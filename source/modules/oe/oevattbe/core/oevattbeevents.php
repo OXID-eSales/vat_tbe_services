@@ -23,7 +23,7 @@
 /**
  * Class defines what module does on Shop events.
  */
-class oePayPalEvents
+class oeVATTBEEvents
 {
     /**
      * Execute action on activate event
