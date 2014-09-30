@@ -19,39 +19,23 @@
  * @copyright (C) OXID eSales AG 2003-2014
  */
 
-/**
- * Metadata version
- */
-$sMetadataVersion = '1.2';
 
 /**
- * Module information
+ * Class defines what module does on Shop events.
  */
-$aModule = array(
-    'id'           => 'oevattbe',
-    'title'        => 'VAT TBE services',
-    'description'  => array(
-        'de' => 'Module for VAT TBE Services.',
-        'en' => 'Module for VAT TBE Services.',
-    ),
-    'thumbnail'    => 'logo.jpg',
-    'version'      => '1.0.0',
-    'author'       => 'OXID eSales AG',
-    'url'          => 'http://www.oxid-esales.com',
-    'email'        => 'info@oxid-esales.com',
-    'extend'       => array(
+class oePayPalEvents
+{
+    /**
+     * Execute action on activate event
+     */
+    public static function onActivate()
+    {
+    }
 
-    ),
-    'files' => array(
-    ),
-    'events'       => array(
-        'onActivate'   => 'oeVatTbeEvents::onActivate',
-        'onDeactivate' => 'oeVatTbeEvents::onDeactivate'
-    ),
-    'templates' => array(
-    ),
-    'blocks' => array(
-    ),
-    'settings' => array(
-    )
-);
+    /**
+     * Execute action on deactivate event
+     */
+    public static function onDeactivate()
+    {
+    }
+}
