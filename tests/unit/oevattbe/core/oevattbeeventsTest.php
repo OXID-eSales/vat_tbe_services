@@ -25,10 +25,38 @@
 class Unit_oeVATTBE_Core_oeVATTBEEventsTest extends OxidTestCase
 {
     /**
-     * Dummy test.
+     * Tear down
      */
-    public function testDummy()
+    public function tearDown()
     {
-        $this->assertTrue(true);
+        oxDb::getDb()->execute('DROP TABLE IF EXISTS `oevattbe_articlevat`');
+        oxDb::getDb()->execute('DROP TABLE IF EXISTS `oevattbe_countryvatgroups`');
+
+        oeVATTBEEvents::onActivate();
+
+        parent::tearDown();
+    }
+
+    /**
+     * Test for action on activation
+     */
+    public function testOnActivate()
+    {
+        oeVATTBEEvents::onActivate();
+
+        $oDbMetaDataHandler = oxNew('oxDbMetaDataHandler');
+
+        $this->assertTrue($oDbMetaDataHandler->tableExists('oevattbe_articlevat'));
+        $this->assertTrue($oDbMetaDataHandler->tableExists('oevattbe_countryvatgroups'));
+
+        $aTableFields = array(
+            'oxarticles'   => 'oevattbe_istbeservice',
+            'oxcountry' => 'oevattbe_appliestbevat',
+            'oxcountry' => 'oevattbe_istbevatconfigured',
+        );
+
+        foreach ($aTableFields as $sTableName => $sFieldName) {
+            $this->assertTrue($oDbMetaDataHandler->fieldExists($sFieldName, $sTableName));
+        }
     }
 }

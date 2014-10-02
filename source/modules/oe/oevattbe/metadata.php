@@ -43,6 +43,7 @@ $aModule = array(
 
     ),
     'files' => array(
+        'oeVatTbeEvents'                    => 'oe/oevattbe/core/oevattbeevents.php',
     ),
     'events'       => array(
         'onActivate'   => 'oeVatTbeEvents::onActivate',
