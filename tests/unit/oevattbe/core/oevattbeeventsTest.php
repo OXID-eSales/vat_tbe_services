@@ -22,7 +22,7 @@
 /**
  * This is dummy test.
  */
-class Unit_oeVATTBE_Core_oeVATTBEEvents extends OxidTestCase
+class Unit_oeVATTBE_Core_oeVATTBEEventsTest extends OxidTestCase
 {
     /**
      * Dummy test.
