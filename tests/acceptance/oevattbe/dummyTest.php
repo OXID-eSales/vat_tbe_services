@@ -24,7 +24,7 @@ require_once realpath( "." ) . '/acceptance/oxTestCase.php';
 /**
  * Acceptance test cases
  */
-class Acceptance_oeVATTBE_dummyTest extends oxTestCase
+class oeVATTBE_dummyTest extends oxTestCase
 {
 
     const TEST_USER_NAME = 'test@oxid-esales.com';
