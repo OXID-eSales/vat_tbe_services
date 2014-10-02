@@ -19,7 +19,7 @@
  * @copyright (C) OXID eSales AG 2003-2014
  */
 
-require_once realpath( "." ) . '/acceptance/library/oxTestCase.php';
+require_once realpath( "." ) . '/acceptance/oxTestCase.php';
 
 /**
  * Acceptance test cases
