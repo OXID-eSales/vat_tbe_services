@@ -32,6 +32,7 @@ class oeVATTBEEvents
     {
         self::_addArticleVatGroupTable();
         self::_addCountryVatGroupTable();
+        self::_addOrderEvidences();
         self::_addFields();
     }
 
@@ -53,12 +54,15 @@ class oeVATTBEEvents
             'oxarticles'  => 'oevattbe_istbeservice',
             'oxcountry' => 'oevattbe_appliestbevat',
             'oxcountry' => 'oevattbe_istbevatconfigured',
+            'oxorder' => 'oevattbe_hastbeservices',
+
         );
 
         $aFieldSql = array(
             'oevattbe_istbeservice' => "ALTER TABLE `oxarticles` ADD `oevattbe_istbeservice` tinyint(1) NOT NULL default 0",
             'oevattbe_appliestbevat' => "ALTER TABLE `oxcountry` ADD `oevattbe_appliestbevat` tinyint(1) NOT NULL default 0",
             'oevattbe_istbevatconfigured' => "ALTER TABLE `oxcountry` ADD `oevattbe_istbevatconfigured` tinyint(1) NOT NULL default 0",
+            'oevattbe_hastbeservices' => "ALTER TABLE `oxorder` ADD `oevattbe_hastbeservices` tinyint(1) NOT NULL default 0",
         );
 
         foreach ($aTableFields as $sTableName => $sFieldName) {
@@ -99,6 +103,23 @@ class oeVATTBEEvents
               `OEVATTBE_RATE` decimal(9,2) NOT NULL,
               `OEVATTBE_TIMESTAMP` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
               PRIMARY KEY (`OEVATTBE_ID`)
+            ) ENGINE=InnoDB;";
+
+        oxDb::getDb()->execute($sSql);
+    }
+
+    /**
+     * Add order evidence table
+     */
+    protected static function _addOrderEvidences()
+    {
+        $sSql = "CREATE TABLE IF NOT EXISTS `oevattbe_orderevidences` (
+              `OEVATTBE_ORDERID` char(32) character set latin1 collate latin1_general_ci NOT NULL,
+              `OEVATTBE_EVIDENCE` char(32) character set latin1 collate latin1_general_ci NOT NULL,
+              `OEVATTBE_COUNTRYID` varchar(255) character set latin1 collate latin1_general_ci NOT NULL,
+              `OEVATTBE_TIMESTAMP` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+              KEY (`OEVATTBE_ORDERID`),
+              KEY (`OEVATTBE_COUNTRYID`)
             ) ENGINE=InnoDB;";
 
         oxDb::getDb()->execute($sSql);

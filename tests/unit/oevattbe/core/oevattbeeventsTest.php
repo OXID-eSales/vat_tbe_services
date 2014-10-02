@@ -48,11 +48,14 @@ class Unit_oeVATTBE_Core_oeVATTBEEventsTest extends OxidTestCase
 
         $this->assertTrue($oDbMetaDataHandler->tableExists('oevattbe_articlevat'));
         $this->assertTrue($oDbMetaDataHandler->tableExists('oevattbe_countryvatgroups'));
+        $this->assertTrue($oDbMetaDataHandler->tableExists('oevattbe_orderevidences'));
 
         $aTableFields = array(
             'oxarticles'   => 'oevattbe_istbeservice',
             'oxcountry' => 'oevattbe_appliestbevat',
             'oxcountry' => 'oevattbe_istbevatconfigured',
+            'oxorder' => 'oevattbe_hastbeservices',
+
         );
 
         foreach ($aTableFields as $sTableName => $sFieldName) {
