@@ -38,7 +38,7 @@ class oeVATTBE_dummyTest extends oxTestCase
     public function testActivateExtension()
     {
         $this->open(shopURL . "admin");
-        $this->loginAdminForModule("Extensions", "Modules", null, null, null, "admin@myoxideshop.com", "admin0303");
+        $this->loginAdminForModule("Extensions", "Modules", null, null, null, "admin", "admin");
         $this->openListItem("link=VAT TBE services");
         $this->clickAndWait("module_activate");
         // dumping database
