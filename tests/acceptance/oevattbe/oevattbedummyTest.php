@@ -38,11 +38,8 @@ class Acceptance_oeVATTBEDummy_dummyTest extends oxTestCase
     public function testActivateExtension()
     {
         $this->open(shopURL . "admin");
-        $this->loginAdminForModule("Extensions", "Themes", null, null, null, "admin@myoxideshop.com", "admin0303");
-        $this->openListItem("link=OXID eShop mobile theme");
-        $this->clickAndWait("//input[@value='Activate']");
         $this->selectMenu("Extensions", "Modules");
-        $this->openListItem("link=OXID eShop theme switch");
+        $this->openListItem("link=VAT TBE services");
         $this->clickAndWait("module_activate");
         // dumping database
         try {
