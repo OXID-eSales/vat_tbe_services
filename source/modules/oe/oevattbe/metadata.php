@@ -40,7 +40,8 @@ $aModule = array(
     'url'          => 'http://www.oxid-esales.com',
     'email'        => 'info@oxid-esales.com',
     'extend'       => array(
-
+        'oxarticle'         => 'oe/oevattbe/models/oevattbeoxarticle',
+        'oxarticlelist'     => 'oe/oevattbe/models/oevattbeoxarticlelist',
     ),
     'files' => array(
         'oeVATTBEEvidenceSelector'         => 'oe/oevattbe/models/oevattbeevidenceselector.php',
