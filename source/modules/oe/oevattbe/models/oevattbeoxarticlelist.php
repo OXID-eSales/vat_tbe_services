@@ -279,6 +279,47 @@ class oeVatTbeOxArticleList extends oeVatTbeOxArticleList_parent
     }
 
     /**
+     * Loads article accessories
+     *
+     * @param string $sArticleId Article id
+     *
+     * @return null
+     */
+    public function loadArticleAccessoires($sArticleId)
+    {
+        if (!is_null($this->_getTbeCountryId())) {
+            $myConfig = $this->getConfig();
+
+            // Performance
+            if (!$myConfig->getConfigParam('bl_perfLoadAccessoires')) {
+                return;
+            }
+
+            $sArticleId = oxDb::getDb()->quote($sArticleId);
+
+            $oBaseObject = $this->getBaseObject();
+            $sArticleTable = $oBaseObject->getViewName();
+
+            $sSelect = "select $sArticleTable.* ";
+            $sSelect .= " , `oevattbe_countryvatgroups`.`oevattbe_rate` ";
+            $sSelect .= " from oxaccessoire2article ";
+            $sSelect .= " left join $sArticleTable on oxaccessoire2article.oxobjectid=$sArticleTable.oxid ";
+            $sSelect .= " LEFT JOIN `oevattbe_articlevat` ON `" . $sArticleTable . "`.`oxid` = `oevattbe_articlevat`.`oevattbe_articleid` ";
+            $sSelect .= "       AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($this->_getTbeCountryId());
+            $sSelect .= " LEFT JOIN `oevattbe_countryvatgroups` ON `oevattbe_articlevat`.`oevattbe_vatgroupid` = `oevattbe_countryvatgroups`.`oevattbe_id` ";
+            $sSelect .= "where oxaccessoire2article.oxarticlenid = $sArticleId ";
+            $sSelect .= " and $sArticleTable.oxid is not null and " . $oBaseObject->getSqlActiveSnippet();
+            //sorting articles
+            $sSelect .= " order by oxaccessoire2article.oxsort";
+
+            $this->selectString($sSelect);
+        } else {
+            parent::loadArticleAccessoires($sArticleId);
+        }
+
+    }
+
+    /**
      * Returns users tbe country
      *
      * @return string
