@@ -34,6 +34,16 @@ class oeVatTbeOxArticle extends oeVatTbeOxArticle_parent
         return $this->oxarticles__oevattbe_rate->value;
     }
 
+    /**
+     * Article TBE vat
+     *
+     * @return string
+     */
+    public function getIsTbeService()
+    {
+        return $this->oxarticles__oevattbe_istbeservice->value;
+    }
+
 
     /**
      * Builds and returns SQL query string.
