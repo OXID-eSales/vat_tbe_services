@@ -25,6 +25,15 @@
  */
 class Unit_oeVatTbe_models_oeVatTbeOxArticleTest extends OxidTestCase
 {
+    /**
+     * Test for vat tbe getter
+     */
+    public function testTbeVatGetter()
+    {
+        $oArticle = oxNew('oxArticle');
+        $oArticle->oxarticles__oevattbe_rate = new oxField(9);
+        $this->assertSame(9, $oArticle->getTbeVat());
+    }
 
     /**
      * Test case for loading article
@@ -41,7 +50,7 @@ class Unit_oeVatTbe_models_oeVatTbeOxArticleTest extends OxidTestCase
 
         $oArticle->load('1126');
 
-        $this->assertSame('8.00', $oArticle->oxarticles__oevattbe_rate->value);
+        $this->assertSame('8.00', $oArticle->getTbeVat());
     }
 
     /**
@@ -59,7 +68,7 @@ class Unit_oeVatTbe_models_oeVatTbeOxArticleTest extends OxidTestCase
 
         $oArticle->load('1126');
 
-        $this->assertNull($oArticle->oxarticles__oevattbe_rate->value);
+        $this->assertNull($oArticle->getTbeVat());
     }
 
 
