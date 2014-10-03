@@ -320,6 +320,69 @@ class oeVatTbeOxArticleList extends oeVatTbeOxArticleList_parent
     }
 
     /**
+     * Loads article cross selling
+     *
+     * @param string $sArticleId Article id
+     *
+     * @return null
+     */
+    public function loadArticleCrossSell($sArticleId)
+    {
+        if (!is_null($this->_getTbeCountryId())) {
+            $myConfig = $this->getConfig();
+
+            // Performance
+            if (!$myConfig->getConfigParam('bl_perfLoadCrossselling')) {
+                return null;
+            }
+
+            $oBaseObject = $this->getBaseObject();
+            $sArticleTable = $oBaseObject->getViewName();
+
+            $sArticleId = oxDb::getDb()->quote($sArticleId);
+
+            $sSelect = "SELECT $sArticleTable.* ";
+            $sSelect .= " , `oevattbe_countryvatgroups`.`oevattbe_rate` ";
+            $sSelect .= " FROM $sArticleTable ";
+            $sSelect .= " INNER JOIN oxobject2article ON oxobject2article.oxobjectid=$sArticleTable.oxid ";
+            $sSelect .= " LEFT JOIN `oevattbe_articlevat` ON `" . $sArticleTable . "`.`oxid` = `oevattbe_articlevat`.`oevattbe_articleid` ";
+            $sSelect .= "       AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($this->_getTbeCountryId());
+            $sSelect .= " LEFT JOIN `oevattbe_countryvatgroups` ON `oevattbe_articlevat`.`oevattbe_vatgroupid` = `oevattbe_countryvatgroups`.`oevattbe_id` ";
+            $sSelect .= "WHERE oxobject2article.oxarticlenid = $sArticleId ";
+            $sSelect .= " AND " . $oBaseObject->getSqlActiveSnippet();
+
+            // #525 bidirectional cross selling
+            if ($myConfig->getConfigParam('blBidirectCross')) {
+                $sSelect = "
+                (
+                    SELECT $sArticleTable.* FROM $sArticleTable
+                        INNER JOIN oxobject2article AS O2A1 on
+                            ( O2A1.oxobjectid = $sArticleTable.oxid AND O2A1.oxarticlenid = $sArticleId )
+                    WHERE 1
+                    AND " . $oBaseObject->getSqlActiveSnippet() . "
+                    AND ($sArticleTable.oxid != $sArticleId)
+                )
+                UNION
+                (
+                    SELECT $sArticleTable.* FROM $sArticleTable
+                        INNER JOIN oxobject2article AS O2A2 ON
+                            ( O2A2.oxarticlenid = $sArticleTable.oxid AND O2A2.oxobjectid = $sArticleId )
+                    WHERE 1
+                    AND " . $oBaseObject->getSqlActiveSnippet() . "
+                    AND ($sArticleTable.oxid != $sArticleId)
+                )";
+            }
+
+            $this->setSqlLimit(0, $myConfig->getConfigParam('iNrofCrossellArticles'));
+            $this->selectString($sSelect);
+
+        } else {
+            parent::loadArticleCrossSell($sArticleId);
+        }
+
+    }
+
+    /**
      * Returns users tbe country
      *
      * @return string
