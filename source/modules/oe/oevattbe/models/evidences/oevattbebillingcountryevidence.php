@@ -25,22 +25,51 @@
  */
 class oeVATTBEBillingCountryEvidence extends oeVATTBEEvidence
 {
-    /** @var string */
-    private $_name = 'billing_country';
+    /**
+     * Evidence name. Will be stored in Admin Order page if this evidence was used for selection.
+     * Also used when selecting default evidence.
+     *
+     * @var string
+     */
+    private $_sName = 'billing_country';
+
+    /** @var string Calculated user country. */
+    private $_sCountry = null;
 
     /**
+     * Returns the name of evidence.
+     *
      * @return string
      */
     public function getName()
     {
-        return $this->_name;
+        return $this->_sName;
     }
 
     /**
+     * Gets user country id and returns it.
+     * Has local cache, so does not recheck twice.
+     *
      * @return string
      */
-    public function getCountry()
+    public function getCountryId()
     {
-        return 'Germany';
+        if (!$this->_sCountry) {
+            $this->_sCountry = $this->_getBillingCountryId();
+        }
+
+        return $this->_sCountry;
+    }
+
+    /**
+     * Returns Billing country id.
+     *
+     * @return string
+     */
+    private function _getBillingCountryId()
+    {
+        $oUser = $this->_getUser();
+
+        return $oUser->oxuser__oxcountryid->value;
     }
 }

@@ -29,19 +29,28 @@ class Unit_oeVATTBE_Models_Evidences_oeVATTBEBillingCountryEvidenceTest extends 
 
     public function testGetName()
     {
-        /** @var oxUser|PHPUnit_Framework_MockObject_MockObject $oUser */
-        $oUser = $this->getMock('oxUser', array(), array(), '', false);
+        $oUser = new oxUser();
         $oEvidence = new oeVATTBEBillingCountryEvidence($oUser);
 
         $this->assertEquals('billing_country', $oEvidence->getName());
     }
 
-    public function testGetCountry()
+    public function testGetCountryId()
     {
-        /** @var oxUser|PHPUnit_Framework_MockObject_MockObject $oUser */
-        $oUser = $this->getMock('oxUser', array(), array(), '', false);
+        $oUser = new oxUser();
+        $oUser->oxuser__oxcountryid = new oxField('a7c40f631fc920687.20179984');
+
         $oEvidence = new oeVATTBEBillingCountryEvidence($oUser);
 
-        $this->assertEquals('Germany', $oEvidence->getCountry());
+        $this->assertEquals('a7c40f631fc920687.20179984', $oEvidence->getCountryId());
+    }
+
+    public function testGetCountryIdWhenNoCountrySet()
+    {
+        $oUser = new oxUser();
+
+        $oEvidence = new oeVATTBEBillingCountryEvidence($oUser);
+
+        $this->assertEquals(null, $oEvidence->getCountryId());
     }
 }
