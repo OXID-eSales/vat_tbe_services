@@ -120,9 +120,9 @@ class Unit_oeVATTBE_Models_oeVATTBEEvidenceSelectorTest extends OxidTestCase
     protected function _createEvidence($sName, $sCountry)
     {
         /** @var oeVATTBEEvidence|PHPUnit_Framework_MockObject_MockObject $oUser */
-        $oEvidence = $this->getMock('oeVATTBEEvidence', array('getName', 'getCountry'), array(), '', false);
+        $oEvidence = $this->getMock('oeVATTBEEvidence', array('getName', 'getCountryId'), array(), '', false);
         $oEvidence->expects($this->any())->method('getName')->will($this->returnValue($sName));
-        $oEvidence->expects($this->any())->method('getCountry')->will($this->returnValue($sCountry));
+        $oEvidence->expects($this->any())->method('getCountryId')->will($this->returnValue($sCountry));
 
         return $oEvidence;
     }

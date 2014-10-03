@@ -28,7 +28,7 @@ class Unit_oeVATTBE_Models_Evidences_oeVATTBEEvidenceListTest extends OxidTestCa
 {
     public function testAddingToList()
     {
-        $oEvidence = $this->getMock('oeVATTBEEvidence');
+        $oEvidence = $this->getMock('oeVATTBEEvidence', array(), array(), '', false);
 
         $oList = new oeVATTBEEvidenceList();
         $oList->add($oEvidence);

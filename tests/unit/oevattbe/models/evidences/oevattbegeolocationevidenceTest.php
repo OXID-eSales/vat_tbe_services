@@ -36,12 +36,12 @@ class Unit_oeVATTBE_Models_Evidences_oeVATTBEGeoLocationEvidenceTest extends Oxi
         $this->assertEquals('geo_location', $oEvidence->getName());
     }
 
-    public function testGetCountry()
+    public function testGetCountryId()
     {
         /** @var oxUser|PHPUnit_Framework_MockObject_MockObject $oUser */
         $oUser = $this->getMock('oxUser', array(), array(), '', false);
         $oEvidence = new oeVATTBEGeoLocationEvidence($oUser);
 
-        $this->assertEquals('Germany', $oEvidence->getCountry());
+        $this->assertEquals('', $oEvidence->getCountryId());
     }
 }

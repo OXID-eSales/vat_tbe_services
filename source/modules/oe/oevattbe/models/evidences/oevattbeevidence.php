@@ -29,9 +29,11 @@ abstract class oeVATTBEEvidence
     private $_oUser = null;
 
     /**
-     * @param $oUser
+     * Sets required dependencies.
+     *
+     * @param oxUser $oUser
      */
-    public function __constructor($oUser)
+    public function __construct($oUser)
     {
         $this->_oUser = $oUser;
     }
@@ -44,11 +46,12 @@ abstract class oeVATTBEEvidence
     abstract public function getName();
 
     /**
-     * Returns country id found be this evidence.
+     * Gets user country id and returns it.
+     * Has local cache, so does not recheck twice.
      *
      * @return string Country id.
      */
-    abstract public function getCountry();
+    abstract public function getCountryId();
 
     /**
      * Returns oxUser object.

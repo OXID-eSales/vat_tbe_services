@@ -29,6 +29,8 @@ class oeVATTBEGeoLocationEvidence extends oeVATTBEEvidence
     private $_name = 'geo_location';
 
     /**
+     * Returns evidence name.
+     *
      * @return string
      */
     public function getName()
@@ -37,10 +39,13 @@ class oeVATTBEGeoLocationEvidence extends oeVATTBEEvidence
     }
 
     /**
+     * Gets user country id and returns it.
+     * Has local cache, so does not recheck twice.
+     *
      * @return string
      */
-    public function getCountry()
+    public function getCountryId()
     {
-        return 'Germany';
+        return '';
     }
 }

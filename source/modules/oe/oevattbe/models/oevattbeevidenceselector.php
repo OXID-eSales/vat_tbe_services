@@ -28,14 +28,14 @@ class oeVATTBEEvidenceSelector
     /** @var array List of evidence collectors */
     private $_oEvidenceList = array();
 
-    /** @var array List of evidence collectors */
+    /** @var oxConfig Config object */
     private $_oConfig = array();
 
     /**
      * Class constructor method, handles required dependencies.
      *
      * @param oeVATTBEEvidenceList $oEvidenceList List of evidences.
-     * @param oxConfig             $oConfig    Shop Config object.
+     * @param oxConfig             $oConfig       Shop Config object.
      */
     public function __construct($oEvidenceList, $oConfig)
     {
@@ -62,7 +62,7 @@ class oeVATTBEEvidenceSelector
             if ($sDefaultEvidence == $oEvidence->getName()) {
                 $oDefaultEvidence = $oEvidence;
             }
-            if (!$oFirstNonEmptyEvidence && $oEvidence->getCountry()) {
+            if (!$oFirstNonEmptyEvidence && $oEvidence->getCountryId()) {
                 $oFirstNonEmptyEvidence = $oEvidence;
             }
         }
@@ -82,7 +82,7 @@ class oeVATTBEEvidenceSelector
         $aUniqueCountries = array();
         foreach ($aEvidences as $oEvidence) {
             /** @var oeVATTBEEvidence $oEvidence */
-            $aUniqueCountries[$oEvidence->getCountry()] = $oEvidence->getCountry();
+            $aUniqueCountries[$oEvidence->getCountryId()] = $oEvidence->getCountryId();
         }
 
         return (count($aUniqueCountries) === 1) ? false : true;
