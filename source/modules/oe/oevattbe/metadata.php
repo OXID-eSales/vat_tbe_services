@@ -42,6 +42,7 @@ $aModule = array(
     'extend'       => array(
         'oxarticle'         => 'oe/oevattbe/models/oevattbeoxarticle',
         'oxarticlelist'     => 'oe/oevattbe/models/oevattbeoxarticlelist',
+        'oxuser'         => 'oe/oevattbe/models/oevattbeoxuser',
     ),
     'files' => array(
         'oeVATTBEEvidenceSelector'         => 'oe/oevattbe/models/oevattbeevidenceselector.php',
