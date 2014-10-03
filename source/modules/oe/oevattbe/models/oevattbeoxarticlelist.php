@@ -434,6 +434,53 @@ class oeVatTbeOxArticleList extends oeVatTbeOxArticleList_parent
     }
 
     /**
+     * Load top 5 articles
+     *
+     * @param int $iLimit Select limit
+     */
+    public function loadTop5Articles($iLimit = null)
+    {
+        if (!is_null($this->_getTbeCountryId())) {
+            $myConfig = $this->getConfig();
+
+            if (!$myConfig->getConfigParam('bl_perfLoadPriceForAddList')) {
+                $this->getBaseObject()->disablePriceLoad();
+            }
+
+            switch ($myConfig->getConfigParam('iTop5Mode')) {
+                case 0:
+                    // switched off, do nothing
+                    break;
+                case 1:
+                    // manually entered
+                    $this->loadActionArticles('oxtop5', $iLimit);
+                    break;
+                case 2:
+                    $sArticleTable = getViewName('oxarticles');
+
+                    //by default limit 5
+                    $sLimit = ($iLimit > 0) ? "limit " . $iLimit : 'limit 5';
+
+                    $sSelect = "select $sArticleTable.* ";
+                    $sSelect .= " , `oevattbe_countryvatgroups`.`oevattbe_rate` ";
+                    $sSelect .= " from $sArticleTable ";
+                    $sSelect .= " LEFT JOIN `oevattbe_articlevat` ON `" . $sArticleTable . "`.`oxid` = `oevattbe_articlevat`.`oevattbe_articleid` ";
+                    $sSelect .= "       AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($this->_getTbeCountryId());
+                    $sSelect .= " LEFT JOIN `oevattbe_countryvatgroups` ON `oevattbe_articlevat`.`oevattbe_vatgroupid` = `oevattbe_countryvatgroups`.`oevattbe_id` ";
+                    $sSelect .= "where " . $this->getBaseObject()->getSqlActiveSnippet() . " and $sArticleTable.oxissearch = 1 ";
+                    $sSelect .= "and $sArticleTable.oxparentid = '' and $sArticleTable.oxsoldamount>0 ";
+                    $sSelect .= "order by $sArticleTable.oxsoldamount desc $sLimit";
+
+                    $this->selectString($sSelect);
+                    break;
+            }
+        } else {
+            parent::loadTop5Articles($iLimit);
+        }
+
+    }
+
+    /**
      * Returns users tbe country
      *
      * @return string
