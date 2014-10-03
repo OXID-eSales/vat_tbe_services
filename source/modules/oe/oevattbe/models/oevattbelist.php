@@ -21,7 +21,7 @@
 
 
 /**
- * Class checks all collected evidences and provides user country from them.
+ * Base class for lists. Implements Iterator and Countable interfaces.
  */
 class oeVATTBEList implements Iterator, Countable
 {

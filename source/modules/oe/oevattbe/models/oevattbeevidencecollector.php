@@ -21,7 +21,7 @@
 
 
 /**
- * Class checks all collected evidences and provides user country from them.
+ * Class creates list of evidences.
  */
 class oeVATTBEEvidenceCollector
 {
@@ -29,11 +29,11 @@ class oeVATTBEEvidenceCollector
     /** @var oxConfig */
     private $_oConfig = null;
 
-    /** @var oxUser */
+    /** @var oxUser User object passed to every evidence. */
     private $_oUser = null;
 
     /**
-     * Sets required dependencies.
+     * Handles required dependencies.
      *
      * @param oxConfig $oConfig
      * @param oxUser   $oUser
@@ -46,6 +46,7 @@ class oeVATTBEEvidenceCollector
 
     /**
      * Creates list of evidences and returns it.
+     * All evidences must be instance or child of oeVATTBEEvidence.
      *
      * @return oeVATTBEEvidenceList
      */
@@ -80,6 +81,7 @@ class oeVATTBEEvidenceCollector
 
     /**
      * Returns user object.
+     * User object is passed to every evidence.
      *
      * @return oxUser
      */

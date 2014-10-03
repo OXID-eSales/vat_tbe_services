@@ -21,7 +21,7 @@
 
 
 /**
- * Class checks all collected evidences and provides user country from them.
+ * Class to get user country from geo location.
  */
 class oeVATTBEGeoLocationEvidence extends oeVATTBEEvidence
 {

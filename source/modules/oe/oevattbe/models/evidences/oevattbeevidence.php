@@ -21,17 +21,17 @@
 
 
 /**
- * Class checks all collected evidences and provides user country from them.
+ * Abstract class for all evidences.
  */
 abstract class oeVATTBEEvidence
 {
-    /** @var oxUser */
+    /** @var oxUser User object to get data needed for finding user country. */
     private $_oUser = null;
 
     /**
-     * Sets required dependencies.
+     * Handles required dependencies.
      *
-     * @param oxUser $oUser
+     * @param oxUser $oUser User object to get data needed for finding user country.
      */
     public function __construct($oUser)
     {
@@ -40,6 +40,8 @@ abstract class oeVATTBEEvidence
 
     /**
      * Returns evidence name.
+     * Evidence name is shown with TBE articles in order page if this evidence was used for country selection.
+     * Also used for selecting default evidence.
      *
      * @return string Evidence name.
      */
@@ -47,7 +49,7 @@ abstract class oeVATTBEEvidence
 
     /**
      * Gets user country id and returns it.
-     * Has local cache, so does not recheck twice.
+     * Should have local cache, so that it would not recheck twice.
      *
      * @return string Country id.
      */

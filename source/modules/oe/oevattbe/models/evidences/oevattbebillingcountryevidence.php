@@ -21,7 +21,7 @@
 
 
 /**
- * Class checks all collected evidences and provides user country from them.
+ * Class to get user country from billing address.
  */
 class oeVATTBEBillingCountryEvidence extends oeVATTBEEvidence
 {

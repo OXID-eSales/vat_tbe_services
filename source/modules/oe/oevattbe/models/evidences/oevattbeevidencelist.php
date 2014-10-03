@@ -21,24 +21,25 @@
 
 
 /**
- * Class checks all collected evidences and provides user country from them.
+ * Class for storing evidences.
  */
 class oeVATTBEEvidenceList extends oeVATTBEList
 {
 
     /**
      * Adds item to list.
+     * Checks if this item is instance of oeVATTBEEvidence.
      *
-     * @param mixed $mItem Any item to add to the list.
+     * @param oeVATTBEEvidence $oItem Evidence to add to the list.
      *
      * @throws Exception
      */
-    public function add($mItem)
+    public function add($oItem)
     {
-        if (!($mItem instanceof oeVATTBEEvidence)) {
+        if (!($oItem instanceof oeVATTBEEvidence)) {
             throw new Exception('Item must be instance or child of oeVATTBEEvidence');
         }
 
-        parent::add($mItem);
+        parent::add($oItem);
     }
 }

@@ -21,21 +21,21 @@
 
 
 /**
- * Class checks all collected evidences and provides user country from them.
+ * Class checks all evidences and provides the one that should be used in VAT calculations.
  */
 class oeVATTBEEvidenceSelector
 {
-    /** @var array List of evidence collectors */
+    /** @var array List of evidences. */
     private $_oEvidenceList = array();
 
-    /** @var oxConfig Config object */
+    /** @var oxConfig Configuration object. */
     private $_oConfig = array();
 
     /**
-     * Class constructor method, handles required dependencies.
+     * Handles required dependencies.
      *
      * @param oeVATTBEEvidenceList $oEvidenceList List of evidences.
-     * @param oxConfig             $oConfig       Shop Config object.
+     * @param oxConfig             $oConfig       Shop Configuration object.
      */
     public function __construct($oEvidenceList, $oConfig)
     {
@@ -44,7 +44,7 @@ class oeVATTBEEvidenceSelector
     }
 
     /**
-     * Checks all evidences and returns country from them.
+     * Checks all evidences and provides the one that should be used in VAT calculations.
      *
      * @return string
      */
@@ -71,7 +71,7 @@ class oeVATTBEEvidenceSelector
     }
 
     /**
-     * Checks if all countries are unique.
+     * Checks if there are any contradicting evidences.
      *
      * @return bool
      */
@@ -99,7 +99,7 @@ class oeVATTBEEvidenceSelector
     }
 
     /**
-     * Returns evidence list.
+     * Returns shop configuration object.
      *
      * @return oxConfig
      */
