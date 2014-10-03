@@ -39,7 +39,7 @@ class oeVatTbeOxArticle extends oeVatTbeOxArticle_parent
      *
      * @return string
      */
-    public function getIsTbeService()
+    public function isTbeService()
     {
         return $this->oxarticles__oevattbe_istbeservice->value;
     }
