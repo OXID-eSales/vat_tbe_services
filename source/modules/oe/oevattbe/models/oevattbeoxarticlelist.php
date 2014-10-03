@@ -24,5 +24,226 @@
  */
 class oeVatTbeOxArticleList extends oeVatTbeOxArticleList_parent
 {
+    /**
+     * Creates SQL Statement to load Articles, etc.
+     *
+     * @param string $sFields        Fields which are loaded e.g. "oxid" or "*" etc.
+     * @param string $sCatId         Category tree ID
+     * @param array  $aSessionFilter Like array ( catid => array( attrid => value,...))
+     *
+     * @return string SQL
+     */
+    protected function _getCategorySelect($sFields, $sCatId, $aSessionFilter)
+    {
+        if (!is_null($this->_getTbeCountryId())) {
+            $sArticleTable = getViewName('oxarticles');
+            $sO2CView = getViewName('oxobject2category');
 
+            // ----------------------------------
+            // sorting
+            $sSorting = '';
+            if ($this->_sCustomSorting) {
+                $sSorting = " {$this->_sCustomSorting} , ";
+            }
+
+            // ----------------------------------
+            // filtering ?
+            $sFilterSql = '';
+            $iLang = oxRegistry::getLang()->getBaseLanguage();
+            if ($aSessionFilter && isset($aSessionFilter[$sCatId][$iLang])) {
+                $sFilterSql = $this->_getFilterSql($sCatId, $aSessionFilter[$sCatId][$iLang]);
+            }
+
+            $oDb = oxDb::getDb();
+
+            $sSelect = "SELECT $sFields, $sArticleTable.oxtimestamp";
+            $sSelect .= " , `oevattbe_countryvatgroups`.`oevattbe_rate` ";
+            $sSelect .= " FROM $sO2CView as oc";
+            $sSelect .= " left join $sArticleTable ON $sArticleTable.oxid = oc.oxobjectid";
+            $sSelect .= " LEFT JOIN `oevattbe_articlevat` ON `" . $sArticleTable . "`.`oxid` = `oevattbe_articlevat`.`oevattbe_articleid` ";
+            $sSelect .= "       AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($this->_getTbeCountryId());
+            $sSelect .= " LEFT JOIN `oevattbe_countryvatgroups` ON `oevattbe_articlevat`.`oevattbe_vatgroupid` = `oevattbe_countryvatgroups`.`oevattbe_id` ";
+            $sSelect .= " WHERE " . $this->getBaseObject()->getSqlActiveSnippet() . " and $sArticleTable.oxparentid = ''";
+            $sSelect .= " and oc.oxcatnid = " . $oDb->quote($sCatId) . " $sFilterSql ORDER BY $sSorting oc.oxpos, oc.oxobjectid ";
+        } else {
+            $sSelect = parent::_getCategorySelect($sFields, $sCatId, $aSessionFilter);
+        }
+
+        return $sSelect;
+    }
+
+    /**
+     * Builds vendor select SQL statement
+     *
+     * @param string $sVendorId Vendor ID
+     *
+     * @return string
+     */
+    protected function _getVendorSelect($sVendorId)
+    {
+        if (!is_null($this->_getTbeCountryId())) {
+            $sArticleTable = getViewName('oxarticles');
+            $oBaseObject = $this->getBaseObject();
+            $sFieldNames = $oBaseObject->getSelectFields();
+            $sSelect = "select $sFieldNames ";
+            $sSelect .= " , `oevattbe_countryvatgroups`.`oevattbe_rate` ";
+            $sSelect .= " from $sArticleTable ";
+            $sSelect .= " LEFT JOIN `oevattbe_articlevat` ON `" . $sArticleTable . "`.`oxid` = `oevattbe_articlevat`.`oevattbe_articleid` ";
+            $sSelect .= "       AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($this->_getTbeCountryId());
+            $sSelect .= " LEFT JOIN `oevattbe_countryvatgroups` ON `oevattbe_articlevat`.`oevattbe_vatgroupid` = `oevattbe_countryvatgroups`.`oevattbe_id` ";
+            $sSelect .= "where $sArticleTable.oxvendorid = " . oxDb::getDb()->quote($sVendorId) . " ";
+            $sSelect .= " and " . $oBaseObject->getSqlActiveSnippet() . " and $sArticleTable.oxparentid = ''  ";
+
+            if ($this->_sCustomSorting) {
+                $sSelect .= " ORDER BY {$this->_sCustomSorting} ";
+            }
+        } else {
+            $sSelect = parent::_getVendorSelect($sVendorId);
+        }
+
+        return $sSelect;
+    }
+
+    /**
+     * Builds Manufacturer select SQL statement
+     *
+     * @param string $sManufacturerId Manufacturer ID
+     *
+     * @return string
+     */
+    protected function _getManufacturerSelect($sManufacturerId)
+    {
+        if (!is_null($this->_getTbeCountryId())) {
+            $sArticleTable = getViewName('oxarticles');
+            $oBaseObject = $this->getBaseObject();
+            $sFieldNames = $oBaseObject->getSelectFields();
+            $sSelect = "select $sFieldNames ";
+            $sSelect .= " , `oevattbe_countryvatgroups`.`oevattbe_rate` ";
+            $sSelect .= " from $sArticleTable ";
+            $sSelect .= " LEFT JOIN `oevattbe_articlevat` ON `" . $sArticleTable . "`.`oxid` = `oevattbe_articlevat`.`oevattbe_articleid` ";
+            $sSelect .= "       AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($this->_getTbeCountryId());
+            $sSelect .= " LEFT JOIN `oevattbe_countryvatgroups` ON `oevattbe_articlevat`.`oevattbe_vatgroupid` = `oevattbe_countryvatgroups`.`oevattbe_id` ";
+            $sSelect .= "where $sArticleTable.oxmanufacturerid = " . oxDb::getDb()->quote($sManufacturerId) . " ";
+            $sSelect .= " and " . $oBaseObject->getSqlActiveSnippet() . " and $sArticleTable.oxparentid = ''  ";
+
+            if ($this->_sCustomSorting) {
+                $sSelect .= " ORDER BY {$this->_sCustomSorting} ";
+            }
+        } else {
+            $sSelect = parent::_getManufacturerSelect($sManufacturerId);
+        }
+
+        return $sSelect;
+    }
+
+    /**
+     * Builds SQL for selecting articles by price
+     *
+     * @param double $dPriceFrom Starting price
+     * @param double $dPriceTo   Max price
+     *
+     * @return string
+     */
+    protected function _getPriceSelect($dPriceFrom, $dPriceTo)
+    {
+        if (!is_null($this->_getTbeCountryId())) {
+            $oBaseObject = $this->getBaseObject();
+            $sArticleTable = $oBaseObject->getViewName();
+            $sSelectFields = $oBaseObject->getSelectFields();
+
+            $sSelect = "select $sSelectFields ";
+            $sSelect .= " , `oevattbe_countryvatgroups`.`oevattbe_rate` ";
+            $sSelect .= " from $sArticleTable ";
+            $sSelect .= " LEFT JOIN `oevattbe_articlevat` ON `" . $sArticleTable . "`.`oxid` = `oevattbe_articlevat`.`oevattbe_articleid` ";
+            $sSelect .= "       AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($this->_getTbeCountryId());
+            $sSelect .= " LEFT JOIN `oevattbe_countryvatgroups` ON `oevattbe_articlevat`.`oevattbe_vatgroupid` = `oevattbe_countryvatgroups`.`oevattbe_id` ";
+            $sSelect .= " where oxvarminprice >= 0 ";
+            $sSelect .= $dPriceTo ? "and oxvarminprice <= " . (double) $dPriceTo . " " : " ";
+            $sSelect .= $dPriceFrom ? "and oxvarminprice  >= " . (double) $dPriceFrom . " " : " ";
+
+            $sSelect .= " and " . $oBaseObject->getSqlActiveSnippet() . " and {$sArticleTable}.oxissearch = 1";
+
+            if (!$this->_sCustomSorting) {
+                $sSelect .= " order by {$sArticleTable}.oxvarminprice asc , {$sArticleTable}.oxid";
+            } else {
+                $sSelect .= " order by {$this->_sCustomSorting}, {$sArticleTable}.oxid ";
+            }
+        } else {
+            $sSelect = parent::_getPriceSelect($dPriceFrom, $dPriceTo);
+        }
+
+
+        return $sSelect;
+    }
+
+    /**
+     * Loads a list of articles having
+     *
+     * @param string $sTag  Searched tag
+     * @param int    $iLang Active language
+     *
+     * @return int
+     */
+    public function loadTagArticles($sTag, $iLang)
+    {
+        if (!is_null($this->_getTbeCountryId())) {
+            $oListObject = $this->getBaseObject();
+            $sArticleTable = $oListObject->getViewName();
+            $sArticleFields = $oListObject->getSelectFields();
+            $sViewName = getViewName('oxartextends', $iLang);
+
+            $oTag = oxNew('oxtag', $sTag);
+            $oTag->addUnderscores();
+            $sTag = $oTag->get();
+
+            $sQ = "select {$sArticleFields}";
+            $sQ .= " , `oevattbe_countryvatgroups`.`oevattbe_rate` ";
+            $sQ .= " from {$sViewName} ";
+            $sQ .= " inner join {$sArticleTable} on {$sArticleTable}.oxid = {$sViewName}.oxid ";
+            $sQ .= " LEFT JOIN `oevattbe_articlevat` ON `" . $sArticleTable . "`.`oxid` = `oevattbe_articlevat`.`oevattbe_articleid` ";
+            $sQ .= "       AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($this->_getTbeCountryId());
+            $sQ .= " LEFT JOIN `oevattbe_countryvatgroups` ON `oevattbe_articlevat`.`oevattbe_vatgroupid` = `oevattbe_countryvatgroups`.`oevattbe_id` ";
+            $sQ .= " where {$sArticleTable}.oxparentid = '' AND match ( {$sViewName}.oxtags ) ";
+            $sQ .= " against( " . oxDb::getDb()->quote("\"" . $sTag . "\"") . " IN BOOLEAN MODE )";
+
+            // checking stock etc
+            if (($sActiveSnippet = $oListObject->getSqlActiveSnippet())) {
+                $sQ .= " and {$sActiveSnippet}";
+            }
+
+            if ($this->_sCustomSorting) {
+                $sSort = $this->_sCustomSorting;
+                if (strpos($sSort, '.') === false) {
+                    $sSort = $sArticleTable . '.' . $sSort;
+                }
+                $sQ .= " order by $sSort ";
+            }
+
+            $this->selectString($sQ);
+
+            // calc count - we can not use count($this) here as we might have paging enabled
+            return oxRegistry::get("oxUtilsCount")->getTagArticleCount($sTag, $iLang);
+        } else {
+            return parent::loadTagArticles($sTag, $iLang);
+        }
+
+    }
+
+
+    /**
+     * Returns users tbe country
+     *
+     * @return string
+     */
+    private function _getTbeCountryId()
+    {
+        $sCountryId = null;
+        $oUser = $this->getBaseObject()->getUser();
+
+        if ($oUser) {
+            $sCountryId = $oUser->getTbeCountryId();
+        }
+
+        return $sCountryId;
+    }
 }
