@@ -383,6 +383,57 @@ class oeVatTbeOxArticleList extends oeVatTbeOxArticleList_parent
     }
 
     /**
+     * Loads newest shops articles from DB.
+     *
+     * @param int $iLimit Select limit
+     */
+    public function loadNewestArticles($iLimit = null)
+    {
+        if (!is_null($this->_getTbeCountryId())) {
+            $myConfig = $this->getConfig();
+
+            if (!$myConfig->getConfigParam('bl_perfLoadPriceForAddList')) {
+                $this->getBaseObject()->disablePriceLoad();
+            }
+
+            $this->_aArray = array();
+            switch ($myConfig->getConfigParam('iNewestArticlesMode')) {
+                case 0:
+                    // switched off, do nothing
+                    break;
+                case 1:
+                    // manually entered
+                    $this->loadActionArticles('oxnewest', $iLimit);
+                    break;
+                case 2:
+                    $sArticleTable = getViewName('oxarticles');
+                    if ($myConfig->getConfigParam('blNewArtByInsert')) {
+                        $sType = 'oxinsert';
+                    } else {
+                        $sType = 'oxtimestamp';
+                    }
+                    $sSelect = "select $sArticleTable.* ";
+                    $sSelect .= " , `oevattbe_countryvatgroups`.`oevattbe_rate` ";
+                    $sSelect .= " from $sArticleTable ";
+                    $sSelect .= " LEFT JOIN `oevattbe_articlevat` ON `" . $sArticleTable . "`.`oxid` = `oevattbe_articlevat`.`oevattbe_articleid` ";
+                    $sSelect .= "       AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($this->_getTbeCountryId());
+                    $sSelect .= " LEFT JOIN `oevattbe_countryvatgroups` ON `oevattbe_articlevat`.`oevattbe_vatgroupid` = `oevattbe_countryvatgroups`.`oevattbe_id` ";
+                    $sSelect .= "where oxparentid = '' and " . $this->getBaseObject()->getSqlActiveSnippet() . " and oxissearch = 1 order by $sType desc ";
+                    if (!($iLimit = (int) $iLimit)) {
+                        $iLimit = $myConfig->getConfigParam('iNrofNewcomerArticles');
+                    }
+                    $sSelect .= "limit " . $iLimit;
+
+                    $this->selectString($sSelect);
+                    break;
+            }
+        } else {
+            parent::loadNewestArticles($iLimit);
+        }
+
+    }
+
+    /**
      * Returns users tbe country
      *
      * @return string
