@@ -229,6 +229,54 @@ class oeVatTbeOxArticleList extends oeVatTbeOxArticleList_parent
 
     }
 
+    /**
+     * Loads shop AktionArticles.
+     *
+     * @param string $sActionID Action id
+     * @param int    $iLimit    Select limit
+     *
+     * @return null
+     */
+    public function loadActionArticles($sActionID, $iLimit = null)
+    {
+        if (!is_null($this->_getTbeCountryId())) {
+            // Performance
+            if (!trim($sActionID)) {
+                return;
+            }
+
+            $sShopID = $this->getConfig()->getShopId();
+            $sActionID = oxDb::getDb()->quote(strtolower($sActionID));
+
+            //echo $sSelect;
+            $oBaseObject = $this->getBaseObject();
+            $sArticleTable = $oBaseObject->getViewName();
+            $sArticleFields = $oBaseObject->getSelectFields();
+
+            $oBase = oxNew("oxactions");
+            $sActiveSql = $oBase->getSqlActiveSnippet();
+            $sViewName = $oBase->getViewName();
+
+            $sLimit = ($iLimit > 0) ? "limit " . $iLimit : '';
+
+            $sSelect = "select $sArticleFields ";
+            $sSelect .= " , `oevattbe_countryvatgroups`.`oevattbe_rate` ";
+            $sSelect .= " from oxactions2article";
+            $sSelect .= " left join $sArticleTable on $sArticleTable.oxid = oxactions2article.oxartid";
+            $sSelect .= " left join $sViewName on $sViewName.oxid = oxactions2article.oxactionid";
+            $sSelect .= " LEFT JOIN `oevattbe_articlevat` ON `" . $sArticleTable . "`.`oxid` = `oevattbe_articlevat`.`oevattbe_articleid` ";
+            $sSelect .= "       AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($this->_getTbeCountryId());
+            $sSelect .= " LEFT JOIN `oevattbe_countryvatgroups` ON `oevattbe_articlevat`.`oevattbe_vatgroupid` = `oevattbe_countryvatgroups`.`oevattbe_id` ";
+            $sSelect .= " where oxactions2article.oxshopid = '$sShopID' and oxactions2article.oxactionid = $sActionID and $sActiveSql";
+            $sSelect .= " and $sArticleTable.oxid is not null and " . $oBaseObject->getSqlActiveSnippet();
+            $sSelect .= " order by oxactions2article.oxsort $sLimit";
+
+            $this->selectString($sSelect);
+        } else {
+            parent::loadActionArticles($sActionID, $iLimit = null);
+        }
+
+    }
 
     /**
      * Returns users tbe country
