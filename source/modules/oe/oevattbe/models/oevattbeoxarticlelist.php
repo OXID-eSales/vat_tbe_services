@@ -481,6 +481,37 @@ class oeVatTbeOxArticleList extends oeVatTbeOxArticleList_parent
     }
 
     /**
+     * Returns the appropriate SQL select
+     *
+     * @param string $sRecommId       Recommlist ID
+     * @param string $sArticlesFilter Additional filter for recommlist's items
+     *
+     * @return string
+     */
+    protected function _getArticleSelect($sRecommId, $sArticlesFilter = null)
+    {
+        if (!is_null($this->_getTbeCountryId())) {
+            $sRecommId = oxDb::getDb()->quote($sRecommId);
+
+            $sArticleTable = getViewName('oxarticles');
+
+            $sSelect = "select distinct $sArticleTable.*, oxobject2list.oxdesc ";
+            $sSelect .= " , `oevattbe_countryvatgroups`.`oevattbe_rate` ";
+            $sSelect .= " from oxobject2list ";
+            $sSelect .= " LEFT JOIN `oevattbe_articlevat` ON `" . $sArticleTable . "`.`oxid` = `oevattbe_articlevat`.`oevattbe_articleid` ";
+            $sSelect .= "       AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($this->_getTbeCountryId());
+            $sSelect .= " LEFT JOIN `oevattbe_countryvatgroups` ON `oevattbe_articlevat`.`oevattbe_vatgroupid` = `oevattbe_countryvatgroups`.`oevattbe_id` ";
+            $sSelect .= "left join $sArticleTable on oxobject2list.oxobjectid = $sArticleTable.oxid ";
+            $sSelect .= "where (oxobject2list.oxlistid = $sRecommId) " . $sArticlesFilter;
+
+            return $sSelect;
+        } else {
+            parent::_getArticleSelect($sRecommId, $sArticlesFilter);
+        }
+
+    }
+
+    /**
      * Returns users tbe country
      *
      * @return string
