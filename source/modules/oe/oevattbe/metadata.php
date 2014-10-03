@@ -43,7 +43,14 @@ $aModule = array(
 
     ),
     'files' => array(
-        'oeVatTbeEvents'                    => 'oe/oevattbe/core/oevattbeevents.php',
+        'oeVATTBEEvidenceSelector'         => 'oe/oevattbe/models/oevattbeevidenceselector.php',
+        'oeVATTBEEvidenceCollector'        => 'oe/oevattbe/models/oevattbeevidencecollector.php',
+        'oeVATTBEEvidence'                 => 'oe/oevattbe/models/evidences/oevattbeevidence.php',
+        'oeVATTBEBillingCountryEvidence'   => 'oe/oevattbe/models/evidences/oevattbebillingcountryevidence.php',
+        'oeVATTBEGeoLocationEvidence'      => 'oe/oevattbe/models/evidences/oevattbegeolocationevidence.php',
+        'oeVATTBEEvidenceList'             => 'oe/oevattbe/models/evidences/oevattbeevidencelist.php',
+        'oeVATTBEList'                     => 'oe/oevattbe/models/oevattbelist.php',
+        'oeVatTbeEvents'                   => 'oe/oevattbe/core/oevattbeevents.php',
     ),
     'events'       => array(
         'onActivate'   => 'oeVatTbeEvents::onActivate',
