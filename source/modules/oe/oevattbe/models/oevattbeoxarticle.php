@@ -52,13 +52,13 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
      *
      * @return string
      */
-    public function buildArticleSelect($aWhere = null)
+    private function _buildArticleSelect($aWhere = null)
     {
         $sSelect = "SELECT " . $this->getSelectFields();
         $sSelect .= " , `oevattbe_countryvatgroups`.`oevattbe_rate` ";
         $sSelect .= " FROM " . $this->getViewName();
         $sSelect .= " LEFT JOIN `oevattbe_articlevat` ON `".$this->getViewName()."`.`oxid` = `oevattbe_articlevat`.`oevattbe_articleid` ";
-        $sSelect .= " AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($this->_getTbeCountryId());
+        $sSelect .= " AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($this->getUser()->getTbeCountryId());
         $sSelect .= " LEFT JOIN `oevattbe_countryvatgroups` ON `oevattbe_articlevat`.`oevattbe_VATGROUPID` = `oevattbe_countryvatgroups`.`oevattbe_id` ";
         $sSelect .= " WHERE 1 ";
 
@@ -94,16 +94,12 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
      */
     protected function _loadFromDb($sOxId)
     {
-        $sTbeCountry = $this->_getTbeCountryId();
-
-        if (!is_null($sTbeCountry)) {
+        if ($this->_isForeignUser()) {
             if (oxRegistry::getConfig()->getEdition() == 'EE') {
                 $blCoreTableUsage = $this->getForceCoreTableUsage();
                 $this->_forceCoreTableUsageForSharedBasket();
             }
-
-            $sSelect = $this->buildArticleSelect(array($this->getViewName() . ".oxid" => $sOxId));
-
+            $sSelect = $this->_buildArticleSelect(array($this->getViewName() . ".oxid" => $sOxId));
             if (oxRegistry::getConfig()->getEdition() == 'EE') {
                 $this->setForceCoreTableUsage($blCoreTableUsage);
             }
@@ -115,24 +111,21 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
         return $aData;
     }
 
-
     /**
      * Returns users tbe country
      *
-     * @return string
+     * @return bool
      */
-    private function _getTbeCountryId()
+    private function _isForeignUser()
     {
-        $sCountryId = null;
+        $blResult = false;
         $oUser = $this->getUser();
-
         if ($oUser) {
-            $sCountryId = $oUser->getTbeCountryId();
+            $blResult = !$oUser->isLocalUser();
         }
 
-        return $sCountryId;
+        return $blResult;
     }
-
 
     /**
      * Sets forcing of core table usage for creating table view name when shared basket is enabled.
