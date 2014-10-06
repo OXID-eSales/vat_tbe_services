@@ -261,8 +261,9 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleListTest extends OxidTestCase
      */
     protected function _getArticleList()
     {
-        $oUser = $this->getMock("oxUser", array("getTbeCountryId"));
+        $oUser = $this->getMock("oxUser", array("getTbeCountryId", 'isLocalUser'));
         $oUser->expects($this->any())->method("getTbeCountryId")->will($this->returnValue('a7c40f631fc920687.20179984'));
+        $oUser->expects($this->any())->method("isLocalUser")->will($this->returnValue(false));
 
         $oArticleList = oxNew("oxArticleList");
         $oArticle = $oArticleList->getBaseObject();

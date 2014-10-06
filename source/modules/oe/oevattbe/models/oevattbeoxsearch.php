@@ -37,9 +37,7 @@ class oeVATTBEOxSearch extends oeVATTBEOxSearch_parent
      */
     protected function _getSearchSelect($sSearchParamForQuery = false, $sInitialSearchCat = false, $sInitialSearchVendor = false, $sInitialSearchManufacturer = false, $sSortBy = false)
     {
-        $sTbeCountry = $this->_getTbeCountryId();
-
-        if (!is_null($sTbeCountry)) {
+        if ($this->_isForeignUser()) {
             $oDb = oxDb::getDb();
 
             // performance
@@ -108,7 +106,7 @@ class oeVATTBEOxSearch extends oeVATTBEOxSearch_parent
             }
 
             $sDescJoin .= " LEFT JOIN `oevattbe_articlevat` ON `" . $sArticleTable . "`.`oxid` = `oevattbe_articlevat`.`oevattbe_articleid` ";
-            $sDescJoin .= "       AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($this->_getTbeCountryId());
+            $sDescJoin .= "       AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($this->getUser()->getTbeCountryId());
             $sDescJoin .= " LEFT JOIN `oevattbe_countryvatgroups` ON `oevattbe_articlevat`.`oevattbe_vatgroupid` = `oevattbe_countryvatgroups`.`oevattbe_id` ";
 
             //select articles
@@ -157,17 +155,16 @@ class oeVATTBEOxSearch extends oeVATTBEOxSearch_parent
     /**
      * Returns users tbe country
      *
-     * @return string
+     * @return bool
      */
-    private function _getTbeCountryId()
+    private function _isForeignUser()
     {
-        $sCountryId = null;
+        $blResult = false;
         $oUser = $this->getUser();
-
         if ($oUser) {
-            $sCountryId = $oUser->getTbeCountryId();
+            $blResult = !$oUser->isLocalUser();
         }
 
-        return $sCountryId;
+        return $blResult;
     }
 }
