@@ -28,6 +28,7 @@ class Unit_oeVATTBE_Models_Evidences_oeVATTBEEvidenceListTest extends OxidTestCa
 {
     public function testAddingToList()
     {
+        /** @var oeVATTBEEvidence|PHPUnit_Framework_MockObject_MockObject $oEvidence */
         $oEvidence = $this->getMock('oeVATTBEEvidence', array(), array(), '', false);
 
         $oList = new oeVATTBEEvidenceList();
@@ -48,5 +49,45 @@ class Unit_oeVATTBE_Models_Evidences_oeVATTBEEvidenceListTest extends OxidTestCa
         $this->setExpectedException('Exception');
 
         $oList->add(1);
+    }
+
+    public function testFormationOfArray()
+    {
+        $oBillingEvidence = $this->_createEvidence('billing_country', 'GermanyId');
+        $oGeoEvidence = $this->_createEvidence('geo_location', 'LithuaniaId');
+
+        $oList = new oeVATTBEEvidenceList(array($oBillingEvidence, $oGeoEvidence));
+
+        $aExpectedArray = array(
+            'billing_country' => array(
+                'name' => 'billing_country',
+                'countryId' => 'GermanyId'
+            ),
+            'geo_location' => array(
+                'name' => 'geo_location',
+                'countryId' => 'LithuaniaId'
+            ),
+        );
+
+        $this->assertEquals($aExpectedArray, $oList->getArray());
+    }
+
+
+    /**
+     * Creates evidence object with given name and country.
+     *
+     * @param string $sName
+     * @param string $sCountry
+     *
+     * @return oeVATTBEEvidence
+     */
+    protected function _createEvidence($sName, $sCountry)
+    {
+        /** @var oeVATTBEEvidence|PHPUnit_Framework_MockObject_MockObject $oUser */
+        $oEvidence = $this->getMock('oeVATTBEEvidence', array('getName', 'getCountryId'), array(), '', false);
+        $oEvidence->expects($this->any())->method('getName')->will($this->returnValue($sName));
+        $oEvidence->expects($this->any())->method('getCountryId')->will($this->returnValue($sCountry));
+
+        return $oEvidence;
     }
 }

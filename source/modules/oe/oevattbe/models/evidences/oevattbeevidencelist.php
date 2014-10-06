@@ -42,4 +42,25 @@ class oeVATTBEEvidenceList extends oeVATTBEList
 
         parent::add($oItem);
     }
+
+    /**
+     * Returns evidences in form of array.
+     *
+     * @return array
+     */
+    public function getArray()
+    {
+        $aItems = parent::getArray();
+
+        $aEvidences = array();
+        foreach ($aItems as $oEvidence) {
+            /** @var oeVATTBEEvidence $oEvidence */
+            $aEvidences[$oEvidence->getName()] = array(
+                'name' => $oEvidence->getName(),
+                'countryId' => $oEvidence->getCountryId()
+            );
+        }
+
+        return $aEvidences;
+    }
 }
