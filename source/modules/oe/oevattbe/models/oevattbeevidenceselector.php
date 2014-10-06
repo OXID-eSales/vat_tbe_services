@@ -46,12 +46,12 @@ class oeVATTBEEvidenceSelector
     /**
      * Checks all evidences and provides the one that should be used in VAT calculations.
      *
-     * @return string
+     * @return oeVATTBEEvidence
      */
     public function getEvidence()
     {
         $oConfig = $this->_getConfig();
-        $sDefaultEvidence = $oConfig->getConfigParam('sDefaultTBEEvidence');
+        $sDefaultEvidenceName = $oConfig->getConfigParam('sDefaultTBEEvidence');
 
         $oEvidenceList = $this->_getEvidenceList();
 
@@ -59,7 +59,7 @@ class oeVATTBEEvidenceSelector
         $oDefaultEvidence = null;
         foreach ($oEvidenceList as $oEvidence) {
             /** @var oeVATTBEEvidence $oEvidence */
-            if ($sDefaultEvidence == $oEvidence->getName()) {
+            if ($sDefaultEvidenceName == $oEvidence->getName()) {
                 $oDefaultEvidence = $oEvidence;
             }
             if (!$oFirstNonEmptyEvidence && $oEvidence->getCountryId()) {
@@ -67,7 +67,7 @@ class oeVATTBEEvidenceSelector
             }
         }
 
-        return $oDefaultEvidence ? $oDefaultEvidence : $oFirstNonEmptyEvidence;
+        return $oDefaultEvidence->getCountryId() ? $oDefaultEvidence : $oFirstNonEmptyEvidence;
     }
 
     /**

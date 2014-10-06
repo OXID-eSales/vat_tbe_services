@@ -69,7 +69,7 @@ class Unit_oeVATTBE_Models_oeVATTBEEvidenceSelectorTest extends OxidTestCase
 
         $oCalculator = new oeVATTBEEvidenceSelector($oEvidenceList, $oConfig);
 
-        $this->assertEquals($oBillingEvidence, $oCalculator->getEvidence());
+        $this->assertSame($oBillingEvidence, $oCalculator->getEvidence());
     }
 
     public function testGetCountryWhenDefaultAndFirstEvidenceEmpty()
@@ -84,7 +84,7 @@ class Unit_oeVATTBE_Models_oeVATTBEEvidenceSelectorTest extends OxidTestCase
 
         $oCalculator = new oeVATTBEEvidenceSelector($oEvidenceList, $oConfig);
 
-        $this->assertEquals($oGeoLocationEvidence, $oCalculator->getEvidence());
+        $this->assertSame($oGeoLocationEvidence, $oCalculator->getEvidence());
     }
 
     public function testIsEvidencesContradictingWhenEvidencesDoNotMatch()
@@ -95,7 +95,7 @@ class Unit_oeVATTBE_Models_oeVATTBEEvidenceSelectorTest extends OxidTestCase
 
         $oCalculator = new oeVATTBEEvidenceSelector($oEvidenceList, $this->getConfig());
 
-        $this->assertEquals(false, $oCalculator->isEvidencesContradicting());
+        $this->assertSame(false, $oCalculator->isEvidencesContradicting());
     }
 
     public function testIsEvidencesContradictingWhenEvidencesMatch()
@@ -106,7 +106,7 @@ class Unit_oeVATTBE_Models_oeVATTBEEvidenceSelectorTest extends OxidTestCase
 
         $oCalculator = new oeVATTBEEvidenceSelector($oEvidenceList, $this->getConfig());
 
-        $this->assertEquals(true, $oCalculator->isEvidencesContradicting());
+        $this->assertSame(true, $oCalculator->isEvidencesContradicting());
     }
 
     /**
