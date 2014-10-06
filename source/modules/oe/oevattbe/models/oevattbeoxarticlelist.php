@@ -406,6 +406,7 @@ class oeVatTbeOxArticleList extends oeVatTbeOxArticleList_parent
                     $this->loadActionArticles('oxnewest', $iLimit);
                     break;
                 case 2:
+
                     $sArticleTable = getViewName('oxarticles');
                     if ($myConfig->getConfigParam('blNewArtByInsert')) {
                         $sType = 'oxinsert';
@@ -425,6 +426,7 @@ class oeVatTbeOxArticleList extends oeVatTbeOxArticleList_parent
                     $sSelect .= "limit " . $iLimit;
 
                     $this->selectString($sSelect);
+
                     break;
             }
         } else {
