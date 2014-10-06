@@ -93,4 +93,12 @@ class Unit_oeVATTBE_Models_oeVATTBEListTest extends OxidTestCase
 
         $this->assertEquals(array(1, 2, 1, 2), $aElements);
     }
+
+    public function testReturningArray()
+    {
+        $oList = new oeVATTBEList(array(1,2));
+        $oList->add(3);
+
+        $this->assertEquals(array(1, 2, 3), $oList->getArray());
+    }
 }

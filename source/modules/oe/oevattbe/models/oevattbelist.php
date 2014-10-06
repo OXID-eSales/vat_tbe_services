@@ -49,6 +49,16 @@ class oeVATTBEList implements Iterator, Countable
     }
 
     /**
+     * Returns all items in list in form of array.
+     *
+     * @return array
+     */
+    public function getArray()
+    {
+        return $this->_aItems;
+    }
+
+    /**
      * Return the current element
      *
      * @return mixed Can return any type.
