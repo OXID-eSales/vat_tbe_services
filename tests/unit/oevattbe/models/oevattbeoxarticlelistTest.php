@@ -226,6 +226,26 @@ class Unit_oeVatTbe_models_oeVatTbeOxArticleListTest extends OxidTestCase
     }
 
     /**
+     * Category list test case
+     */
+    public function testloadRecommArticles()
+    {
+        $oObject2list = oxNew("oxbase");
+        $oObject2list->init("oxobject2list");
+        $oObject2list->oxobject2list__oxobjectid = new oxField('1126');
+        $oObject2list->oxobject2list__oxlistid = new oxField('list');
+        $oObject2list->save();
+
+        $oArticleList = $this->_getArticleList();
+        $oArticleList->loadRecommArticles('list');
+
+        /** @var oxArticle $oArticle */
+        $oArticle = $oArticleList['1126'];
+
+        $this->assertSame('8.00', $oArticle->getTbeVat());
+    }
+
+    /**
      * prepare data
      */
     protected function _prepareData()

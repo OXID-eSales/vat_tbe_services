@@ -500,10 +500,10 @@ class oeVatTbeOxArticleList extends oeVatTbeOxArticleList_parent
             $sSelect = "select distinct $sArticleTable.*, oxobject2list.oxdesc ";
             $sSelect .= " , `oevattbe_countryvatgroups`.`oevattbe_rate` ";
             $sSelect .= " from oxobject2list ";
+            $sSelect .= "left join $sArticleTable on oxobject2list.oxobjectid = $sArticleTable.oxid ";
             $sSelect .= " LEFT JOIN `oevattbe_articlevat` ON `" . $sArticleTable . "`.`oxid` = `oevattbe_articlevat`.`oevattbe_articleid` ";
             $sSelect .= "       AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($this->_getTbeCountryId());
             $sSelect .= " LEFT JOIN `oevattbe_countryvatgroups` ON `oevattbe_articlevat`.`oevattbe_vatgroupid` = `oevattbe_countryvatgroups`.`oevattbe_id` ";
-            $sSelect .= "left join $sArticleTable on oxobject2list.oxobjectid = $sArticleTable.oxid ";
             $sSelect .= "where (oxobject2list.oxlistid = $sRecommId) " . $sArticlesFilter;
 
             return $sSelect;
