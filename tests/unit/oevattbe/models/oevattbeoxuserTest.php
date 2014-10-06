@@ -36,4 +36,30 @@ class Unit_oeVatTbe_models_oeVATTBEOxUserTest extends OxidTestCase
 
         $this->assertEquals('GermanyId', $oUser->getTbeCountryId());
     }
+
+    public function testIdentificationIfUserIsLocalWhenUserIsLocal()
+    {
+        $oConfig = $this->getConfig();
+        $oConfig->setConfigParam('TBECountryEvidences', array('oeVATTBEBillingCountryEvidence'));
+        $oConfig->setConfigParam('sDefaultTBEEvidence', 'billing_country');
+        $oConfig->setConfigParam('aHomeCountry', array('LithuaniaId', 'GermanyId'));
+
+        $oUser = oxNew('oeVATTBEOxUser');
+        $oUser->oxuser__oxcountryid = new oxField('GermanyId');
+
+        $this->assertEquals(true, $oUser->isLocalUser());
+    }
+
+    public function testIdentificationIfUserIsLocalWhenUserIsNotLocal()
+    {
+        $oConfig = $this->getConfig();
+        $oConfig->setConfigParam('TBECountryEvidences', array('oeVATTBEBillingCountryEvidence'));
+        $oConfig->setConfigParam('sDefaultTBEEvidence', 'billing_country');
+        $oConfig->setConfigParam('aHomeCountry', array('LithuaniaId', 'FranceId'));
+
+        $oUser = oxNew('oeVATTBEOxUser');
+        $oUser->oxuser__oxcountryid = new oxField('GermanyId');
+
+        $this->assertEquals(false, $oUser->isLocalUser());
+    }
 }
