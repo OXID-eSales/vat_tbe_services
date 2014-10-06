@@ -50,18 +50,18 @@ class oeVATTBEEvidenceCollector
      *
      * @return oeVATTBEEvidenceList
      */
-    public function getEvidences()
+    public function getEvidenceList()
     {
         $oConfig = $this->_getConfig();
         $oUser = $this->_getUser();
         $aEvidences = (array) $oConfig->getConfigParam('TBECountryEvidences');
 
-        $oList = new oeVATTBEEvidenceList();
+        $oList = oxNew('oeVATTBEEvidenceList');
 
         foreach ($aEvidences as $sEvidenceClass) {
             if (class_exists($sEvidenceClass)) {
                 /** @var oeVATTBEEvidence $oEvidence */
-                $oEvidence = new $sEvidenceClass($oUser);
+                $oEvidence = oxNew($sEvidenceClass, $oUser);
                 $oList->add($oEvidence);
             }
         }

@@ -44,6 +44,16 @@ class oeVATTBEEvidenceSelector
     }
 
     /**
+     * Returns evidence list.
+     *
+     * @return oeVATTBEEvidenceList
+     */
+    public function getEvidenceList()
+    {
+        return $this->_oEvidenceList;
+    }
+
+    /**
      * Checks all evidences and provides the one that should be used in VAT calculations.
      *
      * @return oeVATTBEEvidence
@@ -53,7 +63,7 @@ class oeVATTBEEvidenceSelector
         $oConfig = $this->_getConfig();
         $sDefaultEvidenceName = $oConfig->getConfigParam('sDefaultTBEEvidence');
 
-        $oEvidenceList = $this->_getEvidenceList();
+        $oEvidenceList = $this->getEvidenceList();
 
         $oFirstNonEmptyEvidence = null;
         $oDefaultEvidence = null;
@@ -77,7 +87,7 @@ class oeVATTBEEvidenceSelector
      */
     public function isEvidencesContradicting()
     {
-        $aEvidences = $this->_getEvidenceList();
+        $aEvidences = $this->getEvidenceList();
 
         $aUniqueCountries = array();
         foreach ($aEvidences as $oEvidence) {
@@ -86,16 +96,6 @@ class oeVATTBEEvidenceSelector
         }
 
         return (count($aUniqueCountries) === 1) ? false : true;
-    }
-
-    /**
-     * Returns evidence list.
-     *
-     * @return oeVATTBEEvidenceList
-     */
-    protected function _getEvidenceList()
-    {
-        return $this->_oEvidenceList;
     }
 
     /**

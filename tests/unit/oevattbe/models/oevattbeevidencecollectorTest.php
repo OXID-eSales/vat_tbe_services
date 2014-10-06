@@ -40,7 +40,7 @@ class Unit_oeVATTBE_Models_oeVATTBEEvidenceCollectorTest extends OxidTestCase
         $oEvidenceList->add($oExpectedEvidence);
 
         $oCollector = new oeVATTBEEvidenceCollector($oUser, $oConfig);
-        $this->assertEquals($oEvidenceList, $oCollector->getEvidences());
+        $this->assertEquals($oEvidenceList, $oCollector->getEvidenceList());
     }
 
     public function testGetEvidencesWhenNoEvidenceSet()
@@ -54,7 +54,7 @@ class Unit_oeVATTBE_Models_oeVATTBEEvidenceCollectorTest extends OxidTestCase
         $oEvidenceList = new oeVATTBEEvidenceList();
 
         $oCollector = new oeVATTBEEvidenceCollector($oUser, $oConfig);
-        $this->assertEquals($oEvidenceList, $oCollector->getEvidences());
+        $this->assertEquals($oEvidenceList, $oCollector->getEvidenceList());
     }
 
     public function testGetEvidencesWhenNoEvidenceDoesNotExists()
@@ -68,6 +68,6 @@ class Unit_oeVATTBE_Models_oeVATTBEEvidenceCollectorTest extends OxidTestCase
         $oEvidenceList = new oeVATTBEEvidenceList();
 
         $oCollector = new oeVATTBEEvidenceCollector($oUser, $oConfig);
-        $this->assertEquals($oEvidenceList, $oCollector->getEvidences());
+        $this->assertEquals($oEvidenceList, $oCollector->getEvidenceList());
     }
 }
