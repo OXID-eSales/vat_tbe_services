@@ -53,6 +53,7 @@ $aModule = array(
         'oeVATTBEEvidenceList'             => 'oe/oevattbe/models/evidences/oevattbeevidencelist.php',
         'oeVATTBEList'                     => 'oe/oevattbe/models/oevattbelist.php',
         'oeVatTbeEvents'                   => 'oe/oevattbe/core/oevattbeevents.php',
+        'oeVATTBETBEUser'                  => 'oe/oevattbe/models/oevattbetbeuser.php',
     ),
     'events'       => array(
         'onActivate'   => 'oeVatTbeEvents::onActivate',

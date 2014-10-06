@@ -31,34 +31,12 @@ class oeVATTBEOxUser extends oeVatTbeOxUser_parent
      */
     public function getTbeCountryId()
     {
-        $oSession = oxRegistry::getSession();
-        $sTBECountryId = $oSession->getVariable('TBECountryId');
-        if (!$sTBECountryId) {
-            $oFactorySelector = $this->_factoryEvidenceSelector();
-            $oSession->setVariable('TBEEvidenceList', $oFactorySelector->getEvidenceList()->getArray());
+        $oSession = $this->getSession();
+        $oConfig = $this->getConfig();
 
-            $oEvidence = $oFactorySelector->getEvidence();
-            $sTBECountryId = $oEvidence->getCountryId();
-            $oSession->setVariable('TBECountryId', $sTBECountryId);
-            $oSession->setVariable('TBEEvidenceUsed', $oEvidence->getName());
-        }
+        /** @var oeVATTBETBEUser $oTBEUser */
+        $oTBEUser = oxNew('oeVATTBETBEUser', $this, $oSession, $oConfig);
 
-        return $sTBECountryId;
-    }
-
-    /**
-     * Forms evidence selector object.
-     *
-     * @return oeVATTBEEvidenceSelector
-     */
-    private function _factoryEvidenceSelector()
-    {
-        $oConfig = oxRegistry::getConfig();
-
-        $oEvidenceCollector = oxNew('oeVATTBEEvidenceCollector', $this, $oConfig);
-        $oEvidenceList = $oEvidenceCollector->getEvidenceList();
-        $oEvidenceSelector = oxNew('oeVATTBEEvidenceSelector', $oEvidenceList, $oConfig);
-
-        return $oEvidenceSelector;
+        return $oTBEUser->getTbeCountryId();
     }
 }
