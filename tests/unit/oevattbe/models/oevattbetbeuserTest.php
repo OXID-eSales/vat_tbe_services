@@ -21,7 +21,7 @@
 
 
 /**
- * Testing extended oxArticle class.
+ * Testing TBEUser class.
  */
 class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
 {
