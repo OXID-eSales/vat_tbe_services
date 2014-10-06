@@ -22,7 +22,7 @@
 /**
  * VAT TBE oxArticle class
  */
-class oeVatTbeOxArticleList extends oeVatTbeOxArticleList_parent
+class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
 {
     /**
      * Creates SQL Statement to load Articles, etc.

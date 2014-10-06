@@ -23,7 +23,7 @@
 /**
  * Testing extended oxArticle class.
  */
-class Unit_oeVatTbe_models_oeVatTbeOxSearchTest extends OxidTestCase
+class Unit_oeVATTBE_models_oeVATTBEOxSearchTest extends OxidTestCase
 {
     /**
      * Initialize the fixture.
@@ -33,8 +33,9 @@ class Unit_oeVatTbe_models_oeVatTbeOxSearchTest extends OxidTestCase
         $this->_prepareData();
     }
 
-
-
+    /**
+     * Search article list test
+     */
     public function testGetSearchArticles()
     {
         $oUser = $this->getMock("oxUser", array("getTbeCountryId"));
@@ -48,7 +49,7 @@ class Unit_oeVatTbe_models_oeVatTbeOxSearchTest extends OxidTestCase
         /** @var oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertSame('8.00', $oArticle->getTbeVat());
+        $this->assertSame('8.00', $oArticle->getTBEVat());
     }
 
 

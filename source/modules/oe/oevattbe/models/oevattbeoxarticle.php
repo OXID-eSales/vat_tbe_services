@@ -22,14 +22,14 @@
 /**
  * VAT TBE oxArticle class
  */
-class oeVatTbeOxArticle extends oeVatTbeOxArticle_parent
+class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
 {
     /**
      * Article TBE vat
      *
      * @return string
      */
-    public function getTbeVat()
+    public function getTBEVat()
     {
         return $this->oxarticles__oevattbe_rate->value;
     }
@@ -39,7 +39,7 @@ class oeVatTbeOxArticle extends oeVatTbeOxArticle_parent
      *
      * @return string
      */
-    public function isTbeService()
+    public function isTBEService()
     {
         return $this->oxarticles__oevattbe_istbeservice->value;
     }
@@ -55,11 +55,11 @@ class oeVatTbeOxArticle extends oeVatTbeOxArticle_parent
     public function buildArticleSelect($aWhere = null)
     {
         $sSelect = "SELECT " . $this->getSelectFields();
-        $sSelect .= " , `oevattbe_countryvatgroups`.`OEVATTBE_RATE` ";
+        $sSelect .= " , `oevattbe_countryvatgroups`.`oevattbe_rate` ";
         $sSelect .= " FROM " . $this->getViewName();
-        $sSelect .= " LEFT JOIN `oevattbe_articlevat` ON `".$this->getViewName()."`.`oxid` = `oevattbe_articlevat`.`OEVATTBE_ARTICLEID` ";
-        $sSelect .= " AND `oevattbe_articlevat`.`OEVATTBE_COUNTRYID` = " . oxDb::getDb()->quote($this->_getTbeCountryId());
-        $sSelect .= " LEFT JOIN `oevattbe_countryvatgroups` ON `oevattbe_articlevat`.`OEVATTBE_VATGROUPID` = `oevattbe_countryvatgroups`.`OEVATTBE_ID` ";
+        $sSelect .= " LEFT JOIN `oevattbe_articlevat` ON `".$this->getViewName()."`.`oxid` = `oevattbe_articlevat`.`oevattbe_articleid` ";
+        $sSelect .= " AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($this->_getTbeCountryId());
+        $sSelect .= " LEFT JOIN `oevattbe_countryvatgroups` ON `oevattbe_articlevat`.`oevattbe_VATGROUPID` = `oevattbe_countryvatgroups`.`oevattbe_id` ";
         $sSelect .= " WHERE 1 ";
 
         if ($aWhere) {

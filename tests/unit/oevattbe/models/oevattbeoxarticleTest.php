@@ -23,7 +23,7 @@
 /**
  * Testing extended oxArticle class.
  */
-class Unit_oeVatTbe_models_oeVatTbeOxArticleTest extends OxidTestCase
+class Unit_oeVATTBE_models_oeVATTBEOxArticleTest extends OxidTestCase
 {
     /**
      * Test for vat tbe getter
@@ -32,7 +32,17 @@ class Unit_oeVatTbe_models_oeVatTbeOxArticleTest extends OxidTestCase
     {
         $oArticle = oxNew('oxArticle');
         $oArticle->oxarticles__oevattbe_rate = new oxField(9);
-        $this->assertSame(9, $oArticle->getTbeVat());
+        $this->assertSame(9, $oArticle->getTBEVat());
+    }
+
+    /**
+     * Test for is tbe service
+     */
+    public function testIsTbeService()
+    {
+        $oArticle = oxNew('oxArticle');
+        $oArticle->oxarticles__oevattbe_istbeservice = new oxField(false);
+        $this->assertFalse($oArticle->isTbeService());
     }
 
     /**
@@ -50,7 +60,7 @@ class Unit_oeVatTbe_models_oeVatTbeOxArticleTest extends OxidTestCase
 
         $oArticle->load('1126');
 
-        $this->assertSame('8.00', $oArticle->getTbeVat());
+        $this->assertSame('8.00', $oArticle->getTBEVat());
     }
 
     /**
@@ -68,7 +78,7 @@ class Unit_oeVatTbe_models_oeVatTbeOxArticleTest extends OxidTestCase
 
         $oArticle->load('1126');
 
-        $this->assertNull($oArticle->getTbeVat());
+        $this->assertNull($oArticle->getTBEVat());
     }
 
 
@@ -91,4 +101,3 @@ class Unit_oeVatTbe_models_oeVatTbeOxArticleTest extends OxidTestCase
         $oDb->execute($sql);
     }
 }
-

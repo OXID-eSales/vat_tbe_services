@@ -23,7 +23,7 @@
 /**
  * Testing extended oxArticle class.
  */
-class Unit_oeVatTbe_models_oeVatTbeOxArticleListTest extends OxidTestCase
+class Unit_oeVATTBE_models_oeVATTBEOxArticleListTest extends OxidTestCase
 {
     /**
      * Initialize the fixture.
@@ -31,14 +31,6 @@ class Unit_oeVatTbe_models_oeVatTbeOxArticleListTest extends OxidTestCase
     protected function setUp()
     {
         $this->_prepareData();
-    }
-
-    /**
-     * Tear down the fixture.
-     */
-    protected function tearDown()
-    {
-
     }
 
     /**
@@ -52,7 +44,7 @@ class Unit_oeVatTbe_models_oeVatTbeOxArticleListTest extends OxidTestCase
         /** @var oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertSame('8.00', $oArticle->getTbeVat());
+        $this->assertSame('8.00', $oArticle->getTBEVat());
     }
 
     /**
@@ -71,7 +63,7 @@ class Unit_oeVatTbe_models_oeVatTbeOxArticleListTest extends OxidTestCase
         /** @var oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertSame('8.00', $oArticle->getTbeVat());
+        $this->assertSame('8.00', $oArticle->getTBEVat());
     }
 
     /**
@@ -90,7 +82,7 @@ class Unit_oeVatTbe_models_oeVatTbeOxArticleListTest extends OxidTestCase
         /** @var oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertSame('8.00', $oArticle->getTbeVat());
+        $this->assertSame('8.00', $oArticle->getTBEVat());
     }
 
     /**
@@ -109,7 +101,7 @@ class Unit_oeVatTbe_models_oeVatTbeOxArticleListTest extends OxidTestCase
         /** @var oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertSame('8.00', $oArticle->getTbeVat());
+        $this->assertSame('8.00', $oArticle->getTBEVat());
     }
 
     /**
@@ -123,12 +115,11 @@ class Unit_oeVatTbe_models_oeVatTbeOxArticleListTest extends OxidTestCase
         /** @var oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertSame('8.00', $oArticle->getTbeVat());
+        $this->assertSame('8.00', $oArticle->getTBEVat());
     }
 
-
     /**
-     * Category list test case
+     * Action list test case
      */
     public function testActionList()
     {
@@ -144,11 +135,11 @@ class Unit_oeVatTbe_models_oeVatTbeOxArticleListTest extends OxidTestCase
         /** @var oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertSame('8.00', $oArticle->getTbeVat());
+        $this->assertSame('8.00', $oArticle->getTBEVat());
     }
 
     /**
-     * Category list test case
+     * Newest list test case
      */
     public function testNewestList()
     {
@@ -166,11 +157,11 @@ class Unit_oeVatTbe_models_oeVatTbeOxArticleListTest extends OxidTestCase
         /** @var oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertSame('8.00', $oArticle->getTbeVat());
+        $this->assertSame('8.00', $oArticle->getTBEVat());
     }
 
     /**
-     * Category list test case
+     * Top 5 list test case
      */
     public function testTop5Articles()
     {
@@ -187,12 +178,11 @@ class Unit_oeVatTbe_models_oeVatTbeOxArticleListTest extends OxidTestCase
         /** @var oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertSame('8.00', $oArticle->getTbeVat());
+        $this->assertSame('8.00', $oArticle->getTBEVat());
     }
 
-
     /**
-     * Category list test case
+     * Cross selling list test case
      */
     public function testArticleCrossSell()
     {
@@ -202,11 +192,11 @@ class Unit_oeVatTbe_models_oeVatTbeOxArticleListTest extends OxidTestCase
         /** @var oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertSame('8.00', $oArticle->getTbeVat());
+        $this->assertSame('8.00', $oArticle->getTBEVat());
     }
 
     /**
-     * Category list test case
+     * Article accessoires list test case
      */
     public function testArticleAccessoires()
     {
@@ -222,11 +212,11 @@ class Unit_oeVatTbe_models_oeVatTbeOxArticleListTest extends OxidTestCase
         /** @var oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertSame('8.00', $oArticle->getTbeVat());
+        $this->assertSame('8.00', $oArticle->getTBEVat());
     }
 
     /**
-     * Category list test case
+     * Recommendation list test case
      */
     public function testloadRecommArticles()
     {
@@ -242,7 +232,7 @@ class Unit_oeVatTbe_models_oeVatTbeOxArticleListTest extends OxidTestCase
         /** @var oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertSame('8.00', $oArticle->getTbeVat());
+        $this->assertSame('8.00', $oArticle->getTBEVat());
     }
 
     /**
@@ -263,8 +253,6 @@ class Unit_oeVatTbe_models_oeVatTbeOxArticleListTest extends OxidTestCase
 
         $oDb->execute($sql);
     }
-
-
 
     /**
      * Prepare article list object for testing

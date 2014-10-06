@@ -22,7 +22,7 @@
 /**
  * VAT TBE oxArticle class
  */
-class oeVatTbeOxSearch extends oeVatTbeOxSearch_parent
+class oeVATTBEOxSearch extends oeVATTBEOxSearch_parent
 {
     /**
      * Returns the appropriate SQL select for a search according to search parameters
