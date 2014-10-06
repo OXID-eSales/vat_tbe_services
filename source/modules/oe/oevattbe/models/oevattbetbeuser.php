@@ -61,10 +61,16 @@ class oeVATTBETBEUser
             $oFactorySelector = $this->_factoryEvidenceSelector();
             $oSession->setVariable('TBEEvidenceList', $oFactorySelector->getEvidenceList()->getArray());
 
+            $sTBECountryId = '';
+            $sEvidenceUser = '';
+
             $oEvidence = $oFactorySelector->getEvidence();
-            $sTBECountryId = $oEvidence->getCountryId();
+            if ($oEvidence) {
+                $sTBECountryId = $oEvidence->getCountryId();
+                $sEvidenceUser = $oEvidence->getName();
+            }
             $oSession->setVariable('TBECountryId', $sTBECountryId);
-            $oSession->setVariable('TBEEvidenceUsed', $oEvidence->getName());
+            $oSession->setVariable('TBEEvidenceUsed', $sEvidenceUser);
         }
 
         return $sTBECountryId;

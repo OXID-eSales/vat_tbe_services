@@ -40,6 +40,19 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
         $this->assertEquals('GermanyId', $oTBEUser->getTbeCountryId());
     }
 
+    public function testTBECountryIdWhenNoEvidenceIsSet()
+    {
+        $oConfig = $this->getConfig();
+        $oSession = $this->getSession();
+        $oConfig->setConfigParam('TBECountryEvidences', array());
+        $oConfig->setConfigParam('sDefaultTBEEvidence', '');
+
+        $oUser = oxNew('oxUser');
+        $oTBEUser = oxNew('oeVATTBETBEUser', $oUser, $oSession, $oConfig);
+
+        $this->assertEquals('', $oTBEUser->getTbeCountryId());
+    }
+
     public function testInformationAddedToSession()
     {
         $oConfig = $this->getConfig();

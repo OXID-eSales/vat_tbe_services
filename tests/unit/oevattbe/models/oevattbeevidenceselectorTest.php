@@ -87,6 +87,15 @@ class Unit_oeVATTBE_Models_oeVATTBEEvidenceSelectorTest extends OxidTestCase
         $this->assertSame($oGeoLocationEvidence, $oCalculator->getEvidence());
     }
 
+    public function testGetCountryWithEmptyList()
+    {
+        $oConfig = $this->getConfig();
+        $oEvidenceList = new oeVATTBEEvidenceList();
+        $oCalculator = new oeVATTBEEvidenceSelector($oEvidenceList, $oConfig);
+
+        $this->assertSame(null, $oCalculator->getEvidence());
+    }
+
     public function testIsEvidencesContradictingWhenEvidencesDoNotMatch()
     {
         $oBillingEvidence = $this->_createEvidence('billing_address', 'Germany');
