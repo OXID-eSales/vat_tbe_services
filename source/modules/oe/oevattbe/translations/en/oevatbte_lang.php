@@ -23,6 +23,6 @@
 // RESOURCE IDENTIFIER = STRING
 // -------------------------------
 $aLang = array(
-    'charset'                                    => 'ISO-8859-15',
-
+    'charset'        => 'ISO-8859-15',
+    'PLUS_SHIPPING2' => '[tr]shipping ** TBE VAT'
 );

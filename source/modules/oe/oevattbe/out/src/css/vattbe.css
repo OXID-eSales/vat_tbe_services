@@ -1,4 +1,3 @@
-<?php
 /**
  * This file is part of OXID eSales VAT TBE module.
  *
@@ -19,11 +18,20 @@
  * @copyright (C) OXID eSales AG 2003-2014
  */
 
-// -------------------------------
-// RESOURCE IDENTIFIER = STRING
-// -------------------------------
-$aLang = array(
-    'charset'        => 'ISO-8859-15',
-    'PLUS_SHIPPING2' => '[tr]Versandkosten ** TBE VAT'
+.lineView .functions label.price {
+    margin-right: 0px;
+}
+.lineView .functions label.tbePrice {
+    margin-left: 0px;
+}
 
-);
+.tobasketFunction label.price {
+    margin-right: 5px;
+}
+.tobasketFunction label.tbePrice {
+    margin-right: 10px;
+}
+
+.specBoxInfo .tbePrice {
+    padding-left: 5px;
+}

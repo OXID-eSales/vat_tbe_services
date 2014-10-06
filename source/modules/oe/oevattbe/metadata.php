@@ -62,6 +62,14 @@ $aModule = array(
     'templates' => array(
     ),
     'blocks' => array(
+        array('template' => 'layout/base.tpl', 'block'=>'base_style', 'file'=>'/views/blocks/layout/base.tpl'),
+        array('template' => 'page/details/inc/productmain.tpl', 'block'=>'details_productmain_price_value', 'file'=>'/views/blocks/page/details/inc/productmain.tpl'),
+        array('template' => 'widget/product/listitem_grid.tpl', 'block'=>'widget_product_listitem_grid_price_value', 'file'=>'/views/blocks/widget/product/listitem_grid.tpl'),
+        array('template' => 'widget/product/listitem_infogrid.tpl', 'block'=>'widget_product_listitem_infogrid_price_value', 'file'=>'/views/blocks/widget/product/listitem_infogrid.tpl'),
+        array('template' => 'widget/product/listitem_line.tpl', 'block'=>'widget_product_listitem_line_price_value', 'file'=>'/views/blocks/widget/product/listitem_line.tpl'),
+        array('template' => 'widget/product/boxproduct.tpl', 'block'=>'widget_product_boxproduct_price_value', 'file'=>'/views/blocks/widget/product/boxproduct.tpl'),
+        array('template' => 'widget/product/bargainitem.tpl', 'block'=>'widget_product_bargainitem_price_value', 'file'=>'/views/blocks/widget/product/bargainitem.tpl'),
+        array('template' => 'widget/product/compareitem.tpl', 'block'=>'widget_product_compareitem_price_value', 'file'=>'/views/blocks/widget/product/compareitem.tpl'),
     ),
     'settings' => array(
     )
