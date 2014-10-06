@@ -35,13 +35,13 @@ class oeVATTBEEvidenceCollector
     /**
      * Handles required dependencies.
      *
-     * @param oxConfig $oConfig
      * @param oxUser   $oUser
+     * @param oxConfig $oConfig
      */
-    public function __construct($oConfig, $oUser)
+    public function __construct($oUser, $oConfig)
     {
-        $this->_oConfig = $oConfig;
         $this->_oUser = $oUser;
+        $this->_oConfig = $oConfig;
     }
 
     /**
