@@ -56,6 +56,26 @@ class Unit_oeVATTBE_models_oeVATTBEOxSearchTest extends OxidTestCase
     /**
      * Search article list test
      */
+    public function testGetSearchArticlesUserFromLocalCountry()
+    {
+        $oUser = $this->getMock("oxUser", array("getTbeCountryId", 'isLocalUser'));
+        $oUser->expects($this->any())->method("getTbeCountryId")->will($this->returnValue('a7c40f631fc920687.20179984'));
+        $oUser->expects($this->any())->method("isLocalUser")->will($this->returnValue(true));
+
+        $oSearch = oxNew("oxSearch");
+        $oSearch->setUser($oUser);
+
+        $oArticleList = $oSearch->getSearchArticles('ABSINTH');
+
+        /** @var oxArticle $oArticle */
+        $oArticle = $oArticleList['1126'];
+
+        $this->assertNull($oArticle->getTBEVat());
+    }
+
+    /**
+     * Search article list test
+     */
     public function testGetSearchArticlesUserNotLogged()
     {
         $oSearch = oxNew("oxSearch");
