@@ -74,5 +74,8 @@ $aModule = array(
         array('template' => 'widget/product/compareitem.tpl', 'block'=>'widget_product_compareitem_price_value', 'file'=>'/views/blocks/widget/product/compareitem.tpl'),
     ),
     'settings' => array(
+        array('group' => 'oevattbe', 'name' => 'blOeVATTBECountryEvidences',      'type' => 'arr',   'value' => array('oeVATTBEBillingCountryEvidence', 'oeVATTBEGeoLocationEvidence')),
+        array('group' => 'oevattbe', 'name' => 'sOeVATTBEDefaultEvidence',        'type' => 'str',   'value' => 'billing_country'),
+
     )
 );
