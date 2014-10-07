@@ -53,6 +53,20 @@ class Unit_oeVATTBE_models_oeVATTBEOxSearchTest extends OxidTestCase
         $this->assertSame('8.00', $oArticle->getTBEVat());
     }
 
+    /**
+     * Search article list test
+     */
+    public function testGetSearchArticlesUserNotLogged()
+    {
+        $oSearch = oxNew("oxSearch");
+
+        $oArticleList = $oSearch->getSearchArticles('ABSINTH');
+
+        /** @var oxArticle $oArticle */
+        $oArticle = $oArticleList['1126'];
+
+        $this->assertNull($oArticle->getTBEVat());
+    }
 
     /**
      * prepare data

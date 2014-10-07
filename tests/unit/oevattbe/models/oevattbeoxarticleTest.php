@@ -67,7 +67,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleTest extends OxidTestCase
     /**
      * Test case for loading article
      */
-    public function testLoadArticleNoTbeCountry()
+    public function testLoadArticleUserIsFromLocalCountry()
     {
         $this->_prepareData();
 
@@ -77,6 +77,19 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleTest extends OxidTestCase
         $oArticle = oxNew('oxArticle');
         $oArticle->setUser($oUser);
 
+        $oArticle->load('1126');
+
+        $this->assertNull($oArticle->getTBEVat());
+    }
+
+    /**
+     * Test case for loading article
+     */
+    public function testLoadArticleUserNotLoggedIn()
+    {
+        $this->_prepareData();
+
+        $oArticle = oxNew('oxArticle');
         $oArticle->load('1126');
 
         $this->assertNull($oArticle->getTBEVat());
