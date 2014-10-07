@@ -42,8 +42,9 @@ $aModule = array(
     'extend'       => array(
         'oxarticle'         => 'oe/oevattbe/models/oevattbeoxarticle',
         'oxarticlelist'     => 'oe/oevattbe/models/oevattbeoxarticlelist',
-        'oxuser'         => 'oe/oevattbe/models/oevattbeoxuser',
-        'oxsearch'         => 'oe/oevattbe/models/oevattbeoxsearch',
+        'oxuser'            => 'oe/oevattbe/models/oevattbeoxuser',
+        'oxsearch'          => 'oe/oevattbe/models/oevattbeoxsearch',
+        'oxvatselector'     => 'oe/oevattbe/models/oevattbeoxvatselector',
     ),
     'files' => array(
         'oeVATTBEEvidenceSelector'         => 'oe/oevattbe/models/oevattbeevidenceselector.php',
