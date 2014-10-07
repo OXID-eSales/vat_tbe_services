@@ -22,7 +22,7 @@
 /**
  * VAT TBE oxUser class
  */
-class oeVATTBEOxOrder extends oeVatTbeOxOrder_parent
+class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
 {
     /**
      * Validates order parameters like stock, delivery and payment
@@ -35,12 +35,17 @@ class oeVATTBEOxOrder extends oeVatTbeOxOrder_parent
      */
     public function validateOrder($oBasket, $oUser)
     {
-        $iValidState = parent::validateOrder($oBasket, $oUser);
+        $iValidState = $this->_getValidateOrderParent($oBasket, $oUser);
 
-        if ($oUser->getTBECountryId() && ($oBasket->getTBECountryId() != $oUser->getTBECountryId())) {
+        if (!$iValidState && $oUser->getTBECountryId() && ($oBasket->getTBECountryId() != $oUser->getTBECountryId())) {
             $iValidState = oxOrder::ORDER_STATE_INVALIDDElADDRESSCHANGED;
         }
 
         return $iValidState;
+    }
+
+    protected function _getValidateOrderParent($oBasket, $oUser)
+    {
+        return parent::validateOrder($oBasket, $oUser);
     }
 }
