@@ -314,6 +314,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleListTest extends OxidTestCase
 
         $oDb->execute("TRUNCATE TABLE oevattbe_countryvatgroups");
         $oDb->execute("TRUNCATE TABLE oevattbe_articlevat");
+        $oDb->execute("DELETE FROM  `oxobject2category` WHERE `OXID`='c3944abfcb65b13a3.66180278'");
 
         $sql = "INSERT INTO oevattbe_countryvatgroups SET OEVATTBE_ID = 1, OEVATTBE_COUNTRYID = 'a7c40f631fc920687.20179984', OEVATTBE_NAME='name', OEVATTBE_RATE='8'";
 
@@ -321,6 +322,10 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleListTest extends OxidTestCase
 
         $sql = "INSERT INTO oevattbe_articlevat SET OEVATTBE_ARTICLEID = '1126', OEVATTBE_COUNTRYID = 'a7c40f631fc920687.20179984', OEVATTBE_VATGROUPID = '1'";
 
+        $oDb->execute($sql);
+
+        $sql = "INSERT INTO `oxobject2category` (`OXID`, `OXOBJECTID`, `OXCATNID`, `OXPOS`, `OXTIME`) VALUES
+        ('c3944abfcb65b13a3.66180278', '1126', '30e44ab8593023055.23928895', 0, 1152122038)";
         $oDb->execute($sql);
     }
 
