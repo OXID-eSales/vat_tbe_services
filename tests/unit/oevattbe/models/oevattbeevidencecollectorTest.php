@@ -46,7 +46,7 @@ class Unit_oeVATTBE_Models_oeVATTBEEvidenceCollectorTest extends OxidTestCase
     public function testGetEvidencesWhenNoEvidenceSet()
     {
         $oConfig = $this->getConfig();
-        $oConfig->setConfigParam('blOeVATTBECountryEvidences', null);
+        $oConfig->setConfigParam('blOeVATTBECountryEvidences', array());
 
         /** @var oxUser|PHPUnit_Framework_MockObject_MockObject $oUser */
         $oUser = $this->getMock('oxUser', array(), array(), '', false);
