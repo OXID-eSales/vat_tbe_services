@@ -39,8 +39,8 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
     {
         $oConfig = $this->getConfig();
         $oSession = $this->getSession();
-        $oConfig->setConfigParam('TBECountryEvidences', array('oeVATTBEBillingCountryEvidence'));
-        $oConfig->setConfigParam('sDefaultTBEEvidence', 'billing_country');
+        $oConfig->setConfigParam('blOeVATTBECountryEvidences', array('oeVATTBEBillingCountryEvidence'));
+        $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
 
         $oUser = oxNew('oxUser');
         $oUser->oxuser__oxcountryid = new oxField('GermanyId');
@@ -54,8 +54,8 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
     {
         $oConfig = $this->getConfig();
         $oSession = $this->getSession();
-        $oConfig->setConfigParam('TBECountryEvidences', array());
-        $oConfig->setConfigParam('sDefaultTBEEvidence', '');
+        $oConfig->setConfigParam('blOeVATTBECountryEvidences', array());
+        $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', '');
 
         $oUser = oxNew('oxUser');
         $oTBEUser = oxNew('oeVATTBETBEUser', $oUser, $oSession, $oConfig);
@@ -67,8 +67,8 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
     {
         $oConfig = $this->getConfig();
         $oSession = $this->getSession();
-        $oConfig->setConfigParam('TBECountryEvidences', array('oeVATTBEBillingCountryEvidence'));
-        $oConfig->setConfigParam('sDefaultTBEEvidence', 'billing_country');
+        $oConfig->setConfigParam('blOeVATTBECountryEvidences', array('oeVATTBEBillingCountryEvidence'));
+        $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
 
         $oUser = oxNew('oxUser');
         $oUser->oxuser__oxcountryid = new oxField('GermanyId');
@@ -93,8 +93,8 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
     {
         $oConfig = $this->getConfig();
         $oSession = $this->getSession();
-        $oConfig->setConfigParam('TBECountryEvidences', array('oeVATTBEBillingCountryEvidence'));
-        $oConfig->setConfigParam('sDefaultTBEEvidence', 'billing_country');
+        $oConfig->setConfigParam('blOeVATTBECountryEvidences', array('oeVATTBEBillingCountryEvidence'));
+        $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
 
 
         $oUser = oxNew('oxUser');

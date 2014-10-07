@@ -30,7 +30,7 @@ class Unit_oeVATTBE_Models_oeVATTBEEvidenceCollectorTest extends OxidTestCase
     public function testGetEvidencesWhenEvidencesExists()
     {
         $oConfig = $this->getConfig();
-        $oConfig->setConfigParam('TBECountryEvidences', array('oeVATTBEBillingCountryEvidence'));
+        $oConfig->setConfigParam('blOeVATTBECountryEvidences', array('oeVATTBEBillingCountryEvidence'));
 
         /** @var oxUser|PHPUnit_Framework_MockObject_MockObject $oUser */
         $oUser = $this->getMock('oxUser', array(), array(), '', false);
@@ -46,7 +46,7 @@ class Unit_oeVATTBE_Models_oeVATTBEEvidenceCollectorTest extends OxidTestCase
     public function testGetEvidencesWhenNoEvidenceSet()
     {
         $oConfig = $this->getConfig();
-        $oConfig->setConfigParam('TBECountryEvidences', null);
+        $oConfig->setConfigParam('blOeVATTBECountryEvidences', null);
 
         /** @var oxUser|PHPUnit_Framework_MockObject_MockObject $oUser */
         $oUser = $this->getMock('oxUser', array(), array(), '', false);
@@ -60,7 +60,7 @@ class Unit_oeVATTBE_Models_oeVATTBEEvidenceCollectorTest extends OxidTestCase
     public function testGetEvidencesWhenNoEvidenceDoesNotExists()
     {
         $oConfig = $this->getConfig();
-        $oConfig->setConfigParam('TBECountryEvidences', array('NonExistingEvidenceClass'));
+        $oConfig->setConfigParam('blOeVATTBECountryEvidences', array('NonExistingEvidenceClass'));
 
         /** @var oxUser|PHPUnit_Framework_MockObject_MockObject $oUser */
         $oUser = $this->getMock('oxUser', array(), array(), '', false);

@@ -28,8 +28,8 @@ class Unit_oeVatTbe_models_oeVATTBEOxUserTest extends OxidTestCase
     public function testTBECountryIdSelecting()
     {
         $oConfig = $this->getConfig();
-        $oConfig->setConfigParam('TBECountryEvidences', array('oeVATTBEBillingCountryEvidence'));
-        $oConfig->setConfigParam('sDefaultTBEEvidence', 'billing_country');
+        $oConfig->setConfigParam('blOeVATTBECountryEvidences', array('oeVATTBEBillingCountryEvidence'));
+        $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
 
         $oUser = oxNew('oeVATTBEOxUser');
         $oUser->oxuser__oxcountryid = new oxField('GermanyId');
@@ -40,8 +40,8 @@ class Unit_oeVatTbe_models_oeVATTBEOxUserTest extends OxidTestCase
     public function testIdentificationIfUserIsLocalWhenUserIsLocal()
     {
         $oConfig = $this->getConfig();
-        $oConfig->setConfigParam('TBECountryEvidences', array('oeVATTBEBillingCountryEvidence'));
-        $oConfig->setConfigParam('sDefaultTBEEvidence', 'billing_country');
+        $oConfig->setConfigParam('blOeVATTBECountryEvidences', array('oeVATTBEBillingCountryEvidence'));
+        $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
         $oConfig->setConfigParam('aHomeCountry', array('LithuaniaId', 'GermanyId'));
 
         $oUser = oxNew('oeVATTBEOxUser');
@@ -53,8 +53,8 @@ class Unit_oeVatTbe_models_oeVATTBEOxUserTest extends OxidTestCase
     public function testIdentificationIfUserIsLocalWhenUserIsNotLocal()
     {
         $oConfig = $this->getConfig();
-        $oConfig->setConfigParam('TBECountryEvidences', array('oeVATTBEBillingCountryEvidence'));
-        $oConfig->setConfigParam('sDefaultTBEEvidence', 'billing_country');
+        $oConfig->setConfigParam('blOeVATTBECountryEvidences', array('oeVATTBEBillingCountryEvidence'));
+        $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
         $oConfig->setConfigParam('aHomeCountry', array('LithuaniaId', 'FranceId'));
 
         $oUser = oxNew('oeVATTBEOxUser');

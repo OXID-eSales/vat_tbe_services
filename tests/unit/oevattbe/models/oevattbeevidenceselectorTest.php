@@ -50,7 +50,7 @@ class Unit_oeVATTBE_Models_oeVATTBEEvidenceSelectorTest extends OxidTestCase
     public function testGetCountryWhenBothEvidenceDoNotMatchDefaultTaken($oEvidenceList, $sDefaultEvidence, $sExpectedEvidence)
     {
         $oConfig = $this->getConfig();
-        $oConfig->setConfigParam('sDefaultTBEEvidence', $sDefaultEvidence);
+        $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', $sDefaultEvidence);
 
         $oCalculator = new oeVATTBEEvidenceSelector($oEvidenceList, $oConfig);
 
@@ -60,7 +60,7 @@ class Unit_oeVATTBE_Models_oeVATTBEEvidenceSelectorTest extends OxidTestCase
     public function testGetCountryWhenDefaultEvidenceEmpty()
     {
         $oConfig = $this->getConfig();
-        $oConfig->setConfigParam('sDefaultTBEEvidence', 'default_evidence');
+        $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'default_evidence');
 
         $oBillingEvidence = $this->_createEvidence('billing_address', 'Germany');
         $oGeoLocationEvidence = $this->_createEvidence('geo_location', 'Lithuania');
@@ -75,7 +75,7 @@ class Unit_oeVATTBE_Models_oeVATTBEEvidenceSelectorTest extends OxidTestCase
     public function testGetCountryWhenDefaultAndFirstEvidenceEmpty()
     {
         $oConfig = $this->getConfig();
-        $oConfig->setConfigParam('sDefaultTBEEvidence', 'default_evidence');
+        $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'default_evidence');
 
         $oBillingEvidence = $this->_createEvidence('billing_address', '');
         $oGeoLocationEvidence = $this->_createEvidence('geo_location', 'Lithuania');

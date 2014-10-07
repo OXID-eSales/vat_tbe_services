@@ -61,7 +61,7 @@ class oeVATTBEEvidenceSelector
     public function getEvidence()
     {
         $oConfig = $this->_getConfig();
-        $sDefaultEvidenceName = $oConfig->getConfigParam('sDefaultTBEEvidence');
+        $sDefaultEvidenceName = $oConfig->getConfigParam('sOeVATTBEDefaultEvidence');
 
         $oEvidenceList = $this->getEvidenceList();
 
