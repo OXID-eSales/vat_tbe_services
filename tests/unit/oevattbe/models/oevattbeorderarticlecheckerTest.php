@@ -25,17 +25,11 @@
  */
 class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends OxidTestCase
 {
-
-    public function testCheckingArticlesWhenIncorrectArticlesExists()
+    public function testCheckingArticlesWithEmptyList()
     {
-        $oArticleWithoutVAT = $this->_createArticle(false, null);
-        $oTBEArticleWithoutVAT = $this->_createArticle(true, null);
+        $oChecker = oxNew('oeVATTBEOrderArticleChecker', array());
 
-        $aArticles = array($oArticleWithoutVAT, $oTBEArticleWithoutVAT);
-
-        $oChecker = oxNew('oeVATTBEOrderArticleChecker', $aArticles);
-
-        $this->assertSame(false, $oChecker->checkArticles());
+        $this->assertSame(true, $oChecker->isValid());
     }
 
     public function testCheckingArticlesWhenCorrectArticlesExists()
@@ -48,7 +42,38 @@ class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends OxidTestCase
 
         $oChecker = oxNew('oeVATTBEOrderArticleChecker', $aArticles);
 
-        $this->assertSame(true, $oChecker->checkArticles());
+        $this->assertSame(true, $oChecker->isValid());
+    }
+
+    public function testCheckingArticlesWhenIncorrectArticlesExists()
+    {
+        $oArticleWithoutVAT = $this->_createArticle(false, null);
+        $oTBEArticleWithoutVAT = $this->_createArticle(true, null);
+
+        $aArticles = array($oArticleWithoutVAT, $oTBEArticleWithoutVAT);
+
+        $oChecker = oxNew('oeVATTBEOrderArticleChecker', $aArticles);
+
+        $this->assertSame(false, $oChecker->isValid());
+
+        return $oChecker;
+    }
+
+    public function testReturningInvalidArticlesWhenIncorrectArticlesExists()
+    {
+        $oArticleWithoutVAT = $this->_createArticle(false, null);
+        $oTBEArticleWithoutVAT1 = $this->_createArticle(true, null);
+        $oTBEArticleWithoutVAT2 = $this->_createArticle(true, null);
+
+        $aArticles = array($oArticleWithoutVAT, $oTBEArticleWithoutVAT1, $oTBEArticleWithoutVAT2);
+
+        $oChecker = oxNew('oeVATTBEOrderArticleChecker', $aArticles);
+
+        $aIncorrectArticles = array($oTBEArticleWithoutVAT1, $oTBEArticleWithoutVAT2);
+
+        $oChecker->isValid();
+
+        $this->assertSame($aIncorrectArticles, $oChecker->getInvalidArticles());
     }
 
     protected function _createArticle($blTBEService, $iVat)
