@@ -24,6 +24,9 @@
  */
 class oeVATTBEOxUser extends oeVatTbeOxUser_parent
 {
+    /** @var oeVATTBETBEUser */
+    private $_oTBEUser = null;
+
     /**
      * Returns users TBE country
      *
@@ -31,12 +34,7 @@ class oeVATTBEOxUser extends oeVatTbeOxUser_parent
      */
     public function getTbeCountryId()
     {
-        $oSession = $this->getSession();
-        $oConfig = $this->getConfig();
-
-        /** @var oeVATTBETBEUser $oTBEUser */
-        $oTBEUser = oxNew('oeVATTBETBEUser', $this, $oSession, $oConfig);
-
+        $oTBEUser = $this->_getTBEUser();
         return $oTBEUser->getTbeCountryId();
     }
 
@@ -46,11 +44,7 @@ class oeVATTBEOxUser extends oeVatTbeOxUser_parent
      */
     public function unsetTbeCountryFromCaching()
     {
-        $oSession = $this->getSession();
-        $oConfig = $this->getConfig();
-
-        /** @var oeVATTBETBEUser $oTBEUser */
-        $oTBEUser = oxNew('oeVATTBETBEUser', $this, $oSession, $oConfig);
+        $oTBEUser = $this->_getTBEUser();
         $oTBEUser->unsetTbeCountryFromCaching();
     }
 
@@ -61,13 +55,25 @@ class oeVATTBEOxUser extends oeVatTbeOxUser_parent
      */
     public function isLocalUser()
     {
-        $oSession = $this->getSession();
-        $oConfig = $this->getConfig();
-
-        /** @var oeVATTBETBEUser $oTBEUser */
-        $oTBEUser = oxNew('oeVATTBETBEUser', $this, $oSession, $oConfig);
-
+        $oTBEUser = $this->_getTBEUser();
         return $oTBEUser->isLocalUser();
+    }
+
+    /**
+     * Returns TBE User object.
+     *
+     * @return oeVATTBETBEUser
+     */
+    protected function _getTBEUser()
+    {
+        if (!$this->_oTBEUser) {
+            $oSession = $this->getSession();
+            $oConfig = $this->getConfig();
+
+            $this->_oTBEUser = oxNew('oeVATTBETBEUser', $this, $oSession, $oConfig);
+        }
+
+        return $this->_oTBEUser;
     }
 
     /**
