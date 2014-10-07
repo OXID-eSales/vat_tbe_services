@@ -37,8 +37,9 @@ class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends OxidTestCase
         $oArticleWithoutVAT = $this->_createArticle(false, null);
         $oArticleWithVAT = $this->_createArticle(false, 15);
         $oTBEArticleWithVAT = $this->_createArticle(true, 15);
+        $oTBEArticleWithZeroVAT = $this->_createArticle(true, 0);
 
-        $aArticles = array($oArticleWithoutVAT, $oArticleWithVAT, $oTBEArticleWithVAT);
+        $aArticles = array($oArticleWithoutVAT, $oArticleWithVAT, $oTBEArticleWithVAT, $oTBEArticleWithZeroVAT);
 
         $oChecker = oxNew('oeVATTBEOrderArticleChecker', $aArticles);
 
