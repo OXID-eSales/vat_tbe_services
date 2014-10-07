@@ -96,4 +96,13 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
 
         $this->assertEquals('GermanyId', $oTBEUser->getTbeCountryId());
     }
+
+    /**
+     *
+     */
+    public function testUnsetCountryCaching()
+    {
+        $oTBEUser->unsetTbeCountryFromCaching();
+        $this->assertEquals('LithuaniaId', $oTBEUser->getTbeCountryId());
+    }
 }

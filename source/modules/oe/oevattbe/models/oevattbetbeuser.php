@@ -77,6 +77,16 @@ class oeVATTBETBEUser
     }
 
     /**
+     * Unset TBE country from caching to force recalculation on next get.
+     */
+    public function unsetTbeCountryFromCaching()
+    {
+        $oSession = $this->_getSession();
+        $oSession->deleteVariable('TBECountryId');
+        $oSession->deleteVariable('TBEEvidenceUsed');
+    }
+
+    /**
      * Returns user object.
      *
      * @return oxUser

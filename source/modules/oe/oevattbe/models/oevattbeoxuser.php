@@ -41,6 +41,20 @@ class oeVATTBEOxUser extends oeVatTbeOxUser_parent
     }
 
     /**
+     * Unset TBE country from caching to force recalculation on next get.
+     * Wrapper for oeVATTBETBEUser::unsetTbeCountryFromCaching
+     */
+    public function unsetTbeCountryFromCaching()
+    {
+        $oSession = $this->getSession();
+        $oConfig = $this->getConfig();
+
+        /** @var oeVATTBETBEUser $oTBEUser */
+        $oTBEUser = oxNew('oeVATTBETBEUser', $this, $oSession, $oConfig);
+        $oTBEUser->unsetTbeCountryFromCaching();
+    }
+
+    /**
      * Checks if user country matches shop country.
      *
      * @return bool
