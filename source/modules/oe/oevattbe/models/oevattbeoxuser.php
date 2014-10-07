@@ -69,4 +69,46 @@ class oeVATTBEOxUser extends oeVatTbeOxUser_parent
 
         return $oTBEUser->isLocalUser();
     }
+
+    /**
+     * Performs user login by username and password. Fetches user data from DB.
+     * Registers in session. Returns true on success, FALSE otherwise.
+     *
+     * @param string $sUser     User username
+     * @param string $sPassword User password
+     * @param bool   $blCookie  (default false)
+     *
+     * @throws object
+     * @throws oxCookieException
+     * @throws oxUserException
+     *
+     * @return bool
+     */
+    public function login($sUser, $sPassword, $blCookie = false)
+    {
+        $this->unsetTbeCountryFromCaching();
+        return parent::login($sUser, $sPassword, $blCookie);
+    }
+
+    /**
+     * Logs out session user. Returns true on success
+     *
+     * @return bool
+     */
+    public function logout()
+    {
+        $this->unsetTbeCountryFromCaching();
+        return parent::logout();
+    }
+
+    /**
+     * Saves (updates) user object data information in DB. Return true on success.
+     *
+     * @return bool
+     */
+    public function save()
+    {
+        $this->unsetTbeCountryFromCaching();
+        return parent::save();
+    }
 }
