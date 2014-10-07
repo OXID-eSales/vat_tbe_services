@@ -45,6 +45,8 @@ $aModule = array(
         'oxuser'            => 'oe/oevattbe/models/oevattbeoxuser',
         'oxsearch'          => 'oe/oevattbe/models/oevattbeoxsearch',
         'oxvatselector'     => 'oe/oevattbe/models/oevattbeoxvatselector',
+        'oxbasket'          => 'oe/oevattbe/models/oevattbeoxbasket',
+        'oxcmp_basket'      => 'oe/oevattbe/components/oevattbeoxcmp_basket',
     ),
     'files' => array(
         'oeVATTBEEvidenceSelector'         => 'oe/oevattbe/models/oevattbeevidenceselector.php',
