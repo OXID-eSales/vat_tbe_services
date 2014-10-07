@@ -87,6 +87,19 @@ class oeVATTBETBEUser
     }
 
     /**
+     * Checks if user country matches shop country.
+     *
+     * @return bool
+     */
+    public function isLocalUser()
+    {
+        $sTBECountry = $this->getTbeCountryId();
+        $aHomeCountries = (array) $this->_getConfig()->getConfigParam('aHomeCountry');
+
+        return in_array($sTBECountry, $aHomeCountries);
+    }
+
+    /**
      * Returns user object.
      *
      * @return oxUser

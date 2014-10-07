@@ -61,9 +61,12 @@ class oeVATTBEOxUser extends oeVatTbeOxUser_parent
      */
     public function isLocalUser()
     {
-        $sTBECountry = $this->getTbeCountryId();
-        $aHomeCountries = (array) $this->getConfig()->getConfigParam('aHomeCountry');
+        $oSession = $this->getSession();
+        $oConfig = $this->getConfig();
 
-        return in_array($sTBECountry, $aHomeCountries);
+        /** @var oeVATTBETBEUser $oTBEUser */
+        $oTBEUser = oxNew('oeVATTBETBEUser', $this, $oSession, $oConfig);
+
+        return $oTBEUser->isLocalUser();
     }
 }
