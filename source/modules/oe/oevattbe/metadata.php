@@ -47,6 +47,7 @@ $aModule = array(
         'oxvatselector'     => 'oe/oevattbe/models/oevattbeoxvatselector',
         'oxbasket'          => 'oe/oevattbe/models/oevattbeoxbasket',
         'oxcmp_basket'      => 'oe/oevattbe/components/oevattbeoxcmp_basket',
+        'oxorder'      => 'oe/oevattbe/components/oevattbeoxorder',
     ),
     'files' => array(
         'oeVATTBEEvidenceSelector'         => 'oe/oevattbe/models/oevattbeevidenceselector.php',

@@ -20,32 +20,27 @@
  */
 
 /**
- * VAT TBE oxBasket class
+ * VAT TBE oxUser class
  */
-class oeVATTBEOxCmp_Basket extends oeVatTbeOxCmp_Basket_parent
+class oeVATTBEOxOrder extends oeVatTbeOxOrder_parent
 {
     /**
-     * Loads basket ($oBasket = $mySession->getBasket()), calls oBasket->calculateBasket,
-     * executes parent::render() and returns basket object.
+     * Validates order parameters like stock, delivery and payment
+     * parameters
      *
-     * @return object   $oBasket    basket object
+     * @param oxbasket $oBasket basket object
+     * @param oxuser   $oUser   order user
+     *
+     * @return null
      */
-    public function render()
+    public function validateOrder($oBasket, $oUser)
     {
-        if ($oBasket = $this->getSession()->getBasket()) {
-            $oUser = $this->getUser();
-            if ($oUser) {
-                if (is_null($oBasket->getTbeCountryId() || $oBasket->getTbeCountryId() != $oUser->getTbeCountryId())) {
-                    $oBasket->setTBECountryId($oUser->getTbeCountryId());
-                    $oBasket->calculateBasket(true);
-                }
-            } else {
-                $oBasket->calculateBasket(false);
-            }
+        $iValidState = parent::validateOrder($oBasket, $oUser);
+
+        if ($oUser->getTBECountryId() && ($oBasket->getTBECountryId() != $oUser->getTBECountryId())) {
+            $iValidState = oxOrder::ORDER_STATE_INVALIDDElADDRESSCHANGED;
         }
 
-        parent::render();
-
-        return $oBasket;
+        return $iValidState;
     }
 }
