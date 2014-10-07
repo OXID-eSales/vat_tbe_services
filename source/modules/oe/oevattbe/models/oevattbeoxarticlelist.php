@@ -172,7 +172,6 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
             $sSelect = parent::_getPriceSelect($dPriceFrom, $dPriceTo);
         }
 
-
         return $sSelect;
     }
 
@@ -508,7 +507,7 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
 
             return $sSelect;
         } else {
-            parent::_getArticleSelect($sRecommId, $sArticlesFilter);
+            return parent::_getArticleSelect($sRecommId, $sArticlesFilter);
         }
 
     }
@@ -521,11 +520,28 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
     private function _isForeignUser()
     {
         $blResult = false;
-        $oUser = $this->getUser();
+        $oUser = $this->getBaseObject()->getUser();
         if ($oUser) {
             $blResult = !$oUser->isLocalUser();
         }
 
         return $blResult;
+    }
+
+    /**
+     * Returns users tbe country
+     *
+     * @return string
+     */
+    private function _getTbeCountryId()
+    {
+        $sCountryId = null;
+        $oUser = $this->getBaseObject()->getUser();
+
+        if ($oUser) {
+            $sCountryId = $oUser->getTbeCountryId();
+        }
+
+        return $sCountryId;
     }
 }
