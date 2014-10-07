@@ -59,6 +59,7 @@ $aModule = array(
         'oeVATTBEList'                     => 'oe/oevattbe/models/oevattbelist.php',
         'oeVatTbeEvents'                   => 'oe/oevattbe/core/oevattbeevents.php',
         'oeVATTBETBEUser'                  => 'oe/oevattbe/models/oevattbetbeuser.php',
+        'oeVATTBEOrderArticleChecker'      => 'oe/oevattbe/models/oevattbeorderarticlechecker.php',
     ),
     'events'       => array(
         'onActivate'   => 'oeVatTbeEvents::onActivate',
