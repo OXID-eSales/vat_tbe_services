@@ -34,7 +34,7 @@ class oeVATTBEEvents
         self::_addCountryVatGroupTable();
         self::_addOrderEvidences();
         self::_addFields();
-
+        self::_regenerateViews();
         self::_addDemoData();
     }
 
@@ -125,6 +125,16 @@ class oeVATTBEEvents
             ) ENGINE=InnoDB;";
 
         oxDb::getDb()->execute($sSql);
+    }
+
+
+    /**
+     * regenerate views for changed tables
+     */
+    protected static function _regenerateViews()
+    {
+        $oDbMetaDataHandler = oxNew('oxDbMetaDataHandler');
+        $oDbMetaDataHandler->updateViews(array('oxarticles', 'oxorder', 'oxcountry'));
     }
 
     /**
