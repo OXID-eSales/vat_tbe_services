@@ -48,6 +48,8 @@ $aModule = array(
         'oxbasket'          => 'oe/oevattbe/models/oevattbeoxbasket',
         'oxcmp_basket'      => 'oe/oevattbe/components/oevattbeoxcmp_basket',
         'oxorder'           => 'oe/oevattbe/models/oevattbeoxorder',
+        'basket'            => 'oe/oevattbe/controllers/oevattbebasket',
+        'order'             => 'oe/oevattbe/controllers/oevattbeorder',
     ),
     'files' => array(
         'oeVATTBEEvidenceSelector'         => 'oe/oevattbe/models/oevattbeevidenceselector.php',
@@ -60,6 +62,8 @@ $aModule = array(
         'oeVatTbeEvents'                   => 'oe/oevattbe/core/oevattbeevents.php',
         'oeVATTBETBEUser'                  => 'oe/oevattbe/models/oevattbetbeuser.php',
         'oeVATTBEOrderArticleChecker'      => 'oe/oevattbe/models/oevattbeorderarticlechecker.php',
+        'oeVATTBEBasketItemsValidator'     => 'oe/oevattbe/services/oevattbebasketitemsvalidator.php',
+        'oeVATTBEArticleMessageFormatter'     => 'oe/oevattbe/models/oevattbearticlemessageformatter.php',
     ),
     'events'       => array(
         'onActivate'   => 'oeVatTbeEvents::onActivate',
