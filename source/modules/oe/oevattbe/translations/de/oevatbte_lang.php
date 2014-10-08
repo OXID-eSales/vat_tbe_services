@@ -23,7 +23,8 @@
 // RESOURCE IDENTIFIER = STRING
 // -------------------------------
 $aLang = array(
-    'charset'        => 'ISO-8859-15',
-    'PLUS_SHIPPING2' => '[tr]Versandkosten ** TBE VAT'
+    'charset'                                => 'ISO-8859-15',
+    'PLUS_SHIPPING2'                         => '[tr]Versandkosten ** TBE VAT',
+    'ERROR_MESSAGE_TBE_ARTICLE_VAT_PROBLEMS' => '[tr]Some articles can not be sold because of VAT problems in your country: %s',
 
 );
