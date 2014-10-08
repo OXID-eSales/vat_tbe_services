@@ -41,9 +41,10 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleListTest extends OxidTestCase
     public function userConfiguration()
     {
         return array(
-            array( 'local', null ),
+            //array( 'local', null ),
             array( 'notLoggedIn', null ),
-            array( 'notLocal', '8.00' )
+            array( 'loggedIn', '8.00' ),
+            array( 'loggedInWithoutCountry', null )
         );
     }
 
@@ -311,19 +312,13 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleListTest extends OxidTestCase
     protected function _prepareData()
     {
         $oDb = oxDb::getDb();
-
         $oDb->execute("TRUNCATE TABLE oevattbe_countryvatgroups");
         $oDb->execute("TRUNCATE TABLE oevattbe_articlevat");
         $oDb->execute("DELETE FROM  `oxobject2category` WHERE `OXID`='c3944abfcb65b13a3.66180278'");
-
         $sql = "INSERT INTO oevattbe_countryvatgroups SET OEVATTBE_ID = 1, OEVATTBE_COUNTRYID = 'a7c40f631fc920687.20179984', OEVATTBE_NAME='name', OEVATTBE_RATE='8'";
-
         $oDb->execute($sql);
-
         $sql = "INSERT INTO oevattbe_articlevat SET OEVATTBE_ARTICLEID = '1126', OEVATTBE_COUNTRYID = 'a7c40f631fc920687.20179984', OEVATTBE_VATGROUPID = '1'";
-
         $oDb->execute($sql);
-
         $sql = "INSERT INTO `oxobject2category` (`OXID`, `OXOBJECTID`, `OXCATNID`, `OXPOS`, `OXTIME`) VALUES
         ('c3944abfcb65b13a3.66180278', '1126', '30e44ab8593023055.23928895', 0, 1152122038)";
         $oDb->execute($sql);
@@ -336,15 +331,15 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleListTest extends OxidTestCase
      *
      * @return oxArticleList
      */
-    protected function _getArticleList($sUserStatus = 'notLocal')
+    protected function _getArticleList($sUserStatus = 'notLoggedIn')
     {
         $oArticleList = oxNew("oxArticleList");
         $oArticle = $oArticleList->getBaseObject();
 
         if ($sUserStatus != 'notLoggedIn') {
-            $oUser = $this->getMock("oxUser", array("getTbeCountryId", 'isLocalUser'));
-            $oUser->expects($this->any())->method("getTbeCountryId")->will($this->returnValue('a7c40f631fc920687.20179984'));
-            $oUser->expects($this->any())->method("isLocalUser")->will($this->returnValue(($sUserStatus=='local')));
+            $oUser = $this->getMock("oxUser", array("getTbeCountryId"));
+            $sCountryId = ($sUserStatus == 'loggedInWithoutCountry') ? null : 'a7c40f631fc920687.20179984';
+            $oUser->expects($this->any())->method("getTbeCountryId")->will($this->returnValue($sCountryId));
             $oArticle->setUser($oUser);
         }
 

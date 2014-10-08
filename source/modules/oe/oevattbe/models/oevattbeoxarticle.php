@@ -54,7 +54,7 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
      */
     public function buildSelectString($aWhere = null)
     {
-        if (!$this->_isForeignUser()) {
+        if (is_null($this->_getTbeCountryId())) {
             return parent::buildSelectString($aWhere);
         }
 
@@ -62,7 +62,7 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
         $sSelect .= " , `oevattbe_countryvatgroups`.`oevattbe_rate` ";
         $sSelect .= " FROM " . $this->getViewName();
         $sSelect .= " LEFT JOIN `oevattbe_articlevat` ON `".$this->getViewName()."`.`oxid` = `oevattbe_articlevat`.`oevattbe_articleid` ";
-        $sSelect .= " AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($this->getUser()->getTbeCountryId());
+        $sSelect .= " AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($this->_getTbeCountryId());
         $sSelect .= " LEFT JOIN `oevattbe_countryvatgroups` ON `oevattbe_articlevat`.`oevattbe_VATGROUPID` = `oevattbe_countryvatgroups`.`oevattbe_id` ";
         $sSelect .= " WHERE 1 ";
 
@@ -92,16 +92,17 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
     /**
      * Returns users tbe country
      *
-     * @return bool
+     * @return string
      */
-    private function _isForeignUser()
+    private function _getTbeCountryId()
     {
-        $blResult = false;
+        $sCountryId = null;
         $oUser = $this->getUser();
+
         if ($oUser) {
-            $blResult = !$oUser->isLocalUser();
+            $sCountryId = $oUser->getTbeCountryId();
         }
 
-        return $blResult;
+        return $sCountryId;
     }
 }

@@ -34,6 +34,8 @@ class oeVATTBEEvents
         self::_addCountryVatGroupTable();
         self::_addOrderEvidences();
         self::_addFields();
+
+        self::_addDemoData();
     }
 
     /**
@@ -123,5 +125,33 @@ class oeVATTBEEvents
             ) ENGINE=InnoDB;";
 
         oxDb::getDb()->execute($sSql);
+    }
+
+    /**
+     * insert demo data
+     */
+    protected static function _addDemoData()
+    {
+        $oDb = oxDb::getDb();
+        $oDb->execute("TRUNCATE TABLE oevattbe_countryvatgroups");
+        $oDb->execute("TRUNCATE TABLE oevattbe_articlevat");
+
+        $aSqls = array();
+        //de
+        $aSqls[] = "INSERT INTO oevattbe_countryvatgroups SET OEVATTBE_ID = 10, OEVATTBE_COUNTRYID = 'a7c40f631fc920687.20179984', OEVATTBE_NAME='name', OEVATTBE_RATE='20'";
+        $aSqls[] = "INSERT INTO oevattbe_countryvatgroups SET OEVATTBE_ID = 11, OEVATTBE_COUNTRYID = 'a7c40f631fc920687.20179984', OEVATTBE_NAME='name', OEVATTBE_RATE='25'";
+        //au
+        $aSqls[] = "INSERT INTO oevattbe_countryvatgroups SET OEVATTBE_ID = 20, OEVATTBE_COUNTRYID = 'a7c40f6320aeb2ec2.72885259', OEVATTBE_NAME='name', OEVATTBE_RATE='10'";
+        $aSqls[] = "INSERT INTO oevattbe_countryvatgroups SET OEVATTBE_ID = 21, OEVATTBE_COUNTRYID = 'a7c40f6320aeb2ec2.72885259', OEVATTBE_NAME='name', OEVATTBE_RATE='15'";
+
+        $aSqls[] = "INSERT INTO oevattbe_articlevat SET OEVATTBE_ARTICLEID = 'b56369b1fc9d7b97f9c5fc343b349ece', OEVATTBE_COUNTRYID = 'a7c40f631fc920687.20179984', OEVATTBE_VATGROUPID = '10'";
+        $aSqls[] = "INSERT INTO oevattbe_articlevat SET OEVATTBE_ARTICLEID = 'b56369b1fc9d7b97f9c5fc343b349ece', OEVATTBE_COUNTRYID = 'a7c40f6320aeb2ec2.72885259', OEVATTBE_VATGROUPID = '20'";
+
+        $aSqls[] = "INSERT INTO oevattbe_articlevat SET OEVATTBE_ARTICLEID = 'b56597806428de2f58b1c6c7d3e0e093', OEVATTBE_COUNTRYID = 'a7c40f631fc920687.20179984', OEVATTBE_VATGROUPID = '11'";
+        $aSqls[] = "INSERT INTO oevattbe_articlevat SET OEVATTBE_ARTICLEID = 'b56597806428de2f58b1c6c7d3e0e093', OEVATTBE_COUNTRYID = 'a7c40f6320aeb2ec2.72885259', OEVATTBE_VATGROUPID = '21'";
+
+        foreach ($aSqls as $sSql) {
+            $oDb->execute($sSql);
+        }
     }
 }

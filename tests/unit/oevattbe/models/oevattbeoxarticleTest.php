@@ -52,8 +52,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleTest extends OxidTestCase
     {
         $this->_prepareData();
 
-        $oUser = $this->getMock("oxUser", array("isLocalUser", "getTbeCountryId"));
-        $oUser->expects($this->any())->method("isLocalUser")->will($this->returnValue(false));
+        $oUser = $this->getMock("oxUser", array("getTbeCountryId"));
         $oUser->expects($this->any())->method("getTbeCountryId")->will($this->returnValue('a7c40f631fc920687.20179984'));
 
         $oArticle = oxNew('oxArticle');
@@ -71,8 +70,8 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleTest extends OxidTestCase
     {
         $this->_prepareData();
 
-        $oUser = $this->getMock("oxUser", array("isLocalUser"));
-        $oUser->expects($this->any())->method("isLocalUser")->will($this->returnValue(true));
+        $oUser = $this->getMock("oxUser", array("getTbeCountryId"));
+        $oUser->expects($this->any())->method("getTbeCountryId")->will($this->returnValue(null));
 
         $oArticle = oxNew('oxArticle');
         $oArticle->setUser($oUser);

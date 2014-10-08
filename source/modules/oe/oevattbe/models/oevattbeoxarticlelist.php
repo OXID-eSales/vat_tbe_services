@@ -35,7 +35,8 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
      */
     protected function _getCategorySelect($sFields, $sCatId, $aSessionFilter)
     {
-        if ($this->_isForeignUser()) {
+        if (!is_null($this->_getTbeCountryId())) {
+
             $sArticleTable = getViewName('oxarticles');
             $sO2CView = getViewName('oxobject2category');
 
@@ -65,9 +66,12 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
             $sSelect .= " LEFT JOIN `oevattbe_countryvatgroups` ON `oevattbe_articlevat`.`oevattbe_vatgroupid` = `oevattbe_countryvatgroups`.`oevattbe_id` ";
             $sSelect .= " WHERE " . $this->getBaseObject()->getSqlActiveSnippet() . " and $sArticleTable.oxparentid = ''";
             $sSelect .= " and oc.oxcatnid = " . $oDb->quote($sCatId) . " $sFilterSql ORDER BY $sSorting oc.oxpos, oc.oxobjectid ";
+
         } else {
             $sSelect = parent::_getCategorySelect($sFields, $sCatId, $aSessionFilter);
         }
+
+
 
         return $sSelect;
     }
@@ -81,7 +85,7 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
      */
     protected function _getVendorSelect($sVendorId)
     {
-        if ($this->_isForeignUser()) {
+        if (!is_null($this->_getTbeCountryId())) {
             $sArticleTable = getViewName('oxarticles');
             $oBaseObject = $this->getBaseObject();
             $sFieldNames = $oBaseObject->getSelectFields();
@@ -113,7 +117,7 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
      */
     protected function _getManufacturerSelect($sManufacturerId)
     {
-        if ($this->_isForeignUser()) {
+        if (!is_null($this->_getTbeCountryId())) {
             $sArticleTable = getViewName('oxarticles');
             $oBaseObject = $this->getBaseObject();
             $sFieldNames = $oBaseObject->getSelectFields();
@@ -146,7 +150,7 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
      */
     protected function _getPriceSelect($dPriceFrom, $dPriceTo)
     {
-        if ($this->_isForeignUser()) {
+        if (!is_null($this->_getTbeCountryId())) {
             $oBaseObject = $this->getBaseObject();
             $sArticleTable = $oBaseObject->getViewName();
             $sSelectFields = $oBaseObject->getSelectFields();
@@ -185,7 +189,7 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
      */
     public function loadTagArticles($sTag, $iLang)
     {
-        if ($this->_isForeignUser()) {
+        if (!is_null($this->_getTbeCountryId())) {
             $oListObject = $this->getBaseObject();
             $sArticleTable = $oListObject->getViewName();
             $sArticleFields = $oListObject->getSelectFields();
@@ -238,7 +242,7 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
      */
     public function loadActionArticles($sActionID, $iLimit = null)
     {
-        if ($this->_isForeignUser()) {
+        if (!is_null($this->_getTbeCountryId())) {
             // Performance
             if (!trim($sActionID)) {
                 return;
@@ -286,7 +290,7 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
      */
     public function loadArticleAccessoires($sArticleId)
     {
-        if ($this->_isForeignUser()) {
+        if (!is_null($this->_getTbeCountryId())) {
             $myConfig = $this->getConfig();
 
             // Performance
@@ -327,7 +331,7 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
      */
     public function loadArticleCrossSell($sArticleId)
     {
-        if ($this->_isForeignUser()) {
+        if (!is_null($this->_getTbeCountryId())) {
             $myConfig = $this->getConfig();
 
             // Performance
@@ -388,7 +392,7 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
      */
     public function loadNewestArticles($iLimit = null)
     {
-        if ($this->_isForeignUser()) {
+        if (!is_null($this->_getTbeCountryId())) {
             $myConfig = $this->getConfig();
 
             if (!$myConfig->getConfigParam('bl_perfLoadPriceForAddList')) {
@@ -441,7 +445,7 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
      */
     public function loadTop5Articles($iLimit = null)
     {
-        if ($this->_isForeignUser()) {
+        if (!is_null($this->_getTbeCountryId())) {
             $myConfig = $this->getConfig();
 
             if (!$myConfig->getConfigParam('bl_perfLoadPriceForAddList')) {
@@ -491,7 +495,7 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
      */
     protected function _getArticleSelect($sRecommId, $sArticlesFilter = null)
     {
-        if ($this->_isForeignUser()) {
+        if (!is_null($this->_getTbeCountryId())) {
             $sRecommId = oxDb::getDb()->quote($sRecommId);
 
             $sArticleTable = getViewName('oxarticles');
@@ -515,22 +519,6 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
     /**
      * Returns users tbe country
      *
-     * @return bool
-     */
-    private function _isForeignUser()
-    {
-        $blResult = false;
-        $oUser = $this->getBaseObject()->getUser();
-        if ($oUser) {
-            $blResult = !$oUser->isLocalUser();
-        }
-
-        return $blResult;
-    }
-
-    /**
-     * Returns users tbe country
-     *
      * @return string
      */
     private function _getTbeCountryId()
@@ -541,6 +529,8 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
         if ($oUser) {
             $sCountryId = $oUser->getTbeCountryId();
         }
+
+       // var_dump($sCountryId);
 
         return $sCountryId;
     }
