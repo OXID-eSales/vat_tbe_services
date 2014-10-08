@@ -93,6 +93,7 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
     {
         $oConfig = $this->getConfig();
         $oSession = $this->getSession();
+        $oSession->setVariable('TBECountryId', null);
         $oConfig->setConfigParam('blOeVATTBECountryEvidences', array('oeVATTBEBillingCountryEvidence'));
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
 
@@ -105,6 +106,28 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
         $oUser->oxuser__oxcountryid = new oxField('LithuaniaId');
 
         $this->assertEquals('GermanyId', $oTBEUser->getTbeCountryId());
+
+        $this->_hasDependencies = true;
+
+        return $oTBEUser;
+    }
+
+    public function testCountryCachingWhenCountryIsEmpty()
+    {
+        $oConfig = $this->getConfig();
+        $oSession = $this->getSession();
+        $oSession->setVariable('TBECountryId', null);
+        $oConfig->setConfigParam('blOeVATTBECountryEvidences', array('oeVATTBEBillingCountryEvidence'));
+        $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
+
+        $oUser = oxNew('oxUser');
+        $oUser->oxuser__oxcountryid = new oxField('');
+
+        $oTBEUser = oxNew('oeVATTBETBEUser', $oUser, $oSession, $oConfig);
+        $oTBEUser->getTbeCountryId();
+        $oUser->oxuser__oxcountryid = new oxField('LithuaniaId');
+
+        $this->assertEquals('', $oTBEUser->getTbeCountryId());
 
         $this->_hasDependencies = true;
 
