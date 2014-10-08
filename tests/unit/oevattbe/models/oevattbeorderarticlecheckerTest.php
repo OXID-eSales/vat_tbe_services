@@ -86,8 +86,6 @@ class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends OxidTestCase
 
         $aIncorrectArticles = array($oTBEArticleWithoutVAT1, $oTBEArticleWithoutVAT2);
 
-        $oChecker->isValid();
-
         $this->assertSame($aIncorrectArticles, $oChecker->getInvalidArticles());
     }
 

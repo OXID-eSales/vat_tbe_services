@@ -24,12 +24,11 @@
  */
 class oeVATTBEOrderArticleChecker
 {
-
     /** @var array|oxArticleList */
     private $_mArticleList = null;
 
     /** @var array List of incorrect TBE articles */
-    private $_aIncorrectArticles = array();
+    private $_aInvalidArticles = null;
 
     /**
      * Handles dependencies.
@@ -53,16 +52,9 @@ class oeVATTBEOrderArticleChecker
      */
     public function isValid()
     {
-        $mArticleList = $this->_getArticleList();
+        $aInvalidArticles = $this->getInvalidArticles();
 
-        foreach ($mArticleList as $oArticle) {
-            /** @var oeVATTBEOxArticle $oArticle */
-            if ($oArticle->isTBEService() && is_null($oArticle->getTBEVat())) {
-                $this->_aIncorrectArticles[] = $oArticle;
-            }
-        }
-
-        return empty($this->_aIncorrectArticles);
+        return empty($aInvalidArticles);
     }
 
     /**
@@ -74,7 +66,19 @@ class oeVATTBEOrderArticleChecker
      */
     public function getInvalidArticles()
     {
-        return $this->_aIncorrectArticles;
+        if (is_null($this->_aInvalidArticles)) {
+            $mArticleList = $this->_getArticleList();
+
+            $this->_aInvalidArticles = array();
+            foreach ($mArticleList as $oArticle) {
+                /** @var oeVATTBEOxArticle $oArticle */
+                if ($oArticle->isTBEService() && is_null($oArticle->getTBEVat())) {
+                    $this->_aInvalidArticles[] = $oArticle;
+                }
+            }
+        }
+
+        return $this->_aInvalidArticles;
     }
 
     /**
