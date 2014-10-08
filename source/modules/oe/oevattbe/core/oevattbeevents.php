@@ -134,7 +134,7 @@ class oeVATTBEEvents
     protected static function _regenerateViews()
     {
         $oDbMetaDataHandler = oxNew('oxDbMetaDataHandler');
-        $oDbMetaDataHandler->updateViews(array('oxarticles', 'oxorder', 'oxcountry'));
+        $oDbMetaDataHandler->updateViews();
     }
 
     /**
