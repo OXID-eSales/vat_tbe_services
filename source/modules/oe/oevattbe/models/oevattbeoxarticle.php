@@ -52,8 +52,12 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
      *
      * @return string
      */
-    private function _buildArticleSelect($aWhere = null)
+    public function buildSelectString($aWhere = null)
     {
+        if (!$this->_isForeignUser()) {
+            return parent::buildSelectString($aWhere);
+        }
+
         $sSelect = "SELECT " . $this->getSelectFields();
         $sSelect .= " , `oevattbe_countryvatgroups`.`oevattbe_rate` ";
         $sSelect .= " FROM " . $this->getViewName();
@@ -86,32 +90,6 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
     }
 
     /**
-     * Get data from db
-     *
-     * @param string $sOxId id
-     *
-     * @return array
-     */
-    protected function _loadFromDb($sOxId)
-    {
-        if ($this->_isForeignUser()) {
-            if (oxRegistry::getConfig()->getEdition() == 'EE') {
-                $blCoreTableUsage = $this->getForceCoreTableUsage();
-                $this->_forceCoreTableUsageForSharedBasket();
-            }
-            $sSelect = $this->_buildArticleSelect(array($this->getViewName() . ".oxid" => $sOxId));
-            if (oxRegistry::getConfig()->getEdition() == 'EE') {
-                $this->setForceCoreTableUsage($blCoreTableUsage);
-            }
-            $aData = oxDb::getDb(oxDb::FETCH_MODE_ASSOC)->getRow($sSelect);
-        } else {
-            $aData = parent::_loadFromDb($sOxId);
-        }
-
-        return $aData;
-    }
-
-    /**
      * Returns users tbe country
      *
      * @return bool
@@ -125,15 +103,5 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
         }
 
         return $blResult;
-    }
-
-    /**
-     * Sets forcing of core table usage for creating table view name when shared basket is enabled.
-     */
-    private function _forceCoreTableUsageForSharedBasket()
-    {
-        if ($this->getConfig()->getConfigParam('blMallSharedBasket')) {
-            $this->setForceCoreTableUsage(true);
-        }
     }
 }
