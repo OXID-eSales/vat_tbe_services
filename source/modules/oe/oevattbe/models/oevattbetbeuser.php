@@ -57,7 +57,7 @@ class oeVATTBETBEUser
     {
         $oSession = $this->_getSession();
         $sTBECountryId = $oSession->getVariable('TBECountryId');
-        if (!$sTBECountryId) {
+        if (is_null($sTBECountryId)) {
             $oFactorySelector = $this->_factoryEvidenceSelector();
             $oSession->setVariable('TBEEvidenceList', $oFactorySelector->getEvidenceList()->getArray());
 
@@ -84,19 +84,6 @@ class oeVATTBETBEUser
         $oSession = $this->_getSession();
         $oSession->deleteVariable('TBECountryId');
         $oSession->deleteVariable('TBEEvidenceUsed');
-    }
-
-    /**
-     * Checks if user country matches shop country.
-     *
-     * @return bool
-     */
-    public function isLocalUser()
-    {
-        $sTBECountry = $this->getTbeCountryId();
-        $aHomeCountries = (array) $this->_getConfig()->getConfigParam('aHomeCountry');
-
-        return in_array($sTBECountry, $aHomeCountries);
     }
 
     /**

@@ -49,17 +49,6 @@ class oeVATTBEOxUser extends oeVatTbeOxUser_parent
     }
 
     /**
-     * Checks if user country matches shop country.
-     *
-     * @return bool
-     */
-    public function isLocalUser()
-    {
-        $oTBEUser = $this->_getTBEUser();
-        return $oTBEUser->isLocalUser();
-    }
-
-    /**
      * Returns TBE User object.
      *
      * @return oeVATTBETBEUser
