@@ -38,6 +38,9 @@ class oeVATTBEOrderArticleChecker
      */
     public function __construct($mArticleList)
     {
+        if (!is_array($mArticleList) && !($mArticleList instanceof oxArticleList)) {
+            $mArticleList = array();
+        }
         $this->_mArticleList = $mArticleList;
     }
 

@@ -25,9 +25,23 @@
  */
 class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends OxidTestCase
 {
-    public function testCheckingArticlesWithEmptyList()
+
+    public function providerCheckingArticlesWithEmptyList()
     {
-        $oChecker = oxNew('oeVATTBEOrderArticleChecker', array());
+        return array(
+            array(array()),
+            array(''),
+            array(null),
+            array(false),
+        );
+    }
+
+    /**
+     * @dataProvider providerCheckingArticlesWithEmptyList
+     */
+    public function testCheckingArticlesWithEmptyList($mEmptyList)
+    {
+        $oChecker = oxNew('oeVATTBEOrderArticleChecker', $mEmptyList);
 
         $this->assertSame(true, $oChecker->isValid());
     }
