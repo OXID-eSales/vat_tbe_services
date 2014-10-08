@@ -530,8 +530,6 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
             $sCountryId = $oUser->getTbeCountryId();
         }
 
-       // var_dump($sCountryId);
-
         return $sCountryId;
     }
 }

@@ -127,7 +127,6 @@ class oeVATTBEEvents
         oxDb::getDb()->execute($sSql);
     }
 
-
     /**
      * regenerate views for changed tables
      */
@@ -159,6 +158,9 @@ class oeVATTBEEvents
 
         $aSqls[] = "INSERT INTO oevattbe_articlevat SET OEVATTBE_ARTICLEID = 'b56597806428de2f58b1c6c7d3e0e093', OEVATTBE_COUNTRYID = 'a7c40f631fc920687.20179984', OEVATTBE_VATGROUPID = '11'";
         $aSqls[] = "INSERT INTO oevattbe_articlevat SET OEVATTBE_ARTICLEID = 'b56597806428de2f58b1c6c7d3e0e093', OEVATTBE_COUNTRYID = 'a7c40f6320aeb2ec2.72885259', OEVATTBE_VATGROUPID = '21'";
+
+        $aSqls[] = "UPDATE oxarticles SET oevattbe_istbeservice = '1' WHERE oxid in ( 'b56369b1fc9d7b97f9c5fc343b349ece', 'b56597806428de2f58b1c6c7d3e0e093' )";
+
 
         foreach ($aSqls as $sSql) {
             $oDb->execute($sSql);
