@@ -25,6 +25,7 @@
  */
 class Unit_oeVatTbe_models_oeVATTBEOxUserTest extends OxidTestCase
 {
+
     public function testTBECountryIdSelecting()
     {
         $oConfig = $this->getConfig();
@@ -35,5 +36,84 @@ class Unit_oeVatTbe_models_oeVATTBEOxUserTest extends OxidTestCase
         $oUser->oxuser__oxcountryid = new oxField('GermanyId');
 
         $this->assertEquals('GermanyId', $oUser->getTbeCountryId());
+    }
+
+    /**
+     * Vat id getter test
+     */
+    public function testGetVatId()
+    {
+        $oUser = oxNew('oxUser');
+        $oUser->oxuser__oxustId = new oxField('IdNumber');
+
+        $this->assertSame('IdNumber', $oUser->getVatId());
+    }
+
+    /**
+     * Vat id getter test
+     */
+    public function testGetVatIdStoreDate()
+    {
+        $oUser = oxNew('oxUser');
+        $oUser->oxuser__oevattbe_vatidenterdate = new oxField('2014-12-12 12:12:12');
+
+        $this->assertSame('2014-12-12 12:12:12', $oUser->getVatIdStoreDate());
+    }
+
+    /**
+     * Test for saving vat id store date
+     */
+    public function testSaveVatIdStoreDateDateIsAlreadySaved()
+    {
+        $oUser = oxNew('oxUser');
+        $oUser->delete('userId');
+        $oUser->setId('userId');
+        $oUser->oxuser__oxustId = new oxField('IdNumber');
+        $oUser->oxuser__oevattbe_vatidenterdate = new oxField('2014-12-12 12:12:12');
+        $oUser->save();
+
+        $oUser = oxNew('oxUser');
+        $oUser->load('userId');
+
+        $this->assertSame('2014-12-12 12:12:12', $oUser->getVatIdStoreDate());
+    }
+
+    /**
+     * Test for saving vat id store date
+     */
+    public function testSaveVatIdDoNotStoreDateVatIdNotSet()
+    {
+        $oUser = oxNew('oxUser');
+        $oUser->delete('userId');
+        $oUser->setId('userId');
+        $oUser->save();
+
+        $oUser = oxNew('oxUser');
+        $oUser->load('userId');
+
+        $this->assertSame('0000-00-00 00:00:00', $oUser->getVatIdStoreDate());
+    }
+
+    /**
+     * Test for saving vat id store date
+     */
+    public function testSaveVatIdStoreDateDateIsNotSaved()
+    {
+        $oUtilsDate = $this->getMock("oxUtilsDate", array("getTime"));
+        $oUtilsDate->expects($this->any())->method("getTime")->will($this->returnValue(1388664732));
+
+        oxRegistry::set('oxUtilsDate', $oUtilsDate);
+
+        $oUser = oxNew('oxUser');
+        $oUser->delete('userId');
+
+        $oUser->setId('userId');
+        $oUser->oxuser__oxustId = new oxField('IdNumber');
+        $oUser->save();
+
+        $oUser = oxNew('oxUser');
+        $oUser->load('userId');
+
+        $this->assertSame('2014-01-02 13:12:12', $oUser->getVatIdStoreDate());
     }
 }

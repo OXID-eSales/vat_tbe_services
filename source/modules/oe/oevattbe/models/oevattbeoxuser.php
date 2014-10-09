@@ -125,7 +125,31 @@ class oeVATTBEOxUser extends oeVatTbeOxUser_parent
      */
     public function save()
     {
+        if ($this->getVatId() && !$this->getVatIdStoreDate()) {
+            $this->oxuser__oevattbe_vatidenterdate = new oxField(date('Y-m-d H:i:s', oxRegistry::get("oxUtilsDate")->getTime()));
+        }
+
         $this->unsetTbeCountryFromCaching();
         return parent::save();
+    }
+
+    /**
+     * VAT ID Store date
+     *
+     * @return string
+     */
+    public function getVatIdStoreDate()
+    {
+        return $this->oxuser__oevattbe_vatidenterdate->value;
+    }
+
+    /**
+     * VAT ID
+     *
+     * @return string
+     */
+    public function getVatId()
+    {
+        return $this->oxuser__oxustId->value;
     }
 }
