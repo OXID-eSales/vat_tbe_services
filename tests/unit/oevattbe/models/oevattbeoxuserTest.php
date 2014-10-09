@@ -41,47 +41,47 @@ class Unit_oeVatTbe_models_oeVATTBEOxUserTest extends OxidTestCase
     /**
      * Vat id getter test
      */
-    public function testGetVatId()
+    public function testGetVatIn()
     {
         $oUser = oxNew('oxUser');
         $oUser->oxuser__oxustid = new oxField('IdNumber');
 
-        $this->assertSame('IdNumber', $oUser->getVatId());
+        $this->assertSame('IdNumber', $oUser->getVatIn());
     }
 
     /**
      * Vat id getter test
      */
-    public function testGetVatIdStoreDate()
+    public function testGetVatInStoreDate()
     {
         $oUser = oxNew('oxUser');
-        $oUser->oxuser__oevattbe_vatidenterdate = new oxField('2014-12-12 12:12:12');
+        $oUser->oxuser__oevattbe_vatinenterdate = new oxField('2014-12-12 12:12:12');
 
-        $this->assertSame('2014-12-12 12:12:12', $oUser->getVatIdStoreDate());
+        $this->assertSame('2014-12-12 12:12:12', $oUser->getVatInStoreDate());
     }
 
     /**
      * Test for saving vat id store date
      */
-    public function testSaveVatIdStoreDateDateIsAlreadySaved()
+    public function testSaveVatInStoreDateDateIsAlreadySaved()
     {
         $oUser = oxNew('oxUser');
         $oUser->delete('userId');
         $oUser->setId('userId');
         $oUser->oxuser__oxustid = new oxField('IdNumber');
-        $oUser->oxuser__oevattbe_vatidenterdate = new oxField('2014-12-12 12:12:12');
+        $oUser->oxuser__oevattbe_vatinenterdate = new oxField('2014-12-12 12:12:12');
         $oUser->save();
 
         $oUser = oxNew('oxUser');
         $oUser->load('userId');
 
-        $this->assertSame('2014-12-12 12:12:12', $oUser->getVatIdStoreDate());
+        $this->assertSame('2014-12-12 12:12:12', $oUser->getVatInStoreDate());
     }
 
     /**
      * Test for saving vat id store date
      */
-    public function testSaveVatIdDoNotStoreDateVatIdNotSet()
+    public function testSaveVatInDoNotStoreDateVatIdNotSet()
     {
         $oUser = oxNew('oxUser');
         $oUser->delete('userId');
@@ -91,13 +91,13 @@ class Unit_oeVatTbe_models_oeVATTBEOxUserTest extends OxidTestCase
         $oUser = oxNew('oxUser');
         $oUser->load('userId');
 
-        $this->assertSame('0000-00-00 00:00:00', $oUser->getVatIdStoreDate());
+        $this->assertSame('0000-00-00 00:00:00', $oUser->getVatInStoreDate());
     }
 
     /**
      * Test for saving vat id store date
      */
-    public function testSaveVatIdStoreDateDateIsNotSaved()
+    public function testSaveVatInStoreDateDateIsNotSaved()
     {
         $oUtilsDate = $this->getMock("oxUtilsDate", array("getTime"));
         $oUtilsDate->expects($this->any())->method("getTime")->will($this->returnValue(1388664732));
@@ -109,12 +109,12 @@ class Unit_oeVatTbe_models_oeVATTBEOxUserTest extends OxidTestCase
 
         $oUser->setId('userId');
         $oUser->oxuser__oxustid = new oxField('IdNumber');
-        $oUser->oxuser__oevattbe_vatidenterdate = new oxField('0000-00-00 00:00:00');
+        $oUser->oxuser__oevattbe_vatinenterdate = new oxField('0000-00-00 00:00:00');
         $oUser->save();
 
         $oUser1 = oxNew('oxUser');
         $oUser1->load('userId');
 
-        $this->assertSame('2014-01-02 13:12:12', $oUser1->getVatIdStoreDate());
+        $this->assertSame('2014-01-02 13:12:12', $oUser1->getVatInStoreDate());
     }
 }

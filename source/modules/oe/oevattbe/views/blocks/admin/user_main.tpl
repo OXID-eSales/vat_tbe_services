@@ -97,11 +97,11 @@
 </tr>
 <tr>
     <td class="edittext">
-        [{xmultilang ident="GENERAL_USTID" }]
+        [{oxmultilang ident="GENERAL_USTID" }]
     </td>
     <td class="edittext">
         <input type="text" class="editinput" size="15" maxlength="[{$edit->oxuser__oxustid->fldmax_length}]" name="editval[oxuser__oxustid]" value="[{$edit->oxuser__oxustid->value }]" [{ $readonly }]>
-        [{oxinputhelp ident="HELP_GENERAL_USTID" }] ([{$edit->oxuser__oevattbe_vatidenterdate->value}])
+        [{oxinputhelp ident="HELP_GENERAL_USTID" }] ([{$edit->oxuser__oevattbe_vatinenterdate->value}])
     </td>
 </tr>
 <tr>
