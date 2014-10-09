@@ -80,6 +80,7 @@ $aModule = array(
         array('template' => 'widget/product/boxproduct.tpl', 'block'=>'widget_product_boxproduct_price_value', 'file'=>'/views/blocks/widget/product/boxproduct.tpl'),
         array('template' => 'widget/product/bargainitem.tpl', 'block'=>'widget_product_bargainitem_price_value', 'file'=>'/views/blocks/widget/product/bargainitem.tpl'),
         array('template' => 'widget/product/compareitem.tpl', 'block'=>'widget_product_compareitem_price_value', 'file'=>'/views/blocks/widget/product/compareitem.tpl'),
+        array('template' => 'user_main.tpl', 'block'=>'admin_user_main_form', 'file'=>'/views/blocks/admin/user_main.tpl'),
     ),
     'settings' => array(
         array('group' => 'oevattbe', 'name' => 'blOeVATTBECountryEvidences',      'type' => 'arr',   'value' => array('oeVATTBEBillingCountryEvidence', 'oeVATTBEGeoLocationEvidence')),
