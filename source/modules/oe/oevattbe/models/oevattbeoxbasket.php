@@ -42,6 +42,26 @@ class oeVATTBEOxBasket extends oeVatTbeOxBasket_parent
     }
 
     /**
+     * Returns if basket has tbe articles in it.
+     *
+     * @return bool
+     */
+    public function hasVATTBEArticles()
+    {
+        $blHasTBEArticles = false;
+        $oBasketArticles = $this->getBasketArticles();
+        foreach ($oBasketArticles as $oArticle) {
+            /** @var oxArticle $oArticle */
+            if ($oArticle->isTBEService()) {
+                $blHasTBEArticles = true;
+                break;
+            }
+        }
+
+        return $blHasTBEArticles;
+    }
+
+    /**
      * Set tbe country id
      *
      * @param string $sTBECountryId tbe country id
