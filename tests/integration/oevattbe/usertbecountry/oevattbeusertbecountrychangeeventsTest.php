@@ -23,7 +23,7 @@
 /**
  * Testing TBEUser class.
  */
-class Integration_oeVatTbe_userTBECountryChangeEvents_oeVATTBEUserTBECountryTest extends OxidTestCase
+class Integration_oeVatTbe_userTBECountry_oeVATTBEUserTBECountryChangeEventsTest extends OxidTestCase
 {
     /**
      * Do not destroy environment before test which depend from previous.
