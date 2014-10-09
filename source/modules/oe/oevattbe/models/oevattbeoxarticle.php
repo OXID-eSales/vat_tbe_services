@@ -60,9 +60,9 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
     {
         $aKeys = parent::getCacheKeys($aLanguages, $aShops);
 
-        $oTBEArticle = $this->_getVATTBETBEArticleCacheKey();
-        if ($this->isTBEService() && $oTBEArticle->needToCalculateKeys()) {
-            $aKeys = $oTBEArticle->updateCacheKeys($aKeys);
+        $oTBEArticleCacheKey = $this->_getVATTBETBEArticleCacheKey();
+        if ($this->isTBEService() && $oTBEArticleCacheKey->needToCalculateKeys()) {
+            $aKeys = $oTBEArticleCacheKey->updateCacheKeys($aKeys);
         }
 
         return $aKeys;
