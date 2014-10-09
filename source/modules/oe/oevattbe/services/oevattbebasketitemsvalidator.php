@@ -38,7 +38,7 @@ class oeVATTBEBasketItemsValidator
      *
      * @param oeVATTBEOrderArticleChecker     $oVATTBEOrderArticleChecker  checks if article list has article with wrong TBE VAT.
      * @param oeVATTBEArticleMessageFormatter $oVATTBEArticleMessageFormer forms error message if article list has article with wrong TBE VAT.
-     * @param oxUtilsView                     $oUtilsView                  stores error messsage.
+     * @param oxUtilsView                     $oUtilsView                  stores error message.
      */
     public function __construct($oVATTBEOrderArticleChecker, $oVATTBEArticleMessageFormer, $oUtilsView)
     {
@@ -51,7 +51,7 @@ class oeVATTBEBasketItemsValidator
      * Create instance of this object by creating dependencies.
      * Later should be replaced with DIC.
      *
-     * @param oeVATTBEBasketItemsValidator $oBasketArticles basket article list to check if has article with wrong TBE VAT .
+     * @param oevattbeoxarticle $oBasketArticles basket article list to check if has article with wrong TBE VAT .
      *
      * @return oeVATTBEBasketItemsValidator
      */
