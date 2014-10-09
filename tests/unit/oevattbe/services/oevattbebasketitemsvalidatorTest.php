@@ -35,7 +35,7 @@ class Unit_oeVatTbe_services_oeVATTBEBasketItemsValidatorTest extends OxidTestCa
         $oVATTBEOrderArticleChecker = $this->getMock('oeVATTBEOrderArticleChecker', array(), array(), '', false);
         $oVATTBEOrderArticleChecker->expects($this->any())->method('isValid')->will($this->returnValue(true));
 
-        $oVATTBEArticleMessageFormer = $this->getMock('oeVATTBEArticleMessageFormatter');
+        $oVATTBEArticleMessageFormer = $this->getMock('oeVATTBEIncorrectVATArticlesMessageFormatter');
 
         $oUtilsView = $this->getMock('oxUtilsView');
         // Error message should not be set as oeVATTBEOrderArticleChecker indicates that there is no wrong article.
@@ -53,7 +53,7 @@ class Unit_oeVatTbe_services_oeVATTBEBasketItemsValidatorTest extends OxidTestCa
         $oVATTBEOrderArticleChecker = $this->getMock('oeVATTBEOrderArticleChecker', array(), array(), '', false);
         $oVATTBEOrderArticleChecker->expects($this->any())->method('isValid')->will($this->returnValue(false));
 
-        $oVATTBEArticleMessageFormer = $this->getMock('oeVATTBEArticleMessageFormatter');
+        $oVATTBEArticleMessageFormer = $this->getMock('oeVATTBEIncorrectVATArticlesMessageFormatter');
 
         $oUtilsView = $this->getMock('oxUtilsView');
         // Error message should be set as oeVATTBEOrderArticleChecker indicates that there is wrong article.

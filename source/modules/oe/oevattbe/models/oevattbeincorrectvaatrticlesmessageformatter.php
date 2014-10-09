@@ -22,7 +22,7 @@
 /**
  * Forms error message if there are articles with invalid TBE VAT.
  */
-class oeVATTBEArticleMessageFormatter
+class oeVATTBEIncorrectVATArticlesMessageFormatter
 {
     /**
      * Forms error message for articles with TBE VAT problems.

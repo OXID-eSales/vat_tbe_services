@@ -27,7 +27,7 @@ class oeVATTBEBasketItemsValidator
     /** @var oeVATTBEOrderArticleChecker */
     private $_oVATTBEOrderArticleChecker;
 
-    /** @var oeVATTBEArticleMessageFormatter */
+    /** @var oeVATTBEIncorrectVATArticlesMessageFormatter */
     private $_oVATTBEArticleMessageFormer;
 
     /** @var oxUtilsView */
@@ -37,7 +37,7 @@ class oeVATTBEBasketItemsValidator
      * Sets dependencies.
      *
      * @param oeVATTBEOrderArticleChecker     $oVATTBEOrderArticleChecker  checks if article list has article with wrong TBE VAT.
-     * @param oeVATTBEArticleMessageFormatter $oVATTBEArticleMessageFormer forms error message if article list has article with wrong TBE VAT.
+     * @param oeVATTBEIncorrectVATArticlesMessageFormatter $oVATTBEArticleMessageFormer forms error message if article list has article with wrong TBE VAT.
      * @param oxUtilsView                     $oUtilsView                  stores error message.
      */
     public function __construct($oVATTBEOrderArticleChecker, $oVATTBEArticleMessageFormer, $oUtilsView)
@@ -59,7 +59,7 @@ class oeVATTBEBasketItemsValidator
     {
         $oVATTBEOrderArticleChecker = oxNew('oeVATTBEOrderArticleChecker', $oBasketArticles);
         $oUtilsView = oxRegistry::get('oxUtilsView');
-        $oVATTBEArticleMessageFormer = oxNew('oeVATTBEArticleMessageFormatter');
+        $oVATTBEArticleMessageFormer = oxNew('oeVATTBEIncorrectVATArticlesMessageFormatter');
 
         $oVATTBEBasketItemsValidator = oxNew('oeVATTBEBasketItemsValidator', $oVATTBEOrderArticleChecker, $oVATTBEArticleMessageFormer, $oUtilsView);
         return $oVATTBEBasketItemsValidator;

@@ -24,7 +24,7 @@
  *
  * @covers oeVATTBEArticleMessageFormatter
  */
-class Unit_oeVATTBE_Models_oeVATTBEArticleMessageFormatterTest extends OxidTestCase
+class Unit_oeVATTBE_Models_oeVATTBEIncorrectVATArticlesMessageFormatterTest extends OxidTestCase
 {
     /**
      * Provider for different article set to test if error message was formed correctly.
@@ -58,8 +58,8 @@ class Unit_oeVATTBE_Models_oeVATTBEArticleMessageFormatterTest extends OxidTestC
      */
     public function testGetMessage($oInvalidArticles, $sExpectedMessage)
     {
-        /** @var oeVATTBEArticleMessageFormatter $oVATTBEArticleMessageFormer */
-        $oVATTBEArticleMessageFormer = oxNew('oeVATTBEArticleMessageFormatter');
+        /** @var oeVATTBEIncorrectVATArticlesMessageFormatter $oVATTBEArticleMessageFormer */
+        $oVATTBEArticleMessageFormer = oxNew('oeVATTBEIncorrectVATArticlesMessageFormatter');
         $sErrorMessage = $oVATTBEArticleMessageFormer->getMessage($oInvalidArticles);
 
         $this->assertSame($sExpectedMessage, $sErrorMessage->getOxMessage());
