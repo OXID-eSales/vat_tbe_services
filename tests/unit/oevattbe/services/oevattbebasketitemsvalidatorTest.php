@@ -22,6 +22,8 @@
 
 /**
  * Testing TBEUser class.
+ *
+ * @covers oeVATTBEBasketItemsValidator
  */
 class Unit_oeVatTbe_services_oeVATTBEBasketItemsValidatorTest extends OxidTestCase
 {
