@@ -66,18 +66,21 @@ class Unit_oeVATTBE_Models_oeVATTBEListTest extends OxidTestCase
         $this->assertEquals(array(1, 2), $aElements);
     }
 
+    public function testReturningArray()
+    {
+        $oList = new oeVATTBEList(array(1,2));
+        $oList->add(3);
+
+        $this->assertEquals(array(1, 2, 3), $oList->getArray());
+    }
+
     public function testAdditionOfItemsToEmptyList()
     {
         $oList = new oeVATTBEList();
         $oList->add(1);
         $oList->add(2);
 
-        $aElements = array();
-        foreach ($oList as $iItem) {
-            $aElements[] = $iItem;
-        }
-
-        $this->assertEquals(array(1, 2), $aElements);
+        $this->assertEquals(array(1, 2), $oList->getArray());
     }
 
     public function testAdditionOfItemsToNotEmptyList()
@@ -86,19 +89,6 @@ class Unit_oeVATTBE_Models_oeVATTBEListTest extends OxidTestCase
         $oList->add(1);
         $oList->add(2);
 
-        $aElements = array();
-        foreach ($oList as $iItem) {
-            $aElements[] = $iItem;
-        }
-
-        $this->assertEquals(array(1, 2, 1, 2), $aElements);
-    }
-
-    public function testReturningArray()
-    {
-        $oList = new oeVATTBEList(array(1,2));
-        $oList->add(3);
-
-        $this->assertEquals(array(1, 2, 3), $oList->getArray());
+        $this->assertEquals(array(1, 2, 1, 2), $oList->getArray());
     }
 }
