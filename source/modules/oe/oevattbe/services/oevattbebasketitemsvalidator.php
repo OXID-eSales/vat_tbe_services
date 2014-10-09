@@ -36,9 +36,9 @@ class oeVATTBEBasketItemsValidator
     /**
      * Sets dependencies.
      *
-     * @param oeVATTBEOrderArticleChecker  $oVATTBEOrderArticleChecker  checks if article list has article with wrong TBE VAT.
+     * @param oeVATTBEOrderArticleChecker     $oVATTBEOrderArticleChecker  checks if article list has article with wrong TBE VAT.
      * @param oeVATTBEArticleMessageFormatter $oVATTBEArticleMessageFormer forms error message if article list has article with wrong TBE VAT.
-     * @param oxUtilsView                  $oUtilsView                  stores error messsage.
+     * @param oxUtilsView                     $oUtilsView                  stores error messsage.
      */
     public function __construct($oVATTBEOrderArticleChecker, $oVATTBEArticleMessageFormer, $oUtilsView)
     {
