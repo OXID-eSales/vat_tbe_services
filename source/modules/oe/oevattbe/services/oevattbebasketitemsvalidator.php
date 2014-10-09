@@ -55,7 +55,7 @@ class oeVATTBEBasketItemsValidator
      *
      * @return oeVATTBEBasketItemsValidator
      */
-    public static function createInstance($oBasketArticles)
+    public static function getInstance($oBasketArticles)
     {
         $oVATTBEOrderArticleChecker = oxNew('oeVATTBEOrderArticleChecker', $oBasketArticles);
         $oUtilsView = oxRegistry::get('oxUtilsView');

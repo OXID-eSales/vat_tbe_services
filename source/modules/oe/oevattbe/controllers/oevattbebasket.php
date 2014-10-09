@@ -34,7 +34,7 @@ class oeVATTBEBasket extends oeVATTBEBasket_parent
     public function render()
     {
         /** @var oeVATTBEBasketItemsValidator $oVATTBEBasketItemsValidator */
-        $oVATTBEBasketItemsValidator = oeVATTBEBasketItemsValidator::createInstance($this->getBasketArticles());
+        $oVATTBEBasketItemsValidator = oeVATTBEBasketItemsValidator::getInstance($this->getBasketArticles());
         $oVATTBEBasketItemsValidator->validateTbeArticlesAndShowMessageIfNeeded();
 
         return parent::render();
