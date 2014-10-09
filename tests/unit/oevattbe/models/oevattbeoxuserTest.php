@@ -44,7 +44,7 @@ class Unit_oeVatTbe_models_oeVATTBEOxUserTest extends OxidTestCase
     public function testGetVatId()
     {
         $oUser = oxNew('oxUser');
-        $oUser->oxuser__oxustId = new oxField('IdNumber');
+        $oUser->oxuser__oxustid = new oxField('IdNumber');
 
         $this->assertSame('IdNumber', $oUser->getVatId());
     }
@@ -68,7 +68,7 @@ class Unit_oeVatTbe_models_oeVATTBEOxUserTest extends OxidTestCase
         $oUser = oxNew('oxUser');
         $oUser->delete('userId');
         $oUser->setId('userId');
-        $oUser->oxuser__oxustId = new oxField('IdNumber');
+        $oUser->oxuser__oxustid = new oxField('IdNumber');
         $oUser->oxuser__oevattbe_vatidenterdate = new oxField('2014-12-12 12:12:12');
         $oUser->save();
 
@@ -108,12 +108,13 @@ class Unit_oeVatTbe_models_oeVATTBEOxUserTest extends OxidTestCase
         $oUser->delete('userId');
 
         $oUser->setId('userId');
-        $oUser->oxuser__oxustId = new oxField('IdNumber');
+        $oUser->oxuser__oxustid = new oxField('IdNumber');
+        $oUser->oxuser__oevattbe_vatidenterdate = new oxField('0000-00-00 00:00:00');
         $oUser->save();
 
-        $oUser = oxNew('oxUser');
-        $oUser->load('userId');
+        $oUser1 = oxNew('oxUser');
+        $oUser1->load('userId');
 
-        $this->assertSame('2014-01-02 13:12:12', $oUser->getVatIdStoreDate());
+        $this->assertSame('2014-01-02 13:12:12', $oUser1->getVatIdStoreDate());
     }
 }
