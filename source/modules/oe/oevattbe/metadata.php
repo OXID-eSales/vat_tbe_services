@@ -64,6 +64,7 @@ $aModule = array(
         'oeVATTBEOrderArticleChecker'                  => 'oe/oevattbe/models/oevattbeorderarticlechecker.php',
         'oeVATTBEBasketItemsValidator'                 => 'oe/oevattbe/services/oevattbebasketitemsvalidator.php',
         'oeVATTBEIncorrectVATArticlesMessageFormatter' => 'oe/oevattbe/models/oevattbeincorrectvaatrticlesmessageformatter.php',
+        'oeVATTBETBEArticleCacheKey'                   => 'oe/oevattbe/models/oevattbetbearticlecachekey.php',
     ),
     'events'       => array(
         'onActivate'   => 'oeVatTbeEvents::onActivate',

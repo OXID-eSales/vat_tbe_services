@@ -24,6 +24,9 @@
  */
 class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
 {
+    /** @var oeVATTBETBEArticle */
+    private $_oVATTBEArticle = null;
+
     /**
      * Article TBE vat
      *
@@ -42,6 +45,27 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
     public function isTBEService()
     {
         return $this->oxarticles__oevattbe_istbeservice->value;
+    }
+
+    /**
+     * Generate cache keys for dependent cached data.
+     * Add user country for TBE articles.
+     *
+     * @param array $aLanguages lang id array
+     * @param array $aShops     shop ids array
+     *
+     * @return string
+     */
+    public function getCacheKeys($aLanguages = null, $aShops = null)
+    {
+        $aKeys = parent::getCacheKeys($aLanguages, $aShops);
+
+        $oTBEArticle = $this->_getVATTBETBEArticleCacheKey();
+        if ($this->isTBEService() && $oTBEArticle->needToCalculateKeys()) {
+            $aKeys = $oTBEArticle->updateCacheKeys($aKeys);
+        }
+
+        return $aKeys;
     }
 
 
@@ -104,5 +128,19 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
         }
 
         return $sCountryId;
+    }
+
+    /**
+     * Returns TBE Article object.
+     *
+     * @return oeVATTBETBEArticleCacheKey
+     */
+    protected function _getVATTBETBEArticleCacheKey()
+    {
+        if (!$this->_oVATTBEArticle) {
+            $this->_oVATTBEArticle = oxNew('oeVATTBETBEArticleCacheKey', $this->getUser());
+        }
+
+        return $this->_oVATTBEArticle;
     }
 }

@@ -22,6 +22,9 @@
 
 /**
  * Testing extended oxArticle class.
+ *
+ * @covers oeVATTBEOxArticle
+ * @covers oeVATTBETBEArticleCacheKey
  */
 class Unit_oeVATTBE_models_oeVATTBEOxArticleTest extends OxidTestCase
 {
@@ -92,6 +95,57 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleTest extends OxidTestCase
         $oArticle->load('1126');
 
         $this->assertNull($oArticle->getTBEVat());
+    }
+
+    /**
+     * Test that module does not change behaviour when user is not logged in.
+     */
+    public function testGetCacheKeysWithoutActiveUser()
+    {
+        $oArticleWithoutModules = new oxArticle();
+        $aCacheKeysWithoutModules = $oArticleWithoutModules->getCacheKeys();
+
+        /** @var oxArticle $oArticle */
+        $oArticle = oxNew('oxArticle');
+        $aCacheKeys = $oArticle->getCacheKeys();
+        $this->assertSame($aCacheKeysWithoutModules, $aCacheKeys);
+    }
+
+    /**
+     * Test that module does not add user country for not TBE article when user is logged in.
+     */
+    public function testGetCacheKeysForNotTbeArticleWithActiveUser()
+    {
+        $sAustriaId = 'a7c40f6320aeb2ec2.72885259';
+        /** @var oxUser $oUser */
+        $oUser = $this->getMock('oxUser', array('getTbeCountryId'));
+        $oUser->expects($this->any())->method('getTbeCountryId')->will($this->returnValue($sAustriaId));
+
+        /** @var oxArticle $oArticle */
+        $oArticle = oxNew('oxArticle');
+        $oArticle->setUser($oUser);
+        $aCacheKeys = $oArticle->getCacheKeys();
+
+        $this->assertSame(array('oxArticle__1_de', 'oxArticle__1_en'), $aCacheKeys);
+    }
+
+    /**
+     * Test that module add user country for TBE article when user is logged in.
+     */
+    public function testGetCacheKeysForTbeArticleWithActiveUser()
+    {
+        $sAustriaId = 'a7c40f6320aeb2ec2.72885259';
+        /** @var oxUser $oUser */
+        $oUser = $this->getMock('oxUser', array('getTbeCountryId'));
+        $oUser->expects($this->any())->method('getTbeCountryId')->will($this->returnValue($sAustriaId));
+
+        /** @var oxArticle $oArticle */
+        $oArticle = oxNew('oxArticle');
+        $oArticle->setUser($oUser);
+        $oArticle->oxarticles__oevattbe_istbeservice = new oxField(true, oxField::T_RAW);
+        $aCacheKeys = $oArticle->getCacheKeys();
+
+        $this->assertSame(array('oxArticle__1_de_'. $sAustriaId, 'oxArticle__1_en_'. $sAustriaId), $aCacheKeys);
     }
 
 
