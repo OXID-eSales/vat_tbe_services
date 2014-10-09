@@ -57,6 +57,7 @@ class oeVATTBEEvents
             'oxcountry' => 'oevattbe_appliestbevat',
             'oxcountry' => 'oevattbe_istbevatconfigured',
             'oxorder' => 'oevattbe_hastbeservices',
+            'oxuser' => 'oevattbe_vatidenterdate',
 
         );
 
@@ -65,6 +66,7 @@ class oeVATTBEEvents
             'oevattbe_appliestbevat' => "ALTER TABLE `oxcountry` ADD `oevattbe_appliestbevat` tinyint(1) NOT NULL default 0",
             'oevattbe_istbevatconfigured' => "ALTER TABLE `oxcountry` ADD `oevattbe_istbevatconfigured` tinyint(1) NOT NULL default 0",
             'oevattbe_hastbeservices' => "ALTER TABLE `oxorder` ADD `oevattbe_hastbeservices` tinyint(1) NOT NULL default 0",
+            'oevattbe_vatidenterdate' => "ALTER TABLE `oxuser` ADD `oevattbe_vatidenterdate` timestamp NOT NULL",
         );
 
         foreach ($aTableFields as $sTableName => $sFieldName) {

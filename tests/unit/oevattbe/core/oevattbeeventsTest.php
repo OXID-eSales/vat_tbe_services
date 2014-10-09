@@ -55,6 +55,7 @@ class Unit_oeVATTBE_Core_oeVATTBEEventsTest extends OxidTestCase
             'oxcountry' => 'oevattbe_appliestbevat',
             'oxcountry' => 'oevattbe_istbevatconfigured',
             'oxorder' => 'oevattbe_hastbeservices',
+            'oxuser' => 'oevattbe_vatidenterdate',
 
         );
 
