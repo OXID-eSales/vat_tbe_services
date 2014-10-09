@@ -39,6 +39,28 @@ class oeVATTBEOxUser extends oeVatTbeOxUser_parent
     }
 
     /**
+     * Returns users TBE country
+     *
+     * @return string
+     */
+    public function getTBEEvidenceList()
+    {
+        $oTBEUser = $this->_getTBEUser();
+        return $oTBEUser->getTBEEvidenceList();
+    }
+
+    /**
+     * Returns users TBE country
+     *
+     * @return string
+     */
+    public function getTbeEvidenceUsed()
+    {
+        $oTBEUser = $this->_getTBEUser();
+        return $oTBEUser->getTbeEvidenceUsed();
+    }
+
+    /**
      * Unset TBE country from caching to force recalculation on next get.
      * Wrapper for oeVATTBETBEUser::unsetTbeCountryFromCaching
      */

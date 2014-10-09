@@ -53,27 +53,32 @@ class oeVATTBETBEUser
      *
      * @return string
      */
+    public function getTBEEvidenceList()
+    {
+        $this->_loadEvidenceDataToSession();
+        return $this->_getSession()->getVariable('TBEEvidenceList');
+    }
+
+    /**
+     * Returns users TBE country
+     *
+     * @return string
+     */
     public function getTbeCountryId()
     {
-        $oSession = $this->_getSession();
-        $sTBECountryId = $oSession->getVariable('TBECountryId');
-        if (is_null($sTBECountryId)) {
-            $oFactorySelector = $this->_factoryEvidenceSelector();
-            $oSession->setVariable('TBEEvidenceList', $oFactorySelector->getEvidenceList()->getArray());
+        $this->_loadEvidenceDataToSession();
+        return $this->_getSession()->getVariable('TBECountryId');
+    }
 
-            $sTBECountryId = '';
-            $sEvidenceUser = '';
-
-            $oEvidence = $oFactorySelector->getEvidence();
-            if ($oEvidence) {
-                $sTBECountryId = $oEvidence->getCountryId();
-                $sEvidenceUser = $oEvidence->getName();
-            }
-            $oSession->setVariable('TBECountryId', $sTBECountryId);
-            $oSession->setVariable('TBEEvidenceUsed', $sEvidenceUser);
-        }
-
-        return $sTBECountryId;
+    /**
+     * Returns users TBE country
+     *
+     * @return string
+     */
+    public function getTbeEvidenceUsed()
+    {
+        $this->_loadEvidenceDataToSession();
+        return $this->_getSession()->getVariable('TBEEvidenceUsed');
     }
 
     /**
@@ -82,6 +87,7 @@ class oeVATTBETBEUser
     public function unsetTbeCountryFromCaching()
     {
         $oSession = $this->_getSession();
+        $oSession->deleteVariable('TBEEvidenceList');
         $oSession->deleteVariable('TBECountryId');
         $oSession->deleteVariable('TBEEvidenceUsed');
     }
@@ -114,6 +120,24 @@ class oeVATTBETBEUser
     protected function _getConfig()
     {
         return $this->_oConfig;
+    }
+
+    /**
+     * Loads evidence information to session if not already there.
+     */
+    private function _loadEvidenceDataToSession()
+    {
+        $oSession = $this->_getSession();
+        if (is_null($oSession->getVariable('TBECountryId'))) {
+            $oEvidenceSelector = $this->_factoryEvidenceSelector();
+            $oSession->setVariable('TBEEvidenceList', $oEvidenceSelector->getEvidenceList()->getArray());
+
+            $oEvidence = $oEvidenceSelector->getEvidence();
+            $sTBECountryId = $oEvidence ? $oEvidence->getCountryId() : '';
+            $sEvidenceUser = $oEvidence ? $oEvidence->getName() : '';
+            $oSession->setVariable('TBECountryId', $sTBECountryId);
+            $oSession->setVariable('TBEEvidenceUsed', $sEvidenceUser);
+        }
     }
 
     /**
