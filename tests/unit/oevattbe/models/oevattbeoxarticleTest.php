@@ -126,7 +126,8 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleTest extends OxidTestCase
         $oArticle->setUser($oUser);
         $aCacheKeys = $oArticle->getCacheKeys();
 
-        $this->assertSame(array('oxArticle__1_de', 'oxArticle__1_en'), $aCacheKeys);
+        $sShopId = $this->getConfig()->getShopId();
+        $this->assertSame(array('oxArticle__'.$sShopId.'_de', 'oxArticle__'.$sShopId.'_en'), $aCacheKeys);
     }
 
     /**
@@ -145,9 +146,9 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleTest extends OxidTestCase
         $oArticle->oxarticles__oevattbe_istbeservice = new oxField(true, oxField::T_RAW);
         $aCacheKeys = $oArticle->getCacheKeys();
 
-        $this->assertSame(array('oxArticle__1_de_'. $sAustriaId, 'oxArticle__1_en_'. $sAustriaId), $aCacheKeys);
+        $sShopId = $this->getConfig()->getShopId();
+        $this->assertSame(array('oxArticle__'.$sShopId.'_de_'. $sAustriaId, 'oxArticle__'.$sShopId.'_en_'. $sAustriaId), $aCacheKeys);
     }
-
 
     /**
      * prepare data
