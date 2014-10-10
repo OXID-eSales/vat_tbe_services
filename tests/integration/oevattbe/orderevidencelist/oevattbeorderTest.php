@@ -23,7 +23,7 @@
 /**
  * Testing oeVATTBEoxOrder class.
  */
-class Integration_oeVatTbe_oeVATTBEOrderTest extends OxidTestCase
+class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderTest extends OxidTestCase
 {
     /**
      * @return oeVATTBEOrderEvidenceList
