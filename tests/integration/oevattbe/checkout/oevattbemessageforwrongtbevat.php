@@ -43,6 +43,7 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
     {
         $sIdTbeArticleWithVatGroup = '1126';
         $sTbeArticleWithoutVatGroup = '1127';
+        $sNotTbeArticle = '1131';
 
         $sErrorMessage1 = '/.*: Bar-Set ABSINTH.*/';
         $sErrorMessage2 = '/.*: Blinkende Eisw.*/';
@@ -51,6 +52,7 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
             array(array($sIdTbeArticleWithVatGroup), $sErrorMessage1),
             array(array($sTbeArticleWithoutVatGroup), $sErrorMessage2),
             array(array($sIdTbeArticleWithVatGroup, $sTbeArticleWithoutVatGroup), $sErrorMessage3),
+            array(array($sIdTbeArticleWithVatGroup, $sTbeArticleWithoutVatGroup, $sNotTbeArticle), $sErrorMessage3),
         );
     }
 
@@ -87,16 +89,58 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
      *
      * @return array
      */
+    public function providerMessageIsNotSetInBasketWhenUserIsNotLeggedIn()
+    {
+        $sNotTbeArticle = '1131';
+
+        return array(
+            array(array($sNotTbeArticle)),
+        );
+    }
+
+    /**
+     * Check if message is not set, when all articles correct.
+     *
+     * @param array $aArticles array of articles to set to basket and check.
+     *
+     * @dataProvider providerMessageIsNotSetInBasketWhenUserIsNotLeggedIn
+     */
+    public function testMessageIsNotSetInBasketWhenUserIsNotLeggedIn($aArticles)
+    {
+        /** @var oxBasket $oBasket */
+        $oBasket = oxNew('oxBasket');
+        foreach ($aArticles as $sArticleId) {
+            $oBasket->addToBasket($sArticleId, 1);
+        }
+
+        $oSession = oxRegistry::getSession();
+        $oSession->setBasket($oBasket);
+
+        /** @var basket $oBasket */
+        $oBasket = oxNew('basket');
+        $oBasket->render();
+
+        $aEx = oxRegistry::getSession()->getVariable('Errors');
+        $this->assertFalse(isset($aEx['default'][0]));
+    }
+
+    /**
+     * Provides with articles to check if error message is formed.
+     *
+     * @return array
+     */
     public function providerMessageSetInBasketForWrongVATArticlesWhenUserIsLeggedIn()
     {
         $sIdTbeArticleWithVatGroup = '1126';
         $sTbeArticleWithoutVatGroup = '1127';
+        $sNotTbeArticle = '1131';
 
         $sErrorMessage2 = '/.*: Blinkende Eisw.*/';
         $sErrorMessage3 = '/.*: Blinkende Eisw.*/';
         return array(
             array(array($sTbeArticleWithoutVatGroup), $sErrorMessage2),
             array(array($sIdTbeArticleWithVatGroup, $sTbeArticleWithoutVatGroup), $sErrorMessage3),
+            array(array($sIdTbeArticleWithVatGroup, $sTbeArticleWithoutVatGroup, $sNotTbeArticle), $sErrorMessage3),
         );
     }
 
@@ -133,6 +177,56 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
         $aEx = oxRegistry::getSession()->getVariable('Errors');
         $this->assertTrue(isset($aEx['default'][0]));
         $this->assertRegExp($sErrorMessage, $aEx['default'][0], 'Error message: '. $aEx['default'][0]);
+    }
+
+
+    /**
+     * Provides with articles to check if error message is formed.
+     *
+     * @return array
+     */
+    public function providerMessageIsNotSetInBasketWhenUserIsLeggedIn()
+    {
+        $sIdTbeArticleWithVatGroup = '1126';
+        $sNotTbeArticle = '1131';
+
+        return array(
+            array(array($sIdTbeArticleWithVatGroup)),
+            array(array($sIdTbeArticleWithVatGroup, $sNotTbeArticle)),
+        );
+    }
+
+    /**
+     * Check if message is set in first checkout step for TBE articles with wrong VAT when user is logged in.
+     *
+     * @param array $aArticles array of articles to set to basket and check.
+     *
+     * @dataProvider providerMessageIsNotSetInBasketWhenUserIsLeggedIn
+     */
+    public function testMessageIsNotSetInBasketWhenUserIsLeggedIn($aArticles)
+    {
+        $oSession = oxRegistry::getSession();
+
+        /** @var oxBasket $oBasket */
+        $oBasket = oxNew('oxBasket');
+
+        $oUser = $this->_createUser();
+        $blLogin = $oUser->login($this->_sDefaultUserName, $this->_sDefaultPassword);
+        $this->assertTrue($blLogin, 'User must login successfully.');
+        $oSession->setUser($oUser);
+
+        foreach ($aArticles as $sArticleId) {
+            $oBasket->addToBasket($sArticleId, 1);
+        }
+
+        $oSession->setBasket($oBasket);
+
+        /** @var basket $oBasket */
+        $oBasketController = oxNew('basket');
+        $oBasketController->render();
+
+        $aEx = oxRegistry::getSession()->getVariable('Errors');
+        $this->assertFalse(isset($aEx['default'][0]));
     }
 
     /**
