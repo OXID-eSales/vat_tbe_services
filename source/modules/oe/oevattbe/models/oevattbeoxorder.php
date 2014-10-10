@@ -87,10 +87,7 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
     }
 
     /**
-     * Gathers and assigns to new oxOrder object customer data, payment, delivery
-     * and shipping info, customer order remark, currency, voucher, language data.
-     * Additionally stores general discount and wrapping. Sets order status to "error"
-     * and creates oxOrderArticle objects and assigns to them basket articles.
+     * Adds flag whether this order has TBE articles in it.
      *
      * @param oxBasket $oBasket Shopping basket object
      */
@@ -98,6 +95,17 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
     {
         $this->oxorder__oevattbe_hastbeservices = new oxField($oBasket->hasVATTBEArticles());
         parent::_loadFromBasket($oBasket);
+    }
+
+    /**
+     * Sets default evidence used for deciding user country.
+     *
+     * @param object $oUser user object
+     */
+    protected function _setUser($oUser)
+    {
+        $this->oxorder__oevattbe_evidenceused = new oxField($oUser->getTbeEvidenceUsed());
+        parent::_setUser($oUser);
     }
 
     /**
@@ -129,8 +137,6 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
 
     /**
      * Returns oeVATTBEOrderEvidenceList object.
-     *
-     * @param string $sOrderId Which order's evidence list should be loaded.
      *
      * @return oeVATTBEOrderEvidenceList
      */
