@@ -50,6 +50,7 @@ $aModule = array(
         'oxorder'           => 'oe/oevattbe/models/oevattbeoxorder',
         'basket'            => 'oe/oevattbe/controllers/oevattbebasket',
         'order'             => 'oe/oevattbe/controllers/oevattbeorder',
+        'oxBasketContentMarkGenerator' => 'oe/oevattbe/models/oevattbeoxbasketcontentmarkgenerator',
     ),
     'files' => array(
         'oeVATTBEEvidenceSelector'                     => 'oe/oevattbe/models/oevattbeevidenceselector.php',
@@ -82,10 +83,12 @@ $aModule = array(
         array('template' => 'widget/product/bargainitem.tpl', 'block'=>'widget_product_bargainitem_price_value', 'file'=>'/views/blocks/widget/product/bargainitem.tpl'),
         array('template' => 'widget/product/compareitem.tpl', 'block'=>'widget_product_compareitem_price_value', 'file'=>'/views/blocks/widget/product/compareitem.tpl'),
         array('template' => 'user_main.tpl', 'block'=>'admin_user_main_form', 'file'=>'/views/blocks/admin/user_main.tpl'),
+        array('template' => 'page/checkout/inc/basketcontents.tpl', 'block'=>'checkout_basketcontents_basketitem_vat', 'file'=>'/views/blocks/page/checkout/inc/basketitem_vat.tpl'),
+        array('template' => 'page/checkout/basket.tpl', 'block'=>'checkout_basket_next_step_bottom', 'file'=>'/views/blocks/page/checkout/basket_nextstep.tpl'),
+        array('template' => 'page/checkout/order.tpl', 'block'=>'checkout_order_next_step_bottom', 'file'=>'/views/blocks/page/checkout/order_nextstep.tpl'),
     ),
     'settings' => array(
         array('group' => 'oevattbe', 'name' => 'blOeVATTBECountryEvidences',      'type' => 'arr',   'value' => array('oeVATTBEBillingCountryEvidence', 'oeVATTBEGeoLocationEvidence')),
         array('group' => 'oevattbe', 'name' => 'sOeVATTBEDefaultEvidence',        'type' => 'str',   'value' => 'billing_country'),
-
     )
 );
