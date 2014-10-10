@@ -22,7 +22,7 @@
 /**
  * Has TBE TBE article logic.
  */
-class oeVATTBETBEArticleCacheKey extends oxSuperCfg
+class oeVATTBETBEArticleCacheKey
 {
     /** @var oxUser */
     private $_oUser = null;
