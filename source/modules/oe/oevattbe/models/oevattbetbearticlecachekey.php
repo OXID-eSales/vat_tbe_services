@@ -30,7 +30,7 @@ class oeVATTBETBEArticleCacheKey extends oxSuperCfg
     /**
      * Create class with dependency.
      *
-     * @param oxUser $oUser
+     * @param oxUser $oUser user to get country for cache key.
      */
     public function __construct($oUser)
     {
@@ -51,7 +51,7 @@ class oeVATTBETBEArticleCacheKey extends oxSuperCfg
     /**
      * Update existing cache keys with TBE information.
      *
-     * @param array $aKeys
+     * @param array $aKeys old cache keys to change by adding country.
      *
      * @return array
      */
