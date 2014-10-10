@@ -23,6 +23,11 @@
 // RESOURCE IDENTIFIER = STRING
 // -------------------------------
 $aLang = array(
-    'charset'                                    => 'ISO-8859-15',
+    'charset'                                        => 'ISO-8859-15',
+    'SHOP_MODULE_GROUP_oevattbe'                     => '[TR] VAT TBE services options',
 
+    'SHOP_MODULE_blOeVATTBECountryEvidences'         => 'Classes used for user country evidences collection.',
+    'HELP_SHOP_MODULE_blOeVATTBECountryEvidences'    => 'These classes must be reachable by shop framework and extend oeVATTBEEvidence base cass. These classes will be called when collecting information about user country.',
+    'SHOP_MODULE_sOeVATTBEDefaultEvidence'           => 'Default evidence name.',
+    'HELP_SHOP_MODULE_sOeVATTBEDefaultEvidence'      => 'Default evidence is used when there is any non matching evidences. Then the value of this evidence will be used.',
 );
