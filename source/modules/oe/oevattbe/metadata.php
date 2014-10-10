@@ -70,7 +70,7 @@ $aModule = array(
         'oeVATTBEModelDbGateway'                       => 'oe/oevattbe/core/oevattbemodeldbgateway.php',
         'oeVATTBEOrderEvidenceList'                    => 'oe/oevattbe/models/oevattbeorderevidencelist.php',
         'oeVATTBEOrderEvidenceListDbGateway'           => 'oe/oevattbe/models/dbgateways/oevattbeorderevidencelistdbgateway.php',
-        'oeVATTBEArticleSQLBuilder'                    => 'oe/oevattbe/models/oevattbeArticlesqlbuilder.php',
+        'oeVATTBEArticleSQLBuilder'                    => 'oe/oevattbe/models/oevattbearticlesqlbuilder.php',
     ),
     'events'       => array(
         'onActivate'   => 'oeVatTbeEvents::onActivate',
