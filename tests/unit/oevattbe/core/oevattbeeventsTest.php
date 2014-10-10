@@ -53,7 +53,7 @@ class Unit_oeVATTBE_Core_oeVATTBEEventsTest extends OxidTestCase
         $aTableFields = array(
             'oxarticles'   => array('oevattbe_istbeservice'),
             'oxcountry' => array('oevattbe_appliestbevat', 'oevattbe_istbevatconfigured'),
-            'oxorder' => array('oevattbe_hastbeservices'),
+            'oxorder' => array('oevattbe_hastbeservices', 'oevattbe_evidenceused'),
             'oxuser' => array('oevattbe_vatinenterdate'),
         );
 

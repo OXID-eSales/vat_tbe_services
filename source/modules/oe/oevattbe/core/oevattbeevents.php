@@ -55,7 +55,7 @@ class oeVATTBEEvents
         $aTableFields = array(
             'oxarticles'  => array('oevattbe_istbeservice'),
             'oxcountry' => array('oevattbe_appliestbevat', 'oevattbe_istbevatconfigured'),
-            'oxorder' => array('oevattbe_hastbeservices'),
+            'oxorder' => array('oevattbe_hastbeservices', 'oevattbe_evidenceused'),
             'oxuser' => array('oevattbe_vatinenterdate'),
         );
 
@@ -64,6 +64,7 @@ class oeVATTBEEvents
             'oevattbe_appliestbevat' => "ALTER TABLE `oxcountry` ADD `oevattbe_appliestbevat` tinyint(1) NOT NULL default 0",
             'oevattbe_istbevatconfigured' => "ALTER TABLE `oxcountry` ADD `oevattbe_istbevatconfigured` tinyint(1) NOT NULL default 0",
             'oevattbe_hastbeservices' => "ALTER TABLE `oxorder` ADD `oevattbe_hastbeservices` tinyint(1) NOT NULL default 0",
+            'oevattbe_evidenceused' => "ALTER TABLE `oxorder` ADD `oevattbe_evidenceused` char(32) NOT NULL default 0",
             'oevattbe_vatinenterdate' => "ALTER TABLE `oxuser` ADD `oevattbe_vatinenterdate` timestamp NOT NULL",
         );
 
