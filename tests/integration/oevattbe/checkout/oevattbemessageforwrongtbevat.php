@@ -25,12 +25,20 @@
  */
 class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends OxidTestCase
 {
+    /**
+     * Prepare articles data: set articles to be TBE.
+     */
     public function setUp()
     {
         parent::setup();
         $this->_prepareArticlesData();
     }
 
+    /**
+     * Provides with articles to check if error message is formed.
+     *
+     * @return array
+     */
     public function providerMessageSetInBasketForAllArticlesWhenUserIsNotLeggedIn()
     {
         $sIdTbeArticleWithVatGroup = '1126';
@@ -49,7 +57,7 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
     /**
      * Check if message is set in first checkout step for all TBE articles when user is not logged in.
      *
-     * @param array $aArticles array of articles to set to basket and check.
+     * @param array  $aArticles     array of articles to set to basket and check.
      * @param string $sErrorMessage article names which should be displayed in error message.
      *
      * @dataProvider providerMessageSetInBasketForAllArticlesWhenUserIsNotLeggedIn
@@ -74,6 +82,11 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
         $this->assertRegExp($sErrorMessage, $aEx['default'][0], 'Error message: '. $aEx['default'][0]);
     }
 
+    /**
+     * Provides with articles to check if error message is formed.
+     *
+     * @return array
+     */
     public function providerMessageSetInBasketForWrongVATArticlesWhenUserIsLeggedIn()
     {
         $sIdTbeArticleWithVatGroup = '1126';
@@ -90,7 +103,7 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
     /**
      * Check if message is set in first checkout step for TBE articles with wrong VAT when user is logged in.
      *
-     * @param array $aArticles array of articles to set to basket and check.
+     * @param array  $aArticles     array of articles to set to basket and check.
      * @param string $sErrorMessage article names which should be displayed in error message.
      *
      * @dataProvider providerMessageSetInBasketForWrongVATArticlesWhenUserIsLeggedIn
@@ -146,6 +159,8 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
     }
 
     /**
+     * Create demo user to test TBE articles for logged in user.
+     *
      * @return oxUser
      */
     private function _createUser()
@@ -155,6 +170,7 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
         $sSalt = $this->_sNewSalt;
         $sGermanyId = $this->_sAustriaId;
 
+        /** @var oxUser $oUser */
         $oUser = oxNew('oxUser');
         $oUser->oxuser__oxusername = new oxField($sUserName, oxField::T_RAW);
         $oUser->oxuser__oxpassword = new oxField($sEncodedPassword, oxField::T_RAW);
