@@ -24,6 +24,9 @@
  */
 class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
 {
+    /** @var oeVATTBEArticleSQLBuilder */
+    private $_oVATTBEArticleSQLBuilder = null;
+
     /**
      * Creates SQL Statement to load Articles, etc.
      *
@@ -35,43 +38,39 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
      */
     protected function _getCategorySelect($sFields, $sCatId, $aSessionFilter)
     {
-        if (!is_null($this->_getTbeCountryId())) {
-
-            $sArticleTable = getViewName('oxarticles');
-            $sO2CView = getViewName('oxobject2category');
-
-            // ----------------------------------
-            // sorting
-            $sSorting = '';
-            if ($this->_sCustomSorting) {
-                $sSorting = " {$this->_sCustomSorting} , ";
-            }
-
-            // ----------------------------------
-            // filtering ?
-            $sFilterSql = '';
-            $iLang = oxRegistry::getLang()->getBaseLanguage();
-            if ($aSessionFilter && isset($aSessionFilter[$sCatId][$iLang])) {
-                $sFilterSql = $this->_getFilterSql($sCatId, $aSessionFilter[$sCatId][$iLang]);
-            }
-
-            $oDb = oxDb::getDb();
-
-            $sSelect = "SELECT $sFields, $sArticleTable.oxtimestamp";
-            $sSelect .= " , `oevattbe_countryvatgroups`.`oevattbe_rate` ";
-            $sSelect .= " FROM $sO2CView as oc";
-            $sSelect .= " left join $sArticleTable ON $sArticleTable.oxid = oc.oxobjectid";
-            $sSelect .= " LEFT JOIN `oevattbe_articlevat` ON `" . $sArticleTable . "`.`oxid` = `oevattbe_articlevat`.`oevattbe_articleid` ";
-            $sSelect .= "       AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($this->_getTbeCountryId());
-            $sSelect .= " LEFT JOIN `oevattbe_countryvatgroups` ON `oevattbe_articlevat`.`oevattbe_vatgroupid` = `oevattbe_countryvatgroups`.`oevattbe_id` ";
-            $sSelect .= " WHERE " . $this->getBaseObject()->getSqlActiveSnippet() . " and $sArticleTable.oxparentid = ''";
-            $sSelect .= " and oc.oxcatnid = " . $oDb->quote($sCatId) . " $sFilterSql ORDER BY $sSorting oc.oxpos, oc.oxobjectid ";
-
-        } else {
-            $sSelect = parent::_getCategorySelect($sFields, $sCatId, $aSessionFilter);
+        if (is_null($this->_getTbeCountryId())) {
+            return parent::_getCategorySelect($sFields, $sCatId, $aSessionFilter);
         }
 
+        $sArticleTable = getViewName('oxarticles');
+        $sO2CView = getViewName('oxobject2category');
 
+        // ----------------------------------
+        // sorting
+        $sSorting = '';
+        if ($this->_sCustomSorting) {
+            $sSorting = " {$this->_sCustomSorting} , ";
+        }
+
+        // ----------------------------------
+        // filtering ?
+        $sFilterSql = '';
+        $iLang = oxRegistry::getLang()->getBaseLanguage();
+        if ($aSessionFilter && isset($aSessionFilter[$sCatId][$iLang])) {
+            $sFilterSql = $this->_getFilterSql($sCatId, $aSessionFilter[$sCatId][$iLang]);
+        }
+
+        $oDb = oxDb::getDb();
+
+        $sSelect = "SELECT $sArticleTable.oxtimestamp, ";
+        $sSelect .= $this->_getVATTBEArticleSqlBuilder()->getSelectFields();
+        $sSelect .= " FROM $sO2CView as oc";
+        $sSelect .= " left join $sArticleTable ON $sArticleTable.oxid = oc.oxobjectid";
+        $sSelect .= " LEFT JOIN `oevattbe_articlevat` ON `" . $sArticleTable . "`.`oxid` = `oevattbe_articlevat`.`oevattbe_articleid` ";
+        $sSelect .= "       AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($this->_getTbeCountryId());
+        $sSelect .= " LEFT JOIN `oevattbe_countryvatgroups` ON `oevattbe_articlevat`.`oevattbe_vatgroupid` = `oevattbe_countryvatgroups`.`oevattbe_id` ";
+        $sSelect .= " WHERE " . $this->getBaseObject()->getSqlActiveSnippet() . " and $sArticleTable.oxparentid = ''";
+        $sSelect .= " and oc.oxcatnid = " . $oDb->quote($sCatId) . " $sFilterSql ORDER BY $sSorting oc.oxpos, oc.oxobjectid ";
 
         return $sSelect;
     }
@@ -85,24 +84,22 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
      */
     protected function _getVendorSelect($sVendorId)
     {
-        if (!is_null($this->_getTbeCountryId())) {
-            $sArticleTable = getViewName('oxarticles');
-            $oBaseObject = $this->getBaseObject();
-            $sFieldNames = $oBaseObject->getSelectFields();
-            $sSelect = "select $sFieldNames ";
-            $sSelect .= " , `oevattbe_countryvatgroups`.`oevattbe_rate` ";
-            $sSelect .= " from $sArticleTable ";
-            $sSelect .= " LEFT JOIN `oevattbe_articlevat` ON `" . $sArticleTable . "`.`oxid` = `oevattbe_articlevat`.`oevattbe_articleid` ";
-            $sSelect .= "       AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($this->_getTbeCountryId());
-            $sSelect .= " LEFT JOIN `oevattbe_countryvatgroups` ON `oevattbe_articlevat`.`oevattbe_vatgroupid` = `oevattbe_countryvatgroups`.`oevattbe_id` ";
-            $sSelect .= "where $sArticleTable.oxvendorid = " . oxDb::getDb()->quote($sVendorId) . " ";
-            $sSelect .= " and " . $oBaseObject->getSqlActiveSnippet() . " and $sArticleTable.oxparentid = ''  ";
+        if (is_null($this->_getTbeCountryId())) {
+            return parent::_getVendorSelect($sVendorId);
+        }
 
-            if ($this->_sCustomSorting) {
-                $sSelect .= " ORDER BY {$this->_sCustomSorting} ";
-            }
-        } else {
-            $sSelect = parent::_getVendorSelect($sVendorId);
+        $sArticleTable = getViewName('oxarticles');
+        $oBaseObject = $this->getBaseObject();
+
+        $sSelect = "select ";
+        $sSelect .= $this->_getVATTBEArticleSqlBuilder()->getSelectFields();
+        $sSelect .= " from $sArticleTable ";
+        $sSelect .= $this->_getVATTBEArticleSqlBuilder()->getJoins();
+        $sSelect .= "where $sArticleTable.oxvendorid = " . oxDb::getDb()->quote($sVendorId) . " ";
+        $sSelect .= " and " . $oBaseObject->getSqlActiveSnippet() . " and $sArticleTable.oxparentid = ''  ";
+
+        if ($this->_sCustomSorting) {
+            $sSelect .= " ORDER BY {$this->_sCustomSorting} ";
         }
 
         return $sSelect;
@@ -117,24 +114,22 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
      */
     protected function _getManufacturerSelect($sManufacturerId)
     {
-        if (!is_null($this->_getTbeCountryId())) {
-            $sArticleTable = getViewName('oxarticles');
-            $oBaseObject = $this->getBaseObject();
-            $sFieldNames = $oBaseObject->getSelectFields();
-            $sSelect = "select $sFieldNames ";
-            $sSelect .= " , `oevattbe_countryvatgroups`.`oevattbe_rate` ";
-            $sSelect .= " from $sArticleTable ";
-            $sSelect .= " LEFT JOIN `oevattbe_articlevat` ON `" . $sArticleTable . "`.`oxid` = `oevattbe_articlevat`.`oevattbe_articleid` ";
-            $sSelect .= "       AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($this->_getTbeCountryId());
-            $sSelect .= " LEFT JOIN `oevattbe_countryvatgroups` ON `oevattbe_articlevat`.`oevattbe_vatgroupid` = `oevattbe_countryvatgroups`.`oevattbe_id` ";
-            $sSelect .= "where $sArticleTable.oxmanufacturerid = " . oxDb::getDb()->quote($sManufacturerId) . " ";
-            $sSelect .= " and " . $oBaseObject->getSqlActiveSnippet() . " and $sArticleTable.oxparentid = ''  ";
+        if (is_null($this->_getTbeCountryId())) {
+            return parent::_getManufacturerSelect($sManufacturerId);
+        }
 
-            if ($this->_sCustomSorting) {
-                $sSelect .= " ORDER BY {$this->_sCustomSorting} ";
-            }
-        } else {
-            $sSelect = parent::_getManufacturerSelect($sManufacturerId);
+        $sArticleTable = getViewName('oxarticles');
+        $oBaseObject = $this->getBaseObject();
+
+        $sSelect = "select ";
+        $sSelect .= $this->_getVATTBEArticleSqlBuilder()->getSelectFields();
+        $sSelect .= " from $sArticleTable ";
+        $sSelect .= $this->_getVATTBEArticleSqlBuilder()->getJoins();
+        $sSelect .= "where $sArticleTable.oxmanufacturerid = " . oxDb::getDb()->quote($sManufacturerId) . " ";
+        $sSelect .= " and " . $oBaseObject->getSqlActiveSnippet() . " and $sArticleTable.oxparentid = ''  ";
+
+        if ($this->_sCustomSorting) {
+            $sSelect .= " ORDER BY {$this->_sCustomSorting} ";
         }
 
         return $sSelect;
@@ -150,30 +145,27 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
      */
     protected function _getPriceSelect($dPriceFrom, $dPriceTo)
     {
-        if (!is_null($this->_getTbeCountryId())) {
-            $oBaseObject = $this->getBaseObject();
-            $sArticleTable = $oBaseObject->getViewName();
-            $sSelectFields = $oBaseObject->getSelectFields();
+        if (is_null($this->_getTbeCountryId())) {
+            return parent::_getPriceSelect($dPriceFrom, $dPriceTo);
+        }
 
-            $sSelect = "select $sSelectFields ";
-            $sSelect .= " , `oevattbe_countryvatgroups`.`oevattbe_rate` ";
-            $sSelect .= " from $sArticleTable ";
-            $sSelect .= " LEFT JOIN `oevattbe_articlevat` ON `" . $sArticleTable . "`.`oxid` = `oevattbe_articlevat`.`oevattbe_articleid` ";
-            $sSelect .= "       AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($this->_getTbeCountryId());
-            $sSelect .= " LEFT JOIN `oevattbe_countryvatgroups` ON `oevattbe_articlevat`.`oevattbe_vatgroupid` = `oevattbe_countryvatgroups`.`oevattbe_id` ";
-            $sSelect .= " where oxvarminprice >= 0 ";
-            $sSelect .= $dPriceTo ? "and oxvarminprice <= " . (double) $dPriceTo . " " : " ";
-            $sSelect .= $dPriceFrom ? "and oxvarminprice  >= " . (double) $dPriceFrom . " " : " ";
+        $oBaseObject = $this->getBaseObject();
+        $sArticleTable = $oBaseObject->getViewName();
 
-            $sSelect .= " and " . $oBaseObject->getSqlActiveSnippet() . " and {$sArticleTable}.oxissearch = 1";
+        $sSelect = "select ";
+        $sSelect .= $this->_getVATTBEArticleSqlBuilder()->getSelectFields();
+        $sSelect .= " from $sArticleTable ";
+        $sSelect .= $this->_getVATTBEArticleSqlBuilder()->getJoins();
+        $sSelect .= " where oxvarminprice >= 0 ";
+        $sSelect .= $dPriceTo ? "and oxvarminprice <= " . (double) $dPriceTo . " " : " ";
+        $sSelect .= $dPriceFrom ? "and oxvarminprice  >= " . (double) $dPriceFrom . " " : " ";
 
-            if (!$this->_sCustomSorting) {
-                $sSelect .= " order by {$sArticleTable}.oxvarminprice asc , {$sArticleTable}.oxid";
-            } else {
-                $sSelect .= " order by {$this->_sCustomSorting}, {$sArticleTable}.oxid ";
-            }
+        $sSelect .= " and " . $oBaseObject->getSqlActiveSnippet() . " and {$sArticleTable}.oxissearch = 1";
+
+        if (!$this->_sCustomSorting) {
+            $sSelect .= " order by {$sArticleTable}.oxvarminprice asc , {$sArticleTable}.oxid";
         } else {
-            $sSelect = parent::_getPriceSelect($dPriceFrom, $dPriceTo);
+            $sSelect .= " order by {$this->_sCustomSorting}, {$sArticleTable}.oxid ";
         }
 
         return $sSelect;
@@ -189,47 +181,42 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
      */
     public function loadTagArticles($sTag, $iLang)
     {
-        if (!is_null($this->_getTbeCountryId())) {
-            $oListObject = $this->getBaseObject();
-            $sArticleTable = $oListObject->getViewName();
-            $sArticleFields = $oListObject->getSelectFields();
-            $sViewName = getViewName('oxartextends', $iLang);
-
-            $oTag = oxNew('oxtag', $sTag);
-            $oTag->addUnderscores();
-            $sTag = $oTag->get();
-
-            $sQ = "select {$sArticleFields}";
-            $sQ .= " , `oevattbe_countryvatgroups`.`oevattbe_rate` ";
-            $sQ .= " from {$sViewName} ";
-            $sQ .= " inner join {$sArticleTable} on {$sArticleTable}.oxid = {$sViewName}.oxid ";
-            $sQ .= " LEFT JOIN `oevattbe_articlevat` ON `" . $sArticleTable . "`.`oxid` = `oevattbe_articlevat`.`oevattbe_articleid` ";
-            $sQ .= "       AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($this->_getTbeCountryId());
-            $sQ .= " LEFT JOIN `oevattbe_countryvatgroups` ON `oevattbe_articlevat`.`oevattbe_vatgroupid` = `oevattbe_countryvatgroups`.`oevattbe_id` ";
-            $sQ .= " where {$sArticleTable}.oxparentid = '' AND match ( {$sViewName}.oxtags ) ";
-            $sQ .= " against( " . oxDb::getDb()->quote("\"" . $sTag . "\"") . " IN BOOLEAN MODE )";
-
-            // checking stock etc
-            if (($sActiveSnippet = $oListObject->getSqlActiveSnippet())) {
-                $sQ .= " and {$sActiveSnippet}";
-            }
-
-            if ($this->_sCustomSorting) {
-                $sSort = $this->_sCustomSorting;
-                if (strpos($sSort, '.') === false) {
-                    $sSort = $sArticleTable . '.' . $sSort;
-                }
-                $sQ .= " order by $sSort ";
-            }
-
-            $this->selectString($sQ);
-
-            // calc count - we can not use count($this) here as we might have paging enabled
-            return oxRegistry::get("oxUtilsCount")->getTagArticleCount($sTag, $iLang);
-        } else {
+        if (is_null($this->_getTbeCountryId())) {
             return parent::loadTagArticles($sTag, $iLang);
         }
+        $oListObject = $this->getBaseObject();
+        $sArticleTable = $oListObject->getViewName();
+        $sViewName = getViewName('oxartextends', $iLang);
 
+        $oTag = oxNew('oxtag', $sTag);
+        $oTag->addUnderscores();
+        $sTag = $oTag->get();
+
+        $sQ = "select ";
+        $sQ .= $this->_getVATTBEArticleSqlBuilder()->getSelectFields();
+        $sQ .= " from {$sViewName} ";
+        $sQ .= " inner join {$sArticleTable} on {$sArticleTable}.oxid = {$sViewName}.oxid ";
+        $sQ .= $this->_getVATTBEArticleSqlBuilder()->getJoins();
+        $sQ .= " where {$sArticleTable}.oxparentid = '' AND match ( {$sViewName}.oxtags ) ";
+        $sQ .= " against( " . oxDb::getDb()->quote("\"" . $sTag . "\"") . " IN BOOLEAN MODE )";
+
+        // checking stock etc
+        if (($sActiveSnippet = $oListObject->getSqlActiveSnippet())) {
+            $sQ .= " and {$sActiveSnippet}";
+        }
+
+        if ($this->_sCustomSorting) {
+            $sSort = $this->_sCustomSorting;
+            if (strpos($sSort, '.') === false) {
+                $sSort = $sArticleTable . '.' . $sSort;
+            }
+            $sQ .= " order by $sSort ";
+        }
+
+        $this->selectString($sQ);
+
+        // calc count - we can not use count($this) here as we might have paging enabled
+        return oxRegistry::get("oxUtilsCount")->getTagArticleCount($sTag, $iLang);
     }
 
     /**
@@ -242,43 +229,40 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
      */
     public function loadActionArticles($sActionID, $iLimit = null)
     {
-        if (!is_null($this->_getTbeCountryId())) {
-            // Performance
-            if (!trim($sActionID)) {
-                return;
-            }
-
-            $sShopID = $this->getConfig()->getShopId();
-            $sActionID = oxDb::getDb()->quote(strtolower($sActionID));
-
-            //echo $sSelect;
-            $oBaseObject = $this->getBaseObject();
-            $sArticleTable = $oBaseObject->getViewName();
-            $sArticleFields = $oBaseObject->getSelectFields();
-
-            $oBase = oxNew("oxactions");
-            $sActiveSql = $oBase->getSqlActiveSnippet();
-            $sViewName = $oBase->getViewName();
-
-            $sLimit = ($iLimit > 0) ? "limit " . $iLimit : '';
-
-            $sSelect = "select $sArticleFields ";
-            $sSelect .= " , `oevattbe_countryvatgroups`.`oevattbe_rate` ";
-            $sSelect .= " from oxactions2article";
-            $sSelect .= " left join $sArticleTable on $sArticleTable.oxid = oxactions2article.oxartid";
-            $sSelect .= " left join $sViewName on $sViewName.oxid = oxactions2article.oxactionid";
-            $sSelect .= " LEFT JOIN `oevattbe_articlevat` ON `" . $sArticleTable . "`.`oxid` = `oevattbe_articlevat`.`oevattbe_articleid` ";
-            $sSelect .= "       AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($this->_getTbeCountryId());
-            $sSelect .= " LEFT JOIN `oevattbe_countryvatgroups` ON `oevattbe_articlevat`.`oevattbe_vatgroupid` = `oevattbe_countryvatgroups`.`oevattbe_id` ";
-            $sSelect .= " where oxactions2article.oxshopid = '$sShopID' and oxactions2article.oxactionid = $sActionID and $sActiveSql";
-            $sSelect .= " and $sArticleTable.oxid is not null and " . $oBaseObject->getSqlActiveSnippet();
-            $sSelect .= " order by oxactions2article.oxsort $sLimit";
-
-            $this->selectString($sSelect);
-        } else {
+        if (is_null($this->_getTbeCountryId())) {
             parent::loadActionArticles($sActionID, $iLimit = null);
+            return;
         }
 
+        if (!trim($sActionID)) {
+            return;
+        }
+
+        $sShopID = $this->getConfig()->getShopId();
+        $sActionID = oxDb::getDb()->quote(strtolower($sActionID));
+
+        //echo $sSelect;
+        $oBaseObject = $this->getBaseObject();
+        $sArticleTable = $oBaseObject->getViewName();
+        $sArticleFields = $oBaseObject->getSelectFields();
+
+        $oBase = oxNew("oxactions");
+        $sActiveSql = $oBase->getSqlActiveSnippet();
+        $sViewName = $oBase->getViewName();
+
+        $sLimit = ($iLimit > 0) ? "limit " . $iLimit : '';
+
+        $sSelect = "select ";
+        $sSelect .= $this->_getVATTBEArticleSqlBuilder()->getSelectFields();
+        $sSelect .= " from oxactions2article";
+        $sSelect .= " left join $sArticleTable on $sArticleTable.oxid = oxactions2article.oxartid";
+        $sSelect .= " left join $sViewName on $sViewName.oxid = oxactions2article.oxactionid";
+        $sSelect .= $this->_getVATTBEArticleSqlBuilder()->getJoins();
+        $sSelect .= " where oxactions2article.oxshopid = '$sShopID' and oxactions2article.oxactionid = $sActionID and $sActiveSql";
+        $sSelect .= " and $sArticleTable.oxid is not null and " . $oBaseObject->getSqlActiveSnippet();
+        $sSelect .= " order by oxactions2article.oxsort $sLimit";
+
+        $this->selectString($sSelect);
     }
 
     /**
@@ -290,36 +274,33 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
      */
     public function loadArticleAccessoires($sArticleId)
     {
-        if (!is_null($this->_getTbeCountryId())) {
-            $myConfig = $this->getConfig();
-
-            // Performance
-            if (!$myConfig->getConfigParam('bl_perfLoadAccessoires')) {
-                return;
-            }
-
-            $sArticleId = oxDb::getDb()->quote($sArticleId);
-
-            $oBaseObject = $this->getBaseObject();
-            $sArticleTable = $oBaseObject->getViewName();
-
-            $sSelect = "select $sArticleTable.* ";
-            $sSelect .= " , `oevattbe_countryvatgroups`.`oevattbe_rate` ";
-            $sSelect .= " from oxaccessoire2article ";
-            $sSelect .= " left join $sArticleTable on oxaccessoire2article.oxobjectid=$sArticleTable.oxid ";
-            $sSelect .= " LEFT JOIN `oevattbe_articlevat` ON `" . $sArticleTable . "`.`oxid` = `oevattbe_articlevat`.`oevattbe_articleid` ";
-            $sSelect .= "       AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($this->_getTbeCountryId());
-            $sSelect .= " LEFT JOIN `oevattbe_countryvatgroups` ON `oevattbe_articlevat`.`oevattbe_vatgroupid` = `oevattbe_countryvatgroups`.`oevattbe_id` ";
-            $sSelect .= "where oxaccessoire2article.oxarticlenid = $sArticleId ";
-            $sSelect .= " and $sArticleTable.oxid is not null and " . $oBaseObject->getSqlActiveSnippet();
-            //sorting articles
-            $sSelect .= " order by oxaccessoire2article.oxsort";
-
-            $this->selectString($sSelect);
-        } else {
+        if (is_null($this->_getTbeCountryId())) {
             parent::loadArticleAccessoires($sArticleId);
+            return;
+        }
+        $myConfig = $this->getConfig();
+
+        // Performance
+        if (!$myConfig->getConfigParam('bl_perfLoadAccessoires')) {
+            return;
         }
 
+        $sArticleId = oxDb::getDb()->quote($sArticleId);
+
+        $oBaseObject = $this->getBaseObject();
+        $sArticleTable = $oBaseObject->getViewName();
+
+        $sSelect = "select ";
+        $sSelect .= $this->_getVATTBEArticleSqlBuilder()->getSelectFields();
+        $sSelect .= " from oxaccessoire2article ";
+        $sSelect .= " left join $sArticleTable on oxaccessoire2article.oxobjectid=$sArticleTable.oxid ";
+        $sSelect .= $this->_getVATTBEArticleSqlBuilder()->getJoins();
+        $sSelect .= "where oxaccessoire2article.oxarticlenid = $sArticleId ";
+        $sSelect .= " and $sArticleTable.oxid is not null and " . $oBaseObject->getSqlActiveSnippet();
+        //sorting articles
+        $sSelect .= " order by oxaccessoire2article.oxsort";
+
+        $this->selectString($sSelect);
     }
 
     /**
@@ -331,189 +312,181 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
      */
     public function loadArticleCrossSell($sArticleId)
     {
-        if (!is_null($this->_getTbeCountryId())) {
-            $myConfig = $this->getConfig();
-
-            // Performance
-            if (!$myConfig->getConfigParam('bl_perfLoadCrossselling')) {
-                return null;
-            }
-
-            $oBaseObject = $this->getBaseObject();
-            $sArticleTable = $oBaseObject->getViewName();
-
-            $sArticleId = oxDb::getDb()->quote($sArticleId);
-
-            $sSelect = "SELECT $sArticleTable.* ";
-            $sSelect .= " , `oevattbe_countryvatgroups`.`oevattbe_rate` ";
-            $sSelect .= " FROM $sArticleTable ";
-            $sSelect .= " INNER JOIN oxobject2article ON oxobject2article.oxobjectid=$sArticleTable.oxid ";
-            $sSelect .= " LEFT JOIN `oevattbe_articlevat` ON `" . $sArticleTable . "`.`oxid` = `oevattbe_articlevat`.`oevattbe_articleid` ";
-            $sSelect .= "       AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($this->_getTbeCountryId());
-            $sSelect .= " LEFT JOIN `oevattbe_countryvatgroups` ON `oevattbe_articlevat`.`oevattbe_vatgroupid` = `oevattbe_countryvatgroups`.`oevattbe_id` ";
-            $sSelect .= "WHERE oxobject2article.oxarticlenid = $sArticleId ";
-            $sSelect .= " AND " . $oBaseObject->getSqlActiveSnippet();
-
-            // #525 bidirectional cross selling
-            if ($myConfig->getConfigParam('blBidirectCross')) {
-                $sSelect = "
-                (
-                    SELECT $sArticleTable.* FROM $sArticleTable
-                        INNER JOIN oxobject2article AS O2A1 on
-                            ( O2A1.oxobjectid = $sArticleTable.oxid AND O2A1.oxarticlenid = $sArticleId )
-                    WHERE 1
-                    AND " . $oBaseObject->getSqlActiveSnippet() . "
-                    AND ($sArticleTable.oxid != $sArticleId)
-                )
-                UNION
-                (
-                    SELECT $sArticleTable.* FROM $sArticleTable
-                        INNER JOIN oxobject2article AS O2A2 ON
-                            ( O2A2.oxarticlenid = $sArticleTable.oxid AND O2A2.oxobjectid = $sArticleId )
-                    WHERE 1
-                    AND " . $oBaseObject->getSqlActiveSnippet() . "
-                    AND ($sArticleTable.oxid != $sArticleId)
-                )";
-            }
-
-            $this->setSqlLimit(0, $myConfig->getConfigParam('iNrofCrossellArticles'));
-            $this->selectString($sSelect);
-
-        } else {
+        if (is_null($this->_getTbeCountryId())) {
             parent::loadArticleCrossSell($sArticleId);
+            return;
         }
 
+        $myConfig = $this->getConfig();
+
+        // Performance
+        if (!$myConfig->getConfigParam('bl_perfLoadCrossselling')) {
+            return null;
+        }
+
+        $oBaseObject = $this->getBaseObject();
+        $sArticleTable = $oBaseObject->getViewName();
+
+        $sArticleId = oxDb::getDb()->quote($sArticleId);
+
+        $sSelect = "SELECT ";
+        $sSelect .= $this->_getVATTBEArticleSqlBuilder()->getSelectFields();
+        $sSelect .= " FROM $sArticleTable ";
+        $sSelect .= " INNER JOIN oxobject2article ON oxobject2article.oxobjectid=$sArticleTable.oxid ";
+        $sSelect .= $this->_getVATTBEArticleSqlBuilder()->getJoins();
+        $sSelect .= "WHERE oxobject2article.oxarticlenid = $sArticleId ";
+        $sSelect .= " AND " . $oBaseObject->getSqlActiveSnippet();
+
+        // #525 bidirectional cross selling
+        if ($myConfig->getConfigParam('blBidirectCross')) {
+            $sSelect = "
+            (
+                SELECT $sArticleTable.* FROM $sArticleTable
+                    INNER JOIN oxobject2article AS O2A1 on
+                        ( O2A1.oxobjectid = $sArticleTable.oxid AND O2A1.oxarticlenid = $sArticleId )
+                WHERE 1
+                AND " . $oBaseObject->getSqlActiveSnippet() . "
+                AND ($sArticleTable.oxid != $sArticleId)
+            )
+            UNION
+            (
+                SELECT $sArticleTable.* FROM $sArticleTable
+                    INNER JOIN oxobject2article AS O2A2 ON
+                        ( O2A2.oxarticlenid = $sArticleTable.oxid AND O2A2.oxobjectid = $sArticleId )
+                WHERE 1
+                AND " . $oBaseObject->getSqlActiveSnippet() . "
+                AND ($sArticleTable.oxid != $sArticleId)
+            )";
+        }
+
+        $this->setSqlLimit(0, $myConfig->getConfigParam('iNrofCrossellArticles'));
+        $this->selectString($sSelect);
     }
 
     /**
      * Loads newest shops articles from DB.
      *
      * @param int $iLimit Select limit
+     *
+     * @return null
      */
     public function loadNewestArticles($iLimit = null)
     {
-        if (!is_null($this->_getTbeCountryId())) {
-            $myConfig = $this->getConfig();
-
-            if (!$myConfig->getConfigParam('bl_perfLoadPriceForAddList')) {
-                $this->getBaseObject()->disablePriceLoad();
-            }
-
-            $this->_aArray = array();
-            switch ($myConfig->getConfigParam('iNewestArticlesMode')) {
-                case 0:
-                    // switched off, do nothing
-                    break;
-                case 1:
-                    // manually entered
-                    $this->loadActionArticles('oxnewest', $iLimit);
-                    break;
-                case 2:
-
-                    $sArticleTable = getViewName('oxarticles');
-                    if ($myConfig->getConfigParam('blNewArtByInsert')) {
-                        $sType = 'oxinsert';
-                    } else {
-                        $sType = 'oxtimestamp';
-                    }
-                    $sSelect = "select $sArticleTable.* ";
-                    $sSelect .= " , `oevattbe_countryvatgroups`.`oevattbe_rate` ";
-                    $sSelect .= " from $sArticleTable ";
-                    $sSelect .= " LEFT JOIN `oevattbe_articlevat` ON `" . $sArticleTable . "`.`oxid` = `oevattbe_articlevat`.`oevattbe_articleid` ";
-                    $sSelect .= "       AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($this->_getTbeCountryId());
-                    $sSelect .= " LEFT JOIN `oevattbe_countryvatgroups` ON `oevattbe_articlevat`.`oevattbe_vatgroupid` = `oevattbe_countryvatgroups`.`oevattbe_id` ";
-                    $sSelect .= "where oxparentid = '' and " . $this->getBaseObject()->getSqlActiveSnippet() . " and oxissearch = 1 order by $sType desc ";
-                    if (!($iLimit = (int) $iLimit)) {
-                        $iLimit = $myConfig->getConfigParam('iNrofNewcomerArticles');
-                    }
-                    $sSelect .= "limit " . $iLimit;
-
-                    $this->selectString($sSelect);
-
-                    break;
-            }
-        } else {
+        if (is_null($this->_getTbeCountryId())) {
             parent::loadNewestArticles($iLimit);
+            return;
+        }
+        $myConfig = $this->getConfig();
+
+        if (!$myConfig->getConfigParam('bl_perfLoadPriceForAddList')) {
+            $this->getBaseObject()->disablePriceLoad();
         }
 
+        $this->_aArray = array();
+        switch ($myConfig->getConfigParam('iNewestArticlesMode')) {
+            case 0:
+                // switched off, do nothing
+                break;
+            case 1:
+                // manually entered
+                $this->loadActionArticles('oxnewest', $iLimit);
+                break;
+            case 2:
+
+                $sArticleTable = getViewName('oxarticles');
+                if ($myConfig->getConfigParam('blNewArtByInsert')) {
+                    $sType = 'oxinsert';
+                } else {
+                    $sType = 'oxtimestamp';
+                }
+                $sSelect = "select ";
+                $sSelect .= $this->_getVATTBEArticleSqlBuilder()->getSelectFields();
+                $sSelect .= " from $sArticleTable ";
+                $sSelect .= $this->_getVATTBEArticleSqlBuilder()->getJoins();
+                $sSelect .= "where oxparentid = '' and " . $this->getBaseObject()->getSqlActiveSnippet() . " and oxissearch = 1 order by $sType desc ";
+                if (!($iLimit = (int) $iLimit)) {
+                    $iLimit = $myConfig->getConfigParam('iNrofNewcomerArticles');
+                }
+                $sSelect .= "limit " . $iLimit;
+
+                $this->selectString($sSelect);
+
+                break;
+        }
     }
 
     /**
      * Load top 5 articles
      *
      * @param int $iLimit Select limit
+     *
+     * @return null
      */
     public function loadTop5Articles($iLimit = null)
     {
-        if (!is_null($this->_getTbeCountryId())) {
-            $myConfig = $this->getConfig();
-
-            if (!$myConfig->getConfigParam('bl_perfLoadPriceForAddList')) {
-                $this->getBaseObject()->disablePriceLoad();
-            }
-
-            switch ($myConfig->getConfigParam('iTop5Mode')) {
-                case 0:
-                    // switched off, do nothing
-                    break;
-                case 1:
-                    // manually entered
-                    $this->loadActionArticles('oxtop5', $iLimit);
-                    break;
-                case 2:
-                    $sArticleTable = getViewName('oxarticles');
-
-                    //by default limit 5
-                    $sLimit = ($iLimit > 0) ? "limit " . $iLimit : 'limit 5';
-
-                    $sSelect = "select $sArticleTable.* ";
-                    $sSelect .= " , `oevattbe_countryvatgroups`.`oevattbe_rate` ";
-                    $sSelect .= " from $sArticleTable ";
-                    $sSelect .= " LEFT JOIN `oevattbe_articlevat` ON `" . $sArticleTable . "`.`oxid` = `oevattbe_articlevat`.`oevattbe_articleid` ";
-                    $sSelect .= "       AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($this->_getTbeCountryId());
-                    $sSelect .= " LEFT JOIN `oevattbe_countryvatgroups` ON `oevattbe_articlevat`.`oevattbe_vatgroupid` = `oevattbe_countryvatgroups`.`oevattbe_id` ";
-                    $sSelect .= "where " . $this->getBaseObject()->getSqlActiveSnippet() . " and $sArticleTable.oxissearch = 1 ";
-                    $sSelect .= "and $sArticleTable.oxparentid = '' and $sArticleTable.oxsoldamount>0 ";
-                    $sSelect .= "order by $sArticleTable.oxsoldamount desc $sLimit";
-
-                    $this->selectString($sSelect);
-                    break;
-            }
-        } else {
+        if (is_null($this->_getTbeCountryId())) {
             parent::loadTop5Articles($iLimit);
+            return;
+        }
+        $myConfig = $this->getConfig();
+
+        if (!$myConfig->getConfigParam('bl_perfLoadPriceForAddList')) {
+            $this->getBaseObject()->disablePriceLoad();
         }
 
+        switch ($myConfig->getConfigParam('iTop5Mode')) {
+            case 0:
+                // switched off, do nothing
+                break;
+            case 1:
+                // manually entered
+                $this->loadActionArticles('oxtop5', $iLimit);
+                break;
+            case 2:
+                $sArticleTable = getViewName('oxarticles');
+
+                //by default limit 5
+                $sLimit = ($iLimit > 0) ? "limit " . $iLimit : 'limit 5';
+
+                $sSelect = "select ";
+                $sSelect .= $this->_getVATTBEArticleSqlBuilder()->getSelectFields();
+                $sSelect .= " from $sArticleTable ";
+                $sSelect .= $this->_getVATTBEArticleSqlBuilder()->getJoins();
+                $sSelect .= "where " . $this->getBaseObject()->getSqlActiveSnippet() . " and $sArticleTable.oxissearch = 1 ";
+                $sSelect .= "and $sArticleTable.oxparentid = '' and $sArticleTable.oxsoldamount>0 ";
+                $sSelect .= "order by $sArticleTable.oxsoldamount desc $sLimit";
+
+                $this->selectString($sSelect);
+                break;
+        }
     }
 
     /**
      * Returns the appropriate SQL select
      *
-     * @param string $sRecommId       Recommlist ID
-     * @param string $sArticlesFilter Additional filter for recommlist's items
+     * @param string $sRecommendationId Recommlist ID
+     * @param string $sArticlesFilter   Additional filter for recommlist's items
      *
      * @return string
      */
-    protected function _getArticleSelect($sRecommId, $sArticlesFilter = null)
+    protected function _getArticleSelect($sRecommendationId, $sArticlesFilter = null)
     {
-        if (!is_null($this->_getTbeCountryId())) {
-            $sRecommId = oxDb::getDb()->quote($sRecommId);
-
-            $sArticleTable = getViewName('oxarticles');
-
-            $sSelect = "select distinct $sArticleTable.*, oxobject2list.oxdesc ";
-            $sSelect .= " , `oevattbe_countryvatgroups`.`oevattbe_rate` ";
-            $sSelect .= " from oxobject2list ";
-            $sSelect .= "left join $sArticleTable on oxobject2list.oxobjectid = $sArticleTable.oxid ";
-            $sSelect .= " LEFT JOIN `oevattbe_articlevat` ON `" . $sArticleTable . "`.`oxid` = `oevattbe_articlevat`.`oevattbe_articleid` ";
-            $sSelect .= "       AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($this->_getTbeCountryId());
-            $sSelect .= " LEFT JOIN `oevattbe_countryvatgroups` ON `oevattbe_articlevat`.`oevattbe_vatgroupid` = `oevattbe_countryvatgroups`.`oevattbe_id` ";
-            $sSelect .= "where (oxobject2list.oxlistid = $sRecommId) " . $sArticlesFilter;
-
-            return $sSelect;
-        } else {
-            return parent::_getArticleSelect($sRecommId, $sArticlesFilter);
+        if (is_null($this->_getTbeCountryId())) {
+            return parent::_getArticleSelect($sRecommendationId, $sArticlesFilter);
         }
 
+        $sRecommendationId = oxDb::getDb()->quote($sRecommendationId);
+
+        $sArticleTable = getViewName('oxarticles');
+
+        $sSelect = "select distinct oxobject2list.oxdesc, ";
+        $sSelect .= $this->_getVATTBEArticleSqlBuilder()->getSelectFields();
+        $sSelect .= " from oxobject2list ";
+        $sSelect .= " left join $sArticleTable on oxobject2list.oxobjectid = $sArticleTable.oxid ";
+        $sSelect .= $this->_getVATTBEArticleSqlBuilder()->getJoins();
+        $sSelect .= "where (oxobject2list.oxlistid = $sRecommendationId) " . $sArticlesFilter;
+
+        return $sSelect;
     }
 
     /**
@@ -531,5 +504,19 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
         }
 
         return $sCountryId;
+    }
+
+    /**
+     * Article sql builder
+     *
+     * @return oeVATTBEArticleSQLBuilder
+     */
+    protected function _getVATTBEArticleSqlBuilder()
+    {
+        if (is_null($this->_oVATTBEArticleSQLBuilder)) {
+            $this->_oVATTBEArticleSQLBuilder = oxNew('oeVATTBEArticleSQLBuilder', $this->getBaseObject());
+        }
+
+        return $this->_oVATTBEArticleSQLBuilder;
     }
 }
