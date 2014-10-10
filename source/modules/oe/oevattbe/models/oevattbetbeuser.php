@@ -51,7 +51,7 @@ class oeVATTBETBEUser
     /**
      * Returns users TBE country
      *
-     * @return string
+     * @return array
      */
     public function getTBEEvidenceList()
     {
