@@ -28,17 +28,17 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
     public function setUp()
     {
         parent::setup();
-        $this->_prepareData();
+        $this->_prepareArticlesData();
     }
 
-    public function providerMessageSetInBasketPageWhenTBEArticleWithWrongVATExistInBasket()
+    public function providerMessageSetInBasketForAllArticlesWhenUserIsNotLeggedIn()
     {
         $sIdTbeArticleWithVatGroup = '1126';
         $sTbeArticleWithoutVatGroup = '1127';
 
-        $sErrorMessage1 = '/.*Bar-Set ABSINTH.*/';
-        $sErrorMessage2 = '/.*Blinkende Eisw.*/';
-        $sErrorMessage3 = '/.*Bar-Set ABSINTH, Blinkende Eisw.*/';
+        $sErrorMessage1 = '/.*: Bar-Set ABSINTH.*/';
+        $sErrorMessage2 = '/.*: Blinkende Eisw.*/';
+        $sErrorMessage3 = '/.*: Bar-Set ABSINTH, Blinkende Eisw.*/';
         return array(
             array(array($sIdTbeArticleWithVatGroup), $sErrorMessage1),
             array(array($sTbeArticleWithoutVatGroup), $sErrorMessage2),
@@ -47,11 +47,12 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
     }
 
     /**
-     * Check if message is set in first checkout step for all TBE articles when user is logged in.
+     * Check if message is set in first checkout step for all TBE articles when user is not logged in.
      *
      * @param array $aArticles array of articles to set to basket and check.
+     * @param string $sErrorMessage article names which should be displayed in error message.
      *
-     * @dataProvider providerMessageSetInBasketPageWhenTBEArticleWithWrongVATExistInBasket
+     * @dataProvider providerMessageSetInBasketForAllArticlesWhenUserIsNotLeggedIn
      */
     public function testMessageSetInBasketForAllArticlesWhenUserIsNotLeggedIn($aArticles, $sErrorMessage)
     {
@@ -70,25 +71,72 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
 
         $aEx = oxRegistry::getSession()->getVariable('Errors');
         $this->assertTrue(isset($aEx['default'][0]));
-        $this->assertRegExp($sErrorMessage, $aEx['default'][0]);
+        $this->assertRegExp($sErrorMessage, $aEx['default'][0], 'Error message: '. $aEx['default'][0]);
     }
 
+    public function providerMessageSetInBasketForWrongVATArticlesWhenUserIsLeggedIn()
+    {
+        $sIdTbeArticleWithVatGroup = '1126';
+        $sTbeArticleWithoutVatGroup = '1127';
+
+        $sErrorMessage2 = '/.*: Blinkende Eisw.*/';
+        $sErrorMessage3 = '/.*: Blinkende Eisw.*/';
+        return array(
+            array(array($sTbeArticleWithoutVatGroup), $sErrorMessage2),
+            array(array($sIdTbeArticleWithVatGroup, $sTbeArticleWithoutVatGroup), $sErrorMessage3),
+        );
+    }
 
     /**
-     * prepare data
+     * Check if message is set in first checkout step for TBE articles with wrong VAT when user is logged in.
+     *
+     * @param array $aArticles array of articles to set to basket and check.
+     * @param string $sErrorMessage article names which should be displayed in error message.
+     *
+     * @dataProvider providerMessageSetInBasketForWrongVATArticlesWhenUserIsLeggedIn
      */
-    protected function _prepareData()
+    public function testMessageSetInBasketForWrongVATArticlesWhenUserIsLeggedIn($aArticles, $sErrorMessage)
+    {
+        $oSession = oxRegistry::getSession();
+
+        /** @var oxBasket $oBasket */
+        $oBasket = oxNew('oxBasket');
+
+        $oUser = $this->_createUser();
+        $blLogin = $oUser->login($this->_sDefaultUserName, $this->_sDefaultPassword);
+        $this->assertTrue($blLogin, 'User must login successfully.');
+        $oSession->setUser($oUser);
+
+        foreach ($aArticles as $sArticleId) {
+            $oBasket->addToBasket($sArticleId, 1);
+        }
+
+        $oSession->setBasket($oBasket);
+
+        /** @var basket $oBasket */
+        $oBasket = oxNew('basket');
+        $oBasket->render();
+
+        $aEx = oxRegistry::getSession()->getVariable('Errors');
+        $this->assertTrue(isset($aEx['default'][0]));
+        $this->assertRegExp($sErrorMessage, $aEx['default'][0], 'Error message: '. $aEx['default'][0]);
+    }
+
+    /**
+     * Prepare articles data.
+     */
+    protected function _prepareArticlesData()
     {
         $oDb = oxDb::getDb();
 
         $oDb->execute("TRUNCATE TABLE oevattbe_countryvatgroups");
         $oDb->execute("TRUNCATE TABLE oevattbe_articlevat");
 
-        $sql = "INSERT INTO oevattbe_countryvatgroups SET OEVATTBE_ID = 1, OEVATTBE_COUNTRYID = 'a7c40f631fc920687.20179984', OEVATTBE_NAME='name', OEVATTBE_RATE='8'";
+        $sql = "INSERT INTO oevattbe_countryvatgroups SET OEVATTBE_ID = 1, OEVATTBE_COUNTRYID = '{$this->_sAustriaId}', OEVATTBE_NAME='name', OEVATTBE_RATE='8'";
 
         $oDb->execute($sql);
 
-        $sql = "INSERT INTO oevattbe_articlevat SET OEVATTBE_ARTICLEID = '1126', OEVATTBE_COUNTRYID = 'a7c40f631fc920687.20179984', OEVATTBE_VATGROUPID = '1'";
+        $sql = "INSERT INTO oevattbe_articlevat SET OEVATTBE_ARTICLEID = '1126', OEVATTBE_COUNTRYID = '{$this->_sAustriaId}', OEVATTBE_VATGROUPID = '1'";
 
         $oDb->execute($sql);
 
@@ -96,4 +144,39 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
 
         $oDb->execute($sql);
     }
+
+    /**
+     * @return oxUser
+     */
+    private function _createUser()
+    {
+        $sUserName = $this->_sDefaultUserName;
+        $sEncodedPassword = $this->_sNewEncodedPassword;
+        $sSalt = $this->_sNewSalt;
+        $sGermanyId = $this->_sAustriaId;
+
+        $oUser = oxNew('oxUser');
+        $oUser->oxuser__oxusername = new oxField($sUserName, oxField::T_RAW);
+        $oUser->oxuser__oxpassword = new oxField($sEncodedPassword, oxField::T_RAW);
+        $oUser->oxuser__oxpasssalt = new oxField($sSalt, oxField::T_RAW);
+        $oUser->oxuser__oxcountryid = new oxField($sGermanyId, oxField::T_RAW);
+        $oUser->save();
+
+        return $oUser;
+    }
+
+    /** @var string */
+    protected $_sDefaultUserName = '_testUserName@oxid-esales.com';
+
+    /** @var string */
+    protected $_sDefaultUserPassword = '_testPassword';
+
+    /** @var string encoded default password */
+    private $_sNewEncodedPassword = 'b016e37ac8ec71449b475e84a941e3c39a27fb8f0710d4b47d6116ad6a6afcaa0c17006a4c01ffc67f3db95772fe001584cb4ce7e5bacd74198c24d1851841d5';
+
+    /** @var string Salt generated with new algorithm. */
+    private $_sNewSalt = '56784f8ffc657fff84915b93e12a626e';
+
+    /** @var string Austria ID. */
+    private $_sAustriaId = 'a7c40f6320aeb2ec2.72885259';
 }
