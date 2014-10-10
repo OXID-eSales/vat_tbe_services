@@ -103,5 +103,30 @@ class Unit_oeVATTBE_Core_oeVATTBEModelTest extends OxidTestCase
 
         return $oModel;
     }
-}
 
+    /**
+     * Creates stub object from given class
+     *
+     * @param string $sClass       Class name
+     * @param array  $aMethods     Assoc array with method => value
+     * @param array  $aTestMethods Array with test methods for mocking
+     *
+     * @return mixed
+     */
+    protected function _createStub($sClass, $aMethods, $aTestMethods = array())
+    {
+        $aMockedMethods = array_unique(array_merge(array_keys($aMethods), $aTestMethods));
+
+        $oObject = $this->getMock($sClass, $aMockedMethods, array(), '', false);
+
+        foreach ($aMethods as $sMethod => $sValue) {
+            if (!in_array($sMethod, $aTestMethods)) {
+                $oObject->expects($this->any())
+                    ->method($sMethod)
+                    ->will($this->returnValue($sValue));
+            }
+        }
+
+        return $oObject;
+    }
+}
