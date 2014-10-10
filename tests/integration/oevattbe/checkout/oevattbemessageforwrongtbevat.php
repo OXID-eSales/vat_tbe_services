@@ -127,8 +127,47 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
         $oSession->setBasket($oBasket);
 
         /** @var basket $oBasket */
-        $oBasket = oxNew('basket');
-        $oBasket->render();
+        $oBasketController = oxNew('basket');
+        $oBasketController->render();
+
+        $aEx = oxRegistry::getSession()->getVariable('Errors');
+        $this->assertTrue(isset($aEx['default'][0]));
+        $this->assertRegExp($sErrorMessage, $aEx['default'][0], 'Error message: '. $aEx['default'][0]);
+    }
+
+    /**
+     * Check if message is set in first checkout step for TBE articles with wrong VAT when user is logged in.
+     *
+     * @param array  $aArticles     array of articles to set to basket and check.
+     * @param string $sErrorMessage article names which should be displayed in error message.
+     *
+     * @dataProvider providerMessageSetInBasketForWrongVATArticlesWhenUserIsLeggedIn
+     */
+    public function testMessageSetInOrderForWrongVATArticles($aArticles, $sErrorMessage)
+    {
+        $oSession = oxRegistry::getSession();
+
+        /** @var oxBasket $oBasket */
+        $oBasket = oxNew('oxBasket');
+
+        $oUser = $this->_createUser();
+        $blLogin = $oUser->login($this->_sDefaultUserName, $this->_sDefaultPassword);
+        $this->assertTrue($blLogin, 'User must login successfully.');
+        $oSession->setUser($oUser);
+
+        foreach ($aArticles as $sArticleId) {
+            $oBasket->addToBasket($sArticleId, 1);
+        }
+
+        $oBasket->setBasketUser($oUser);
+        $oBasket->setShipping('oxidstandard');
+        $oBasket->setPayment('oxidpayadvance');
+        $oBasket->calculateBasket(true);
+        $oSession->setBasket($oBasket);
+
+        /** @var basket $oBasket */
+        $oOrder = oxNew('order');
+        $oOrder->render();
 
         $aEx = oxRegistry::getSession()->getVariable('Errors');
         $this->assertTrue(isset($aEx['default'][0]));
@@ -172,11 +211,29 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
 
         /** @var oxUser $oUser */
         $oUser = oxNew('oxUser');
-        $oUser->oxuser__oxusername = new oxField($sUserName, oxField::T_RAW);
-        $oUser->oxuser__oxpassword = new oxField($sEncodedPassword, oxField::T_RAW);
-        $oUser->oxuser__oxpasssalt = new oxField($sSalt, oxField::T_RAW);
-        $oUser->oxuser__oxcountryid = new oxField($sGermanyId, oxField::T_RAW);
+        $oUser->oxuser__oxusername = new oxField($sUserName);
+        $oUser->oxuser__oxpassword = new oxField($sEncodedPassword);
+        $oUser->oxuser__oxpasssalt = new oxField($sSalt);
+        $oUser->oxuser__oxcountryid = new oxField($sGermanyId);
+        $oUser->oxuser__oxrights = new oxField('user');
+        $oUser->oxuser__active = new oxField('1');
+        $oUser->oxuser__oxcompany = new oxField('Your Company Name');
+        $oUser->oxuser__oxfname = new oxField('John');
+        $oUser->oxuser__oxlname = new oxField('Doe');
+        $oUser->oxuser__oxstreet = new oxField('Maple Street');
+        $oUser->oxuser__oxstreetnr = new oxField('10');
+        $oUser->oxuser__oxcity = new oxField('Any City');
+        $oUser->oxuser__oxzip = new oxField('9041');
+        $oUser->oxuser__oxfon = new oxField('217-8918712');
+        $oUser->oxuser__oxfax = new oxField('217-8918713');
+        $oUser->oxuser__oxsal = new oxField('MR');
         $oUser->save();
+
+        $oObj = new oxBase();
+        $oObj->init('oxobject2group');
+        $oObj->oxobject2group__oxobjectid = new oxField($oUser->getId());
+        $oObj->oxobject2group__oxgroupsid = new oxField('oxidadmin');
+        $oObj->save();
 
         return $oUser;
     }
