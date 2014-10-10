@@ -53,12 +53,10 @@ class oeVATTBEEvents
         $oDbMetaDataHandler = oxNew('oxDbMetaDataHandler');
 
         $aTableFields = array(
-            'oxarticles'  => 'oevattbe_istbeservice',
-            'oxcountry' => 'oevattbe_appliestbevat',
-            'oxcountry' => 'oevattbe_istbevatconfigured',
-            'oxorder' => 'oevattbe_hastbeservices',
-            'oxuser' => 'oevattbe_vatinenterdate',
-
+            'oxarticles'  => array('oevattbe_istbeservice'),
+            'oxcountry' => array('oevattbe_appliestbevat', 'oevattbe_istbevatconfigured'),
+            'oxorder' => array('oevattbe_hastbeservices'),
+            'oxuser' => array('oevattbe_vatinenterdate'),
         );
 
         $aFieldSql = array(
@@ -69,9 +67,11 @@ class oeVATTBEEvents
             'oevattbe_vatinenterdate' => "ALTER TABLE `oxuser` ADD `oevattbe_vatinenterdate` timestamp NOT NULL",
         );
 
-        foreach ($aTableFields as $sTableName => $sFieldName) {
-            if (!$oDbMetaDataHandler->fieldExists($sFieldName, $sTableName)) {
-                oxDb::getDb()->execute($aFieldSql[$sFieldName]);
+        foreach ($aTableFields as $sTableName => $aFields) {
+            foreach ($aFields as $sFieldName) {
+                if (!$oDbMetaDataHandler->fieldExists($sFieldName, $sTableName)) {
+                    oxDb::getDb()->execute($aFieldSql[$sFieldName]);
+                }
             }
         }
     }

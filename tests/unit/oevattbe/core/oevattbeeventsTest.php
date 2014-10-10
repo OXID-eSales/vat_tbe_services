@@ -51,16 +51,16 @@ class Unit_oeVATTBE_Core_oeVATTBEEventsTest extends OxidTestCase
         $this->assertTrue($oDbMetaDataHandler->tableExists('oevattbe_orderevidences'));
 
         $aTableFields = array(
-            'oxarticles'   => 'oevattbe_istbeservice',
-            'oxcountry' => 'oevattbe_appliestbevat',
-            'oxcountry' => 'oevattbe_istbevatconfigured',
-            'oxorder' => 'oevattbe_hastbeservices',
-            'oxuser' => 'oevattbe_vatidenterdate',
-
+            'oxarticles'   => array('oevattbe_istbeservice'),
+            'oxcountry' => array('oevattbe_appliestbevat', 'oevattbe_istbevatconfigured'),
+            'oxorder' => array('oevattbe_hastbeservices'),
+            'oxuser' => array('oevattbe_vatinenterdate'),
         );
 
-        foreach ($aTableFields as $sTableName => $sFieldName) {
-            $this->assertTrue($oDbMetaDataHandler->fieldExists($sFieldName, $sTableName));
+        foreach ($aTableFields as $sTableName => $aFieldNames) {
+            foreach ($aFieldNames as $sFieldName) {
+                $this->assertTrue($oDbMetaDataHandler->fieldExists($sFieldName, $sTableName), "Field missing: $sTableName.$sFieldName");
+            }
         }
     }
 }
