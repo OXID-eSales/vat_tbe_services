@@ -27,6 +27,9 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
     /** @var oeVATTBETBEArticle */
     private $_oVATTBEArticle = null;
 
+    /** @var oeVATTBEArticleSQLBuilder */
+    private $_oVATTBEArticleSQLBuilder = null;
+
     /**
      * Article TBE vat
      *
@@ -82,12 +85,10 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
             return parent::buildSelectString($aWhere);
         }
 
-        $sSelect = "SELECT " . $this->getSelectFields();
-        $sSelect .= " , `oevattbe_countryvatgroups`.`oevattbe_rate` ";
+        $sSelect = "SELECT ";
+        $sSelect .= $this->_getVATTBEArticleSqlBuilder()->getSelectFields();
         $sSelect .= " FROM " . $this->getViewName();
-        $sSelect .= " LEFT JOIN `oevattbe_articlevat` ON `".$this->getViewName()."`.`oxid` = `oevattbe_articlevat`.`oevattbe_articleid` ";
-        $sSelect .= " AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($this->_getTbeCountryId());
-        $sSelect .= " LEFT JOIN `oevattbe_countryvatgroups` ON `oevattbe_articlevat`.`oevattbe_VATGROUPID` = `oevattbe_countryvatgroups`.`oevattbe_id` ";
+        $sSelect .= $this->_getVATTBEArticleSqlBuilder()->getJoins();
         $sSelect .= " WHERE 1 ";
 
         if ($aWhere) {
@@ -142,5 +143,19 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
         }
 
         return $this->_oVATTBEArticle;
+    }
+
+    /**
+     * Article sql builder
+     *
+     * @return oeVATTBEArticleSQLBuilder
+     */
+    protected function _getVATTBEArticleSqlBuilder()
+    {
+        if (is_null($this->_oVATTBEArticleSQLBuilder)) {
+            $this->_oVATTBEArticleSQLBuilder = oxNew('oeVATTBEArticleSQLBuilder', $this);
+        }
+
+        return $this->_oVATTBEArticleSQLBuilder;
     }
 }
