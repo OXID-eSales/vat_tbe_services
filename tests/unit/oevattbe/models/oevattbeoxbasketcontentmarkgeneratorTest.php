@@ -25,6 +25,9 @@
  */
 class Unit_oeVATTBE_models_oeVATTBEOxBasketContentMarkGeneratorTest extends OxidTestCase
 {
+    /**
+     * Mark calculation test case: just tbe
+     */
     public function testGetMark()
     {
         $oBasket = $this->getMock('oxBasket', array('hasVATTBEArticles'));
@@ -35,6 +38,9 @@ class Unit_oeVATTBE_models_oeVATTBEOxBasketContentMarkGeneratorTest extends Oxid
         $this->assertSame('**', $oGenerator->getMark('tbeService'));
     }
 
+    /**
+     * Mark calculation test case: tbe and other
+     */
     public function testGetMarkHasOtherMarks()
     {
         $oBasket = $this->getMock('oxBasket', array('hasVATTBEArticles', 'hasArticlesWithDownloadableAgreement'));
@@ -47,6 +53,9 @@ class Unit_oeVATTBE_models_oeVATTBEOxBasketContentMarkGeneratorTest extends Oxid
         $this->assertSame('***', $oGenerator->getMark('downloadable'));
     }
 
+    /**
+     * Mark calculation test case: no tbe
+     */
     public function testGetMarkHasOtherMarksButNotTBE()
     {
         $oBasket = $this->getMock('oxBasket', array('hasVATTBEArticles', 'hasArticlesWithDownloadableAgreement'));
