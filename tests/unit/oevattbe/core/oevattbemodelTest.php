@@ -34,8 +34,7 @@ class Unit_oeVATTBE_Core_oeVATTBEModelTest extends OxidTestCase
     {
         $sId = 'RecordIdToLoad';
         $aData = array('testkey' => 'testValue');
-        $oGateway = $this->getMock('TestGateway', array('load'));
-        $oGateway->expects($this->any())->method('load')->with($sId)->will($this->returnValue($aData));
+        $oGateway = $this->_createStub('TestGateway', array('load' => $aData));
 
         $oModel = $this->_getModel($oGateway, $sId);
 
@@ -50,10 +49,9 @@ class Unit_oeVATTBE_Core_oeVATTBEModelTest extends OxidTestCase
     {
         $sId = 'RecordIdToLoad';
         $aData = array('testkey' => 'testValue');
-        $oGateway = $this->getMock('TestGateway', array('load'));
-        $oGateway->expects($this->any())->method('load')->with($sId)->will($this->returnValue($aData));
+        $oGateway = $this->_createStub('TestGateway', array('load' => $aData));
 
-        $oModel = $this->_getModel($oGateway, $sId, $sId);
+        $oModel = $this->_getModel($oGateway);
 
         $this->assertTrue($oModel->load($sId));
         $this->assertEquals($aData, $oModel->getData());
@@ -86,19 +84,32 @@ class Unit_oeVATTBE_Core_oeVATTBEModelTest extends OxidTestCase
     }
 
     /**
+     * Is loaded method returns false when record does not exists in database
+     */
+    public function testUnsettingOfDataAfterDeletion()
+    {
+        $oGateway = $this->_createStub('TestGateway', array('delete' => true));
+
+        $oModel = $this->_getModel($oGateway);
+        $oModel->setData(array('some_field' => 'some_entry'));
+        $oModel->delete();
+
+        $this->assertEquals(array(), $oModel->getData());
+    }
+
+    /**
      * Creates oeVATTBEModel with mocked abstract methods
      *
      * @param object $oGateway
-     * @param string $sGetId
-     * @param string $sSetId
+     * @param string $sId
      *
      * @return oeVATTBEModel
      */
-    protected function _getModel($oGateway, $sGetId = null, $sSetId = null)
+    protected function _getModel($oGateway, $sId = null)
     {
-        $oModel = $this->_createStub('oeVATTBEModel', array('_getDbGateway' => $oGateway, 'getId' => $sGetId), array('setId'));
-        if ($sSetId) {
-            $oModel->expects($this->any())->method('setId')->with($sSetId);
+        $oModel = oxNew('oeVATTBEModel', $oGateway);
+        if ($sId) {
+            $oModel->setId($sId);
         }
 
         return $oModel;

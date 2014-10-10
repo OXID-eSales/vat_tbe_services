@@ -66,6 +66,10 @@ $aModule = array(
         'oeVATTBEBasketItemsValidator'                 => 'oe/oevattbe/services/oevattbebasketitemsvalidator.php',
         'oeVATTBEIncorrectVATArticlesMessageFormatter' => 'oe/oevattbe/models/oevattbeincorrectvaatrticlesmessageformatter.php',
         'oeVATTBETBEArticleCacheKey'                   => 'oe/oevattbe/models/oevattbetbearticlecachekey.php',
+        'oeVATTBEModel'                                => 'oe/oevattbe/core/oevattbemodel.php',
+        'oeVATTBEModelDbGateway'                       => 'oe/oevattbe/core/oevattbemodeldbgateway.php',
+        'oeVATTBEOrderEvidenceList'                    => 'oe/oevattbe/models/oevattbeorderevidencelist.php',
+        'oeVATTBEOrderEvidenceListDbGateway'           => 'oe/oevattbe/models/dbgateways/oevattbeorderevidencelistdbgateway.php',
     ),
     'events'       => array(
         'onActivate'   => 'oeVatTbeEvents::onActivate',

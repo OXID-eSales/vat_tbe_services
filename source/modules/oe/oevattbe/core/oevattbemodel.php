@@ -22,28 +22,49 @@
 /**
  * Abstract model class
  */
-abstract class oeVATTBEModel
+class oeVATTBEModel
 {
-    /**
-     * Data base gateway.
-     *
-     * @var oeVATTBEModelDbGateway
-     */
+    /** @var string Model id. */
+    protected $_sId = null;
+
+    /** @var oeVATTBEModelDbGateway Data base gateway. */
     protected $_oDbGateway = null;
 
-    /**
-     * Model data.
-     *
-     * @var array
-     */
+    /** @var array Model data. */
     protected $_aData = null;
 
-    /**
-     * Was object information found in database.
-     *
-     * @var bool
-     */
+    /** @var bool Was object information found in database. */
     protected $_blIsLoaded = false;
+
+    /**
+     * Handles class dependencies.
+     *
+     * @param oeVATTBEModelDbGateway $oDbGateway
+     */
+    public function __construct($oDbGateway)
+    {
+        $this->_oDbGateway = $oDbGateway;
+    }
+
+    /**
+     * Sets model id.
+     *
+     * @param string $sId Model id
+     */
+    public function setId($sId)
+    {
+        $this->_sId = $sId;
+    }
+
+    /**
+     * Returns model id.
+     *
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->_sId;
+    }
 
     /**
      * Set response data.
@@ -64,48 +85,6 @@ abstract class oeVATTBEModel
     public function getData()
     {
         return $this->_aData;
-    }
-
-    /**
-     * Return value from data by given key.
-     *
-     * @param string $sKey key of data value
-     *
-     * @return string
-     */
-    protected function _getValue($sKey)
-    {
-        $aData = $this->getData();
-
-        return $aData[$sKey];
-    }
-
-    /**
-     * Return value from data by given key.
-     *
-     * @param string $sKey   key of data value
-     * @param string $sValue data value
-     */
-    protected function _setValue($sKey, $sValue)
-    {
-        $this->_aData[$sKey] = $sValue;
-    }
-
-    /**
-     * Returns model database gateway.
-     *
-     * @var $oDbGateway
-     */
-    abstract protected function _getDbGateway();
-
-    /**
-     * Set model database gateway.
-     *
-     * @param oeVATTBEModelDbGateway $oDbGateway
-     */
-    protected function _setDbGateway($oDbGateway)
-    {
-        $this->_oDbGateway = $oDbGateway;
     }
 
     /**
@@ -134,7 +113,12 @@ abstract class oeVATTBEModel
             $this->setId($sId);
         }
 
-        return $this->_getDbGateway()->delete($this->getId());
+        $blResult = $this->_getDbGateway()->delete($this->getId());
+        if ($blResult) {
+            $this->setData(array());
+        }
+
+        return $blResult;
     }
 
     /**
@@ -171,14 +155,37 @@ abstract class oeVATTBEModel
     }
 
     /**
-     * Abstract method for delete model.
+     * Return value from data by given key.
      *
-     * @param string $sId model id
+     * @param string $sKey key of data value
+     *
+     * @return string
      */
-    abstract public function setId($sId);
+    protected function _getValue($sKey)
+    {
+        $aData = $this->getData();
+
+        return $aData[$sKey];
+    }
 
     /**
-     * Abstract method for getting id.
+     * Return value from data by given key.
+     *
+     * @param string $sKey   key of data value
+     * @param string $sValue data value
      */
-    abstract public function getId();
+    protected function _setValue($sKey, $sValue)
+    {
+        $this->_aData[$sKey] = $sValue;
+    }
+
+    /**
+     * Returns model database gateway.
+     *
+     * @return oeVATTBEModelDbGateway
+     */
+    protected function _getDbGateway()
+    {
+        return $this->_oDbGateway;
+    }
 }
