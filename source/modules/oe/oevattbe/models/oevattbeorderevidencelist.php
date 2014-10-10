@@ -24,28 +24,8 @@
  */
 class oeVATTBEOrderEvidenceList extends oeVATTBEModel
 {
-    /** @var string Order ID for which evidence list is loaded.  */
-    private $_sOrderId = null;
-
-    /**
-     * Sets order id.
-     *
-     * @param string $sOrderId
-     */
-    public function setId($sOrderId)
-    {
-        $this->_sOrderId = $sOrderId;
-    }
-
-    /**
-     * Returns order id.
-     *
-     * @return string
-     */
-    public function getId()
-    {
-        return $this->_sOrderId;
-    }
+    /** @var array Model data. */
+    protected $_aData = array();
 
     /**
      * Method for model saving (insert and update data).
@@ -61,19 +41,5 @@ class oeVATTBEOrderEvidenceList extends oeVATTBEModel
         $this->_getDbGateway()->save($aData);
 
         return $this->getId();
-    }
-
-    /**
-     * Return database gateway.
-     *
-     * @return oeVATTBEOrderEvidenceListDbGateway
-     */
-    protected function _getDbGateway()
-    {
-        if (is_null($this->_oDbGateway)) {
-            $this->_setDbGateway(oxNew('oeVATTBEOrderEvidenceListDbGateway'));
-        }
-
-        return $this->_oDbGateway;
     }
 }

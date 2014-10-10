@@ -30,8 +30,17 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderEvidenceListTest exten
      */
     public function testSavingEvidenceList()
     {
-        $aData = array('evidence' => 'evidenceData');
-        $oGateway = $this->getMock('TestGateway', array('save'));
+        $aData = array(
+            'evidence1' => array(
+                'name' => 'evidence1',
+                'countryId' => 'GermanyId',
+            ),
+            'evidence2' => array(
+                'name' => 'evidence2',
+                'countryId' => 'GermanyId',
+            ),
+        );
+        $oGateway = oxNew('oeVATTBEOrderEvidenceListDbGateway');
 
         /** @var oeVATTBEOrderEvidenceList $oList */
         $oList = oxNew('oeVATTBEOrderEvidenceList', $oGateway);
@@ -53,8 +62,10 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderEvidenceListTest exten
      */
     public function testLoadingEvidenceList($oList)
     {
+        $oGateway = oxNew('oeVATTBEOrderEvidenceListDbGateway');
+
         /** @var oeVATTBEOrderEvidenceList $oList */
-        $oList = oxNew('oeVATTBEOrderEvidenceList');
+        $oList = oxNew('oeVATTBEOrderEvidenceList', $oGateway);
         $oList->load('order_id');
 
         $aData = $oList->getData();

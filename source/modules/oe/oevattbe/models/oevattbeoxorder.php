@@ -24,6 +24,7 @@
  */
 class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
 {
+
     /**
      * Validates order parameters like stock, delivery and payment
      * parameters
@@ -44,8 +45,103 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
         return $iValidState;
     }
 
+    /**
+     * Delete order together with PayPal order data.
+     *
+     * @param string $sOxId
+     *
+     * @return null
+     */
+    public function delete($sOxId = null)
+    {
+        $oOrderEvidenceList = $this->_factoryOeVATTBEOrderEvidenceList();
+        $oOrderEvidenceList->delete($sOxId ? $sOxId : $this->getId());
+
+        parent::delete($sOxId);
+    }
+
+    /**
+     * After order finalization saves used evidences to database.
+     *
+     * @param oxBasket $oBasket              Shopping basket object
+     * @param oxUser   $oUser                Current user object
+     * @param bool     $blRecalculatingOrder Order recalculation
+     *
+     * @return integer
+     */
+    public function finalizeOrder(oxBasket $oBasket, $oUser, $blRecalculatingOrder = false)
+    {
+        $iRet = $this->_getFinalizeOrderParent($oBasket, $oUser, $blRecalculatingOrder);
+
+        if (!$blRecalculatingOrder && $iRet == parent::ORDER_STATE_OK) {
+            $oOrderEvidenceList = $this->_factoryOeVATTBEOrderEvidenceList();
+
+            $oOrderEvidenceList->setId($this->getId());
+            $aEvidenceList = $oUser->getTBEEvidenceList();
+            $oOrderEvidenceList->setData($aEvidenceList);
+
+            $oOrderEvidenceList->save();
+        }
+
+        return $iRet;
+    }
+
+    /**
+     * Gathers and assigns to new oxOrder object customer data, payment, delivery
+     * and shipping info, customer order remark, currency, voucher, language data.
+     * Additionally stores general discount and wrapping. Sets order status to "error"
+     * and creates oxOrderArticle objects and assigns to them basket articles.
+     *
+     * @param oxBasket $oBasket Shopping basket object
+     */
+    protected function _loadFromBasket(oxBasket $oBasket)
+    {
+        $this->oxorder__oevattbe_hastbeservices = new oxField($oBasket->hasVATTBEArticles());
+        parent::_loadFromBasket($oBasket);
+    }
+
+    /**
+     * Calls validateOrder() method on parent class and returns it's value.
+     *
+     * @param oxBasket $oBasket
+     * @param oxUser   $oUser
+     *
+     * @return mixed
+     */
     protected function _getValidateOrderParent($oBasket, $oUser)
     {
         return parent::validateOrder($oBasket, $oUser);
+    }
+
+    /**
+     * Calls finalizeOrder() method on parent class and returns it's value.
+     *
+     * @param oxBasket $oBasket
+     * @param oxUser   $oUser
+     * @param bool     $blRecalculatingOrder
+     *
+     * @return mixed
+     */
+    protected function _getFinalizeOrderParent(oxBasket $oBasket, $oUser, $blRecalculatingOrder = false)
+    {
+        return parent::finalizeOrder($oBasket, $oUser, $blRecalculatingOrder);
+    }
+
+    /**
+     * Returns oeVATTBEOrderEvidenceList object.
+     *
+     * @param string $sOrderId Which order's evidence list should be loaded.
+     *
+     * @return oeVATTBEOrderEvidenceList
+     */
+    protected function _factoryOeVATTBEOrderEvidenceList()
+    {
+        /** @var oeVATTBEOrderEvidenceListDbGateway $oGateway */
+        $oGateway = oxNew('oeVATTBEOrderEvidenceListDbGateway');
+
+        /** @var oeVATTBEOrderEvidenceList $oOrderEvidenceList */
+        $oOrderEvidenceList = oxNew('oeVATTBEOrderEvidenceList', $oGateway);
+
+        return $oOrderEvidenceList;
     }
 }
