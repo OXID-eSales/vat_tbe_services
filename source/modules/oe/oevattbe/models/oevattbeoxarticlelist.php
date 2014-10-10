@@ -66,9 +66,7 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
         $sSelect .= $this->_getVATTBEArticleSqlBuilder()->getSelectFields();
         $sSelect .= " FROM $sO2CView as oc";
         $sSelect .= " left join $sArticleTable ON $sArticleTable.oxid = oc.oxobjectid";
-        $sSelect .= " LEFT JOIN `oevattbe_articlevat` ON `" . $sArticleTable . "`.`oxid` = `oevattbe_articlevat`.`oevattbe_articleid` ";
-        $sSelect .= "       AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($this->_getTbeCountryId());
-        $sSelect .= " LEFT JOIN `oevattbe_countryvatgroups` ON `oevattbe_articlevat`.`oevattbe_vatgroupid` = `oevattbe_countryvatgroups`.`oevattbe_id` ";
+        $sSelect .= $this->_getVATTBEArticleSqlBuilder()->getJoins();
         $sSelect .= " WHERE " . $this->getBaseObject()->getSqlActiveSnippet() . " and $sArticleTable.oxparentid = ''";
         $sSelect .= " and oc.oxcatnid = " . $oDb->quote($sCatId) . " $sFilterSql ORDER BY $sSorting oc.oxpos, oc.oxobjectid ";
 
