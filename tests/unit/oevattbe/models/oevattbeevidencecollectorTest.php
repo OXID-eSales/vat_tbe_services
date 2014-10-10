@@ -27,6 +27,9 @@
 class Unit_oeVATTBE_Models_oeVATTBEEvidenceCollectorTest extends OxidTestCase
 {
 
+    /**
+     * Test returning evidences when evidences can be collected.
+     */
     public function testGetEvidencesWhenEvidencesExists()
     {
         $oConfig = $this->getConfig();
@@ -35,11 +38,11 @@ class Unit_oeVATTBE_Models_oeVATTBEEvidenceCollectorTest extends OxidTestCase
         /** @var oxUser|PHPUnit_Framework_MockObject_MockObject $oUser */
         $oUser = $this->getMock('oxUser', array(), array(), '', false);
 
-        $oExpectedEvidence = new oeVATTBEBillingCountryEvidence($oUser);
-        $oEvidenceList = new oeVATTBEEvidenceList();
+        $oExpectedEvidence = oxNew('oeVATTBEBillingCountryEvidence', $oUser);
+        $oEvidenceList = oxNew('oeVATTBEEvidenceList');
         $oEvidenceList->add($oExpectedEvidence);
 
-        $oCollector = new oeVATTBEEvidenceCollector($oUser, $oConfig);
+        $oCollector = oxNew('oeVATTBEEvidenceCollector', $oUser, $oConfig);
         $this->assertEquals($oEvidenceList, $oCollector->getEvidenceList());
     }
 
@@ -51,9 +54,9 @@ class Unit_oeVATTBE_Models_oeVATTBEEvidenceCollectorTest extends OxidTestCase
         /** @var oxUser|PHPUnit_Framework_MockObject_MockObject $oUser */
         $oUser = $this->getMock('oxUser', array(), array(), '', false);
 
-        $oEvidenceList = new oeVATTBEEvidenceList();
+        $oEvidenceList = oxNew('oeVATTBEEvidenceList');
 
-        $oCollector = new oeVATTBEEvidenceCollector($oUser, $oConfig);
+        $oCollector = oxNew('oeVATTBEEvidenceCollector', $oUser, $oConfig);
         $this->assertEquals($oEvidenceList, $oCollector->getEvidenceList());
     }
 
@@ -65,9 +68,9 @@ class Unit_oeVATTBE_Models_oeVATTBEEvidenceCollectorTest extends OxidTestCase
         /** @var oxUser|PHPUnit_Framework_MockObject_MockObject $oUser */
         $oUser = $this->getMock('oxUser', array(), array(), '', false);
 
-        $oEvidenceList = new oeVATTBEEvidenceList();
+        $oEvidenceList = oxNew('oeVATTBEEvidenceList');
 
-        $oCollector = new oeVATTBEEvidenceCollector($oUser, $oConfig);
+        $oCollector = oxNew('oeVATTBEEvidenceCollector', $oUser, $oConfig);
         $this->assertEquals($oEvidenceList, $oCollector->getEvidenceList());
     }
 }

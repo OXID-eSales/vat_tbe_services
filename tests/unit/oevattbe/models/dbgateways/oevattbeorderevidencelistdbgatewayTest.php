@@ -27,6 +27,11 @@
 class Unit_oeVATTBE_Models_DbGateways_oeVATTBEOrderEvidenceListDbGatewayTest extends OxidTestCase
 {
 
+    /**
+     * Testing Order list saving to database. Test works with database so can be slow.
+     *
+     * @return oeVATTBEOrderEvidenceListDbGateway
+     */
     public function testOrderListSavingToDatabase()
     {
         $oOrderArticleList = oxNew('oeVATTBEOrderEvidenceListDbGateway');
@@ -49,6 +54,8 @@ class Unit_oeVATTBE_Models_DbGateways_oeVATTBEOrderEvidenceListDbGatewayTest ext
     }
 
     /**
+     * Testing Order list loading from database. Test works with database so can be slow.
+     *
      * @param oeVATTBEOrderEvidenceListDbGateway $oOrderArticleList
      *
      * @depends testOrderListSavingToDatabase
@@ -78,6 +85,8 @@ class Unit_oeVATTBE_Models_DbGateways_oeVATTBEOrderEvidenceListDbGatewayTest ext
     }
 
     /**
+     * Testing deletion of Order list from database. Test works with database so can be slow.
+     *
      * @param oeVATTBEOrderEvidenceListDbGateway $oOrderArticleList
      *
      * @depends testOrderListLoading
@@ -89,6 +98,9 @@ class Unit_oeVATTBE_Models_DbGateways_oeVATTBEOrderEvidenceListDbGatewayTest ext
         $this->assertSame(array(), $oOrderArticleList->load('order_id'));
     }
 
+    /**
+     * Test trying to save empty list to database.
+     */
     public function testSavingEmptyList()
     {
         $oOrderArticleList = oxNew('oeVATTBEOrderEvidenceListDbGateway');
@@ -100,12 +112,18 @@ class Unit_oeVATTBE_Models_DbGateways_oeVATTBEOrderEvidenceListDbGatewayTest ext
         $this->assertSame(array(), $oOrderArticleList->load('order_id'));
     }
 
+    /**
+     * Test trying to load order, when no order exists in database.
+     */
     public function testLoadingEmptyOrderList()
     {
         $oOrderArticleList = oxNew('oeVATTBEOrderEvidenceListDbGateway');
         $this->assertSame(array(), $oOrderArticleList->load('non_existing_order'));
     }
 
+    /**
+     * Test deleting non existing order.
+     */
     public function testDeletingEmptyOrderList()
     {
         $oOrderArticleList = oxNew('oeVATTBEOrderEvidenceListDbGateway');

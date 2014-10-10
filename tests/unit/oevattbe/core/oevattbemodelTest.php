@@ -30,7 +30,7 @@ class Unit_oeVATTBE_Core_oeVATTBEModelTest extends OxidTestCase
     /**
      * Loading of data by id, returned by getId method
      */
-    public function testLoad_LoadByGetId_DataLoaded()
+    public function testLoadWhenIdIsSetToModel()
     {
         $sId = 'RecordIdToLoad';
         $aData = array('testkey' => 'testValue');
@@ -45,7 +45,7 @@ class Unit_oeVATTBE_Core_oeVATTBEModelTest extends OxidTestCase
     /**
      * Loading of data by passed id
      */
-    public function testLoad_LoadByPassedId_DataLoaded()
+    public function testLoadWhenIdPassedIdViaParameter()
     {
         $sId = 'RecordIdToLoad';
         $aData = array('testkey' => 'testValue');
@@ -60,7 +60,7 @@ class Unit_oeVATTBE_Core_oeVATTBEModelTest extends OxidTestCase
     /**
      * Is loaded method returns false when record does not exists in database
      */
-    public function testIsLoaded_DatabaseRecordNotFound()
+    public function testIsLoadedWhenDatabaseRecordNotFound()
     {
         $oGateway = $this->_createStub('TestGateway', array('load' => null));
 
@@ -73,7 +73,7 @@ class Unit_oeVATTBE_Core_oeVATTBEModelTest extends OxidTestCase
     /**
      * Is loaded method returns false when record does not exists in database
      */
-    public function testIsLoaded_DatabaseRecordFound()
+    public function testIsLoadedWhenDatabaseRecordFound()
     {
         $oGateway = $this->_createStub('TestGateway', array('load' => array('oeTBEVATId' => 'testId')));
 
@@ -86,7 +86,7 @@ class Unit_oeVATTBE_Core_oeVATTBEModelTest extends OxidTestCase
     /**
      * Is loaded method returns false when record does not exists in database
      */
-    public function testUnsettingOfDataAfterDeletion()
+    public function testClearingDataAfterDeletion()
     {
         $oGateway = $this->_createStub('TestGateway', array('delete' => true));
 
