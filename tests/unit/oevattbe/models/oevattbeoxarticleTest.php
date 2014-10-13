@@ -102,6 +102,10 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleTest extends OxidTestCase
      */
     public function testGetCacheKeysWithoutActiveUser()
     {
+        if ($this->getConfig()->getEdition() != 'EE') {
+            return;
+        }
+
         $oArticleWithoutModules = new oxArticle();
         $aCacheKeysWithoutModules = $oArticleWithoutModules->getCacheKeys();
 
@@ -116,6 +120,10 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleTest extends OxidTestCase
      */
     public function testGetCacheKeysForNotTbeArticleWithActiveUser()
     {
+        if ($this->getConfig()->getEdition() != 'EE') {
+            return;
+        }
+
         $sAustriaId = 'a7c40f6320aeb2ec2.72885259';
         /** @var oxUser $oUser */
         $oUser = $this->getMock('oxUser', array('getTbeCountryId'));
@@ -135,6 +143,10 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleTest extends OxidTestCase
      */
     public function testGetCacheKeysForTbeArticleWithActiveUser()
     {
+        if ($this->getConfig()->getEdition() != 'EE') {
+            return;
+        }
+
         $sAustriaId = 'a7c40f6320aeb2ec2.72885259';
         /** @var oxUser $oUser */
         $oUser = $this->getMock('oxUser', array('getTbeCountryId'));
