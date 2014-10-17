@@ -24,7 +24,7 @@
  *
  * @covers oeVATTBEOrderEvidenceListDbGateway
  */
-class Unit_oeVATTBE_Models_DbGateways_oeVATTBEOrderEvidenceListDbGatewayTest extends OxidTestCase
+class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderEvidenceListDbGatewayTest extends OxidTestCase
 {
 
     /**
