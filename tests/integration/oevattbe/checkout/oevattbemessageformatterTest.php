@@ -16,16 +16,16 @@
  * along with OXID eSales VAT TBE module.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @link      http://www.oxid-esales.com
- * @copyright (C) OXID eSales AG 2003-2014T
+ * @copyright (C) OXID eSales AG 2003-2014
  */
 
+
 /**
- * Test class for oeVATTBEArticleMessageFormatter.
- *
- * @covers oeVATTBEArticleMessageFormatter
+ * Testing message formatter in oeVATTBEIncorrectVATArticlesMessageFormatter.
  */
-class Unit_oeVATTBE_Models_oeVATTBEIncorrectVATArticlesMessageFormatterTest extends OxidTestCase
+class Integration_oeVatTbe_checkout_oeVATTBEMessageFormatterTest extends OxidTestCase
 {
+
     /**
      * Provider for different article set to test if error message was formed correctly.
      *
@@ -43,8 +43,8 @@ class Unit_oeVATTBE_Models_oeVATTBEIncorrectVATArticlesMessageFormatterTest exte
         $oInvalidArticles2 = array($oArticle1, $oArticle2);
 
         return array(
-            array($oInvalidArticles1, 'ERROR_MESSAGE_TBE_ARTICLE_VAT_PROBLEMS'),
-            array($oInvalidArticles2, 'ERROR_MESSAGE_TBE_ARTICLE_VAT_PROBLEMS'),
+            array($oInvalidArticles1, '[tr]Some articles can not be sold because of VAT problems in your country: some article name'),
+            array($oInvalidArticles2, '[tr]Some articles can not be sold because of VAT problems in your country: some article name, some other name'),
         );
     }
 
