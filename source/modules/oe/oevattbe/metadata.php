@@ -50,7 +50,7 @@ $aModule = array(
         'oxorder'           => 'oe/oevattbe/models/oevattbeoxorder',
         'basket'            => 'oe/oevattbe/controllers/oevattbebasket',
         'order'             => 'oe/oevattbe/controllers/oevattbeorder',
-        'oxBasketContentMarkGenerator' => 'oe/oevattbe/models/oevattbeoxbasketcontentmarkgenerator',
+        'oxbasketcontentmarkgenerator' => 'oe/oevattbe/models/oevattbeoxbasketcontentmarkgenerator',
     ),
     'files' => array(
         'oeVATTBEModel'                                => 'oe/oevattbe/core/oevattbemodel.php',
