@@ -27,41 +27,18 @@
 class Unit_oeVATTBE_Models_oeVATTBEIncorrectVATArticlesMessageFormatterTest extends OxidTestCase
 {
     /**
-     * Provider for different article set to test if error message was formed correctly.
-     *
-     * @return array
-     */
-    public function providerGetMessage()
-    {
-        $oArticle1 = oxNew('oeVATTBEOxArticle');
-        $oArticle1->oxarticles__oxtitle = new oxField('some article name', oxField::T_RAW);
-
-        $oArticle2 = oxNew('oeVATTBEOxArticle');
-        $oArticle2->oxarticles__oxtitle = new oxField('some other name', oxField::T_RAW);
-
-        $oInvalidArticles1 = array($oArticle1);
-        $oInvalidArticles2 = array($oArticle1, $oArticle2);
-
-        return array(
-            array($oInvalidArticles1, 'ERROR_MESSAGE_TBE_ARTICLE_VAT_PROBLEMS'),
-            array($oInvalidArticles2, 'ERROR_MESSAGE_TBE_ARTICLE_VAT_PROBLEMS'),
-        );
-    }
-
-    /**
      * Test if error message is formed correctly.
-     *
-     * @param array  $oInvalidArticles fake articles to form error message.
-     * @param string $sExpectedMessage expected error message.
-     *
-     * @dataProvider providerGetMessage
      */
-    public function testGetMessage($oInvalidArticles, $sExpectedMessage)
+    public function testGetMessage()
     {
+        /** @var oeVATTBEOxArticle|oxArticle $oArticle */
+        $oArticle = oxNew('oeVATTBEOxArticle');
+        $oArticle->oxarticles__oxtitle = new oxField('some other name', oxField::T_RAW);
+
         /** @var oeVATTBEIncorrectVATArticlesMessageFormatter $oVATTBEArticleMessageFormer */
         $oVATTBEArticleMessageFormer = oxNew('oeVATTBEIncorrectVATArticlesMessageFormatter');
-        $sErrorMessage = $oVATTBEArticleMessageFormer->getMessage($oInvalidArticles);
+        $oErrorMessage = $oVATTBEArticleMessageFormer->getMessage(array($oArticle));
 
-        $this->assertSame($sExpectedMessage, $sErrorMessage->getOxMessage());
+        $this->assertInstanceOf('oxDisplayError', $oErrorMessage);
     }
 }
