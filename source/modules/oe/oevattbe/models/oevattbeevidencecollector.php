@@ -53,15 +53,15 @@ class oeVATTBEEvidenceCollector
     public function getEvidenceList()
     {
         $oConfig = $this->_getConfig();
-        $aEvidences = (array) $oConfig->getConfigParam('aOeVATTBECountryEvidences');
-        $aActiveEvidences = (array) $oConfig->getConfigParam('aOeVATTBECountryActiveEvidences');
+        $aEvidences = (array) $oConfig->getConfigParam('aOeVATTBECountryEvidenceClasses');
+        $aActiveEvidences = (array) $oConfig->getConfigParam('aOeVATTBECountryEvidences');
 
         /** @var oeVATTBEEvidenceList $oList */
         $oList = oxNew('oeVATTBEEvidenceList');
         $aUpdatedActiveEvidences = $this->_fillEvidenceList($oList, $aEvidences, $aActiveEvidences);
 
         if ($aActiveEvidences !== $aUpdatedActiveEvidences) {
-            oxRegistry::getConfig()->saveShopConfVar('aarr', 'aOeVATTBECountryActiveEvidences', $aUpdatedActiveEvidences, null, 'module:oevattbe');
+            oxRegistry::getConfig()->saveShopConfVar('aarr', 'aOeVATTBECountryEvidences', $aUpdatedActiveEvidences, null, 'module:oevattbe');
         }
 
         return $oList;
@@ -94,6 +94,7 @@ class oeVATTBEEvidenceCollector
      * @param oeVATTBEEvidenceList $oList
      * @param array                $aEvidences
      * @param array                $aActiveEvidences
+     *
      * @return array
      */
     private function _fillEvidenceList($oList, $aEvidences, $aActiveEvidences)

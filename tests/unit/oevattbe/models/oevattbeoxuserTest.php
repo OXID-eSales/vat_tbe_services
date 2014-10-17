@@ -32,7 +32,7 @@ class Unit_oeVatTbe_models_oeVATTBEOxUserTest extends OxidTestCase
     public function testTBECountryIdSelecting()
     {
         $oConfig = $this->getConfig();
-        $oConfig->setConfigParam('aOeVATTBECountryEvidences', array('oeVATTBEBillingCountryEvidence'));
+        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence'));
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
 
         $oUser = oxNew('oeVATTBEOxUser');

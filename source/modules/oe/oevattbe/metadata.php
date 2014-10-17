@@ -62,6 +62,7 @@ $aModule = array(
         'oeVATTBEEvidenceCollector'                    => 'oe/oevattbe/models/oevattbeevidencecollector.php',
         'oeVATTBEBillingCountryEvidence'               => 'oe/oevattbe/models/evidences/oevattbebillingcountryevidence.php',
         'oeVATTBEGeoLocationEvidence'                  => 'oe/oevattbe/models/evidences/oevattbegeolocationevidence.php',
+        'oeVATTBEEvidenceRegister'                     => 'oe/oevattbe/models/oevattbeevidenceregister.php',
         'oeVATTBEEvidenceList'                         => 'oe/oevattbe/models/evidences/oevattbeevidencelist.php',
         'oeVATTBETBEUser'                              => 'oe/oevattbe/models/oevattbetbeuser.php',
         'oeVATTBEOrderArticleChecker'                  => 'oe/oevattbe/models/oevattbeorderarticlechecker.php',
@@ -93,7 +94,7 @@ $aModule = array(
         array('template' => 'page/checkout/order.tpl', 'block'=>'checkout_order_next_step_bottom', 'file'=>'/views/blocks/page/checkout/order_nextstep.tpl'),
     ),
     'settings' => array(
-        array('group' => 'oevattbe', 'name' => 'aOeVATTBECountryActiveEvidences',      'type' => 'aarr',   'value' => array('billing_country' => 1, 'geo_location' => 1)),
+        array('group' => 'oevattbe', 'name' => 'aOeVATTBECountryEvidences',      'type' => 'aarr',   'value' => array('billing_country' => 1, 'geo_location' => 1)),
         array('group' => 'oevattbe', 'name' => 'sOeVATTBEDefaultEvidence',        'type' => 'str',   'value' => 'billing_country'),
     )
 );
