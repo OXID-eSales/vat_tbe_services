@@ -58,6 +58,7 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
 
     /**
      * Check if message is set in first checkout step for all TBE articles when user is not logged in.
+     * No error message set for not TBE articles.
      *
      * @param array  $aArticles     array of articles to set to basket and check.
      * @param string $sErrorMessage article names which should be displayed in error message.
@@ -99,7 +100,7 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
     }
 
     /**
-     * Check if message is not set, when all articles correct.
+     * Check if message is not set in first checkout step when all articles correct and user is not logged in.
      *
      * @param array $aArticles array of articles to set to basket and check.
      *
@@ -197,7 +198,7 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
     }
 
     /**
-     * Check if message is set in first checkout step for TBE articles with wrong VAT when user is logged in.
+     * Check if message is not set in first checkout step when all articles are correct when user is logged in.
      *
      * @param array $aArticles array of articles to set to basket and check.
      *
@@ -230,7 +231,7 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
     }
 
     /**
-     * Check if message is set in first checkout step for TBE articles with wrong VAT when user is logged in.
+     * Check if message is set in forth checkout step for TBE articles with wrong VAT.
      *
      * @param array  $aArticles     array of articles to set to basket and check.
      * @param string $sErrorMessage article names which should be displayed in error message.
