@@ -24,6 +24,6 @@
 // -------------------------------
 $aLang = array(
     'charset'                                    => 'ISO-8859-15',
-    'OEVATTBE_VAT_IN_STORE_DATE' => '[tr]VAT IN store date',
-    'HELP_OEVATTBE_VAT_IN_STORE_DATE' => '[tr]VAT IN store date',
+    'OEVATTBE_VAT_IN_STORE_DATE' => '[tr]Date VAT ID was entered',
+    'HELP_OEVATTBE_VAT_IN_STORE_DATE' => '[tr]For telecommunication, broadcasting and electronic services, a customer is taxable, if he has  supplied a valid VAT ID. In order for the shop owner to have a record of when a customer entered this VAT ID, the date it was first entered is shown.',
 );
