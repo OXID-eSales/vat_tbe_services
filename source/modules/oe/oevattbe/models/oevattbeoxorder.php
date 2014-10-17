@@ -24,6 +24,12 @@
  */
 class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
 {
+    /**
+     * Protection parameters used for some data in order are invalid
+     *
+     * @var int
+     */
+    const ORDER_STATE_TBE_NOT_CONFIGURED = 1;
 
     /**
      * Validates order parameters like stock, delivery and payment
@@ -40,6 +46,12 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
 
         if (!$iValidState && $oUser->getTBECountryId() && ($oBasket->getTBECountryId() != $oUser->getTBECountryId())) {
             $iValidState = oxOrder::ORDER_STATE_INVALIDDElADDRESSCHANGED;
+        }
+
+        $oVATTBEOrderArticleChecker = $this->_getOeVATTBEOrderArticleChecker($oBasket);
+
+        if (!$iValidState && !$oVATTBEOrderArticleChecker->isValid()) {
+            $iValidState = oeVATTBEOxOrder::ORDER_STATE_TBE_NOT_CONFIGURED;
         }
 
         return $iValidState;
@@ -150,4 +162,17 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
 
         return $oOrderEvidenceList;
     }
+
+    /**
+     * Return tbe article checker
+     *
+     * @param oxBasket $oBasket basket
+     *
+     * @return oeVATTBEOrderArticleChecker
+     */
+    protected function _getOeVATTBEOrderArticleChecker($oBasket)
+    {
+        return oxNew('oeVATTBEOrderArticleChecker', $oBasket->getBasketArticles());
+    }
+
 }
