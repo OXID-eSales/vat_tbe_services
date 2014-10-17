@@ -23,7 +23,7 @@
 /**
  * Testing extended oxArticle class.
  */
-class Unit_oeVATTBE_models_oeVATTBEOxSearchTest extends OxidTestCase
+class Integration_oeVATTBE_article_oeVATTBEOxSearchTest extends OxidTestCase
 {
     /**
      * Initialize the fixture.
