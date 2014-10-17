@@ -232,24 +232,25 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
 
     /**
      * Check if message is set in forth checkout step for TBE articles with wrong VAT.
-     *
-     * @param array  $aArticles     array of articles to set to basket and check.
-     * @param string $sErrorMessage article names which should be displayed in error message.
-     *
-     * @dataProvider providerMessageSetInBasketForWrongVATArticlesWhenUserIsLoggedIn
      */
-    public function testMessageSetInOrderForWrongVATArticles($aArticles, $sErrorMessage)
+    public function testDoNotAllowOrderIfVATNotConfigured()
     {
+        $this->getConfig()->setRequestParameter('stoken', 'stoken');
+        $this->getConfig()->setRequestParameter('sDeliveryAddressMD5', 'b4ebffc0f1940d9a54599ec7e21d2f2c');
+
         $oSession = oxRegistry::getSession();
+        $oSession->setVariable('sess_stoken', 'stoken');
 
         /** @var oxBasket $oBasket */
         $oBasket = oxNew('oxBasket');
+        $oBasket->setTBECountryId('a7c40f6320aeb2ec2.72885259');
 
         $oUser = $this->_createUser();
         $blLogin = $oUser->login($this->_sDefaultUserName, $this->_sDefaultPassword);
         $this->assertTrue($blLogin, 'User must login successfully.');
         $oSession->setUser($oUser);
 
+        $aArticles = array('1126','1127');
         foreach ($aArticles as $sArticleId) {
             $oBasket->addToBasket($sArticleId, 1);
         }
@@ -260,14 +261,80 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
         $oBasket->calculateBasket(true);
         $oSession->setBasket($oBasket);
 
-        /** @var basket $oBasket */
         $oOrder = oxNew('order');
-        $oOrder->render();
-
-        $aEx = oxRegistry::getSession()->getVariable('Errors');
-        $this->assertTrue(isset($aEx['default'][0]));
-        $this->assertRegExp($sErrorMessage, $aEx['default'][0], 'Error message: '. $aEx['default'][0]);
+        $this->assertSame('order', $oOrder->execute());
     }
+
+    /**
+ * Check if message is set in forth checkout step for TBE articles with wrong VAT.
+ */
+    public function testAllowOrderIfVATConfigured()
+    {
+        $this->getConfig()->setRequestParameter('stoken', 'stoken');
+        $this->getConfig()->setRequestParameter('sDeliveryAddressMD5', 'b4ebffc0f1940d9a54599ec7e21d2f2c');
+
+        $oSession = oxRegistry::getSession();
+        $oSession->setVariable('sess_stoken', 'stoken');
+
+        /** @var oxBasket $oBasket */
+        $oBasket = oxNew('oxBasket');
+        $oBasket->setTBECountryId('a7c40f6320aeb2ec2.72885259');
+
+        $oUser = $this->_createUser();
+        $blLogin = $oUser->login($this->_sDefaultUserName, $this->_sDefaultPassword);
+        $this->assertTrue($blLogin, 'User must login successfully.');
+        $oSession->setUser($oUser);
+
+        $aArticles = array('1126', '1131');
+        foreach ($aArticles as $sArticleId) {
+            $oBasket->addToBasket($sArticleId, 1);
+        }
+
+        $oBasket->setBasketUser($oUser);
+        $oBasket->setShipping('oxidstandard');
+        $oBasket->setPayment('oxidpayadvance');
+        $oBasket->calculateBasket(true);
+        $oSession->setBasket($oBasket);
+
+        $oOrder = oxNew('order');
+        $this->assertSame('thankyou', $oOrder->execute());
+    }
+
+    /**
+     * Check if message is set in forth checkout step for TBE articles with wrong VAT.
+     */
+    public function testAllowOrderIfNoTBEArticles()
+    {
+        $this->getConfig()->setRequestParameter('stoken', 'stoken');
+        $this->getConfig()->setRequestParameter('sDeliveryAddressMD5', 'b4ebffc0f1940d9a54599ec7e21d2f2c');
+
+        $oSession = oxRegistry::getSession();
+        $oSession->setVariable('sess_stoken', 'stoken');
+
+        /** @var oxBasket $oBasket */
+        $oBasket = oxNew('oxBasket');
+        $oBasket->setTBECountryId('a7c40f6320aeb2ec2.72885259');
+
+        $oUser = $this->_createUser();
+        $blLogin = $oUser->login($this->_sDefaultUserName, $this->_sDefaultPassword);
+        $this->assertTrue($blLogin, 'User must login successfully.');
+        $oSession->setUser($oUser);
+
+        $aArticles = array('1131');
+        foreach ($aArticles as $sArticleId) {
+            $oBasket->addToBasket($sArticleId, 1);
+        }
+
+        $oBasket->setBasketUser($oUser);
+        $oBasket->setShipping('oxidstandard');
+        $oBasket->setPayment('oxidpayadvance');
+        $oBasket->calculateBasket(true);
+        $oSession->setBasket($oBasket);
+
+        $oOrder = oxNew('order');
+        $this->assertSame('thankyou', $oOrder->execute());
+    }
+
 
     /**
      * Prepare articles data.

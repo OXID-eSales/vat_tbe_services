@@ -39,4 +39,24 @@ class oeVATTBEOrder extends oeVATTBEOrder_parent
 
         return parent::render();
     }
+
+    /**
+     * Returns next order step. If ordering was successful - returns string "thankyou" (possible
+     * additional parameters), otherwise - returns string "payment" with additional
+     * error parameters.
+     *
+     * @param integer $iSuccess status code
+     *
+     * @return  string  $sNextStep  partial parameter url for next step
+     */
+    protected function _getNextStep($iSuccess)
+    {
+        if ($iSuccess == oeVATTBEOxOrder::ORDER_STATE_TBE_NOT_CONFIGURED) {
+            $sNextStep = 'order';
+        } else {
+            $sNextStep = parent::_getNextStep($iSuccess);
+        }
+
+        return $sNextStep;
+    }
 }

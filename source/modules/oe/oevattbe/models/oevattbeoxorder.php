@@ -29,7 +29,7 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
      *
      * @var int
      */
-    const ORDER_STATE_TBE_NOT_CONFIGURED = 1;
+    const ORDER_STATE_TBE_NOT_CONFIGURED = 10;
 
     /**
      * Validates order parameters like stock, delivery and payment
@@ -53,7 +53,6 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
         if (!$iValidState && !$oVATTBEOrderArticleChecker->isValid()) {
             $iValidState = oeVATTBEOxOrder::ORDER_STATE_TBE_NOT_CONFIGURED;
         }
-
         return $iValidState;
     }
 
