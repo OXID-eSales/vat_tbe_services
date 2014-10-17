@@ -39,7 +39,7 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
      *
      * @return array
      */
-    public function providerMessageSetInBasketForAllArticlesWhenUserIsNotLeggedIn()
+    public function providerMessageSetInBasketForAllArticlesWhenUserIsNotLoggedIn()
     {
         $sIdTbeArticleWithVatGroup = '1126';
         $sTbeArticleWithoutVatGroup = '1127';
@@ -62,9 +62,9 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
      * @param array  $aArticles     array of articles to set to basket and check.
      * @param string $sErrorMessage article names which should be displayed in error message.
      *
-     * @dataProvider providerMessageSetInBasketForAllArticlesWhenUserIsNotLeggedIn
+     * @dataProvider providerMessageSetInBasketForAllArticlesWhenUserIsNotLoggedIn
      */
-    public function testMessageSetInBasketForAllArticlesWhenUserIsNotLeggedIn($aArticles, $sErrorMessage)
+    public function testMessageSetInBasketForAllArticlesWhenUserIsNotLoggedIn($aArticles, $sErrorMessage)
     {
         /** @var oxBasket $oBasket */
         $oBasket = oxNew('oxBasket');
@@ -89,7 +89,7 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
      *
      * @return array
      */
-    public function providerMessageIsNotSetInBasketWhenUserIsNotLeggedIn()
+    public function providerMessageIsNotSetInBasketWhenUserIsNotLoggedIn()
     {
         $sNotTbeArticle = '1131';
 
@@ -103,9 +103,9 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
      *
      * @param array $aArticles array of articles to set to basket and check.
      *
-     * @dataProvider providerMessageIsNotSetInBasketWhenUserIsNotLeggedIn
+     * @dataProvider providerMessageIsNotSetInBasketWhenUserIsNotLoggedIn
      */
-    public function testMessageIsNotSetInBasketWhenUserIsNotLeggedIn($aArticles)
+    public function testMessageIsNotSetInBasketWhenUserIsNotLoggedIn($aArticles)
     {
         /** @var oxBasket $oBasket */
         $oBasket = oxNew('oxBasket');
@@ -129,7 +129,7 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
      *
      * @return array
      */
-    public function providerMessageSetInBasketForWrongVATArticlesWhenUserIsLeggedIn()
+    public function providerMessageSetInBasketForWrongVATArticlesWhenUserIsLoggedIn()
     {
         $sIdTbeArticleWithVatGroup = '1126';
         $sTbeArticleWithoutVatGroup = '1127';
@@ -150,9 +150,9 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
      * @param array  $aArticles     array of articles to set to basket and check.
      * @param string $sErrorMessage article names which should be displayed in error message.
      *
-     * @dataProvider providerMessageSetInBasketForWrongVATArticlesWhenUserIsLeggedIn
+     * @dataProvider providerMessageSetInBasketForWrongVATArticlesWhenUserIsLoggedIn
      */
-    public function testMessageSetInBasketForWrongVATArticlesWhenUserIsLeggedIn($aArticles, $sErrorMessage)
+    public function testMessageSetInBasketForWrongVATArticlesWhenUserIsLoggedIn($aArticles, $sErrorMessage)
     {
         $oSession = oxRegistry::getSession();
 
@@ -185,7 +185,7 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
      *
      * @return array
      */
-    public function providerMessageIsNotSetInBasketWhenUserIsLeggedIn()
+    public function providerMessageIsNotSetInBasketWhenUserIsLoggedIn()
     {
         $sIdTbeArticleWithVatGroup = '1126';
         $sNotTbeArticle = '1131';
@@ -201,9 +201,9 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
      *
      * @param array $aArticles array of articles to set to basket and check.
      *
-     * @dataProvider providerMessageIsNotSetInBasketWhenUserIsLeggedIn
+     * @dataProvider providerMessageIsNotSetInBasketWhenUserIsLoggedIn
      */
-    public function testMessageIsNotSetInBasketWhenUserIsLeggedIn($aArticles)
+    public function testMessageIsNotSetInBasketWhenUserIsLoggedIn($aArticles)
     {
         $oSession = oxRegistry::getSession();
 
@@ -235,7 +235,7 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
      * @param array  $aArticles     array of articles to set to basket and check.
      * @param string $sErrorMessage article names which should be displayed in error message.
      *
-     * @dataProvider providerMessageSetInBasketForWrongVATArticlesWhenUserIsLeggedIn
+     * @dataProvider providerMessageSetInBasketForWrongVATArticlesWhenUserIsLoggedIn
      */
     public function testMessageSetInOrderForWrongVATArticles($aArticles, $sErrorMessage)
     {
