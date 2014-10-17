@@ -43,8 +43,8 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageFormatterTest extends OxidTes
         $oInvalidArticles2 = array($oArticle1, $oArticle2);
 
         return array(
-            array($oInvalidArticles1, '[tr]Some articles can not be sold because of VAT problems in your country: some article name'),
-            array($oInvalidArticles2, '[tr]Some articles can not be sold because of VAT problems in your country: some article name, some other name'),
+            array($oInvalidArticles1, '[tr]Some articles can not be sold because we do not know their VAT rate in your country: some article name. Please remove those articles from your basket.'),
+            array($oInvalidArticles2, '[tr]Some articles can not be sold because we do not know their VAT rate in your country: some article name, some other name. Please remove those articles from your basket.'),
         );
     }
 
