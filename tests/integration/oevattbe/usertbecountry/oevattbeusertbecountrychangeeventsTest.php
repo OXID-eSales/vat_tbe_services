@@ -154,6 +154,7 @@ class Integration_oeVatTbe_userTBECountry_oeVATTBEUserTBECountryChangeEventsTest
     /** @var string */
     protected $_sDefaultUserPassword = '_testPassword';
 
+    /** @var string encoded default password */
     private $_sNewEncodedPassword = 'b016e37ac8ec71449b475e84a941e3c39a27fb8f0710d4b47d6116ad6a6afcaa0c17006a4c01ffc67f3db95772fe001584cb4ce7e5bacd74198c24d1851841d5';
 
     /** @var string Salt generated with new algorithm. */
