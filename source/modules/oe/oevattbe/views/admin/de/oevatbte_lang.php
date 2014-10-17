@@ -24,5 +24,6 @@
 // -------------------------------
 $aLang = array(
     'charset'                                    => 'ISO-8859-15',
-
+    'OEVATTBE_VAT_IN_STORE_DATE' => '[tr]VAT IN store date',
+    'HELP_OEVATTBE_VAT_IN_STORE_DATE' => '[tr]VAT IN store date',
 );

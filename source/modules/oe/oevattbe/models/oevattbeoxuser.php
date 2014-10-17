@@ -125,10 +125,11 @@ class oeVATTBEOxUser extends oeVatTbeOxUser_parent
      */
     public function save()
     {
-        if ($this->getVatIn() && $this->getVatInStoreDate() == '0000-00-00 00:00:00') {
+        if ($this->getVatIn() && $this->_isVATINStoredDateEmpty()) {
             $this->oxuser__oevattbe_vatinenterdate = new oxField(date('Y-m-d H:i:s', oxRegistry::get("oxUtilsDate")->getTime()));
         }
         $this->unsetTbeCountryFromCaching();
+
         return parent::save();
     }
 
@@ -139,8 +140,6 @@ class oeVATTBEOxUser extends oeVatTbeOxUser_parent
      */
     public function getVatInStoreDate()
     {
-
-
         return $this->oxuser__oevattbe_vatinenterdate->value;
     }
 
@@ -153,5 +152,14 @@ class oeVATTBEOxUser extends oeVatTbeOxUser_parent
     {
         return $this->oxuser__oxustid->value;
     }
-}
 
+    /**
+     * Check if VAT in stored date is empty
+     *
+     * @return bool
+     */
+    protected function _isVATINStoredDateEmpty()
+    {
+        return  is_null($this->getVatInStoreDate()) || $this->getVatInStoreDate() == '0000-00-00 00:00:00';
+    }
+}

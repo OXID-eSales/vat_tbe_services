@@ -101,9 +101,20 @@
     </td>
     <td class="edittext">
         <input type="text" class="editinput" size="15" maxlength="[{$edit->oxuser__oxustid->fldmax_length}]" name="editval[oxuser__oxustid]" value="[{$edit->oxuser__oxustid->value }]" [{ $readonly }]>
-        [{oxinputhelp ident="HELP_GENERAL_USTID" }] ([{$edit->oxuser__oevattbe_vatinenterdate->value}])
+        [{oxinputhelp ident="HELP_GENERAL_USTID" }]
     </td>
 </tr>
+[{if $edit->oxuser__oevattbe_vatinenterdate->value && $edit->oxuser__oevattbe_vatinenterdate->value != '0000-00-00 00:00:00'}]
+<tr>
+    <td class="edittext">
+        [{oxmultilang ident="OEVATTBE_VAT_IN_STORE_DATE"}]
+    </td>
+    <td class="edittext">
+        [{$edit->oxuser__oevattbe_vatinenterdate->value}] [{oxinputhelp ident="HELP_OEVATTBE_VAT_IN_STORE_DATE"}]
+    </td>
+</tr>
+[{/if}]
+
 <tr>
     <td class="edittext">
         [{oxmultilang ident="GENERAL_EXTRAINFO" }]
