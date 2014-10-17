@@ -37,7 +37,7 @@ class Unit_oeVatTbe_components_oeVATTBEOxCmpbasketTest extends OxidTestCase
 
         $this->getSession()->setBasket($oBasket);
 
-        $oCmp_Basket= oxNew('oxcmp_basket');
+        $oCmp_Basket = oxNew('oeVATTBEOxCmp_Basket');
         $oCmp_Basket->setUser($oUser);
 
         $oBasket = $oCmp_Basket->render();
@@ -58,7 +58,7 @@ class Unit_oeVatTbe_components_oeVATTBEOxCmpbasketTest extends OxidTestCase
 
         $this->getSession()->setBasket($oBasket);
 
-        $oCmp_Basket= oxNew('oxcmp_basket');
+        $oCmp_Basket = oxNew('oeVATTBEOxCmp_Basket');
         $oCmp_Basket->setUser($oUser);
 
         $oBasket = $oCmp_Basket->render();

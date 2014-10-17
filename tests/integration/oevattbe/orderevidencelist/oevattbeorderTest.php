@@ -31,11 +31,11 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderTest extends OxidTestC
     public function testSavingEvidenceList()
     {
         $oConfig = $this->getConfig();
-        $oConfig->setConfigParam('blOeVATTBECountryEvidences', array('oeVATTBEBillingCountryEvidence'));
+        $oConfig->setConfigParam('aOeVATTBECountryEvidences', array('oeVATTBEBillingCountryEvidence'));
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
 
-        $oBasket = oxNew('oxBasket');
-        $oUser = oxNew('oxUser');
+        $oBasket = oxNew('oeVATTBEOxBasket');
+        $oUser = oxNew('oeVATTBEOxUser');
 
         $oOrder = $this->getMock("oeVATTBEOxOrder", array("_getFinalizeOrderParent"));
         $oOrder->expects($this->any())->method("_getFinalizeOrderParent")->will($this->returnValue(oxOrder::ORDER_STATE_OK));

@@ -38,10 +38,10 @@ class Unit_oeVATTBE_models_oeVATTBEOxSearchTest extends OxidTestCase
      */
     public function testGetSearchArticles()
     {
-        $oUser = $this->getMock("oxUser", array("getTbeCountryId"));
+        $oUser = $this->getMock("oeVATTBEOxUser", array("getTbeCountryId"));
         $oUser->expects($this->any())->method("getTbeCountryId")->will($this->returnValue('a7c40f631fc920687.20179984'));
 
-        $oSearch = oxNew("oxSearch");
+        $oSearch = oxNew("oeVATTBEOxSearch");
         $oSearch->setUser($oUser);
 
         $oArticleList = $oSearch->getSearchArticles('ABSINTH');
@@ -57,10 +57,10 @@ class Unit_oeVATTBE_models_oeVATTBEOxSearchTest extends OxidTestCase
      */
     public function testGetSearchArticlesUserCountryNotSet()
     {
-        $oUser = $this->getMock("oxUser", array("getTbeCountryId"));
+        $oUser = $this->getMock("oeVATTBEOxUser", array("getTbeCountryId"));
         $oUser->expects($this->any())->method("getTbeCountryId")->will($this->returnValue(null));
 
-        $oSearch = oxNew("oxSearch");
+        $oSearch = oxNew("oeVATTBEOxSearch");
         $oSearch->setUser($oUser);
 
         $oArticleList = $oSearch->getSearchArticles('ABSINTH');
@@ -76,7 +76,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxSearchTest extends OxidTestCase
      */
     public function testGetSearchArticlesUserNotLogged()
     {
-        $oSearch = oxNew("oxSearch");
+        $oSearch = oxNew("oeVATTBEOxSearch");
 
         $oArticleList = $oSearch->getSearchArticles('ABSINTH');
 

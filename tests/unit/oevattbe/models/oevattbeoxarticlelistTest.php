@@ -61,7 +61,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleListTest extends OxidTestCase
         $oArticleList = $this->_getArticleList($sUserStatus);
         $oArticleList->loadCategoryArticles('30e44ab8593023055.23928895', null);
 
-        /** @var oxArticle $oArticle */
+        /** @var oeVATTBEOxArticle|oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
         $this->assertSame($sVat, $oArticle->getTBEVat());
@@ -77,7 +77,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleListTest extends OxidTestCase
      */
     public function testManufacturerList($sUserStatus, $sVat)
     {
-        $oArticle = oxNew('oxArticle');
+        $oArticle = oxNew('oeVATTBEOxArticle');
         $oArticle->setId('1126');
         $oArticle->oxarticles__oxmanufacturerid = new oxField('manufacturerId');
         $oArticle->save();
@@ -85,7 +85,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleListTest extends OxidTestCase
         $oArticleList = $this->_getArticleList($sUserStatus);
         $oArticleList->loadManufacturerArticles('manufacturerId');
 
-        /** @var oxArticle $oArticle */
+        /** @var oeVATTBEOxArticle|oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
         $this->assertSame($sVat, $oArticle->getTBEVat());
@@ -101,7 +101,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleListTest extends OxidTestCase
      */
     public function testVendorList($sUserStatus, $sVat)
     {
-        $oArticle = oxNew('oxArticle');
+        $oArticle = oxNew('oeVATTBEOxArticle');
         $oArticle->setId('1126');
         $oArticle->oxarticles__oxvendorid = new oxField('vendorId');
         $oArticle->save();
@@ -109,7 +109,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleListTest extends OxidTestCase
         $oArticleList = $this->_getArticleList($sUserStatus);
         $oArticleList->loadVendorArticles('vendorId');
 
-        /** @var oxArticle $oArticle */
+        /** @var oeVATTBEOxArticle|oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
         $this->assertSame($sVat, $oArticle->getTBEVat());
@@ -133,7 +133,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleListTest extends OxidTestCase
         $oArticleList = $this->_getArticleList($sUserStatus);
         $oArticleList->loadTagArticles('tag', oxRegistry::getLang()->getBaseLanguage());
 
-        /** @var oxArticle $oArticle */
+        /** @var oeVATTBEOxArticle|oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
         $this->assertSame($sVat, $oArticle->getTBEVat());
@@ -152,7 +152,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleListTest extends OxidTestCase
         $oArticleList = $this->_getArticleList($sUserStatus);
         $oArticleList->loadPriceArticles(20, 40);
 
-        /** @var oxArticle $oArticle */
+        /** @var oeVATTBEOxArticle|oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
         $this->assertSame($sVat, $oArticle->getTBEVat());
@@ -177,7 +177,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleListTest extends OxidTestCase
         $oArticleList = $this->_getArticleList($sUserStatus);
         $oArticleList->loadActionArticles('oxstart');
 
-        /** @var oxArticle $oArticle */
+        /** @var oeVATTBEOxArticle|oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
         $this->assertSame($sVat, $oArticle->getTBEVat());
@@ -196,7 +196,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleListTest extends OxidTestCase
         $this->getConfig()->setConfigParam('iNewestArticlesMode', 2);
         $this->getConfig()->setConfigParam('blNewArtByInsert', false);
 
-        $oArticle = oxNew('oxArticle');
+        $oArticle = oxNew('oeVATTBEOxArticle');
         $oArticle->setId('1126');
         $oArticle->oxarticles__oxtimestamp = new oxField(date('Y-m-d H:i:s', oxRegistry::get("oxUtilsDate")->getTime()));
         $oArticle->save();
@@ -204,7 +204,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleListTest extends OxidTestCase
         $oArticleList = $this->_getArticleList($sUserStatus);
         $oArticleList->loadNewestArticles();
 
-        /** @var oxArticle $oArticle */
+        /** @var oeVATTBEOxArticle|oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
         $this->assertSame($sVat, $oArticle->getTBEVat());
@@ -222,7 +222,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleListTest extends OxidTestCase
     {
         $this->getConfig()->setConfigParam('iTop5Mode', 2);
 
-        $oArticle = oxNew('oxArticle');
+        $oArticle = oxNew('oeVATTBEOxArticle');
         $oArticle->setId('1126');
         $oArticle->oxarticles__oxsoldamount = new oxField(9999);
         $oArticle->save();
@@ -230,7 +230,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleListTest extends OxidTestCase
         $oArticleList = $this->_getArticleList($sUserStatus);
         $oArticleList->loadTop5Articles();
 
-        /** @var oxArticle $oArticle */
+        /** @var oeVATTBEOxArticle|oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
         $this->assertSame($sVat, $oArticle->getTBEVat());
@@ -249,7 +249,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleListTest extends OxidTestCase
         $oArticleList = $this->_getArticleList($sUserStatus);
         $oArticleList->loadArticleCrossSell('1964');
 
-        /** @var oxArticle $oArticle */
+        /** @var oeVATTBEOxArticle|oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
         $this->assertSame($sVat, $oArticle->getTBEVat());
@@ -274,7 +274,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleListTest extends OxidTestCase
         $oArticleList = $this->_getArticleList($sUserStatus);
         $oArticleList->loadArticleAccessoires('1964');
 
-        /** @var oxArticle $oArticle */
+        /** @var oeVATTBEOxArticle|oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
         $this->assertSame($sVat, $oArticle->getTBEVat());
@@ -299,7 +299,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleListTest extends OxidTestCase
         $oArticleList = $this->_getArticleList($sUserStatus);
         $oArticleList->loadRecommArticles('list');
 
-        /** @var oxArticle $oArticle */
+        /** @var oeVATTBEOxArticle|oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
         $this->assertSame($sVat, $oArticle->getTBEVat());
@@ -333,11 +333,11 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleListTest extends OxidTestCase
      */
     protected function _getArticleList($sUserStatus = 'notLoggedIn')
     {
-        $oArticleList = oxNew("oxArticleList");
+        $oArticleList = oxNew("oeVATTBEOxArticleList");
         $oArticle = $oArticleList->getBaseObject();
 
         if ($sUserStatus != 'notLoggedIn') {
-            $oUser = $this->getMock("oxUser", array("getTbeCountryId"));
+            $oUser = $this->getMock("oeVATTBEOxUser", array("getTbeCountryId"));
             $sCountryId = ($sUserStatus == 'loggedInWithoutCountry') ? null : 'a7c40f631fc920687.20179984';
             $oUser->expects($this->any())->method("getTbeCountryId")->will($this->returnValue($sCountryId));
             $oArticle->setUser($oUser);

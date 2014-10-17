@@ -33,7 +33,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleTest extends OxidTestCase
      */
     public function testTbeVatGetter()
     {
-        $oArticle = oxNew('oxArticle');
+        $oArticle = oxNew('oeVATTBEOxArticle');
         $oArticle->oxarticles__oevattbe_rate = new oxField(9);
         $this->assertSame(9, $oArticle->getTBEVat());
     }
@@ -43,7 +43,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleTest extends OxidTestCase
      */
     public function testIsTbeService()
     {
-        $oArticle = oxNew('oxArticle');
+        $oArticle = oxNew('oeVATTBEOxArticle');
         $oArticle->oxarticles__oevattbe_istbeservice = new oxField(false);
         $this->assertFalse($oArticle->isTbeService());
     }
@@ -58,7 +58,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleTest extends OxidTestCase
         $oUser = $this->getMock("oxUser", array("getTbeCountryId"));
         $oUser->expects($this->any())->method("getTbeCountryId")->will($this->returnValue('a7c40f631fc920687.20179984'));
 
-        $oArticle = oxNew('oxArticle');
+        $oArticle = oxNew('oeVATTBEOxArticle');
         $oArticle->setUser($oUser);
 
         $oArticle->load('1126');
@@ -76,7 +76,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleTest extends OxidTestCase
         $oUser = $this->getMock("oxUser", array("getTbeCountryId"));
         $oUser->expects($this->any())->method("getTbeCountryId")->will($this->returnValue(null));
 
-        $oArticle = oxNew('oxArticle');
+        $oArticle = oxNew('oeVATTBEOxArticle');
         $oArticle->setUser($oUser);
 
         $oArticle->load('1126');
@@ -91,7 +91,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleTest extends OxidTestCase
     {
         $this->_prepareData();
 
-        $oArticle = oxNew('oxArticle');
+        $oArticle = oxNew('oeVATTBEOxArticle');
         $oArticle->load('1126');
 
         $this->assertNull($oArticle->getTBEVat());
@@ -110,7 +110,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleTest extends OxidTestCase
         $aCacheKeysWithoutModules = $oArticleWithoutModules->getCacheKeys();
 
         /** @var oxArticle $oArticle */
-        $oArticle = oxNew('oxArticle');
+        $oArticle = oxNew('oeVATTBEOxArticle');
         $aCacheKeys = $oArticle->getCacheKeys();
         $this->assertSame($aCacheKeysWithoutModules, $aCacheKeys);
     }
@@ -126,11 +126,11 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleTest extends OxidTestCase
 
         $sAustriaId = 'a7c40f6320aeb2ec2.72885259';
         /** @var oxUser $oUser */
-        $oUser = $this->getMock('oxUser', array('getTbeCountryId'));
+        $oUser = $this->getMock('oeVATTBEOxUser', array('getTbeCountryId'));
         $oUser->expects($this->any())->method('getTbeCountryId')->will($this->returnValue($sAustriaId));
 
         /** @var oxArticle $oArticle */
-        $oArticle = oxNew('oxArticle');
+        $oArticle = oxNew('oeVATTBEOxArticle');
         $oArticle->setUser($oUser);
         $aCacheKeys = $oArticle->getCacheKeys();
 
@@ -149,11 +149,11 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleTest extends OxidTestCase
 
         $sAustriaId = 'a7c40f6320aeb2ec2.72885259';
         /** @var oxUser $oUser */
-        $oUser = $this->getMock('oxUser', array('getTbeCountryId'));
+        $oUser = $this->getMock('oeVATTBEOxUser', array('getTbeCountryId'));
         $oUser->expects($this->any())->method('getTbeCountryId')->will($this->returnValue($sAustriaId));
 
         /** @var oxArticle $oArticle */
-        $oArticle = oxNew('oxArticle');
+        $oArticle = oxNew('oeVATTBEOxArticle');
         $oArticle->setUser($oUser);
         $oArticle->oxarticles__oevattbe_istbeservice = new oxField(true, oxField::T_RAW);
         $aCacheKeys = $oArticle->getCacheKeys();

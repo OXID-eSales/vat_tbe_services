@@ -138,7 +138,7 @@ class Integration_oeVatTbe_userTBECountry_oeVATTBEUserTBECountryChangeEventsTest
         $sSalt = $this->_sNewSalt;
         $sGermanyId = $this->_sGermanyId;
 
-        $oUser = oxNew('oxUser');
+        $oUser = oxNew('oeVATTBEOxUser');
         $oUser->oxuser__oxusername = new oxField($sUserName, oxField::T_RAW);
         $oUser->oxuser__oxpassword = new oxField($sEncodedPassword, oxField::T_RAW);
         $oUser->oxuser__oxpasssalt = new oxField($sSalt, oxField::T_RAW);
