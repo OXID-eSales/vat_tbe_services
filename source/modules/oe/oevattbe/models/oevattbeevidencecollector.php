@@ -26,7 +26,7 @@
 class oeVATTBEEvidenceCollector
 {
 
-    /** @var oxConfig */
+    /** @var oxConfig Config object to find out about existing evidences */
     private $_oConfig = null;
 
     /** @var oxUser User object passed to every evidence. */
@@ -35,8 +35,8 @@ class oeVATTBEEvidenceCollector
     /**
      * Handles required dependencies.
      *
-     * @param oxUser   $oUser
-     * @param oxConfig $oConfig
+     * @param oxUser   $oUser   User object passed to every evidence.
+     * @param oxConfig $oConfig Config object to find out about existing evidences.
      */
     public function __construct($oUser, $oConfig)
     {
