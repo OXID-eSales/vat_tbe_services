@@ -25,6 +25,6 @@
 $aLang = array(
     'charset'                                => 'ISO-8859-15',
     'PLUS_SHIPPING2'                         => '[tr]shipping ** TBE VAT',
-    'ERROR_MESSAGE_TBE_ARTICLE_VAT_PROBLEMS' => '[tr]Some articles can not be sold because of VAT problems in your country: %s',
+    'ERROR_MESSAGE_TBE_ARTICLE_VAT_PROBLEMS' => '[tr]Some articles can not be sold because we do not know their VAT rate in your country: %s. Please remove those articles from your basket.',
     'VAT_TBE_VAT_CALCULATED_BY_USER_COUNTRY' => '[tr]This VAT was calculated acccording country of your rezidence: %s',
 );
