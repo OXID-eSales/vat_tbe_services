@@ -35,7 +35,7 @@ class oeVATTBEOrder extends oeVATTBEOrder_parent
     {
         /** @var oeVATTBEBasketItemsValidator $oVATTBEBasketItemsValidator */
         $oVATTBEBasketItemsValidator = oeVATTBEBasketItemsValidator::getInstance($this->getBasketArticles());
-        $oVATTBEBasketItemsValidator->validateTbeArticlesAndShowMessageIfNeeded();
+        $oVATTBEBasketItemsValidator->validateTbeArticlesAndShowMessageIfNeeded('order');
 
         return parent::render();
     }

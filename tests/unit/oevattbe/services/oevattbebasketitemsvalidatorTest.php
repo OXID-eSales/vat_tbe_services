@@ -43,8 +43,9 @@ class Unit_oeVatTbe_services_oeVATTBEBasketItemsValidatorTest extends OxidTestCa
 
         /** @var oeVATTBEBasketItemsValidator $oVATTBEBasketItemsValidator */
         $oVATTBEBasketItemsValidator = oxNew('oeVATTBEBasketItemsValidator', $oVATTBEOrderArticleChecker, $oVATTBEArticleMessageFormer, $oUtilsView);
-        $oVATTBEBasketItemsValidator->validateTbeArticlesAndShowMessageIfNeeded();
+        $oVATTBEBasketItemsValidator->validateTbeArticlesAndShowMessageIfNeeded('basket');
     }
+
     /**
      * Test that error message set when there are articles with wrong TBE VAT.
      */
@@ -61,6 +62,6 @@ class Unit_oeVatTbe_services_oeVATTBEBasketItemsValidatorTest extends OxidTestCa
 
         /** @var oeVATTBEBasketItemsValidator $oVATTBEBasketItemsValidator */
         $oVATTBEBasketItemsValidator = oxNew('oeVATTBEBasketItemsValidator', $oVATTBEOrderArticleChecker, $oVATTBEArticleMessageFormer, $oUtilsView);
-        $oVATTBEBasketItemsValidator->validateTbeArticlesAndShowMessageIfNeeded();
+        $oVATTBEBasketItemsValidator->validateTbeArticlesAndShowMessageIfNeeded('basket');
     }
 }

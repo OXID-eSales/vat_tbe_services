@@ -68,15 +68,17 @@ class oeVATTBEBasketItemsValidator
     /**
      * Check if there is article with wrong TBE VAT.
      * Form message and add it for displaying to oxUtilsView.
+     *
+     * @param string $sControllerWhereToShowMessage name of controller where to display and delete message.
      */
-    public function validateTbeArticlesAndShowMessageIfNeeded()
+    public function validateTbeArticlesAndShowMessageIfNeeded($sControllerWhereToShowMessage)
     {
         $oVATTBEOrderArticleChecker = $this->_oVATTBEOrderArticleChecker;
         $blAllBasketArticlesValid = $oVATTBEOrderArticleChecker->isValid();
         if (!$blAllBasketArticlesValid) {
             $oInvalidArticles = $oVATTBEOrderArticleChecker->getInvalidArticles();
             $oEx = $this->_oVATTBEArticleMessageFormer->getMessage($oInvalidArticles);
-            $this->_oUtilsView->addErrorToDisplay($oEx);
+            $this->_oUtilsView->addErrorToDisplay($oEx, false, true, '', $sControllerWhereToShowMessage);
         }
     }
 }
