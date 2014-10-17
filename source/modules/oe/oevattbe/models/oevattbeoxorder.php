@@ -59,7 +59,7 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
     /**
      * Delete order together with PayPal order data.
      *
-     * @param string $sOxId
+     * @param string $sOxId id
      *
      * @return null
      */
@@ -122,8 +122,8 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
     /**
      * Calls validateOrder() method on parent class and returns it's value.
      *
-     * @param oxBasket $oBasket
-     * @param oxUser   $oUser
+     * @param oxBasket $oBasket Basket
+     * @param oxUser   $oUser   User
      *
      * @return mixed
      */
@@ -135,9 +135,9 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
     /**
      * Calls finalizeOrder() method on parent class and returns it's value.
      *
-     * @param oxBasket $oBasket
-     * @param oxUser   $oUser
-     * @param bool     $blRecalculatingOrder
+     * @param oxBasket $oBasket              Basket
+     * @param oxUser   $oUser                User
+     * @param bool     $blRecalculatingOrder Recalculation Order
      *
      * @return mixed
      */
@@ -173,5 +173,4 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
     {
         return oxNew('oeVATTBEOrderArticleChecker', $oBasket->getBasketArticles());
     }
-
 }
