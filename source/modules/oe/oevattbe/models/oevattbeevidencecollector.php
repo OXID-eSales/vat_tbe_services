@@ -54,7 +54,7 @@ class oeVATTBEEvidenceCollector
     {
         $oConfig = $this->_getConfig();
         $oUser = $this->_getUser();
-        $aEvidences = (array) $oConfig->getConfigParam('blOeVATTBECountryEvidences');
+        $aEvidences = (array) $oConfig->getConfigParam('aOeVATTBECountryEvidences');
 
         $oList = oxNew('oeVATTBEEvidenceList');
 
