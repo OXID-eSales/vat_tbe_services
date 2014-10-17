@@ -27,11 +27,11 @@ class oeVATTBEIncorrectVATArticlesMessageFormatter
     /**
      * Forms error message for articles with TBE VAT problems.
      *
-     * @param array $oInvalidArticles Takes titles to form error message.
+     * @param array $aInvalidArticles Takes titles to form error message.
      *
      * @return oxDisplayError
      */
-    public function getMessage($oInvalidArticles)
+    public function getMessage($aInvalidArticles)
     {
         /** @var oxDisplayError $oEx */
         $oEx = oxNew('oxDisplayError');
@@ -39,7 +39,8 @@ class oeVATTBEIncorrectVATArticlesMessageFormatter
         $oLang = oxRegistry::getLang();
 
         /** @var oxArticle $oInvalidArticle */
-        foreach ($oInvalidArticles as $oInvalidArticle) {
+        $aArticleNames = array();
+        foreach ($aInvalidArticles as $oInvalidArticle) {
             $aArticleNames[] = $oInvalidArticle->oxarticles__oxtitle->value;
         }
         $sArticleNames = implode(', ', $aArticleNames);
