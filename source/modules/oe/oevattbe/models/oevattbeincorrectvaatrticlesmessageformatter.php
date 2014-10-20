@@ -45,7 +45,7 @@ class oeVATTBEIncorrectVATArticlesMessageFormatter
         }
         $sArticleNames = implode(', ', $aArticleNames);
 
-        $oEx->setMessage(sprintf($oLang->translateString('ERROR_MESSAGE_TBE_ARTICLE_VAT_PROBLEMS', $oLang->getTplLanguage()), $sArticleNames));
+        $oEx->setMessage(sprintf($oLang->translateString('OEVATTBE_ERROR_MESSAGE_TBE_ARTICLE_VAT_PROBLEMS', $oLang->getTplLanguage()), $sArticleNames));
 
         return $oEx;
     }
