@@ -70,7 +70,7 @@ class oeVATTBEEvidenceSelector
         foreach ($oEvidenceList as $oEvidence) {
             /** @var oeVATTBEEvidence $oEvidence */
             if ($oEvidence->getCountryId()) {
-                if ($sDefaultEvidenceName == $oEvidence->getName()) {
+                if ($sDefaultEvidenceName == $oEvidence->getId()) {
                     $oDefaultEvidence = $oEvidence;
                 }
                 if (!$oFirstNonEmptyEvidence) {

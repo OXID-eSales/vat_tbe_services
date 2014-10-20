@@ -57,8 +57,8 @@ class oeVATTBEEvidenceList extends oeVATTBEList
         $aEvidences = array();
         foreach ($aItems as $oEvidence) {
             /** @var oeVATTBEEvidence $oEvidence */
-            $aEvidences[$oEvidence->getName()] = array(
-                'name' => $oEvidence->getName(),
+            $aEvidences[$oEvidence->getId()] = array(
+                'name' => $oEvidence->getId(),
                 'countryId' => $oEvidence->getCountryId()
             );
         }

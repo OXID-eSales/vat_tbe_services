@@ -134,7 +134,7 @@ class oeVATTBETBEUser
 
             $oEvidence = $oEvidenceSelector->getEvidence();
             $sTBECountryId = $oEvidence ? $oEvidence->getCountryId() : '';
-            $sEvidenceUser = $oEvidence ? $oEvidence->getName() : '';
+            $sEvidenceUser = $oEvidence ? $oEvidence->getId() : '';
             $oSession->setVariable('TBECountryId', $sTBECountryId);
             $oSession->setVariable('TBEEvidenceUsed', $sEvidenceUser);
         }

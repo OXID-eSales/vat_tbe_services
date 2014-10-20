@@ -27,13 +27,13 @@
 class Unit_oeVATTBE_Models_Evidences_oeVATTBEGeoLocationEvidenceTest extends OxidTestCase
 {
 
-    public function testGetName()
+    public function testGetId()
     {
         /** @var oxUser|PHPUnit_Framework_MockObject_MockObject $oUser */
         $oUser = $this->getMock('oxUser', array(), array(), '', false);
         $oEvidence = new oeVATTBEGeoLocationEvidence($oUser);
 
-        $this->assertEquals('geo_location', $oEvidence->getName());
+        $this->assertEquals('geo_location', $oEvidence->getId());
     }
 
     public function testGetCountryId()

@@ -31,26 +31,29 @@ class oeVATTBEBillingCountryEvidence extends oeVATTBEEvidence
      *
      * @var string
      */
-    private $_sName = 'billing_country';
+    private $_sId = 'billing_country';
 
     /** @var string Calculated user country. */
     private $_sCountry = null;
 
     /**
-     * Returns the name of evidence.
+     * Returns evidence id.
+     * Evidence id is shown in module configuration screen for admin to be able to active or deactivate this evidence.
+     * It is also shown in order page if order has TBE articles and this evidence was used for country selection.
      *
-     * @return string
+     * @return string Evidence id.
      */
-    public function getName()
+    public function getId()
     {
-        return $this->_sName;
+        return $this->_sId;
     }
 
     /**
-     * Gets user country id and returns it.
-     * Has local cache, so does not recheck twice.
+     * Calculates user country id and returns it.
+     * For performance reasons country id is cached locally,
+     * so that country would not be checked on every call.
      *
-     * @return string
+     * @return string Country id.
      */
     public function getCountryId()
     {

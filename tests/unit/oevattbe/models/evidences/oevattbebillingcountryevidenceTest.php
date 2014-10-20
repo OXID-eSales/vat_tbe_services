@@ -27,12 +27,12 @@
 class Unit_oeVATTBE_Models_Evidences_oeVATTBEBillingCountryEvidenceTest extends OxidTestCase
 {
 
-    public function testGetName()
+    public function testGetId()
     {
         $oUser = new oxUser();
         $oEvidence = new oeVATTBEBillingCountryEvidence($oUser);
 
-        $this->assertEquals('billing_country', $oEvidence->getName());
+        $this->assertEquals('billing_country', $oEvidence->getId());
     }
 
     public function testGetCountryId()

@@ -39,17 +39,18 @@ abstract class oeVATTBEEvidence
     }
 
     /**
-     * Returns evidence name.
-     * Evidence name is shown with TBE articles in order page if this evidence was used for country selection.
-     * Also used for selecting default evidence.
+     * Returns evidence id.
+     * Evidence id is shown in module configuration screen for admin to be able to active or deactivate this evidence.
+     * It is also shown in order page if order has TBE articles and this evidence was used for country selection.
      *
-     * @return string Evidence name.
+     * @return string Evidence id.
      */
-    abstract public function getName();
+    abstract public function getId();
 
     /**
-     * Gets user country id and returns it.
-     * Should have local cache, so that it would not recheck twice.
+     * Calculates user country id and returns it.
+     * For performance reasons country id should be cached locally,
+     * so that country would not be checked on every call.
      *
      * @return string Country id.
      */

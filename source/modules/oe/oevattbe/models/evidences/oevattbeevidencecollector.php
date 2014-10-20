@@ -106,7 +106,7 @@ class oeVATTBEEvidenceCollector
             if (class_exists($sEvidenceClass)) {
                 /** @var oeVATTBEEvidence $oEvidence */
                 $oEvidence = oxNew($sEvidenceClass, $oUser);
-                $sName = $oEvidence->getName();
+                $sName = $oEvidence->getId();
                 if (isset($aEvidences[$sName]) && $aEvidences[$sName] == 1) {
                     $oList->add($oEvidence);
                 }

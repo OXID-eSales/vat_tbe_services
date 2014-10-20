@@ -84,8 +84,8 @@ class Unit_oeVATTBE_Models_Evidences_oeVATTBEEvidenceListTest extends OxidTestCa
     protected function _createEvidence($sName, $sCountry)
     {
         /** @var oeVATTBEEvidence|PHPUnit_Framework_MockObject_MockObject $oUser */
-        $oEvidence = $this->getMock('oeVATTBEEvidence', array('getName', 'getCountryId'), array(), '', false);
-        $oEvidence->expects($this->any())->method('getName')->will($this->returnValue($sName));
+        $oEvidence = $this->getMock('oeVATTBEEvidence', array('getId', 'getCountryId'), array(), '', false);
+        $oEvidence->expects($this->any())->method('getId')->will($this->returnValue($sName));
         $oEvidence->expects($this->any())->method('getCountryId')->will($this->returnValue($sCountry));
 
         return $oEvidence;

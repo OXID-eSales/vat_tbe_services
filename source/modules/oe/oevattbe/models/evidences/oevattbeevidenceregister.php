@@ -149,6 +149,6 @@ class oeVATTBEEvidenceRegister
     {
         /** @var oeVATTBEBillingCountryEvidence $oEvidence */
         $oEvidence = oxNew($sEvidenceClass, false);
-        return $oEvidence->getName();
+        return $oEvidence->getId();
     }
 }
