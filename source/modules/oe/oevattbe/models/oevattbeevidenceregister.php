@@ -48,7 +48,7 @@ class oeVATTBEEvidenceRegister
     public function getRegisteredEvidences()
     {
         $oConfig = $this->_getConfig();
-        return $oConfig->getConfigParam('aOeVATTBECountryEvidenceClasses');
+        return (array) $oConfig->getConfigParam('aOeVATTBECountryEvidenceClasses');
     }
 
     /**
@@ -59,7 +59,7 @@ class oeVATTBEEvidenceRegister
     public function getActiveEvidences()
     {
         $oConfig = $this->_getConfig();
-        return $oConfig->getConfigParam('aOeVATTBECountryEvidences');
+        return (array) $oConfig->getConfigParam('aOeVATTBECountryEvidences');
     }
 
     /**
@@ -73,8 +73,7 @@ class oeVATTBEEvidenceRegister
      */
     public function registerEvidence($sEvidenceClass, $blActive = false)
     {
-        $oConfig = $this->_getConfig();
-        $aEvidences = $oConfig->getConfigParam('aOeVATTBECountryEvidenceClasses');
+        $aEvidences = $this->getRegisteredEvidences();
         if (class_exists($sEvidenceClass) && !in_array($sEvidenceClass, $aEvidences)) {
             $aEvidences[] = $sEvidenceClass;
             oxRegistry::getConfig()->saveShopConfVar('arr', 'aOeVATTBECountryEvidenceClasses', $aEvidences);
@@ -90,8 +89,7 @@ class oeVATTBEEvidenceRegister
      */
     public function activateEvidence($sEvidenceId)
     {
-        $oConfig = $this->_getConfig();
-        $aEvidences = $oConfig->getConfigParam('aOeVATTBECountryEvidences');
+        $aEvidences = $this->getActiveEvidences();
         if (isset($aEvidences[$sEvidenceId]) && $aEvidences[$sEvidenceId] !== 1) {
             $aEvidences[$sEvidenceId] = 1;
             oxRegistry::getConfig()->saveShopConfVar('arr', 'aOeVATTBECountryEvidences', $aEvidences, null, 'module:oevattbe');
@@ -105,8 +103,7 @@ class oeVATTBEEvidenceRegister
      */
     public function deactivateEvidence($sEvidenceId)
     {
-        $oConfig = $this->_getConfig();
-        $aEvidences = $oConfig->getConfigParam('aOeVATTBECountryEvidences');
+        $aEvidences = $this->getActiveEvidences();
         if (isset($aEvidences[$sEvidenceId]) && $aEvidences[$sEvidenceId] !== 0) {
             $aEvidences[$sEvidenceId] = 0;
             oxRegistry::getConfig()->saveShopConfVar('arr', 'aOeVATTBECountryEvidences', $aEvidences, null, 'module:oevattbe');
@@ -132,8 +129,7 @@ class oeVATTBEEvidenceRegister
      */
     private function _addEvidenceToEvidenceList($sEvidenceClass, $blActive = false)
     {
-        $oConfig = $this->_getConfig();
-        $aEvidences = $oConfig->getConfigParam('aOeVATTBECountryEvidences');
+        $aEvidences = $this->getActiveEvidences();
         $sEvidenceId = $this->_getEvidenceId($sEvidenceClass);
         if (!isset($aEvidences[$sEvidenceId])) {
             $aEvidences[$sEvidenceId] = $blActive ? 1 : 0;
