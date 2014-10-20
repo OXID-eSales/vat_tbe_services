@@ -84,7 +84,7 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
     {
         $iRet = $this->_getFinalizeOrderParent($oBasket, $oUser, $blRecalculatingOrder);
 
-        if (!$blRecalculatingOrder && $iRet == parent::ORDER_STATE_OK) {
+        if (!$blRecalculatingOrder && ($iRet === parent::ORDER_STATE_OK || $iRet === parent::ORDER_STATE_MAILINGERROR)) {
             $oOrderEvidenceList = $this->_factoryOeVATTBEOrderEvidenceList();
 
             $oOrderEvidenceList->setId($this->getId());
