@@ -40,8 +40,7 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderTest extends OxidTestC
     }
 
     /**
-     * Order was made successfully;
-     * Order status: OK;
+     * Order was successfully;
      * Evidence list should be saved to database.
      *
      * @param int $iOrderState Order state when evidence list should be saved.
@@ -119,7 +118,7 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderTest extends OxidTestC
     }
 
     /**
-     * Data provider for SavingEvidenceList test.
+     * Data provider for NotSavingEvidenceListOnFailedOrder test.
      *
      * @return array
      */
@@ -137,11 +136,10 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderTest extends OxidTestC
     }
 
     /**
-     * Order was made successfully;
-     * Order status: OK;
-     * Evidence list should be saved to database.
+     * Order was not successfully;
+     * Evidence list should not be saved to database.
      *
-     * @param int $iOrderState Order state when evidence list should be saved.
+     * @param int $iOrderState Order state when evidence list should not be saved.
      *
      * @dataProvider providerNotSavingEvidenceListOnFailedOrder
      *
