@@ -35,7 +35,10 @@ class oeVATTBEOxCmp_Basket extends oeVatTbeOxCmp_Basket_parent
         if ($oBasket = $this->getSession()->getBasket()) {
             $oUser = $this->getUser();
             if ($oUser) {
-                if (is_null($oBasket->getTbeCountryId()) || ($oBasket->getTbeCountryId() != $oUser->getTbeCountryId())) {
+                if ((is_null($oBasket->getTbeCountryId()) || ($oBasket->getTbeCountryId() != $oUser->getTbeCountryId()))) {
+                    if ($oBasket->hasVATTBEArticles()) {
+                        $oBasket->setTBECountryChanged();
+                    }
                     $oBasket->setTBECountryId($oUser->getTbeCountryId());
                     $oBasket->calculateBasket(true);
                 }

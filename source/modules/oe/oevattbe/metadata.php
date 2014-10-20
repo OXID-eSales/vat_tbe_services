@@ -92,6 +92,7 @@ $aModule = array(
         array('template' => 'page/checkout/inc/basketcontents.tpl', 'block'=>'checkout_basketcontents_basketitem_vat', 'file'=>'/views/blocks/page/checkout/inc/basketitem_vat.tpl'),
         array('template' => 'page/checkout/basket.tpl', 'block'=>'checkout_basket_next_step_bottom', 'file'=>'/views/blocks/page/checkout/basket_nextstep.tpl'),
         array('template' => 'page/checkout/order.tpl', 'block'=>'checkout_order_next_step_bottom', 'file'=>'/views/blocks/page/checkout/order_nextstep.tpl'),
+        array('template' => 'layout/page.tpl', 'block'=>'content_main', 'file'=>'/views/blocks/layout/page.tpl'),
     ),
     'settings' => array(
         array('group' => 'oevattbe', 'name' => 'aOeVATTBECountryEvidences',      'type' => 'aarr',   'value' => array('billing_country' => 1, 'geo_location' => 1)),

@@ -53,4 +53,24 @@ class Unit_oeVATTBE_models_oeVATTBEOxBasketTest extends OxidTestCase
         $oBasket->setTBECountryId('a7c40f631fc920687.20179984');
         $this->assertSame('Deutschland', $oBasket->getTBECountry()->oxcountry__oxtitle->value);
     }
+
+    /**
+     * Show error default value
+     */
+    public function testShowTBECountryChangedErrorDefault()
+    {
+        $oBasket = oxNew('oeVATTBEOxBasket');
+        $this->assertFalse($oBasket->showTBECountryChangedError());
+    }
+
+    /**
+     * Show error after set and show one time
+     */
+    public function testShowTBECountryChangedErrorShow()
+    {
+        $oBasket = oxNew('oeVATTBEOxBasket');
+        $oBasket->setTBECountryChanged();
+        $this->assertTrue($oBasket->showTBECountryChangedError());
+        $this->assertFalse($oBasket->showTBECountryChangedError());
+    }
 }

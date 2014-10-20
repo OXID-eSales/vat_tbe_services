@@ -31,6 +31,10 @@ class oeVATTBEOxBasket extends oeVatTbeOxBasket_parent
      */
     private $_sTBECountryId = null;
 
+
+    /** @var bool store info about tbe country changes */
+    private $_isTBECountryChanged = false;
+
     /**
      * Return tbe country id
      *
@@ -86,5 +90,30 @@ class oeVATTBEOxBasket extends oeVatTbeOxBasket_parent
         }
 
         return $oCountry;
+    }
+
+    /**
+     * Setter to set country was changed or not
+     *
+     * @param bool $blChanged changed ot not
+     *
+     * @return bool
+     */
+    public function setTBECountryChanged($blChanged = true)
+    {
+        return $this->_isTBECountryChanged = $blChanged;
+    }
+
+    /**
+     * Return true on show error only for one time
+     *
+     * @return bool
+     */
+    public function showTBECountryChangedError()
+    {
+        $blChanged = $this->_isTBECountryChanged;
+        $this->setTBECountryChanged(false);
+
+        return $blChanged;
     }
 }
