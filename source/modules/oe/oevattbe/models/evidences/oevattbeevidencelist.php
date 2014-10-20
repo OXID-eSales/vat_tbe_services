@@ -37,7 +37,9 @@ class oeVATTBEEvidenceList extends oeVATTBEList
     public function add($oItem)
     {
         if (!($oItem instanceof oeVATTBEEvidence)) {
-            throw oxNew('oxException', 'Item must be instance or child of oeVATTBEEvidence');
+            /** @var oxException $oException */
+            $oException = oxNew('oxException', 'Item must be instance or child of oeVATTBEEvidence');
+            throw $oException;
         }
 
         parent::add($oItem);
