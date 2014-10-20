@@ -32,7 +32,7 @@ class oeVATTBEEvidenceList extends oeVATTBEList
      *
      * @param oeVATTBEEvidence $oItem Evidence to add to the list.
      *
-     * @throws Exception
+     * @throws oxException
      */
     public function add($oItem)
     {
