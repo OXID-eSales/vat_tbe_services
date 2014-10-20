@@ -92,7 +92,7 @@ class oeVATTBEEvidenceRegister
         $aEvidences = $this->getActiveEvidences();
         if (isset($aEvidences[$sEvidenceId]) && $aEvidences[$sEvidenceId] !== 1) {
             $aEvidences[$sEvidenceId] = 1;
-            oxRegistry::getConfig()->saveShopConfVar('arr', 'aOeVATTBECountryEvidences', $aEvidences, null, 'module:oevattbe');
+            oxRegistry::getConfig()->saveShopConfVar('aarr', 'aOeVATTBECountryEvidences', $aEvidences, null, 'module:oevattbe');
         }
     }
 
@@ -106,7 +106,7 @@ class oeVATTBEEvidenceRegister
         $aEvidences = $this->getActiveEvidences();
         if (isset($aEvidences[$sEvidenceId]) && $aEvidences[$sEvidenceId] !== 0) {
             $aEvidences[$sEvidenceId] = 0;
-            oxRegistry::getConfig()->saveShopConfVar('arr', 'aOeVATTBECountryEvidences', $aEvidences, null, 'module:oevattbe');
+            oxRegistry::getConfig()->saveShopConfVar('aarr', 'aOeVATTBECountryEvidences', $aEvidences, null, 'module:oevattbe');
         }
     }
 

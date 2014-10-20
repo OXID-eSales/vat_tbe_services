@@ -53,15 +53,15 @@ class oeVATTBEEvidenceCollector
     public function getEvidenceList()
     {
         $oConfig = $this->_getConfig();
-        $aEvidences = (array) $oConfig->getConfigParam('aOeVATTBECountryEvidenceClasses');
-        $aActiveEvidences = (array) $oConfig->getConfigParam('aOeVATTBECountryEvidences');
+        $aEvidenceClasses = (array) $oConfig->getConfigParam('aOeVATTBECountryEvidenceClasses');
+        $aEvidences = (array) $oConfig->getConfigParam('aOeVATTBECountryEvidences');
 
         /** @var oeVATTBEEvidenceList $oList */
         $oList = oxNew('oeVATTBEEvidenceList');
-        $aUpdatedActiveEvidences = $this->_fillEvidenceList($oList, $aEvidences, $aActiveEvidences);
+        $aUpdatedEvidences = $this->_fillEvidenceList($oList, $aEvidenceClasses, $aEvidences);
 
-        if ($aActiveEvidences !== $aUpdatedActiveEvidences) {
-            oxRegistry::getConfig()->saveShopConfVar('aarr', 'aOeVATTBECountryEvidences', $aUpdatedActiveEvidences, null, 'module:oevattbe');
+        if ($aEvidences !== $aUpdatedEvidences) {
+            oxRegistry::getConfig()->saveShopConfVar('aarr', 'aOeVATTBECountryEvidences', $aUpdatedEvidences, null, 'module:oevattbe');
         }
 
         return $oList;
@@ -92,28 +92,28 @@ class oeVATTBEEvidenceCollector
      * Fills provided evidence list with available active evidences and returns updated active evidences array.
      *
      * @param oeVATTBEEvidenceList $oList
+     * @param array                $aEvidenceClasses
      * @param array                $aEvidences
-     * @param array                $aActiveEvidences
      *
      * @return array
      */
-    private function _fillEvidenceList($oList, $aEvidences, $aActiveEvidences)
+    private function _fillEvidenceList($oList, $aEvidenceClasses, $aEvidences)
     {
         $oUser = $this->_getUser();
-        $aUpdatedActiveEvidences = array();
+        $aUpdatedEvidences = array();
 
-        foreach ($aEvidences as $sEvidenceClass) {
+        foreach ($aEvidenceClasses as $sEvidenceClass) {
             if (class_exists($sEvidenceClass)) {
                 /** @var oeVATTBEEvidence $oEvidence */
                 $oEvidence = oxNew($sEvidenceClass, $oUser);
                 $sName = $oEvidence->getName();
-                if (isset($aActiveEvidences[$sName]) && $aActiveEvidences[$sName] == 1) {
+                if (isset($aEvidences[$sName]) && $aEvidences[$sName] == 1) {
                     $oList->add($oEvidence);
                 }
-                $aUpdatedActiveEvidences[$sName] = isset($aActiveEvidences[$sName])? $aActiveEvidences[$sName] : 0;
+                $aUpdatedEvidences[$sName] = isset($aEvidences[$sName]) ? $aEvidences[$sName] : 0;
             }
         }
 
-        return $aUpdatedActiveEvidences;
+        return $aUpdatedEvidences;
     }
 }
