@@ -346,6 +346,10 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
         $oDb->execute("TRUNCATE TABLE oevattbe_countryvatgroups");
         $oDb->execute("TRUNCATE TABLE oevattbe_articlevat");
 
+        if ($this->getConfig()->getEdition() != 'EE') {
+            $oDb->execute("UPDATE `oxarticles` SET `OXVARSTOCK`='0', `OXVARCOUNT` =  '0' WHERE `oxarticles`.`OXID`='1127'");
+        }
+
         $sql = "INSERT INTO oevattbe_countryvatgroups SET OEVATTBE_ID = 1, OEVATTBE_COUNTRYID = '{$this->_sAustriaId}', OEVATTBE_NAME='name', OEVATTBE_RATE='8'";
 
         $oDb->execute($sql);
@@ -366,36 +370,44 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
      */
     private function _createUser()
     {
-        $sUserName = $this->_sDefaultUserName;
-        $sEncodedPassword = $this->_sNewEncodedPassword;
-        $sSalt = $this->_sNewSalt;
-        $sGermanyId = $this->_sAustriaId;
+        $sUserId = oxDb::getDb()->getOne("SELECT `oxid` FROM `oxuser` WHERE `oxusername` = '".$this->_sDefaultUserName."'");
 
-        /** @var oxUser $oUser */
-        $oUser = oxNew('oxUser');
-        $oUser->oxuser__oxusername = new oxField($sUserName);
-        $oUser->oxuser__oxpassword = new oxField($sEncodedPassword);
-        $oUser->oxuser__oxpasssalt = new oxField($sSalt);
-        $oUser->oxuser__oxcountryid = new oxField($sGermanyId);
-        $oUser->oxuser__oxrights = new oxField('user');
-        $oUser->oxuser__active = new oxField('1');
-        $oUser->oxuser__oxcompany = new oxField('Your Company Name');
-        $oUser->oxuser__oxfname = new oxField('John');
-        $oUser->oxuser__oxlname = new oxField('Doe');
-        $oUser->oxuser__oxstreet = new oxField('Maple Street');
-        $oUser->oxuser__oxstreetnr = new oxField('10');
-        $oUser->oxuser__oxcity = new oxField('Any City');
-        $oUser->oxuser__oxzip = new oxField('9041');
-        $oUser->oxuser__oxfon = new oxField('217-8918712');
-        $oUser->oxuser__oxfax = new oxField('217-8918713');
-        $oUser->oxuser__oxsal = new oxField('MR');
-        $oUser->save();
+        if (!$sUserId) {
+            $sUserName = $this->_sDefaultUserName;
+            $sEncodedPassword = $this->_sNewEncodedPassword;
+            $sSalt = $this->_sNewSalt;
+            $sGermanyId = $this->_sAustriaId;
 
-        $oObj = new oxBase();
-        $oObj->init('oxobject2group');
-        $oObj->oxobject2group__oxobjectid = new oxField($oUser->getId());
-        $oObj->oxobject2group__oxgroupsid = new oxField('oxidadmin');
-        $oObj->save();
+            /** @var oxUser $oUser */
+            $oUser = oxNew('oxUser');
+            $oUser->oxuser__oxusername = new oxField($sUserName);
+            $oUser->oxuser__oxpassword = new oxField($sEncodedPassword);
+            $oUser->oxuser__oxpasssalt = new oxField($sSalt);
+            $oUser->oxuser__oxcountryid = new oxField($sGermanyId);
+            $oUser->oxuser__oxrights = new oxField('user');
+            $oUser->oxuser__active = new oxField('1');
+            $oUser->oxuser__oxcompany = new oxField('Your Company Name');
+            $oUser->oxuser__oxfname = new oxField('John');
+            $oUser->oxuser__oxlname = new oxField('Doe');
+            $oUser->oxuser__oxstreet = new oxField('Maple Street');
+            $oUser->oxuser__oxstreetnr = new oxField('10');
+            $oUser->oxuser__oxcity = new oxField('Any City');
+            $oUser->oxuser__oxzip = new oxField('9041');
+            $oUser->oxuser__oxfon = new oxField('217-8918712');
+            $oUser->oxuser__oxfax = new oxField('217-8918713');
+            $oUser->oxuser__oxsal = new oxField('MR');
+            $oUser->save();
+
+            $oObj = new oxBase();
+            $oObj->init('oxobject2group');
+            $oObj->oxobject2group__oxobjectid = new oxField($oUser->getId());
+            $oObj->oxobject2group__oxgroupsid = new oxField('oxidadmin');
+            $oObj->save();
+        } else {
+            $oUser = oxNew('oxUser');
+            $oUser->load($sUserId);
+        }
+
 
         return $oUser;
     }
