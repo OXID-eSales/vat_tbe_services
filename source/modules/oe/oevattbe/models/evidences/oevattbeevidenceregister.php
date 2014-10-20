@@ -74,9 +74,11 @@ class oeVATTBEEvidenceRegister
     public function registerEvidence($sEvidenceClass, $blActive = false)
     {
         $aEvidences = $this->getRegisteredEvidences();
-        if (class_exists($sEvidenceClass) && !in_array($sEvidenceClass, $aEvidences)) {
-            $aEvidences[] = $sEvidenceClass;
-            oxRegistry::getConfig()->saveShopConfVar('arr', 'aOeVATTBECountryEvidenceClasses', $aEvidences);
+        if (class_exists($sEvidenceClass)) {
+            if (!in_array($sEvidenceClass, $aEvidences)) {
+                $aEvidences[] = $sEvidenceClass;
+                oxRegistry::getConfig()->saveShopConfVar('arr', 'aOeVATTBECountryEvidenceClasses', $aEvidences);
+            }
 
             $this->_addEvidenceToEvidenceList($sEvidenceClass, $blActive);
         }
