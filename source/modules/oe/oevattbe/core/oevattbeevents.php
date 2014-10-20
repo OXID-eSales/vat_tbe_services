@@ -36,7 +36,10 @@ class oeVATTBEEvents
         self::_addFields();
         self::_regenerateViews();
         self::_addDemoData();
-        oxRegistry::getConfig()->saveShopConfVar('arr', 'aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence', 'oeVATTBEGeoLocationEvidence'));
+        /** @var oeVATTBEEvidenceRegister $oEvidenceRegister */
+        $oEvidenceRegister = oxNew('oeVATTBEEvidenceRegister', oxRegistry::getConfig());
+        $oEvidenceRegister->registerEvidence('oeVATTBEBillingCountryEvidence', true);
+        $oEvidenceRegister->registerEvidence('oeVATTBEGeoLocationEvidence', true);
     }
 
     /**

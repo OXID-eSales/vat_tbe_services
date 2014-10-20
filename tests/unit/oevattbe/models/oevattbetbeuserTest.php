@@ -49,6 +49,7 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
         $oConfig = $this->getConfig();
         $oSession = $this->getSession();
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence'));
+        $oConfig->setConfigParam('aOeVATTBECountryEvidences', array('billing_country' => 1));
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
 
         $oUser = oxNew('oxUser');
@@ -157,6 +158,7 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
         $oSession = $this->getSession();
         $oSession->setVariable('TBECountryId', null);
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence'));
+        $oConfig->setConfigParam('aOeVATTBECountryEvidences', array('billing_country' => 1));
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
 
         $oUser = oxNew('oxUser');
