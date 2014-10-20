@@ -51,6 +51,7 @@ $aModule = array(
         'basket'            => 'oe/oevattbe/controllers/oevattbebasket',
         'order'             => 'oe/oevattbe/controllers/oevattbeorder',
         'oxbasketcontentmarkgenerator' => 'oe/oevattbe/models/oevattbeoxbasketcontentmarkgenerator',
+        'order_main' => 'oe/oevattbe/controllers/admin/oevattbeorder_main',
     ),
     'files' => array(
         'oeVATTBEModel'                                => 'oe/oevattbe/core/oevattbemodel.php',
@@ -92,6 +93,7 @@ $aModule = array(
         array('template' => 'page/checkout/inc/basketcontents.tpl', 'block'=>'checkout_basketcontents_basketitem_vat', 'file'=>'/views/blocks/page/checkout/inc/basketitem_vat.tpl'),
         array('template' => 'page/checkout/basket.tpl', 'block'=>'checkout_basket_next_step_bottom', 'file'=>'/views/blocks/page/checkout/basket_nextstep.tpl'),
         array('template' => 'page/checkout/order.tpl', 'block'=>'checkout_order_next_step_bottom', 'file'=>'/views/blocks/page/checkout/order_nextstep.tpl'),
+        array('template' => 'order_main.tpl', 'block'=>'admin_order_main_form', 'file'=>'/views/admin/tpl/oevattbeorder_main.tpl'),
         array('template' => 'layout/page.tpl', 'block'=>'content_main', 'file'=>'/views/blocks/layout/page.tpl'),
     ),
     'settings' => array(

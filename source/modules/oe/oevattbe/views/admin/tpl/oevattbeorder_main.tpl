@@ -1,5 +1,5 @@
 [{$smarty.block.parent}]
-
+[{if $sTBECountry}]
 <tr>
     <td class="edittext" colspan="2">
         <br>
@@ -12,13 +12,16 @@
                 </tr>
                 <tr>
                     <td class="edittext">Order country</td>
-                    <td class="edittext">Lithuania</td>
+                    <td class="edittext">[{$sTBECountry}]</td>
                 </tr>
-                <tr>
-                    <td class="edittext">Countries from which was calculated order country</td>
-                    <td class="edittext">Lithuania, Russia, Germany, Germany</td>
-                </tr>
+                [{foreach from=$aCountriesByEvidences item=evidence}]
+                    <tr>
+                        <td class="edittext">Country calculated by evidence [{$evidence.name}]</td>
+                        <td class="edittext">[{$evidence.countryTitle}]</td>
+                    </tr>
+                [{/foreach}]
             </tbody>
         </table>
     </td>
 </tr>
+[{/if}]
