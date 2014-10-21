@@ -116,4 +116,25 @@ class oeVATTBEOxBasket extends oeVatTbeOxBasket_parent
 
         return $blChanged;
     }
+
+    /**
+     * Return if basket is valid according TBE rules
+     *
+     * @return bool
+     */
+    public function isTBEValid()
+    {
+        return $this->_getOeVATTBEOrderArticleChecker()->isValid();
+    }
+
+    /**
+     * Return tbe article checker
+     *
+     * @return oeVATTBEOrderArticleChecker
+     */
+    protected function _getOeVATTBEOrderArticleChecker()
+    {
+        $oTBEUser  = oxNew('oeVATTBETBEUser', oxNew('oxUser'), oxRegistry::getSession(), oxRegistry::getConfig());
+        return oxNew('oeVATTBEOrderArticleChecker', $this->getBasketArticles(), $oTBEUser);
+    }
 }

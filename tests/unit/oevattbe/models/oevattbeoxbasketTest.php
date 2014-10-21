@@ -73,4 +73,32 @@ class Unit_oeVATTBE_models_oeVATTBEOxBasketTest extends OxidTestCase
         $this->assertTrue($oBasket->showTBECountryChangedError());
         $this->assertFalse($oBasket->showTBECountryChangedError());
     }
+
+    /**
+     * test for basket validation
+     */
+    public function testIsTBEValidValid()
+    {
+        $oChecker = $this->getMock('oeVATTBEOrderArticleChecker', array('isValid'), array(), '', false);
+        $oChecker->expects($this->any())->method('isValid')->will($this->returnValue(true));
+
+        $oBasket = $this->getMock('oeVATTBEOxBasket', array('_getOeVATTBEOrderArticleChecker'));
+        $oBasket->expects($this->any())->method('_getOeVATTBEOrderArticleChecker')->will($this->returnValue($oChecker));
+
+        $this->assertTrue($oBasket->isTBEValid());
+    }
+
+    /**
+     * test for basket validation
+     */
+    public function testIsTBEValidNotValid()
+    {
+        $oChecker = $this->getMock('oeVATTBEOrderArticleChecker', array('isValid'), array(), '', false);
+        $oChecker->expects($this->any())->method('isValid')->will($this->returnValue(false));
+
+        $oBasket = $this->getMock('oeVATTBEOxBasket', array('_getOeVATTBEOrderArticleChecker'));
+        $oBasket->expects($this->any())->method('_getOeVATTBEOrderArticleChecker')->will($this->returnValue($oChecker));
+
+        $this->assertFalse($oBasket->isTBEValid());
+    }
 }
