@@ -6,11 +6,9 @@
     [{if $oArticle->isTBEService()}]
         [{if $oxcmp_user }]
             [{if $oxcmp_basket->isTBEValid() }]
-                [{if $oCountry->appliesTBEVAT()}]
+
                     [{$basketitem->getVatPercent()}]% [{$oMarkGenerator->getMark('tbeService')}]
-                [{else}]
-                    [{$basketitem->getVatPercent()}]%
-                [{/if}]
+
             [{else }]
                 -
             [{/if}]
@@ -19,5 +17,9 @@
         [{/if}]
     [{else}]
         [{$basketitem->getVatPercent()}]%
+            [{if $oxcmp_user && $oCountry && !$oCountry->isInEU() }]
+             [{$oMarkGenerator->getMark('tbeService')}]
+            [{/if}]
     [{/if}]
+
 </td>

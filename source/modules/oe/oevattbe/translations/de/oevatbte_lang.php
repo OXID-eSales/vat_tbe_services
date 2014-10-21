@@ -29,4 +29,5 @@ $aLang = array(
     'OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY' => '[tr]This VAT was calculated acccording country of your rezidence: %s',
     'OEVATTBE_VAT_WILL_BE_CALCULATED_BY_USER_COUNTRY' => '[tr]This VAT rate can be changed after you will login and your residence country will be identified.',
     'OEVATTBE_RESIDENCE_COUNTRY_CHANGED_MESSAGE' => '[tr] Your rezidence country is identified and VAT rate will be applied according this country.',
+    'OEVATTBE_VAT_EXCLUDED' => '[tr] We excluded VAT from price, but you should pay it in your country.',
 );
