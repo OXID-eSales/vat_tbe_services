@@ -67,11 +67,12 @@ class oeVATTBEOrderArticleChecker
      */
     public function isValid()
     {
-        $isValid = true;
-
         $oTBEUserCountry = $this->getTBEUserCountry();
         $oCountry = $oTBEUserCountry->getCountry();
-        if ($oCountry->isInEU() && $oCountry->appliesTBEVAT()) {
+
+        $isValid = $oCountry ? true : false;
+
+        if ($isValid && $oCountry->isInEU() && $oCountry->appliesTBEVAT()) {
             $aInvalidArticles = $this->getInvalidArticles();
             $isValid = empty($aInvalidArticles);
         }
