@@ -37,56 +37,18 @@ class oeVATTBEOrder_Main extends oeVATTBEOrder_Main_parent
         $oOrder = oxNew("oxOrder");
         $sOrderEvidenceId = $this->_getCurrentOrderEvidenceId($oOrder, $sOrderId);
 
-        /** @var oeVATTBEOrderEvidenceListDbGateway $oDbGateway */
-        $oDbGateway = oxNew('oeVATTBEOrderEvidenceListDbGateway');
-        $aOrder = $oDbGateway->load($sOrderId);
+        /** @var oeVATTBEOrderEvidenceListDbGateway $oDBGateway */
+        $oDBGateway = oxNew('oeVATTBEOrderEvidenceListDbGateway');
 
-        /** @var oxCountry $oCountry */
-        $oCountry = oxNew('oxCountry');
-        $sTBECountryTitle = $this->_getTBECountryTitle($oCountry, $aOrder[$sOrderEvidenceId]['countryId']);
-        $aEvidencesData = $this->_prepareEvidencesData($aOrder, $oCountry);
+        /** @var oeVATTBEOrderEvidenceList $oEvidenceList */
+        $oEvidenceList = oxNew('oeVATTBEOrderEvidenceList', $oDBGateway);
+        $oEvidenceList->loadWithCountryNames($sOrderId);
+        $aEvidencesData = $oEvidenceList->getData();
 
-        $this->_aViewData["sTBECountry"] = $sTBECountryTitle;
+        $this->_aViewData["sTBECountry"] = $aEvidencesData[$sOrderEvidenceId]['countryTitle'];
         $this->_aViewData["aEvidencesData"] = $aEvidencesData;
 
         return parent::render();
-    }
-
-    /**
-     * Prepares data for template.
-     *
-     * @param array     $aOrder   Currently selected order evidences data.
-     * @param oxCountry $oCountry Object used to load country title.
-     *
-     * @return array
-     */
-    protected function _prepareEvidencesData($aOrder, $oCountry)
-    {
-        foreach ($aOrder as $sEvidenceId => $aOrderInfo) {
-            if ($oCountry->load($aOrderInfo['countryId'])) {
-                $aOrder[$sEvidenceId]['countryTitle'] = $oCountry->oxcountry__oxtitle->value;
-            } else {
-                $aOrder[$sEvidenceId]['countryTitle'] = '-';
-            }
-        }
-
-        return $aOrder;
-    }
-
-    /**
-     * Returns TBE country title.
-     *
-     * @param oxCountry $oCountry      Object used to load country title.
-     * @param string    $sTBECountryId Country id.
-     *
-     * @return string
-     */
-    protected function _getTBECountryTitle($oCountry, $sTBECountryId)
-    {
-        $oCountry->load($sTBECountryId);
-        $sTBECountryTitle = $oCountry->oxcountry__oxtitle->value;
-
-        return $sTBECountryTitle;
     }
 
     /**

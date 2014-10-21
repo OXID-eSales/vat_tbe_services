@@ -42,4 +42,25 @@ class oeVATTBEOrderEvidenceList extends oeVATTBEModel
 
         return $this->getId();
     }
+
+    /**
+     * Loads evidence data with country title.
+     *
+     * @param string|null $sId Order evidence id.
+     */
+    public function loadWithCountryNames($sId = null)
+    {
+        /** @var oxCountry $oCountry */
+        $oCountry = oxNew('oxCountry');
+        $this->load($sId);
+        $aData = $this->getData();
+        foreach ($aData as $sEvidenceId => $aOrderInfo) {
+            if ($oCountry->load($aOrderInfo['countryId'])) {
+                $aData[$sEvidenceId]['countryTitle'] = $oCountry->oxcountry__oxtitle->value;
+            } else {
+                $aData[$sEvidenceId]['countryTitle'] = '-';
+            }
+        }
+        $this->setData($aData);
+    }
 }
