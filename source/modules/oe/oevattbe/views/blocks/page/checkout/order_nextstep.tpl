@@ -1,5 +1,5 @@
 [{assign var="oCountry" value=$oxcmp_basket->getTBECountry()}]
-[{if $oxcmp_basket->hasVATTBEArticles() && $oCountry}]
+[{if $oxcmp_basket->hasVATTBEArticles() && $oCountry && $oxcmp_basket->isTBEValid() && $oCountry->appliesTBEVAT()}]
     [{assign var="oMarkGenerator" value=$oView->getBasketContentMarkGenerator()}]
     [{assign var="oCountry" value=$oxcmp_basket->getTBECountry()}]
     <div>
