@@ -157,4 +157,21 @@ class oeVATTBETBEUser
 
         return $oEvidenceSelector;
     }
+
+    /**
+     * Returns country
+     *
+     * @return oxCountry
+     */
+    public function getCountry()
+    {
+        $oCountry = null;
+
+        if (!is_null($this->getTBECountryId())) {
+            $oCountry = oxNew('oxCountry');
+            $oCountry->load($this->getTBECountryId());
+        }
+
+        return $oCountry;
+    }
 }

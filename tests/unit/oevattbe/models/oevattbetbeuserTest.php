@@ -234,4 +234,19 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
 
         $this->assertEquals('', $oTBEUser->getTbeCountryId());
     }
+
+    public function testGetCountry()
+    {
+        $sGermanyId = 'a7c40f631fc920687.20179984';
+        $oSession = $this->getSession();
+        $oSession->setVariable('TBECountryId', $sGermanyId);
+
+        $oConfig = $this->getConfig();
+        $oSession = $this->getSession();
+
+        $oUser = oxNew('oeVATTBETBEUser', oxNew('oxUser'), $oSession, $oConfig);
+
+        $this->assertSame('Deutschland', $oUser->getCountry()->oxcountry__oxtitle->value);
+    }
+
 }
