@@ -40,4 +40,17 @@ class Unit_oeVATTBE_models_oeVATTBEOxCountryTest extends OxidTestCase
         $oCountry->oxcountry__oevattbe_appliestbevat = new oxField(0);
         $this->assertFalse($oCountry->appliesTBEVAT());
     }
+
+    /**
+     * Test if getter for data field works correct.
+     */
+    public function testOEVATTBEIsAtLeastOneGroupConfigured()
+    {
+        $oCountry = oxNew('oeVATTBEOxCountry');
+        $oCountry->oevattbe_istbevatconfigured = new oxField(1);
+        $this->assertTrue($oCountry->OEVATTBEIsAtLeastOneGroupConfigured());
+
+        $oCountry->oevattbe_istbevatconfigured = new oxField(0);
+        $this->assertFalse($oCountry->OEVATTBEIsAtLeastOneGroupConfigured());
+    }
 }

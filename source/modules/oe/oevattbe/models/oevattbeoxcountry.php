@@ -33,4 +33,14 @@ class oeVATTBEOxCountry extends oeVATTBEOxCountry_parent
     {
         return (bool) $this->oxcountry__oevattbe_appliestbevat->value;
     }
+
+    /**
+     * Return true if at least one TBE VAT group configured for this country.
+     *
+     * @return bool
+     */
+    public function OEVATTBEIsAtLeastOneGroupConfigured()
+    {
+        return (bool) $this->oevattbe_istbevatconfigured->value;
+    }
 }
