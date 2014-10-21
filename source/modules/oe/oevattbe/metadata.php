@@ -73,7 +73,8 @@ $aModule = array(
         'oeVATTBETBEArticleCacheKey'                   => 'oe/oevattbe/models/oevattbetbearticlecachekey.php',
         'oeVATTBEOrderEvidenceList'                    => 'oe/oevattbe/models/oevattbeorderevidencelist.php',
         'oeVATTBEOrderEvidenceListDbGateway'           => 'oe/oevattbe/models/dbgateways/oevattbeorderevidencelistdbgateway.php',
-        'oeVATTBEVATGroupsDbGateway'           => 'oe/oevattbe/models/dbgateways/oevattbevatgroupsdbgateway.php',
+        'oeVATTBEVATGroupsDbGateway'                   => 'oe/oevattbe/models/dbgateways/oevattbevatgroupsdbgateway.php',
+        'oeVATTBEVATGroup'                             => 'oe/oevattbe/models/oevattbevatgroup.php',
         'oeVATTBEArticleSQLBuilder'                    => 'oe/oevattbe/models/oevattbearticlesqlbuilder.php',
     ),
     'events'       => array(
