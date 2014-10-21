@@ -9,7 +9,7 @@
     }
     .vattbeEvidencesInfo {
         border-collapse:collapse;
-        width: 80%
+        width: 100%
     }
 </style>
 <tr>
