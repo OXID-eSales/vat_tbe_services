@@ -25,19 +25,6 @@
  */
 class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
 {
-    private $_hasDependencies = false;
-
-    /**
-     * Initiates tearDown for tests which does not have dependencies.
-     * Test have to define $this->_hasDependencies = true; if no tearDown should be done.
-     */
-    public function tearDown()
-    {
-        if (!$this->_hasDependencies) {
-            parent::tearDown();
-        }
-        $this->_hasDependencies = false;
-    }
 
     /**
      * Tests collecting of TBE evidences when evidence collector is billing country and it is set as default.
@@ -64,7 +51,6 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
             ),
         );
         $this->assertEquals($aExpected, $oTBEUser->getTBEEvidenceList());
-        $this->_hasDependencies = true;
 
         return $oTBEUser;
     }
@@ -81,7 +67,6 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
     public function testTBECountryIdSelecting($oTBEUser)
     {
         $this->assertEquals('GermanyId', $oTBEUser->getTbeCountryId());
-        $this->_hasDependencies = true;
         return $oTBEUser;
     }
 
@@ -114,7 +99,6 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
         $oTBEUser = oxNew('oeVATTBETBEUser', $oUser, $oSession, $oConfig);
 
         $this->assertEquals(array(), $oTBEUser->getTBEEvidenceList());
-        $this->_hasDependencies = true;
         return $oTBEUser;
     }
 
@@ -130,7 +114,6 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
     public function testTBECountryIdSelectingWhenNoEvidenceFound($oTBEUser)
     {
         $this->assertEquals('', $oTBEUser->getTbeCountryId());
-        $this->_hasDependencies = true;
         return $oTBEUser;
     }
 
@@ -183,7 +166,6 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
         $oTBEUser = oxNew('oeVATTBETBEUser', $oUser, $oSession, $oConfig);
         $this->assertEquals($aExpectedList, $oTBEUser->getTBEEvidenceList());
 
-        $this->_hasDependencies = true;
         return $oTBEUser;
     }
 
@@ -200,7 +182,6 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
     public function testTBECountryIdCaching($oTBEUser)
     {
         $this->assertEquals('GermanyId', $oTBEUser->getTbeCountryId());
-        $this->_hasDependencies = true;
         return $oTBEUser;
     }
 
@@ -217,7 +198,6 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
     public function testTBEEvidenceUsedCaching($oTBEUser)
     {
         $this->assertEquals('billing_country', $oTBEUser->getTbeEvidenceUsed());
-        $this->_hasDependencies = true;
         return $oTBEUser;
     }
 
@@ -253,7 +233,5 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
         $oUser->oxuser__oxcountryid = new oxField('LithuaniaId');
 
         $this->assertEquals('', $oTBEUser->getTbeCountryId());
-
-        $this->_hasDependencies = true;
     }
 }
