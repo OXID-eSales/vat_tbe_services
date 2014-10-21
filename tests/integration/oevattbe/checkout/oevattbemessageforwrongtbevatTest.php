@@ -57,7 +57,7 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
     }
 
     /**
-     * Check if message is set in first checkout step for all TBE articles when user is not logged in.
+     * Check if message is not set in first checkout step for all TBE articles when user is not logged in.
      * No error message set for not TBE articles.
      *
      * @param array  $aArticles     array of articles to set to basket and check.
@@ -81,8 +81,7 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
         $oBasket->render();
 
         $aEx = oxRegistry::getSession()->getVariable('Errors');
-        $this->assertTrue(isset($aEx['default'][0]));
-        $this->assertRegExp($sErrorMessage, $aEx['default'][0], 'Error message: '. $aEx['default'][0]);
+        $this->assertFalse(isset($aEx['default'][0]));
     }
 
     /**
