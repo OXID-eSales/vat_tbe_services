@@ -114,6 +114,8 @@ class Integration_oeVatTbe_VATGroups_oeVATTBEVATGroupsDbGatewayTest extends Oxid
      */
     public function testLoadingGroupsListForCountryWhenGroupsExist()
     {
+        $this->addTableForCleanup('oevattbe_countryvatgroups');
+
         $oVatGroupsGateway = oxNew('oeVATTBEVATGroupsDbGateway');
         $aData = array(
             'OEVATTBE_COUNTRYID' => '8f241f11095410f38.37165361',
