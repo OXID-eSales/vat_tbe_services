@@ -28,20 +28,27 @@ class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends OxidTestCase
 
     public function providerCheckingArticlesWithEmptyList()
     {
+        $oCountry = $this->getMock('oxCountry', array('isInEU', 'appliesTBEVAT'));
+        $oCountry->expects($this->any())->method('isInEU')->will($this->returnValue(true));
+        $oCountry->expects($this->any())->method('appliesTBEVAT')->will($this->returnValue(true));
+
+        $oUser = $this->getMock('oeVATTBETBEUser', array('getCountry'), array(), '', false);
+        $oUser->expects($this->any())->method('getCountry')->will($this->returnValue($oCountry));
+
         return array(
-            array(array()),
-            array(''),
-            array(null),
-            array(false),
+            array(array(), $oUser),
+            array('', $oUser),
+            array(null, $oUser),
+            array(false, $oUser),
         );
     }
 
     /**
      * @dataProvider providerCheckingArticlesWithEmptyList
      */
-    public function testCheckingArticlesWithEmptyList($mEmptyList)
+    public function testCheckingArticlesWithEmptyList($mEmptyList, $oUser)
     {
-        $oChecker = oxNew('oeVATTBEOrderArticleChecker', $mEmptyList);
+        $oChecker = oxNew('oeVATTBEOrderArticleChecker', $mEmptyList, $oUser);
 
         $this->assertSame(true, $oChecker->isValid());
     }
@@ -55,9 +62,16 @@ class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends OxidTestCase
 
         $aArticles = array($oArticleWithoutVAT, $oArticleWithVAT, $oTBEArticleWithVAT, $oTBEArticleWithZeroVAT);
 
-        $oChecker = oxNew('oeVATTBEOrderArticleChecker', $aArticles);
+        $oCountry = $this->getMock('oxCountry', array('isInEU', 'appliesTBEVAT'));
+        $oCountry->expects($this->any())->method('isInEU')->will($this->returnValue(true));
+        $oCountry->expects($this->any())->method('appliesTBEVAT')->will($this->returnValue(true));
 
-        $this->assertSame(true, $oChecker->isValid());
+        $oUser = $this->getMock('oeVATTBETBEUser', array('getCountry'), array(), '', false);
+        $oUser->expects($this->any())->method('getCountry')->will($this->returnValue($oCountry));
+
+        $oChecker = oxNew('oeVATTBEOrderArticleChecker', $aArticles, $oUser);
+
+        $this->assertTrue($oChecker->isValid());
     }
 
     public function testCheckingArticlesWhenIncorrectArticlesExists()
@@ -67,9 +81,16 @@ class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends OxidTestCase
 
         $aArticles = array($oArticleWithoutVAT, $oTBEArticleWithoutVAT);
 
-        $oChecker = oxNew('oeVATTBEOrderArticleChecker', $aArticles);
+        $oCountry = $this->getMock('oxCountry', array('isInEU', 'appliesTBEVAT'));
+        $oCountry->expects($this->any())->method('isInEU')->will($this->returnValue(true));
+        $oCountry->expects($this->any())->method('appliesTBEVAT')->will($this->returnValue(true));
 
-        $this->assertSame(false, $oChecker->isValid());
+        $oUser = $this->getMock('oeVATTBETBEUser', array('getCountry'), array(), '', false);
+        $oUser->expects($this->any())->method('getCountry')->will($this->returnValue($oCountry));
+
+        $oChecker = oxNew('oeVATTBEOrderArticleChecker', $aArticles, $oUser);
+
+        $this->assertFalse($oChecker->isValid());
 
         return $oChecker;
     }
@@ -82,11 +103,61 @@ class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends OxidTestCase
 
         $aArticles = array($oArticleWithoutVAT, $oTBEArticleWithoutVAT1, $oTBEArticleWithoutVAT2);
 
-        $oChecker = oxNew('oeVATTBEOrderArticleChecker', $aArticles);
+        $oCountry = $this->getMock('oxCountry', array('isInEU', 'appliesTBEVAT'));
+        $oCountry->expects($this->any())->method('isInEU')->will($this->returnValue(true));
+        $oCountry->expects($this->any())->method('appliesTBEVAT')->will($this->returnValue(true));
+
+        $oUser = $this->getMock('oeVATTBETBEUser', array('getCountry'), array(), '', false);
+        $oUser->expects($this->any())->method('getCountry')->will($this->returnValue($oCountry));
+
+        $oChecker = oxNew('oeVATTBEOrderArticleChecker', $aArticles, $oUser);
 
         $aIncorrectArticles = array($oTBEArticleWithoutVAT1, $oTBEArticleWithoutVAT2);
 
         $this->assertSame($aIncorrectArticles, $oChecker->getInvalidArticles());
+    }
+
+
+    public function testCheckingArticlesWhenIncorrectArticlesExistsButCountryIsNotEu()
+    {
+        $oArticleWithoutVAT = $this->_createArticle(false, null);
+        $oTBEArticleWithoutVAT = $this->_createArticle(true, null);
+
+        $aArticles = array($oArticleWithoutVAT, $oTBEArticleWithoutVAT);
+
+        $oCountry = $this->getMock('oxCountry', array('isInEU', 'appliesTBEVAT'));
+        $oCountry->expects($this->any())->method('isInEU')->will($this->returnValue(false));
+        $oCountry->expects($this->any())->method('appliesTBEVAT')->will($this->returnValue(true));
+
+        $oUser = $this->getMock('oeVATTBETBEUser', array('getCountry'), array(), '', false);
+        $oUser->expects($this->any())->method('getCountry')->will($this->returnValue($oCountry));
+
+        $oChecker = oxNew('oeVATTBEOrderArticleChecker', $aArticles, $oUser);
+
+        $this->assertTrue($oChecker->isValid());
+
+        return $oChecker;
+    }
+
+    public function testCheckingArticlesWhenIncorrectArticlesExistsButCountryIsEuButNotTBE()
+    {
+        $oArticleWithoutVAT = $this->_createArticle(false, null);
+        $oTBEArticleWithoutVAT = $this->_createArticle(true, null);
+
+        $aArticles = array($oArticleWithoutVAT, $oTBEArticleWithoutVAT);
+
+        $oCountry = $this->getMock('oxCountry', array('isInEU', 'appliesTBEVAT'));
+        $oCountry->expects($this->any())->method('isInEU')->will($this->returnValue(true));
+        $oCountry->expects($this->any())->method('appliesTBEVAT')->will($this->returnValue(false));
+
+        $oUser = $this->getMock('oeVATTBETBEUser', array('getCountry'), array(), '', false);
+        $oUser->expects($this->any())->method('getCountry')->will($this->returnValue($oCountry));
+
+        $oChecker = oxNew('oeVATTBEOrderArticleChecker', $aArticles, $oUser);
+
+        $this->assertTrue($oChecker->isValid());
+
+        return $oChecker;
     }
 
     protected function _createArticle($blTBEService, $iVat)

@@ -27,20 +27,35 @@ class oeVATTBEOrderArticleChecker
     /** @var array|oxArticleList */
     private $_mArticleList = null;
 
+    /** @var oeVATTBETBEUser */
+    private $_oTBEUserCountry = null;
+
     /** @var array List of incorrect TBE articles */
     private $_aInvalidArticles = null;
 
     /**
      * Handles dependencies.
      *
-     * @param array|oxArticleList $mArticleList Articles list to check.
+     * @param array|oxArticleList $mArticleList    Articles list to check.
+     * @param oeVATTBETBEUser     $oTBEUserCountry TBE user country
      */
-    public function __construct($mArticleList)
+    public function __construct($mArticleList, $oTBEUserCountry)
     {
         if (!is_array($mArticleList) && !($mArticleList instanceof oxArticleList)) {
             $mArticleList = array();
         }
         $this->_mArticleList = $mArticleList;
+        $this->_oTBEUserCountry = $oTBEUserCountry;
+    }
+
+    /**
+     * Return tbe user
+     *
+     * @return oeVATTBETBEUser
+     */
+    public function getTBEUserCountry()
+    {
+        return $this->_oTBEUserCountry;
     }
 
     /**
@@ -52,9 +67,16 @@ class oeVATTBEOrderArticleChecker
      */
     public function isValid()
     {
-        $aInvalidArticles = $this->getInvalidArticles();
+        $isValid = true;
 
-        return empty($aInvalidArticles);
+        $oTBEUserCountry = $this->getTBEUserCountry();
+        $oCountry = $oTBEUserCountry->getCountry();
+        if ($oCountry->isInEU() && $oCountry->appliesTBEVAT()) {
+            $aInvalidArticles = $this->getInvalidArticles();
+            $isValid = empty($aInvalidArticles);
+        }
+
+        return $isValid;
     }
 
     /**
