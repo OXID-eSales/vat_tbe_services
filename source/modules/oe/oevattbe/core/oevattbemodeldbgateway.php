@@ -27,7 +27,7 @@ abstract class oeVATTBEModelDbGateway
     /**
      * Returns data base resource.
      *
-     * @return oxDb
+     * @return oxLegacyDb
      */
     protected function _getDb()
     {
