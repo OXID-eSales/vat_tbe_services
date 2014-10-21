@@ -75,6 +75,7 @@ $aModule = array(
         'oeVATTBEOrderEvidenceListDbGateway'           => 'oe/oevattbe/models/dbgateways/oevattbeorderevidencelistdbgateway.php',
         'oeVATTBEVATGroupsDbGateway'                   => 'oe/oevattbe/models/dbgateways/oevattbevatgroupsdbgateway.php',
         'oeVATTBEVATGroup'                             => 'oe/oevattbe/models/oevattbevatgroup.php',
+        'oeVATTBEVATGroupsList'                        => 'oe/oevattbe/models/oevattbecountryvatgroupslist.php',
         'oeVATTBEArticleSQLBuilder'                    => 'oe/oevattbe/models/oevattbearticlesqlbuilder.php',
     ),
     'events'       => array(
