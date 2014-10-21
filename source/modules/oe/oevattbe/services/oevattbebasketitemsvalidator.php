@@ -57,7 +57,8 @@ class oeVATTBEBasketItemsValidator
      */
     public static function getInstance($oBasketArticles)
     {
-        $oVATTBEOrderArticleChecker = oxNew('oeVATTBEOrderArticleChecker', $oBasketArticles);
+        $oTBEUser  = oxNew('oeVATTBETBEUser', oxNew('oxUser'), oxRegistry::getSession(), oxRegistry::getConfig());
+        $oVATTBEOrderArticleChecker = oxNew('oeVATTBEOrderArticleChecker', $oBasketArticles, $oTBEUser);
         $oUtilsView = oxRegistry::get('oxUtilsView');
         $oVATTBEArticleMessageFormer = oxNew('oeVATTBEIncorrectVATArticlesMessageFormatter');
 
