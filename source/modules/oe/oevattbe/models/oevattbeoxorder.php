@@ -74,9 +74,9 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
     /**
      * After order finalization saves used evidences to database.
      *
-     * @param oxBasket $oBasket              Shopping basket object
-     * @param oxUser   $oUser                Current user object
-     * @param bool     $blRecalculatingOrder Order recalculation
+     * @param oxBasket              $oBasket              Shopping basket object
+     * @param oxUser|oeVATTBEOxUser $oUser                Current user object
+     * @param bool                  $blRecalculatingOrder Order recalculation
      *
      * @return integer
      */
