@@ -33,11 +33,11 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderEvidenceListTest exten
         $aData = array(
             'evidence1' => array(
                 'name' => 'evidence1',
-                'countryId' => 'GermanyId',
+                'countryId' => 'a7c40f631fc920687.20179984',
             ),
             'evidence2' => array(
                 'name' => 'evidence2',
-                'countryId' => 'GermanyId',
+                'countryId' => 'NonExisting',
             ),
         );
         $oGateway = oxNew('oeVATTBEOrderEvidenceListDbGateway');
@@ -73,13 +73,50 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderEvidenceListTest exten
         $aExpectedData = array(
             'evidence1' => array(
                 'name' => 'evidence1',
-                'countryId' => 'GermanyId',
+                'countryId' => 'a7c40f631fc920687.20179984',
                 'timestamp' => $aData['evidence1']['timestamp'],
             ),
             'evidence2' => array(
                 'name' => 'evidence2',
-                'countryId' => 'GermanyId',
+                'countryId' => 'NonExisting',
                 'timestamp' => $aData['evidence2']['timestamp'],
+            ),
+        );
+
+        $this->assertEquals($aExpectedData, $aData);
+
+        return $oList;
+    }
+
+    /**
+     * @depends testSavingEvidenceList
+     *
+     * @param oeVATTBEOrderEvidenceList $oList
+     *
+     * @return oeVATTBEOrderEvidenceList
+     */
+    public function testLoadWithCountryNamesEvidenceList($oList)
+    {
+        $oGateway = oxNew('oeVATTBEOrderEvidenceListDbGateway');
+
+        /** @var oeVATTBEOrderEvidenceList $oList */
+        $oList = oxNew('oeVATTBEOrderEvidenceList', $oGateway);
+        $oList->loadWithCountryNames('order_id');
+
+        $aData = $oList->getData();
+
+        $aExpectedData = array(
+            'evidence1' => array(
+                'name' => 'evidence1',
+                'countryId' => 'a7c40f631fc920687.20179984',
+                'timestamp' => $aData['evidence1']['timestamp'],
+                'countryTitle' => 'Deutschland',
+            ),
+            'evidence2' => array(
+                'name' => 'evidence2',
+                'countryId' => 'NonExisting',
+                'timestamp' => $aData['evidence2']['timestamp'],
+                'countryTitle' => '-',
             ),
         );
 
