@@ -25,33 +25,32 @@
  */
 class Integration_oeVatTbe_userTBECountry_oeVATTBEUserTBECountryChangeEventsTest extends OxidTestCase
 {
-    /**
-     * Do not destroy environment before test which depend from previous.
-     */
-    public function tearDown()
-    {
-        if (!$this->_hasDependencies) {
-            parent::tearDown();
-        }
-        $this->_hasDependencies = false;
-    }
 
+    /**
+     * User created with billing country set as germany;
+     * His TBE Country should also be germany.
+     *
+     * @return oxUser|oeVATTBEOxUser
+     */
     public function testGetTbeCountryAfterUserCreated()
     {
         $sGermanyId = $this->_sGermanyId;
         $oUser = $this->_createUser();
         $this->assertSame($sGermanyId, $oUser->getTbeCountryId(), 'User created in Germany, so TBE country must be Germany.');
 
-        $this->_hasDependencies = true;
         return $oUser;
     }
 
     /**
-     * @param oxUser $oUser
+     * User TBE Country is calculated;
+     * User changes country;
+     * User TBE Country should be recalculated.
+     *
+     * @param oxUser|oeVATTBEOxUser $oUser
      *
      * @depends testGetTbeCountryAfterUserCreated
      *
-     * @return oxUser
+     * @return oxUser|oeVATTBEOxUser
      */
     public function testGetTbeCountryAfterUserChangeEvent($oUser)
     {
@@ -62,16 +61,19 @@ class Integration_oeVatTbe_userTBECountry_oeVATTBEUserTBECountryChangeEventsTest
         $oUser->save();
         $this->assertSame($sAustriaId, $oUser->getTbeCountryId());
 
-        $this->_hasDependencies = true;
         return $oUser;
     }
 
     /**
-     * @param oxUser $oUser
+     * User TBE Country is calculated;
+     * User logs out;
+     * User TBE Country should be recalculated.
+     *
+     * @param oxUser|oeVATTBEOxUser $oUser
      *
      * @depends testGetTbeCountryAfterUserChangeEvent
      *
-     * @return oxUser
+     * @return oxUser|oeVATTBEOxUser
      */
     public function testGetTbeCountryAfterLogout($oUser)
     {
@@ -82,17 +84,19 @@ class Integration_oeVatTbe_userTBECountry_oeVATTBEUserTBECountryChangeEventsTest
         $oUser->logout();
         $this->assertSame($sUnitedKingdom, $oUser->getTbeCountryId());
 
-        $this->_hasDependencies = true;
         return $oUser;
     }
 
     /**
-     * @param oxUser $oUser
+     * User TBE Country is calculated;
+     * User fails to log in (wrong password);
+     * User TBE Country should not be recalculated.
+     *
+     * @param oxUser|oeVATTBEOxUser $oUser
      *
      * @depends testGetTbeCountryAfterLogout
-     * @depends testGetTbeCountryAfterUserChangeEvent
      *
-     * @return oxUser
+     * @return oxUser|oeVATTBEOxUser
      */
     public function testGetTbeCountryAfterUserFailsLogIn($oUser)
     {
@@ -105,16 +109,17 @@ class Integration_oeVatTbe_userTBECountry_oeVATTBEUserTBECountryChangeEventsTest
         $this->assertTrue($blLogsIn, 'User did not log in successfully.');
         $this->assertNotSame($sAustriaId, $oUser->getTbeCountryId());
 
-        $this->_hasDependencies = true;
         return $oUser;
     }
 
     /**
-     * @param oxUser $oUser
+     * User TBE Country is calculated;
+     * User logs in;
+     * User TBE Country should be recalculated.
+     *
+     * @param oxUser|oeVATTBEOxUser $oUser
      *
      * @depends testGetTbeCountryAfterUserFailsLogIn
-     *
-     * @return oxUser
      */
     public function testGetTbeCountryAfterUserLogsIn($oUser)
     {
@@ -129,7 +134,9 @@ class Integration_oeVatTbe_userTBECountry_oeVATTBEUserTBECountryChangeEventsTest
     }
 
     /**
-     * @return oxUser
+     * Creates used object for use in tests.
+     *
+     * @return oxUser|oeVATTBEOxUser
      */
     private function _createUser()
     {
@@ -168,7 +175,4 @@ class Integration_oeVatTbe_userTBECountry_oeVATTBEUserTBECountryChangeEventsTest
 
     /** @var string United Kingdom ID. */
     private $_sUnitedKingdom = 'a7c40f632a0804ab5.18804076';
-
-    /** @var bool Marks that other tests will be executed with same environment. */
-    private $_hasDependencies = false;
 }
