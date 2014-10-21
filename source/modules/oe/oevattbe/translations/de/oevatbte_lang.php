@@ -27,5 +27,6 @@ $aLang = array(
     'PLUS_SHIPPING2'                         => '[tr]Versandkosten ** TBE VAT',
     'OEVATTBE_ERROR_MESSAGE_TBE_ARTICLE_VAT_PROBLEMS' => '[tr]Some articles can not be sold because we do not know their VAT rate in your country: %s. Please remove those articles from your basket.',
     'OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY' => '[tr]This VAT was calculated acccording country of your rezidence: %s',
-    'OEVATTBE_RESIDENCE_COUNTRY_CHANGED_MESSAGE' => '[tr] Your rezidence country is newly identified and VAT rate will be applied according this country.',
+    'OEVATTBE_VAT_WILL_BE_CALCULATED_BY_USER_COUNTRY' => '[tr]This VAT rate can be changed after you will login and your residence country will be identified.',
+    'OEVATTBE_RESIDENCE_COUNTRY_CHANGED_MESSAGE' => '[tr] Your rezidence country is identified and VAT rate will be applied according this country.',
 );
