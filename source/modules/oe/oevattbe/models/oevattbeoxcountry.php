@@ -41,6 +41,6 @@ class oeVATTBEOxCountry extends oeVATTBEOxCountry_parent
      */
     public function OEVATTBEIsAtLeastOneGroupConfigured()
     {
-        return (bool) $this->oevattbe_istbevatconfigured->value;
+        return (bool) $this->oxcountry__oevattbe_istbevatconfigured->value;
     }
 }
