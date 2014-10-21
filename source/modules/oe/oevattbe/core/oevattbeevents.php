@@ -35,7 +35,9 @@ class oeVATTBEEvents
         self::_addOrderEvidences();
         self::_addFields();
         self::_regenerateViews();
+        self::_configureCountries();
         self::_addDemoData();
+
         /** @var oeVATTBEEvidenceRegister $oEvidenceRegister */
         $oEvidenceRegister = oxNew('oeVATTBEEvidenceRegister', oxRegistry::getConfig());
         $oEvidenceRegister->registerEvidence('oeVATTBEBillingCountryEvidence', true);
@@ -149,28 +151,191 @@ class oeVATTBEEvents
     protected static function _addDemoData()
     {
         $oDb = oxDb::getDb();
-        $oDb->execute("TRUNCATE TABLE oevattbe_countryvatgroups");
-        $oDb->execute("TRUNCATE TABLE oevattbe_articlevat");
 
         $aSqls = array();
-        //de
-        $aSqls[] = "INSERT INTO oevattbe_countryvatgroups SET OEVATTBE_ID = 10, OEVATTBE_COUNTRYID = 'a7c40f631fc920687.20179984', OEVATTBE_NAME='name', OEVATTBE_RATE='20'";
-        $aSqls[] = "INSERT INTO oevattbe_countryvatgroups SET OEVATTBE_ID = 11, OEVATTBE_COUNTRYID = 'a7c40f631fc920687.20179984', OEVATTBE_NAME='name', OEVATTBE_RATE='25'";
-        //au
-        $aSqls[] = "INSERT INTO oevattbe_countryvatgroups SET OEVATTBE_ID = 20, OEVATTBE_COUNTRYID = 'a7c40f6320aeb2ec2.72885259', OEVATTBE_NAME='name', OEVATTBE_RATE='10'";
-        $aSqls[] = "INSERT INTO oevattbe_countryvatgroups SET OEVATTBE_ID = 21, OEVATTBE_COUNTRYID = 'a7c40f6320aeb2ec2.72885259', OEVATTBE_NAME='name', OEVATTBE_RATE='15'";
 
         $aSqls[] = "INSERT INTO oevattbe_articlevat SET OEVATTBE_ARTICLEID = 'b56369b1fc9d7b97f9c5fc343b349ece', OEVATTBE_COUNTRYID = 'a7c40f631fc920687.20179984', OEVATTBE_VATGROUPID = '10'";
-        $aSqls[] = "INSERT INTO oevattbe_articlevat SET OEVATTBE_ARTICLEID = 'b56369b1fc9d7b97f9c5fc343b349ece', OEVATTBE_COUNTRYID = 'a7c40f6320aeb2ec2.72885259', OEVATTBE_VATGROUPID = '20'";
-
         $aSqls[] = "INSERT INTO oevattbe_articlevat SET OEVATTBE_ARTICLEID = 'b56597806428de2f58b1c6c7d3e0e093', OEVATTBE_COUNTRYID = 'a7c40f631fc920687.20179984', OEVATTBE_VATGROUPID = '11'";
-        $aSqls[] = "INSERT INTO oevattbe_articlevat SET OEVATTBE_ARTICLEID = 'b56597806428de2f58b1c6c7d3e0e093', OEVATTBE_COUNTRYID = 'a7c40f6320aeb2ec2.72885259', OEVATTBE_VATGROUPID = '21'";
-
         $aSqls[] = "UPDATE oxarticles SET oevattbe_istbeservice = '1' WHERE oxid in ( 'b56369b1fc9d7b97f9c5fc343b349ece', 'b56597806428de2f58b1c6c7d3e0e093' )";
-
 
         foreach ($aSqls as $sSql) {
             $oDb->execute($sSql);
         }
+    }
+
+    /**
+     * insert demo data
+     */
+    protected static function _configureCountries()
+    {
+        $aCountryVATs = self::_getCountryVatRates();
+        $oDb = oxDb::getDb();
+
+        foreach ($aCountryVATs as $sCountryCode => $aVATRates) {
+
+            $isCountryConfigured = $oDb->getOne("SELECT COUNT(*) FROM `oevattbe_countryvatgroups` INNER JOIN `oxcountry` ON oevattbe_countryvatgroups.OEVATTBE_COUNTRYID=oxcountry.oxid AND OXISOALPHA2 = ". $oDb->quote($sCountryCode));
+            if (!$isCountryConfigured) {
+                $oDb->execute("UPDATE `oxcountry` SET `oevattbe_appliestbevat` = 1, `oevattbe_istbevatconfigured` = 1 WHERE `oxisoalpha2`=". $oDb->quote($sCountryCode));
+
+                foreach ($aVATRates as $aRate) {
+                    $sSql = "INSERT INTO `oevattbe_countryvatgroups` ";
+                    $sSql .= "SET ";
+                    $sSql .= "`oevattbe_countryid` = (SELECT `oxid` FROM `oxcountry` WHERE `oxisoalpha2`=". $oDb->quote($sCountryCode).")";
+                    $sSql .= ",`oevattbe_name` = " . $oDb->quote($aRate['name']);
+                    $sSql .= ",`oevattbe_rate` = " . $oDb->quote($aRate['rate']);
+
+                    $oDb->execute($sSql);
+                }
+            }
+        }
+    }
+
+    /**
+     * Returns EU country vat rates
+     *
+     * @return array
+     */
+    protected static function _getCountryVatRates()
+    {
+        $aCountryVATs = array(
+            'BE' => array(
+                array('name' => 'Reduce rate 1', 'rate' => 6),
+                array('name' => 'Reduce rate 2', 'rate' => 12),
+                array('name' => 'Standard rate', 'rate' => 21),
+                array('name' => 'Parking rate', 'rate' => 12),
+            ),
+            'BG' => array(
+                array('name' => 'Reduce rate', 'rate' => 9),
+                array('name' => 'Standard rate', 'rate' => 20),
+            ),
+            'CZ' => array(
+                array('name' => 'Reduce rate', 'rate' => 15),
+                array('name' => 'Standard rate', 'rate' => 21),
+            ),
+            'DK' => array(
+                array('name' => 'Standard rate', 'rate' => 25),
+            ),
+            'DE' => array(
+                array('name' => 'Reduce rate', 'rate' => 7),
+                array('name' => 'Standard rate', 'rate' => 19),
+            ),
+            'EE' => array(
+                array('name' => 'Reduce rate', 'rate' => 9),
+                array('name' => 'Standard rate', 'rate' => 20),
+            ),
+            'GR' => array(
+                array('name' => 'Reduce rate 1', 'rate' => 6.5),
+                array('name' => 'Reduce rate 2', 'rate' => 13),
+                array('name' => 'Standard rate', 'rate' => 23),
+            ),
+            'ES' => array(
+                array('name' => 'Super reduce rate', 'rate' => 4),
+                array('name' => 'Reduce rate', 'rate' => 10),
+                array('name' => 'Standard rate', 'rate' => 21),
+            ),
+            'FR' => array(
+                array('name' => 'Super reduce rate', 'rate' => 2.1),
+                array('name' => 'Reduce rate 1', 'rate' => 5.5),
+                array('name' => 'Reduce rate 2', 'rate' => 10),
+                array('name' => 'Standard rate', 'rate' => 20),
+            ),
+            'HR' => array(
+                array('name' => 'Reduce rate 1', 'rate' => 5),
+                array('name' => 'Reduce rate 2', 'rate' => 13),
+                array('name' => 'Standard rate', 'rate' => 25),
+            ),
+            'IE' => array(
+                array('name' => 'Super reduce rate', 'rate' => 4.8),
+                array('name' => 'Reduce rate 1', 'rate' => 9),
+                array('name' => 'Reduce rate 2', 'rate' => 13.5),
+                array('name' => 'Standard rate', 'rate' => 23),
+                array('name' => 'Parking rate', 'rate' => 13.5),
+            ),
+            'IT' => array(
+                array('name' => 'Super reduce rate', 'rate' => 4),
+                array('name' => 'Reduce rate', 'rate' => 10),
+                array('name' => 'Standard rate', 'rate' => 22),
+            ),
+            'CY' => array(
+                array('name' => 'Reduce rate 1', 'rate' => 5),
+                array('name' => 'Reduce rate 2', 'rate' => 9),
+                array('name' => 'Standard rate', 'rate' => 19),
+            ),
+            'LV' => array(
+                array('name' => 'Reduce rate', 'rate' => 12),
+                array('name' => 'Standard rate', 'rate' => 21),
+            ),
+            'LT' => array(
+                array('name' => 'Reduce rate 1', 'rate' => 5),
+                array('name' => 'Reduce rate 2', 'rate' => 9),
+                array('name' => 'Standard rate', 'rate' => 21),
+            ),
+            'LU' => array(
+                array('name' => 'Super reduce rate', 'rate' => 3),
+                array('name' => 'Reduce rate', 'rate' => 6),
+                array('name' => 'Reduce rate', 'rate' => 12),
+                array('name' => 'Standard rate', 'rate' => 15),
+                array('name' => 'Parking rate', 'rate' => 12),
+            ),
+            'HU' => array(
+                array('name' => 'Reduce rate 1', 'rate' => 5),
+                array('name' => 'Reduce rate 2', 'rate' => 18),
+                array('name' => 'Standard rate', 'rate' => 27),
+            ),
+            'MT' => array(
+                array('name' => 'Reduce rate 1', 'rate' => 5),
+                array('name' => 'Reduce rate 2', 'rate' => 7),
+                array('name' => 'Standard rate', 'rate' => 18),
+            ),
+            'NL' => array(
+                array('name' => 'Reduce rate', 'rate' => 6),
+                array('name' => 'Standard rate', 'rate' => 21),
+            ),
+            'AT' => array(
+                array('name' => 'Reduce rate', 'rate' => 10),
+                array('name' => 'Standard rate', 'rate' => 20),
+                array('name' => 'Parking rate', 'rate' => 12),
+            ),
+            'PL' => array(
+                array('name' => 'Reduce rate 1', 'rate' => 5),
+                array('name' => 'Reduce rate 2', 'rate' => 8),
+                array('name' => 'Standard rate', 'rate' => 23),
+            ),
+            'PT' => array(
+                array('name' => 'Reduce rate 1', 'rate' => 6),
+                array('name' => 'Reduce rate 2', 'rate' => 13),
+                array('name' => 'Standard rate', 'rate' => 23),
+                array('name' => 'Parking rate', 'rate' => 13),
+            ),
+            'RO' => array(
+                array('name' => 'Reduce rate 1', 'rate' => 5),
+                array('name' => 'Reduce rate 2', 'rate' => 9),
+                array('name' => 'Standard rate', 'rate' => 24),
+            ),
+            'SI' => array(
+                array('name' => 'Reduce rate', 'rate' => 9.5),
+                array('name' => 'Standard rate', 'rate' => 22),
+            ),
+            'SK' => array(
+                array('name' => 'Reduce rate', 'rate' => 10),
+                array('name' => 'Standard rate', 'rate' => 20),
+            ),
+            'FI' => array(
+                array('name' => 'Reduce rate 1', 'rate' => 10),
+                array('name' => 'Reduce rate 2', 'rate' => 14),
+                array('name' => 'Standard rate', 'rate' => 24),
+            ),
+            'SE' => array(
+                array('name' => 'Reduce rate 1', 'rate' => 6),
+                array('name' => 'Reduce rate 2', 'rate' => 12),
+                array('name' => 'Standard rate', 'rate' => 25),
+            ),
+            'GB' => array(
+                array('name' => 'Reduce rate', 'rate' => 5),
+                array('name' => 'Standard rate', 'rate' => 20),
+            ),
+        );
+
+        return $aCountryVATs;
     }
 }

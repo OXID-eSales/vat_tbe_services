@@ -62,5 +62,10 @@ class Unit_oeVATTBE_Core_oeVATTBEEventsTest extends OxidTestCase
                 $this->assertTrue($oDbMetaDataHandler->fieldExists($sFieldName, $sTableName), "Field missing: $sTableName.$sFieldName");
             }
         }
+
+        $blHasVATGroups = (bool) oxDb::getDb()->getOne("SELECT COUNT(*) FROM oevattbe_countryvatgroups");
+        $this->assertTrue($blHasVATGroups);
+        $blCountriesMarkedAsConfigured = (bool) oxDb::getDb()->getOne("SELECT COUNT(*) FROM oxcountry WHERE oevattbe_appliestbevat = 1 and oevattbe_istbevatconfigured = 1");
+        $this->assertTrue($blCountriesMarkedAsConfigured);
     }
 }
