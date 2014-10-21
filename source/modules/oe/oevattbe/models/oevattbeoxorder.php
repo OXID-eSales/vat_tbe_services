@@ -111,7 +111,7 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
     /**
      * Sets default evidence used for deciding user country.
      *
-     * @param oxUser $oUser user object
+     * @param oxUser|oeVATTBEOxUser $oUser user object
      */
     protected function _setUser($oUser)
     {
