@@ -26,4 +26,8 @@ $aLang = array(
     'charset'                                    => 'ISO-8859-15',
     'OEVATTBE_VAT_IN_STORE_DATE' => '[tr]Date VAT ID was entered',
     'HELP_OEVATTBE_VAT_IN_STORE_DATE' => '[tr]For telecommunication, broadcasting and electronic services, a customer is taxable, if he has  supplied a valid VAT ID. In order for the shop owner to have a record of when a customer entered this VAT ID, the date it was first entered is shown.',
+    'OEVATTBE_TITLE_EVIDENCES_FOR_TBE'=> '[tr]Country evidences for TBE services',
+    'OEVATTBE_EVIDENCE_FOR_ARTICLES_USED'=> '[tr]For order TBE products used %s VAT rates',
+    'OEVATTBE_EVIDENCE_ID'=> '[tr]Evidence Id',
+    'OEVATTBE_EVIDENCE_COUNTRY'=> '[tr]Country',
 );

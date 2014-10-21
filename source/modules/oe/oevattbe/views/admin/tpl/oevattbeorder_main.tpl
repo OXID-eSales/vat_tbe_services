@@ -1,26 +1,37 @@
 [{$smarty.block.parent}]
 [{if $sTBECountry}]
+<style>
+    .vattbeEvidences {
+        border: solid 1px #A9A9A9;
+        padding: 5px;
+        width: 600px;
+        margin-top: 14px;
+    }
+    .vattbeEvidencesInfo {
+        border-collapse:collapse;
+        width: 80%
+    }
+</style>
 <tr>
     <td class="edittext" colspan="2">
-        <br>
-        <table style="border : 1px #A9A9A9; border-style : solid solid solid solid; padding-top: 5px; padding-bottom: 5px; padding-right: 5px; padding-left: 5px; width: 600px;">
+        <table class="vattbeEvidences">
             <thead>
                 <tr>
                     <td class="edittext" colspan="2">
-                        Country evidences for TBE services
+                        [{oxmultilang ident="OEVATTBE_TITLE_EVIDENCES_FOR_TBE"}]
                     </td>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td class="edittext" colspan="2">For order TBE products used [{$sTBECountry}] VAT rates</td>
+                    <td class="edittext" colspan="2">[{oxmultilang ident="OEVATTBE_EVIDENCE_FOR_ARTICLES_USED" args=$sTBECountry}]</td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <table border="1" style="border-collapse:collapse; width: 80%" cellpadding="2">
+                        <table border="1" class="vattbeEvidencesInfo" cellpadding="2">
                             <tr>
-                                <th class="edittext">Evidence Id</th>
-                                <th class="edittext">Country</th>
+                                <th class="edittext">[{oxmultilang ident="OEVATTBE_EVIDENCE_ID"}]</th>
+                                <th class="edittext">[{oxmultilang ident="OEVATTBE_EVIDENCE_COUNTRY"}]</th>
                             </tr>
                             [{foreach from=$aEvidencesData item=evidence}]
                             <tr>
