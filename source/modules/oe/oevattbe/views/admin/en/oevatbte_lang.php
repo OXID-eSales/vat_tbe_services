@@ -30,4 +30,8 @@ $aLang = array(
     'OEVATTBE_EVIDENCE_FOR_ARTICLES_USED'=> '[tr]For order TBE products used %s VAT rates',
     'OEVATTBE_EVIDENCE_ID'=> '[tr]Evidence Id',
     'OEVATTBE_EVIDENCE_COUNTRY'=> '[tr]Country',
+    'OEVATTBE_APPLY_TBE' => '[tr]Apply TBE',
+    'OEVATTBE_COUNTRY_IS_TBE' => '[tr]Yes',
+    'OEVATTBE_COUNTRY_IS_NOT_TBE' => '[tr]NO',
+    'OEVATTBE_COUNTRY_NO_TBE_GROUPS_CONFIGURED' => '[tr](not configured)',
 );
