@@ -35,28 +35,73 @@ class oeVATTBEOrder_Main extends oeVATTBEOrder_Main_parent
 
         /** @var oxOrder $oOrder */
         $oOrder = oxNew("oxOrder");
-        $oOrder->load($sOrderId);
-        $sEvidence = $oOrder->oxorder__oevattbe_evidenceused->value;
+        $sOrderEvidenceId = $this->_getCurrentOrderEvidenceId($oOrder, $sOrderId);
+
         /** @var oeVATTBEOrderEvidenceListDbGateway $oDbGateway */
         $oDbGateway = oxNew('oeVATTBEOrderEvidenceListDbGateway');
         $aOrder = $oDbGateway->load($sOrderId);
 
-
         /** @var oxCountry $oCountry */
         $oCountry = oxNew('oxCountry');
-        $sTBECountryId = $aOrder[$sEvidence]['countryId'];
-        $oCountry->load($sTBECountryId);
-        $sTBECountry = $oCountry->oxcountry__oxtitle->value;
+        $sTBECountryTitle = $this->_getTBECountryTitle($oCountry, $aOrder[$sOrderEvidenceId]['countryId']);
+        $aEvidencesData = $this->_prepareEvidencesData($aOrder, $oCountry);
 
-        foreach ($aOrder as $sKey => $aOrderInfo) {
+        $this->_aViewData["sTBECountry"] = $sTBECountryTitle;
+        $this->_aViewData["aEvidencesData"] = $aEvidencesData;
+
+        return parent::render();
+    }
+
+    /**
+     * Prepares data for template.
+     *
+     * @param array     $aOrder   Currently selected order evidences data.
+     * @param oxCountry $oCountry Object used to load country title.
+     *
+     * @return array
+     */
+    protected function _prepareEvidencesData($aOrder, $oCountry)
+    {
+        foreach ($aOrder as $sEvidenceId => $aOrderInfo) {
             if ($oCountry->load($aOrderInfo['countryId'])) {
-                $aOrder[$sKey]['countryTitle'] = $oCountry->oxcountry__oxtitle->value;
+                $aOrder[$sEvidenceId]['countryTitle'] = $oCountry->oxcountry__oxtitle->value;
+            } else {
+                $aOrder[$sEvidenceId]['countryTitle'] = '-';
             }
         }
 
-        $this->_aViewData["sTBECountry"] = $sTBECountry;
-        $this->_aViewData["aCountriesByEvidences"] = $aOrder;
+        return $aOrder;
+    }
 
-        return parent::render();
+    /**
+     * Returns TBE country title.
+     *
+     * @param oxCountry $oCountry      Object used to load country title.
+     * @param string    $sTBECountryId Country id.
+     *
+     * @return string
+     */
+    protected function _getTBECountryTitle($oCountry, $sTBECountryId)
+    {
+        $oCountry->load($sTBECountryId);
+        $sTBECountryTitle = $oCountry->oxcountry__oxtitle->value;
+
+        return $sTBECountryTitle;
+    }
+
+    /**
+     * Returns currently selected order evidence id.
+     *
+     * @param oxOrder $oOrder   Used to get evidence id.
+     * @param string  $sOrderId Order id.
+     *
+     * @return string
+     */
+    protected function _getCurrentOrderEvidenceId($oOrder, $sOrderId)
+    {
+        $oOrder->load($sOrderId);
+        $sEvidenceId = $oOrder->oxorder__oevattbe_evidenceused->value;
+
+        return $sEvidenceId;
     }
 }
