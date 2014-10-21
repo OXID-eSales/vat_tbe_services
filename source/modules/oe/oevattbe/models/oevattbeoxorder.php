@@ -171,6 +171,7 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
      */
     protected function _getOeVATTBEOrderArticleChecker($oBasket)
     {
-        return oxNew('oeVATTBEOrderArticleChecker', $oBasket->getBasketArticles());
+        $oTBEUser  = oxNew('oeVATTBETBEUser', oxNew('oxUser'), oxRegistry::getSession(), oxRegistry::getConfig());
+        return oxNew('oeVATTBEOrderArticleChecker', $oBasket->getBasketArticles(), $oTBEUser);
     }
 }
