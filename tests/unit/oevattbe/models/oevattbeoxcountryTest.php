@@ -21,10 +21,9 @@
 
 
 /**
- * Testing extended oxArticle class.
+ * Testing extended oxCountry class.
  *
- * @covers oeVATTBEOxArticle
- * @covers oeVATTBETBEArticleCacheKey
+ * @covers oeVATTBEOxCountry
  */
 class Unit_oeVATTBE_models_oeVATTBEOxCountryTest extends OxidTestCase
 {

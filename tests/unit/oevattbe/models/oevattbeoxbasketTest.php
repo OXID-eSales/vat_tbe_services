@@ -22,6 +22,8 @@
 
 /**
  * Testing extended oxArticle class.
+ *
+ * @covers oeVATTBEOxBasket
  */
 class Unit_oeVATTBE_models_oeVATTBEOxBasketTest extends OxidTestCase
 {

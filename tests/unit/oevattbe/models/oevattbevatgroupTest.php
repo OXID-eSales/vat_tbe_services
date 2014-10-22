@@ -22,6 +22,7 @@
 
 /**
  * Testing oeVATTBEVATGroup class.
+ *
  * @covers oeVATTBEVATGroup
  */
 class Unit_oeVatTbe_models_oeVATTBEVATGroupTest extends OxidTestCase

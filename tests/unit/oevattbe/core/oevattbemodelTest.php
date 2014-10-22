@@ -23,6 +23,8 @@ require_once realpath(".") . '/unit/OxidTestCase.php';
 
 /**
  * Testing oeVATTBEModel class.
+ *
+ * @covers oeVATTBEModel
  */
 class Unit_oeVATTBE_Core_oeVATTBEModelTest extends OxidTestCase
 {

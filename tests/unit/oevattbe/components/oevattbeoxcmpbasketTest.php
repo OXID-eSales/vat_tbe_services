@@ -22,8 +22,10 @@
 
 /**
  * Testing extended oxUser class.
+ *
+ * @covers oeVATTBEOxCmp_Basket
  */
-class Unit_oeVatTbe_components_oeVATTBEOxCmpbasketTest extends OxidTestCase
+class Unit_oeVatTbe_components_oeVATTBEOxCmpBasketTest extends OxidTestCase
 {
     /**
      * Render test

@@ -22,6 +22,8 @@
 
 /**
  * Testing TBEUser class.
+ *
+ * @covers oeVATTBETBEUser
  */
 class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
 {

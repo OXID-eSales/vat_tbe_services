@@ -22,6 +22,8 @@
 
 /**
  * Testing extended oxUser class.
+ *
+ * @covers oeVATTBEOxVatSelector
  */
 class Unit_oeVatTbe_models_oeVATTBEOxVatSelectorTest extends OxidTestCase
 {

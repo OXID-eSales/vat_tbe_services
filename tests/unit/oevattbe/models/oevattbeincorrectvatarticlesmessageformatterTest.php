@@ -22,7 +22,7 @@
 /**
  * Test class for oeVATTBEArticleMessageFormatter.
  *
- * @covers oeVATTBEArticleMessageFormatter
+ * @covers oeVATTBEIncorrectVATArticlesMessageFormatter
  */
 class Unit_oeVATTBE_Models_oeVATTBEIncorrectVATArticlesMessageFormatterTest extends OxidTestCase
 {

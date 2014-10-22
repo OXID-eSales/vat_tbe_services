@@ -22,27 +22,11 @@
 
 /**
  * Testing oeVATTBECountryVATGroupsList class.
+ *
  * @covers oeVATTBECountryVATGroupsList
  */
 class Unit_oeVatTbe_models_oeVATTBECountryVATGroupsListTest extends OxidTestCase
 {
-    /**
-     * Country id is set to the list;
-     * VAT Group is being added to list;
-     * New VAT Group is saved with lists country id.
-     */
-//    public function testAddingVATGroupToEmptyList()
-//    {
-//        $oNewGroup = $this->getMock('oeVATTBEVATGroup', array('save'), array(), '', false);
-//        $oNewGroup->expects($this->once())->method('save');
-//
-//        /** @var oeVATTBEVATGroupsDbGateway $oGateway */
-//        $oGateway = oxNew('oeVATTBEVATGroupsDbGateway');
-//
-//        /** @var oeVATTBEVATGroupsList $oGroupsList */
-//        $oGroupsList = oxNew('oeVATTBEVATGroupsList', $oGateway);
-//        $oGroupsList->addGroup($oNewGroup);
-//    }
 
     /**
      * Two Country Groups exits;

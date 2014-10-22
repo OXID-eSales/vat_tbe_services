@@ -21,6 +21,8 @@
 
 /**
  * This is dummy test.
+ *
+ * @covers oeVATTBEEvents
  */
 class Unit_oeVATTBE_Core_oeVATTBEEventsTest extends OxidTestCase
 {

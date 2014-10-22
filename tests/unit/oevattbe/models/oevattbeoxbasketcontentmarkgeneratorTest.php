@@ -22,6 +22,8 @@
 
 /**
  * Testing extended oxArticle class.
+ *
+ * @covers oeVATTBEOxBasketContentMarkGenerator
  */
 class Unit_oeVATTBE_models_oeVATTBEOxBasketContentMarkGeneratorTest extends OxidTestCase
 {
