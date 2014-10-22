@@ -20,7 +20,7 @@
  */
 
 /**
- * VAT TBE oxArticle class
+ * VAT TBE oxArticle class.
  */
 class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
 {
@@ -31,7 +31,7 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
     private $_oVATTBEArticleSQLBuilder = null;
 
     /**
-     * Article TBE vat
+     * Article TBE vat.
      *
      * @return string
      */
@@ -41,9 +41,9 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
     }
 
     /**
-     * Article TBE vat
+     * Article TBE vat.
      *
-     * @return string
+     * @return int
      */
     public function isTBEService()
     {
@@ -115,7 +115,7 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
     }
 
     /**
-     * Returns users tbe country
+     * Returns users tbe country.
      *
      * @return string
      */
@@ -146,7 +146,7 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
     }
 
     /**
-     * Article sql builder
+     * Article sql builder.
      *
      * @return oeVATTBEArticleSQLBuilder
      */
