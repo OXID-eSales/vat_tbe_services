@@ -19,8 +19,16 @@
  * @copyright (C) OXID eSales AG 2003-2014T
  */
 
+/**
+ * Class responsible for VAT TBE article administration.
+ */
 class oeVATTBEArticleAdministration extends oxAdminDetails
 {
+    /**
+     * Renders template for VAT TBE administration in article page.
+     *
+     * @return string
+     */
     public function render()
     {
         parent::render();
@@ -33,6 +41,9 @@ class oeVATTBEArticleAdministration extends oxAdminDetails
         return "oevattbearticleadministration.tpl";
     }
 
+    /**
+     * Updates article information related with TBE services.
+     */
     public function save()
     {
         parent::save();
