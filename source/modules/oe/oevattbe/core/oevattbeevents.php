@@ -93,6 +93,7 @@ class oeVATTBEEvents
               `OEVATTBE_COUNTRYID` char(32) character set latin1 collate latin1_general_ci NOT NULL,
               `OEVATTBE_VATGROUPID` int(11) unsigned NOT NULL,
               `OEVATTBE_TIMESTAMP` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+              UNIQUE KEY `OEVATTBE_ARTICLEID_2` (`OEVATTBE_ARTICLEID`,`OEVATTBE_COUNTRYID`),
               KEY `OEVATTBE_ARTICLEID` (`OEVATTBE_ARTICLEID`),
               KEY `OEVATTBE_COUNTRYID` (`OEVATTBE_COUNTRYID`),
               KEY `OEVATTBE_VATGROUPID` (`OEVATTBE_VATGROUPID`)

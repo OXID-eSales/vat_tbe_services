@@ -78,6 +78,7 @@ $aModule = array(
         'oeVATTBECountryVATGroupsList'                 => 'oe/oevattbe/models/oevattbecountryvatgroupslist.php',
         'oeVATTBEArticleSQLBuilder'                    => 'oe/oevattbe/models/oevattbearticlesqlbuilder.php',
         'oeVATTBECountryVatGroups'                     => 'oe/oevattbe/controllers/admin/oevattbecountryvatgroups.php',
+        'oeVATTBEArticleVATGroupsDbGateway'            => 'oe/oevattbe/models/dbgateways/oevattbearticlevatgroupsdbgateway.php',
         'oeVATTBEArticleAdministration'                => 'oe/oevattbe/controllers/admin/oevattbearticleadministration.php',
     ),
     'events'       => array(
