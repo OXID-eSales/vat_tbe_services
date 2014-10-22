@@ -81,7 +81,7 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
      */
     public function buildSelectString($aWhere = null)
     {
-        if (is_null($this->_getTbeCountryId())) {
+        if (!$this->_isTBEConfigured()) {
             return parent::buildSelectString($aWhere);
         }
 
@@ -130,6 +130,25 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
 
         return $sCountryId;
     }
+
+    /**
+     * Returns users tbe country
+     *
+     * @return string
+     */
+    private function _isTBEConfigured()
+    {
+        $isConfigured = false;
+        $sCountryId = $this->_getTbeCountryId();
+        if (!is_null($sCountryId)) {
+            $oCountry = oxNew('oxCountry');
+            $oCountry->load($sCountryId);
+            $isConfigured = $oCountry->appliesTBEVAT();
+        }
+
+        return $isConfigured;
+    }
+
 
     /**
      * Returns TBE Article object.
