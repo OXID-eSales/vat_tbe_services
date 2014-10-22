@@ -18,7 +18,7 @@
     <input type="hidden" name="editval[oevattbe_istbeservice]" value="0">
     <input class="edittext" type="checkbox" name="editval[oevattbe_istbeservice]" value='1' [{if $iIsTbeService == 1}]checked[{/if}]>
 
-    <input type="submit" class="edittext" name="save" value="blaaaaaaaaa" onClick="Javascript:document.myedit.fnc.value='save'">
+    <input type="submit" class="edittext" name="save" value="[{oxmultilang ident="OEVATTBE_ARTICLE_UPDATE"}]" onClick="Javascript:document.myedit.fnc.value='save'">
 </form>
 
 [{*Required for admin tabs to work*}]

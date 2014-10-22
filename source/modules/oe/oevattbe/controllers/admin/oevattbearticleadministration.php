@@ -28,7 +28,6 @@ class oeVATTBEArticleAdministration extends oxAdminDetails
         $oArticle = oxNew("oeVATTBEOxArticle");
         $sCurrentArticleId = $this->getEditObjectId();
         $oArticle->load($sCurrentArticleId);
-
         $this->_aViewData["iIsTbeService"] = $oArticle->isTBEService();
 
         return "oevattbearticleadministration.tpl";
@@ -37,10 +36,15 @@ class oeVATTBEArticleAdministration extends oxAdminDetails
     public function save()
     {
         parent::save();
+        $sCurrentArticleId = $this->getEditObjectId();
         $oConfig = $this->getConfig();
         $aParams = $oConfig->getRequestParameter("editval");
+        $iIsTBEService = $aParams['oevattbe_istbeservice'];
 
-
-        //var_dump($aParams);
+        /** @var oeVATTBEOxArticle|oxArticle $oArticle */
+        $oArticle = oxNew("oeVATTBEOxArticle");
+        $oArticle->load($sCurrentArticleId);
+        $oArticle->oxarticles__oevattbe_istbeservice = new oxField($iIsTBEService);
+        $oArticle->save();
     }
 }
