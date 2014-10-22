@@ -33,6 +33,7 @@ class Unit_oeVATTBE_Core_oeVATTBEEventsTest extends OxidTestCase
     {
         oxDb::getDb()->execute('DROP TABLE IF EXISTS `oevattbe_articlevat`');
         oxDb::getDb()->execute('DROP TABLE IF EXISTS `oevattbe_countryvatgroups`');
+        oxDb::getDb()->execute('DROP TABLE IF EXISTS `oevattbe_orderevidences`');
 
         oeVATTBEEvents::onActivate();
 
@@ -44,6 +45,10 @@ class Unit_oeVATTBE_Core_oeVATTBEEventsTest extends OxidTestCase
      */
     public function testOnActivate()
     {
+        oxDb::getDb()->execute('DROP TABLE IF EXISTS `oevattbe_articlevat`');
+        oxDb::getDb()->execute('DROP TABLE IF EXISTS `oevattbe_countryvatgroups`');
+        oxDb::getDb()->execute('DROP TABLE IF EXISTS `oevattbe_orderevidences`');
+
         oeVATTBEEvents::onActivate();
 
         $oDbMetaDataHandler = oxNew('oxDbMetaDataHandler');
