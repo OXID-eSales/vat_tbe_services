@@ -77,12 +77,14 @@ $aModule = array(
         'oeVATTBEVATGroup'                             => 'oe/oevattbe/models/oevattbevatgroup.php',
         'oeVATTBEVATGroupsList'                        => 'oe/oevattbe/models/oevattbecountryvatgroupslist.php',
         'oeVATTBEArticleSQLBuilder'                    => 'oe/oevattbe/models/oevattbearticlesqlbuilder.php',
+        'oeVATTBECountryVatGroups'                     => 'oe/oevattbe/controllers/admin/oevattbecountryvatgroups.php',
     ),
     'events'       => array(
         'onActivate'   => 'oeVatTbeEvents::onActivate',
         'onDeactivate' => 'oeVatTbeEvents::onDeactivate'
     ),
     'templates' => array(
+        'oevattbecountryvatgroups.tpl' => 'oe/oevattbe/views/admin/tpl/oevattbecountryvatgroups.tpl'
     ),
     'blocks' => array(
         array('template' => 'layout/base.tpl', 'block'=>'base_style', 'file'=>'/views/blocks/layout/base.tpl'),
