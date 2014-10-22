@@ -31,6 +31,7 @@ class Integration_oeVATTBE_article_oeVATTBEOxSearchTest extends OxidTestCase
     protected function setUp()
     {
         $this->_prepareData();
+        parent::setup();
     }
 
     /**

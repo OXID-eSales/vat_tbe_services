@@ -30,6 +30,7 @@ class Integration_oeVATTBE_article_oeVATTBEOxArticleListTest extends OxidTestCas
      */
     protected function setUp()
     {
+        parent::setup();
         $this->_prepareData();
     }
 
@@ -333,7 +334,7 @@ class Integration_oeVATTBE_article_oeVATTBEOxArticleListTest extends OxidTestCas
      */
     protected function _getArticleList($sUserStatus = 'notLoggedIn')
     {
-        $oArticleList = oxNew("oeVATTBEOxArticleList");
+        $oArticleList = oxNew("oxArticleList");
         $oArticle = $oArticleList->getBaseObject();
 
         if ($sUserStatus != 'notLoggedIn') {
