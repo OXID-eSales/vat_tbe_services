@@ -74,7 +74,7 @@ class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends OxidTestCase
         $this->assertTrue($oChecker->isValid());
     }
 
-    public function testCheckingArticlesWhenCorrectArticlesExistsBurCountryNot()
+    public function testCheckingArticlesWhenCorrectArticlesExistsButCountryNot()
     {
         $oArticleWithoutVAT = $this->_createArticle(false, null);
         $oArticleWithVAT = $this->_createArticle(false, 15);
@@ -82,7 +82,6 @@ class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends OxidTestCase
         $oTBEArticleWithZeroVAT = $this->_createArticle(true, 0);
 
         $aArticles = array($oArticleWithoutVAT, $oArticleWithVAT, $oTBEArticleWithVAT, $oTBEArticleWithZeroVAT);
-
 
         $oUser = $this->getMock('oeVATTBETBEUser', array('getCountry'), array(), '', false);
         $oUser->expects($this->any())->method('getCountry')->will($this->returnValue(null));
