@@ -25,7 +25,7 @@
  *
  * @covers oeVATTBECountryVATGroup
  */
-class Unit_oeVatTbe_models_oeVATTBECountryVATGroupTest extends OxidTestCase
+class Unit_oeVatTbe_Models_oeVATTBECountryVATGroupTest extends OxidTestCase
 {
     /**
      * Information is set to Group entity;
