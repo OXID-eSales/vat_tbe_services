@@ -46,8 +46,6 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderTest extends OxidTestC
      * @param int $iOrderState Order state when evidence list should be saved.
      *
      * @dataProvider providerSavingEvidenceList
-     *
-     * @return oeVATTBEOrderEvidenceList
      */
     public function testSavingEvidenceList($iOrderState)
     {
@@ -83,10 +81,11 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderTest extends OxidTestC
         );
 
         $this->assertEquals($aExpectedData, $aData);
-
-        return $oOrder;
     }
 
+    /**
+     * Test deleting evidences list.
+     */
     public function testDeletingEvidenceList()
     {
         $oConfig = $this->getConfig();
@@ -112,9 +111,7 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderTest extends OxidTestC
         $oList = oxNew('oeVATTBEOrderEvidenceList', $oGateway);
         $oList->load('order_id');
 
-        $aData = $oList->getData();
-
-        $this->assertEquals(array(), $aData);
+        $this->assertEquals(array(), $oList->getData());
     }
 
     /**
@@ -142,8 +139,6 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderTest extends OxidTestC
      * @param int $iOrderState Order state when evidence list should not be saved.
      *
      * @dataProvider providerNotSavingEvidenceListOnFailedOrder
-     *
-     * @return oeVATTBEOrderEvidenceList
      */
     public function testNotSavingEvidenceListOnFailedOrder($iOrderState)
     {
@@ -171,7 +166,5 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderTest extends OxidTestC
         $aData = $oList->getData();
 
         $this->assertEquals(array(), $aData);
-
-        return $oOrder;
     }
 }
