@@ -34,7 +34,9 @@ class oeVATTBECountryVATGroupsList extends oeVATTBEModel
      */
     public function load($sId = null)
     {
-        $this->setId($sId);
+        if (!is_null($sId)) {
+            $this->setId($sId);
+        }
 
         $aGroups = array();
         $oGateway = $this->_getDbGateway();
@@ -49,6 +51,29 @@ class oeVATTBECountryVATGroupsList extends oeVATTBEModel
             }
         }
         $this->setData($aGroups);
+
+        return $aGroups;
+    }
+
+    /**
+     * Returns all groups per country with key as country id and array of its groups as value.
+     *
+     * @return array
+     */
+    public function getList()
+    {
+        $aGroups = array();
+        $oGateway = $this->_getDbGateway();
+        $aGroupsData = $oGateway->getList();
+        if (is_array($aGroupsData) && count($aGroupsData)) {
+            foreach ($aGroupsData as $aData) {
+                /** @var oeVATTBEVATGroup $oGroup */
+                $oGroup = oxNew('oeVATTBEVATGroup', $oGateway);
+                $oGroup->setId($aData['OEVATTBE_ID']);
+                $oGroup->setData($aData);
+                $aGroups[$aData['OEVATTBE_COUNTRYID']][] = $oGroup;
+            }
+        }
 
         return $aGroups;
     }
