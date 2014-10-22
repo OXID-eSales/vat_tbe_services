@@ -1,14 +1,9 @@
 [{*Required for admin tabs to work*}]
 [{include file="headitem.tpl" title="GENERAL_ADMIN_TITLE"|oxmultilangassign}]
-<script type="text/javascript">
-    window.onload = function () {
-        top.oxid.admin.updateList('[{$sOxid}]')
-    };
-</script>
 <form name="transfer" id="transfer" action="[{$oViewConf->getSelfLink()}]" method="post">
     [{$oViewConf->getHiddenSid()}]
-    <input type="hidden" name="oxid" value="[{$sOxid}]">
-    <input type="hidden" name="oxidCopy" value="[{$sOxid}]">
+    <input type="hidden" name="oxid" value="[{$oxid}]">
+    <input type="hidden" name="oxidCopy" value="[{$oxid}]">
     <input type="hidden" name="cl" value="article_main">
     <input type="hidden" name="language" value="[{$actlang}]">
 </form>
@@ -18,6 +13,7 @@
     [{$oViewConf->getHiddenSid()}]
     <input type="hidden" name="cl" value="oevattbearticleadministration">
     <input type="hidden" name="fnc" value="save">
+    <input type="hidden" name="oxid" value="[{$oxid}]">
 
     <input type="hidden" name="editval[oevattbe_istbeservice]" value="0">
     <input class="edittext" type="checkbox" name="editval[oevattbe_istbeservice]" value='1' [{if $iIsTbeService == 1}]checked[{/if}]>

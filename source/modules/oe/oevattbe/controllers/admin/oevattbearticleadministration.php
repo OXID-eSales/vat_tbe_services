@@ -23,25 +23,24 @@ class oeVATTBEArticleAdministration extends oxAdminDetails
 {
     public function render()
     {
+        parent::render();
         /** @var oeVATTBEOxArticle $oArticle */
         $oArticle = oxNew("oeVATTBEOxArticle");
         $sCurrentArticleId = $this->getEditObjectId();
         $oArticle->load($sCurrentArticleId);
 
         $this->_aViewData["iIsTbeService"] = $oArticle->isTBEService();
-        $this->_aViewData["sOxid"] = $sCurrentArticleId;
 
         return "oevattbearticleadministration.tpl";
     }
 
     public function save()
     {
-        $sCurrentArticleId = $this->getEditObjectId();
-        $this->_aViewData["sOxid"] = $sCurrentArticleId;
+        parent::save();
         $oConfig = $this->getConfig();
         $aParams = $oConfig->getRequestParameter("editval");
 
 
-        var_dump($aParams);
+        //var_dump($aParams);
     }
 }
