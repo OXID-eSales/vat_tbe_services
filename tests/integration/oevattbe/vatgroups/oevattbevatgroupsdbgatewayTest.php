@@ -141,6 +141,18 @@ class Integration_oeVatTbe_VATGroups_oeVATTBEVATGroupsDbGatewayTest extends Oxid
     }
 
     /**
+     * VAT Groups exists for specific country;
+     * Groups list is loaded with correct information for this country.
+     */
+    public function testLoadingGroupsListWhenGroupsExistAndNoCountryIsPassed()
+    {
+        $oVatGroupsGateway = oxNew('oeVATTBEVATGroupsDbGateway');
+        $aGroupsList = $oVatGroupsGateway->getList();
+
+        $this->assertNotEmpty($aGroupsList);
+    }
+
+    /**
      * No VAT Groups exists for specific country;
      * Empty groups list should be returned.
      */

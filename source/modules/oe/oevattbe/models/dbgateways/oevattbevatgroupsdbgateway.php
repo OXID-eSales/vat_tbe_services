@@ -56,16 +56,20 @@ class oeVATTBEVATGroupsDbGateway extends oeVATTBEModelDbGateway
     /**
      * Load VAT Group data from Db for given country.
      *
-     * @param string $sCountryId Country id.
+     * @param string $sCountryId Country id. If no country id is given, all records will be returned.
      *
      * @return array
      */
-    public function getList($sCountryId)
+    public function getList($sCountryId = null)
     {
         $oDb = $this->_getDb();
-        $aData = $oDb->getAll('SELECT * FROM `oevattbe_countryvatgroups` WHERE `oevattbe_countryid` = ' . $oDb->quote($sCountryId) . ' ORDER BY `oevattbe_timestamp` DESC');
+        $sQuery = 'SELECT * FROM `oevattbe_countryvatgroups`';
+        if ($sCountryId) {
+            $sQuery .= 'WHERE `oevattbe_countryid` = ' . $oDb->quote($sCountryId);
+        }
+        $sQuery .= ' ORDER BY `oevattbe_timestamp` DESC';
 
-        return $aData;
+        return $oDb->getAll($sQuery);
     }
 
     /**
