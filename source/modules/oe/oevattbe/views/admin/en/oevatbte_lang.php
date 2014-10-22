@@ -36,5 +36,6 @@ $aLang = array(
     'OEVATTBE_COUNTRY_IS_TBE' => '[tr]Yes',
     'OEVATTBE_COUNTRY_IS_NOT_TBE' => '[tr]NO',
     'OEVATTBE_COUNTRY_NO_TBE_GROUPS_CONFIGURED' => '[tr](not configured)',
-    'OEVATTBE_ARTICLE_UPDATE' => '[tr]Update',
+    'OEVATTBE_ARTICLE_UPDATE_BUTTON' => '[tr]Update',
+    'OEVATTBE_ARTICLE_UPDATE_LABEL' => '[tr]Enable VAT TBE services for this product',
 );
