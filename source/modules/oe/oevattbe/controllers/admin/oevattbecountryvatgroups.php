@@ -51,15 +51,15 @@ class oeVATTBECountryVatGroups extends oxAdminDetails
     /**
      * Create class to deal with VAT Group together with its dependencies.
      *
-     * @return oeVATTBEVATGroup
+     * @return oeVATTBECountryVATGroup
      */
     protected function _factoryVATGroup()
     {
-        /** @var oeVATTBEOrderEvidenceListDbGateway $oGateway */
-        $oGateway = oxNew('oeVATTBEVATGroupsDbGateway');
+        /** @var oeVATTBECountryVATGroupsDbGateway $oGateway */
+        $oGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
 
-        /** @var oeVATTBEVATGroup $oGroup */
-        $oGroup = oxNew('oeVATTBEVATGroup', $oGateway);
+        /** @var oeVATTBECountryVATGroup $oGroup */
+        $oGroup = oxNew('oeVATTBECountryVATGroup', $oGateway);
         return $oGroup;
     }
 
