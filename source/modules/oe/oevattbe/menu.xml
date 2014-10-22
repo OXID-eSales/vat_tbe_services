@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<OX>
+    <OXMENU id="NAVIGATION_ESHOPADMIN">
+        <MAINMENU id="mxcountries">
+            <TAB id="oevattbe_country_vat_groups" cl="oevattbecountryvatgroups"/>
+        </MAINMENU>
+    </OXMENU>
+</OX>
