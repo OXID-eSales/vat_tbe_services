@@ -21,4 +21,34 @@ class oeVATTBECountryVatGroups extends oxAdminDetails
 
         return "oevattbecountryvatgroups.tpl";
     }
+
+    /**
+     * Add country VAT group.
+     */
+    public function addCountryVATGroup()
+    {
+        $aParams = oxRegistry::getConfig()->getRequestParameter("editval");
+
+        $oGroup = $this->_factoryVATGroup();
+        $oGroup->setCountryId($aParams['oxcountry__oxid']);
+        $oGroup->setName($aParams['oevattbe_name']);
+        $oGroup->setRate($aParams['oevattbe_rate']);
+        $oGroup->setDescription($aParams['oevattbe_description']);
+        $oGroup->save();
+    }
+
+    /**
+     * Create class to deal with VAT Group together with its dependencies.
+     *
+     * @return oeVATTBEVATGroup
+     */
+    protected function _factoryVATGroup()
+    {
+        /** @var oeVATTBEOrderEvidenceListDbGateway $oGateway */
+        $oGateway = oxNew('oeVATTBEVATGroupsDbGateway');
+
+        /** @var oeVATTBEVATGroup $oGroup */
+        $oGroup = oxNew('oeVATTBEVATGroup', $oGateway);
+        return $oGroup;
+    }
 }

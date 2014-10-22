@@ -40,4 +40,10 @@ $aLang = array(
     'OEVATTBE_ARTICLE_UPDATE_LABEL' => '[tr]Enable VAT TBE services for this product',
     'OEVATTBE_TBE_COUNTRY' => '[tr]Applie TBE VAT rates',
     'HELP_OEVATTBE_TBE_COUNTRY' => '[tr]Applie TBE VAT rates',
+    'oevattbe_article_administration' => '[tr]VAT TBE administration',
+    'OEVATTBE_COUNTRY_VAT_GROUP_NAME' => '[tr]Group Name',
+    'OEVATTBE_COUNTRY_VAT_GROUP_VALUE' => '[tr]VAT Value',
+    'OEVATTBE_COUNTRY_VAT_GROUP_DESCRIPTION' => '[tr]Group Description',
+    'OEVATTBE_COUNTRY_VAT_GROUP_SAVE' => '[tr]Save',
+    'OEVATTBE_HELP_COUNTRY_VAT_GROUP_VALUE' => '[tr]This value will be used
 );
