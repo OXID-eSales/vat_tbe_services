@@ -24,7 +24,7 @@
  *
  * @covers oeVATTBEEvidenceRegister
  */
-class Unit_oeVATTBE_Models_oeVATTBEEvidenceRegisterTest extends OxidTestCase
+class Unit_oeVATTBE_Models_Evidences_oeVATTBEEvidenceRegisterTest extends OxidTestCase
 {
 
     /**

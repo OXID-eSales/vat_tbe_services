@@ -24,7 +24,7 @@
  *
  * @covers oeVATTBEBillingCountryEvidence
  */
-class Unit_oeVATTBE_Models_Evidences_oeVATTBEBillingCountryEvidenceTest extends OxidTestCase
+class Unit_oeVATTBE_Models_Evidences_Items_oeVATTBEBillingCountryEvidenceTest extends OxidTestCase
 {
 
     public function testGetId()

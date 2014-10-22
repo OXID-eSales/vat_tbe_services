@@ -24,7 +24,7 @@
  *
  * @covers oeVATTBEEvidenceSelector
 */
-class Unit_oeVATTBE_Models_oeVATTBEEvidenceSelectorTest extends OxidTestCase
+class Unit_oeVATTBE_Models_Evidences_oeVATTBEEvidenceSelectorTest extends OxidTestCase
 {
 
 

@@ -24,7 +24,7 @@
  *
  * @covers oeVATTBEGeoLocationEvidence
  */
-class Unit_oeVATTBE_Models_Evidences_oeVATTBEGeoLocationEvidenceTest extends OxidTestCase
+class Unit_oeVATTBE_Models_Evidences_Items_oeVATTBEGeoLocationEvidenceTest extends OxidTestCase
 {
 
     public function testGetId()
