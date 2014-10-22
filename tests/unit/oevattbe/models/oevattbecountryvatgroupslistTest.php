@@ -46,7 +46,7 @@ class Unit_oeVatTbe_models_oeVATTBECountryVATGroupsListTest extends OxidTestCase
         $aGroup2Data['OEVATTBE_ID'] = 100;
         $aData = array($aGroup1Data, $aGroup2Data);
 
-        $oGateway = $this->_createStub('oeVATTBEVATGroupsDbGateway', array('getList' => $aData));
+        $oGateway = $this->_createStub('oeVATTBECountryVATGroupsDbGateway', array('getList' => $aData));
 
         $oGroup1 = $this->_createGroupObject($aGroup1Data, $oGateway);
         $oGroup2 = $this->_createGroupObject($aGroup2Data, $oGateway);
@@ -80,7 +80,7 @@ class Unit_oeVatTbe_models_oeVATTBECountryVATGroupsListTest extends OxidTestCase
 
         $aData = array($aGroup1Data, $aGroup2Data, $aGroup3Data);
 
-        $oGateway = $this->_createStub('oeVATTBEVATGroupsDbGateway', array('getList' => $aData));
+        $oGateway = $this->_createStub('oeVATTBECountryVATGroupsDbGateway', array('getList' => $aData));
 
         $oGroup1 = $this->_createGroupObject($aGroup1Data, $oGateway);
         $oGroup2 = $this->_createGroupObject($aGroup2Data, $oGateway);
@@ -101,13 +101,13 @@ class Unit_oeVatTbe_models_oeVATTBECountryVATGroupsListTest extends OxidTestCase
      * Creates VAT Group object and sets given data to it.
      *
      * @param array                      $aData
-     * @param oeVATTBEVATGroupsDbGateway $oGateway
+     * @param oeVATTBECountryVATGroupsDbGateway $oGateway
      *
-     * @return oeVATTBEVATGroup
+     * @return oeVATTBECountryVATGroup
      */
     protected function _createGroupObject($aData, $oGateway)
     {
-        $oGroupsList = oxNew('oeVATTBEVATGroup', $oGateway);
+        $oGroupsList = oxNew('oeVATTBECountryVATGroup', $oGateway);
         $oGroupsList->setId($aData['OEVATTBE_ID']);
         $oGroupsList->setData($aData);
 

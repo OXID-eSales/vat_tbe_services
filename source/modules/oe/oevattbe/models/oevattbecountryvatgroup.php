@@ -22,7 +22,7 @@
 /**
  * VAT Groups handling class
  */
-class oeVATTBEVATGroup extends oeVATTBEModel
+class oeVATTBECountryVATGroup extends oeVATTBEModel
 {
 
     /**

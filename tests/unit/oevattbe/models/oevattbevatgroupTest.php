@@ -21,11 +21,11 @@
 
 
 /**
- * Testing oeVATTBEVATGroup class.
+ * Testing oeVATTBECountryVATGroup class.
  *
- * @covers oeVATTBEVATGroup
+ * @covers oeVATTBECountryVATGroup
  */
-class Unit_oeVatTbe_models_oeVATTBEVATGroupTest extends OxidTestCase
+class Unit_oeVatTbe_models_oeVATTBECountryVATGroupTest extends OxidTestCase
 {
     /**
      * Information is set to Group entity;
@@ -40,11 +40,11 @@ class Unit_oeVatTbe_models_oeVATTBEVATGroupTest extends OxidTestCase
             'oevattbe_rate' => 20.50
         );
 
-        $oGateway = $this->getMock('oeVATTBEVATGroupsDbGateway', array('save'));
+        $oGateway = $this->getMock('oeVATTBECountryVATGroupsDbGateway', array('save'));
         $oGateway->expects($this->once())->method('save')->with($aExpectedData);
 
-        /** @var oeVATTBEVATGroup $oGroup */
-        $oGroup = oxNew('oeVATTBEVATGroup', $oGateway);
+        /** @var oeVATTBECountryVATGroup $oGroup */
+        $oGroup = oxNew('oeVATTBECountryVATGroup', $oGateway);
 
         $oGroup->setCountryId('8f241f11095410f38.37165361');
         $oGroup->setName('Group Name');
@@ -60,11 +60,11 @@ class Unit_oeVatTbe_models_oeVATTBEVATGroupTest extends OxidTestCase
      */
     public function testSavingVATGroupWithNoData()
     {
-        $oGateway = $this->getMock('oeVATTBEVATGroupsDbGateway', array('save'));
+        $oGateway = $this->getMock('oeVATTBECountryVATGroupsDbGateway', array('save'));
         $oGateway->expects($this->once())->method('save')->with(null);
 
-        /** @var oeVATTBEVATGroup $oGroup */
-        $oGroup = oxNew('oeVATTBEVATGroup', $oGateway);
+        /** @var oeVATTBECountryVATGroup $oGroup */
+        $oGroup = oxNew('oeVATTBECountryVATGroup', $oGateway);
 
         $oGroup->save();
     }
@@ -84,10 +84,10 @@ class Unit_oeVatTbe_models_oeVATTBEVATGroupTest extends OxidTestCase
             'OEVATTBE_TIMESTAMP' => '2014-05-05 18:00:00',
         );
 
-        $oGateway = $this->_createStub('oeVATTBEVATGroupsDbGateway', array('load' => $aData));
+        $oGateway = $this->_createStub('oeVATTBECountryVATGroupsDbGateway', array('load' => $aData));
 
-        /** @var oeVATTBEVATGroup $oGroup */
-        $oGroup = oxNew('oeVATTBEVATGroup', $oGateway);
+        /** @var oeVATTBECountryVATGroup $oGroup */
+        $oGroup = oxNew('oeVATTBECountryVATGroup', $oGateway);
         $oGroup->load(99);
 
         $this->assertSame('8f241f11095410f38.37165361', $oGroup->getCountryId());

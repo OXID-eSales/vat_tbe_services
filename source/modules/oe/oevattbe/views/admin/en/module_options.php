@@ -26,7 +26,7 @@ $aLang = array(
     'charset'                                        => 'ISO-8859-15',
     'SHOP_MODULE_GROUP_oevattbe'                     => '[TR] VAT TBE services options',
 
-    'SHOP_MODULE_aOeVATTBECountryEvidences'          => '[TR] Registered country evidence collectors.',
+    'SHOP_MODULE_aOeVATTBECountryEvidences'          => '[TR] Activate or deactivate user country evidences.',
     'HELP_SHOP_MODULE_aOeVATTBECountryEvidences'     => '[TR] Country evidences can be marked as active (1) or inactive (0). Only active evidences are used in user country calculation. Evidences should not be removed from the list, only activation state should be changed when needed.',
     'SHOP_MODULE_sOeVATTBEDefaultEvidence'           => '[TR] Default evidence id.',
     'HELP_SHOP_MODULE_sOeVATTBEDefaultEvidence'      => '[TR] In case of contradicting evidences this evidence will be used when deciding user country. If user country can not be determined by default evidence, first registered evidence with country will be used.',

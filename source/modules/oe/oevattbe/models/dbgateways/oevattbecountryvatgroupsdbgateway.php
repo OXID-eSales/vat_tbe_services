@@ -22,7 +22,7 @@
 /**
  * VAT Groups db gateway class.
  */
-class oeVATTBEVATGroupsDbGateway extends oeVATTBEModelDbGateway
+class oeVATTBECountryVATGroupsDbGateway extends oeVATTBEModelDbGateway
 {
     /**
      * Saves VAT Group data to database.

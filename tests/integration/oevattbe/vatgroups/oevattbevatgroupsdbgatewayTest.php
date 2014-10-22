@@ -20,11 +20,11 @@
  */
 
 /**
- * Test class for oeVATTBEVATGroupsDbGateway.
+ * Test class for oeVATTBECountryVATGroupsDbGateway.
  *
- * @covers oeVATTBEVATGroupsDbGateway
+ * @covers oeVATTBECountryVATGroupsDbGateway
  */
-class Integration_oeVatTbe_VATGroups_oeVATTBEVATGroupsDbGatewayTest extends OxidTestCase
+class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupsDbGatewayTest extends OxidTestCase
 {
 
     /**
@@ -34,7 +34,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBEVATGroupsDbGatewayTest extends Oxid
      */
     public function testSavingVATGroupToDatabase()
     {
-        $oVatGroupsGateway = oxNew('oeVATTBEVATGroupsDbGateway');
+        $oVatGroupsGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
         $aData = array(
             'oevattbe_countryid' => '8f241f11095410f38.37165361',
             'oevattbe_name' => 'Group Name',
@@ -58,7 +58,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBEVATGroupsDbGatewayTest extends Oxid
      */
     public function testVATGroupLoading($sGroupId)
     {
-        $oVatGroupsGateway = oxNew('oeVATTBEVATGroupsDbGateway');
+        $oVatGroupsGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
         $aData = $oVatGroupsGateway->load($sGroupId);
 
         $aExpectedData = array(
@@ -84,7 +84,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBEVATGroupsDbGatewayTest extends Oxid
      */
     public function testDeletingVATGroupList($sGroupId)
     {
-        $oVatGroupsGateway = oxNew('oeVATTBEVATGroupsDbGateway');
+        $oVatGroupsGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
         $oVatGroupsGateway->delete($sGroupId);
 
         $this->assertSame(array(), $oVatGroupsGateway->load($sGroupId));
@@ -95,7 +95,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBEVATGroupsDbGatewayTest extends Oxid
      */
     public function testLoadingEmptyVATGroup()
     {
-        $oVatGroupsGateway = oxNew('oeVATTBEVATGroupsDbGateway');
+        $oVatGroupsGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
         $this->assertSame(array(), $oVatGroupsGateway->load('non_existing_group'));
     }
 
@@ -104,7 +104,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBEVATGroupsDbGatewayTest extends Oxid
      */
     public function testDeletingEmptyVATGroup()
     {
-        $oVatGroupsGateway = oxNew('oeVATTBEVATGroupsDbGateway');
+        $oVatGroupsGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
         $this->assertNotSame(false, $oVatGroupsGateway->delete('non_existing_group'));
     }
 
@@ -116,7 +116,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBEVATGroupsDbGatewayTest extends Oxid
     {
         $this->addTableForCleanup('oevattbe_countryvatgroups');
 
-        $oVatGroupsGateway = oxNew('oeVATTBEVATGroupsDbGateway');
+        $oVatGroupsGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
         $aData = array(
             'OEVATTBE_COUNTRYID' => '8f241f11095410f38.37165361',
             'OEVATTBE_NAME' => 'Group Name',
@@ -126,7 +126,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBEVATGroupsDbGatewayTest extends Oxid
         $sGroupId1 = $oVatGroupsGateway->save($aData);
         $sGroupId2 = $oVatGroupsGateway->save($aData);
 
-        $oVatGroupsGateway = oxNew('oeVATTBEVATGroupsDbGateway');
+        $oVatGroupsGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
         $aGroupsList = $oVatGroupsGateway->getList('8f241f11095410f38.37165361');
 
         $aData1 = $aData;
@@ -146,7 +146,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBEVATGroupsDbGatewayTest extends Oxid
      */
     public function testLoadingGroupsListWhenGroupsExistAndNoCountryIsPassed()
     {
-        $oVatGroupsGateway = oxNew('oeVATTBEVATGroupsDbGateway');
+        $oVatGroupsGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
         $aGroupsList = $oVatGroupsGateway->getList();
 
         $this->assertNotEmpty($aGroupsList);
@@ -158,7 +158,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBEVATGroupsDbGatewayTest extends Oxid
      */
     public function testLoadingGroupsListWhenNoGroupsExist()
     {
-        $oVatGroupsGateway = oxNew('oeVATTBEVATGroupsDbGateway');
+        $oVatGroupsGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
         $aGroupsList = $oVatGroupsGateway->getList('8f241f11095410f38.37165361');
 
         $this->assertEquals(array(), $aGroupsList);
