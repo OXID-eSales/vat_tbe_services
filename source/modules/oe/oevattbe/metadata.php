@@ -107,6 +107,7 @@ $aModule = array(
         array('template' => 'country_list.tpl', 'block'=>'admin_country_list_filter', 'file'=>'/views/blocks/admin/country_list_filter.tpl'),
         array('template' => 'country_list.tpl', 'block'=>'admin_country_list_sorting', 'file'=>'/views/blocks/admin/country_list_sorting.tpl'),
         array('template' => 'country_list.tpl', 'block'=>'admin_country_list_item', 'file'=>'/views/blocks/admin/country_list_item.tpl'),
+        array('template' => 'country_main.tpl', 'block'=>'admin_country_main_form', 'file'=>'/views/blocks/admin/country_main.tpl'),
     ),
     'settings' => array(
         array('group' => 'oevattbe', 'name' => 'aOeVATTBECountryEvidences',      'type' => 'aarr',   'value' => array('billing_country' => 1, 'geo_location' => 1)),

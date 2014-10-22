@@ -38,4 +38,6 @@ $aLang = array(
     'OEVATTBE_COUNTRY_NO_TBE_GROUPS_CONFIGURED' => '[tr](not configured)',
     'OEVATTBE_ARTICLE_UPDATE_BUTTON' => '[tr]Update',
     'OEVATTBE_ARTICLE_UPDATE_LABEL' => '[tr]Enable VAT TBE services for this product',
+    'OEVATTBE_TBE_COUNTRY' => '[tr]Applie TBE VAT rates',
+    'HELP_OEVATTBE_TBE_COUNTRY' => '[tr]Applie TBE VAT rates',
 );
