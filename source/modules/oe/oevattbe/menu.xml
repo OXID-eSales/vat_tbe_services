@@ -6,5 +6,10 @@
                 <TAB id="oevattbe_country_vat_groups" cl="oevattbecountryvatgroups"/>
             </SUBMENU>
         </MAINMENU>
+        <MAINMENU id="mxmanageprod">
+            <SUBMENU id="mxarticles" cl="article" list="article_list">
+                <TAB id="oevattbe_article_administration" cl="oevattbearticleadministration" />
+            </SUBMENU>
+        </MAINMENU>
     </OXMENU>
 </OX>
