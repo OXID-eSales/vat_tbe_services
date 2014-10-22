@@ -83,6 +83,139 @@ class Unit_oeVATTBE_Models_Evidences_oeVATTBEEvidenceRegisterTest extends OxidTe
     }
 
     /**
+     * Registered evidences exists;
+     * Evidence class is passed for unregistering;
+     * Evidence should get registered.
+     *
+     * @return oeVATTBEEvidenceRegister
+     */
+    public function testUnregisteringEvidenceWhenItIsRegistered()
+    {
+        $oConfig = oxRegistry::getConfig();
+        $oConfig->setConfigParam('aOeVATTBECountryEvidences', array('billing_country' => 1));
+        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence'));
+
+        /** @var oeVATTBEEvidenceRegister $oCollector */
+        $oRegister = oxNew('oeVATTBEEvidenceRegister', $oConfig);
+        $oRegister->unregisterEvidence('oeVATTBEBillingCountryEvidence');
+
+        $this->assertEquals(array(), $oRegister->getRegisteredEvidences());
+
+        return $oRegister;
+    }
+
+    /**
+     * Registered evidences exists;
+     * Evidence class is passed for unregistering;
+     * Evidence should be removed from active evidences list.
+     *
+     * @param oeVATTBEEvidenceRegister $oRegister
+     *
+     * @depends testUnregisteringEvidenceWhenItIsRegistered
+     */
+    public function testRemovingEvidenceAfterItIsUnregistered($oRegister)
+    {
+        $this->assertEquals(array(), $oRegister->getActiveEvidences());
+    }
+
+    /**
+     * Registered evidences exists;
+     * More evidences exist in the list;
+     * Evidence class is passed for unregistering;
+     * Evidence should get unregistered but other evidences should still exist.
+     *
+     * @return oeVATTBEEvidenceRegister
+     */
+    public function testUnregisteringEvidenceWhenItIsRegisteredAndMoreEvidencesExist()
+    {
+        $oConfig = oxRegistry::getConfig();
+        $oConfig->setConfigParam('aOeVATTBECountryEvidences', array('billing_country' => 1, 'geo_location' => 1));
+        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence', 'GeoClass'));
+
+        /** @var oeVATTBEEvidenceRegister $oCollector */
+        $oRegister = oxNew('oeVATTBEEvidenceRegister', $oConfig);
+        $oRegister->unregisterEvidence('oeVATTBEBillingCountryEvidence');
+
+        $this->assertEquals(array(1 => 'GeoClass'), $oRegister->getRegisteredEvidences());
+
+        return $oRegister;
+    }
+
+    /**
+     * Registered evidences exists;
+     * More evidences exist in the list;
+     * Evidence class is passed for unregistering;
+     * Evidence should be removed from the list but other evidences should still exist.
+     *
+     * @param oeVATTBEEvidenceRegister $oRegister
+     *
+     * @depends testUnregisteringEvidenceWhenItIsRegisteredAndMoreEvidencesExist
+     */
+    public function testRemovingEvidenceAfterItIsUnregisteredAndMoreEvidencesExist($oRegister)
+    {
+        $this->assertEquals(array('geo_location' => 1), $oRegister->getActiveEvidences());
+    }
+
+    /**
+     * Evidence exist in the list;
+     * Non existing evidence class is passed for unregistering;
+     * Evidence list should stay intact.
+     *
+     * @return oeVATTBEEvidenceRegister
+     */
+    public function testUnregisteringEvidenceWhenEvidenceIsNotRegistered()
+    {
+        $oConfig = oxRegistry::getConfig();
+        $oConfig->setConfigParam('aOeVATTBECountryEvidences', array('billing_country' => 1));
+        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence'));
+
+        /** @var oeVATTBEEvidenceRegister $oCollector */
+        $oRegister = oxNew('oeVATTBEEvidenceRegister', $oConfig);
+        $oRegister->unregisterEvidence('SomeNonExistingEvidenceClass');
+
+        $this->assertEquals(array('oeVATTBEBillingCountryEvidence'), $oRegister->getRegisteredEvidences());
+
+        return $oRegister;
+    }
+
+    /**
+     * Registered evidences exists;
+     * More evidences exist in the list;
+     * Evidence class is passed for unregistering;
+     * Evidence should be removed from the list but other evidences should still exist.
+     *
+     * @param oeVATTBEEvidenceRegister $oRegister
+     *
+     * @depends testUnregisteringEvidenceWhenEvidenceIsNotRegistered
+     */
+    public function testRemovingEvidenceWhenEvidenceIsNotRegistered($oRegister)
+    {
+        $this->assertEquals(array('billing_country' => 1), $oRegister->getActiveEvidences());
+    }
+
+    /**
+     * Registered evidences exists;
+     * Evidence class is passed for unregistering;
+     * Evidence should get registered.
+     *
+     * @return oeVATTBEEvidenceRegister
+     */
+    public function testUnregisteringEvidenceWhenItIsNotRegistered()
+    {
+        $oConfig = oxRegistry::getConfig();
+        $oConfig->setConfigParam('aOeVATTBECountryEvidences', array('billing_country' => 1, 'geo_location' => 1));
+        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence', 'GeoClass'));
+
+        /** @var oeVATTBEEvidenceRegister $oCollector */
+        $oRegister = oxNew('oeVATTBEEvidenceRegister', $oConfig);
+        $oRegister->unregisterEvidence('oeVATTBEBillingCountryEvidence');
+
+        $this->assertEquals(array(1 => 'GeoClass'), $oRegister->getRegisteredEvidences());
+
+        return $oRegister;
+    }
+
+    /**
      * Inactive evidence exist;
      * Inactive evidence id is passed;
      * Evidence should be activated.

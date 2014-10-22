@@ -85,6 +85,25 @@ class oeVATTBEEvidenceRegister
     }
 
     /**
+     * Registers evidence to config.
+     * This evidence will be used when calculating user country.
+     * By default registered evidence is made inactive,
+     * but shop administrator can go to module configuration and activate it.
+     *
+     * @param string $sEvidenceClass Evidence class name. It should be reachable by shop (e.g. in activated module).
+     * @param string $sEvidenceId    Evidence id. In case no evidence id is given, evidence class must be still reachable.
+     */
+    public function unregisterEvidence($sEvidenceClass, $sEvidenceId = null)
+    {
+        $aEvidenceClasses = $this->getRegisteredEvidences();
+        if (($key = array_search($sEvidenceClass, $aEvidenceClasses)) !== false) {
+            unset($aEvidenceClasses[$key]);
+            oxRegistry::getConfig()->saveShopConfVar('arr', 'aOeVATTBECountryEvidenceClasses', $aEvidenceClasses);
+        }
+        $this->_removeEvidenceToEvidenceList($sEvidenceClass, $sEvidenceId);
+    }
+
+    /**
      * Activates evidence by id.
      *
      * @param string $sEvidenceId Evidence Id. This is should be defined in evidence class.
@@ -135,6 +154,26 @@ class oeVATTBEEvidenceRegister
         $sEvidenceId = $this->_getEvidenceId($sEvidenceClass);
         if (!isset($aEvidences[$sEvidenceId])) {
             $aEvidences[$sEvidenceId] = $blActive ? 1 : 0;
+            oxRegistry::getConfig()->saveShopConfVar('aarr', 'aOeVATTBECountryEvidences', $aEvidences, null, 'module:oevattbe');
+        }
+    }
+
+    /**
+     * Adds evidence id to evidence list. If $blActive is set to true, also activates it.
+     * If evidence is already in the list, its activation state will not be changed.
+     *
+     * @param string $sEvidenceClass Evidence class name.
+     * @param bool   $sEvidenceId    Whether to activate evidence.
+     */
+    private function _removeEvidenceToEvidenceList($sEvidenceClass, $sEvidenceId = false)
+    {
+        if (!$sEvidenceId && class_exists($sEvidenceClass)) {
+            $sEvidenceId = $this->_getEvidenceId($sEvidenceClass);
+        }
+
+        $aEvidences = $this->getActiveEvidences();
+        if (isset($aEvidences[$sEvidenceId])) {
+            unset($aEvidences[$sEvidenceId]);
             oxRegistry::getConfig()->saveShopConfVar('aarr', 'aOeVATTBECountryEvidences', $aEvidences, null, 'module:oevattbe');
         }
     }
