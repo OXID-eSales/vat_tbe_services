@@ -24,16 +24,27 @@ class oeVATTBECountryVatGroups extends oxAdminDetails
 
     /**
      * Add country VAT group.
+     *
+     * @return null
      */
     public function addCountryVATGroup()
     {
         $aParams = oxRegistry::getConfig()->getRequestParameter("editval");
+        $sCountryId = $aParams['oxcountry__oxid'];
+        $sGroupName = $aParams['oevattbe_name'];
+        $fVATRate = $aParams['oevattbe_rate'];
+        $sGroupDescription = $aParams['oevattbe_description'];
+
+        if (!$sCountryId || !$sGroupName || !$fVATRate) {
+            $this->_setMissingParameterMessage();
+            return null;
+        }
 
         $oGroup = $this->_factoryVATGroup();
-        $oGroup->setCountryId($aParams['oxcountry__oxid']);
-        $oGroup->setName($aParams['oevattbe_name']);
-        $oGroup->setRate($aParams['oevattbe_rate']);
-        $oGroup->setDescription($aParams['oevattbe_description']);
+        $oGroup->setCountryId($sCountryId);
+        $oGroup->setName($sGroupName);
+        $oGroup->setRate($fVATRate);
+        $oGroup->setDescription($sGroupDescription);
         $oGroup->save();
     }
 
@@ -50,5 +61,22 @@ class oeVATTBECountryVatGroups extends oxAdminDetails
         /** @var oeVATTBEVATGroup $oGroup */
         $oGroup = oxNew('oeVATTBEVATGroup', $oGateway);
         return $oGroup;
+    }
+
+    /**
+     * Set error message if some required parameter is missing.
+     */
+    protected function _setMissingParameterMessage()
+    {
+        /** @var oxLang $oLang */
+        $oLang = oxRegistry::getLang();
+
+        /** @var oxDisplayError $oEx */
+        $oEx = oxNew('oxDisplayError');
+        $oEx->setMessage($oLang->translateString('OEVATTBE_NEW_COUNTRY_VAT_GROUP_PARAMETER_MISSING', $oLang->getTplLanguage()));
+
+        /** @var oxUtilsView $oView */
+        $oView = oxRegistry::get('oxUtilsView');
+        $oView->addErrorToDisplay($oEx);
     }
 }

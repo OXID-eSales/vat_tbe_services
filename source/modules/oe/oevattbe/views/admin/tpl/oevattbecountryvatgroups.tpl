@@ -46,7 +46,7 @@
                             [{oxmultilang ident="OEVATTBE_COUNTRY_VAT_GROUP_VALUE"}]
                         </td>
                         <td class="edittext" nowrap="nowrap">
-                            <input class="edittext" type="text" name="editval[oevattbe_rate]">
+                            <input class="edittext" type="text" name="editval[oevattbe_rate]" size="5">
                             [{oxinputhelp ident="OEVATTBE_HELP_COUNTRY_VAT_GROUP_VALUE"}]
                         </td>
                     </tr>
