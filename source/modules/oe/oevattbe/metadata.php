@@ -85,7 +85,7 @@ $aModule = array(
         'onDeactivate' => 'oeVatTbeEvents::onDeactivate'
     ),
     'templates' => array(
-        'oevattbecountryvatgroups.tpl' => 'oe/oevattbe/views/admin/tpl/oevattbecountryvatgroups.tpl'
+        'oevattbecountryvatgroups.tpl' => 'oe/oevattbe/views/admin/tpl/oevattbecountryvatgroups.tpl',
         'oevattbearticleadministration.tpl' => 'oe/oevattbe/views/admin/tpl/oevattbearticleadministration.tpl',
     ),
     'blocks' => array(
