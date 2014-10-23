@@ -21,9 +21,9 @@
 
 
 /**
- * Testing extended oxCountry class.
+ * Testing extended Basket controller.
  *
- * @covers oeVATTBEOxCountry
+ * @covers oeVATTBEBasket
  */
 class Unit_oeVATTBE_controllers_oeVATTBEBasketTest extends OxidTestCase
 {

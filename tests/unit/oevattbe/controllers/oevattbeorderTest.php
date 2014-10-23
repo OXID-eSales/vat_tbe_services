@@ -21,9 +21,9 @@
 
 
 /**
- * Testing extended oxCountry class.
+ * Testing extended Order controller.
  *
- * @covers oeVATTBEOxCountry
+ * @covers oeVATTBEOrder
  */
 class Unit_oeVATTBE_controllers_oeVATTBEOrderTest extends OxidTestCase
 {
