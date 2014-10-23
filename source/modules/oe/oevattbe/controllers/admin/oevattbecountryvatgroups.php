@@ -40,7 +40,7 @@ class oeVATTBECountryVatGroups extends oxAdminDetails
         $oGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
         /** @var oeVATTBECountryVATGroupsList $oeVATTBECountryVATGroupsList */
         $oVATTBECountryVATGroupsList = oxNew('oeVATTBECountryVATGroupsList', $oGateway);
-        $aVATTBECountryVATGroupsList = $oVATTBECountryVATGroupsList->load('a7c40f632e04633c9.47194042');
+        $aVATTBECountryVATGroupsList = $oVATTBECountryVATGroupsList->load($this->getEditObjectId());
 
         return $aVATTBECountryVATGroupsList;
     }
