@@ -32,11 +32,15 @@ class Unit_oeVatTbe_components_oeVATTBEOxCmpBasketTest extends OxidTestCase
      */
     public function testRenderBasketWithoutTbeCountry()
     {
+        $oCountry = $this->getMock("oeVATTBEOxCountry", array("appliesTBEVAT"));
+        $oCountry->expects($this->any())->method("appliesTBEVAT")->will($this->returnValue(true));
+
         $oUser = $this->getMock("oxUser", array("getTbeCountryId", 'hasVATTBEArticles'));
         $oUser->expects($this->any())->method("getTbeCountryId")->will($this->returnValue('DE'));
 
-        $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasVATTBEArticles'));
+        $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasVATTBEArticles', 'getTBECountry'));
         $oBasket->expects($this->any())->method("hasVATTBEArticles")->will($this->returnValue(true));
+        $oBasket->expects($this->any())->method("getTBECountry")->will($this->returnValue($oCountry));
 
         $this->getSession()->setBasket($oBasket);
 
@@ -54,11 +58,15 @@ class Unit_oeVatTbe_components_oeVATTBEOxCmpBasketTest extends OxidTestCase
      */
     public function testRenderBasketWithTbeCountry()
     {
+        $oCountry = $this->getMock("oxTBEoxCountry", array("appliesTBEVAT"));
+        $oCountry->expects($this->any())->method("appliesTBEVAT")->will($this->returnValue(true));
+
         $oUser = $this->getMock("oxUser", array("getTbeCountryId", 'hasVATTBEArticles'));
         $oUser->expects($this->any())->method("getTbeCountryId")->will($this->returnValue('DE'));
 
-        $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasVATTBEArticles'));
+        $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasVATTBEArticles', 'getTBECountry'));
         $oBasket->expects($this->any())->method("hasVATTBEArticles")->will($this->returnValue(true));
+        $oBasket->expects($this->any())->method("getTBECountry")->will($this->returnValue($oCountry));
         $oBasket->setTBECountryId('LT');
 
         $this->getSession()->setBasket($oBasket);
@@ -71,6 +79,35 @@ class Unit_oeVatTbe_components_oeVATTBEOxCmpBasketTest extends OxidTestCase
         $this->assertSame('DE', $oBasket->getTbeCountryId());
         $this->assertTrue($oBasket->showTBECountryChangedError());
     }
+
+    /**
+     * Render test
+     */
+    public function testRenderBasketWithNotTbeCountry()
+    {
+        $oCountry = $this->getMock("oxTBEoxCountry", array("appliesTBEVAT"));
+        $oCountry->expects($this->any())->method("appliesTBEVAT")->will($this->returnValue(false));
+
+        $oUser = $this->getMock("oxUser", array("getTbeCountryId", 'hasVATTBEArticles'));
+        $oUser->expects($this->any())->method("getTbeCountryId")->will($this->returnValue('DE'));
+
+        $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasVATTBEArticles', 'getTBECountry'));
+        $oBasket->expects($this->any())->method("hasVATTBEArticles")->will($this->returnValue(true));
+        $oBasket->expects($this->any())->method("getTBECountry")->will($this->returnValue($oCountry));
+        $oBasket->setTBECountryId('LT');
+
+        $this->getSession()->setBasket($oBasket);
+
+        $oCmp_Basket = oxNew('oeVATTBEOxCmp_Basket');
+        $oCmp_Basket->setUser($oUser);
+
+        $oBasket = $oCmp_Basket->render();
+
+        $this->assertSame('DE', $oBasket->getTbeCountryId());
+        $this->assertFalse($oBasket->showTBECountryChangedError());
+    }
+
+
 
     /**
      * Render test

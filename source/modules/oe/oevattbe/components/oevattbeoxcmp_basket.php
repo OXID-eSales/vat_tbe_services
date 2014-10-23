@@ -35,13 +35,7 @@ class oeVATTBEOxCmp_Basket extends oeVatTbeOxCmp_Basket_parent
         if ($oBasket = $this->getSession()->getBasket()) {
             $oUser = $this->getUser();
             if ($oUser) {
-                if ((is_null($oBasket->getTbeCountryId()) || ($oBasket->getTbeCountryId() != $oUser->getTbeCountryId()))) {
-                    if ($oBasket->hasVATTBEArticles()) {
-                        $oBasket->setTBECountryChanged();
-                    }
-                    $oBasket->setTBECountryId($oUser->getTbeCountryId());
-                    $oBasket->calculateBasket(true);
-                }
+                $this->_manageBasketForLoggedInUser($oBasket, $oUser);
             } else {
                 $oBasket->calculateBasket(false);
             }
@@ -50,5 +44,22 @@ class oeVATTBEOxCmp_Basket extends oeVatTbeOxCmp_Basket_parent
         parent::render();
 
         return $oBasket;
+    }
+
+    /**
+     * Manage basket if needed add errors and recalculation
+     *
+     * @param oeVATTBEOxBasket $oBasket basket
+     * @param oeVATTBEOxUser   $oUser   user
+     */
+    protected function _manageBasketForLoggedInUser($oBasket, $oUser)
+    {
+        if ((is_null($oBasket->getTbeCountryId()) || ($oBasket->getTbeCountryId() != $oUser->getTbeCountryId()))) {
+            $oBasket->setTBECountryId($oUser->getTbeCountryId());
+            if ($oBasket->hasVATTBEArticles() && $oBasket->getTBECountry()->appliesTBEVAT()) {
+                $oBasket->setTBECountryChanged();
+            }
+            $oBasket->calculateBasket(true);
+        }
     }
 }
