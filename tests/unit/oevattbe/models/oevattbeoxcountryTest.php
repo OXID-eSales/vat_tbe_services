@@ -52,4 +52,14 @@ class Unit_oeVATTBE_models_oeVATTBEOxCountryTest extends OxidTestCase
         $oCountry->oxcountry__oevattbe_istbevatconfigured = new oxField(0);
         $this->assertFalse($oCountry->isOEVATTBEAtLeastOneGroupConfigured());
     }
+
+    /**
+     * Test for vat tbe getter
+     */
+    public function testGetVATTBEName()
+    {
+        $oCountry = oxNew('oeVATTBEOxCountry');
+        $oCountry->oxcountry__oxtitle = new oxField('LT');
+        $this->assertSame('LT', $oCountry->getVATTBEName());
+    }
 }

@@ -43,4 +43,14 @@ class oeVATTBEOxCountry extends oeVATTBEOxCountry_parent
     {
         return (bool) $this->oxcountry__oevattbe_istbevatconfigured->value;
     }
+
+    /**
+     * Return title
+     *
+     * @return string
+     */
+    public function getVATTBEName()
+    {
+        return $this->oxcountry__oxtitle->value;
+    }
 }

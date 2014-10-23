@@ -59,7 +59,7 @@ class oeVATTBEBasket extends oeVATTBEBasket_parent
             } elseif ($oBasket->isTBEValid()) {
                 if ($oCountry && $oCountry->appliesTBEVAT()) {
                     $sMessage = $oMarkGenerator->getMark('tbeService') . ' - ';
-                    $sMessage .= sprintf(oxRegistry::getLang()->translateString('OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY'), $oCountry->oxcountry__oxtitle->value);
+                    $sMessage .= sprintf(oxRegistry::getLang()->translateString('OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY'), $oCountry->getVATTBEName());
                 }
             }
         }
