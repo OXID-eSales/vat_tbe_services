@@ -24,6 +24,8 @@
  */
 class oeVATTBEArticleAdministration extends oxAdminDetails
 {
+    private $_aArticleVATGroupData;
+
     /**
      * Renders template for VAT TBE administration in article page.
      *
@@ -33,21 +35,15 @@ class oeVATTBEArticleAdministration extends oxAdminDetails
     {
         parent::render();
         /** @var oeVATTBEOxArticle|oxArticle $oArticle */
-        $oArticle = oxNew("oeVATTBEOxArticle");
+        $oArticle = oxNew('oeVATTBEOxArticle');
         $sCurrentArticleId = $this->getEditObjectId();
         $oArticle->load($sCurrentArticleId);
-        $this->_aViewData["iIsTbeService"] = $oArticle->isTBEService();
+        $this->_aViewData['iIsTbeService'] = $oArticle->isTBEService();
         /** @var oxCountry $oCountry */
         $oCountry = oxNew('oxCountry');
-        $this->_aViewData["aTBECountriesAndVATGroups"] = $this->_getCountryAndVATGroupsData($oCountry);
-/*echo "<pre/>";
-        print_r($this->_aViewData["aTBECountriesAndVATGroups"]);*/
-        /** @var oeVATTBEArticleVATGroupsList $oGroupList */
-        //$oGroupList = oeVATTBEArticleVATGroupsList::createArticleVATGroupsList();
-        //var_dump($oGroupList->load('05848170643ab0deb9914566391c0c63'));
-        //var_dump($oGroupList->getData());
+        $this->_aViewData['aCountriesAndVATGroups'] = $this->_getCountryAndVATGroupsData($oCountry);
 
-        return "oevattbearticleadministration.tpl";
+        return 'oevattbearticleadministration.tpl';
     }
 
     /**
@@ -58,8 +54,8 @@ class oeVATTBEArticleAdministration extends oxAdminDetails
         parent::save();
         $sCurrentArticleId = $this->getEditObjectId();
         $oConfig = $this->getConfig();
-        $aParams = $oConfig->getRequestParameter("editval");
-        $aVATGroupsParams = $oConfig->getRequestParameter("VATGroupsByCountry");
+        $aParams = $oConfig->getRequestParameter('editval');
+        $aVATGroupsParams = $oConfig->getRequestParameter('VATGroupsByCountry');
         $oArticleVATGroupsList = oeVATTBEArticleVATGroupsList::createArticleVATGroupsList();
         $oArticleVATGroupsList->setId($sCurrentArticleId);
         $oArticleVATGroupsList->setData($aVATGroupsParams);
@@ -68,10 +64,29 @@ class oeVATTBEArticleAdministration extends oxAdminDetails
         $iIsTBEService = $aParams['oevattbe_istbeservice'];
 
         /** @var oeVATTBEOxArticle|oxArticle $oArticle */
-        $oArticle = oxNew("oeVATTBEOxArticle");
+        $oArticle = oxNew('oeVATTBEOxArticle');
         $oArticle->load($sCurrentArticleId);
         $oArticle->oxarticles__oevattbe_istbeservice = new oxField($iIsTBEService);
         $oArticle->save();
+    }
+
+    /**
+     * Checks in template if select element was selected.
+     *
+     * @param string $sCountryId  Html select element country.
+     * @param string $sVATGroupId Group which is checked.
+     *
+     * @return bool
+     */
+    public function isSelected($sCountryId, $sVATGroupId)
+    {
+        $oArticleVATGroupsList = oeVATTBEArticleVATGroupsList::createArticleVATGroupsList();
+        $oArticleVATGroupsList->load($this->getEditObjectId());
+        if (is_null($this->_aArticleVATGroupData)) {
+            $this->_aArticleVATGroupData = $oArticleVATGroupsList->getData();
+        }
+
+        return $this->_aArticleVATGroupData[$sCountryId] === $sVATGroupId;
     }
 
     /**
@@ -95,17 +110,5 @@ class oeVATTBEArticleAdministration extends oxAdminDetails
         }
 
         return $aViewData;
-    }
-
-    /**
-     * Forms country VAT group information for view.
-     *
-     * @param oeVATTBECountryVATGroup $oCountryVATGroup Object to get information.
-     *
-     * @return string
-     */
-    protected function _formGroupInformation($oCountryVATGroup)
-    {
-        return $oCountryVATGroup->getName() . ' - ' . $oCountryVATGroup->getRate() . '%';
     }
 }
