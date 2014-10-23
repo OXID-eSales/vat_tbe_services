@@ -41,6 +41,9 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupCreationTest extends
             array('small VAT', 5, 'some description', '5.00'),
             array('small VAT', 5, '', '5.00'),
             array('small VAT', 5.5, 'some description', '5.50'),
+            array('small VAT', 'five', 'some description', '0.00'),
+            array('small VAT', '5.5', 'some description', '5.50'),
+            array('small VAT', '5,5', 'some description', '5.00'),
         );
     }
 
@@ -60,11 +63,11 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupCreationTest extends
 
         $sCountryId = 'some_country_id';
         $aParameters['oxcountry__oxid'] = $sCountryId;
-        if ($sGroupName) {
             $aParameters['oevattbe_name'] = $sGroupName;
-        }
         $aParameters['oevattbe_rate'] = $fVATRate;
-        $aParameters['oevattbe_description'] = $sGroupDescription;
+        if ($sGroupDescription) {
+            $aParameters['oevattbe_description'] = $sGroupDescription;
+        }
 
         $this->setRequestParam('editval', $aParameters);
 
@@ -97,5 +100,71 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupCreationTest extends
         $this->assertSame($sGroupName, $oNewlyCreatedCountryVATGroup->getName());
         $this->assertSame($sExpectedVatRate, $oNewlyCreatedCountryVATGroup->getRate());
         $this->assertSame($sGroupDescription, $oNewlyCreatedCountryVATGroup->getDescription());
+    }
+
+    /**
+     * Return data for group request with some required parameters missing.
+     *
+     * @return array
+     */
+    public function providerCreateNewGroupFailWhenMissingRequiredData()
+    {
+        return array(
+            array('small VAT', '', 'some description'),
+            array('', '5', 'some description'),
+        );
+    }
+
+    /**
+     * Test if no new entry created when missing some required data.
+     *
+     * @param string $sGroupName        group name.
+     * @param float  $fVATRate          vat rate.
+     * @param string $sGroupDescription group description.
+     *
+     * @dataProvider providerCreateNewGroupFailWhenMissingRequiredData
+     */
+    public function testCreateNewGroupFailWithErrorMessageWhenMissingRequiredData($sGroupName, $fVATRate, $sGroupDescription)
+    {
+        $this->setTablesForCleanup('oevattbe_countryvatgroups');
+
+        $sCountryId = 'some_country_id';
+        $aParameters['oxcountry__oxid'] = $sCountryId;
+        if ($sGroupName) {
+            $aParameters['oevattbe_name'] = $sGroupName;
+        }
+        if ($fVATRate) {
+            $aParameters['oevattbe_rate'] = $fVATRate;
+        }
+        $aParameters['oevattbe_description'] = $sGroupDescription;
+
+        $this->setRequestParam('editval', $aParameters);
+
+        /** @var oeVATTBECountryVatGroups $oVATTBECountryVatGroups */
+        $oVATTBECountryVatGroups = oxNew('oeVATTBECountryVatGroups');
+        $oVATTBECountryVatGroups->addCountryVATGroup();
+        $oVATTBECountryVatGroups->addCountryVATGroup();
+
+        /** @var oeVATTBECountryVATGroupsDbGateway $oGateway */
+        $oGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
+        /** @var oeVATTBECountryVATGroupsList $oeVATTBECountryVATGroupsList */
+        $oVATTBECountryVATGroupsList = oxNew('oeVATTBECountryVATGroupsList', $oGateway);
+        $aVATTBECountryVATGroupsList = $oVATTBECountryVATGroupsList->load('some_country_id');
+
+        $this->assertTrue(
+            !isset($aVATTBECountryVATGroupsList[0]),
+            'Some data missing so no new entry should be created. However got this: '. serialize($aVATTBECountryVATGroupsList[0])
+        );
+
+        $aEx = oxRegistry::getSession()->getVariable('Errors');
+        $this->assertTrue(isset($aEx['default'][0]), 'Error message must be set as some parameters missing.');
+
+        /** @var oxDisplayError $oError */
+        $oError = unserialize($aEx['default'][0]);
+
+        $oLang = oxRegistry::getLang();
+        $sErrorMessage = $oLang->translateString('OEVATTBE_NEW_COUNTRY_VAT_GROUP_PARAMETER_MISSING');
+
+        $this->assertSame($sErrorMessage, $oError->getOxMessage());
     }
 }
