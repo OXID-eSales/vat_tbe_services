@@ -9,6 +9,13 @@
 class oeVATTBECountryVatGroups extends oxAdminDetails
 {
     /**
+     * To set only one error message in session.
+     *
+     * @var bool
+     */
+    private $_blMissingParameterErrorSet = false;
+
+    /**
      * Executes parent method parent::render(), creates oxOrder object,
      * passes it's data to Smarty engine and returns
      * name of template file "order_paypal.tpl".
@@ -51,7 +58,7 @@ class oeVATTBECountryVatGroups extends oxAdminDetails
         $fVATRate = $aParams['oevattbe_rate'];
         $sGroupDescription = trim($aParams['oevattbe_description']);
 
-        if (!$sCountryId || !$sGroupName || !$fVATRate) {
+        if (!$sCountryId || !$sGroupName) {
             $this->_setMissingParameterMessage();
             return null;
         }
@@ -73,6 +80,13 @@ class oeVATTBECountryVatGroups extends oxAdminDetails
 
         $oVatGroup = $this->_factoryVATGroup();
         foreach ($aVatGroups as $aVatGroup) {
+            if (!$aVatGroup['oevattbe_id'] || !$aVatGroup['oevattbe_name']) {
+                if (!$this->_blMissingParameterErrorSet) {
+                    $this->_blMissingParameterErrorSet = true;
+                    $this->_setMissingParameterMessage();
+                }
+                continue;
+            }
             $oVatGroup->setId($aVatGroup['oevattbe_id']);
             $oVatGroup->setName($aVatGroup['oevattbe_name']);
             $oVatGroup->setRate($aVatGroup['oevattbe_rate']);

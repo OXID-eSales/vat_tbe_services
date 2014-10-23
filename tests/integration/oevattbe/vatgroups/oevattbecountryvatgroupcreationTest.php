@@ -41,9 +41,11 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupCreationTest extends
             array('small VAT', 5, 'some description', '5.00'),
             array('small VAT', 5, '', '5.00'),
             array('small VAT', 5.5, 'some description', '5.50'),
+            array('small VAT', 0, '', '0.00'),
             array('small VAT', 'five', 'some description', '0.00'),
             array('small VAT', '5.5', 'some description', '5.50'),
             array('small VAT', '5,5', 'some description', '5.00'),
+            array('small VAT', '', 'some description', '0.00'),
         );
     }
 
@@ -110,8 +112,8 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupCreationTest extends
     public function providerCreateNewGroupFailWhenMissingRequiredData()
     {
         return array(
-            array('small VAT', '', 'some description'),
             array('', '5', 'some description'),
+            array('', '', 'some description'),
         );
     }
 
