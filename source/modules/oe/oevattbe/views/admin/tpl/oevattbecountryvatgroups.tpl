@@ -51,11 +51,11 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="edittext">
+                        <td class="edittext" valign="top">
                             [{oxmultilang ident="OEVATTBE_COUNTRY_VAT_GROUP_DESCRIPTION"}]
                         </td>
                         <td class="edittext" nowrap="nowrap">
-                            <input class="edittext" type="text" name="editval[oevattbe_description]">
+                            <textarea class="editinput" cols="18" rows="5" wrap="VIRTUAL" name="editval[oevattbe_description]"></textarea>
                         </td>
                     </tr>
                 </table>
