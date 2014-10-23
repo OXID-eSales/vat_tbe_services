@@ -39,4 +39,31 @@ class oeVATTBEBasket extends oeVATTBEBasket_parent
 
         return parent::render();
     }
+
+    /**
+     * Format message if basket has tbe articles
+     *
+     * @return string
+     */
+    public function getTBEMarkMessage()
+    {
+        $sMessage ='';
+        $oBasket = $this->getSession()->getBasket();
+        $oCountry = $oBasket->getTBECountry();
+        $oMarkGenerator =  $this->getBasketContentMarkGenerator();
+
+        if ($oBasket->hasVATTBEArticles()) {
+            if (!$oBasket->getUser()) {
+                $sMessage = $oMarkGenerator->getMark('tbeService') . ' - ';
+                $sMessage .= oxRegistry::getLang()->translateString('OEVATTBE_VAT_WILL_BE_CALCULATED_BY_USER_COUNTRY');
+            } elseif ($oBasket->isTBEValid()) {
+                if ($oCountry && $oCountry->appliesTBEVAT()) {
+                    $sMessage = $oMarkGenerator->getMark('tbeService') . ' - ';
+                    $sMessage .= sprintf(oxRegistry::getLang()->translateString('OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY'), $oCountry->oxcountry__oxtitle->value);
+                }
+            }
+        }
+
+        return $sMessage;
+    }
 }
