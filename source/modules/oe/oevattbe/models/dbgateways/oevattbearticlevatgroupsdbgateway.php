@@ -35,31 +35,39 @@ class oeVATTBEArticleVATGroupsDbGateway extends oeVATTBEModelDbGateway
     {
         $oDb = $this->_getDb();
 
-        foreach ($aData as $sField => $sData) {
-            $aSql[] = '`' . $sField . '` = ' . $oDb->quote($sData);
+        $sArticleId = $aData['articleid'];
+
+        $this->delete($sArticleId);
+
+        $sSql = 'INSERT INTO `oevattbe_articlevat` (oevattbe_articleid, oevattbe_countryid, oevattbe_vatgroupid) VALUES ';
+        $aSqlValues = array();
+
+        $sArticleIdQuoted = $oDb->quote($sArticleId);
+        foreach ($aData['relations'] as $sCountryId => $sGroupId) {
+            $sCountryIdQuoted = $oDb->quote($sCountryId);
+            $sGroupIdQuoted = $oDb->quote($sGroupId);
+            $aSqlValues[] = "($sArticleIdQuoted, $sCountryIdQuoted, $sGroupIdQuoted)";
         }
 
-        $sSql = 'INSERT INTO `oevattbe_articlevat` SET ';
-        $sSql .= implode(', ', $aSql);
-        $sSql .= ' ON DUPLICATE KEY UPDATE ';
-        $sSql .= implode(', ', $aSql);
-
-        $oDb->execute($sSql);
+        if (!empty($aSqlValues)) {
+            $sSql = $sSql . implode(', ', $aSqlValues) . ";";
+            $oDb->execute($sSql);
+        }
 
         return true;
     }
 
     /**
-     * Load VAT Group data from Db.
+     * Load Article VAT Groups data from Db.
      *
-     * @param string $sGroupId VAT group id.
+     * @param string $sArticleId VAT group id.
      *
      * @return array
      */
-    public function load($sGroupId)
+    public function load($sArticleId)
     {
         $oDb = $this->_getDb();
-        $aData = $oDb->getAll('SELECT * FROM `oevattbe_articlevat` WHERE `oevattbe_articleid` = ' . $oDb->quote($sGroupId));
+        $aData = $oDb->getAll('SELECT * FROM `oevattbe_articlevat` WHERE `oevattbe_articleid` = ' . $oDb->quote($sArticleId));
 
         return $aData;
     }

@@ -36,9 +36,10 @@ class Integration_oeVatTbe_VATGroups_oeVATTBEArticleVATGroupsDbGatewayTest exten
         /** @var oeVATTBEArticleVATGroupsDbGateway $oVatGroupsGateway */
         $oVatGroupsGateway = oxNew('oeVATTBEArticleVATGroupsDbGateway');
         $aData = array(
-            'oevattbe_articleid' => '0962081a5693597654fd2887af7a6095',
-            'oevattbe_countryid' => 'a7c40f631fc920687.20179984',
-            'oevattbe_vatgroupid' => '10',
+            'articleid' => '0962081a5693597654fd2887af7a6095',
+            'relations' => array(
+                'a7c40f631fc920687.20179984' => '10',
+            ),
         );
         $this->assertTrue($oVatGroupsGateway->save($aData));
 
@@ -59,32 +60,11 @@ class Integration_oeVatTbe_VATGroups_oeVATTBEArticleVATGroupsDbGatewayTest exten
         /** @var oeVATTBEArticleVATGroupsDbGateway $oVatGroupsGateway */
         $oVatGroupsGateway = oxNew('oeVATTBEArticleVATGroupsDbGateway');
         $aData = array(
-            'oevattbe_articleid' => $sArticleId,
-            'oevattbe_countryid' => 'a7c40f631fc920687.20179984',
-            'oevattbe_vatgroupid' => '11',
-        );
-        $this->assertTrue($oVatGroupsGateway->save($aData));
-
-        return $sArticleId;
-    }
-
-    /**
-     * Testing VAT Group updating.
-     *
-     * @param string $sArticleId Article id, for which group was created.
-     *
-     * @depends testSavingVATGroupToDatabase
-     *
-     * @return string Article id, for which record was saved.
-     */
-    public function testAddingNewVATGroupToDatabaseWhenGroupsAlreadyExists($sArticleId)
-    {
-        /** @var oeVATTBEArticleVATGroupsDbGateway $oVatGroupsGateway */
-        $oVatGroupsGateway = oxNew('oeVATTBEArticleVATGroupsDbGateway');
-        $aData = array(
-            'oevattbe_articleid' => $sArticleId,
-            'oevattbe_countryid' => '8f241f110958b69e4.93886171',
-            'oevattbe_vatgroupid' => '12',
+            'articleid' => '0962081a5693597654fd2887af7a6095',
+            'relations' => array(
+                'a7c40f631fc920687.20179984' => '11',
+                '8f241f110958b69e4.93886171' => '12',
+            ),
         );
         $this->assertTrue($oVatGroupsGateway->save($aData));
 
