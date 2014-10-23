@@ -48,5 +48,5 @@ $aLang = array(
     'OEVATTBE_COUNTRY_VAT_GROUP_SAVE' => '[tr]Save',
     'OEVATTBE_HELP_COUNTRY_VAT_GROUP_VALUE' => '[tr]This value will be used for TBE articles VAT rate',
     'OEVATTBE_NEW_COUNTRY_VAT_GROUP_PARAMETER_MISSING' => '[tr]Group name and VAT rate must be entered',
-    'OEVATTBE_VAT_RATES' => '[tr]VAT rates',
+    'OEVATTBE_VAT_RATES' => '[tr]VAT rates:',
 );
