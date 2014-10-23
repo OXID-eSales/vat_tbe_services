@@ -70,9 +70,9 @@ class oeVATTBEOrder extends oeVATTBEOrder_parent
         $sMessage ='';
         $oBasket = $this->getSession()->getBasket();
         $oCountry = $oBasket->getTBECountry();
-        $oMarkGenerator =  $this->getBasketContentMarkGenerator();
+        $oMarkGenerator = $this->getBasketContentMarkGenerator();
 
-        if ($oBasket->hasVATTBEArticles() && $oBasket->isTBEValid() && $oCountry->appliesTBEVAT()) {
+        if ($oBasket->hasVATTBEArticles() && $oBasket->isTBEValid() && $oCountry && $oCountry->appliesTBEVAT()) {
             $sMessage = $oMarkGenerator->getMark('tbeService') . ' - ';
             $sMessage .= sprintf(oxRegistry::getLang()->translateString('OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY'), $oCountry->getVATTBEName());
         }
