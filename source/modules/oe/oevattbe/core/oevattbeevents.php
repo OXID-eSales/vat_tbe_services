@@ -36,7 +36,7 @@ class oeVATTBEEvents
         self::_addFields();
         self::_regenerateViews();
         self::_configureCountries();
-        self::_addDemoData();
+        //self::_addDemoData();
 
         /** @var oeVATTBEEvidenceRegister $oEvidenceRegister */
         $oEvidenceRegister = oxNew('oeVATTBEEvidenceRegister', oxRegistry::getConfig());
