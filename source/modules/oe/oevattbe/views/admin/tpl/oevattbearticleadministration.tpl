@@ -50,26 +50,18 @@
                             [{oxmultilang ident="OEVATTBE_ARTICLE_VAT_GROUP"}]
                         </th>
                     </tr>
+                    [{foreach from=$aTBECountriesAndVATGroups key=sCountryId item=aVATInformation}]
                     <tr>
-                        <td>Lithuania</td>
+                        <td>[{$aVATInformation.countryTitle}]</td>
                         <td>
-                            <select>
-                                <option>Standard rate - 19%</option>
-                                <option>Reduce rate 1 - 6%</option>
-                                <option>Parking rate - 12%</option>
+                            <select name="VATGroupsByCountry[[{$sCountryId}]]">
+                                [{foreach from=$aVATInformation.countryGroups item=oVATTBECountryVATGroup}]
+                                    <option value="[{$oVATTBECountryVATGroup->getId()}]">[{$oVATTBECountryVATGroup->getName()}] - [{$oVATTBECountryVATGroup->getRate()}]%</option>
+                                [{/foreach}]
                             </select>
                         </td>
                     </tr>
-                    <tr>
-                        <td>Germany</td>
-                        <td>
-                            <select>
-                                <option>Standard rate - 19%</option>
-                                <option>Reduce rate 1 - 6%</option>
-                                <option>Parking rate - 12%</option>
-                            </select>
-                        </td>
-                    </tr>
+                    [{/foreach}]
                 </table>
             </td>
         </tr>

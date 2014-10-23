@@ -39,7 +39,13 @@ class oeVATTBEArticleAdministration extends oxAdminDetails
         $this->_aViewData["iIsTbeService"] = $oArticle->isTBEService();
         /** @var oxCountry $oCountry */
         $oCountry = oxNew('oxCountry');
-        $this->_aViewData["aTBECountries"] = $this->_getCountryAndVATGroupsData($oCountry);
+        $this->_aViewData["aTBECountriesAndVATGroups"] = $this->_getCountryAndVATGroupsData($oCountry);
+/*echo "<pre/>";
+        print_r($this->_aViewData["aTBECountriesAndVATGroups"]);*/
+        /** @var oeVATTBEArticleVATGroupsList $oGroupList */
+        //$oGroupList = oeVATTBEArticleVATGroupsList::createArticleVATGroupsList();
+        //var_dump($oGroupList->load('05848170643ab0deb9914566391c0c63'));
+        //var_dump($oGroupList->getData());
 
         return "oevattbearticleadministration.tpl";
     }
@@ -53,6 +59,12 @@ class oeVATTBEArticleAdministration extends oxAdminDetails
         $sCurrentArticleId = $this->getEditObjectId();
         $oConfig = $this->getConfig();
         $aParams = $oConfig->getRequestParameter("editval");
+        $aVATGroupsParams = $oConfig->getRequestParameter("VATGroupsByCountry");
+        $oArticleVATGroupsList = oeVATTBEArticleVATGroupsList::createArticleVATGroupsList();
+        $oArticleVATGroupsList->setId($sCurrentArticleId);
+        $oArticleVATGroupsList->setData($aVATGroupsParams);
+        $oArticleVATGroupsList->save();
+
         $iIsTBEService = $aParams['oevattbe_istbeservice'];
 
         /** @var oeVATTBEOxArticle|oxArticle $oArticle */
@@ -60,22 +72,6 @@ class oeVATTBEArticleAdministration extends oxAdminDetails
         $oArticle->load($sCurrentArticleId);
         $oArticle->oxarticles__oevattbe_istbeservice = new oxField($iIsTBEService);
         $oArticle->save();
-    }
-
-    /**
-     * Create VAT group list class.
-     *
-     * @return oeVATTBECountryVATGroupsList
-     */
-    protected function _factoryVATGroupList()
-    {
-        /** @var oeVATTBECountryVATGroupsDbGateway $oGateway */
-        $oGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
-
-        /** @var oeVATTBECountryVATGroupsList $oGroupList */
-        $oGroupList = oxNew('oeVATTBECountryVATGroupsList', $oGateway);
-
-        return $oGroupList;
     }
 
     /**
@@ -88,40 +84,17 @@ class oeVATTBEArticleAdministration extends oxAdminDetails
     protected function _getCountryAndVATGroupsData($oCountry)
     {
         $aViewData = array();
-        $aVATGroupList = $this->_factoryVATGroupList()->getList();
-        foreach ($this->_getTBECountries($oCountry) as $sCountryId => $sCountryName) {
-            $aCountryVATGroups = $aVATGroupList[$sCountryId];
-            /** @var oeVATTBECountryVATGroup $oCountryVATGroup */
-            foreach ($aCountryVATGroups as $key => $oCountryVATGroup) {
-                $oCountryVATGroup->getId();
-                $oCountryVATGroup->getName();
-                $aViewData[$sCountryId] = array(
-                    $sCountryId => $sCountryName,
-                    $oCountryVATGroup->getId() => $this->_formGroupInformation($oCountryVATGroup)
-                );
-            }
+        $oCountryVATGroupsList = oeVATTBECountryVATGroupsList::createCountryVATGroupsList();
+        $aVATGroupList = $oCountryVATGroupsList->getList();
+        foreach ($aVATGroupList as $sCountryId => $aGroupsList) {
+            $oCountry->load($sCountryId);
+            $aViewData[$sCountryId] = array(
+                'countryTitle' => $oCountry->oxcountry__oxtitle->value,
+                'countryGroups' => $aGroupsList
+            );
         }
 
         return $aViewData;
-    }
-
-    /**
-     * Forms array of countries with their names.
-     *
-     * @param oxCountry $oCountry Country object used to get name.
-     *
-     * @return array
-     */
-    protected function _getTBECountries($oCountry)
-    {
-        $aCountries = array();
-
-        foreach ($this->_factoryVATGroupList()->getList() as $sCountryId => $aCountryVATGroupList) {
-            $oCountry->load($sCountryId);
-            $aCountries[$sCountryId] = $oCountry->oxcountry__oxtitle->value;
-        }
-
-        return $aCountries;
     }
 
     /**
