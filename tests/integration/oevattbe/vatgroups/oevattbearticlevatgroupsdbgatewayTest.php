@@ -118,11 +118,40 @@ class Integration_oeVatTbe_VATGroups_oeVATTBEArticleVATGroupsDbGatewayTest exten
     }
 
     /**
+     * Testing VAT Group loading from database by group id.
+     *
+     * @param string $sArticleId Article id, for which group was created.
+     *
+     * @depends testVATGroupLoading
+     *
+     * @return string
+     */
+    public function testVATGroupLoadingByGroupId($sArticleId)
+    {
+        /** @var oeVATTBEArticleVATGroupsDbGateway $oVatGroupsGateway */
+        $oVatGroupsGateway = oxNew('oeVATTBEArticleVATGroupsDbGateway');
+        $aData = $oVatGroupsGateway->loadByGroupId('12');
+
+        $aExpectedData = array(
+            array(
+                'OEVATTBE_ARTICLEID' => $sArticleId,
+                'OEVATTBE_COUNTRYID' => '8f241f110958b69e4.93886171',
+                'OEVATTBE_VATGROUPID' => '12',
+                'OEVATTBE_TIMESTAMP' => $aData[0]['OEVATTBE_TIMESTAMP'],
+            ),
+        );
+
+        $this->assertSame($aExpectedData, $aData);
+
+        return $sArticleId;
+    }
+
+    /**
      * Testing deletion of VAT Group from database.
      *
      * @param string $sArticleId
      *
-     * @depends testVATGroupLoading
+     * @depends testVATGroupLoadingByGroupId
      */
     public function testDeletingVATGroupList($sArticleId)
     {

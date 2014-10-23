@@ -71,6 +71,21 @@ class oeVATTBEArticleVATGroupsDbGateway extends oeVATTBEModelDbGateway
     }
 
     /**
+     * Load Article VAT Groups data from Db by group id.
+     *
+     * @param string $sGroupId Article id.
+     *
+     * @return array
+     */
+    public function loadByGroupId($sGroupId)
+    {
+        $oDb = $this->_getDb();
+        $aData = $oDb->getAll('SELECT * FROM `oevattbe_articlevat` WHERE `oevattbe_vatgroupid` = ' . $oDb->quote($sGroupId));
+
+        return $aData;
+    }
+
+    /**
      * Delete VAT Group data from database.
      *
      * @param string $sGroupId VAT group id.
