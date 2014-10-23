@@ -107,4 +107,14 @@ class Unit_oeVatTbe_Models_oeVATTBEArticleVATGroupsListTest extends OxidTestCase
 
         $oList->delete('articleid');
     }
+
+    /**
+     * Tests creating of oeVATTBEArticleVATGroupsList.
+     */
+    public function testCreatingListWithCreationMethod()
+    {
+        $oList = oeVATTBEArticleVATGroupsList::createArticleVATGroupsList();
+
+        $this->assertInstanceOf('oeVATTBEArticleVATGroupsList', $oList);
+    }
 }

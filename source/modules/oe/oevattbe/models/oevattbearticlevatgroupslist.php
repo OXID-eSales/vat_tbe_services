@@ -26,6 +26,19 @@ class oeVATTBEArticleVATGroupsList extends oeVATTBEModel
 {
 
     /**
+     * Creates an instance of oeVATTBEArticleVATGroupsList.
+     *
+     * @return oeVATTBEArticleVATGroupsList;
+     */
+    public static function createArticleVATGroupsList()
+    {
+        $oGateway = oxNew('oeVATTBEArticleVATGroupsDbGateway');
+        $oList = oxNew('oeVATTBEArticleVATGroupsList', $oGateway);
+
+        return $oList;
+    }
+
+    /**
      * Method for model saving (insert and update data).
      *
      * @return int|false
