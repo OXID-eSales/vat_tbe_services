@@ -26,6 +26,19 @@ class oeVATTBECountryVATGroup extends oeVATTBEModel
 {
 
     /**
+     * Creates an instance of oeVATTBEArticleVATGroupsList.
+     *
+     * @return oeVATTBEArticleVATGroupsList;
+     */
+    public static function createCountryVATGroup()
+    {
+        $oGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
+        $oGroup = oxNew('oeVATTBECountryVATGroup', $oGateway);
+
+        return $oGroup;
+    }
+
+    /**
      * Returns country id, for which this group is used.
      *
      * @return string

@@ -95,4 +95,14 @@ class Unit_oeVatTbe_Models_oeVATTBECountryVATGroupTest extends OxidTestCase
         $this->assertSame('Some description', $oGroup->getDescription());
         $this->assertSame('20.50', $oGroup->getRate());
     }
+
+    /**
+     * Tests creating of oeVATTBEArticleVATGroupsList.
+     */
+    public function testCreatingGroupWithCreationMethod()
+    {
+        $oGroup = oeVATTBECountryVATGroup::createCountryVATGroup();
+
+        $this->assertInstanceOf('oeVATTBECountryVATGroup', $oGroup);
+    }
 }

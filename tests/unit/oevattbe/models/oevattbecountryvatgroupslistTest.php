@@ -100,7 +100,7 @@ class Unit_oeVatTbe_models_oeVATTBECountryVATGroupsListTest extends OxidTestCase
     /**
      * Creates VAT Group object and sets given data to it.
      *
-     * @param array                      $aData
+     * @param array                             $aData
      * @param oeVATTBECountryVATGroupsDbGateway $oGateway
      *
      * @return oeVATTBECountryVATGroup
@@ -112,5 +112,15 @@ class Unit_oeVatTbe_models_oeVATTBECountryVATGroupsListTest extends OxidTestCase
         $oGroupsList->setData($aData);
 
         return $oGroupsList;
+    }
+
+    /**
+     * Tests creating of oeVATTBEArticleVATGroupsList.
+     */
+    public function testCreatingListWithCreationMethod()
+    {
+        $oList = oeVATTBECountryVATGroupsList::createCountryVATGroupsList();
+
+        $this->assertInstanceOf('oeVATTBECountryVATGroupsList', $oList);
     }
 }

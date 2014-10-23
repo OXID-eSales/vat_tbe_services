@@ -26,6 +26,19 @@ class oeVATTBECountryVATGroupsList extends oeVATTBEModel
 {
 
     /**
+     * Creates an instance of oeVATTBEArticleVATGroupsList.
+     *
+     * @return oeVATTBEArticleVATGroupsList;
+     */
+    public static function createCountryVATGroupsList()
+    {
+        $oGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
+        $oList = oxNew('oeVATTBECountryVATGroupsList', $oGateway);
+
+        return $oList;
+    }
+
+    /**
      * Selects and loads order payment history.
      *
      * @param string $sId Country id.
