@@ -93,6 +93,35 @@ class Unit_oeVatTbe_Models_oeVATTBEArticleVATGroupsListTest extends OxidTestCase
     }
 
     /**
+     * Test loading article groups list.
+     */
+    public function testLoadingEvidenceListById()
+    {
+        $aData = array(
+            array(
+                'OEVATTBE_ARTICLEID' => 'articleId1',
+                'OEVATTBE_COUNTRYID' => '8f241f110958b69e4.93886171',
+                'OEVATTBE_VATGROUPID' => '10',
+                'OEVATTBE_TIMESTAMP' => '2014-05-05 19:00:00',
+            ),
+            array(
+                'OEVATTBE_ARTICLEID' => 'articleId2',
+                'OEVATTBE_COUNTRYID' => 'a7c40f631fc920687.20179984',
+                'OEVATTBE_VATGROUPID' => '10',
+                'OEVATTBE_TIMESTAMP' => '2014-05-05 19:00:00',
+            )
+        );
+        /** @var oeVATTBEArticleVATGroupsDbGateway|PHPUnit_Framework_MockObject_MockObject $oGateway */
+        $oGateway = $this->_createStub('oeVATTBEArticleVATGroupsDbGateway', array('loadByGroupId' => $aData));
+
+        /** @var oeVATTBEArticleVATGroupsList $oList */
+        $oList = oxNew('oeVATTBEArticleVATGroupsList', $oGateway);
+
+        $aExpectedData = array('articleId1', 'articleId2');
+        $this->assertEquals($aExpectedData, $oList->getArticlesAssignedToGroup('10'));
+    }
+
+    /**
      * Test deleting article groups list.
      */
     public function testDeletingEvidenceList()

@@ -67,9 +67,9 @@ class oeVATTBEArticleVATGroupsList extends oeVATTBEModel
     }
 
     /**
-     * Method for loading model, if loaded returns true.
+     * Method for loading article VAT group list. If loaded - returns true.
      *
-     * @param string $sId model id.
+     * @param string $sId Article id.
      *
      * @return bool
      */
@@ -91,5 +91,25 @@ class oeVATTBEArticleVATGroupsList extends oeVATTBEModel
         }
 
         return $this->isLoaded();
+    }
+
+    /**
+     * Method for loading article VAT group list. If loaded - returns true.
+     *
+     * @param string $sGroupId Group id.
+     *
+     * @return bool
+     */
+    public function getArticlesAssignedToGroup($sGroupId = null)
+    {
+        $aData = array();
+        $aDbData = $this->_getDbGateway()->loadByGroupId($sGroupId);
+        if ($aDbData) {
+            foreach ($aDbData as $aRecord) {
+                $aData[] = $aRecord['OEVATTBE_ARTICLEID'];
+            }
+        }
+
+        return $aData;
     }
 }
