@@ -96,6 +96,18 @@ class oeVATTBECountryVatGroups extends oxAdminDetails
     }
 
     /**
+     * Delete selected Country VAT Group.
+     */
+    public function deleteCountryVatGroup()
+    {
+        $iVATGroupId = oxRegistry::getConfig()->getRequestParameter('countryVATGroupId');
+
+        $oVATGroup = $this->_factoryVATGroup();
+        $oVATGroup->setId($iVATGroupId);
+        $oVATGroup->delete();
+    }
+
+    /**
      * Create class to deal with VAT Group together with its dependencies.
      *
      * @return oeVATTBECountryVATGroup

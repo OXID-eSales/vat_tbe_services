@@ -66,7 +66,7 @@
                             </td>
                             <td class=listitem[{$oddclass}]>
                                 <input type="hidden" name="updateval[[{$oVatGroup->getId()}]][oevattbe_id]" value="[{$oVatGroup->getId()}]">
-                                <a [{$readonly}] href="[{ $oViewConf->getSelfLink() }]&cl=article_stock&priceid=[{$oVatGroup->getId()}]&fnc=deleteprice&oxid=[{$oxid}]" onClick='return confirm("[{ oxmultilang ident="GENERAL_YOUWANTTODELETE" }]")' [{if $readonly }]onclick="JavaScript:return false;"[{/if}] class="delete"></a>
+                                <a [{$readonly}] href="[{ $oViewConf->getSelfLink() }]&cl=oeVATTBECountryVatGroups&countryVATGroupId=[{$oVatGroup->getId()}]&fnc=deleteCountryVatGroup&oxid=[{$oxid}]" onClick='return confirm("[{ oxmultilang ident="GENERAL_YOUWANTTODELETE" }]")' [{if $readonly }]onclick="JavaScript:return false;"[{/if}] class="delete"></a>
                             </td>
                         </tr>
                     [{/foreach}]
