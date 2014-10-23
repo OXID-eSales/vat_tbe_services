@@ -62,11 +62,11 @@
                                 <input type="text" size="5" name="updateval[[{$oVatGroup->getId()}]][oevattbe_rate]" value="[{$oVatGroup->getRate()}]" />
                             </td>
                             <td class="listitem[{$oddclass}]" nowrap="nowrap" valign="top">
-                                <textarea class="editinput" cols="18" rows="2" wrap="VIRTUAL" name="updateval[[{$oVatGroup->getId()}]][oevattbe_description]">[{$oVatGroup->getDescription()}]</textarea>
+                                <textarea class="editinput" cols="28" rows="1" wrap="VIRTUAL" name="updateval[[{$oVatGroup->getId()}]][oevattbe_description]">[{$oVatGroup->getDescription()}]</textarea>
                             </td>
                             <td class=listitem[{$oddclass}]>
                                 <input type="hidden" name="updateval[[{$oVatGroup->getId()}]][oevattbe_id]" value="[{$oVatGroup->getId()}]">
-                                <a [{$readonly}] href="[{ $oViewConf->getSelfLink() }]&cl=article_stock&priceid=[{$oVatGroup->getId()}]&fnc=deleteprice&oxid=[{$oxid}]" onClick='return confirm("[{ oxmultilang ident="GENERAL_YOUWANTTODELETE" }]")' [{if $readonly }]onclick="JavaScript:return false;"[{/if}] class="delete"></a>
+                                <a [{$readonly}] href="[{ $oViewConf->getSelfLink() }]&cl=oeVATTBECountryVatGroups&countryVATGroupId=[{$oVatGroup->getId()}]&fnc=deleteCountryVatGroup&oxid=[{$oxid}]" onClick='return confirm("[{ oxmultilang ident="GENERAL_YOUWANTTODELETE" }]")' [{if $readonly }]onclick="JavaScript:return false;"[{/if}] class="delete"></a>
                             </td>
                         </tr>
                     [{/foreach}]
@@ -108,7 +108,7 @@
                                             [{oxmultilang ident="OEVATTBE_COUNTRY_VAT_GROUP_NAME"}]
                                         </td>
                                         <td class="edittext">
-                                            <input class="edittext" type="text" name="editval[oevattbe_name]">
+                                            <input class="edittext" size="25" type="text" name="editval[oevattbe_name]">
                                         </td>
                                     </tr>
                                     <tr>
@@ -125,7 +125,7 @@
                                             [{oxmultilang ident="OEVATTBE_COUNTRY_VAT_GROUP_DESCRIPTION"}]
                                         </td>
                                         <td class="edittext" nowrap="nowrap">
-                                            <textarea class="editinput" cols="18" rows="5" wrap="VIRTUAL" name="editval[oevattbe_description]"></textarea>
+                                            <textarea class="editinput" cols="28" rows="1" wrap="VIRTUAL" name="editval[oevattbe_description]"></textarea>
                                         </td>
                                     </tr>
                                 </table>

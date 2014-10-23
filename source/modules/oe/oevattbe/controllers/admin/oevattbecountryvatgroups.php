@@ -9,6 +9,13 @@
 class oeVATTBECountryVatGroups extends oxAdminDetails
 {
     /**
+     * To set only one error message in session.
+     *
+     * @var bool
+     */
+    private $_blMissingParameterErrorSet = false;
+
+    /**
      * Executes parent method parent::render(), creates oxOrder object,
      * passes it's data to Smarty engine and returns
      * name of template file "order_paypal.tpl".
@@ -33,7 +40,7 @@ class oeVATTBECountryVatGroups extends oxAdminDetails
         $oGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
         /** @var oeVATTBECountryVATGroupsList $oeVATTBECountryVATGroupsList */
         $oVATTBECountryVATGroupsList = oxNew('oeVATTBECountryVATGroupsList', $oGateway);
-        $aVATTBECountryVATGroupsList = $oVATTBECountryVATGroupsList->load('a7c40f632e04633c9.47194042');
+        $aVATTBECountryVATGroupsList = $oVATTBECountryVATGroupsList->load($this->getEditObjectId());
 
         return $aVATTBECountryVATGroupsList;
     }
@@ -51,7 +58,7 @@ class oeVATTBECountryVatGroups extends oxAdminDetails
         $fVATRate = $aParams['oevattbe_rate'];
         $sGroupDescription = trim($aParams['oevattbe_description']);
 
-        if (!$sCountryId || !$sGroupName || !$fVATRate) {
+        if (!$sCountryId || !$sGroupName) {
             $this->_setMissingParameterMessage();
             return null;
         }
@@ -73,12 +80,31 @@ class oeVATTBECountryVatGroups extends oxAdminDetails
 
         $oVatGroup = $this->_factoryVATGroup();
         foreach ($aVatGroups as $aVatGroup) {
+            if (!$aVatGroup['oevattbe_id'] || !$aVatGroup['oevattbe_name']) {
+                if (!$this->_blMissingParameterErrorSet) {
+                    $this->_blMissingParameterErrorSet = true;
+                    $this->_setMissingParameterMessage();
+                }
+                continue;
+            }
             $oVatGroup->setId($aVatGroup['oevattbe_id']);
             $oVatGroup->setName($aVatGroup['oevattbe_name']);
             $oVatGroup->setRate($aVatGroup['oevattbe_rate']);
             $oVatGroup->setDescription(trim($aVatGroup['oevattbe_description']));
             $oVatGroup->save();
         }
+    }
+
+    /**
+     * Delete selected Country VAT Group.
+     */
+    public function deleteCountryVatGroup()
+    {
+        $iVATGroupId = oxRegistry::getConfig()->getRequestParameter('countryVATGroupId');
+
+        $oVATGroup = $this->_factoryVATGroup();
+        $oVATGroup->setId($iVATGroupId);
+        $oVATGroup->delete();
     }
 
     /**
