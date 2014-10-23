@@ -26,9 +26,9 @@ class oeVATTBECountryVATGroupsList extends oeVATTBEModel
 {
 
     /**
-     * Creates an instance of oeVATTBEArticleVATGroupsList.
+     * Creates an instance of oeVATTBECountryVATGroupsList.
      *
-     * @return oeVATTBEArticleVATGroupsList;
+     * @return oeVATTBECountryVATGroupsList;
      */
     public static function createCountryVATGroupsList()
     {
