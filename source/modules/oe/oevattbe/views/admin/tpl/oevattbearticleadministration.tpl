@@ -31,17 +31,20 @@
     <input type="hidden" name="oxid" value="[{$oxid}]">
     <table class="vattbeAdministration">
         <tr>
-            <td class="edittext" width="120">
-                [{oxmultilang ident="OEVATTBE_ARTICLE_UPDATE_LABEL"}]
-            </td>
-            <td class="edittext">
+            <td class="edittext" colspan="2">
+                <label for="oevattbeIsTBEService">[{oxmultilang ident="OEVATTBE_ARTICLE_SUBMIT_LABEL"}]</label>
                 <input type="hidden" name="editval[oevattbe_istbeservice]" value="0">
-                <input class="edittext" type="checkbox" name="editval[oevattbe_istbeservice]" value="1" [{if $iIsTbeService == 1}]checked[{/if}]>
+                <input id="oevattbeIsTBEService" class="edittext" type="checkbox" name="editval[oevattbe_istbeservice]" value="1" [{if $iIsTbeService == 1}]checked[{/if}]>
             </td>
         </tr>
         <tr>
             <td colspan="2">
                 <table class="vattbeAdministrationList">
+                    <tr>
+                        <td colspan="2">
+                            [{oxmultilang ident="OEVATTBE_VAT_RATES"}]
+                        </td>
+                    </tr>
                     <tr>
                         <th>
                             [{oxmultilang ident="OEVATTBE_ARTICLE_COUNTRY"}]
@@ -70,7 +73,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                <input type="submit" class="edittext" name="save" value="[{oxmultilang ident="OEVATTBE_ARTICLE_UPDATE_BUTTON"}]" onClick="Javascript:document.myedit.fnc.value='save'">
+                <input type="submit" class="edittext" name="save" value="[{oxmultilang ident="OEVATTBE_ARTICLE_SUBMIT_BUTTON"}]" onClick="Javascript:document.myedit.fnc.value='save'">
             </td>
         </tr>
     </table>
