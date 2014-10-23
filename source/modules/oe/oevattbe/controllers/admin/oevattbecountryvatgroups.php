@@ -23,6 +23,22 @@ class oeVATTBECountryVatGroups extends oxAdminDetails
     }
 
     /**
+     * Return VAT Groups for selected country.
+     *
+     * @return array
+     */
+    public function getVatGroups()
+    {
+        /** @var oeVATTBECountryVATGroupsDbGateway $oGateway */
+        $oGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
+        /** @var oeVATTBECountryVATGroupsList $oeVATTBECountryVATGroupsList */
+        $oVATTBECountryVATGroupsList = oxNew('oeVATTBECountryVATGroupsList', $oGateway);
+        $aVATTBECountryVATGroupsList = $oVATTBECountryVATGroupsList->load('a7c40f632e04633c9.47194042');
+
+        return $aVATTBECountryVATGroupsList;
+    }
+
+    /**
      * Add country VAT group.
      *
      * @return null
@@ -33,7 +49,7 @@ class oeVATTBECountryVatGroups extends oxAdminDetails
         $sCountryId = $aParams['oxcountry__oxid'];
         $sGroupName = $aParams['oevattbe_name'];
         $fVATRate = $aParams['oevattbe_rate'];
-        $sGroupDescription = $aParams['oevattbe_description'];
+        $sGroupDescription = trim($aParams['oevattbe_description']);
 
         if (!$sCountryId || !$sGroupName || !$fVATRate) {
             $this->_setMissingParameterMessage();
@@ -46,6 +62,23 @@ class oeVATTBECountryVatGroups extends oxAdminDetails
         $oGroup->setRate($fVATRate);
         $oGroup->setDescription($sGroupDescription);
         $oGroup->save();
+    }
+
+    /**
+     * Method to change Country VAT Groups data.
+     */
+    public function changeCountryVATGroups()
+    {
+        $aVatGroups = oxRegistry::getConfig()->getRequestParameter("updateval");
+
+        $oVatGroup = $this->_factoryVATGroup();
+        foreach ($aVatGroups as $aVatGroup) {
+            $oVatGroup->setId($aVatGroup['oevattbe_id']);
+            $oVatGroup->setName($aVatGroup['oevattbe_name']);
+            $oVatGroup->setRate($aVatGroup['oevattbe_rate']);
+            $oVatGroup->setDescription(trim($aVatGroup['oevattbe_description']));
+            $oVatGroup->save();
+        }
     }
 
     /**
