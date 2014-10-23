@@ -24,6 +24,8 @@
  */
 class oeVATTBEArticleVATGroupsList extends oeVATTBEModel
 {
+    /** @var array Model data. */
+    protected $_aData = array();
 
     /**
      * Creates an instance of oeVATTBEArticleVATGroupsList.
@@ -49,16 +51,15 @@ class oeVATTBEArticleVATGroupsList extends oeVATTBEModel
         $aDbData = array();
         foreach ($aData as $sCountryId => $sGroupId) {
             $aDbData[] = array(
-                'OEVATTBE_ARTICLEID' => 'articleId',
-                'OEVATTBE_COUNTRYID' => '8f241f110958b69e4.93886171',
-                'OEVATTBE_VATGROUPID' => '12',
-                'OEVATTBE_TIMESTAMP' => '2014-05-05 19:00:00'
+                'OEVATTBE_ARTICLEID' => $this->getId(),
+                'OEVATTBE_COUNTRYID' => $sCountryId,
+                'OEVATTBE_VATGROUPID' => $sGroupId
             );
         }
 
         $aData = array(
             'articleid' => $this->getId(),
-            'data' => $aDbData
+            'relations' => $aDbData
         );
         $this->_getDbGateway()->save($aData);
 

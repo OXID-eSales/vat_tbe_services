@@ -22,7 +22,10 @@
 
 /**
  * Testing oeVATTBECountryVATGroupsList class.
+ *
  * @covers oeVATTBECountryVATGroupsList
+ * @covers oeVATTBECountryVATGroup
+ * @covers oeVATTBECountryVATGroupsDbGateway
  */
 class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupsListTest extends OxidTestCase
 {

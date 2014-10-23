@@ -42,11 +42,9 @@ class oeVATTBEArticleVATGroupsDbGateway extends oeVATTBEModelDbGateway
         $sSql = 'INSERT INTO `oevattbe_articlevat` (oevattbe_articleid, oevattbe_countryid, oevattbe_vatgroupid) VALUES ';
         $aSqlValues = array();
 
-        $sArticleIdQuoted = $oDb->quote($sArticleId);
-        foreach ($aData['relations'] as $sCountryId => $sGroupId) {
-            $sCountryIdQuoted = $oDb->quote($sCountryId);
-            $sGroupIdQuoted = $oDb->quote($sGroupId);
-            $aSqlValues[] = "($sArticleIdQuoted, $sCountryIdQuoted, $sGroupIdQuoted)";
+        foreach ($aData['relations'] as $aValues) {
+            $aQuoted = array_map(array($oDb, 'quote'), $aValues);
+            $aSqlValues[] = "(".implode(',', $aQuoted).")";
         }
 
         if (!empty($aSqlValues)) {

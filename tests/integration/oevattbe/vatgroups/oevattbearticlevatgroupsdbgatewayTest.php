@@ -38,7 +38,11 @@ class Integration_oeVatTbe_VATGroups_oeVATTBEArticleVATGroupsDbGatewayTest exten
         $aData = array(
             'articleid' => '0962081a5693597654fd2887af7a6095',
             'relations' => array(
-                'a7c40f631fc920687.20179984' => '10',
+                array(
+                    'OEVATTBE_ARTICLEID' => '0962081a5693597654fd2887af7a6095',
+                    'OEVATTBE_COUNTRYID' => 'a7c40f631fc920687.20179984',
+                    'OEVATTBE_VATGROUPID' => '10',
+                ),
             ),
         );
         $this->assertTrue($oVatGroupsGateway->save($aData));
@@ -62,8 +66,16 @@ class Integration_oeVatTbe_VATGroups_oeVATTBEArticleVATGroupsDbGatewayTest exten
         $aData = array(
             'articleid' => '0962081a5693597654fd2887af7a6095',
             'relations' => array(
-                'a7c40f631fc920687.20179984' => '11',
-                '8f241f110958b69e4.93886171' => '12',
+                array(
+                    'OEVATTBE_ARTICLEID' => $sArticleId,
+                    'OEVATTBE_COUNTRYID' => 'a7c40f631fc920687.20179984',
+                    'OEVATTBE_VATGROUPID' => '11',
+                ),
+                array(
+                    'OEVATTBE_ARTICLEID' => $sArticleId,
+                    'OEVATTBE_COUNTRYID' => '8f241f110958b69e4.93886171',
+                    'OEVATTBE_VATGROUPID' => '12',
+                ),
             ),
         );
         $this->assertTrue($oVatGroupsGateway->save($aData));

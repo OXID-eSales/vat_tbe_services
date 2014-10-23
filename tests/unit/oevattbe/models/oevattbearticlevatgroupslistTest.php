@@ -34,12 +34,11 @@ class Unit_oeVatTbe_Models_oeVATTBEArticleVATGroupsListTest extends OxidTestCase
     {
         $aExpectedData = array(
             'articleid' => 'articleId',
-            'data' => array(
+            'relations' => array(
                 array(
                     'OEVATTBE_ARTICLEID' => 'articleId',
                     'OEVATTBE_COUNTRYID' => '8f241f110958b69e4.93886171',
                     'OEVATTBE_VATGROUPID' => '12',
-                    'OEVATTBE_TIMESTAMP' => '2014-05-05 19:00:00',
                 )
             )
         );
