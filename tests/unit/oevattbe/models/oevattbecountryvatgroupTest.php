@@ -55,6 +55,35 @@ class Unit_oeVatTbe_Models_oeVATTBECountryVATGroupTest extends OxidTestCase
     }
 
     /**
+     * Information is set to Group entity with id set;
+     * Correct information array is passed to gateway for saving.
+     */
+    public function testUpdatingVATGroup()
+    {
+        $aExpectedData = array(
+            'oevattbe_id' => '999',
+            'oevattbe_countryid' => '8f241f11095410f38.37165361',
+            'oevattbe_name' => 'Group Name',
+            'oevattbe_description' => 'Some description',
+            'oevattbe_rate' => 20.50
+        );
+
+        $oGateway = $this->getMock('oeVATTBECountryVATGroupsDbGateway', array('save'));
+        $oGateway->expects($this->once())->method('save')->with($aExpectedData);
+
+        /** @var oeVATTBECountryVATGroup $oGroup */
+        $oGroup = oxNew('oeVATTBECountryVATGroup', $oGateway);
+
+        $oGroup->setId('999');
+        $oGroup->setCountryId('8f241f11095410f38.37165361');
+        $oGroup->setName('Group Name');
+        $oGroup->setDescription('Some description');
+        $oGroup->setRate(20.50);
+
+        $oGroup->save();
+    }
+
+    /**
      * No information is set to group;
      * Correct information array is passed to gateway for saving.
      */

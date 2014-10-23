@@ -39,6 +39,17 @@ class oeVATTBECountryVATGroup extends oeVATTBEModel
     }
 
     /**
+     * Sets model id.
+     *
+     * @param string $sId Model id
+     */
+    public function setId($sId)
+    {
+        parent::setId($sId);
+        $this->_setValue('oevattbe_id', $sId);
+    }
+
+    /**
      * Returns country id, for which this group is used.
      *
      * @return string
