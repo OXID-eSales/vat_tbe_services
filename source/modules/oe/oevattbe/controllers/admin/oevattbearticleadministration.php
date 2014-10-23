@@ -32,11 +32,14 @@ class oeVATTBEArticleAdministration extends oxAdminDetails
     public function render()
     {
         parent::render();
-        /** @var oeVATTBEOxArticle $oArticle */
+        /** @var oeVATTBEOxArticle|oxArticle $oArticle */
         $oArticle = oxNew("oeVATTBEOxArticle");
         $sCurrentArticleId = $this->getEditObjectId();
         $oArticle->load($sCurrentArticleId);
         $this->_aViewData["iIsTbeService"] = $oArticle->isTBEService();
+        /** @var oxCountry $oCountry */
+        $oCountry = oxNew('oxCountry');
+        $this->_aViewData["aTBECountries"] = $this->_getCountryAndVATGroupsData($oCountry);
 
         return "oevattbearticleadministration.tpl";
     }
@@ -57,5 +60,79 @@ class oeVATTBEArticleAdministration extends oxAdminDetails
         $oArticle->load($sCurrentArticleId);
         $oArticle->oxarticles__oevattbe_istbeservice = new oxField($iIsTBEService);
         $oArticle->save();
+    }
+
+    /**
+     * Create VAT group list class.
+     *
+     * @return oeVATTBECountryVATGroupsList
+     */
+    protected function _factoryVATGroupList()
+    {
+        /** @var oeVATTBECountryVATGroupsDbGateway $oGateway */
+        $oGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
+
+        /** @var oeVATTBECountryVATGroupsList $oGroupList */
+        $oGroupList = oxNew('oeVATTBECountryVATGroupsList', $oGateway);
+
+        return $oGroupList;
+    }
+
+    /**
+     * Forms view VAT groups data for template.
+     *
+     * @param oxCountry $oCountry Country object used to get country title.
+     *
+     * @return array
+     */
+    protected function _getCountryAndVATGroupsData($oCountry)
+    {
+        $aViewData = array();
+        $aVATGroupList = $this->_factoryVATGroupList()->getList();
+        foreach ($this->_getTBECountries($oCountry) as $sCountryId => $sCountryName) {
+            $aCountryVATGroups = $aVATGroupList[$sCountryId];
+            /** @var oeVATTBECountryVATGroup $oCountryVATGroup */
+            foreach ($aCountryVATGroups as $key => $oCountryVATGroup) {
+                $oCountryVATGroup->getId();
+                $oCountryVATGroup->getName();
+                $aViewData[$sCountryId] = array(
+                    $sCountryId => $sCountryName,
+                    $oCountryVATGroup->getId() => $this->_formGroupInformation($oCountryVATGroup)
+                );
+            }
+        }
+
+        return $aViewData;
+    }
+
+    /**
+     * Forms array of countries with their names.
+     *
+     * @param oxCountry $oCountry Country object used to get name.
+     *
+     * @return array
+     */
+    protected function _getTBECountries($oCountry)
+    {
+        $aCountries = array();
+
+        foreach ($this->_factoryVATGroupList()->getList() as $sCountryId => $aCountryVATGroupList) {
+            $oCountry->load($sCountryId);
+            $aCountries[$sCountryId] = $oCountry->oxcountry__oxtitle->value;
+        }
+
+        return $aCountries;
+    }
+
+    /**
+     * Forms country VAT group information for view.
+     *
+     * @param oeVATTBECountryVATGroup $oCountryVATGroup Object to get information.
+     *
+     * @return string
+     */
+    protected function _formGroupInformation($oCountryVATGroup)
+    {
+        return $oCountryVATGroup->getName() . ' - ' . $oCountryVATGroup->getRate() . '%';
     }
 }

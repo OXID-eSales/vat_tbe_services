@@ -24,7 +24,7 @@
     }
 </style>
 
-<form action="[{$oViewConf->getSelfLink()}]" method="post" style="padding: 0px;margin: 0px;height:0px;">
+<form action="[{$oViewConf->getSelfLink()}]" method="post">
     [{$oViewConf->getHiddenSid()}]
     <input type="hidden" name="cl" value="oevattbearticleadministration">
     <input type="hidden" name="fnc" value="save">
@@ -36,7 +36,7 @@
             </td>
             <td class="edittext">
                 <input type="hidden" name="editval[oevattbe_istbeservice]" value="0">
-                <input class="edittext" type="checkbox" name="editval[oevattbe_istbeservice]" value='1' [{if $iIsTbeService == 1}]checked[{/if}]>
+                <input class="edittext" type="checkbox" name="editval[oevattbe_istbeservice]" value="1" [{if $iIsTbeService == 1}]checked[{/if}]>
             </td>
         </tr>
         <tr>
