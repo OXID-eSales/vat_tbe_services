@@ -149,5 +149,4 @@ class Integration_oeVatTbe_VATGroups_oeVATTBEArticleVATGroupsDbGatewayTest exten
         $oVatGroupsGateway = oxNew('oeVATTBEArticleVATGroupsDbGateway');
         $this->assertNotSame(false, $oVatGroupsGateway->delete('non_existing_group'));
     }
-
 }
