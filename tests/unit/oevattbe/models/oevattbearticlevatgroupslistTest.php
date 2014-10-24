@@ -60,6 +60,29 @@ class Unit_oeVatTbe_Models_oeVATTBEArticleVATGroupsListTest extends OxidTestCase
     }
 
     /**
+     * Records with group id not set is passed;
+     * These records should not be sent to gateway for recording.
+     */
+    public function testSavingGroupsListWhenRecordsWithNoGroupIsPassed()
+    {
+        /** @var oeVATTBEArticleVATGroupsDbGateway|PHPUnit_Framework_MockObject_MockObject $oGateway */
+        $oGateway = $this->getMock('oeVATTBEArticleVATGroupsDbGateway', array('save'));
+        $oGateway->expects($this->once())->method('save')->with(array('articleid' => 'articleId', 'relations' => array()));
+
+        /** @var oeVATTBEArticleVATGroupsList $oList */
+        $oList = oxNew('oeVATTBEArticleVATGroupsList', $oGateway);
+
+        $oList->setId('articleId');
+
+        $aData = array(
+            '8f241f110958b69e4.93886171' => '',
+        );
+        $oList->setData($aData);
+
+        $oList->save();
+    }
+
+    /**
      * Test loading article groups list.
      */
     public function testLoadingEvidenceList()

@@ -50,11 +50,13 @@ class oeVATTBEArticleVATGroupsList extends oeVATTBEModel
         $aData = $this->getData();
         $aDbData = array();
         foreach ($aData as $sCountryId => $sGroupId) {
-            $aDbData[] = array(
-                'OEVATTBE_ARTICLEID' => $this->getId(),
-                'OEVATTBE_COUNTRYID' => $sCountryId,
-                'OEVATTBE_VATGROUPID' => $sGroupId
-            );
+            if ($sGroupId) {
+                $aDbData[] = array(
+                    'OEVATTBE_ARTICLEID' => $this->getId(),
+                    'OEVATTBE_COUNTRYID' => $sCountryId,
+                    'OEVATTBE_VATGROUPID' => $sGroupId
+                );
+            }
         }
 
         $aData = array(
@@ -98,7 +100,7 @@ class oeVATTBEArticleVATGroupsList extends oeVATTBEModel
      *
      * @param string $sGroupId Group id.
      *
-     * @return bool
+     * @return array
      */
     public function getArticlesAssignedToGroup($sGroupId = null)
     {
