@@ -17,7 +17,6 @@
     }
     .vattbeAdministrationList {
         width: 100%;
-        margin-top: 5px;
     }
     .vattbeAdministrationList th {
         text-align: left;
@@ -29,14 +28,13 @@
     <input type="hidden" name="cl" value="oevattbearticleadministration">
     <input type="hidden" name="fnc" value="save">
     <input type="hidden" name="oxid" value="[{$oxid}]">
+
+    <p>
+        <label for="oevattbeIsTBEService">[{oxmultilang ident="OEVATTBE_ARTICLE_SUBMIT_LABEL"}]</label>
+        <input type="hidden" name="editval[oevattbe_istbeservice]" value="0">
+        <input id="oevattbeIsTBEService" class="edittext" type="checkbox" name="editval[oevattbe_istbeservice]" value="1" [{if $iIsTbeService == 1}]checked[{/if}]>
+    </p>
     <table class="vattbeAdministration">
-        <tr>
-            <td class="edittext" colspan="2">
-                <label for="oevattbeIsTBEService">[{oxmultilang ident="OEVATTBE_ARTICLE_SUBMIT_LABEL"}]</label>
-                <input type="hidden" name="editval[oevattbe_istbeservice]" value="0">
-                <input id="oevattbeIsTBEService" class="edittext" type="checkbox" name="editval[oevattbe_istbeservice]" value="1" [{if $iIsTbeService == 1}]checked[{/if}]>
-            </td>
-        </tr>
         <tr>
             <td colspan="2">
                 <table class="vattbeAdministrationList">

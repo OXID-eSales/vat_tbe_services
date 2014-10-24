@@ -79,6 +79,36 @@ class Integration_oeVATTBE_article_oeVATTBEArticleAdministrationTest extends Oxi
         $this->assertEquals($aExpectedViewData, $aViewData['aCountriesAndVATGroups'], 'Data which should go to template is not correct.');
     }
 
+    public function providerIsTBEService()
+    {
+        return array(
+            array(1),
+            array(0),
+        );
+    }
+
+    /**
+     * @param $iIsTBEArticle
+     *
+     * @dataProvider providerIsTBEService
+     */
+    public function testIsTBEService($iIsTBEArticle)
+    {
+        /** @var oeVATTBEOxArticle|oxArticle $oArticle */
+        $oArticle = oxNew('oeVATTBEOxArticle');
+        $oArticle->setId('_testArticle');
+        $oArticle->oxarticles__oevattbe_istbeservice = new oxField($iIsTBEArticle);
+        $oArticle->save();
+
+        /** @var oeVATTBEArticleAdministration $oArticleAdministration */
+        $oArticleAdministration = oxNew('oeVATTBEArticleAdministration');
+        $oArticleAdministration->setEditObjectId('_testArticle');
+        $oArticleAdministration->render();
+        $aViewData = $oArticleAdministration->getViewData();
+
+        $this->assertSame("$iIsTBEArticle", $aViewData['iIsTbeService']);
+    }
+
     /**
      * Prepares VAT TBE groups data.
      *

@@ -25,7 +25,7 @@
 $aLang = array(
     'charset'                                    => 'ISO-8859-15',
     'oevattbe_country_vat_groups' => '[tr]VAT Groups',
-    'oevattbe_article_administration' => '[tr]VAT TBE administration',
+    'oevattbe_article_administration' => '[tr]TBE service administration',
     'OEVATTBE_VAT_IN_STORE_DATE' => '[tr]Date VAT ID was entered',
     'HELP_OEVATTBE_VAT_IN_STORE_DATE' => '[tr]For telecommunication, broadcasting and electronic services, a customer is taxable, if he has  supplied a valid VAT ID. In order for the shop owner to have a record of when a customer entered this VAT ID, the date it was first entered is shown.',
     'OEVATTBE_TITLE_EVIDENCES_FOR_TBE'=> '[tr]Evidences of customer location',
@@ -37,7 +37,7 @@ $aLang = array(
     'OEVATTBE_COUNTRY_IS_NOT_TBE' => '[tr]NO',
     'OEVATTBE_COUNTRY_NO_TBE_GROUPS_CONFIGURED' => '[tr](not configured)',
     'OEVATTBE_ARTICLE_SUBMIT_BUTTON' => '[tr]Save',
-    'OEVATTBE_ARTICLE_SUBMIT_LABEL' => '[tr]VAT TBE service',
+    'OEVATTBE_ARTICLE_SUBMIT_LABEL' => '[tr]TBE service',
     'OEVATTBE_ARTICLE_COUNTRY' => '[tr]Country',
     'OEVATTBE_ARTICLE_VAT_GROUP' => '[tr]VAT group',
     'OEVATTBE_TBE_COUNTRY' => '[tr]Applie TBE VAT rates',
