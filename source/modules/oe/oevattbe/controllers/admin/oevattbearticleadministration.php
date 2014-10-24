@@ -24,6 +24,7 @@
  */
 class oeVATTBEArticleAdministration extends oxAdminDetails
 {
+    /** @var array Used to cache VAT Groups data. */
     private $_aArticleVATGroupData;
 
     /**
@@ -38,9 +39,10 @@ class oeVATTBEArticleAdministration extends oxAdminDetails
         $oArticle = oxNew('oeVATTBEOxArticle');
         $sCurrentArticleId = $this->getEditObjectId();
         $oArticle->load($sCurrentArticleId);
-        $this->_aViewData['iIsTbeService'] = $oArticle->isTBEService();
         /** @var oxCountry $oCountry */
         $oCountry = oxNew('oxCountry');
+
+        $this->_aViewData['iIsTbeService'] = $oArticle->isTBEService();
         $this->_aViewData['aCountriesAndVATGroups'] = $this->_getCountryAndVATGroupsData($oCountry);
 
         return 'oevattbearticleadministration.tpl';
@@ -69,7 +71,7 @@ class oeVATTBEArticleAdministration extends oxAdminDetails
     }
 
     /**
-     * Checks in template if select element was selected.
+     * Used in template to check if select element was selected.
      *
      * @param string $sCountryId  Html select element country.
      * @param string $sVATGroupId Group which is checked.
