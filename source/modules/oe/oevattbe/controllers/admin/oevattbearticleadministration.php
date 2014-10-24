@@ -61,12 +61,10 @@ class oeVATTBEArticleAdministration extends oxAdminDetails
         $oArticleVATGroupsList->setData($aVATGroupsParams);
         $oArticleVATGroupsList->save();
 
-        $iIsTBEService = $aParams['oevattbe_istbeservice'];
-
         /** @var oeVATTBEOxArticle|oxArticle $oArticle */
         $oArticle = oxNew('oeVATTBEOxArticle');
         $oArticle->load($sCurrentArticleId);
-        $oArticle->oxarticles__oevattbe_istbeservice = new oxField($iIsTBEService);
+        $oArticle->oxarticles__oevattbe_istbeservice = new oxField($aParams['oevattbe_istbeservice']);
         $oArticle->save();
     }
 
