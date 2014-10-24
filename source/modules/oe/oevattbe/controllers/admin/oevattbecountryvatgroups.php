@@ -130,12 +130,7 @@ class oeVATTBECountryVatGroups extends oxAdminDetails
      */
     protected function _factoryVATGroup()
     {
-        /** @var oeVATTBECountryVATGroupsDbGateway $oGateway */
-        $oGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
-
-        /** @var oeVATTBECountryVATGroup $oGroup */
-        $oGroup = oxNew('oeVATTBECountryVATGroup', $oGateway);
-        return $oGroup;
+        return oeVATTBECountryVATGroup::createCountryVATGroup();
     }
 
     /**

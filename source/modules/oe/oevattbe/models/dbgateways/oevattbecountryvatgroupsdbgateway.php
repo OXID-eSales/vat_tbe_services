@@ -100,8 +100,9 @@ class oeVATTBECountryVATGroupsDbGateway extends oeVATTBEModelDbGateway
         $oDb->startTransaction();
 
         $blDeleteResult = $oDb->execute('DELETE FROM `oevattbe_countryvatgroups` WHERE `oevattbe_id` = ' . $oDb->quote($sGroupId));
-
-        $blResult = ($blDeleteResult !== false);
+        $blResult = ($blDeleteResult !== false) ? true : false;
+        $blDeleteResult = $oDb->execute('DELETE FROM `oevattbe_articlevat` WHERE `oevattbe_vatgroupid` = ' . $oDb->quote($sGroupId));
+        $blResult = ($blDeleteResult !== false) ? $blResult : false;
 
         if ($blResult) {
             $oDb->commitTransaction();

@@ -91,6 +91,23 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupsDbGatewayTest exten
     }
 
     /**
+     * Testing deletion of article and groups dependencies on group deletion.
+     */
+    public function testDeletingVATGroupAndArticlesRelations()
+    {
+        $oRelationsList = oeVATTBEArticleVATGroupsList::createArticleVATGroupsList();
+        $oRelationsList->setId('articleid');
+        $oRelationsList->setData(array('germanyid' => '10', 'lithuaniaid' => '12'));
+        $oRelationsList->save();
+
+        $oVatGroupsGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
+        $oVatGroupsGateway->delete('12');
+
+        $oRelationsList->load('articleid');
+        $this->assertSame(array('germanyid' => '10'), $oRelationsList->getData());
+    }
+
+    /**
      * Test loading non existing VAT Group.
      */
     public function testLoadingEmptyVATGroup()
