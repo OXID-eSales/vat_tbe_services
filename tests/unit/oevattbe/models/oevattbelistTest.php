@@ -91,4 +91,11 @@ class Unit_oeVATTBE_Models_oeVATTBEListTest extends OxidTestCase
 
         $this->assertEquals(array(1, 2, 1, 2), $oList->getArray());
     }
+
+    public function testCountingOfListItems()
+    {
+        $oList = new oeVATTBEList(array(1,2));
+
+        $this->assertEquals(2, count($oList));
+    }
 }
