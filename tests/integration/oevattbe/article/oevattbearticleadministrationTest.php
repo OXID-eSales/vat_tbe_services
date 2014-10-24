@@ -104,7 +104,7 @@ class Integration_oeVATTBE_article_oeVATTBEArticleAdministrationTest extends Oxi
     public function testViewDataIsTBEService($iIsTBEArticle)
     {
         /** @var oeVATTBEOxArticle|oxArticle $oArticle */
-        $oArticle = oxNew('oeVATTBEOxArticle');
+        $oArticle = oxNew('oxArticle');
         $oArticle->setId('_testArticle');
         $oArticle->oxarticles__oevattbe_istbeservice = new oxField($iIsTBEArticle);
         $oArticle->save();
