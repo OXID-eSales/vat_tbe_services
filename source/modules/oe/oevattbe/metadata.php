@@ -80,6 +80,7 @@ $aModule = array(
         'oeVATTBECountryVatGroups'                     => 'oe/oevattbe/controllers/admin/oevattbecountryvatgroups.php',
         'oeVATTBEArticleVATGroupsDbGateway'            => 'oe/oevattbe/models/dbgateways/oevattbearticlevatgroupsdbgateway.php',
         'oeVATTBEArticleVATGroupsList'                 => 'oe/oevattbe/models/oevattbearticlevatgroupslist.php',
+        'oeVATTBEVATGroupArticleCacheInvalidator'      => 'oe/oevattbe/models/oevattbevatgrouparticlescacheinvalidator.php',
         'oeVATTBEArticleAdministration'                => 'oe/oevattbe/controllers/admin/oevattbearticleadministration.php',
     ),
     'events'       => array(
