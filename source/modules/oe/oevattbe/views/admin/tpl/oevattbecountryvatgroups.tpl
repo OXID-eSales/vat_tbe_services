@@ -134,7 +134,7 @@
                         </tr>
                         <tr>
                             <td><br>
-                                <input type="submit" class="edittext" name="save" value="[{oxmultilang ident="OEVATTBE_COUNTRY_VAT_GROUP_SAVE"}]"><br><br>
+                                <input type="submit" class="edittext" name="save" value="[{oxmultilang ident="OEVATTBE_SAVE_BUTTON"}]"><br><br>
                             </td>
                         </tr>
                     </table>

@@ -75,7 +75,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                <input type="submit" class="edittext" name="save" value="[{oxmultilang ident="OEVATTBE_ARTICLE_SUBMIT_BUTTON"}]" onClick="Javascript:document.myedit.fnc.value='save'">
+                <input type="submit" class="edittext" name="save" value="[{oxmultilang ident="OEVATTBE_SAVE_BUTTON"}]" onClick="Javascript:document.myedit.fnc.value='save'">
             </td>
         </tr>
     </table>
