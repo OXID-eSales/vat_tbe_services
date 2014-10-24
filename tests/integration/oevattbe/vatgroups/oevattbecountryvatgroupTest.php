@@ -27,7 +27,7 @@
  * @covers oeVATTBECountryVATGroup
  * @covers oeVATTBECountryVATGroupsDbGateway
  */
-class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupsTest extends OxidTestCase
+class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupTest extends OxidTestCase
 {
     /**
      * Tests saving group to database.
@@ -55,6 +55,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupsTest extends OxidTe
 
         return $sGroupId;
     }
+
     /**
      * Tests updating group without loading it, but providing its id and all info instead.
      *
