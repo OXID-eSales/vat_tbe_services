@@ -18,7 +18,7 @@ class oeVATTBECountryVatGroups extends oxAdminDetails
     /**
      * Executes parent method parent::render(), creates oxOrder object,
      * passes it's data to Smarty engine and returns
-     * name of template file "order_paypal.tpl".
+     * name of template file 'order_paypal.tpl'.
      *
      * @return string
      */
@@ -26,7 +26,7 @@ class oeVATTBECountryVatGroups extends oxAdminDetails
     {
         parent::render();
 
-        return "oevattbecountryvatgroups.tpl";
+        return 'oevattbecountryvatgroups.tpl';
     }
 
     /**
@@ -52,7 +52,7 @@ class oeVATTBECountryVatGroups extends oxAdminDetails
      */
     public function addCountryVATGroup()
     {
-        $aParams = oxRegistry::getConfig()->getRequestParameter("editval");
+        $aParams = oxRegistry::getConfig()->getRequestParameter('editval');
         $sCountryId = $aParams['oxcountry__oxid'];
         $sGroupName = $aParams['oevattbe_name'];
         $fVATRate = $aParams['oevattbe_rate'];
@@ -76,7 +76,7 @@ class oeVATTBECountryVatGroups extends oxAdminDetails
      */
     public function changeCountryVATGroups()
     {
-        $aVatGroups = oxRegistry::getConfig()->getRequestParameter("updateval");
+        $aVatGroups = oxRegistry::getConfig()->getRequestParameter('updateval');
 
         $oVatGroup = $this->_factoryVATGroup();
         foreach ($aVatGroups as $aVatGroup) {
