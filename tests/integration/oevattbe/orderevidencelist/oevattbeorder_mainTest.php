@@ -22,6 +22,8 @@
 
 /**
  * Testing admin controller class.
+ *
+ * @covers oeVATTBEOrder_Main
  */
 class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrder_MainTest extends OxidTestCase
 {
