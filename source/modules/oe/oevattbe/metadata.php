@@ -34,7 +34,7 @@ $aModule = array(
         'de' => 'Module for VAT TBE Services.',
         'en' => 'Module for VAT TBE Services.',
     ),
-    'thumbnail'    => 'logo.jpg',
+    'thumbnail'    => 'logo.png',
     'version'      => '1.0.0',
     'author'       => 'OXID eSales AG',
     'url'          => 'http://www.oxid-esales.com',
