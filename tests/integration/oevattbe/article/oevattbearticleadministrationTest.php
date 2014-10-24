@@ -22,6 +22,8 @@
 
 /**
  * Testing VAT TBE administration in article page.
+ *
+ * @covers oeVATTBEArticleAdministration
  */
 class Integration_oeVATTBE_article_oeVATTBEArticleAdministrationTest extends OxidTestCase
 {
