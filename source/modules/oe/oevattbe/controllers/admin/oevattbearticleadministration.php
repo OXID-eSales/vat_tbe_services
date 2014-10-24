@@ -20,7 +20,7 @@
  */
 
 /**
- * Class responsible for VAT TBE article administration.
+ * Class responsible for TBE service administration.
  */
 class oeVATTBEArticleAdministration extends oxAdminDetails
 {
