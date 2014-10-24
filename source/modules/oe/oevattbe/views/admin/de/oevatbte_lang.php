@@ -50,4 +50,5 @@ $aLang = array(
     'OEVATTBE_NEW_COUNTRY_VAT_GROUP_PARAMETER_MISSING' => '[tr]Group name and VAT rate must be entered',
     'OEVATTBE_VAT_RATES' => '[tr]VAT rates:',
     'OEVATTBE_CHOOSE_VAT_RATE' => '[tr]Choose',
+    'OEVATTBE_CREATE_NEW_COUNTRY_VAT_GROUP_LEGEND' => '[tr]Create new group',
 );

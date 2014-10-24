@@ -99,6 +99,7 @@
                 <input type="hidden" name="language" value="[{$actlang}]">
                 <input type="hidden" name="editval[oxcountry__oxid]" value="[{$oxid}]">
                 <fieldset style="padding-left: 5px;" title="new group form">
+                    <legend>[{oxmultilang ident="OEVATTBE_CREATE_NEW_COUNTRY_VAT_GROUP_LEGEND"}]</legend>
                     <table cellspacing="0" cellpadding="0" border="0" width="50%">
                         <tr>
                             <td class="edittext" valign="top">
