@@ -31,8 +31,8 @@ $aModule = array(
     'id'           => 'oevattbe',
     'title'        => 'VAT TBE services',
     'description'  => array(
-        'de' => 'Module for VAT TBE Services.',
-        'en' => 'Module for VAT TBE Services.',
+        'de' => 'OXID eShop eVAT Modul.',
+        'en' => 'OXID eShop eVAT module.',
     ),
     'thumbnail'    => 'logo.png',
     'version'      => '1.0.0',
