@@ -119,6 +119,57 @@ class Integration_oeVATTBE_article_oeVATTBEArticleAdministrationTest extends Oxi
     }
 
     /**
+     * Checks if selected option is saved rate.
+     *
+     * @return oeVATTBEArticleAdministration
+     */
+    public function testSelectedRateForCountry()
+    {
+        /** @var oeVATTBEArticleAdministration $oArticleAdministration */
+        $oArticleAdministration = oxNew('oeVATTBEArticleAdministration');
+        $aSelectParams = array(
+            'a7c40f632e04633c9.47194042' => 2,
+            '8f241f110955d3260.55487539' => ''
+        );
+        $oConfig = $this->getConfig();
+        $oConfig::setRequestParameter('VATGroupsByCountry', $aSelectParams);
+        $oArticleAdministration->setEditObjectId('_testArticle');
+        $oArticleAdministration->save();
+
+        $this->assertSame(true, $oArticleAdministration->isSelected('a7c40f632e04633c9.47194042', '2'));
+
+        return $oArticleAdministration;
+    }
+
+    /**
+     * Checks if rate was not selected.
+     *
+     * @param oeVATTBEArticleAdministration $oArticleAdministration
+     *
+     * @depends testSelectedRateForCountry
+     *
+     * @return oeVATTBEArticleAdministration
+     */
+    public function testNotSelectedRateForCountry($oArticleAdministration)
+    {
+        $this->assertSame(false, $oArticleAdministration->isSelected('8f241f110955d3260.55487539', ''));
+
+        return $oArticleAdministration;
+    }
+
+    /**
+     * Checks if method returns correct value for non existing country.
+     *
+     * @param oeVATTBEArticleAdministration $oArticleAdministration
+     *
+     * @depends testNotSelectedRateForCountry
+     */
+    public function testSelectionForNonExistingCountry($oArticleAdministration)
+    {
+        $this->assertSame(false, $oArticleAdministration->isSelected('NoneExistingId', '2'));
+    }
+
+    /**
      * Prepares VAT TBE groups data.
      *
      * @param array $aData1
