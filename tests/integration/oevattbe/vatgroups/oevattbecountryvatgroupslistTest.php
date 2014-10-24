@@ -46,8 +46,8 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupsListTest extends Ox
         /** @var oeVATTBECountryVATGroupsDbGateway $oGateway */
         $oGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
 
-        $oGroup1 = $this->_createGroupObject($aGroupData, $oGateway);
-        $oGroup2 = $this->_createGroupObject($aGroupData, $oGateway);
+        $oGroup1 = $this->_createGroupObject($aGroupData);
+        $oGroup2 = $this->_createGroupObject($aGroupData);
 
         /** @var oeVATTBECountryVATGroupsList $oGroupsList */
         $oGroupsList = oxNew('oeVATTBECountryVATGroupsList', $oGateway);
@@ -74,14 +74,12 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupsListTest extends Ox
      * Creates VAT Group object and sets given data to it.
      *
      * @param array                      $aData
-     * @param oeVATTBECountryVATGroupsDbGateway $oGateway
      *
      * @return oeVATTBECountryVATGroup
      */
-    protected function _createGroupObject($aData, $oGateway)
+    protected function _createGroupObject($aData)
     {
-        /** @var oeVATTBECountryVATGroup $oGroup */
-        $oGroup = oxNew('oeVATTBECountryVATGroup', $oGateway);
+        $oGroup = oeVATTBECountryVATGroup::createCountryVATGroup();
         $oGroup->setId($aData['OEVATTBE_ID']);
         $oGroup->setData($aData);
         $aData['OEVATTBE_ID'] = $oGroup->save();

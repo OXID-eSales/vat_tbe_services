@@ -20,10 +20,11 @@
  */
 
 /**
- * VAT Groups handling class
+ * VAT Group handling class
  */
 class oeVATTBECountryVATGroup extends oeVATTBEModel
 {
+    private $_oVATGroupArticleCacheInvalidator = null;
 
     /**
      * Creates an instance of oeVATTBECountryVATGroup.
@@ -32,10 +33,51 @@ class oeVATTBECountryVATGroup extends oeVATTBEModel
      */
     public static function createCountryVATGroup()
     {
+        $oInvalidator = oeVATTBEVATGroupArticleCacheInvalidator::createCacheInvalidator();
         $oGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
         $oGroup = oxNew('oeVATTBECountryVATGroup', $oGateway);
+        $oGroup->setVATGroupArticleCacheInvalidator($oInvalidator);
 
         return $oGroup;
+    }
+
+    /**
+     * Sets VAT group articles cache invalidator.
+     * If this invalidator is not set, cache will not be cleared on save and delete events.
+     *
+     * @param null $oVATGroupArticleCacheInvalidator Cache invalidator object.
+     */
+    public function setVATGroupArticleCacheInvalidator($oVATGroupArticleCacheInvalidator)
+    {
+        $this->_oVATGroupArticleCacheInvalidator = $oVATGroupArticleCacheInvalidator;
+    }
+
+    /**
+     * Method for model saving (insert and update data).
+     *
+     * @return int|false
+     */
+    public function save()
+    {
+        $blResult = parent::save();
+        $this->_invalidateGroupArticlesCache();
+
+        return $blResult;
+    }
+
+    /**
+     * Delete model data from db.
+     *
+     * @param string $sId model id
+     *
+     * @return bool
+     */
+    public function delete($sId = null)
+    {
+        $blResult = parent::delete($sId);
+        $this->_invalidateGroupArticlesCache();
+
+        return $blResult;
     }
 
     /**
@@ -127,5 +169,26 @@ class oeVATTBECountryVATGroup extends oeVATTBEModel
     public function setRate($dRate)
     {
         $this->_setValue('oevattbe_rate', $dRate);
+    }
+
+    /**
+     * Returns group articles cache invalidator.
+     *
+     * @return oeVATTBEVATGroupArticleCacheInvalidator
+     */
+    protected function _getVATGroupArticleCacheInvalidator()
+    {
+        return $this->_oVATGroupArticleCacheInvalidator;
+    }
+
+    /**
+     * Clears cache for VAT group articles.
+     */
+    private function _invalidateGroupArticlesCache()
+    {
+        $oInvalidator = $this->_getVATGroupArticleCacheInvalidator();
+        if ($oInvalidator) {
+            $oInvalidator->invalidate($this->getId());
+        }
     }
 }

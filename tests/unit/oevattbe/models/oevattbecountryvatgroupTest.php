@@ -134,4 +134,42 @@ class Unit_oeVatTbe_Models_oeVATTBECountryVATGroupTest extends OxidTestCase
 
         $this->assertInstanceOf('oeVATTBECountryVATGroup', $oGroup);
     }
+
+    /**
+     * Tests invalidating cache on group save event.
+     */
+    public function testInvalidatingCacheOnGroupSaving()
+    {
+        /** @var oeVATTBECountryVATGroupsDbGateway $oGateway */
+        $oGateway = $this->_createStub('oeVATTBECountryVATGroupsDbGateway', array('save' => 'groupId'));
+
+        $oInvalidator = $this->getMock('oeVATTBEVATGroupArticleCacheInvalidator', array('invalidate'), array(), '', false);
+        $oInvalidator->expects($this->atLeastOnce())->method('invalidate')->with('groupId');
+
+        /** @var oeVATTBECountryVATGroup $oGroup */
+        $oGroup = oxNew('oeVATTBECountryVATGroup', $oGateway);
+        $oGroup->setVATGroupArticleCacheInvalidator($oInvalidator);
+        $oGroup->setId('groupId');
+
+        $oGroup->save();
+    }
+
+    /**
+     * Tests invalidating cache on group save event.
+     */
+    public function testInvalidatingCacheOnGroupDeletion()
+    {
+        /** @var oeVATTBECountryVATGroupsDbGateway $oGateway */
+        $oGateway = $this->_createStub('oeVATTBECountryVATGroupsDbGateway', array('save' => 'groupId'));
+
+        $oInvalidator = $this->getMock('oeVATTBEVATGroupArticleCacheInvalidator', array('invalidate'), array(), '', false);
+        $oInvalidator->expects($this->atLeastOnce())->method('invalidate')->with('groupId');
+
+        /** @var oeVATTBECountryVATGroup $oGroup */
+        $oGroup = oxNew('oeVATTBECountryVATGroup', $oGateway);
+        $oGroup->setVATGroupArticleCacheInvalidator($oInvalidator);
+        $oGroup->setId('groupId');
+
+        $oGroup->delete();
+    }
 }

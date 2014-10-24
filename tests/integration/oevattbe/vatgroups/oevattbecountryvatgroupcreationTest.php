@@ -65,7 +65,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupCreationTest extends
 
         $sCountryId = 'some_country_id';
         $aParameters['oxcountry__oxid'] = $sCountryId;
-            $aParameters['oevattbe_name'] = $sGroupName;
+        $aParameters['oevattbe_name'] = $sGroupName;
         $aParameters['oevattbe_rate'] = $fVATRate;
         if ($sGroupDescription) {
             $aParameters['oevattbe_description'] = $sGroupDescription;
