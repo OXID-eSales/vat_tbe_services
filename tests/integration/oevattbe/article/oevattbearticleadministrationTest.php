@@ -30,53 +30,70 @@ class Integration_oeVATTBE_article_oeVATTBEArticleAdministrationTest extends Oxi
      */
     public function testViewData()
     {
-        $this->_prepareData();
+        $aData1 = array(
+            'oevattbe_id'          => '2',
+            'oevattbe_countryid'   => 'a7c40f631fc920687.20179984',
+            'oevattbe_name'        => 'Group Name1',
+            'oevattbe_description' => 'Some description1',
+            'oevattbe_rate'        => '20.50',
+            'oevattbe_timestamp'   => '2014-10-24 09:46:11'
+        );
+        $aData2 = array(
+            'oevattbe_id'          => '3',
+            'oevattbe_countryid'   => 'a7c40f6323c4bfb36.59919433',
+            'oevattbe_name'        => 'Group Name2',
+            'oevattbe_description' => 'Some description2',
+            'oevattbe_rate'        => '11.11',
+            'oevattbe_timestamp'   => '2014-10-24 09:46:11'
+        );
+        $this->_prepareData($aData1, $aData2);
 
         /** @var oeVATTBEArticleAdministration $oArticleAdministration */
         $oArticleAdministration = oxNew('oeVATTBEArticleAdministration');
         $oArticleAdministration->render();
         $aViewData = $oArticleAdministration->getViewData();
 
+        $oCountryVATGroup1 = oeVATTBECountryVATGroup::createCountryVATGroup();
+        $oCountryVATGroup1->setId(2);
+        $oCountryVATGroup1->setData($aData1);
+
+        $oCountryVATGroup2 = oeVATTBECountryVATGroup::createCountryVATGroup();
+        $oCountryVATGroup2->setId(3);
+        $oCountryVATGroup2->setData($aData2);
+
         $aExpectedViewData = array(
             'a7c40f631fc920687.20179984' => array(
-                'a7c40f631fc920687.20179984' => 'Deutschland',
-                '2' => 'Group Name1 - 20.50%'
+                'countryTitle' => 'Deutschland',
+                'countryGroups' => array (
+                    $oCountryVATGroup1
+                ),
             ),
             'a7c40f6323c4bfb36.59919433' => array(
-                'a7c40f6323c4bfb36.59919433' => 'Italien',
-                '3' => 'Group Name2 - 11.11%'
+                'countryTitle' => 'Italien',
+                'countryGroups' => array (
+                    $oCountryVATGroup2
+                ),
             ),
         );
 
-        $this->assertSame($aExpectedViewData, $aViewData['aTBECountries'], 'Data which should go ');
+        $this->assertEquals($aExpectedViewData, $aViewData['aCountriesAndVATGroups'], 'Data which should go to template is not correct.');
     }
 
     /**
      * Prepares VAT TBE groups data.
+     *
+     * @param array $aData1
+     * @param array $aData2
      */
-    private function _prepareData()
+    private function _prepareData($aData1, $aData2)
     {
         /** @var oeVATTBECountryVATGroupsDbGateway $oGateway */
         $oGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
         foreach ($oGateway->getList() as $aGroupInformation) {
             $oGateway->delete($aGroupInformation['OEVATTBE_ID']);
         }
-        $aData1 = array(
-            'oevattbe_id'          => '2',
-            'oevattbe_countryid'   => 'a7c40f631fc920687.20179984',
-            'oevattbe_name'        => 'Group Name1',
-            'oevattbe_description' => 'Some description1',
-            'oevattbe_rate'        => 20.50
-        );
-        $oGateway->save($aData1);
 
-        $aData2 = array(
-            'oevattbe_id'          => '3',
-            'oevattbe_countryid'   => 'a7c40f6323c4bfb36.59919433',
-            'oevattbe_name'        => 'Group Name2',
-            'oevattbe_description' => 'Some description2',
-            'oevattbe_rate'        => 11.11
-        );
+        $oGateway->save($aData1);
         $oGateway->save($aData2);
     }
 }
