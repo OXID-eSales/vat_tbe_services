@@ -31,6 +31,9 @@ class Unit_oeVATTBE_Models_oeVATTBEVATGroupArticleCacheInvalidatorTest extends O
      */
     public function testArticleInvalidation()
     {
+        if ($this->getConfig()->getEdition() != 'EE') {
+            $this->markTestSkipped('Test only on Enterprise shop');
+        }
         $this->getConfig()->setConfigParam('blCacheActive', true);
 
         $aMethods = array('getArticlesAssignedToGroup' => array('article1', 'article2'));
