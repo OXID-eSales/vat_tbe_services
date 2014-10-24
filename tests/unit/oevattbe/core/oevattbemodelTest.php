@@ -19,8 +19,6 @@
  * @copyright (C) OXID eSales AG 2003-2014
  */
 
-require_once realpath(".") . '/unit/OxidTestCase.php';
-
 /**
  * Testing oeVATTBEModel class.
  *
@@ -28,7 +26,6 @@ require_once realpath(".") . '/unit/OxidTestCase.php';
  */
 class Unit_oeVATTBE_Core_oeVATTBEModelTest extends OxidTestCase
 {
-
     /**
      * Loading of data by id, returned by getId method
      */
