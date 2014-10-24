@@ -21,6 +21,9 @@
     .vattbeAdministrationList th {
         text-align: left;
     }
+    .vattbeAdministrationList select {
+        min-width: 180px;
+    }
 </style>
 
 <form action="[{$oViewConf->getSelfLink()}]" method="post">
