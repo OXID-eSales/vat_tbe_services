@@ -56,7 +56,7 @@
                         <td>[{$aVATInformation.countryTitle}]</td>
                         <td>
                             <select name="VATGroupsByCountry[[{$sCountryId}]]">
-                                <option>[{oxmultilang ident="OEVATTBE_CHOOSE_VAT_RATE"}]</option>
+                                <option value="">[{oxmultilang ident="OEVATTBE_CHOOSE_VAT_RATE"}]</option>
                                 [{foreach from=$aVATInformation.countryGroups item=oVATTBECountryVATGroup}]
                                     <option value="[{$oVATTBECountryVATGroup->getId()}]"
                                         [{if $oView->isSelected($sCountryId, $oVATTBECountryVATGroup->getId())}]selected="selected"[{/if}]>
