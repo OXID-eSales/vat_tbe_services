@@ -24,6 +24,8 @@
  */
 class oeVATTBEOrder extends oeVATTBEOrder_parent
 {
+    private $_getBasketItemVATFormatter = null;
+
     /**
      * Executes parent::render(), creates list with basket articles
      * Returns name of template file basket::_sThisTemplate (for Search
@@ -89,25 +91,22 @@ class oeVATTBEOrder extends oeVATTBEOrder_parent
      */
     public function getTBEVat($oBasketItem)
     {
-        $sMessage = $oBasketItem->getVatPercent() . '%';
+        return $this->_getBasketItemVATFormatter()->getTBEVat($oBasketItem);
+    }
 
-        $oArticle = $oBasketItem->getArticle();
-        $oBasket = $this->getSession()->getBasket();
-        $oCountry = $oBasket->getTBECountry();
-        $oMarkGenerator =  $this->getBasketContentMarkGenerator();
-        $aInValidArticles = $oBasket->getTBEInValidArticles();
-
-        if ($oArticle->isTBEService()) {
-            if ($this->getUser()) {
-                $sMessage .= ($oCountry->appliesTBEVAT()) ? $oMarkGenerator->getMark('tbeService') : '';
-                if (!$oBasket->isTBEValid() && isset($aInValidArticles[$oArticle->getId()])) {
-                    $sMessage = '-';
-                }
-            } else {
-                $sMessage .= $oMarkGenerator->getMark('tbeService');
-            }
+    /**
+     * Returns vat formatter
+     *
+     * @return oeVATTBEBasketItemVATFormatter
+     */
+    protected function _getBasketItemVATFormatter()
+    {
+        if (is_null($this->_getBasketItemVATFormatter)) {
+            $oBasket = $this->getSession()->getBasket();
+            $oMarkGenerator =  $this->getBasketContentMarkGenerator();
+            $this->_getBasketItemVATFormatter = oxNew('oeVATTBEBasketItemVATFormatter', $oBasket, $oMarkGenerator);
         }
 
-        return $sMessage;
+        return $this->_getBasketItemVATFormatter;
     }
 }

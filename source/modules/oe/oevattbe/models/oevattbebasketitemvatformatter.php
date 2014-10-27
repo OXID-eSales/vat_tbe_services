@@ -22,22 +22,21 @@
 /**
  * VAT TBE oxBasket class
  */
-class oeVATTBEBasketItemVATFormatter extends oeVatTbeOxBasket_parent
+class oeVATTBEBasketItemVATFormatter
 {
     private $_oBasket;
-    private $_oBasketItem;
+
     private $_oMarkGenerator;
 
     /**
      * Constructor
      *
-     * @param oxBasketItem                         $oBasketItem    Basket item
      * @param oeVATTBEOxBasket                     $oBasket        Basket
      * @param oeVATTBEOxBasketContentMarkGenerator $oMarkGenerator Mark generator
      */
-    public function __construct($oBasketItem, $oBasket, $oMarkGenerator)
+    public function __construct($oBasket, $oMarkGenerator)
     {
-        $this->_oBasketItem = $oBasketItem;
+
         $this->_oBasket = $oBasket;
         $this->_oMarkGenerator = $oMarkGenerator;
     }
@@ -45,11 +44,12 @@ class oeVATTBEBasketItemVATFormatter extends oeVatTbeOxBasket_parent
     /**
      * Return formatted vat rate
      *
+     * @param oxBasketItem $oBasketItem Basket item
+     *
      * @return string
      */
-    public function getTBEVat()
+    public function getTBEVat($oBasketItem)
     {
-        $oBasketItem = $this->_oBasketItem;
         $oBasket = $this->_oBasket;
         $oMarkGenerator =  $this->_oMarkGenerator;
 
