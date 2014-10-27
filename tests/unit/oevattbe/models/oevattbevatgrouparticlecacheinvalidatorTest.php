@@ -55,7 +55,7 @@ class Unit_oeVATTBE_Models_oeVATTBEVATGroupArticleCacheInvalidatorTest extends O
     }
 }
 
-if (oxRegistry::getConfig()->getEdition() != 'EE') {
+if (oxRegistry::getConfig()->getEdition() === 'EE') {
     /**
      * Mock connector class for CacheBackend invalidation testing.
      */
