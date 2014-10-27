@@ -178,6 +178,35 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupsEditingTest extends
     }
 
     /**
+     * Test if country VAT groups might be deleted.
+     */
+    public function testDeleteCountryVatGroup()
+    {
+        $this->setTablesForCleanup('oevattbe_countryvatgroups');
+
+        $sCountryId = 'a7c40f632a0804ab5.18804076';
+        /** @var oeVATTBECountryVatGroups $oVATTBECountryVatGroups */
+        $oVATTBECountryVatGroups = oxNew('oeVATTBECountryVatGroups');
+        $oVATTBECountryVatGroups->setEditObjectId($sCountryId);
+        $aCountryVatGroups = $oVATTBECountryVatGroups->getVatGroups();
+
+        $this->assertSame(2, count($aCountryVatGroups));
+
+        $this->setRequestParam('countryVATGroupId', '79');
+        $oVATTBECountryVatGroups->deleteCountryVatGroup();
+
+        $aCountryVatGroups = $oVATTBECountryVatGroups->getVatGroups();
+        $this->assertSame(1, count($aCountryVatGroups));
+
+        $this->setRequestParam('countryVATGroupId', '80');
+        $oVATTBECountryVatGroups->deleteCountryVatGroup();
+
+        $aCountryVatGroups = $oVATTBECountryVatGroups->getVatGroups();
+        $this->assertSame(0, count($aCountryVatGroups));
+
+    }
+
+    /**
      * Asserts that an array has a specified key.
      *
      * @param mixed             $value   value to search in array.
