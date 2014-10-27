@@ -66,4 +66,35 @@ class oeVATTBEBasket extends oeVATTBEBasket_parent
 
         return $sMessage;
     }
+
+    /**
+     * Return formatted vat rate
+     *
+     * @param oxBasketItem $oBasketItem - basket item
+     *
+     * @return string
+     */
+    public function getTBEVat($oBasketItem)
+    {
+        $sMessage = $oBasketItem->getVatPercent() . '%';
+
+        $oArticle = $oBasketItem->getArticle();
+        $oBasket = $this->getSession()->getBasket();
+        $oCountry = $oBasket->getTBECountry();
+        $oMarkGenerator =  $this->getBasketContentMarkGenerator();
+        $aInValidArticles = $oBasket->getTBEInValidArticles();
+
+        if ($oArticle->isTBEService()) {
+            if ($this->getUser()) {
+                $sMessage .= ($oCountry->appliesTBEVAT()) ? $oMarkGenerator->getMark('tbeService') : '';
+                if (!$oBasket->isTBEValid() && isset($aInValidArticles[$oArticle->getId()])) {
+                    $sMessage = '-';
+                }
+            } else {
+                $sMessage .= $oMarkGenerator->getMark('tbeService');
+            }
+        }
+
+        return $sMessage;
+    }
 }

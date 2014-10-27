@@ -128,6 +128,16 @@ class oeVATTBEOxBasket extends oeVatTbeOxBasket_parent
     }
 
     /**
+     * Return if basket is valid according TBE rules
+     *
+     * @return bool
+     */
+    public function getTBEInValidArticles()
+    {
+        return $this->_getOeVATTBEOrderArticleChecker()->getInvalidArticles();
+    }
+
+    /**
      * Return tbe article checker
      *
      * @return oeVATTBEOrderArticleChecker

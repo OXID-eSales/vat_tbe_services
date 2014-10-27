@@ -100,7 +100,7 @@ class oeVATTBEOrderArticleChecker
             foreach ($mArticleList as $oArticle) {
                 /** @var oeVATTBEOxArticle $oArticle */
                 if ($oArticle->isTBEService() && is_null($oArticle->getTBEVat())) {
-                    $this->_aInvalidArticles[] = $oArticle;
+                    $this->_aInvalidArticles[$oArticle->getId()] = $oArticle;
                 }
             }
         }
