@@ -29,7 +29,7 @@ $sMetadataVersion = '1.2';
  */
 $aModule = array(
     'id'           => 'oevattbe',
-    'title'        => 'VAT TBE services',
+    'title'        => 'OXID eShop eVAT',
     'description'  => array(
         'de' => 'OXID eShop eVAT Modul.',
         'en' => 'OXID eShop eVAT module.',
