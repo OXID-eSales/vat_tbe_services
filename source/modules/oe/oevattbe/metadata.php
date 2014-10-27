@@ -82,6 +82,7 @@ $aModule = array(
         'oeVATTBEArticleVATGroupsList'                 => 'oe/oevattbe/models/oevattbearticlevatgroupslist.php',
         'oeVATTBEVATGroupArticleCacheInvalidator'      => 'oe/oevattbe/models/oevattbevatgrouparticlescacheinvalidator.php',
         'oeVATTBEArticleAdministration'                => 'oe/oevattbe/controllers/admin/oevattbearticleadministration.php',
+        'oeVATTBEBasketItemVATFormatter'                => 'oe/oevattbe/models/oevattbebasketitemvatformatter.php',
     ),
     'events'       => array(
         'onActivate'   => 'oeVatTbeEvents::onActivate',
