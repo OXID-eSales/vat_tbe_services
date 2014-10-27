@@ -25,6 +25,8 @@
 class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderEvidenceListTest extends OxidTestCase
 {
     /**
+     * Saves evidence list.
+     *
      * @return oeVATTBEOrderEvidenceList
      */
     public function testSavingEvidenceList()
@@ -53,9 +55,11 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderEvidenceListTest exten
     }
 
     /**
-     * @depends testSavingEvidenceList
+     * Checks evidence list load.
      *
      * @param oeVATTBEOrderEvidenceList $oList
+     *
+     * @depends testSavingEvidenceList
      *
      * @return oeVATTBEOrderEvidenceList
      */
@@ -88,9 +92,11 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderEvidenceListTest exten
     }
 
     /**
-     * @depends testSavingEvidenceList
+     * Loads with country names and checks.
      *
      * @param oeVATTBEOrderEvidenceList $oList
+     *
+     * @depends testSavingEvidenceList
      *
      * @return oeVATTBEOrderEvidenceList
      */
@@ -125,6 +131,8 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderEvidenceListTest exten
     }
 
     /**
+     * Checks if deletes.
+     *
      * @depends testSavingEvidenceList
      *
      * @param oeVATTBEOrderEvidenceList $oList
