@@ -73,7 +73,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupsListTest extends Ox
     /**
      * Creates VAT Group object and sets given data to it.
      *
-     * @param array                      $aData
+     * @param array $aData
      *
      * @return oeVATTBECountryVATGroup
      */

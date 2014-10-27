@@ -33,10 +33,12 @@ class oeVATTBECountryVATGroup extends oeVATTBEModel
      */
     public static function createCountryVATGroup()
     {
-        $oInvalidator = oeVATTBEVATGroupArticleCacheInvalidator::createCacheInvalidator();
         $oGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
         $oGroup = oxNew('oeVATTBECountryVATGroup', $oGateway);
-        $oGroup->setVATGroupArticleCacheInvalidator($oInvalidator);
+        if (oxRegistry::getConfig()->getEdition() === 'EE') {
+            $oInvalidator = oeVATTBEVATGroupArticleCacheInvalidator::createCacheInvalidator();
+            $oGroup->setVATGroupArticleCacheInvalidator($oInvalidator);
+        }
 
         return $oGroup;
     }
