@@ -203,7 +203,6 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupsEditingTest extends
 
         $aCountryVatGroups = $oVATTBECountryVatGroups->getVatGroups();
         $this->assertSame(0, count($aCountryVatGroups));
-
     }
 
     /**
