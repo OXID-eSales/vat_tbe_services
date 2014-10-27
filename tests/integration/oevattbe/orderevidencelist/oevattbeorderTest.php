@@ -53,8 +53,9 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderTest extends OxidTestC
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence'));
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
 
-        /** @var oeVATTBEOxBasket|oxBasket $oBasket */
-        $oBasket = oxNew('oeVATTBEOxBasket');
+        /** @var oeVATTBEOxBasket|oxBasket|PHPUnit_Framework_MockObject_MockObject $oBasket */
+        $oBasket = $this->getMock('oeVATTBEOxBasket', array('hasVATTBEArticles'));
+        $oBasket->expects($this->any())->method('hasVATTBEArticles')->will($this->returnValue(true));
         /** @var oeVATTBEOxUser|oxUser $oUser */
         $oUser = oxNew('oeVATTBEOxUser');
 
@@ -92,8 +93,9 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderTest extends OxidTestC
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence'));
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
 
-        /** @var oeVATTBEOxBasket|oxBasket $oBasket */
-        $oBasket = oxNew('oeVATTBEOxBasket');
+        /** @var oeVATTBEOxBasket|oxBasket|PHPUnit_Framework_MockObject_MockObject $oBasket */
+        $oBasket = $this->getMock('oeVATTBEOxBasket', array('hasVATTBEArticles'));
+        $oBasket->expects($this->any())->method('hasVATTBEArticles')->will($this->returnValue(true));
         /** @var oeVATTBEOxUser|oxUser $oUser */
         $oUser = oxNew('oeVATTBEOxUser');
 
@@ -122,13 +124,15 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderTest extends OxidTestC
     public function providerNotSavingEvidenceListOnFailedOrder()
     {
         return array(
-            array(oxOrder::ORDER_STATE_PAYMENTERROR),
-            array(oxOrder::ORDER_STATE_ORDEREXISTS),
-            array(oxOrder::ORDER_STATE_INVALIDDELIVERY),
-            array(oxOrder::ORDER_STATE_INVALIDPAYMENT),
-            array(oxOrder::ORDER_STATE_INVALIDTSPROTECTION),
-            array(oxOrder::ORDER_STATE_INVALIDDElADDRESSCHANGED),
-            array(oxOrder::ORDER_STATE_BELOWMINPRICE),
+            array(oxOrder::ORDER_STATE_OK, false),
+            array(oxOrder::ORDER_STATE_MAILINGERROR, false),
+            array(oxOrder::ORDER_STATE_PAYMENTERROR, true),
+            array(oxOrder::ORDER_STATE_ORDEREXISTS, true),
+            array(oxOrder::ORDER_STATE_INVALIDDELIVERY, true),
+            array(oxOrder::ORDER_STATE_INVALIDPAYMENT, true),
+            array(oxOrder::ORDER_STATE_INVALIDTSPROTECTION, true),
+            array(oxOrder::ORDER_STATE_INVALIDDElADDRESSCHANGED, true),
+            array(oxOrder::ORDER_STATE_BELOWMINPRICE, true),
         );
     }
 
@@ -136,18 +140,20 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderTest extends OxidTestC
      * Order was not successfully;
      * Evidence list should not be saved to database.
      *
-     * @param int $iOrderState Order state when evidence list should not be saved.
+     * @param int  $iOrderState      Order state when evidence list should not be saved.
+     * @param bool $blHasTBEArticles Order state when evidence list should not be saved.
      *
      * @dataProvider providerNotSavingEvidenceListOnFailedOrder
      */
-    public function testNotSavingEvidenceListOnFailedOrder($iOrderState)
+    public function testNotSavingEvidenceListOnFailedOrder($iOrderState, $blHasTBEArticles)
     {
         $oConfig = $this->getConfig();
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence'));
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
 
-        /** @var oeVATTBEOxBasket|oxBasket $oBasket */
-        $oBasket = oxNew('oeVATTBEOxBasket');
+        /** @var oeVATTBEOxBasket|oxBasket|PHPUnit_Framework_MockObject_MockObject $oBasket */
+        $oBasket = $this->getMock('oeVATTBEOxBasket', array('hasVATTBEArticles'));
+        $oBasket->expects($this->any())->method('hasVATTBEArticles')->will($this->returnValue($blHasTBEArticles));
         /** @var oeVATTBEOxUser|oxUser $oUser */
         $oUser = oxNew('oeVATTBEOxUser');
 

@@ -84,7 +84,7 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
     {
         $iRet = $this->_getFinalizeOrderParent($oBasket, $oUser, $blRecalculatingOrder);
 
-        if (!$blRecalculatingOrder && ($iRet === parent::ORDER_STATE_OK || $iRet === parent::ORDER_STATE_MAILINGERROR)) {
+        if ($this->_shouldStoreEvidences($iRet, $oBasket, $blRecalculatingOrder)) {
             $oOrderEvidenceList = $this->_factoryOeVATTBEOrderEvidenceList();
 
             $oOrderEvidenceList->setId($this->getId());
@@ -174,4 +174,21 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
         $oTBEUser  = oxNew('oeVATTBETBEUser', oxNew('oxUser'), oxRegistry::getSession(), oxRegistry::getConfig());
         return oxNew('oeVATTBEOrderArticleChecker', $oBasket->getBasketArticles(), $oTBEUser);
     }
+
+    /**
+     * Returns whether to store evidences.
+     *
+     * @param int                     $iRet                 Order status. Check oxOrder constants for available return values.
+     * @param oxBasket|oeVATTBEOxUser $oBasket              Basket object. Will check for TBE articles inside basket.
+     * @param bool                    $blRecalculatingOrder Whether order recalculation is being done.
+     *
+     * @return bool
+     */
+    private function _shouldStoreEvidences($iRet, $oBasket, $blRecalculatingOrder)
+    {
+        $blCorrectOrderState = $iRet === oxOrder::ORDER_STATE_OK || $iRet === oxOrder::ORDER_STATE_MAILINGERROR;
+
+        return !$blRecalculatingOrder && $blCorrectOrderState && $oBasket->hasVATTBEArticles();
+    }
+
 }
