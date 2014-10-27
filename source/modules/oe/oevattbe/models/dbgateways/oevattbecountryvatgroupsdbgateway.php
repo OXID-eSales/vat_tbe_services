@@ -50,6 +50,8 @@ class oeVATTBECountryVATGroupsDbGateway extends oeVATTBEModelDbGateway
             $iGroupId = $oDb->getOne('SELECT LAST_INSERT_ID()');
         }
 
+        $oDb->execute('UPDATE `oxcountry` SET `oevattbe_istbevatconfigured` = 1 WHERE `oxid` = "'. $aData['oevattbe_countryid'] .'"');
+
         return $iGroupId;
     }
 

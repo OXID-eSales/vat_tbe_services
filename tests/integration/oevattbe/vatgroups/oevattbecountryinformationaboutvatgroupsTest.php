@@ -32,6 +32,32 @@
 class Integration_oeVatTbe_VATGroups_CountryInformationAboutVatGroupsTest extends OxidTestCase
 {
     /**
+     * Test if country information updated when adding group.
+     */
+    public function testAddCountryVatGroup()
+    {
+        $this->setTablesForCleanup('oevattbe_countryvatgroups');
+
+        $sCountryId = '8f241f11095410f38.37165361';
+
+        /** @var oxCountry|oeVATTBEOxCountry $oCountry */
+        $oCountry = oxNew('oxCountry');
+        $oCountry->load($sCountryId);
+        $this->assertFalse($oCountry->isOEVATTBEAtLeastOneGroupConfigured(), 'Country should not be marked as configured before test.');
+
+        $oGroup = oeVATTBECountryVATGroup::createCountryVATGroup();
+
+        $oGroup->setCountryId($sCountryId);
+        $oGroup->setName('Group Name');
+        $oGroup->setDescription('Some description');
+        $oGroup->setRate('20.50');
+        $oGroup->save();
+
+        $oCountry->load($sCountryId);
+        $this->assertTrue($oCountry->isOEVATTBEAtLeastOneGroupConfigured(), 'Country should be configured as new group was created.');
+    }
+
+    /**
      * Test if country information updated when deleting groups.
      */
     public function testDeleteCountryVatGroup()
