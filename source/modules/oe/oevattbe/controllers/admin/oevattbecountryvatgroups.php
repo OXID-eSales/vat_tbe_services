@@ -54,7 +54,7 @@ class oeVATTBECountryVatGroups extends oxAdminDetails
     {
         /** @var oeVATTBECountryVATGroupsDbGateway $oGateway */
         $oGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
-        /** @var oeVATTBECountryVATGroupsList $oeVATTBECountryVATGroupsList */
+        /** @var oeVATTBECountryVATGroupsList $oVATTBECountryVATGroupsList */
         $oVATTBECountryVATGroupsList = oxNew('oeVATTBECountryVATGroupsList', $oGateway);
         $aVATTBECountryVATGroupsList = $oVATTBECountryVATGroupsList->load($this->getEditObjectId());
 
