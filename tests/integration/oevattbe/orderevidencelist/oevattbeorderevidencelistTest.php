@@ -133,9 +133,9 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderEvidenceListTest exten
     /**
      * Checks if deletes.
      *
-     * @depends testSavingEvidenceList
-     *
      * @param oeVATTBEOrderEvidenceList $oList
+     *
+     * @depends testSavingEvidenceList
      */
     public function testDeletingEvidenceList($oList)
     {
