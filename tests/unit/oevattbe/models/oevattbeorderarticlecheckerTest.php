@@ -25,7 +25,11 @@
  */
 class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends OxidTestCase
 {
-
+    /**
+     * Provider for test.
+     *
+     * @return array
+     */
     public function providerCheckingArticlesWithEmptyList()
     {
         $oCountry = $this->getMock('oxCountry', array('isInEU', 'appliesTBEVAT'));
@@ -44,6 +48,11 @@ class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends OxidTestCase
     }
 
     /**
+     * Checks articles with empty list.
+     *
+     * @param array|null      $mEmptyList
+     * @param oeVATTBETBEUser $oUser
+     *
      * @dataProvider providerCheckingArticlesWithEmptyList
      */
     public function testCheckingArticlesWithEmptyList($mEmptyList, $oUser)
@@ -53,6 +62,9 @@ class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends OxidTestCase
         $this->assertSame(true, $oChecker->isValid());
     }
 
+    /**
+     * Checks articles if valid.
+     */
     public function testCheckingArticlesWhenCorrectArticlesExists()
     {
         $oArticleWithoutVAT = $this->_createArticle(false, null);
@@ -74,6 +86,9 @@ class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends OxidTestCase
         $this->assertTrue($oChecker->isValid());
     }
 
+    /**
+     * Checks articles if not valid.
+     */
     public function testCheckingArticlesWhenCorrectArticlesExistsButCountryNot()
     {
         $oArticleWithoutVAT = $this->_createArticle(false, null);
@@ -91,6 +106,11 @@ class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends OxidTestCase
         $this->assertFalse($oChecker->isValid());
     }
 
+    /**
+     * Checks articles if not valid.
+     *
+     * @return oeVATTBEOrderArticleChecker
+     */
     public function testCheckingArticlesWhenIncorrectArticlesExists()
     {
         $oArticleWithoutVAT = $this->_createArticle(false, null);
@@ -112,6 +132,9 @@ class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends OxidTestCase
         return $oChecker;
     }
 
+    /**
+     * Checks invalid articles.
+     */
     public function testReturningInvalidArticlesWhenIncorrectArticlesExists()
     {
         $oArticleWithoutVAT = $this->_createArticle(false, null);
@@ -134,7 +157,11 @@ class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends OxidTestCase
         $this->assertSame($aIncorrectArticles, $oChecker->getInvalidArticles());
     }
 
-
+    /**
+     * Checks articles if valid.
+     *
+     * @return oeVATTBEOrderArticleChecker
+     */
     public function testCheckingArticlesWhenIncorrectArticlesExistsButCountryIsNotEu()
     {
         $oArticleWithoutVAT = $this->_createArticle(false, null);
@@ -156,6 +183,11 @@ class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends OxidTestCase
         return $oChecker;
     }
 
+    /**
+     * Checks articles if valid.
+     *
+     * @return oeVATTBEOrderArticleChecker
+     */
     public function testCheckingArticlesWhenIncorrectArticlesExistsButCountryIsEuButNotTBE()
     {
         $oArticleWithoutVAT = $this->_createArticle(false, null);
@@ -177,6 +209,14 @@ class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends OxidTestCase
         return $oChecker;
     }
 
+    /**
+     * Creates article.
+     *
+     * @param bool $blTBEService
+     * @param int  $iVat
+     *
+     * @return oxArticle|PHPUnit_Framework_MockObject_MockObject
+     */
     protected function _createArticle($blTBEService, $iVat)
     {
         $oArticle = $this->getMock('oxArticle', array('isTBEService', 'getTBEVat'));
