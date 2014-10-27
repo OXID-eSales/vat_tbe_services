@@ -22,6 +22,8 @@
 [{*/Required for admin tabs to work*}]
 
 <table cellspacing="0" cellpadding="0" border="0" width="50%">
+    [{assign var=aVatGroups value=$oView->getVatGroups()}]
+    [{if count($aVatGroups) > 0}]
     <tr>
         <td valign="top" class="edittext" style="width:50%">
             <form name="countryVATGroupList" id="countryVATGroupList" action="[{$oViewConf->getSelfLink()}]" method="post">
@@ -33,7 +35,6 @@
                 <input type="hidden" name="language" value="[{$actlang}]">
                 <table cellspacing="0" cellpadding="1" border="0" width="98%">
                     [{assign var=oddclass value="2"}]
-                    [{assign var=aVatGroups value=$oView->getVatGroups()}]
                     <colgroup>
                         [{block name="admin_country_list_colgroup"}]
                             <col width="1%">
@@ -70,18 +71,15 @@
                             </td>
                         </tr>
                     [{/foreach}]
-                    [{if count($aVatGroups) > 0}]
-                        <tr>
-                            <td colspan="4"><br>
-                                <input type="submit" class="edittext" name="saveAll" value="[{ oxmultilang ident="OEVATTBE_SAVE_BUTTON" }]"><br><br>
-                            </td>
-                        </tr>
-                    [{/if}]
+                    <tr>
+                        <td colspan="4"><br>
+                            <input type="submit" class="edittext" name="saveAll" value="[{ oxmultilang ident="OEVATTBE_COUNTRY_VAT_GROUP_SAVE" }]"><br><br>
+                        </td>
+                    </tr>
                 </table>
             </form>
         </td>
     </tr>
-    [{if count($aVatGroups) > 0}]
     <tr>
         <td>
             <hr />
