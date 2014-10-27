@@ -73,7 +73,7 @@
                     [{/foreach}]
                     <tr>
                         <td colspan="4"><br>
-                            <input type="submit" class="edittext" name="saveAll" value="[{ oxmultilang ident="OEVATTBE_COUNTRY_VAT_GROUP_SAVE" }]"><br><br>
+                            <input type="submit" class="edittext" name="saveAll" value="[{ oxmultilang ident="OEVATTBE_SAVE_BUTTON" }]"><br><br>
                         </td>
                     </tr>
                 </table>
