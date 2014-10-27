@@ -55,75 +55,77 @@ class Unit_oeVATTBE_Models_oeVATTBEVATGroupArticleCacheInvalidatorTest extends O
     }
 }
 
-/**
- * Mock connector class for CacheBackend invalidation testing.
- */
-class oxTestCacheConnector implements oxiCacheConnector
-{
-    /** @var array */
-    public $aCache = array();
-
+if (oxRegistry::getConfig()->getEdition() != 'EE') {
     /**
-     * Returns that cache is always active.
-     *
-     * @return bool
+     * Mock connector class for CacheBackend invalidation testing.
      */
-    public static function isAvailable()
+    class oxTestCacheConnector implements oxiCacheConnector
     {
-        return true;
-    }
+        /** @var array */
+        public $aCache = array();
 
-    /**
-     * Sets value to cache.
-     *
-     * @param string|array $mKey
-     * @param mixed        $mValue
-     * @param int          $iTTL
-     */
-    public function set($mKey, $mValue = null, $iTTL = null)
-    {
-        if (is_array($mKey)) {
-            $this->aCache = array_merge($this->aCache, $mKey);
-        } else {
-            $this->aCache[$mKey] = $mValue;
+        /**
+         * Returns that cache is always active.
+         *
+         * @return bool
+         */
+        public static function isAvailable()
+        {
+            return true;
         }
-    }
 
-    /**
-     * Returns value in cache.
-     *
-     * @param array|string $mKey
-     *
-     * @return array
-     */
-    public function get($mKey)
-    {
-        if (is_array($mKey)) {
-            return array_intersect_key($this->aCache, array_flip($mKey));
-        } else {
-            return $this->aCache[$mKey];
+        /**
+         * Sets value to cache.
+         *
+         * @param string|array $mKey
+         * @param mixed        $mValue
+         * @param int          $iTTL
+         */
+        public function set($mKey, $mValue = null, $iTTL = null)
+        {
+            if (is_array($mKey)) {
+                $this->aCache = array_merge($this->aCache, $mKey);
+            } else {
+                $this->aCache[$mKey] = $mValue;
+            }
         }
-    }
 
-    /**
-     * Removes item with given key from cache.
-     *
-     * @param array|string $mKey
-     */
-    public function invalidate($mKey)
-    {
-        if (is_array($mKey)) {
-            $this->aCache = array_diff_key($this->aCache, array_flip($mKey));
-        } else {
-            $this->aCache[$mKey] = null;
+        /**
+         * Returns value in cache.
+         *
+         * @param array|string $mKey
+         *
+         * @return array
+         */
+        public function get($mKey)
+        {
+            if (is_array($mKey)) {
+                return array_intersect_key($this->aCache, array_flip($mKey));
+            } else {
+                return $this->aCache[$mKey];
+            }
         }
-    }
 
-    /**
-     * Removes all items from cache.
-     */
-    public function flush()
-    {
-        $this->aCache = array();
+        /**
+         * Removes item with given key from cache.
+         *
+         * @param array|string $mKey
+         */
+        public function invalidate($mKey)
+        {
+            if (is_array($mKey)) {
+                $this->aCache = array_diff_key($this->aCache, array_flip($mKey));
+            } else {
+                $this->aCache[$mKey] = null;
+            }
+        }
+
+        /**
+         * Removes all items from cache.
+         */
+        public function flush()
+        {
+            $this->aCache = array();
+        }
     }
 }
