@@ -25,6 +25,9 @@
  */
 class Unit_oeVATTBE_Models_oeVATTBEOrderEvidenceListTest extends OxidTestCase
 {
+    /**
+     * Saves evidence list.
+     */
     public function testSavingEvidenceList()
     {
         $aData = array('evidence' => 'evidenceData');
@@ -40,6 +43,9 @@ class Unit_oeVATTBE_Models_oeVATTBEOrderEvidenceListTest extends OxidTestCase
         $oList->save();
     }
 
+    /**
+     * Checks if evidence list data.
+     */
     public function testLoadingEvidenceList()
     {
         $aData = array('evidence' => 'evidenceData');
@@ -52,6 +58,9 @@ class Unit_oeVATTBE_Models_oeVATTBEOrderEvidenceListTest extends OxidTestCase
         $this->assertEquals($aData, $oList->getData());
     }
 
+    /**
+     * Deletes evidence list.
+     */
     public function testDeletingEvidenceList()
     {
         $oGateway = $this->getMock('TestGateway', array('load', 'delete'));
