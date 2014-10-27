@@ -79,6 +79,20 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupsEditingTest extends
     }
 
     /**
+     * Test if do not load groups for Country without groups.
+     */
+    public function testGetVatGroupsForCountryWithoutGroups()
+    {
+        $sCountryId = 'a7c40f6321c6f6109.43859248';
+        /** @var oeVATTBECountryVatGroups $oVATTBECountryVatGroups */
+        $oVATTBECountryVatGroups = oxNew('oeVATTBECountryVatGroups');
+        $oVATTBECountryVatGroups->setEditObjectId($sCountryId);
+        $aCountryVatGroups = $oVATTBECountryVatGroups->getVatGroups();
+
+        $this->assertSame(array(), $aCountryVatGroups);
+    }
+
+    /**
      * Test if changing VAT groups for Country works.
      */
     public function testChangeCountryVATGroups()
