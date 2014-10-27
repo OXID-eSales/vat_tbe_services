@@ -28,6 +28,19 @@ class oeVATTBEOrderEvidenceList extends oeVATTBEModel
     protected $_aData = array();
 
     /**
+     * Creates an instance of oeVATTBEOrderEvidenceList.
+     *
+     * @return oeVATTBEOrderEvidenceList;
+     */
+    public static function createOrderEvidenceList()
+    {
+        $oGateway = oxNew('oeVATTBEOrderEvidenceListDbGateway');
+        $oList = oxNew('oeVATTBEOrderEvidenceList', $oGateway);
+
+        return $oList;
+    }
+
+    /**
      * Method for model saving (insert and update data).
      *
      * @return int|false

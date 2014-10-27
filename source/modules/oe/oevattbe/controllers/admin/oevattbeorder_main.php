@@ -37,15 +37,12 @@ class oeVATTBEOrder_Main extends oeVATTBEOrder_Main_parent
         $oOrder = oxNew("oxOrder");
         $sOrderEvidenceId = $this->_getCurrentOrderEvidenceId($oOrder, $sOrderId);
 
-        /** @var oeVATTBEOrderEvidenceListDbGateway $oDBGateway */
-        $oDBGateway = oxNew('oeVATTBEOrderEvidenceListDbGateway');
-
-        /** @var oeVATTBEOrderEvidenceList $oEvidenceList */
-        $oEvidenceList = oxNew('oeVATTBEOrderEvidenceList', $oDBGateway);
+        $oEvidenceList = oeVATTBEOrderEvidenceList::createOrderEvidenceList();
         $oEvidenceList->loadWithCountryNames($sOrderId);
         $aEvidencesData = $oEvidenceList->getData();
 
         $this->_aViewData["sTBECountry"] = $aEvidencesData[$sOrderEvidenceId]['countryTitle'];
+        $this->_aViewData["aEvidenceUsed"] = $sOrderEvidenceId;
         $this->_aViewData["aEvidencesData"] = $aEvidencesData;
 
         return parent::render();

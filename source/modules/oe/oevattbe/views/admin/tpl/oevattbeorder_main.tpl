@@ -35,8 +35,16 @@
                             </tr>
                             [{foreach from=$aEvidencesData item=evidence}]
                             <tr>
-                                <td class="edittext">[{$evidence.name}]</td>
-                                <td class="edittext">[{$evidence.countryTitle}]</td>
+                                <td class="edittext" >
+                                    [{if $aEvidenceUsed == $evidence.name}]<b>[{/if}]
+                                        [{$evidence.name}]
+                                    [{if $aEvidenceUsed == $evidence.id}]<\b>[{/if}]
+                                </td>
+                                <td class="edittext">
+                                    [{if $aEvidenceUsed == $evidence.name}]<b>[{/if}]
+                                        [{$evidence.countryTitle}]
+                                    [{if $aEvidenceUsed == $evidence.id}]<\b>[{/if}]
+                                </td>
                             </tr>
                             [{/foreach}]
                         </table>
