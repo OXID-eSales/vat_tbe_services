@@ -99,12 +99,22 @@ class oeVATTBECountryVATGroupsDbGateway extends oeVATTBEModelDbGateway
         $oDb = $this->_getDb();
         $oDb->startTransaction();
 
+        $aGroupInformation = $this->load($sGroupId);
+        $sCountryId = $aGroupInformation['OEVATTBE_COUNTRYID'];
+
         $blDeleteResult = $oDb->execute('DELETE FROM `oevattbe_countryvatgroups` WHERE `oevattbe_id` = ' . $oDb->quote($sGroupId));
         $blResult = ($blDeleteResult !== false) ? true : false;
         $blDeleteResult = $oDb->execute('DELETE FROM `oevattbe_articlevat` WHERE `oevattbe_vatgroupid` = ' . $oDb->quote($sGroupId));
         $blResult = ($blDeleteResult !== false) ? $blResult : false;
 
+        $bCountryHasGroup = (bool) $oDb->getOne(
+            'SELECT `oevattbe_id`FROM `oevattbe_countryvatgroups` WHERE `oevattbe_countryid` = "'. $sCountryId .'" LIMIT 1'
+        );
+
         if ($blResult) {
+            if (!$bCountryHasGroup) {
+                $oDb->execute('UPDATE `oxcountry`SET `oevattbe_istbevatconfigured` = 0 WHERE `oxid` = "'. $sCountryId .'"');
+            }
             $oDb->commitTransaction();
         } else {
             $oDb->rollbackTransaction();
