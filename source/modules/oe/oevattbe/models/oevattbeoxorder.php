@@ -226,5 +226,4 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
 
         return !$blRecalculatingOrder && $blCorrectOrderState && $oBasket->hasVATTBEArticles();
     }
-
 }
