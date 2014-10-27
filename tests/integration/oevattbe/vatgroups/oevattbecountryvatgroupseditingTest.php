@@ -79,6 +79,49 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupsEditingTest extends
     }
 
     /**
+     * Test if changing VAT groups for Country works.
+     */
+    public function testChangeCountryVATGroups()
+    {
+        $this->setTablesForCleanup('oevattbe_countryvatgroups');
+
+        $fVATRate = 55.5;
+        $sExpectedVATRate = '55.50';
+
+        $iGroupId = 56;
+        $aRequestParameters[$iGroupId]['oevattbe_id'] = $iGroupId;
+        $aRequestParameters[$iGroupId]['oevattbe_name'] = 'some name';
+        $aRequestParameters[$iGroupId]['oevattbe_rate'] = $fVATRate;
+        $aRequestParameters[$iGroupId]['oevattbe_description'] = 'some description';
+
+        $iGroupId = 57;
+        $aRequestParameters[$iGroupId]['oevattbe_id'] = $iGroupId;
+        $aRequestParameters[$iGroupId]['oevattbe_name'] = 'some other name';
+        $aRequestParameters[$iGroupId]['oevattbe_rate'] = $fVATRate;
+        $aRequestParameters[$iGroupId]['oevattbe_description'] = 'some other description';
+
+        $this->setRequestParam('updateval', $aRequestParameters);
+
+        $sAustriaId = 'a7c40f6320aeb2ec2.72885259';
+        /** @var oeVATTBECountryVatGroups $oVATTBECountryVatGroups */
+        $oVATTBECountryVatGroups = oxNew('oeVATTBECountryVatGroups');
+        $oVATTBECountryVatGroups->setEditObjectId($sAustriaId);
+        $oVATTBECountryVatGroups->changeCountryVATGroups();
+
+        /** @var oeVATTBECountryVATGroupsDbGateway $oGateway */
+        $oGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
+        /** @var oeVATTBECountryVatGroup $oVATTBECountryVatGroup */
+        $oVATTBECountryVatGroup = oxNew('oeVATTBECountryVatGroup', $oGateway);
+
+        foreach ($aRequestParameters as $iExpectedGroupId => $aExpectedCountryVatGroup) {
+            $oVATTBECountryVatGroup->load($iExpectedGroupId);
+            $this->assertSame($aExpectedCountryVatGroup['oevattbe_name'], $oVATTBECountryVatGroup->getName());
+            $this->assertSame($sExpectedVATRate, $oVATTBECountryVatGroup->getRate());
+            $this->assertSame($aExpectedCountryVatGroup['oevattbe_description'], $oVATTBECountryVatGroup->getDescription());
+        }
+    }
+
+    /**
      * Asserts that an array has a specified key.
      *
      * @param mixed             $value   value to search in array.
