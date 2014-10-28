@@ -137,9 +137,9 @@ class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends OxidTestCase
      */
     public function testReturningInvalidArticlesWhenIncorrectArticlesExists()
     {
-        $oArticleWithoutVAT = $this->_createArticle(false, null);
-        $oTBEArticleWithoutVAT1 = $this->_createArticle(true, null);
-        $oTBEArticleWithoutVAT2 = $this->_createArticle(true, null);
+        $oArticleWithoutVAT = $this->_createArticle(false, null, 'id');
+        $oTBEArticleWithoutVAT1 = $this->_createArticle(true, null, 'id1');
+        $oTBEArticleWithoutVAT2 = $this->_createArticle(true, null, 'id2');
 
         $aArticles = array($oArticleWithoutVAT, $oTBEArticleWithoutVAT1, $oTBEArticleWithoutVAT2);
 
@@ -152,7 +152,7 @@ class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends OxidTestCase
 
         $oChecker = oxNew('oeVATTBEOrderArticleChecker', $aArticles, $oUser);
 
-        $aIncorrectArticles = array($oTBEArticleWithoutVAT1, $oTBEArticleWithoutVAT2);
+        $aIncorrectArticles = array('id1'=>$oTBEArticleWithoutVAT1, 'id2'=>$oTBEArticleWithoutVAT2);
 
         $this->assertSame($aIncorrectArticles, $oChecker->getInvalidArticles());
     }
@@ -219,9 +219,12 @@ class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends OxidTestCase
      */
     protected function _createArticle($blTBEService, $iVat)
     {
-        $oArticle = $this->getMock('oxArticle', array('oeVATTBEisTBEService', 'oeVATTBEgetTBEVat'));
-        $oArticle->expects($this->any())->method('oeVATTBEisTBEService')->will($this->returnValue($blTBEService));
-        $oArticle->expects($this->any())->method('oeVATTBEgetTBEVat')->will($this->returnValue($iVat));
+        $oArticle = $this->getMock('oxArticle', array('isTBEService', 'getTBEVat'));
+        $oArticle->expects($this->any())->method('isTBEService')->will($this->returnValue($blTBEService));
+        $oArticle->expects($this->any())->method('getTBEVat')->will($this->returnValue($iVat));
+        if (!is_null($sId)) {
+            $oArticle->expects($this->any())->method('getId')->will($this->returnValue($sId));
+        }
 
         return $oArticle;
     }
