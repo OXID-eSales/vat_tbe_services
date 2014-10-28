@@ -45,7 +45,7 @@ class Unit_oeVatTbe_models_oeVATTBEBasketItemVatFormatterTest extends OxidTestCa
         $oCountry = $this->getMock("oeVATTBEoxCountry", array('appliesTBEVAT'));
         $oCountry->expects($this->any())->method("appliesTBEVAT")->will($this->returnValue($blIsCountryConfigured));
 
-        $oArticle = $this->getMock("oeVATTBEoxArticle", array('isTBEService'));
+        $oArticle = $this->getMock("oeVATTBEoxArticle", array('oeVATTBEisTBEService'));
         $oArticle->expects($this->any())->method("isTBEService")->will($this->returnValue($blIsArticleTbeService));
 
         $oBasketItem = $this->getMock("oxBasketItem", array('getVatPercent', 'getArticle'));
@@ -98,7 +98,7 @@ class Unit_oeVatTbe_models_oeVATTBEBasketItemVatFormatterTest extends OxidTestCa
         $oCountry = $this->getMock("oeVATTBEoxCountry", array('appliesTBEVAT'));
         $oCountry->expects($this->any())->method("appliesTBEVAT")->will($this->returnValue(true));
 
-        $oArticle = $this->getMock("oeVATTBEoxArticle", array('isTBEService', 'getId'));
+        $oArticle = $this->getMock("oeVATTBEoxArticle", array('oeVATTBEisTBEService', 'getId'));
         $oArticle->expects($this->any())->method("isTBEService")->will($this->returnValue(true));
         $ArticleId = ($blIsInvalidArticle) ? 'id1' : 'id';
         $oArticle->expects($this->any())->method("getId")->will($this->returnValue($ArticleId));
