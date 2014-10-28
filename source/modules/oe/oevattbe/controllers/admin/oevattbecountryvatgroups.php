@@ -85,6 +85,8 @@ class oeVATTBECountryVatGroups extends oxAdminDetails
         $oGroup->setRate($fVATRate);
         $oGroup->setDescription($sGroupDescription);
         $oGroup->save();
+
+        $this->_aViewData["updatelist"] = "1";
     }
 
     /**
@@ -121,6 +123,8 @@ class oeVATTBECountryVatGroups extends oxAdminDetails
         $oVATGroup = $this->_factoryVATGroup();
         $oVATGroup->setId($iVATGroupId);
         $oVATGroup->delete();
+
+        $this->_aViewData["updatelist"] = "1";
     }
 
     /**
