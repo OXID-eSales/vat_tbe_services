@@ -1,4 +1,4 @@
 [{* product VAT percent *}]
 <td class="vatPercent">
-    [{$oView->oeVATTBEgetTBEVatFormatted($basketitem)}]
+    [{$oView->getOeVATTBETBEVatFormatted($basketitem)}]
 </td>

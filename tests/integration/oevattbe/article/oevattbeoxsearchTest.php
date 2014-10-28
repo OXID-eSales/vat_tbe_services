@@ -49,7 +49,7 @@ class Integration_oeVATTBE_article_oeVATTBEOxSearchTest extends OxidTestCase
         /** @var oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertSame('8.00', $oArticle->oeVATTBEgetTBEVat());
+        $this->assertSame('8.00', $oArticle->getOeVATTBETBEVat());
     }
 
     /**
@@ -68,7 +68,7 @@ class Integration_oeVATTBE_article_oeVATTBEOxSearchTest extends OxidTestCase
         /** @var oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertNull($oArticle->oeVATTBEgetTBEVat());
+        $this->assertNull($oArticle->getOeVATTBETBEVat());
     }
 
     /**
@@ -83,7 +83,7 @@ class Integration_oeVATTBE_article_oeVATTBEOxSearchTest extends OxidTestCase
         /** @var oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertNull($oArticle->oeVATTBEgetTBEVat());
+        $this->assertNull($oArticle->getOeVATTBETBEVat());
     }
 
     /**
