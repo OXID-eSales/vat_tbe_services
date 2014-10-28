@@ -63,7 +63,7 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
     {
         $aKeys = parent::getCacheKeys($aLanguages, $aShops);
 
-        $oTBEArticleCacheKey = $this->_getVATTBETBEArticleCacheKey();
+        $oTBEArticleCacheKey = $this->_getOeVATTBETBEArticleCacheKey();
         if ($this->isOeVATTBETBEService() && $oTBEArticleCacheKey->needToCalculateKeys()) {
             $aKeys = $oTBEArticleCacheKey->updateCacheKeys($aKeys);
         }
@@ -81,14 +81,14 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
      */
     public function buildSelectString($aWhere = null)
     {
-        if (!$this->_isTBEConfigured()) {
+        if (!$this->_isOeVATTBEConfigured()) {
             return parent::buildSelectString($aWhere);
         }
 
         $sSelect = "SELECT ";
-        $sSelect .= $this->_getVATTBEArticleSqlBuilder()->getSelectFields();
+        $sSelect .= $this->_getOeVATTBETBEArticleSqlBuilder()->getSelectFields();
         $sSelect .= " FROM " . $this->getViewName();
-        $sSelect .= $this->_getVATTBEArticleSqlBuilder()->getJoins();
+        $sSelect .= $this->_getOeVATTBETBEArticleSqlBuilder()->getJoins();
         $sSelect .= " WHERE 1 ";
 
         if ($aWhere) {
@@ -136,7 +136,7 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
      *
      * @return string
      */
-    private function _isTBEConfigured()
+    private function _isOeVATTBEConfigured()
     {
         $isConfigured = false;
         $sCountryId = $this->_getTbeCountryId();
@@ -155,7 +155,7 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
      *
      * @return oeVATTBETBEArticleCacheKey
      */
-    protected function _getVATTBETBEArticleCacheKey()
+    protected function _getOeVATTBETBEArticleCacheKey()
     {
         if (!$this->_oVATTBEArticle) {
             $this->_oVATTBEArticle = oxNew('oeVATTBETBEArticleCacheKey', $this->getUser());
@@ -169,7 +169,7 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
      *
      * @return oeVATTBEArticleSQLBuilder
      */
-    protected function _getVATTBEArticleSqlBuilder()
+    protected function _getOeVATTBETBEArticleSqlBuilder()
     {
         if (is_null($this->_oVATTBEArticleSQLBuilder)) {
             $this->_oVATTBEArticleSQLBuilder = oxNew('oeVATTBEArticleSQLBuilder', $this);
