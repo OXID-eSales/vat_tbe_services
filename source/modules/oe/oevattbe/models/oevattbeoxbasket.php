@@ -56,7 +56,7 @@ class oeVATTBEOxBasket extends oeVatTbeOxBasket_parent
         $oBasketArticles = $this->getBasketArticles();
         foreach ($oBasketArticles as $oArticle) {
             /** @var oxArticle $oArticle */
-            if ($oArticle->oeVATTBEisTBEService()) {
+            if ($oArticle->isOeVATTBETBEService()) {
                 $blHasTBEArticles = true;
                 break;
             }

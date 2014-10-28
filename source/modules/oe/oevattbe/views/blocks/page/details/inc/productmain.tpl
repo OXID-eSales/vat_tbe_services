@@ -1,4 +1,4 @@
 [{$smarty.block.parent}]
-[{if $oDetailsProduct->oeVATTBEisTBEService() && $oView->isVatIncluded()}]
+[{if $oDetailsProduct->isOeVATTBETBEService() && $oView->isVatIncluded()}]
     <label class="price tbePrice"><strong><span>**</span></strong></label>
 [{/if}]

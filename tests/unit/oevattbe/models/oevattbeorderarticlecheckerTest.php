@@ -220,8 +220,8 @@ class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends OxidTestCase
      */
     protected function _createArticle($blTBEService, $iVat)
     {
-        $oArticle = $this->getMock('oeVATTBEOxArticle', array('oeVATTBEisTbeService', 'getOeVATTBETBEVat'));
-        $oArticle->expects($this->any())->method('oeVATTBEisTbeService')->will($this->returnValue($blTBEService));
+        $oArticle = $this->getMock('oxArticle', array('isOeVATTBETBEService', 'getOeVATTBETBEVat'));
+        $oArticle->expects($this->any())->method('isOeVATTBETBEService')->will($this->returnValue($blTBEService));
         $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->will($this->returnValue($iVat));
         if (!is_null($sId)) {
             $oArticle->expects($this->any())->method('getId')->will($this->returnValue($sId));

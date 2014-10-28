@@ -33,9 +33,9 @@
     <input type="hidden" name="oxid" value="[{$oxid}]">
 
     <p>
-        <label for="oevattbeIsTBEService">[{oxmultilang ident="OEVATTBE_ARTICLE_SUBMIT_LABEL"}]</label>
+        <label for="isOeVATTBETBEService">[{oxmultilang ident="OEVATTBE_ARTICLE_SUBMIT_LABEL"}]</label>
         <input type="hidden" name="editval[oevattbe_istbeservice]" value="0">
-        <input id="oevattbeIsTBEService" class="edittext" type="checkbox" name="editval[oevattbe_istbeservice]" value="1" [{if $iIsTbeService == 1}]checked[{/if}]>
+        <input id="isOeVATTBETBEService" class="edittext" type="checkbox" name="editval[oevattbe_istbeservice]" value="1" [{if $iIsTbeService == 1}]checked[{/if}]>
     </p>
     <table class="vattbeAdministration">
         <tr>

@@ -41,7 +41,7 @@ class oeVATTBEArticleAdministration extends oxAdminDetails
         /** @var oxCountry $oCountry */
         $oCountry = oxNew('oxCountry');
 
-        $this->_aViewData['iIsTbeService'] = $oArticle->oeVATTBEisTBEService();
+        $this->_aViewData['iIsTbeService'] = $oArticle->isOeVATTBETBEService();
         $this->_aViewData['aCountriesAndVATGroups'] = $this->_getCountryAndVATGroupsData($oCountry);
 
         return 'oevattbearticleadministration.tpl';
