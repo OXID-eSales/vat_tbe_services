@@ -31,6 +31,29 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
      */
     const ORDER_STATE_TBE_NOT_CONFIGURED = 10;
 
+    /** @var bool If order has TBE services. */
+    private $_blHasOrderTBEServicesInInvoice;
+
+    /**
+     * Returns if order has TBE services.
+     *
+     * @return boolean
+     */
+    public function getHasOrderTBEServicesInInvoice()
+    {
+        return (bool)$this->_blHasOrderTBEServicesInInvoice;
+    }
+
+    /**
+     * Sets if order has TBE services.
+     *
+     * @param boolean $blHasOrderTBEServicesInInvoice
+     */
+    public function setHasOrderTBEServicesInInvoice($blHasOrderTBEServicesInInvoice)
+    {
+        $this->_blHasOrderTBEServicesInInvoice = $blHasOrderTBEServicesInInvoice;
+    }
+
     /**
      * Validates order parameters like stock, delivery and payment
      * parameters
@@ -160,14 +183,15 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
                 // Add mark for TBE service.
                 if ($oOrderArt->getArticle()->oeVATTBEisTBEService()) {
                     $oPdf->text(140, $iStartPosForMark, '*');
+                    $this->setHasOrderTBEServicesInInvoice(true);
                 }
             }
         }
-
-        $sCountryTitle = $this->oeVATTBEGetCountryTitle();
-        $iStartPos += 5;
-
-        $oPdf->text(15, $iStartPos, '* ' . sprintf(oxRegistry::getLang()->translateString('OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY_INVOICE', $this->getSelectedLang()), $sCountryTitle));
+        if ($this->getHasOrderTBEServicesInInvoice()) {
+            $iStartPos += 5;
+            $sCountryTitle = $this->oeVATTBEGetCountryTitle();
+            $oPdf->text(15, $iStartPos, '* ' . sprintf(oxRegistry::getLang()->translateString('OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY_INVOICE', $this->getSelectedLang()), $sCountryTitle));
+        }
     }
 
     /**

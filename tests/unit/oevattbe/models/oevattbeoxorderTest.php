@@ -175,4 +175,30 @@ class Unit_oeVATTBE_models_oeVATTBEOxOrderTest extends OxidTestCase
 
         $this->assertSame($sCountryResult, $oOrder->oeVATTBEGetCountryTitle());
     }
+
+    public function providerSetGetOrderTBEServicesInInvoice()
+    {
+        return array(
+            array(null, false),
+            array(false, false),
+            array(true, true),
+        );
+    }
+
+    /**
+     * Test for setter and getter.
+     *
+     * @param boolean $blValueToSet
+     * @param boolean $blResult
+     *
+     * @dataProvider providerSetGetOrderTBEServicesInInvoice
+     */
+    public function testSetGetOrderTBEServicesInInvoice($blValueToSet, $blResult)
+    {
+        /** @var oeVATTBEOxOrder $oOrder */
+        $oOrder = oxNew('oeVATTBEOxOrder');
+        $oOrder->setHasOrderTBEServicesInInvoice($blValueToSet);
+
+        $this->assertSame($blResult, $oOrder->getHasOrderTBEServicesInInvoice());
+    }
 }
