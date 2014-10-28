@@ -66,12 +66,12 @@ class oeVATTBEEvents
         );
 
         $aFieldSql = array(
-            'oevattbe_istbeservice' => "ALTER TABLE `oxarticles` ADD `oevattbe_istbeservice` tinyint(1) NOT NULL default 0",
-            'oevattbe_appliestbevat' => "ALTER TABLE `oxcountry` ADD `oevattbe_appliestbevat` tinyint(1) NOT NULL default 0",
-            'oevattbe_istbevatconfigured' => "ALTER TABLE `oxcountry` ADD `oevattbe_istbevatconfigured` tinyint(1) NOT NULL default 0",
-            'oevattbe_hastbeservices' => "ALTER TABLE `oxorder` ADD `oevattbe_hastbeservices` tinyint(1) NOT NULL default 0",
-            'oevattbe_evidenceused' => "ALTER TABLE `oxorder` ADD `oevattbe_evidenceused` char(32) NOT NULL default 0",
-            'oevattbe_vatinenterdate' => "ALTER TABLE `oxuser` ADD `oevattbe_vatinenterdate` timestamp NOT NULL",
+            'oevattbe_istbeservice' => "ALTER TABLE `oxarticles` ADD `OEVATTBE_ISTBESERVICE` tinyint(1) NOT NULL default 0",
+            'oevattbe_appliestbevat' => "ALTER TABLE `oxcountry` ADD `OEVATTBE_APPLIESTBEVAT` tinyint(1) NOT NULL default 0",
+            'oevattbe_istbevatconfigured' => "ALTER TABLE `oxcountry` ADD `OEVATTBE_ISTBEVATCONFIGURED` tinyint(1) NOT NULL default 0",
+            'oevattbe_hastbeservices' => "ALTER TABLE `oxorder` ADD `OEVATTBE_HASTBESERVICES` tinyint(1) NOT NULL default 0",
+            'oevattbe_evidenceused' => "ALTER TABLE `oxorder` ADD `OEVATTBE_EVIDENCEUSED` char(32) NOT NULL default 0",
+            'oevattbe_vatinenterdate' => "ALTER TABLE `oxuser` ADD `OEVATTBE_VATINENTERDATE` timestamp NOT NULL",
         );
 
         foreach ($aTableFields as $sTableName => $aFields) {
