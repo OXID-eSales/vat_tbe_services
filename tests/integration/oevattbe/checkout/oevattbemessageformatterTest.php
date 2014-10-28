@@ -42,9 +42,11 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageFormatterTest extends OxidTes
         $oInvalidArticles1 = array($oArticle1);
         $oInvalidArticles2 = array($oArticle1, $oArticle2);
 
+        $oLang = oxRegistry::getLang();
+
         return array(
-            array($oInvalidArticles1, '[tr]Some articles can not be sold because we do not know their VAT rate in your country: some article name. Please remove those articles from your basket.'),
-            array($oInvalidArticles2, '[tr]Some articles can not be sold because we do not know their VAT rate in your country: some article name, some other name. Please remove those articles from your basket.'),
+            array($oInvalidArticles1, sprintf($oLang->translateString(OEVATTBE_ERROR_MESSAGE_TBE_ARTICLE_VAT_PROBLEMS), 'some article name')),
+            array($oInvalidArticles2, sprintf($oLang->translateString(OEVATTBE_ERROR_MESSAGE_TBE_ARTICLE_VAT_PROBLEMS), 'some article name, some other name')),
         );
     }
 
