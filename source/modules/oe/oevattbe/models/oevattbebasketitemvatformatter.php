@@ -60,12 +60,12 @@ class oeVATTBEBasketItemVATFormatter
 
         if ($oArticle->isTBEService()) {
             if ($oBasket->getUser()) {
-                $sMessage .= ($oCountry->appliesTBEVAT()) ? $oMarkGenerator->getMark('tbeService') : '';
+                $sMessage .= ($oCountry->appliesTBEVAT()) ? ' '.$oMarkGenerator->getMark('tbeService') : '';
                 if (!$oBasket->isTBEValid() && isset($aInValidArticles[$oArticle->getId()])) {
                     $sMessage = '-';
                 }
             } else {
-                $sMessage .= $oMarkGenerator->getMark('tbeService');
+                $sMessage .= ' '.$oMarkGenerator->getMark('tbeService');
             }
         }
 
