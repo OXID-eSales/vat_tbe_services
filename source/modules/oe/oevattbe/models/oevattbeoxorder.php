@@ -98,6 +98,28 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
     }
 
     /**
+     * Returns order residence country from evidence.
+     *
+     * @return string
+     */
+    public function oeVATTBEGetCountryTitle()
+    {
+        $oOrderEvidenceList = $this->_factoryOeVATTBEOrderEvidenceList();
+        $oOrderEvidenceList->load($this->getId());
+        $aOrderEvidences = $oOrderEvidenceList->getData();
+
+        $sCountryId = $aOrderEvidences[$this->oxorder__oevattbe_evidenceused->value]['countryId'];
+
+        /** @var oxCountry $oCountry */
+        $oCountry = oxNew('oxCountry');
+        $oCountry->setLanguage($this->getSelectedLang());
+        $oCountry->load($sCountryId);
+        $sCountryTitle = $oCountry->oxcountry__oxtitle->value;
+
+        return $sCountryTitle;
+    }
+
+    /**
      * Overrides Invoice PDF module method and adds mark near TBE service VAT.
      *
      * @param object $oPdf        pdf document object
@@ -131,20 +153,11 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
                 }
             }
         }
+
+        $sCountryTitle = $this->oeVATTBEGetCountryTitle();
         $iStartPos += 5;
-        $oOrderEvidenceList = $this->_factoryOeVATTBEOrderEvidenceList();
-        $oOrderEvidenceList->loadWithCountryNames($this->getId());
-        $aOrderEvidences = $oOrderEvidenceList->getData();
-        $sCountryId = $aOrderEvidences[$this->oxorder__oevattbe_evidenceused->value]['countryId'];
 
-
-        /** @var oxCountry $oCountry */
-        $oCountry = oxNew('oxCountry');
-        $oCountry->setLanguage($this->getSelectedLang());
-        $oCountry->load($sCountryId);
-        $oLang = oxRegistry::getLang();
-
-        $oPdf->text(15, $iStartPos, '* ' . sprintf($oLang->translateString('OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY_INVOICE', $this->getSelectedLang()), $oCountry->oxcountry__oxtitle->value));
+        $oPdf->text(15, $iStartPos, '* ' . sprintf(oxRegistry::getLang()->translateString('OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY_INVOICE', $this->getSelectedLang()), $sCountryTitle));
     }
 
     /**
