@@ -25,9 +25,9 @@
 $aLang = array(
     'charset'                                => 'ISO-8859-15',
     'PLUS_SHIPPING2'                         => '[tr]Versandkosten ** TBE VAT',
-    'OEVATTBE_ERROR_MESSAGE_TBE_ARTICLE_VAT_PROBLEMS' => '[tr]Some articles can not be sold because we do not know their VAT rate in your country: %s. Please remove those articles from your basket.',
-    'OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY' => '[tr]This VAT was calculated acccording country of your rezidence: %s',
-    'OEVATTBE_VAT_WILL_BE_CALCULATED_BY_USER_COUNTRY' => '[tr]This VAT rate can be changed after you will login and your residence country will be identified.',
-    'OEVATTBE_RESIDENCE_COUNTRY_CHANGED_MESSAGE' => '[tr] Your rezidence country is identified and VAT rate will be applied according this country.',
-    'OEVATTBE_VAT_EXCLUDED' => '[tr] We excluded VAT from price, but you should pay it in your country.',
+    'OEVATTBE_ERROR_MESSAGE_TBE_ARTICLE_VAT_PROBLEMS' => 'Es war leider nicht möglich, die MwSt für einige Artikel in Ihrem Warenkorb zu berechnen und können daher nicht verkauft werden. Bitte entfernen Sie diese bitte aus dem Warenkorb: %s.',
+    'OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY' => 'Diese MwSt. wurde für Ihren Standort berechnet: %s.',
+    'OEVATTBE_VAT_WILL_BE_CALCULATED_BY_USER_COUNTRY' => 'MwSt. hängt von Kundenstandort ab. Annahme (Deutschland) kann durch Anmeldung berichtigt werden.',
+    'OEVATTBE_RESIDENCE_COUNTRY_CHANGED_MESSAGE' => 'Ihr Standort wurde als Deutschland identifiziert. Dieser Standort wird in der MwST.-Berechnung für z.B. eBooks oder MP3s verwandt',
+    'OEVATTBE_VAT_EXCLUDED' => 'MwSt. wurde nicht berechnet.',
 );

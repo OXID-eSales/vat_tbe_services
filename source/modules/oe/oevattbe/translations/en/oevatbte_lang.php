@@ -25,9 +25,9 @@
 $aLang = array(
     'charset'                                => 'ISO-8859-15',
     'PLUS_SHIPPING2'                         => '[tr]shipping ** TBE VAT',
-    'OEVATTBE_ERROR_MESSAGE_TBE_ARTICLE_VAT_PROBLEMS' => '[tr]Some articles can not be sold because we do not know their VAT rate in your country: %s. Please remove those articles from your basket.',
-    'OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY' => '[tr]This VAT was calculated acccording country of your rezidence: %s',
-    'OEVATTBE_VAT_WILL_BE_CALCULATED_BY_USER_COUNTRY' => '[tr]This VAT rate can be changed after you will login and your residence country will be identified.',
-    'OEVATTBE_RESIDENCE_COUNTRY_CHANGED_MESSAGE' => '[tr] Your rezidence country is identified and VAT rate will be applied according this country.',
-    'OEVATTBE_VAT_EXCLUDED' => '[tr] We excluded VAT from price, but you should pay it in your country.',
+    'OEVATTBE_ERROR_MESSAGE_TBE_ARTICLE_VAT_PROBLEMS' => 'Unfortunately, it was not possible to calculate the VAT rate for some articles in your basket and can therefore not be sold. Please remove the following articles from your basket: %s',
+    'OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY' => 'This VAT was calculated for your location: %s.',
+    'OEVATTBE_VAT_WILL_BE_CALCULATED_BY_USER_COUNTRY' => 'VAT depends on customer location. Assumption (Germany) may be corrected after login.',
+    'OEVATTBE_RESIDENCE_COUNTRY_CHANGED_MESSAGE' => 'Your location has been identifed as Germany. This location will be used in VAT calculation for e.g. eBooks or MP3s.',
+    'OEVATTBE_VAT_EXCLUDED' => 'VAT was excluded from the calculated price.',
 );
