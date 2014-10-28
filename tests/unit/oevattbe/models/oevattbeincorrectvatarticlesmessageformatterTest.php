@@ -32,7 +32,7 @@ class Unit_oeVATTBE_Models_oeVATTBEIncorrectVATArticlesMessageFormatterTest exte
     public function testGetMessage()
     {
         /** @var oeVATTBEOxArticle|oxArticle $oArticle */
-        $oArticle = oxNew('oeVATTBEOxArticle');
+        $oArticle = oxNew('oxArticle');
         $oArticle->oxarticles__oxtitle = new oxField('some other name', oxField::T_RAW);
 
         /** @var oeVATTBEIncorrectVATArticlesMessageFormatter $oVATTBEArticleMessageFormer */

@@ -32,7 +32,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxCountryTest extends OxidTestCase
      */
     public function testAppliesTBEVAT()
     {
-        $oCountry = oxNew('oeVATTBEOxCountry');
+        $oCountry = oxNew('oxCountry');
         $oCountry->oxcountry__oevattbe_appliestbevat = new oxField(1);
         $this->assertTrue($oCountry->appliesTBEVAT());
 
@@ -45,7 +45,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxCountryTest extends OxidTestCase
      */
     public function testIsOEVATTBEAtLeastOneGroupConfigured()
     {
-        $oCountry = oxNew('oeVATTBEOxCountry');
+        $oCountry = oxNew('oxCountry');
         $oCountry->oxcountry__oevattbe_istbevatconfigured = new oxField(1);
         $this->assertTrue($oCountry->isOEVATTBEAtLeastOneGroupConfigured());
 
@@ -58,7 +58,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxCountryTest extends OxidTestCase
      */
     public function testGetVATTBEName()
     {
-        $oCountry = oxNew('oeVATTBEOxCountry');
+        $oCountry = oxNew('oxCountry');
         $oCountry->oxcountry__oxtitle = new oxField('LT');
         $this->assertSame('LT', $oCountry->getVATTBEName());
     }

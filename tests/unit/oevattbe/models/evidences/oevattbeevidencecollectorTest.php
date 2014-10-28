@@ -39,7 +39,7 @@ class Unit_oeVATTBE_Models_Evidences_oeVATTBEEvidenceCollectorTest extends OxidT
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence'));
 
         /** @var oxUser|PHPUnit_Framework_MockObject_MockObject $oUser */
-        $oUser = $this->getMock('oxUser', array(), array(), '', false);
+        $oUser = $this->getMock('oeVATTBEOxUser', array(), array(), '', false);
 
         $oExpectedEvidence = oxNew('oeVATTBEBillingCountryEvidence', $oUser);
         $oEvidenceList = oxNew('oeVATTBEEvidenceList');
@@ -61,7 +61,7 @@ class Unit_oeVATTBE_Models_Evidences_oeVATTBEEvidenceCollectorTest extends OxidT
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence'));
 
         /** @var oxUser|PHPUnit_Framework_MockObject_MockObject $oUser */
-        $oUser = $this->getMock('oxUser', array(), array(), '', false);
+        $oUser = $this->getMock('oeVATTBEOxUser', array(), array(), '', false);
 
         $oEvidenceList = oxNew('oeVATTBEEvidenceList');
 
@@ -81,7 +81,7 @@ class Unit_oeVATTBE_Models_Evidences_oeVATTBEEvidenceCollectorTest extends OxidT
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence'));
 
         /** @var oxUser|PHPUnit_Framework_MockObject_MockObject $oUser */
-        $oUser = $this->getMock('oxUser', array(), array(), '', false);
+        $oUser = $this->getMock('oeVATTBEOxUser', array(), array(), '', false);
         $oCollector = oxNew('oeVATTBEEvidenceCollector', $oUser, $oConfig);
         $oCollector->getEvidenceList();
 
@@ -100,7 +100,7 @@ class Unit_oeVATTBE_Models_Evidences_oeVATTBEEvidenceCollectorTest extends OxidT
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array());
 
         /** @var oxUser|PHPUnit_Framework_MockObject_MockObject $oUser */
-        $oUser = $this->getMock('oxUser', array(), array(), '', false);
+        $oUser = $this->getMock('oeVATTBEOxUser', array(), array(), '', false);
 
         $oEvidenceList = oxNew('oeVATTBEEvidenceList');
 
@@ -120,7 +120,7 @@ class Unit_oeVATTBE_Models_Evidences_oeVATTBEEvidenceCollectorTest extends OxidT
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array());
 
         /** @var oxUser|PHPUnit_Framework_MockObject_MockObject $oUser */
-        $oUser = $this->getMock('oxUser', array(), array(), '', false);
+        $oUser = $this->getMock('oeVATTBEOxUser', array(), array(), '', false);
         $oCollector = oxNew('oeVATTBEEvidenceCollector', $oUser, $oConfig);
         $oCollector->getEvidenceList();
 
@@ -139,7 +139,7 @@ class Unit_oeVATTBE_Models_Evidences_oeVATTBEEvidenceCollectorTest extends OxidT
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('NonExistingEvidenceClass'));
 
         /** @var oxUser|PHPUnit_Framework_MockObject_MockObject $oUser */
-        $oUser = $this->getMock('oxUser', array(), array(), '', false);
+        $oUser = $this->getMock('oeVATTBEOxUser', array(), array(), '', false);
 
         $oEvidenceList = oxNew('oeVATTBEEvidenceList');
 

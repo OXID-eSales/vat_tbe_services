@@ -196,7 +196,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxOrderTest extends OxidTestCase
     public function testSetGetOrderTBEServicesInInvoice($blValueToSet, $blResult)
     {
         /** @var oeVATTBEOxOrder $oOrder */
-        $oOrder = oxNew('oeVATTBEOxOrder');
+        $oOrder = oxNew('oxOrder');
         $oOrder->setHasOrderTBEServicesInInvoice($blValueToSet);
 
         $this->assertSame($blResult, $oOrder->getHasOrderTBEServicesInInvoice());

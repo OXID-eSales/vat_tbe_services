@@ -59,7 +59,7 @@ class Unit_oeVATTBE_controllers_oeVATTBEBasketTest extends OxidTestCase
     {
         $oUser = oxNew("oxUser");
 
-        $oCountry = $this->getMock("oxVATTBEoxCountry", array("appliesTBEVAT",'getVATTBEName'));
+        $oCountry = $this->getMock("oeVATTBEOxCountry", array("appliesTBEVAT",'getVATTBEName'));
         $oCountry->expects($this->any())->method("appliesTBEVAT")->will($this->returnValue(true));
         $oCountry->expects($this->any())->method("getVATTBEName")->will($this->returnValue('LT'));
 
@@ -141,7 +141,7 @@ class Unit_oeVATTBE_controllers_oeVATTBEBasketTest extends OxidTestCase
     {
         $oUser = oxNew("oxUser");
 
-        $oCountry = $this->getMock("oxVATTBEoxCountry", array("appliesTBEVAT",'getVATTBEName'));
+        $oCountry = $this->getMock("oeVATTBEOxCountry", array("appliesTBEVAT",'getVATTBEName'));
         $oCountry->expects($this->any())->method("appliesTBEVAT")->will($this->returnValue(false));
 
         $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasVATTBEArticles', 'getUser', 'getTBECountry'));

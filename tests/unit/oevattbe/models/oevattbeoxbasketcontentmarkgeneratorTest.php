@@ -35,7 +35,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxBasketContentMarkGeneratorTest extends Oxid
         $oBasket = $this->getMock('oeVATTBEOxBasket', array('hasVATTBEArticles'));
         $oBasket->expects($this->any())->method('hasVATTBEArticles')->will($this->returnValue(true));
 
-        $oGenerator = oxNew('oeVATTBEOxBasketContentMarkGenerator', $oBasket);
+        $oGenerator = oxNew('oxBasketContentMarkGenerator', $oBasket);
 
         $this->assertSame('**', $oGenerator->getMark('tbeService'));
     }
@@ -49,7 +49,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxBasketContentMarkGeneratorTest extends Oxid
         $oBasket->expects($this->any())->method('hasVATTBEArticles')->will($this->returnValue(true));
         $oBasket->expects($this->any())->method('hasArticlesWithDownloadableAgreement')->will($this->returnValue(true));
 
-        $oGenerator = oxNew('oeVATTBEOxBasketContentMarkGenerator', $oBasket);
+        $oGenerator = oxNew('oxBasketContentMarkGenerator', $oBasket);
 
         $this->assertSame('**', $oGenerator->getMark('tbeService'));
         $this->assertSame('***', $oGenerator->getMark('downloadable'));
@@ -64,7 +64,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxBasketContentMarkGeneratorTest extends Oxid
         $oBasket->expects($this->any())->method('hasVATTBEArticles')->will($this->returnValue(false));
         $oBasket->expects($this->any())->method('hasArticlesWithDownloadableAgreement')->will($this->returnValue(true));
 
-        $oGenerator = oxNew('oeVATTBEOxBasketContentMarkGenerator', $oBasket);
+        $oGenerator = oxNew('oxBasketContentMarkGenerator', $oBasket);
 
         $this->assertSame(null, $oGenerator->getMark('tbeService'));
         $this->assertSame('**', $oGenerator->getMark('downloadable'));

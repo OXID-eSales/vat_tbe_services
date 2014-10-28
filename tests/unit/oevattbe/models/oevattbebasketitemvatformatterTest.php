@@ -27,6 +27,26 @@
  */
 class Unit_oeVatTbe_models_oeVATTBEBasketItemVatFormatterTest extends OxidTestCase
 {
+
+    /**
+     * data provider for test testFormatVatValidBasket
+     *
+     * @return array
+     */
+    public function providerForFormatVatValidBasket()
+    {
+        return array(
+            array(true, true, true,'10% **'),
+            array(false, true, true, '10% **'),
+            array(true, false, true,'10%'),
+            array(false, false, true,'10%'),
+            array(true, true, false,'10%'),
+            array(false, true, false, '10% **'),
+            array(true, false, false,'10%'),
+            array(false, false, false,'10%'),
+        );
+    }
+
     /**
      * Vat Formatter test when basket has all valid items
      *
@@ -64,21 +84,15 @@ class Unit_oeVatTbe_models_oeVATTBEBasketItemVatFormatterTest extends OxidTestCa
     }
 
     /**
-     * data provider for test testFormatVatValidBasket
+     * data provider for test testFormatVatInValidBasket
      *
      * @return array
      */
-    public function providerForFormatVatValidBasket()
+    public function providerForFormatVatInValidBasket()
     {
         return array(
-            array(true, true, true,'10% **'),
-            array(false, true, true, '10% **'),
-            array(true, false, true,'10%'),
-            array(false, false, true,'10%'),
-            array(true, true, false,'10%'),
-            array(false, true, false, '10% **'),
-            array(true, false, false,'10%'),
-            array(false, false, false,'10%'),
+            array(false, '10% **'),
+            array(true, '-'),
         );
     }
 
@@ -119,18 +133,5 @@ class Unit_oeVatTbe_models_oeVATTBEBasketItemVatFormatterTest extends OxidTestCa
         $oFormatter = oxNew('oeVATTBEBasketItemVATFormatter', $oBasket, $oMarkGenerator);
 
         $this->assertSame($sExpectValue, $oFormatter->formatVAT($oBasketItem));
-    }
-
-    /**
-     * data provider for test testFormatVatInValidBasket
-     *
-     * @return array
-     */
-    public function providerForFormatVatInValidBasket()
-    {
-        return array(
-            array(false, '10% **'),
-            array(true, '-'),
-        );
     }
 }

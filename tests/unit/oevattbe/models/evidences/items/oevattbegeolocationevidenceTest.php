@@ -30,7 +30,7 @@ class Unit_oeVATTBE_Models_Evidences_Items_oeVATTBEGeoLocationEvidenceTest exten
     public function testGetId()
     {
         /** @var oxUser|PHPUnit_Framework_MockObject_MockObject $oUser */
-        $oUser = $this->getMock('oxUser', array(), array(), '', false);
+        $oUser = $this->getMock('oeVATTBEOxUser', array(), array(), '', false);
         $oEvidence = new oeVATTBEGeoLocationEvidence($oUser);
 
         $this->assertEquals('geo_location', $oEvidence->getId());
@@ -39,7 +39,7 @@ class Unit_oeVATTBE_Models_Evidences_Items_oeVATTBEGeoLocationEvidenceTest exten
     public function testGetCountryId()
     {
         /** @var oxUser|PHPUnit_Framework_MockObject_MockObject $oUser */
-        $oUser = $this->getMock('oxUser', array(), array(), '', false);
+        $oUser = $this->getMock('oeVATTBEOxUser', array(), array(), '', false);
         $oEvidence = new oeVATTBEGeoLocationEvidence($oUser);
 
         $this->assertEquals('', $oEvidence->getCountryId());

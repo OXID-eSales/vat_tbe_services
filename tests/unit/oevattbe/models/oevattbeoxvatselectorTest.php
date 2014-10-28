@@ -49,7 +49,7 @@ class Unit_oeVatTbe_models_oeVATTBEOxVatSelectorTest extends OxidTestCase
         $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->will($this->returnValue($iVat));
         $oArticle->expects($this->any())->method('oeVATTBEisTbeService')->will($this->returnValue(true));
 
-        $oVatSelector = oxNew('oeVATTBEOxVatSelector');
+        $oVatSelector = oxNew('oxVatSelector');
 
         $this->assertSame($iVat, $oVatSelector->getArticleUserVat($oArticle));
     }
@@ -64,7 +64,7 @@ class Unit_oeVatTbe_models_oeVATTBEOxVatSelectorTest extends OxidTestCase
         $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->will($this->returnValue(null));
         $oArticle->expects($this->any())->method('oeVATTBEisTbeService')->will($this->returnValue(true));
 
-        $oVatSelector = oxNew('oeVATTBEOxVatSelector');
+        $oVatSelector = oxNew('oxVatSelector');
 
         $this->assertSame(false, $oVatSelector->getArticleUserVat($oArticle));
     }
@@ -79,7 +79,7 @@ class Unit_oeVatTbe_models_oeVATTBEOxVatSelectorTest extends OxidTestCase
         $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->will($this->returnValue(15));
         $oArticle->expects($this->any())->method('oeVATTBEisTbeService')->will($this->returnValue(false));
 
-        $oVatSelector = oxNew('oeVATTBEOxVatSelector');
+        $oVatSelector = oxNew('oxVatSelector');
 
         $this->assertSame(false, $oVatSelector->getArticleUserVat($oArticle));
     }
@@ -94,7 +94,7 @@ class Unit_oeVatTbe_models_oeVATTBEOxVatSelectorTest extends OxidTestCase
         $oArticle->expects($this->any())->method('oeVATTBEisTbeService')->will($this->returnValue(true));
         $this->setAdminMode(true);
 
-        $oVatSelector = oxNew('oeVATTBEOxVatSelector');
+        $oVatSelector = oxNew('oxVatSelector');
 
         $this->assertSame(false, $oVatSelector->getArticleUserVat($oArticle));
     }

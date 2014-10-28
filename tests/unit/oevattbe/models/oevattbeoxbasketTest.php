@@ -32,7 +32,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxBasketTest extends OxidTestCase
      */
     public function testSetGetTBECountryId()
     {
-        $oBasket = oxNew('oeVATTBEOxBasket');
+        $oBasket = oxNew('oxBasket');
         $oBasket->setTBECountryId('de');
         $this->assertSame('de', $oBasket->getTBECountryId());
     }
@@ -42,7 +42,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxBasketTest extends OxidTestCase
      */
     public function testGetTBECountryIdNotSet()
     {
-        $oBasket = oxNew('oeVATTBEOxBasket');
+        $oBasket = oxNew('oxBasket');
         $this->assertNull($oBasket->getTBECountry());
     }
 
@@ -51,7 +51,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxBasketTest extends OxidTestCase
      */
     public function testGetTBECountryIdSet()
     {
-        $oBasket = oxNew('oeVATTBEOxBasket');
+        $oBasket = oxNew('oxBasket');
         $oBasket->setTBECountryId('a7c40f631fc920687.20179984');
         $this->assertSame('Deutschland', $oBasket->getTBECountry()->oxcountry__oxtitle->value);
     }
@@ -61,7 +61,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxBasketTest extends OxidTestCase
      */
     public function testShowTBECountryChangedErrorDefault()
     {
-        $oBasket = oxNew('oeVATTBEOxBasket');
+        $oBasket = oxNew('oxBasket');
         $this->assertFalse($oBasket->showTBECountryChangedError());
     }
 
@@ -70,7 +70,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxBasketTest extends OxidTestCase
      */
     public function testShowTBECountryChangedErrorShow()
     {
-        $oBasket = oxNew('oeVATTBEOxBasket');
+        $oBasket = oxNew('oxBasket');
         $oBasket->setTBECountryChanged();
         $this->assertTrue($oBasket->showTBECountryChangedError());
         $this->assertFalse($oBasket->showTBECountryChangedError());

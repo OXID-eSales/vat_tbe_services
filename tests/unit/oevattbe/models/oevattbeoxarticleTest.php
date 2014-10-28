@@ -33,7 +33,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleTest extends OxidTestCase
      */
     public function testTbeVatGetter()
     {
-        $oArticle = oxNew('oeVATTBEOxArticle');
+        $oArticle = oxNew('oxArticle');
         $oArticle->oxarticles__oevattbe_rate = new oxField(9);
         $this->assertSame(9, $oArticle->getOeVATTBETBEVat());
     }
@@ -43,7 +43,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleTest extends OxidTestCase
      */
     public function testOeVATTBEisTBEService()
     {
-        $oArticle = oxNew('oeVATTBEOxArticle');
+        $oArticle = oxNew('oxArticle');
         $oArticle->oxarticles__oevattbe_istbeservice = new oxField(false);
         $this->assertFalse($oArticle->oeVATTBEisTbeService());
     }
