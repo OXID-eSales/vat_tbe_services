@@ -33,10 +33,10 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageFormatterTest extends OxidTes
      */
     public function providerGetMessage()
     {
-        $oArticle1 = oxNew('oeVATTBEOxArticle');
+        $oArticle1 = oxNew('oxArticle');
         $oArticle1->oxarticles__oxtitle = new oxField('some article name', oxField::T_RAW);
 
-        $oArticle2 = oxNew('oeVATTBEOxArticle');
+        $oArticle2 = oxNew('oxArticle');
         $oArticle2->oxarticles__oxtitle = new oxField('some other name', oxField::T_RAW);
 
         $oInvalidArticles1 = array($oArticle1);

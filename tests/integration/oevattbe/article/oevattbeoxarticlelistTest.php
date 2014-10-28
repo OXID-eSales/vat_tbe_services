@@ -78,7 +78,7 @@ class Integration_oeVATTBE_article_oeVATTBEOxArticleListTest extends OxidTestCas
      */
     public function testManufacturerList($sUserStatus, $sVat)
     {
-        $oArticle = oxNew('oeVATTBEOxArticle');
+        $oArticle = oxNew('oxArticle');
         $oArticle->setId('1126');
         $oArticle->oxarticles__oxmanufacturerid = new oxField('manufacturerId');
         $oArticle->save();
@@ -102,7 +102,7 @@ class Integration_oeVATTBE_article_oeVATTBEOxArticleListTest extends OxidTestCas
      */
     public function testVendorList($sUserStatus, $sVat)
     {
-        $oArticle = oxNew('oeVATTBEOxArticle');
+        $oArticle = oxNew('oxArticle');
         $oArticle->setId('1126');
         $oArticle->oxarticles__oxvendorid = new oxField('vendorId');
         $oArticle->save();
@@ -197,7 +197,7 @@ class Integration_oeVATTBE_article_oeVATTBEOxArticleListTest extends OxidTestCas
         $this->getConfig()->setConfigParam('iNewestArticlesMode', 2);
         $this->getConfig()->setConfigParam('blNewArtByInsert', false);
 
-        $oArticle = oxNew('oeVATTBEOxArticle');
+        $oArticle = oxNew('oxArticle');
         $oArticle->setId('1126');
         $oArticle->oxarticles__oxtimestamp = new oxField(date('Y-m-d H:i:s', oxRegistry::get("oxUtilsDate")->getTime()));
         $oArticle->save();
@@ -223,7 +223,7 @@ class Integration_oeVATTBE_article_oeVATTBEOxArticleListTest extends OxidTestCas
     {
         $this->getConfig()->setConfigParam('iTop5Mode', 2);
 
-        $oArticle = oxNew('oeVATTBEOxArticle');
+        $oArticle = oxNew('oxArticle');
         $oArticle->setId('1126');
         $oArticle->oxarticles__oxsoldamount = new oxField(9999);
         $oArticle->save();
@@ -266,7 +266,7 @@ class Integration_oeVATTBE_article_oeVATTBEOxArticleListTest extends OxidTestCas
      */
     public function testArticleAccessoires($sUserStatus, $sVat)
     {
-        $oAccessoire2article = oxNew("oxbase");
+        $oAccessoire2article = oxNew("oxBase");
         $oAccessoire2article->init("oxaccessoire2article");
         $oAccessoire2article->oxaccessoire2article__oxobjectid = new oxField('1126');
         $oAccessoire2article->oxaccessoire2article__oxarticlenid = new oxField('1964');
@@ -291,7 +291,7 @@ class Integration_oeVATTBE_article_oeVATTBEOxArticleListTest extends OxidTestCas
      */
     public function testloadRecommArticles($sUserStatus, $sVat)
     {
-        $oObject2list = oxNew("oxbase");
+        $oObject2list = oxNew("oxBase");
         $oObject2list->init("oxobject2list");
         $oObject2list->oxobject2list__oxobjectid = new oxField('1126');
         $oObject2list->oxobject2list__oxlistid = new oxField('list');
@@ -338,7 +338,7 @@ class Integration_oeVATTBE_article_oeVATTBEOxArticleListTest extends OxidTestCas
         $oArticle = $oArticleList->getBaseObject();
 
         if ($sUserStatus != 'notLoggedIn') {
-            $oUser = $this->getMock("oeVATTBEOxUser", array("getTbeCountryId"));
+            $oUser = $this->getMock("oxUser", array("getTbeCountryId"));
             $sCountryId = ($sUserStatus == 'loggedInWithoutCountry') ? null : 'a7c40f631fc920687.20179984';
             $oUser->expects($this->any())->method("getTbeCountryId")->will($this->returnValue($sCountryId));
             $oArticle->setUser($oUser);

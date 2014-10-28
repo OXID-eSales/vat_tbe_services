@@ -54,13 +54,13 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderTest extends OxidTestC
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
 
         /** @var oeVATTBEOxBasket|oxBasket|PHPUnit_Framework_MockObject_MockObject $oBasket */
-        $oBasket = $this->getMock('oeVATTBEOxBasket', array('hasVATTBEArticles'));
+        $oBasket = $this->getMock('oxBasket', array('hasVATTBEArticles'));
         $oBasket->expects($this->any())->method('hasVATTBEArticles')->will($this->returnValue(true));
         /** @var oeVATTBEOxUser|oxUser $oUser */
-        $oUser = oxNew('oeVATTBEOxUser');
+        $oUser = oxNew('oxUser');
 
         /** @var oeVATTBEOxOrder|oxOrder|PHPUnit_Framework_MockObject_MockObject $oOrder */
-        $oOrder = $this->getMock("oeVATTBEOxOrder", array("_getFinalizeOrderParent"));
+        $oOrder = $this->getMock("oxOrder", array("_getFinalizeOrderParent"));
         $oOrder->expects($this->any())->method("_getFinalizeOrderParent")->will($this->returnValue($iOrderState));
 
         $oOrder->setId('order_id');
@@ -94,13 +94,13 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderTest extends OxidTestC
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
 
         /** @var oeVATTBEOxBasket|oxBasket|PHPUnit_Framework_MockObject_MockObject $oBasket */
-        $oBasket = $this->getMock('oeVATTBEOxBasket', array('hasVATTBEArticles'));
+        $oBasket = $this->getMock('oxBasket', array('hasVATTBEArticles'));
         $oBasket->expects($this->any())->method('hasVATTBEArticles')->will($this->returnValue(true));
         /** @var oeVATTBEOxUser|oxUser $oUser */
-        $oUser = oxNew('oeVATTBEOxUser');
+        $oUser = oxNew('oxUser');
 
         /** @var oeVATTBEOxOrder|oxOrder|PHPUnit_Framework_MockObject_MockObject $oOrder */
-        $oOrder = $this->getMock("oeVATTBEOxOrder", array("_getFinalizeOrderParent"));
+        $oOrder = $this->getMock("oxOrder", array("_getFinalizeOrderParent"));
         $oOrder->expects($this->any())->method("_getFinalizeOrderParent")->will($this->returnValue(oxOrder::ORDER_STATE_OK));
 
         $oOrder->setId('order_id');
@@ -152,13 +152,13 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderTest extends OxidTestC
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
 
         /** @var oeVATTBEOxBasket|oxBasket|PHPUnit_Framework_MockObject_MockObject $oBasket */
-        $oBasket = $this->getMock('oeVATTBEOxBasket', array('hasVATTBEArticles'));
+        $oBasket = $this->getMock('oxBasket', array('hasVATTBEArticles'));
         $oBasket->expects($this->any())->method('hasVATTBEArticles')->will($this->returnValue($blHasTBEArticles));
         /** @var oeVATTBEOxUser|oxUser $oUser */
-        $oUser = oxNew('oeVATTBEOxUser');
+        $oUser = oxNew('oxUser');
 
         /** @var oeVATTBEOxOrder|oxOrder|PHPUnit_Framework_MockObject_MockObject $oOrder */
-        $oOrder = $this->getMock("oeVATTBEOxOrder", array("_getFinalizeOrderParent"));
+        $oOrder = $this->getMock("oxOrder", array("_getFinalizeOrderParent"));
         $oOrder->expects($this->any())->method("_getFinalizeOrderParent")->will($this->returnValue($iOrderState));
 
         $oOrder->setId('order_id');
