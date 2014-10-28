@@ -29,7 +29,7 @@
  * @covers oeVATTBECountryVATGroupsList
  * @covers oeVATTBEOxCountry
  */
-class Integration_oeVatTbe_VATGroups_CountryInformationAboutVatGroupsTest extends OxidTestCase
+class Integration_oeVatTbe_VATGroups_oeVATTBECountryInformationAboutVatGroupsTest extends OxidTestCase
 {
     /**
      * Test if country information updated when adding group.
