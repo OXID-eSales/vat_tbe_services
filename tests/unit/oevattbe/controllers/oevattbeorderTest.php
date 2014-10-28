@@ -97,4 +97,15 @@ class Unit_oeVATTBE_controllers_oeVATTBEOrderTest extends OxidTestCase
         $this->assertStringEndsWith(sprintf(oxRegistry::getLang()->translateString('OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY'), $oCountry->getVATTBEName()), $oOrder->getTBEMarkMessage());
         $this->assertStringStartsWith('**', $oOrder->getTBEMarkMessage());
     }
+
+    public function testGetTBEVATFormatted()
+    {
+        $oFormatter = $this->getMock("oeVATTBEBasketItemVATFormatter", array("formatVAT"), array(), '', false);
+        $oFormatter->expects($this->any())->method("formatVAT")->will($this->returnValue('12% **'));
+
+        $oBasket = $this->getMock("oeVATTBEBasket", array("_getBasketItemVATFormatter"));
+        $oBasket->expects($this->any())->method("_getBasketItemVATFormatter")->will($this->returnValue($oFormatter));
+
+        $this->assertSame('12% **', $oBasket->getTBEVatFormatted(oxNew('oxBasketItem')));
+    }
 }

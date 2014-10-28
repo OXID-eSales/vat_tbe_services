@@ -76,9 +76,9 @@ class oeVATTBEBasket extends oeVATTBEBasket_parent
      *
      * @return string
      */
-    public function getTBEVat($oBasketItem)
+    public function getTBEVatFormatted($oBasketItem)
     {
-        $sMessage = $this->_getBasketItemVATFormatter()->getTBEVat($oBasketItem);
+        $sMessage = $this->_getBasketItemVATFormatter()->formatVAT($oBasketItem);
 
         return $sMessage;
     }

@@ -48,7 +48,7 @@ class oeVATTBEBasketItemVATFormatter
      *
      * @return string
      */
-    public function getTBEVat($oBasketItem)
+    public function formatVAT($oBasketItem)
     {
         $oBasket = $this->_oBasket;
         $oMarkGenerator =  $this->_oMarkGenerator;
