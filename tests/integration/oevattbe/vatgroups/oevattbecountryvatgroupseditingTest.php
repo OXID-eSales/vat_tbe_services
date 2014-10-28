@@ -135,7 +135,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupsEditingTest extends
         }
     }
     /**
-     * Test if changing VAT groups for Country works when one group has missing requried parameter.
+     * Test if changing VAT groups for Country works when one group has missing required parameter.
      */
     public function testChangeCountryVATGroupsWhenOneGroupMissName()
     {
