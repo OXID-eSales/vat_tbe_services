@@ -39,10 +39,10 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupsEditingTest extends
     public function providerGetVatGroupsForCountry()
     {
         $sAustriaId = 'a7c40f6320aeb2ec2.72885259';
-        $aAustriaGroups = array(56, 57, 58);
+        $aAustriaGroups = array(0 => '56', 1 => '57', 2 => '58');
 
         $sGermanyId = 'a7c40f631fc920687.20179984';
-        $aGermanyGroups = array(10, 11);
+        $aGermanyGroups = array(0 => '10', 1 => '11');
 
         return array(
             array($sAustriaId, $aAustriaGroups),
@@ -67,15 +67,10 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupsEditingTest extends
 
         /** @var oeVATTBECountryVATGroup $aCountryVatGroup */
         foreach ($aCountryVatGroups as $aCountryVatGroup) {
-            $this->assertInstanceOf('oeVATTBECountryVATGroup', $aCountryVatGroup);
-            $this->assertArrayHasValue($aCountryVatGroup->getId(), $aExpectedGroups);
-            $this->assertSame(
-                count($aExpectedGroups),
-                count($aCountryVatGroups),
-                'Groups count did not match expected: '. serialize($aExpectedGroups)
-                .' actual: '. serialize($aCountryVatGroups)
-            );
+            $aResultGroups[] = $aCountryVatGroup->getId();
         }
+
+        $this->assertSame($aExpectedGroups, $aResultGroups);
     }
 
     /**
@@ -203,18 +198,5 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupsEditingTest extends
 
         $aCountryVatGroups = $oVATTBECountryVatGroups->getVatGroups();
         $this->assertSame(0, count($aCountryVatGroups));
-    }
-
-    /**
-     * Asserts that an array has a specified key.
-     *
-     * @param mixed             $value   value to search in array.
-     * @param array|ArrayAccess $array   array which should contain value.
-     * @param string            $message failure message.
-     */
-    public function assertArrayHasValue($value, $array, $message = '')
-    {
-        $arrangedArray = array_flip($array);
-        $this->assertArrayHasKey($value, $arrangedArray, $message);
     }
 }
