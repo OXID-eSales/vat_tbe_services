@@ -155,26 +155,28 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
     /**
      * Overrides Invoice PDF module method and adds mark near TBE service VAT.
      *
-     * @param object $oPdf        pdf document object
-     * @param int    $iStartPos   text start position from top
-     * @param bool   $blShowPrice show articles prices / VAT info or not
+     * @param oxPdf $oPdf        pdf document object
+     * @param int   $iStartPos   text start position from top
+     * @param bool  $blShowPrice show articles prices / VAT info or not
      */
     protected function _setOrderArticlesToPdf($oPdf, &$iStartPos, $blShowPrice = true)
     {
         $iStartPosForMark = $iStartPos;
         parent::_setOrderArticlesToPdf($oPdf, $iStartPos, $blShowPrice);
+
+        $iCurrentPage = 1;
+        $oPdf->setPage($iCurrentPage);
+
         if (!$this->_oArticles) {
             $this->_oArticles = $this->getOrderArticles(true);
         }
 
-        $oPdfBlock = new InvoicepdfBlock();
         // product list
         foreach ($this->_oArticles as $key => $oOrderArt) {
             // starting a new page ...
             if ($iStartPosForMark > 243) {
-                $this->pdffooter($oPdf);
-                $iStartPosForMark = $this->pdfheaderplus($oPdf);
-                $oPdf->setFont($oPdfBlock->getFont(), '', 10);
+                $iStartPosForMark = 56;
+                $oPdf->setPage(++$iCurrentPage);
             } else {
                 $iStartPosForMark = $iStartPosForMark + 4;
             }
@@ -185,6 +187,10 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
                     $oPdf->text(140, $iStartPosForMark, '*');
                     $this->setHasOrderTBEServicesInInvoice(true);
                 }
+            }
+            // additional variant info
+            if ($oOrderArt->oxorderarticles__oxselvariant->value) {
+                $iStartPosForMark = $iStartPosForMark + 4;
             }
         }
         if ($this->getHasOrderTBEServicesInInvoice()) {
