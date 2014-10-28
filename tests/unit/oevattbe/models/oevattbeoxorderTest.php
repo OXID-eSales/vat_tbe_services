@@ -136,4 +136,43 @@ class Unit_oeVATTBE_models_oeVATTBEOxOrderTest extends OxidTestCase
 
         $this->assertSame(1, $oOrder->validateOrder($oBasket, $oUser));
     }
+
+    public function providerOeVATTBEGetCountryTitle()
+    {
+        return array(
+            array(0, 'Deutschland'),
+            array(1, 'Germany'),
+        );
+    }
+
+    /**
+     * Test checks if function which is used for invoice pdf module would generate invoice with correct country.
+     *
+     * @param int    $iLanguageId    Which is used in invoice pdf to set language.
+     * @param string $sCountryResult Country which will be displayed in invoice.
+     *
+     * @dataProvider providerOeVATTBEGetCountryTitle
+     */
+    public function testOeVATTBEGetCountryTitle($iLanguageId, $sCountryResult)
+    {
+        $aEvidenceData = array(
+            'usedOrderEvidenceId' => array('countryId' => 'a7c40f631fc920687.20179984')
+        );
+        /** @var oeVATTBEOrderEvidenceList|PHPUnit_Framework_MockObject_MockObject $oOrderEvidenceList */
+        $oOrderEvidenceList = $this->getMock('oeVATTBEOrderEvidenceList', array('getData', 'load'), array(), '', false);
+        $oOrderEvidenceList->expects($this->once())->method('getData')->will($this->returnValue($aEvidenceData));
+        $oOrderEvidenceList->expects($this->once())->method('load');
+
+        /** @var oxOrder|oeVATTBEOxOrder|PHPUnit_Framework_MockObject_MockObject $oOrder */
+        $oOrder = $this->getMock(
+            'oeVATTBEOxOrder',
+            array('getSelectedLang', '_factoryOeVATTBEOrderEvidenceList', 'load', '_oeVATTBEGetUsedEvidenceId')
+        );
+        $oOrder->expects($this->any())->method('getSelectedLang')->will($this->returnValue($iLanguageId));
+        $oOrder->expects($this->any())->method('_factoryOeVATTBEOrderEvidenceList')->will($this->returnValue($oOrderEvidenceList));
+        $oOrder->expects($this->any())->method('_oeVATTBEGetUsedEvidenceId')->will($this->returnValue('usedOrderEvidenceId'));
+
+
+        $this->assertSame($sCountryResult, $oOrder->oeVATTBEGetCountryTitle());
+    }
 }
