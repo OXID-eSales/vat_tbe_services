@@ -35,7 +35,7 @@ class oeVATTBEOxCmp_Basket extends oeVatTbeOxCmp_Basket_parent
         if ($oBasket = $this->getSession()->getBasket()) {
             $oUser = $this->getUser();
             if ($oUser) {
-                $this->_manageBasketForLoggedInUser($oBasket, $oUser);
+                $this->_oeVATTBEManageBasketForLoggedInUser($oBasket, $oUser);
             } else {
                 $oBasket->calculateBasket(false);
             }
@@ -52,7 +52,7 @@ class oeVATTBEOxCmp_Basket extends oeVatTbeOxCmp_Basket_parent
      * @param oeVATTBEOxBasket $oBasket basket
      * @param oeVATTBEOxUser   $oUser   user
      */
-    protected function _manageBasketForLoggedInUser($oBasket, $oUser)
+    protected function _oeVATTBEManageBasketForLoggedInUser($oBasket, $oUser)
     {
         if ((is_null($oBasket->getTbeCountryId()) || ($oBasket->getTbeCountryId() != $oUser->getTbeCountryId()))) {
             $oBasket->setTBECountryId($oUser->getTbeCountryId());
