@@ -27,17 +27,14 @@
  */
 class Unit_oeVATTBE_controllers_oeVATTBEBasketTest extends OxidTestCase
 {
-    public function testGetTBEMarkMessageNoTBEArticleInBasket()
-    {
-        $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasVATTBEArticles'));
-        $oBasket->expects($this->any())->method("hasVATTBEArticles")->will($this->returnValue(false));
 
-        $this->getSession()->setBasket($oBasket);
-
-        $oBasketController = oxNew('oeVATTBEBasket');
-        $this->assertSame('', $oBasketController->getTBEMarkMessage());
-    }
-
+    /**
+     * TBE Articles are in basket;
+     * User is logged in;
+     * User country was found;
+     * User country is TBE country;
+     * Marks (stars) should be set.
+     */
     public function testGetTBEMarkMessageHasTBEArticleUserNotLoggedIn()
     {
         $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasVATTBEArticles', 'getUser'));
@@ -51,53 +48,13 @@ class Unit_oeVATTBE_controllers_oeVATTBEBasketTest extends OxidTestCase
         $this->assertStringStartsWith('**', $oBasketController->getTBEMarkMessage());
     }
 
-    public function testGetTBEMarkMessageHasTBEArticleUserLoggedInBasketInvalid()
-    {
-        $oUser = oxNew("oxUser");
-
-        $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasVATTBEArticles', 'getUser'));
-        $oBasket->expects($this->any())->method("hasVATTBEArticles")->will($this->returnValue(true));
-        $oBasket->expects($this->any())->method("getUser")->will($this->returnValue($oUser));
-
-        $this->getSession()->setBasket($oBasket);
-
-        $oBasketController = oxNew('oeVATTBEBasket');
-        $this->assertSame('', $oBasketController->getTBEMarkMessage());
-    }
-
-    public function testGetTBEMarkMessageHasTBEArticleUserLoggedInBasketValidNoCountry()
-    {
-        $oUser = oxNew("oxUser");
-
-        $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasVATTBEArticles', 'getUser', 'getTBECountry'));
-        $oBasket->expects($this->any())->method("hasVATTBEArticles")->will($this->returnValue(true));
-        $oBasket->expects($this->any())->method("getUser")->will($this->returnValue($oUser));
-        $oBasket->expects($this->any())->method("getTBECountry")->will($this->returnValue(null));
-
-        $this->getSession()->setBasket($oBasket);
-
-        $oBasketController = oxNew('oeVATTBEBasket');
-        $this->assertSame('', $oBasketController->getTBEMarkMessage());
-    }
-
-    public function testGetTBEMarkMessageHasTBEArticleUserLoggedInBasketValidCountryDoNotTBE()
-    {
-        $oUser = oxNew("oxUser");
-
-        $oCountry = $this->getMock("oxVATTBEoxCountry", array("appliesTBEVAT",'getVATTBEName'));
-        $oCountry->expects($this->any())->method("appliesTBEVAT")->will($this->returnValue(false));
-
-        $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasVATTBEArticles', 'getUser', 'getTBECountry'));
-        $oBasket->expects($this->any())->method("hasVATTBEArticles")->will($this->returnValue(true));
-        $oBasket->expects($this->any())->method("getUser")->will($this->returnValue($oUser));
-        $oBasket->expects($this->any())->method("getTBECountry")->will($this->returnValue($oCountry));
-
-        $this->getSession()->setBasket($oBasket);
-
-        $oBasketController = oxNew('oeVATTBEBasket');
-        $this->assertSame('', $oBasketController->getTBEMarkMessage());
-    }
-
+    /**
+     * TBE Articles are in basket;
+     * User is logged in;
+     * User country was found;
+     * User country is TBE country;
+     * Marks (stars) should be set.
+     */
     public function testGetTBEMarkMessageHasTBEArticleUserLoggedInBasketValidCountryTBE()
     {
         $oUser = oxNew("oxUser");
@@ -116,5 +73,85 @@ class Unit_oeVATTBE_controllers_oeVATTBEBasketTest extends OxidTestCase
         $oBasketController = oxNew('oeVATTBEBasket');
         $this->assertStringEndsWith(sprintf(oxRegistry::getLang()->translateString('OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY'), $oCountry->getVATTBEName()), $oBasketController->getTBEMarkMessage());
         $this->assertStringStartsWith('**', $oBasketController->getTBEMarkMessage());
+    }
+
+    /**
+     * No TBE Articles are in basket;
+     * Marks (stars) should not be set.
+     */
+    public function testGetTBEMarkMessageNoTBEArticleInBasket()
+    {
+        $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasVATTBEArticles'));
+        $oBasket->expects($this->any())->method("hasVATTBEArticles")->will($this->returnValue(false));
+
+        $this->getSession()->setBasket($oBasket);
+
+        $oBasketController = oxNew('oeVATTBEBasket');
+        $this->assertSame('', $oBasketController->getTBEMarkMessage());
+    }
+
+    /**
+     * TBE Articles are in basket;
+     * User is not logged in;
+     * Marks (stars) should not be set.
+     */
+    public function testGetTBEMarkMessageHasTBEArticleUserLoggedInBasketInvalid()
+    {
+        $oUser = oxNew("oxUser");
+
+        $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasVATTBEArticles', 'getUser'));
+        $oBasket->expects($this->any())->method("hasVATTBEArticles")->will($this->returnValue(true));
+        $oBasket->expects($this->any())->method("getUser")->will($this->returnValue($oUser));
+
+        $this->getSession()->setBasket($oBasket);
+
+        $oBasketController = oxNew('oeVATTBEBasket');
+        $this->assertSame('', $oBasketController->getTBEMarkMessage());
+    }
+
+    /**
+     * TBE Articles are in basket;
+     * User is logged in;
+     * User country was not found;
+     * Marks (stars) should not be set.
+     */
+    public function testGetTBEMarkMessageHasTBEArticleUserLoggedInBasketValidNoCountry()
+    {
+        $oUser = oxNew("oxUser");
+
+        $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasVATTBEArticles', 'getUser', 'getTBECountry'));
+        $oBasket->expects($this->any())->method("hasVATTBEArticles")->will($this->returnValue(true));
+        $oBasket->expects($this->any())->method("getUser")->will($this->returnValue($oUser));
+        $oBasket->expects($this->any())->method("getTBECountry")->will($this->returnValue(null));
+
+        $this->getSession()->setBasket($oBasket);
+
+        $oBasketController = oxNew('oeVATTBEBasket');
+        $this->assertSame('', $oBasketController->getTBEMarkMessage());
+    }
+
+    /**
+     * TBE Articles are in basket;
+     * User is logged in;
+     * User country was found;
+     * User country is not TBE country;
+     * Marks (stars) should not be set.
+     */
+    public function testGetTBEMarkMessageHasTBEArticleUserLoggedInBasketValidCountryDoNotTBE()
+    {
+        $oUser = oxNew("oxUser");
+
+        $oCountry = $this->getMock("oxVATTBEoxCountry", array("appliesTBEVAT",'getVATTBEName'));
+        $oCountry->expects($this->any())->method("appliesTBEVAT")->will($this->returnValue(false));
+
+        $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasVATTBEArticles', 'getUser', 'getTBECountry'));
+        $oBasket->expects($this->any())->method("hasVATTBEArticles")->will($this->returnValue(true));
+        $oBasket->expects($this->any())->method("getUser")->will($this->returnValue($oUser));
+        $oBasket->expects($this->any())->method("getTBECountry")->will($this->returnValue($oCountry));
+
+        $this->getSession()->setBasket($oBasket);
+
+        $oBasketController = oxNew('oeVATTBEBasket');
+        $this->assertSame('', $oBasketController->getTBEMarkMessage());
     }
 }
