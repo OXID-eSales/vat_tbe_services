@@ -45,7 +45,7 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
      *
      * @return int
      */
-    public function isTBEService()
+    public function oeVATTBEisTBEService()
     {
         return $this->oxarticles__oevattbe_istbeservice->value;
     }
@@ -64,7 +64,7 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
         $aKeys = parent::getCacheKeys($aLanguages, $aShops);
 
         $oTBEArticleCacheKey = $this->_getVATTBETBEArticleCacheKey();
-        if ($this->isTBEService() && $oTBEArticleCacheKey->needToCalculateKeys()) {
+        if ($this->oeVATTBEisTBEService() && $oTBEArticleCacheKey->needToCalculateKeys()) {
             $aKeys = $oTBEArticleCacheKey->updateCacheKeys($aKeys);
         }
 

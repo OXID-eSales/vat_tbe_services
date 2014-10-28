@@ -45,9 +45,9 @@ class Unit_oeVatTbe_models_oeVATTBEOxVatSelectorTest extends OxidTestCase
      */
     public function testArticleUserVatCalculationWhenHasTbeVatAndIsTbeArticle($iVat)
     {
-        $oArticle = $this->getMock('oeVatTbeOxArticle', array('oeVATTBEgetTBEVat', 'isTbeService'));
+        $oArticle = $this->getMock('oeVatTbeOxArticle', array('oeVATTBEgetTBEVat', 'oeVATTBEisTBEService'));
         $oArticle->expects($this->any())->method('oeVATTBEgetTBEVat')->will($this->returnValue($iVat));
-        $oArticle->expects($this->any())->method('isTbeService')->will($this->returnValue(true));
+        $oArticle->expects($this->any())->method('oeVATTBEisTbeService')->will($this->returnValue(true));
 
         $oVatSelector = oxNew('oeVATTBEOxVatSelector');
 
@@ -60,9 +60,9 @@ class Unit_oeVatTbe_models_oeVATTBEOxVatSelectorTest extends OxidTestCase
      */
     public function testArticleUserVatCalculationWhenTbeVatNotSetAndIsTbeArticle()
     {
-        $oArticle = $this->getMock('oeVatTbeOxArticle', array('oeVATTBEgetTBEVat', 'isTbeService'));
+        $oArticle = $this->getMock('oeVatTbeOxArticle', array('oeVATTBEgetTBEVat', 'oeVATTBEisTbeService'));
         $oArticle->expects($this->any())->method('oeVATTBEgetTBEVat')->will($this->returnValue(null));
-        $oArticle->expects($this->any())->method('isTbeService')->will($this->returnValue(true));
+        $oArticle->expects($this->any())->method('oeVATTBEisTbeService')->will($this->returnValue(true));
 
         $oVatSelector = oxNew('oeVATTBEOxVatSelector');
 
@@ -75,9 +75,9 @@ class Unit_oeVatTbe_models_oeVATTBEOxVatSelectorTest extends OxidTestCase
      */
     public function testArticleUserVatCalculationWhenTbeVatSetAndIsNotTbeArticle()
     {
-        $oArticle = $this->getMock('oeVatTbeOxArticle', array('oeVATTBEgetTBEVat', 'isTbeService'));
+        $oArticle = $this->getMock('oeVatTbeOxArticle', array('oeVATTBEgetTBEVat', 'oeVATTBEisTbeService'));
         $oArticle->expects($this->any())->method('oeVATTBEgetTBEVat')->will($this->returnValue(15));
-        $oArticle->expects($this->any())->method('isTbeService')->will($this->returnValue(false));
+        $oArticle->expects($this->any())->method('oeVATTBEisTbeService')->will($this->returnValue(false));
 
         $oVatSelector = oxNew('oeVATTBEOxVatSelector');
 
@@ -89,9 +89,9 @@ class Unit_oeVatTbe_models_oeVATTBEOxVatSelectorTest extends OxidTestCase
      */
     public function testArticleUserVatCalculationWhenIsAdmin()
     {
-        $oArticle = $this->getMock('oeVatTbeOxArticle', array('oeVATTBEgetTBEVat', 'isTbeService'));
+        $oArticle = $this->getMock('oeVatTbeOxArticle', array('oeVATTBEgetTBEVat', 'oeVATTBEisTbeService'));
         $oArticle->expects($this->any())->method('oeVATTBEgetTBEVat')->will($this->returnValue(15));
-        $oArticle->expects($this->any())->method('isTbeService')->will($this->returnValue(true));
+        $oArticle->expects($this->any())->method('oeVATTBEisTbeService')->will($this->returnValue(true));
         $this->setAdminMode(true);
 
         $oVatSelector = oxNew('oeVATTBEOxVatSelector');

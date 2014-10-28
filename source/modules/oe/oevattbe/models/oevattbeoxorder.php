@@ -148,7 +148,7 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
 
             if ($blShowPrice) {
                 // Add mark for TBE service.
-                if ($oOrderArt->getArticle()->isTBEService()) {
+                if ($oOrderArt->getArticle()->oeVATTBEisTBEService()) {
                     $oPdf->text(140, $iStartPosForMark, '*');
                 }
             }

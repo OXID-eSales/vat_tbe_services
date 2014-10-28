@@ -41,10 +41,10 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleTest extends OxidTestCase
     /**
      * Test for is tbe service
      */
-    public function testIsTbeService()
+    public function testOeVATTBEisTBEService()
     {
         $oArticle = oxNew('oeVATTBEOxArticle');
         $oArticle->oxarticles__oevattbe_istbeservice = new oxField(false);
-        $this->assertFalse($oArticle->isTbeService());
+        $this->assertFalse($oArticle->oeVATTBEisTbeService());
     }
 }
