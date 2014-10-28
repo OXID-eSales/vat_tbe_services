@@ -338,7 +338,7 @@ class Integration_oeVATTBE_article_oeVATTBEOxArticleListTest extends OxidTestCas
         $oArticle = $oArticleList->getBaseObject();
 
         if ($sUserStatus != 'notLoggedIn') {
-            $oUser = $this->getMock("oxUser", array("getTbeCountryId"));
+            $oUser = $this->getMock("oeVATTBEOxUser", array("getTbeCountryId"));
             $sCountryId = ($sUserStatus == 'loggedInWithoutCountry') ? null : 'a7c40f631fc920687.20179984';
             $oUser->expects($this->any())->method("getTbeCountryId")->will($this->returnValue($sCountryId));
             $oArticle->setUser($oUser);

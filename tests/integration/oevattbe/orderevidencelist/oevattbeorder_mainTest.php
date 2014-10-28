@@ -81,7 +81,7 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrder_MainTest extends Oxid
     private function _createOrder()
     {
         /** @var oeVATTBEOxBasket|oxBasket|PHPUnit_Framework_MockObject_MockObject $oBasket */
-        $oBasket = $this->getMock('oxBasket', array('hasVATTBEArticles'));
+        $oBasket = $this->getMock('oeVATTBEOxBasket', array('hasVATTBEArticles'));
         $oBasket->expects($this->any())->method('hasVATTBEArticles')->will($this->returnValue(true));
         /** @var oeVATTBEOxUser|oxUser $oUser */
         $oUser = oxNew('oxUser');
@@ -89,7 +89,7 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrder_MainTest extends Oxid
         $oUser->save();
 
         /** @var oeVATTBEOxOrder|oxOrder|PHPUnit_Framework_MockObject_MockObject $oOrder */
-        $oOrder = $this->getMock("oxOrder", array("_getFinalizeOrderParent"));
+        $oOrder = $this->getMock("oeVATTBEOxOrder", array("_getFinalizeOrderParent"));
         $oOrder->expects($this->any())->method("_getFinalizeOrderParent")->will($this->returnValue(oxOrder::ORDER_STATE_OK));
 
         $oOrder->setId('order_id');

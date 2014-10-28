@@ -35,7 +35,7 @@ class Integration_oeVATTBE_article_oeVATTBEOxArticleTest extends OxidTestCase
     {
         $this->_prepareData();
 
-        $oUser = $this->getMock("oxUser", array("getTbeCountryId"));
+        $oUser = $this->getMock("oeVATTBEOxUser", array("getTbeCountryId"));
         $oUser->expects($this->any())->method("getTbeCountryId")->will($this->returnValue('a7c40f631fc920687.20179984'));
 
         $oArticle = oxNew('oxArticle');
@@ -53,7 +53,7 @@ class Integration_oeVATTBE_article_oeVATTBEOxArticleTest extends OxidTestCase
     {
         $this->_prepareData();
 
-        $oUser = $this->getMock("oxUser", array("getTbeCountryId"));
+        $oUser = $this->getMock("oeVATTBEOxUser", array("getTbeCountryId"));
         $oUser->expects($this->any())->method("getTbeCountryId")->will($this->returnValue(null));
 
         $oArticle = oxNew('oxArticle');
@@ -106,7 +106,7 @@ class Integration_oeVATTBE_article_oeVATTBEOxArticleTest extends OxidTestCase
 
         $sAustriaId = 'a7c40f6320aeb2ec2.72885259';
         /** @var oxUser $oUser */
-        $oUser = $this->getMock('oxUser', array('getTbeCountryId'));
+        $oUser = $this->getMock('oeVATTBEOxUser', array('getTbeCountryId'));
         $oUser->expects($this->any())->method('getTbeCountryId')->will($this->returnValue($sAustriaId));
 
         /** @var oxArticle $oArticle */
@@ -129,7 +129,7 @@ class Integration_oeVATTBE_article_oeVATTBEOxArticleTest extends OxidTestCase
 
         $sAustriaId = 'a7c40f6320aeb2ec2.72885259';
         /** @var oxUser $oUser */
-        $oUser = $this->getMock('oxUser', array('getTbeCountryId'));
+        $oUser = $this->getMock('oeVATTBEOxUser', array('getTbeCountryId'));
         $oUser->expects($this->any())->method('getTbeCountryId')->will($this->returnValue($sAustriaId));
 
         /** @var oxArticle $oArticle */
