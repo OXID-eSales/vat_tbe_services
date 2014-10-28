@@ -35,7 +35,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxArticleTest extends OxidTestCase
     {
         $oArticle = oxNew('oeVATTBEOxArticle');
         $oArticle->oxarticles__oevattbe_rate = new oxField(9);
-        $this->assertSame(9, $oArticle->getTBEVat());
+        $this->assertSame(9, $oArticle->oeVATTBEgetTBEVat());
     }
 
     /**

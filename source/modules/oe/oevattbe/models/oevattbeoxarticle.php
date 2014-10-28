@@ -35,7 +35,7 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
      *
      * @return string
      */
-    public function getTBEVat()
+    public function oeVATTBEgetTBEVat()
     {
         return $this->oxarticles__oevattbe_rate->value;
     }

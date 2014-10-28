@@ -65,7 +65,7 @@ class Integration_oeVATTBE_article_oeVATTBEOxArticleListTest extends OxidTestCas
         /** @var oeVATTBEOxArticle|oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertSame($sVat, $oArticle->getTBEVat());
+        $this->assertSame($sVat, $oArticle->oeVATTBEgetTBEVat());
     }
 
     /**
@@ -89,7 +89,7 @@ class Integration_oeVATTBE_article_oeVATTBEOxArticleListTest extends OxidTestCas
         /** @var oeVATTBEOxArticle|oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertSame($sVat, $oArticle->getTBEVat());
+        $this->assertSame($sVat, $oArticle->oeVATTBEgetTBEVat());
     }
 
     /**
@@ -113,7 +113,7 @@ class Integration_oeVATTBE_article_oeVATTBEOxArticleListTest extends OxidTestCas
         /** @var oeVATTBEOxArticle|oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertSame($sVat, $oArticle->getTBEVat());
+        $this->assertSame($sVat, $oArticle->oeVATTBEgetTBEVat());
     }
 
     /**
@@ -137,7 +137,7 @@ class Integration_oeVATTBE_article_oeVATTBEOxArticleListTest extends OxidTestCas
         /** @var oeVATTBEOxArticle|oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertSame($sVat, $oArticle->getTBEVat());
+        $this->assertSame($sVat, $oArticle->oeVATTBEgetTBEVat());
     }
 
     /**
@@ -156,7 +156,7 @@ class Integration_oeVATTBE_article_oeVATTBEOxArticleListTest extends OxidTestCas
         /** @var oeVATTBEOxArticle|oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertSame($sVat, $oArticle->getTBEVat());
+        $this->assertSame($sVat, $oArticle->oeVATTBEgetTBEVat());
     }
 
     /**
@@ -181,7 +181,7 @@ class Integration_oeVATTBE_article_oeVATTBEOxArticleListTest extends OxidTestCas
         /** @var oeVATTBEOxArticle|oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertSame($sVat, $oArticle->getTBEVat());
+        $this->assertSame($sVat, $oArticle->oeVATTBEgetTBEVat());
     }
 
     /**
@@ -208,7 +208,7 @@ class Integration_oeVATTBE_article_oeVATTBEOxArticleListTest extends OxidTestCas
         /** @var oeVATTBEOxArticle|oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertSame($sVat, $oArticle->getTBEVat());
+        $this->assertSame($sVat, $oArticle->oeVATTBEgetTBEVat());
     }
 
     /**
@@ -234,7 +234,7 @@ class Integration_oeVATTBE_article_oeVATTBEOxArticleListTest extends OxidTestCas
         /** @var oeVATTBEOxArticle|oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertSame($sVat, $oArticle->getTBEVat());
+        $this->assertSame($sVat, $oArticle->oeVATTBEgetTBEVat());
     }
 
     /**
@@ -253,7 +253,7 @@ class Integration_oeVATTBE_article_oeVATTBEOxArticleListTest extends OxidTestCas
         /** @var oeVATTBEOxArticle|oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertSame($sVat, $oArticle->getTBEVat());
+        $this->assertSame($sVat, $oArticle->oeVATTBEgetTBEVat());
     }
 
     /**
@@ -278,7 +278,7 @@ class Integration_oeVATTBE_article_oeVATTBEOxArticleListTest extends OxidTestCas
         /** @var oeVATTBEOxArticle|oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertSame($sVat, $oArticle->getTBEVat());
+        $this->assertSame($sVat, $oArticle->oeVATTBEgetTBEVat());
     }
 
     /**
@@ -303,7 +303,7 @@ class Integration_oeVATTBE_article_oeVATTBEOxArticleListTest extends OxidTestCas
         /** @var oeVATTBEOxArticle|oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertSame($sVat, $oArticle->getTBEVat());
+        $this->assertSame($sVat, $oArticle->oeVATTBEgetTBEVat());
     }
 
     /**

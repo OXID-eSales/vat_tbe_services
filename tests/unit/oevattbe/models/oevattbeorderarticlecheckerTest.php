@@ -219,9 +219,9 @@ class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends OxidTestCase
      */
     protected function _createArticle($blTBEService, $iVat)
     {
-        $oArticle = $this->getMock('oxArticle', array('isTBEService', 'getTBEVat'));
+        $oArticle = $this->getMock('oxArticle', array('isTBEService', 'oeVATTBEgetTBEVat'));
         $oArticle->expects($this->any())->method('isTBEService')->will($this->returnValue($blTBEService));
-        $oArticle->expects($this->any())->method('getTBEVat')->will($this->returnValue($iVat));
+        $oArticle->expects($this->any())->method('oeVATTBEgetTBEVat')->will($this->returnValue($iVat));
 
         return $oArticle;
     }

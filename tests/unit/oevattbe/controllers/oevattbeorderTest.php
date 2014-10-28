@@ -98,7 +98,7 @@ class Unit_oeVATTBE_controllers_oeVATTBEOrderTest extends OxidTestCase
         $this->assertStringStartsWith('**', $oOrder->getTBEMarkMessage());
     }
 
-    public function testGetTBEVATFormatted()
+    public function testoeVATTBEgetTBEVatFormatted()
     {
         $oFormatter = $this->getMock("oeVATTBEBasketItemVATFormatter", array("formatVAT"), array(), '', false);
         $oFormatter->expects($this->any())->method("formatVAT")->will($this->returnValue('12% **'));
@@ -106,6 +106,6 @@ class Unit_oeVATTBE_controllers_oeVATTBEOrderTest extends OxidTestCase
         $oBasket = $this->getMock("oeVATTBEBasket", array("_getBasketItemVATFormatter"));
         $oBasket->expects($this->any())->method("_getBasketItemVATFormatter")->will($this->returnValue($oFormatter));
 
-        $this->assertSame('12% **', $oBasket->getTBEVatFormatted(oxNew('oxBasketItem')));
+        $this->assertSame('12% **', $oBasket->oeVATTBEgetTBEVatFormatted(oxNew('oxBasketItem')));
     }
 }
