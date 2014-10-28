@@ -83,4 +83,19 @@ class Unit_oeVatTbe_models_oeVATTBEOxVatSelectorTest extends OxidTestCase
 
         $this->assertSame(false, $oVatSelector->getArticleUserVat($oArticle));
     }
+
+    /**
+     * Test VAT calculation when article is TBE service, but there is admin mode tuned on.
+     */
+    public function testArticleUserVatCalculationWhenIsAdmin()
+    {
+        $oArticle = $this->getMock('oeVatTbeOxArticle', array('getTbeVat', 'isTbeService'));
+        $oArticle->expects($this->any())->method('getTbeVat')->will($this->returnValue(15));
+        $oArticle->expects($this->any())->method('isTbeService')->will($this->returnValue(true));
+        $this->setAdminMode(true);
+
+        $oVatSelector = oxNew('oeVATTBEOxVatSelector');
+
+        $this->assertSame(false, $oVatSelector->getArticleUserVat($oArticle));
+    }
 }

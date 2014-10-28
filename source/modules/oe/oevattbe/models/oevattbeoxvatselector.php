@@ -35,7 +35,7 @@ class oeVATTBEOxVatSelector extends oeVATTBEOxVatSelector_parent
     {
         /** @var oeVatTbeOxArticle $oArticle */
         $sVat = $oArticle->getTbeVat();
-        if (!$oArticle->isTbeService() || $sVat === null) {
+        if (!$oArticle->isTbeService() || $sVat === null || $this->isAdmin()) {
             $sVat = parent::getArticleUserVat($oArticle);
         }
 
