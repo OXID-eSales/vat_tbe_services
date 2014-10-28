@@ -131,6 +131,20 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
                 }
             }
         }
+        $iStartPos += 5;
+        $oOrderEvidenceList = $this->_factoryOeVATTBEOrderEvidenceList();
+        $oOrderEvidenceList->loadWithCountryNames($this->getId());
+        $aOrderEvidences = $oOrderEvidenceList->getData();
+        $sCountryId = $aOrderEvidences[$this->oxorder__oevattbe_evidenceused->value]['countryId'];
+
+
+        /** @var oxCountry $oCountry */
+        $oCountry = oxNew('oxCountry');
+        $oCountry->setLanguage($this->getSelectedLang());
+        $oCountry->load($sCountryId);
+        $oLang = oxRegistry::getLang();
+
+        $oPdf->text(15, $iStartPos, '* ' . sprintf($oLang->translateString('OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY_INVOICE', $this->getSelectedLang()), $oCountry->oxcountry__oxtitle->value));
     }
 
     /**

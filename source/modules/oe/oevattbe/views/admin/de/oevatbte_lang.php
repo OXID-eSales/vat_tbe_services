@@ -50,4 +50,5 @@ $aLang = array(
     'OEVATTBE_CHOOSE_VAT_RATE' => '---',
     'OEVATTBE_SAVE_BUTTON' => 'Speichern',
     'OEVATTBE_CREATE_NEW_COUNTRY_VAT_GROUP_LEGEND' => '[tr]Create new group',
+    'OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY_INVOICE' => '[tr]This VAT was calculated accordingr rezidence country: %s',
 );
