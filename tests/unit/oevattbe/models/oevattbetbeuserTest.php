@@ -212,7 +212,7 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
      */
     public function testUnsetEvidenceListCaching($oTBEUser)
     {
-        $oTBEUser->unsetTbeCountryFromCaching();
+        $oTBEUser->unsetOeVATTBETbeCountryFromCaching();
         $this->assertEquals('', $oTBEUser->getOeVATTBETbeCountryId());
     }
 

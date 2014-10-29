@@ -62,12 +62,12 @@ class oeVATTBEOxUser extends oeVatTbeOxUser_parent
 
     /**
      * Unset TBE country from caching to force recalculation on next get.
-     * Wrapper for oeVATTBETBEUser::unsetTbeCountryFromCaching
+     * Wrapper for oeVATTBETBEUser::unsetOeVATTBETbeCountryFromCaching
      */
-    public function unsetTbeCountryFromCaching()
+    public function unsetOeVATTBETbeCountryFromCaching()
     {
         $oTBEUser = $this->_getTBEUser();
-        $oTBEUser->unsetTbeCountryFromCaching();
+        $oTBEUser->unsetOeVATTBETbeCountryFromCaching();
     }
 
     /**
@@ -103,7 +103,7 @@ class oeVATTBEOxUser extends oeVatTbeOxUser_parent
      */
     public function login($sUser, $sPassword, $blCookie = false)
     {
-        $this->unsetTbeCountryFromCaching();
+        $this->unsetOeVATTBETbeCountryFromCaching();
         return parent::login($sUser, $sPassword, $blCookie);
     }
 
@@ -114,7 +114,7 @@ class oeVATTBEOxUser extends oeVatTbeOxUser_parent
      */
     public function logout()
     {
-        $this->unsetTbeCountryFromCaching();
+        $this->unsetOeVATTBETbeCountryFromCaching();
         return parent::logout();
     }
 
@@ -128,7 +128,7 @@ class oeVATTBEOxUser extends oeVatTbeOxUser_parent
         if ($this->getOeVATTBEVatIn() && $this->_isOeVATTBEINStoredDateEmpty()) {
             $this->oxuser__oevattbe_vatinenterdate = new oxField(date('Y-m-d H:i:s', oxRegistry::get("oxUtilsDate")->getTime()));
         }
-        $this->unsetTbeCountryFromCaching();
+        $this->unsetOeVATTBETbeCountryFromCaching();
 
         return parent::save();
     }
