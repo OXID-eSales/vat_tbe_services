@@ -34,16 +34,16 @@ class oeVATTBEOrder_Main extends oeVATTBEOrder_Main_parent
         $sOrderId = $this->getEditObjectId();
 
         /** @var oxOrder $oOrder */
-        $oOrder = oxNew("oxOrder");
+        $oOrder = oxNew('oxOrder');
         $sOrderEvidenceId = $this->_getOeVATTBECurrentOrderEvidenceId($oOrder, $sOrderId);
 
         $oEvidenceList = oeVATTBEOrderEvidenceList::createOrderEvidenceList();
         $oEvidenceList->loadWithCountryNames($sOrderId);
         $aEvidencesData = $oEvidenceList->getData();
 
-        $this->_aViewData["sTBECountry"] = $aEvidencesData[$sOrderEvidenceId]['countryTitle'];
-        $this->_aViewData["aEvidenceUsed"] = $sOrderEvidenceId;
-        $this->_aViewData["aEvidencesData"] = $aEvidencesData;
+        $this->_aViewData['sTBECountry'] = $aEvidencesData[$sOrderEvidenceId]['countryTitle'];
+        $this->_aViewData['aEvidenceUsed'] = $sOrderEvidenceId;
+        $this->_aViewData['aEvidencesData'] = $aEvidencesData;
 
         return parent::render();
     }
