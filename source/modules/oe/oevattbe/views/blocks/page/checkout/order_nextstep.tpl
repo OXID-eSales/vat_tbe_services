@@ -1,6 +1,6 @@
-[{if $oView->getTBEMarkMessage()}]
+[{if $oView->getOeVATTBEMarkMessage()}]
     <div>
-        [{$oView->getTBEMarkMessage()}]
+        [{$oView->getOeVATTBEMarkMessage()}]
     </div>
 [{/if}]
 [{$smarty.block.parent}]

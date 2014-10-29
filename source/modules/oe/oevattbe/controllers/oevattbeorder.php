@@ -67,7 +67,7 @@ class oeVATTBEOrder extends oeVATTBEOrder_parent
      *
      * @return string
      */
-    public function getTBEMarkMessage()
+    public function getOeVATTBEMarkMessage()
     {
         $sMessage ='';
         $oBasket = $this->getSession()->getBasket();

@@ -27,7 +27,7 @@
  */
 class Unit_oeVATTBE_controllers_oeVATTBEOrderTest extends OxidTestCase
 {
-    public function testGetTBEMarkMessageNoTBEArticleInBasket()
+    public function testGetOeVATTBEMarkMessageNoTBEArticleInBasket()
     {
         $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasOeTBEVATArticles'));
         $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(false));
@@ -35,10 +35,10 @@ class Unit_oeVATTBE_controllers_oeVATTBEOrderTest extends OxidTestCase
         $this->getSession()->setBasket($oBasket);
 
         $oOrder = oxNew('oeVATTBEOrder');
-        $this->assertSame('', $oOrder->getTBEMarkMessage());
+        $this->assertSame('', $oOrder->getOeVATTBEMarkMessage());
     }
 
-    public function testGetTBEMarkMessageHasTBEArticleInBasketButInvalid()
+    public function testGetOeVATTBEMarkMessageHasTBEArticleInBasketButInvalid()
     {
         $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasOeTBEVATArticles', 'isOeVATTBEValid'));
         $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(true));
@@ -47,10 +47,10 @@ class Unit_oeVATTBE_controllers_oeVATTBEOrderTest extends OxidTestCase
         $this->getSession()->setBasket($oBasket);
 
         $oOrder = oxNew('oeVATTBEOrder');
-        $this->assertSame('', $oOrder->getTBEMarkMessage());
+        $this->assertSame('', $oOrder->getOeVATTBEMarkMessage());
     }
 
-    public function testGetTBEMarkMessageHasTBEArticleInBasketValidButNoCountry()
+    public function testGetOeVATTBEMarkMessageHasTBEArticleInBasketValidButNoCountry()
     {
         $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasOeTBEVATArticles', 'isOeVATTBEValid', 'getOeVATTBECountry'));
         $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(true));
@@ -60,10 +60,10 @@ class Unit_oeVATTBE_controllers_oeVATTBEOrderTest extends OxidTestCase
         $this->getSession()->setBasket($oBasket);
 
         $oOrder = oxNew('oeVATTBEOrder');
-        $this->assertSame('', $oOrder->getTBEMarkMessage());
+        $this->assertSame('', $oOrder->getOeVATTBEMarkMessage());
     }
 
-    public function testGetTBEMarkMessageHasTBEArticleInBasketValidCountryNotTBE()
+    public function testGetOeVATTBEMarkMessageHasTBEArticleInBasketValidCountryNotTBE()
     {
         $oCountry = $this->getMock("oeVATTBEOxCountry", array("appliesTBEVAT"));
         $oCountry->expects($this->any())->method("appliesTBEVAT")->will($this->returnValue(false));
@@ -76,10 +76,10 @@ class Unit_oeVATTBE_controllers_oeVATTBEOrderTest extends OxidTestCase
         $this->getSession()->setBasket($oBasket);
 
         $oOrder = oxNew('oeVATTBEOrder');
-        $this->assertSame('', $oOrder->getTBEMarkMessage());
+        $this->assertSame('', $oOrder->getOeVATTBEMarkMessage());
     }
 
-    public function testGetTBEMarkMessageHasTBEArticleInBasketValidCountryTBE()
+    public function testGetOeVATTBEMarkMessageHasTBEArticleInBasketValidCountryTBE()
     {
         $oCountry = $this->getMock("oeVATTBEOxCountry", array("appliesTBEVAT",'getVATTBEName'));
         $oCountry->expects($this->any())->method("appliesTBEVAT")->will($this->returnValue(true));
@@ -94,8 +94,8 @@ class Unit_oeVATTBE_controllers_oeVATTBEOrderTest extends OxidTestCase
 
         $oOrder = oxNew('oeVATTBEOrder');
 
-        $this->assertStringEndsWith(sprintf(oxRegistry::getLang()->translateString('OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY'), $oCountry->getVATTBEName()), $oOrder->getTBEMarkMessage());
-        $this->assertStringStartsWith('**', $oOrder->getTBEMarkMessage());
+        $this->assertStringEndsWith(sprintf(oxRegistry::getLang()->translateString('OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY'), $oCountry->getVATTBEName()), $oOrder->getOeVATTBEMarkMessage());
+        $this->assertStringStartsWith('**', $oOrder->getOeVATTBEMarkMessage());
     }
 
     public function testGetOeVATTBETBEVatFormatted()
