@@ -25,9 +25,9 @@
 class oeVATTBEOrderEvidenceListDbGateway extends oeVATTBEModelDbGateway
 {
     /**
-     * Save PayPal order data to database.
+     * Save data to db.
      *
-     * @param array $aData
+     * @param array $aData data
      *
      * @return bool
      */
@@ -56,7 +56,7 @@ class oeVATTBEOrderEvidenceListDbGateway extends oeVATTBEModelDbGateway
     }
 
     /**
-     * Load PayPal order data from Db.
+     * Load data from Db.
      *
      * @param string $sOrderId Order id.
      *
@@ -80,7 +80,7 @@ class oeVATTBEOrderEvidenceListDbGateway extends oeVATTBEModelDbGateway
     }
 
     /**
-     * Delete PayPal order data from database.
+     * Delete data from database.
      *
      * @param string $sOrderId Order id.
      *

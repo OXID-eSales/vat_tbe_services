@@ -20,7 +20,7 @@
  */
 
 /**
- * PayPal PayPalOrder class
+ * Order Evidence list class.
  */
 class oeVATTBEOrderEvidenceList extends oeVATTBEModel
 {

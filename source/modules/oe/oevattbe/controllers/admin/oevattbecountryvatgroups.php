@@ -32,9 +32,7 @@ class oeVATTBECountryVatGroups extends oxAdminDetails
     private $_blMissingParameterErrorSet = false;
 
     /**
-     * Executes parent method parent::render(), creates oxOrder object,
-     * passes it's data to Smarty engine and returns
-     * name of template file 'order_paypal.tpl'.
+     * Render returns template.
      *
      * @return string
      */

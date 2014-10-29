@@ -80,7 +80,7 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
     }
 
     /**
-     * Delete order together with PayPal order data.
+     * Delete order.
      *
      * @param string $sOxId id
      *
