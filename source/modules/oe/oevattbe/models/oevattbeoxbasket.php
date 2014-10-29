@@ -70,7 +70,7 @@ class oeVATTBEOxBasket extends oeVatTbeOxBasket_parent
      *
      * @param string $sTBECountryId tbe country id
      */
-    public function setTBECountryId($sTBECountryId)
+    public function setOeVATTBECountryId($sTBECountryId)
     {
         $this->_sTBECountryId = $sTBECountryId;
     }

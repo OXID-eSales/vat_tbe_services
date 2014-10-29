@@ -241,7 +241,7 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
 
         /** @var oxBasket $oBasket */
         $oBasket = oxNew('oxBasket');
-        $oBasket->setTBECountryId('a7c40f6320aeb2ec2.72885259');
+        $oBasket->setOeVATTBECountryId('a7c40f6320aeb2ec2.72885259');
 
         $oUser = $this->_createUser();
         $blLogin = $oUser->login($this->_sDefaultUserName, $this->_sDefaultPassword);
@@ -276,7 +276,7 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
 
         /** @var oxBasket $oBasket */
         $oBasket = oxNew('oxBasket');
-        $oBasket->setTBECountryId('a7c40f6320aeb2ec2.72885259');
+        $oBasket->setOeVATTBECountryId('a7c40f6320aeb2ec2.72885259');
 
         $oUser = $this->_createUser();
         $blLogin = $oUser->login($this->_sDefaultUserName, $this->_sDefaultPassword);
@@ -311,7 +311,7 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
 
         /** @var oxBasket $oBasket */
         $oBasket = oxNew('oxBasket');
-        $oBasket->setTBECountryId('a7c40f6320aeb2ec2.72885259');
+        $oBasket->setOeVATTBECountryId('a7c40f6320aeb2ec2.72885259');
 
         $oUser = $this->_createUser();
         $blLogin = $oUser->login($this->_sDefaultUserName, $this->_sDefaultPassword);
