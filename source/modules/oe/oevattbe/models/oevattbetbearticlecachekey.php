@@ -45,7 +45,7 @@ class oeVATTBETBEArticleCacheKey
      */
     public function needToCalculateKeys()
     {
-        return (bool) $this->_getTbeCountryId();
+        return (bool) $this->_getOeVATTBETbeCountryId();
     }
 
     /**
@@ -58,7 +58,7 @@ class oeVATTBETBEArticleCacheKey
     public function updateCacheKeys($aKeys)
     {
         foreach ($aKeys as $sKey => $sCacheKey) {
-            $sCacheKey .= '_'. $this->_getTbeCountryId();
+            $sCacheKey .= '_'. $this->_getOeVATTBETbeCountryId();
             $aKeys[$sKey] = $sCacheKey;
         }
 
@@ -70,12 +70,12 @@ class oeVATTBETBEArticleCacheKey
      *
      * @return string
      */
-    private function _getTbeCountryId()
+    private function _getOeVATTBETbeCountryId()
     {
         $sCountryId = null;
 
         if ($this->_oUser) {
-            $sCountryId = $this->_oUser->getTbeCountryId();
+            $sCountryId = $this->_oUser->getOeVATTBETbeCountryId();
         }
 
         return $sCountryId;

@@ -28,11 +28,11 @@ class Unit_oeVATTBE_models_oeVATTBEOxOrderTest extends OxidTestCase
 {
     public function testValidateOrderNotValidOtherValidationOk()
     {
-        $oBasket = $this->getMock("oeVATTBEOxBasket", array("getTbeCountryId"));
-        $oBasket->expects($this->any())->method("getTbeCountryId")->will($this->returnValue('de'));
+        $oBasket = $this->getMock("oeVATTBEOxBasket", array("getOeVATTBETbeCountryId"));
+        $oBasket->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue('de'));
 
-        $oUser = $this->getMock("oeVATTBEOxUser", array("getTbeCountryId"));
-        $oUser->expects($this->any())->method("getTbeCountryId")->will($this->returnValue('lt'));
+        $oUser = $this->getMock("oeVATTBEOxUser", array("getOeVATTBETbeCountryId"));
+        $oUser->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue('lt'));
 
         $oOrder = $this->getMock("oeVATTBEOxOrder", array("_getValidateOrderParent"));
         $oOrder->expects($this->any())->method("_getValidateOrderParent")->will($this->returnValue(0));
@@ -42,11 +42,11 @@ class Unit_oeVATTBE_models_oeVATTBEOxOrderTest extends OxidTestCase
 
     public function testValidateOrderValidOtherValidationOk()
     {
-        $oBasket = $this->getMock("oeVATTBEOxBasket", array("getTbeCountryId"));
-        $oBasket->expects($this->any())->method("getTbeCountryId")->will($this->returnValue('de'));
+        $oBasket = $this->getMock("oeVATTBEOxBasket", array("getOeVATTBETbeCountryId"));
+        $oBasket->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue('de'));
 
-        $oUser = $this->getMock("oeVATTBEOxUser", array("getTbeCountryId"));
-        $oUser->expects($this->any())->method("getTbeCountryId")->will($this->returnValue('de'));
+        $oUser = $this->getMock("oeVATTBEOxUser", array("getOeVATTBETbeCountryId"));
+        $oUser->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue('de'));
 
         $oOrder = $this->getMock("oeVATTBEOxOrder", array("_getValidateOrderParent"));
         $oOrder->expects($this->any())->method("_getValidateOrderParent")->will($this->returnValue(0));
@@ -56,11 +56,11 @@ class Unit_oeVATTBE_models_oeVATTBEOxOrderTest extends OxidTestCase
 
     public function testValidateOrderUserHasNoTBECountryOtherValidationOk()
     {
-        $oBasket = $this->getMock("oeVATTBEOxBasket", array("getTbeCountryId"));
-        $oBasket->expects($this->any())->method("getTbeCountryId")->will($this->returnValue(null));
+        $oBasket = $this->getMock("oeVATTBEOxBasket", array("getOeVATTBETbeCountryId"));
+        $oBasket->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue(null));
 
-        $oUser = $this->getMock("oeVATTBEOxUser", array("getTbeCountryId"));
-        $oUser->expects($this->any())->method("getTbeCountryId")->will($this->returnValue(null));
+        $oUser = $this->getMock("oeVATTBEOxUser", array("getOeVATTBETbeCountryId"));
+        $oUser->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue(null));
 
         $oOrder = $this->getMock("oeVATTBEOxOrder", array("_getValidateOrderParent"));
         $oOrder->expects($this->any())->method("_getValidateOrderParent")->will($this->returnValue(0));
@@ -70,11 +70,11 @@ class Unit_oeVATTBE_models_oeVATTBEOxOrderTest extends OxidTestCase
 
     public function testValidateOrderValidOtherValidationNotOk()
     {
-        $oBasket = $this->getMock("oeVATTBEOxBasket", array("getTbeCountryId"));
-        $oBasket->expects($this->any())->method("getTbeCountryId")->will($this->returnValue('de'));
+        $oBasket = $this->getMock("oeVATTBEOxBasket", array("getOeVATTBETbeCountryId"));
+        $oBasket->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue('de'));
 
-        $oUser = $this->getMock("oeVATTBEOxUser", array("getTbeCountryId"));
-        $oUser->expects($this->any())->method("getTbeCountryId")->will($this->returnValue('de'));
+        $oUser = $this->getMock("oeVATTBEOxUser", array("getOeVATTBETbeCountryId"));
+        $oUser->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue('de'));
 
         $oOrder = $this->getMock("oeVATTBEOxOrder", array("_getValidateOrderParent"));
         $oOrder->expects($this->any())->method("_getValidateOrderParent")->will($this->returnValue(1));
@@ -84,11 +84,11 @@ class Unit_oeVATTBE_models_oeVATTBEOxOrderTest extends OxidTestCase
 
     public function testValidateOrderArticleCheckerNotValid()
     {
-        $oBasket = $this->getMock("oeVATTBEOxBasket", array("getTbeCountryId"));
-        $oBasket->expects($this->any())->method("getTbeCountryId")->will($this->returnValue('de'));
+        $oBasket = $this->getMock("oeVATTBEOxBasket", array("getOeVATTBETbeCountryId"));
+        $oBasket->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue('de'));
 
-        $oUser = $this->getMock("oeVATTBEOxUser", array("getTbeCountryId"));
-        $oUser->expects($this->any())->method("getTbeCountryId")->will($this->returnValue('de'));
+        $oUser = $this->getMock("oeVATTBEOxUser", array("getOeVATTBETbeCountryId"));
+        $oUser->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue('de'));
 
         $oChecker = $this->getMock("oeVATTBEOrderArticleChecker", array("isValid"), array(), '', false);
         $oChecker->expects($this->any())->method("isValid")->will($this->returnValue(false));
@@ -102,11 +102,11 @@ class Unit_oeVATTBE_models_oeVATTBEOxOrderTest extends OxidTestCase
 
     public function testValidateOrderArticleCheckerValid()
     {
-        $oBasket = $this->getMock("oeVATTBEOxBasket", array("getTbeCountryId"));
-        $oBasket->expects($this->any())->method("getTbeCountryId")->will($this->returnValue('de'));
+        $oBasket = $this->getMock("oeVATTBEOxBasket", array("getOeVATTBETbeCountryId"));
+        $oBasket->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue('de'));
 
-        $oUser = $this->getMock("oeVATTBEOxUser", array("getTbeCountryId"));
-        $oUser->expects($this->any())->method("getTbeCountryId")->will($this->returnValue('de'));
+        $oUser = $this->getMock("oeVATTBEOxUser", array("getOeVATTBETbeCountryId"));
+        $oUser->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue('de'));
 
         $oChecker = $this->getMock("oeVATTBEOrderArticleChecker", array("isValid"), array(), '', false);
         $oChecker->expects($this->any())->method("isValid")->will($this->returnValue(true));
@@ -120,11 +120,11 @@ class Unit_oeVATTBE_models_oeVATTBEOxOrderTest extends OxidTestCase
 
     public function testValidateOrderArticleCheckerInValidParentInvalid()
     {
-        $oBasket = $this->getMock("oeVATTBEOxBasket", array("getTbeCountryId"));
-        $oBasket->expects($this->any())->method("getTbeCountryId")->will($this->returnValue('de'));
+        $oBasket = $this->getMock("oeVATTBEOxBasket", array("getOeVATTBETbeCountryId"));
+        $oBasket->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue('de'));
 
-        $oUser = $this->getMock("oeVATTBEOxUser", array("getTbeCountryId"));
-        $oUser->expects($this->any())->method("getTbeCountryId")->will($this->returnValue('de'));
+        $oUser = $this->getMock("oeVATTBEOxUser", array("getOeVATTBETbeCountryId"));
+        $oUser->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue('de'));
 
         $oChecker = $this->getMock("oeVATTBEOrderArticleChecker", array("isValid"), array(), '', false);
         $oChecker->expects($this->any())->method("isValid")->will($this->returnValue(false));

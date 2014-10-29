@@ -54,8 +54,8 @@ class oeVATTBEOxCmp_Basket extends oeVatTbeOxCmp_Basket_parent
      */
     protected function _oeVATTBEManageBasketForLoggedInUser($oBasket, $oUser)
     {
-        if ((is_null($oBasket->getTbeCountryId()) || ($oBasket->getTbeCountryId() != $oUser->getTbeCountryId()))) {
-            $oBasket->setTBECountryId($oUser->getTbeCountryId());
+        if ((is_null($oBasket->getOeVATTBETbeCountryId()) || ($oBasket->getOeVATTBETbeCountryId() != $oUser->getOeVATTBETbeCountryId()))) {
+            $oBasket->setTBECountryId($oUser->getOeVATTBETbeCountryId());
             if ($oBasket->hasVATTBEArticles() && $oBasket->getTBECountry()->appliesTBEVAT()) {
                 $oBasket->setTBECountryChanged();
             }

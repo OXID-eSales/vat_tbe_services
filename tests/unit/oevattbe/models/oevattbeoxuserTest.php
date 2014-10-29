@@ -39,7 +39,7 @@ class Unit_oeVatTbe_models_oeVATTBEOxUserTest extends OxidTestCase
         $oUser = oxNew('oxUser');
         $oUser->oxuser__oxcountryid = new oxField('GermanyId');
 
-        $this->assertEquals('GermanyId', $oUser->getTbeCountryId());
+        $this->assertEquals('GermanyId', $oUser->getOeVATTBETbeCountryId());
     }
 
     /**

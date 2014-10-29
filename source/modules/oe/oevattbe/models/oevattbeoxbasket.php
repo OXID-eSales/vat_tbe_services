@@ -40,7 +40,7 @@ class oeVATTBEOxBasket extends oeVatTbeOxBasket_parent
      *
      * @return string
      */
-    public function getTBECountryId()
+    public function getOeVATTBETbeCountryId()
     {
         return $this->_sTBECountryId;
     }
@@ -82,11 +82,11 @@ class oeVATTBEOxBasket extends oeVatTbeOxBasket_parent
      */
     public function getTBECountry()
     {
-        if (!is_null($this->getTBECountryId())) {
+        if (!is_null($this->getOeVATTBETbeCountryId())) {
             $oCountry = oxNew('oxCountry');
 
 
-            $oCountry->load($this->getTBECountryId());
+            $oCountry->load($this->getOeVATTBETbeCountryId());
         }
 
         return $oCountry;

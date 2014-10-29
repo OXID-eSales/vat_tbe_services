@@ -67,7 +67,7 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
     {
         $iValidState = $this->_getValidateOrderParent($oBasket, $oUser);
 
-        if (!$iValidState && $oUser->getTBECountryId() && ($oBasket->getTBECountryId() != $oUser->getTBECountryId())) {
+        if (!$iValidState && $oUser->getOeVATTBETbeCountryId() && ($oBasket->getOeVATTBETbeCountryId() != $oUser->getOeVATTBETbeCountryId())) {
             $iValidState = oxOrder::ORDER_STATE_INVALIDDElADDRESSCHANGED;
         }
 

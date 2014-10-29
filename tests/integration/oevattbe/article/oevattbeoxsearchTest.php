@@ -38,8 +38,8 @@ class Integration_oeVATTBE_article_oeVATTBEOxSearchTest extends OxidTestCase
      */
     public function testGetSearchArticles()
     {
-        $oUser = $this->getMock("oeVATTBEOxUser", array("getTbeCountryId"));
-        $oUser->expects($this->any())->method("getTbeCountryId")->will($this->returnValue('a7c40f631fc920687.20179984'));
+        $oUser = $this->getMock("oeVATTBEOxUser", array("getOeVATTBETbeCountryId"));
+        $oUser->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue('a7c40f631fc920687.20179984'));
 
         $oSearch = oxNew("oxSearch");
         $oSearch->setUser($oUser);
@@ -57,8 +57,8 @@ class Integration_oeVATTBE_article_oeVATTBEOxSearchTest extends OxidTestCase
      */
     public function testGetSearchArticlesUserCountryNotSet()
     {
-        $oUser = $this->getMock("oeVATTBEOxUser", array("getTbeCountryId"));
-        $oUser->expects($this->any())->method("getTbeCountryId")->will($this->returnValue(null));
+        $oUser = $this->getMock("oeVATTBEOxUser", array("getOeVATTBETbeCountryId"));
+        $oUser->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue(null));
 
         $oSearch = oxNew("oxSearch");
         $oSearch->setUser($oUser);

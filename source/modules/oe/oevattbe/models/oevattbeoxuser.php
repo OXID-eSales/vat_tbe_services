@@ -32,10 +32,10 @@ class oeVATTBEOxUser extends oeVatTbeOxUser_parent
      *
      * @return string
      */
-    public function getTbeCountryId()
+    public function getOeVATTBETbeCountryId()
     {
         $oTBEUser = $this->_getTBEUser();
-        return $oTBEUser->getTbeCountryId();
+        return $oTBEUser->getOeVATTBETbeCountryId();
     }
 
     /**

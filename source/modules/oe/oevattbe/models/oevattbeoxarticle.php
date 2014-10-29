@@ -119,13 +119,13 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
      *
      * @return string
      */
-    private function _getTbeCountryId()
+    private function _getOeVATTBETbeCountryId()
     {
         $sCountryId = null;
         $oUser = $this->getUser();
 
         if ($oUser) {
-            $sCountryId = $oUser->getTbeCountryId();
+            $sCountryId = $oUser->getOeVATTBETbeCountryId();
         }
 
         return $sCountryId;
@@ -139,7 +139,7 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
     private function _isOeVATTBEConfigured()
     {
         $isConfigured = false;
-        $sCountryId = $this->_getTbeCountryId();
+        $sCountryId = $this->_getOeVATTBETbeCountryId();
         if (!is_null($sCountryId)) {
             $oCountry = oxNew('oxCountry');
             $oCountry->load($sCountryId);

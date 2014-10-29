@@ -164,7 +164,7 @@ class oeVATTBEOxSearch extends oeVATTBEOxSearch_parent
         $oUser = $this->getUser();
 
         if ($oUser) {
-            $sCountryId = $oUser->getTbeCountryId();
+            $sCountryId = $oUser->getOeVATTBETbeCountryId();
         }
 
         return $sCountryId;

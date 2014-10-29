@@ -36,7 +36,7 @@ class Integration_oeVatTbe_userTBECountry_oeVATTBEUserTBECountryChangeEventsTest
     {
         $sGermanyId = $this->_sGermanyId;
         $oUser = $this->_createUser();
-        $this->assertSame($sGermanyId, $oUser->getTbeCountryId(), 'User created in Germany, so TBE country must be Germany.');
+        $this->assertSame($sGermanyId, $oUser->getOeVATTBETbeCountryId(), 'User created in Germany, so TBE country must be Germany.');
 
         return $oUser;
     }
@@ -57,9 +57,9 @@ class Integration_oeVatTbe_userTBECountry_oeVATTBEUserTBECountryChangeEventsTest
         $sAustriaId = $this->_sAustriaId;
         $oUser->oxuser__oxcountryid = new oxField($sAustriaId, oxField::T_RAW);
 
-        $this->assertNotSame($sAustriaId, $oUser->getTbeCountryId());
+        $this->assertNotSame($sAustriaId, $oUser->getOeVATTBETbeCountryId());
         $oUser->save();
-        $this->assertSame($sAustriaId, $oUser->getTbeCountryId());
+        $this->assertSame($sAustriaId, $oUser->getOeVATTBETbeCountryId());
 
         return $oUser;
     }
@@ -80,9 +80,9 @@ class Integration_oeVatTbe_userTBECountry_oeVATTBEUserTBECountryChangeEventsTest
         $sUnitedKingdom = $this->_sUnitedKingdom;
         $oUser->oxuser__oxcountryid = new oxField($sUnitedKingdom, oxField::T_RAW);
 
-        $this->assertNotSame($sUnitedKingdom, $oUser->getTbeCountryId());
+        $this->assertNotSame($sUnitedKingdom, $oUser->getOeVATTBETbeCountryId());
         $oUser->logout();
-        $this->assertSame($sUnitedKingdom, $oUser->getTbeCountryId());
+        $this->assertSame($sUnitedKingdom, $oUser->getOeVATTBETbeCountryId());
 
         return $oUser;
     }
@@ -104,10 +104,10 @@ class Integration_oeVatTbe_userTBECountry_oeVATTBEUserTBECountryChangeEventsTest
         $sUserName = $this->_sDefaultUserName;
         $sWrongUserPassword = 'wrong password';
 
-        $this->assertNotSame($sAustriaId, $oUser->getTbeCountryId());
+        $this->assertNotSame($sAustriaId, $oUser->getOeVATTBETbeCountryId());
         $blLogsIn = $oUser->login($sUserName, $sWrongUserPassword);
         $this->assertTrue($blLogsIn, 'User did not log in successfully.');
-        $this->assertNotSame($sAustriaId, $oUser->getTbeCountryId());
+        $this->assertNotSame($sAustriaId, $oUser->getOeVATTBETbeCountryId());
 
         return $oUser;
     }
@@ -127,10 +127,10 @@ class Integration_oeVatTbe_userTBECountry_oeVATTBEUserTBECountryChangeEventsTest
         $sUserName = $this->_sDefaultUserName;
         $sUserPassword = $this->_sDefaultUserPassword;
 
-        $this->assertNotSame($sAustriaId, $oUser->getTbeCountryId());
+        $this->assertNotSame($sAustriaId, $oUser->getOeVATTBETbeCountryId());
         $blLogsIn = $oUser->login($sUserName, $sUserPassword);
         $this->assertTrue($blLogsIn, 'User did not log in successfully.');
-        $this->assertSame($sAustriaId, $oUser->getTbeCountryId());
+        $this->assertSame($sAustriaId, $oUser->getOeVATTBETbeCountryId());
     }
 
     /**

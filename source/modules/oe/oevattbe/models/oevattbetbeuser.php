@@ -64,7 +64,7 @@ class oeVATTBETBEUser
      *
      * @return string
      */
-    public function getTbeCountryId()
+    public function getOeVATTBETbeCountryId()
     {
         $this->_loadEvidenceDataToSession();
         return $this->_getSession()->getVariable('TBECountryId');
@@ -167,9 +167,9 @@ class oeVATTBETBEUser
     {
         $oCountry = null;
 
-        if (!is_null($this->getTBECountryId())) {
+        if (!is_null($this->getOeVATTBETbeCountryId())) {
             $oCountry = oxNew('oxCountry');
-            $oCountry->load($this->getTBECountryId());
+            $oCountry->load($this->getOeVATTBETbeCountryId());
         }
 
         return $oCountry;

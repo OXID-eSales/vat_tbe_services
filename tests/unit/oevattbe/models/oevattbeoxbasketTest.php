@@ -30,17 +30,17 @@ class Unit_oeVATTBE_models_oeVATTBEOxBasketTest extends OxidTestCase
     /**
      * Test for tbe country id setter and getter
      */
-    public function testSetGetTBECountryId()
+    public function testSetgetOeVATTBETbeCountryId()
     {
         $oBasket = oxNew('oxBasket');
         $oBasket->setTBECountryId('de');
-        $this->assertSame('de', $oBasket->getTBECountryId());
+        $this->assertSame('de', $oBasket->getOeVATTBETbeCountryId());
     }
 
     /**
      * Test get country when it is not set
      */
-    public function testGetTBECountryIdNotSet()
+    public function testGetOeVATTBETbeCountryIdNotSet()
     {
         $oBasket = oxNew('oxBasket');
         $this->assertNull($oBasket->getTBECountry());
@@ -49,7 +49,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxBasketTest extends OxidTestCase
     /**
      * Test get country when it is set
      */
-    public function testGetTBECountryIdSet()
+    public function testGetOeVATTBETbeCountryIdSet()
     {
         $oBasket = oxNew('oxBasket');
         $oBasket->setTBECountryId('a7c40f631fc920687.20179984');

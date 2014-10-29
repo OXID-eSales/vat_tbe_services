@@ -68,7 +68,7 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
      */
     public function testTBECountryIdSelecting($oTBEUser)
     {
-        $this->assertEquals('GermanyId', $oTBEUser->getTbeCountryId());
+        $this->assertEquals('GermanyId', $oTBEUser->getOeVATTBETbeCountryId());
         return $oTBEUser;
     }
 
@@ -115,7 +115,7 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
      */
     public function testTBECountryIdSelectingWhenNoEvidenceFound($oTBEUser)
     {
-        $this->assertEquals('', $oTBEUser->getTbeCountryId());
+        $this->assertEquals('', $oTBEUser->getOeVATTBETbeCountryId());
         return $oTBEUser;
     }
 
@@ -183,7 +183,7 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
      */
     public function testTBECountryIdCaching($oTBEUser)
     {
-        $this->assertEquals('GermanyId', $oTBEUser->getTbeCountryId());
+        $this->assertEquals('GermanyId', $oTBEUser->getOeVATTBETbeCountryId());
         return $oTBEUser;
     }
 
@@ -213,7 +213,7 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
     public function testUnsetEvidenceListCaching($oTBEUser)
     {
         $oTBEUser->unsetTbeCountryFromCaching();
-        $this->assertEquals('', $oTBEUser->getTbeCountryId());
+        $this->assertEquals('', $oTBEUser->getOeVATTBETbeCountryId());
     }
 
     /**
@@ -231,10 +231,10 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
         $oUser->oxuser__oxcountryid = new oxField('');
 
         $oTBEUser = oxNew('oeVATTBETBEUser', $oUser, $oSession, $oConfig);
-        $oTBEUser->getTbeCountryId();
+        $oTBEUser->getOeVATTBETbeCountryId();
         $oUser->oxuser__oxcountryid = new oxField('LithuaniaId');
 
-        $this->assertEquals('', $oTBEUser->getTbeCountryId());
+        $this->assertEquals('', $oTBEUser->getOeVATTBETbeCountryId());
     }
 
     public function testGetCountry()
