@@ -98,7 +98,7 @@ class oeVATTBEOxSearch extends oeVATTBEOxSearch_parent
         $sArticleTable = $oArticle->getViewName();
         $sO2CView = getViewName('oxobject2category');
 
-        $sSelectFields = $this->_getVATTBEArticleSqlBuilder()->getSelectFields();
+        $sSelectFields = $this->_getOeVATTBEArticleSqlBuilder()->getSelectFields();
 
 
         // longdesc field now is kept on different table
@@ -193,7 +193,7 @@ class oeVATTBEOxSearch extends oeVATTBEOxSearch_parent
      *
      * @return oeVATTBEArticleSQLBuilder
      */
-    protected function _getVATTBEArticleSqlBuilder()
+    protected function _getOeVATTBEArticleSqlBuilder()
     {
         if (is_null($this->_oVATTBEArticleSQLBuilder)) {
             $oArticle = oxNew('oxarticle');
