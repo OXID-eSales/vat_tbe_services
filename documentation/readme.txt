@@ -25,8 +25,24 @@ TBE articles are calculated with user location country VAT rate.
 
 ==Extend==
 *oxarticle
+--getCacheKeys
+--buildSelectString
 *oxarticlelist
+--_getCategorySelect
+--_getVendorSelect
+--_getManufacturerSelect
+--_getPriceSelect
+--loadTagArticles
+--loadActionArticles
+--loadArticleAccessoires
+--loadArticleCrossSell
+--loadNewestArticles
+--loadTop5Articles
+--_getArticleSelect
 *oxuser
+--login
+--logout
+--save
 *oxsearch
 *oxvatselector
 *oxbasket
