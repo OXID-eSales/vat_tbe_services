@@ -21,7 +21,7 @@
 
 
 /**
- * Testing oeVATTBECountryVATGroup class.
+ * Testing oeVATTBEArticleVATGroupsList class.
  *
  * @covers oeVATTBEArticleVATGroupsList
  */
