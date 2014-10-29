@@ -160,8 +160,8 @@ class Unit_oeVATTBE_controllers_oeVATTBEBasketTest extends OxidTestCase
         $oFormatter = $this->getMock("oeVATTBEBasketItemVATFormatter", array("formatVAT"), array(), '', false);
         $oFormatter->expects($this->any())->method("formatVAT")->will($this->returnValue('12% **'));
 
-        $oBasket = $this->getMock("oeVATTBEBasket", array("_getBasketItemVATFormatter"));
-        $oBasket->expects($this->any())->method("_getBasketItemVATFormatter")->will($this->returnValue($oFormatter));
+        $oBasket = $this->getMock("oeVATTBEBasket", array("_getOeVATTBEBasketItemVATFormatter"));
+        $oBasket->expects($this->any())->method("_getOeVATTBEBasketItemVATFormatter")->will($this->returnValue($oFormatter));
 
         $this->assertSame('12% **', $oBasket->getOeVATTBETBEVatFormatted(oxNew('oxBasketItem')));
     }

@@ -166,11 +166,11 @@ class Unit_oeVATTBE_models_oeVATTBEOxOrderTest extends OxidTestCase
         /** @var oxOrder|oeVATTBEOxOrder|PHPUnit_Framework_MockObject_MockObject $oOrder */
         $oOrder = $this->getMock(
             'oeVATTBEOxOrder',
-            array('getSelectedLang', '_factoryOeVATTBEOrderEvidenceList', 'load', '_oeVATTBEGetUsedEvidenceId')
+            array('getSelectedLang', '_factoryOeVATTBEOrderEvidenceList', 'load', '_getOeVATTBEUsedEvidenceId')
         );
         $oOrder->expects($this->any())->method('getSelectedLang')->will($this->returnValue($iLanguageId));
         $oOrder->expects($this->any())->method('_factoryOeVATTBEOrderEvidenceList')->will($this->returnValue($oOrderEvidenceList));
-        $oOrder->expects($this->any())->method('_oeVATTBEGetUsedEvidenceId')->will($this->returnValue('usedOrderEvidenceId'));
+        $oOrder->expects($this->any())->method('_getOeVATTBEUsedEvidenceId')->will($this->returnValue('usedOrderEvidenceId'));
 
 
         $this->assertSame($sCountryResult, $oOrder->getOeVATTBECountryTitle());

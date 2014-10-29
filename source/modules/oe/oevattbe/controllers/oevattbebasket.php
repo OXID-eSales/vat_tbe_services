@@ -24,7 +24,7 @@
  */
 class oeVATTBEBasket extends oeVATTBEBasket_parent
 {
-    private $_getBasketItemVATFormatter = null;
+    private $_getOeVATTBEBasketItemVATFormatter = null;
 
     /**
      * Executes parent::render(), creates list with basket articles
@@ -78,7 +78,7 @@ class oeVATTBEBasket extends oeVATTBEBasket_parent
      */
     public function getOeVATTBETBEVatFormatted($oBasketItem)
     {
-        $sMessage = $this->_getBasketItemVATFormatter()->formatVAT($oBasketItem);
+        $sMessage = $this->_getOeVATTBEBasketItemVATFormatter()->formatVAT($oBasketItem);
 
         return $sMessage;
     }
@@ -88,14 +88,14 @@ class oeVATTBEBasket extends oeVATTBEBasket_parent
      *
      * @return oeVATTBEBasketItemVATFormatter
      */
-    protected function _getBasketItemVATFormatter()
+    protected function _getOeVATTBEBasketItemVATFormatter()
     {
-        if (is_null($this->_getBasketItemVATFormatter)) {
+        if (is_null($this->_getOeVATTBEBasketItemVATFormatter)) {
             $oBasket = $this->getSession()->getBasket();
             $oMarkGenerator =  $this->getBasketContentMarkGenerator();
-            $this->_getBasketItemVATFormatter = oxNew('oeVATTBEBasketItemVATFormatter', $oBasket, $oMarkGenerator);
+            $this->_getOeVATTBEBasketItemVATFormatter = oxNew('oeVATTBEBasketItemVATFormatter', $oBasket, $oMarkGenerator);
         }
 
-        return $this->_getBasketItemVATFormatter;
+        return $this->_getOeVATTBEBasketItemVATFormatter;
     }
 }
