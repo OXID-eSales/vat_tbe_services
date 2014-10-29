@@ -38,7 +38,7 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
      */
     protected function _getCategorySelect($sFields, $sCatId, $aSessionFilter)
     {
-        if (!$this->_isTBEConfigured()) {
+        if (!$this->_isOeVATTBEConfigured()) {
             return parent::_getCategorySelect($sFields, $sCatId, $aSessionFilter);
         }
 
@@ -82,7 +82,7 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
      */
     protected function _getVendorSelect($sVendorId)
     {
-        if (!$this->_isTBEConfigured()) {
+        if (!$this->_isOeVATTBEConfigured()) {
             return parent::_getVendorSelect($sVendorId);
         }
 
@@ -112,7 +112,7 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
      */
     protected function _getManufacturerSelect($sManufacturerId)
     {
-        if (!$this->_isTBEConfigured()) {
+        if (!$this->_isOeVATTBEConfigured()) {
             return parent::_getManufacturerSelect($sManufacturerId);
         }
 
@@ -143,7 +143,7 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
      */
     protected function _getPriceSelect($dPriceFrom, $dPriceTo)
     {
-        if (!$this->_isTBEConfigured()) {
+        if (!$this->_isOeVATTBEConfigured()) {
             return parent::_getPriceSelect($dPriceFrom, $dPriceTo);
         }
 
@@ -179,7 +179,7 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
      */
     public function loadTagArticles($sTag, $iLang)
     {
-        if (!$this->_isTBEConfigured()) {
+        if (!$this->_isOeVATTBEConfigured()) {
             return parent::loadTagArticles($sTag, $iLang);
         }
         $oListObject = $this->getBaseObject();
@@ -227,7 +227,7 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
      */
     public function loadActionArticles($sActionID, $iLimit = null)
     {
-        if (!$this->_isTBEConfigured()) {
+        if (!$this->_isOeVATTBEConfigured()) {
             parent::loadActionArticles($sActionID, $iLimit = null);
             return;
         }
@@ -272,7 +272,7 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
      */
     public function loadArticleAccessoires($sArticleId)
     {
-        if (!$this->_isTBEConfigured()) {
+        if (!$this->_isOeVATTBEConfigured()) {
             parent::loadArticleAccessoires($sArticleId);
             return;
         }
@@ -310,7 +310,7 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
      */
     public function loadArticleCrossSell($sArticleId)
     {
-        if (!$this->_isTBEConfigured()) {
+        if (!$this->_isOeVATTBEConfigured()) {
             parent::loadArticleCrossSell($sArticleId);
             return;
         }
@@ -370,7 +370,7 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
      */
     public function loadNewestArticles($iLimit = null)
     {
-        if (!$this->_isTBEConfigured()) {
+        if (!$this->_isOeVATTBEConfigured()) {
             parent::loadNewestArticles($iLimit);
             return;
         }
@@ -422,7 +422,7 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
      */
     public function loadTop5Articles($iLimit = null)
     {
-        if (!$this->_isTBEConfigured()) {
+        if (!$this->_isOeVATTBEConfigured()) {
             parent::loadTop5Articles($iLimit);
             return;
         }
@@ -469,7 +469,7 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
      */
     protected function _getArticleSelect($sRecommendationId, $sArticlesFilter = null)
     {
-        if (!$this->_isTBEConfigured()) {
+        if (!$this->_isOeVATTBEConfigured()) {
             return parent::_getArticleSelect($sRecommendationId, $sArticlesFilter);
         }
 
@@ -510,7 +510,7 @@ class oeVATTBEOxArticleList extends oeVATTBEOxArticleList_parent
      *
      * @return string
      */
-    private function _isTBEConfigured()
+    private function _isOeVATTBEConfigured()
     {
         $isConfigured = false;
         $sCountryId = $this->_getTbeCountryId();
