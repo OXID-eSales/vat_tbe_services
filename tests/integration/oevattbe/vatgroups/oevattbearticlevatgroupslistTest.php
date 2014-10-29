@@ -53,7 +53,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBEArticleVATGroupsListTest extends Ox
      * Two Country Groups exits;
      * List is successfully loaded and array of groups is returned.
      *
-     * @param string $sArticleId
+     * @param string $sArticleId article id
      *
      * @depends testSavingGroupsList
      */
