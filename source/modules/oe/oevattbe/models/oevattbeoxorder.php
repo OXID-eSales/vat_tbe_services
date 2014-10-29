@@ -131,7 +131,7 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
         $oOrderEvidenceList->load($this->getId());
         $aOrderEvidences = $oOrderEvidenceList->getData();
 
-        $sCountryId = $aOrderEvidences[$this->_oeVATTBEGetUsedEvidenceId()]['countryId'];
+        $sCountryId = $aOrderEvidences[$this->_getOeVATTBEUsedEvidenceId()]['countryId'];
 
         /** @var oxCountry $oCountry */
         $oCountry = oxNew('oxCountry');
@@ -147,7 +147,7 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
      *
      * @return string
      */
-    protected function _oeVATTBEGetUsedEvidenceId()
+    protected function _getOeVATTBEUsedEvidenceId()
     {
         return $this->oxorder__oevattbe_evidenceused->value;
     }
