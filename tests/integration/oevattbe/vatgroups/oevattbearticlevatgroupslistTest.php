@@ -81,5 +81,4 @@ class Integration_oeVatTbe_VATGroups_oeVATTBEArticleVATGroupsListTest extends Ox
 
         $this->assertEquals(array(), $oGroupsList->getData());
     }
-
 }
