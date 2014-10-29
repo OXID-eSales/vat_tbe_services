@@ -40,7 +40,7 @@ class oeVATTBEOxSearch extends oeVATTBEOxSearch_parent
      */
     protected function _getSearchSelect($sSearchParamForQuery = false, $sInitialSearchCat = false, $sInitialSearchVendor = false, $sInitialSearchManufacturer = false, $sSortBy = false)
     {
-        if (!$this->_isTBEConfigured()) {
+        if (!$this->_isOeVATTBEConfigured()) {
             return parent::_getSearchSelect($sSearchParamForQuery, $sInitialSearchCat, $sInitialSearchVendor, $sInitialSearchManufacturer, $sSortBy);
         }
 
@@ -158,7 +158,7 @@ class oeVATTBEOxSearch extends oeVATTBEOxSearch_parent
      *
      * @return string
      */
-    private function _getTbeCountryId()
+    private function _getOeVATTBECountryId()
     {
         $sCountryId = null;
         $oUser = $this->getUser();
@@ -175,10 +175,10 @@ class oeVATTBEOxSearch extends oeVATTBEOxSearch_parent
      *
      * @return string
      */
-    private function _isTBEConfigured()
+    private function _isOeVATTBEConfigured()
     {
         $isConfigured = false;
-        $sCountryId = $this->_getTbeCountryId();
+        $sCountryId = $this->_getOeVATTBECountryId();
         if (!is_null($sCountryId)) {
             $oCountry = oxNew('oxCountry');
             $oCountry->load($sCountryId);
