@@ -79,7 +79,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxBasketTest extends OxidTestCase
     /**
      * test for basket validation
      */
-    public function testIsTBEValidValid()
+    public function testisOeVATTBEValidValid()
     {
         $oChecker = $this->getMock('oeVATTBEOrderArticleChecker', array('isValid'), array(), '', false);
         $oChecker->expects($this->any())->method('isValid')->will($this->returnValue(true));
@@ -87,13 +87,13 @@ class Unit_oeVATTBE_models_oeVATTBEOxBasketTest extends OxidTestCase
         $oBasket = $this->getMock('oeVATTBEOxBasket', array('_getOeVATTBEOrderArticleChecker'));
         $oBasket->expects($this->any())->method('_getOeVATTBEOrderArticleChecker')->will($this->returnValue($oChecker));
 
-        $this->assertTrue($oBasket->isTBEValid());
+        $this->assertTrue($oBasket->isOeVATTBEValid());
     }
 
     /**
      * test for basket validation
      */
-    public function testIsTBEValidNotValid()
+    public function testisOeVATTBEValidNotValid()
     {
         $oChecker = $this->getMock('oeVATTBEOrderArticleChecker', array('isValid'), array(), '', false);
         $oChecker->expects($this->any())->method('isValid')->will($this->returnValue(false));
@@ -101,6 +101,6 @@ class Unit_oeVATTBE_models_oeVATTBEOxBasketTest extends OxidTestCase
         $oBasket = $this->getMock('oeVATTBEOxBasket', array('_getOeVATTBEOrderArticleChecker'));
         $oBasket->expects($this->any())->method('_getOeVATTBEOrderArticleChecker')->will($this->returnValue($oChecker));
 
-        $this->assertFalse($oBasket->isTBEValid());
+        $this->assertFalse($oBasket->isOeVATTBEValid());
     }
 }

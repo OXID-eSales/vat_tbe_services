@@ -72,11 +72,11 @@ class Unit_oeVatTbe_models_oeVATTBEBasketItemVatFormatterTest extends OxidTestCa
         $oBasketItem->expects($this->any())->method("getVatPercent")->will($this->returnValue(10));
         $oBasketItem->expects($this->any())->method("getArticle")->will($this->returnValue($oArticle));
 
-        $oBasket = $this->getMock("oeVATTBEoxBasket", array('getUser', 'getOeVATTBECountry', 'isTBEValid'));
+        $oBasket = $this->getMock("oeVATTBEoxBasket", array('getUser', 'getOeVATTBECountry', 'isOeVATTBEValid'));
         $oUser = ($blIsUserLoggedIn) ? oxNew('oxUser') : null;
         $oBasket->expects($this->any())->method("getUser")->will($this->returnValue($oUser));
         $oBasket->expects($this->any())->method("getOeVATTBECountry")->will($this->returnValue($oCountry));
-        $oBasket->expects($this->any())->method("isTBEValid")->will($this->returnValue(true));
+        $oBasket->expects($this->any())->method("isOeVATTBEValid")->will($this->returnValue(true));
 
         $oFormatter = oxNew('oeVATTBEBasketItemVATFormatter', $oBasket, $oMarkGenerator);
 
@@ -122,11 +122,11 @@ class Unit_oeVatTbe_models_oeVATTBEBasketItemVatFormatterTest extends OxidTestCa
         $oBasketItem->expects($this->any())->method("getVatPercent")->will($this->returnValue(10));
         $oBasketItem->expects($this->any())->method("getArticle")->will($this->returnValue($oArticle));
 
-        $oBasket = $this->getMock("oeVATTBEoxBasket", array('getUser', 'getOeVATTBECountry', 'isTBEValid', 'getTBEInValidArticles'));
+        $oBasket = $this->getMock("oeVATTBEoxBasket", array('getUser', 'getOeVATTBECountry', 'isOeVATTBEValid', 'getTBEInValidArticles'));
         $oUser = oxNew('oxUser');
         $oBasket->expects($this->any())->method("getUser")->will($this->returnValue($oUser));
         $oBasket->expects($this->any())->method("getOeVATTBECountry")->will($this->returnValue($oCountry));
-        $oBasket->expects($this->any())->method("isTBEValid")->will($this->returnValue(false));
+        $oBasket->expects($this->any())->method("isOeVATTBEValid")->will($this->returnValue(false));
         $aInValidArticles = array('id1'=>'article1', 'id2'=>'article2');
         $oBasket->expects($this->any())->method("getTBEInValidArticles")->will($this->returnValue($aInValidArticles));
 

@@ -122,7 +122,7 @@ class oeVATTBEOxBasket extends oeVatTbeOxBasket_parent
      *
      * @return bool
      */
-    public function isTBEValid()
+    public function isOeVATTBEValid()
     {
         return $this->_getOeVATTBEOrderArticleChecker()->isValid();
     }
