@@ -44,7 +44,9 @@ TBE articles are calculated with user location country VAT rate.
 --logout
 --save
 *oxsearch
+--_getSearchSelect
 *oxvatselector
+--getArticleUserVat
 *oxbasket
 *oxcmp_basket
 *oxorder
