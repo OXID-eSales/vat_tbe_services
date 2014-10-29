@@ -28,6 +28,52 @@ class oeVATTBEOxUser extends oeVatTbeOxUser_parent
     private $_oTBEUser = null;
 
     /**
+     * Performs user login by username and password. Fetches user data from DB.
+     * Registers in session. Returns true on success, FALSE otherwise.
+     *
+     * @param string $sUser     User username
+     * @param string $sPassword User password
+     * @param bool   $blCookie  (default false)
+     *
+     * @throws object
+     * @throws oxCookieException
+     * @throws oxUserException
+     *
+     * @return bool
+     */
+    public function login($sUser, $sPassword, $blCookie = false)
+    {
+        $this->unsetOeVATTBETbeCountryFromCaching();
+        return parent::login($sUser, $sPassword, $blCookie);
+    }
+
+    /**
+     * Logs out session user. Returns true on success
+     *
+     * @return bool
+     */
+    public function logout()
+    {
+        $this->unsetOeVATTBETbeCountryFromCaching();
+        return parent::logout();
+    }
+
+    /**
+     * Saves (updates) user object data information in DB. Return true on success.
+     *
+     * @return bool
+     */
+    public function save()
+    {
+        if ($this->getOeVATTBEVatIn() && $this->_isOeVATTBEINStoredDateEmpty()) {
+            $this->oxuser__oevattbe_vatinenterdate = new oxField(date('Y-m-d H:i:s', oxRegistry::get("oxUtilsDate")->getTime()));
+        }
+        $this->unsetOeVATTBETbeCountryFromCaching();
+
+        return parent::save();
+    }
+
+    /**
      * Returns users TBE country
      *
      * @return string
@@ -85,52 +131,6 @@ class oeVATTBEOxUser extends oeVatTbeOxUser_parent
         }
 
         return $this->_oTBEUser;
-    }
-
-    /**
-     * Performs user login by username and password. Fetches user data from DB.
-     * Registers in session. Returns true on success, FALSE otherwise.
-     *
-     * @param string $sUser     User username
-     * @param string $sPassword User password
-     * @param bool   $blCookie  (default false)
-     *
-     * @throws object
-     * @throws oxCookieException
-     * @throws oxUserException
-     *
-     * @return bool
-     */
-    public function login($sUser, $sPassword, $blCookie = false)
-    {
-        $this->unsetOeVATTBETbeCountryFromCaching();
-        return parent::login($sUser, $sPassword, $blCookie);
-    }
-
-    /**
-     * Logs out session user. Returns true on success
-     *
-     * @return bool
-     */
-    public function logout()
-    {
-        $this->unsetOeVATTBETbeCountryFromCaching();
-        return parent::logout();
-    }
-
-    /**
-     * Saves (updates) user object data information in DB. Return true on success.
-     *
-     * @return bool
-     */
-    public function save()
-    {
-        if ($this->getOeVATTBEVatIn() && $this->_isOeVATTBEINStoredDateEmpty()) {
-            $this->oxuser__oevattbe_vatinenterdate = new oxField(date('Y-m-d H:i:s', oxRegistry::get("oxUtilsDate")->getTime()));
-        }
-        $this->unsetOeVATTBETbeCountryFromCaching();
-
-        return parent::save();
     }
 
     /**
