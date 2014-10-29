@@ -23,7 +23,7 @@
 </td>
 <td valign="top" class="[{ $listclass}]" height="15">
     <a href="Javascript:top.oxid.admin.editThis('[{ $listitem->oxcountry__oxid->value}]');" class="[{ $listclass}]">
-        [{if $listitem->appliesTBEVAT()}]
+        [{if $listitem->appliesOeTBEVATTbeVat()}]
             [{ oxmultilang ident="OEVATTBE_COUNTRY_IS_TBE" }]
             [{if !$listitem->isOEVATTBEAtLeastOneGroupConfigured()}]
                 [{ oxmultilang ident="OEVATTBE_COUNTRY_NO_TBE_GROUPS_CONFIGURED" }]

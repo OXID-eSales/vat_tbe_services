@@ -60,7 +60,7 @@ class oeVATTBEBasketItemVATFormatter
 
         if ($oArticle->isOeVATTBETBEService()) {
             if ($oBasket->getUser()) {
-                $sMessage .= ($oCountry->appliesTBEVAT()) ? ' '.$oMarkGenerator->getMark('tbeService') : '';
+                $sMessage .= ($oCountry->appliesOeTBEVATTbeVat()) ? ' '.$oMarkGenerator->getMark('tbeService') : '';
                 if (!$oBasket->isOeVATTBEValid() && isset($aInValidArticles[$oArticle->getId()])) {
                     $sMessage = '-';
                 }

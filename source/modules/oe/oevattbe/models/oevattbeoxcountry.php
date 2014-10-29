@@ -29,7 +29,7 @@ class oeVATTBEOxCountry extends oeVATTBEOxCountry_parent
      *
      * @return bool
      */
-    public function appliesTBEVAT()
+    public function appliesOeTBEVATTbeVat()
     {
         return (bool) $this->oxcountry__oevattbe_appliestbevat->value;
     }

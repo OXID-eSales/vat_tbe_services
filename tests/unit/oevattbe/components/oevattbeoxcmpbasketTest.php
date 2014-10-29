@@ -32,8 +32,8 @@ class Unit_oeVatTbe_components_oeVATTBEOxCmpBasketTest extends OxidTestCase
      */
     public function testRenderBasketWithoutTbeCountry()
     {
-        $oCountry = $this->getMock("oeVATTBEOxCountry", array("appliesTBEVAT"));
-        $oCountry->expects($this->any())->method("appliesTBEVAT")->will($this->returnValue(true));
+        $oCountry = $this->getMock("oeVATTBEOxCountry", array("appliesOeTBEVATTbeVat"));
+        $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->will($this->returnValue(true));
 
         $oUser = $this->getMock("oeVATTBEOxUser", array("getOeVATTBETbeCountryId", 'hasOeTBEVATArticles'));
         $oUser->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue('DE'));
@@ -58,8 +58,8 @@ class Unit_oeVatTbe_components_oeVATTBEOxCmpBasketTest extends OxidTestCase
      */
     public function testRenderBasketWithTbeCountry()
     {
-        $oCountry = $this->getMock("oeVATTBEOxCountry", array("appliesTBEVAT"));
-        $oCountry->expects($this->any())->method("appliesTBEVAT")->will($this->returnValue(true));
+        $oCountry = $this->getMock("oeVATTBEOxCountry", array("appliesOeTBEVATTbeVat"));
+        $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->will($this->returnValue(true));
 
         $oUser = $this->getMock("oeVATTBEOxUser", array("getOeVATTBETbeCountryId", 'hasOeTBEVATArticles'));
         $oUser->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue('DE'));
@@ -85,8 +85,8 @@ class Unit_oeVatTbe_components_oeVATTBEOxCmpBasketTest extends OxidTestCase
      */
     public function testRenderBasketWithNotTbeCountry()
     {
-        $oCountry = $this->getMock("oeVATTBEOxCountry", array("appliesTBEVAT"));
-        $oCountry->expects($this->any())->method("appliesTBEVAT")->will($this->returnValue(false));
+        $oCountry = $this->getMock("oeVATTBEOxCountry", array("appliesOeTBEVATTbeVat"));
+        $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->will($this->returnValue(false));
 
         $oUser = $this->getMock("oeVATTBEOxUser", array("getOeVATTBETbeCountryId", 'hasOeTBEVATArticles'));
         $oUser->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue('DE'));

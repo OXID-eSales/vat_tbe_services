@@ -65,8 +65,8 @@ class Unit_oeVATTBE_controllers_oeVATTBEOrderTest extends OxidTestCase
 
     public function testGetOeVATTBEMarkMessageHasTBEArticleInBasketValidCountryNotTBE()
     {
-        $oCountry = $this->getMock("oeVATTBEOxCountry", array("appliesTBEVAT"));
-        $oCountry->expects($this->any())->method("appliesTBEVAT")->will($this->returnValue(false));
+        $oCountry = $this->getMock("oeVATTBEOxCountry", array("appliesOeTBEVATTbeVat"));
+        $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->will($this->returnValue(false));
 
         $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasOeTBEVATArticles', 'isOeVATTBEValid', 'getOeVATTBECountry'));
         $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(true));
@@ -81,8 +81,8 @@ class Unit_oeVATTBE_controllers_oeVATTBEOrderTest extends OxidTestCase
 
     public function testGetOeVATTBEMarkMessageHasTBEArticleInBasketValidCountryTBE()
     {
-        $oCountry = $this->getMock("oeVATTBEOxCountry", array("appliesTBEVAT",'getVATTBEName'));
-        $oCountry->expects($this->any())->method("appliesTBEVAT")->will($this->returnValue(true));
+        $oCountry = $this->getMock("oeVATTBEOxCountry", array("appliesOeTBEVATTbeVat",'getVATTBEName'));
+        $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->will($this->returnValue(true));
         $oCountry->expects($this->any())->method("getVATTBEName")->will($this->returnValue('LT'));
 
         $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasOeTBEVATArticles', 'isOeVATTBEValid', 'getOeVATTBECountry'));

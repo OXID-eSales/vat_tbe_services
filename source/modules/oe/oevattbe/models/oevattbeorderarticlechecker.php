@@ -72,11 +72,11 @@ class oeVATTBEOrderArticleChecker
 
         $isValid = $oCountry ? true : false;
 
-        if ($isValid && (!$oCountry->isInEU() || !$oCountry->appliesTBEVAT())) {
+        if ($isValid && (!$oCountry->isInEU() || !$oCountry->appliesOeTBEVATTbeVat())) {
             return true;
         }
 
-        if ($isValid && $oCountry->appliesTBEVAT()) {
+        if ($isValid && $oCountry->appliesOeTBEVATTbeVat()) {
             $aInvalidArticles = $this->getInvalidArticles();
             $isValid = empty($aInvalidArticles);
         }

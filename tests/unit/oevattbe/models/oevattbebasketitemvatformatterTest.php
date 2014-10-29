@@ -62,8 +62,8 @@ class Unit_oeVatTbe_models_oeVATTBEBasketItemVatFormatterTest extends OxidTestCa
         $oMarkGenerator = $this->getMock("oeVATTBEBasketItemVATFormatter", array('getMark'), array(), '', false);
         $oMarkGenerator->expects($this->any())->method("getMark")->will($this->returnValue('**'));
 
-        $oCountry = $this->getMock("oeVATTBEoxCountry", array('appliesTBEVAT'));
-        $oCountry->expects($this->any())->method("appliesTBEVAT")->will($this->returnValue($blIsCountryConfigured));
+        $oCountry = $this->getMock("oeVATTBEoxCountry", array('appliesOeTBEVATTbeVat'));
+        $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->will($this->returnValue($blIsCountryConfigured));
 
         $oArticle = $this->getMock("oeVATTBEoxArticle", array('isOeVATTBETBEService'));
         $oArticle->expects($this->any())->method("isOeVATTBETBEService")->will($this->returnValue($blIsArticleTbeService));
@@ -109,8 +109,8 @@ class Unit_oeVatTbe_models_oeVATTBEBasketItemVatFormatterTest extends OxidTestCa
         $oMarkGenerator = $this->getMock("oeVATTBEBasketItemVATFormatter", array('getMark'), array(), '', false);
         $oMarkGenerator->expects($this->any())->method("getMark")->will($this->returnValue('**'));
 
-        $oCountry = $this->getMock("oeVATTBEoxCountry", array('appliesTBEVAT'));
-        $oCountry->expects($this->any())->method("appliesTBEVAT")->will($this->returnValue(true));
+        $oCountry = $this->getMock("oeVATTBEoxCountry", array('appliesOeTBEVATTbeVat'));
+        $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->will($this->returnValue(true));
 
         $oArticle = $this->getMock("oeVATTBEoxArticle", array('isOeVATTBETBEService', 'getId'));
         $oArticle->expects($this->any())->method("isOeVATTBETBEService")->will($this->returnValue(true));

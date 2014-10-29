@@ -182,7 +182,7 @@ class oeVATTBEOxSearch extends oeVATTBEOxSearch_parent
         if (!is_null($sCountryId)) {
             $oCountry = oxNew('oxCountry');
             $oCountry->load($sCountryId);
-            $isConfigured = $oCountry->appliesTBEVAT();
+            $isConfigured = $oCountry->appliesOeTBEVATTbeVat();
         }
 
         return $isConfigured;

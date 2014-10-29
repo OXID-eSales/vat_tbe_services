@@ -32,9 +32,9 @@ class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends OxidTestCase
      */
     public function providerCheckingArticlesWithEmptyList()
     {
-        $oCountry = $this->getMock('oeVATTBEOxCountry', array('isInEU', 'appliesTBEVAT'));
+        $oCountry = $this->getMock('oeVATTBEOxCountry', array('isInEU', 'appliesOeTBEVATTbeVat'));
         $oCountry->expects($this->any())->method('isInEU')->will($this->returnValue(true));
-        $oCountry->expects($this->any())->method('appliesTBEVAT')->will($this->returnValue(true));
+        $oCountry->expects($this->any())->method('appliesOeTBEVATTbeVat')->will($this->returnValue(true));
 
         $oUser = $this->getMock('oeVATTBETBEUser', array('getCountry'), array(), '', false);
         $oUser->expects($this->any())->method('getCountry')->will($this->returnValue($oCountry));
@@ -74,9 +74,9 @@ class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends OxidTestCase
 
         $aArticles = array($oArticleWithoutVAT, $oArticleWithVAT, $oTBEArticleWithVAT, $oTBEArticleWithZeroVAT);
 
-        $oCountry = $this->getMock('oeVATTBEOxCountry', array('isInEU', 'appliesTBEVAT'));
+        $oCountry = $this->getMock('oeVATTBEOxCountry', array('isInEU', 'appliesOeTBEVATTbeVat'));
         $oCountry->expects($this->any())->method('isInEU')->will($this->returnValue(true));
-        $oCountry->expects($this->any())->method('appliesTBEVAT')->will($this->returnValue(true));
+        $oCountry->expects($this->any())->method('appliesOeTBEVATTbeVat')->will($this->returnValue(true));
 
         $oUser = $this->getMock('oeVATTBETBEUser', array('getCountry'), array(), '', false);
         $oUser->expects($this->any())->method('getCountry')->will($this->returnValue($oCountry));
@@ -118,9 +118,9 @@ class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends OxidTestCase
 
         $aArticles = array($oArticleWithoutVAT, $oTBEArticleWithoutVAT);
 
-        $oCountry = $this->getMock('oeVATTBEOxCountry', array('isInEU', 'appliesTBEVAT'));
+        $oCountry = $this->getMock('oeVATTBEOxCountry', array('isInEU', 'appliesOeTBEVATTbeVat'));
         $oCountry->expects($this->any())->method('isInEU')->will($this->returnValue(true));
-        $oCountry->expects($this->any())->method('appliesTBEVAT')->will($this->returnValue(true));
+        $oCountry->expects($this->any())->method('appliesOeTBEVATTbeVat')->will($this->returnValue(true));
 
         $oUser = $this->getMock('oeVATTBETBEUser', array('getCountry'), array(), '', false);
         $oUser->expects($this->any())->method('getCountry')->will($this->returnValue($oCountry));
@@ -143,9 +143,9 @@ class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends OxidTestCase
 
         $aArticles = array($oArticleWithoutVAT, $oTBEArticleWithoutVAT1, $oTBEArticleWithoutVAT2);
 
-        $oCountry = $this->getMock('oeVATTBEOxCountry', array('isInEU', 'appliesTBEVAT'));
+        $oCountry = $this->getMock('oeVATTBEOxCountry', array('isInEU', 'appliesOeTBEVATTbeVat'));
         $oCountry->expects($this->any())->method('isInEU')->will($this->returnValue(true));
-        $oCountry->expects($this->any())->method('appliesTBEVAT')->will($this->returnValue(true));
+        $oCountry->expects($this->any())->method('appliesOeTBEVATTbeVat')->will($this->returnValue(true));
 
         $oUser = $this->getMock('oeVATTBETBEUser', array('getCountry'), array(), '', false);
         $oUser->expects($this->any())->method('getCountry')->will($this->returnValue($oCountry));
@@ -169,9 +169,9 @@ class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends OxidTestCase
 
         $aArticles = array($oArticleWithoutVAT, $oTBEArticleWithoutVAT);
 
-        $oCountry = $this->getMock('oeVATTBEOxCountry', array('isInEU', 'appliesTBEVAT'));
+        $oCountry = $this->getMock('oeVATTBEOxCountry', array('isInEU', 'appliesOeTBEVATTbeVat'));
         $oCountry->expects($this->any())->method('isInEU')->will($this->returnValue(false));
-        $oCountry->expects($this->any())->method('appliesTBEVAT')->will($this->returnValue(true));
+        $oCountry->expects($this->any())->method('appliesOeTBEVATTbeVat')->will($this->returnValue(true));
 
         $oUser = $this->getMock('oeVATTBETBEUser', array('getCountry'), array(), '', false);
         $oUser->expects($this->any())->method('getCountry')->will($this->returnValue($oCountry));
@@ -195,9 +195,9 @@ class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends OxidTestCase
 
         $aArticles = array($oArticleWithoutVAT, $oTBEArticleWithoutVAT);
 
-        $oCountry = $this->getMock('oeVATTBEOxCountry', array('isInEU', 'appliesTBEVAT'));
+        $oCountry = $this->getMock('oeVATTBEOxCountry', array('isInEU', 'appliesOeTBEVATTbeVat'));
         $oCountry->expects($this->any())->method('isInEU')->will($this->returnValue(true));
-        $oCountry->expects($this->any())->method('appliesTBEVAT')->will($this->returnValue(false));
+        $oCountry->expects($this->any())->method('appliesOeTBEVATTbeVat')->will($this->returnValue(false));
 
         $oUser = $this->getMock('oeVATTBETBEUser', array('getCountry'), array(), '', false);
         $oUser->expects($this->any())->method('getCountry')->will($this->returnValue($oCountry));

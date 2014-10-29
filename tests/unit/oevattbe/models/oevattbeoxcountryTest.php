@@ -30,14 +30,14 @@ class Unit_oeVATTBE_models_oeVATTBEOxCountryTest extends OxidTestCase
     /**
      * Test for vat tbe getter
      */
-    public function testAppliesTBEVAT()
+    public function testAppliesOeTBEVATTbeVat()
     {
         $oCountry = oxNew('oxCountry');
         $oCountry->oxcountry__oevattbe_appliestbevat = new oxField(1);
-        $this->assertTrue($oCountry->appliesTBEVAT());
+        $this->assertTrue($oCountry->appliesOeTBEVATTbeVat());
 
         $oCountry->oxcountry__oevattbe_appliestbevat = new oxField(0);
-        $this->assertFalse($oCountry->appliesTBEVAT());
+        $this->assertFalse($oCountry->appliesOeTBEVATTbeVat());
     }
 
     /**
