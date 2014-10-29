@@ -75,7 +75,7 @@ class oeVATTBETBEUser
      *
      * @return string
      */
-    public function getTbeEvidenceUsed()
+    public function getOeVATTBETbeEvidenceUsed()
     {
         $this->_loadEvidenceDataToSession();
         return $this->_getSession()->getVariable('TBEEvidenceUsed');

@@ -218,7 +218,7 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
      */
     protected function _setUser($oUser)
     {
-        $this->oxorder__oevattbe_evidenceused = new oxField($oUser->getTbeEvidenceUsed());
+        $this->oxorder__oevattbe_evidenceused = new oxField($oUser->getOeVATTBETbeEvidenceUsed());
         parent::_setUser($oUser);
     }
 

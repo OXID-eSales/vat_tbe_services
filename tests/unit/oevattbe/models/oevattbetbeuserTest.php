@@ -81,7 +81,7 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
      */
     public function testTBEEvidenceUsedSelecting($oTBEUser)
     {
-        $this->assertEquals('billing_country', $oTBEUser->getTbeEvidenceUsed());
+        $this->assertEquals('billing_country', $oTBEUser->getOeVATTBETbeEvidenceUsed());
     }
 
     /**
@@ -128,7 +128,7 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
      */
     public function testTBEEvidenceUsedSelectingWhenNoEvidenceFound($oTBEUser)
     {
-        $this->assertEquals('', $oTBEUser->getTbeEvidenceUsed());
+        $this->assertEquals('', $oTBEUser->getOeVATTBETbeEvidenceUsed());
     }
 
     /**
@@ -199,7 +199,7 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
      */
     public function testTBEEvidenceUsedCaching($oTBEUser)
     {
-        $this->assertEquals('billing_country', $oTBEUser->getTbeEvidenceUsed());
+        $this->assertEquals('billing_country', $oTBEUser->getOeVATTBETbeEvidenceUsed());
         return $oTBEUser;
     }
 
