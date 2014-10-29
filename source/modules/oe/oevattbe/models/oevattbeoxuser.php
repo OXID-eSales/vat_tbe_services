@@ -34,7 +34,7 @@ class oeVATTBEOxUser extends oeVatTbeOxUser_parent
      */
     public function getOeVATTBETbeCountryId()
     {
-        $oTBEUser = $this->_getTBEUser();
+        $oTBEUser = $this->_getOeVATTBETBEUser();
         return $oTBEUser->getOeVATTBETbeCountryId();
     }
 
@@ -45,7 +45,7 @@ class oeVATTBEOxUser extends oeVatTbeOxUser_parent
      */
     public function getOeVATTBEEvidenceList()
     {
-        $oTBEUser = $this->_getTBEUser();
+        $oTBEUser = $this->_getOeVATTBETBEUser();
         return $oTBEUser->getOeVATTBEEvidenceList();
     }
 
@@ -56,7 +56,7 @@ class oeVATTBEOxUser extends oeVatTbeOxUser_parent
      */
     public function getOeVATTBETbeEvidenceUsed()
     {
-        $oTBEUser = $this->_getTBEUser();
+        $oTBEUser = $this->_getOeVATTBETBEUser();
         return $oTBEUser->getOeVATTBETbeEvidenceUsed();
     }
 
@@ -66,7 +66,7 @@ class oeVATTBEOxUser extends oeVatTbeOxUser_parent
      */
     public function unsetOeVATTBETbeCountryFromCaching()
     {
-        $oTBEUser = $this->_getTBEUser();
+        $oTBEUser = $this->_getOeVATTBETBEUser();
         $oTBEUser->unsetOeVATTBETbeCountryFromCaching();
     }
 
@@ -75,7 +75,7 @@ class oeVATTBEOxUser extends oeVatTbeOxUser_parent
      *
      * @return oeVATTBETBEUser
      */
-    protected function _getTBEUser()
+    protected function _getOeVATTBETBEUser()
     {
         if (!$this->_oTBEUser) {
             $oSession = $this->getSession();
