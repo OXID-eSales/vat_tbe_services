@@ -117,23 +117,6 @@ class oeVATTBEOxUser extends oeVatTbeOxUser_parent
     }
 
     /**
-     * Returns TBE User object.
-     *
-     * @return oeVATTBETBEUser
-     */
-    protected function _getOeVATTBETBEUser()
-    {
-        if (!$this->_oTBEUser) {
-            $oSession = $this->getSession();
-            $oConfig = $this->getConfig();
-
-            $this->_oTBEUser = oxNew('oeVATTBETBEUser', $this, $oSession, $oConfig);
-        }
-
-        return $this->_oTBEUser;
-    }
-
-    /**
      * VAT ID Store date
      *
      * @return string
@@ -151,6 +134,23 @@ class oeVATTBEOxUser extends oeVatTbeOxUser_parent
     public function getOeVATTBEVatIn()
     {
         return $this->oxuser__oxustid->value;
+    }
+
+    /**
+     * Returns TBE User object.
+     *
+     * @return oeVATTBETBEUser
+     */
+    protected function _getOeVATTBETBEUser()
+    {
+        if (!$this->_oTBEUser) {
+            $oSession = $this->getSession();
+            $oConfig = $this->getConfig();
+
+            $this->_oTBEUser = oxNew('oeVATTBETBEUser', $this, $oSession, $oConfig);
+        }
+
+        return $this->_oTBEUser;
     }
 
     /**
