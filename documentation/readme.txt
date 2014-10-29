@@ -49,7 +49,14 @@ TBE articles are calculated with user location country VAT rate.
 --getArticleUserVat
 *oxbasket
 *oxcmp_basket
+--render
 *oxorder
+--setHasOrderTBEServicesInInvoice
+--validateOrder
+--delete
+--finalizeOrder
+--_loadFromBasket
+--_setUser
 *basket
 *order
 *oxbasketcontentmarkgenerator
