@@ -51,7 +51,7 @@ class oeVATTBEBasket extends oeVATTBEBasket_parent
     {
         $sMessage ='';
         $oBasket = $this->getSession()->getBasket();
-        $oCountry = $oBasket->getTBECountry();
+        $oCountry = $oBasket->getOeVATTBECountry();
         $oMarkGenerator =  $this->getBasketContentMarkGenerator();
 
         if ($oBasket->hasOeTBEVATArticles()) {

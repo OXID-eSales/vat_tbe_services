@@ -43,7 +43,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxBasketTest extends OxidTestCase
     public function testGetOeVATTBETbeCountryIdNotSet()
     {
         $oBasket = oxNew('oxBasket');
-        $this->assertNull($oBasket->getTBECountry());
+        $this->assertNull($oBasket->getOeVATTBECountry());
     }
 
     /**
@@ -53,7 +53,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxBasketTest extends OxidTestCase
     {
         $oBasket = oxNew('oxBasket');
         $oBasket->setOeVATTBECountryId('a7c40f631fc920687.20179984');
-        $this->assertSame('Deutschland', $oBasket->getTBECountry()->oxcountry__oxtitle->value);
+        $this->assertSame('Deutschland', $oBasket->getOeVATTBECountry()->oxcountry__oxtitle->value);
     }
 
     /**

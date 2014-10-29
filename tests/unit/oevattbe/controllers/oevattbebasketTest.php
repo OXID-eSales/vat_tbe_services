@@ -63,10 +63,10 @@ class Unit_oeVATTBE_controllers_oeVATTBEBasketTest extends OxidTestCase
         $oCountry->expects($this->any())->method("appliesTBEVAT")->will($this->returnValue(true));
         $oCountry->expects($this->any())->method("getVATTBEName")->will($this->returnValue('LT'));
 
-        $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasOeTBEVATArticles', 'getUser', 'getTBECountry'));
+        $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasOeTBEVATArticles', 'getUser', 'getOeVATTBECountry'));
         $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(true));
         $oBasket->expects($this->any())->method("getUser")->will($this->returnValue($oUser));
-        $oBasket->expects($this->any())->method("getTBECountry")->will($this->returnValue($oCountry));
+        $oBasket->expects($this->any())->method("getOeVATTBECountry")->will($this->returnValue($oCountry));
 
         $this->getSession()->setBasket($oBasket);
 
@@ -119,10 +119,10 @@ class Unit_oeVATTBE_controllers_oeVATTBEBasketTest extends OxidTestCase
     {
         $oUser = oxNew("oxUser");
 
-        $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasOeTBEVATArticles', 'getUser', 'getTBECountry'));
+        $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasOeTBEVATArticles', 'getUser', 'getOeVATTBECountry'));
         $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(true));
         $oBasket->expects($this->any())->method("getUser")->will($this->returnValue($oUser));
-        $oBasket->expects($this->any())->method("getTBECountry")->will($this->returnValue(null));
+        $oBasket->expects($this->any())->method("getOeVATTBECountry")->will($this->returnValue(null));
 
         $this->getSession()->setBasket($oBasket);
 
@@ -144,10 +144,10 @@ class Unit_oeVATTBE_controllers_oeVATTBEBasketTest extends OxidTestCase
         $oCountry = $this->getMock("oeVATTBEOxCountry", array("appliesTBEVAT",'getVATTBEName'));
         $oCountry->expects($this->any())->method("appliesTBEVAT")->will($this->returnValue(false));
 
-        $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasOeTBEVATArticles', 'getUser', 'getTBECountry'));
+        $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasOeTBEVATArticles', 'getUser', 'getOeVATTBECountry'));
         $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(true));
         $oBasket->expects($this->any())->method("getUser")->will($this->returnValue($oUser));
-        $oBasket->expects($this->any())->method("getTBECountry")->will($this->returnValue($oCountry));
+        $oBasket->expects($this->any())->method("getOeVATTBECountry")->will($this->returnValue($oCountry));
 
         $this->getSession()->setBasket($oBasket);
 

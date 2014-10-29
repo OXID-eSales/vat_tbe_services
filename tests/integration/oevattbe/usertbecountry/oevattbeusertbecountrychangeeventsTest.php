@@ -32,7 +32,7 @@ class Integration_oeVatTbe_userTBECountry_oeVATTBEUserTBECountryChangeEventsTest
      *
      * @return oxUser|oeVATTBEOxUser
      */
-    public function testGetTbeCountryAfterUserCreated()
+    public function testGetOeVATTBECountryAfterUserCreated()
     {
         $sGermanyId = $this->_sGermanyId;
         $oUser = $this->_createUser();
@@ -48,11 +48,11 @@ class Integration_oeVatTbe_userTBECountry_oeVATTBEUserTBECountryChangeEventsTest
      *
      * @param oxUser|oeVATTBEOxUser $oUser
      *
-     * @depends testGetTbeCountryAfterUserCreated
+     * @depends testGetOeVATTBECountryAfterUserCreated
      *
      * @return oxUser|oeVATTBEOxUser
      */
-    public function testGetTbeCountryAfterUserChangeEvent($oUser)
+    public function testGetOeVATTBECountryAfterUserChangeEvent($oUser)
     {
         $sAustriaId = $this->_sAustriaId;
         $oUser->oxuser__oxcountryid = new oxField($sAustriaId, oxField::T_RAW);
@@ -71,11 +71,11 @@ class Integration_oeVatTbe_userTBECountry_oeVATTBEUserTBECountryChangeEventsTest
      *
      * @param oxUser|oeVATTBEOxUser $oUser
      *
-     * @depends testGetTbeCountryAfterUserChangeEvent
+     * @depends testGetOeVATTBECountryAfterUserChangeEvent
      *
      * @return oxUser|oeVATTBEOxUser
      */
-    public function testGetTbeCountryAfterLogout($oUser)
+    public function testGetOeVATTBECountryAfterLogout($oUser)
     {
         $sUnitedKingdom = $this->_sUnitedKingdom;
         $oUser->oxuser__oxcountryid = new oxField($sUnitedKingdom, oxField::T_RAW);
@@ -94,11 +94,11 @@ class Integration_oeVatTbe_userTBECountry_oeVATTBEUserTBECountryChangeEventsTest
      *
      * @param oxUser|oeVATTBEOxUser $oUser
      *
-     * @depends testGetTbeCountryAfterLogout
+     * @depends testGetOeVATTBECountryAfterLogout
      *
      * @return oxUser|oeVATTBEOxUser
      */
-    public function testGetTbeCountryAfterUserFailsLogIn($oUser)
+    public function testGetOeVATTBECountryAfterUserFailsLogIn($oUser)
     {
         $sAustriaId = $this->_sAustriaId;
         $sUserName = $this->_sDefaultUserName;
@@ -119,9 +119,9 @@ class Integration_oeVatTbe_userTBECountry_oeVATTBEUserTBECountryChangeEventsTest
      *
      * @param oxUser|oeVATTBEOxUser $oUser
      *
-     * @depends testGetTbeCountryAfterUserFailsLogIn
+     * @depends testGetOeVATTBECountryAfterUserFailsLogIn
      */
-    public function testGetTbeCountryAfterUserLogsIn($oUser)
+    public function testGetOeVATTBECountryAfterUserLogsIn($oUser)
     {
         $sAustriaId = $this->_sAustriaId;
         $sUserName = $this->_sDefaultUserName;

@@ -71,7 +71,7 @@ class oeVATTBEOrder extends oeVATTBEOrder_parent
     {
         $sMessage ='';
         $oBasket = $this->getSession()->getBasket();
-        $oCountry = $oBasket->getTBECountry();
+        $oCountry = $oBasket->getOeVATTBECountry();
         $oMarkGenerator = $this->getBasketContentMarkGenerator();
 
         if ($oBasket->hasOeTBEVATArticles() && $oBasket->isTBEValid() && $oCountry && $oCountry->appliesTBEVAT()) {
