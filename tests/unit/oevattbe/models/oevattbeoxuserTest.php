@@ -45,23 +45,23 @@ class Unit_oeVatTbe_models_oeVATTBEOxUserTest extends OxidTestCase
     /**
      * Vat id getter test
      */
-    public function testGetOeTBEVATVatIn()
+    public function testGetOeVATTBEVatIn()
     {
         $oUser = oxNew('oxUser');
         $oUser->oxuser__oxustid = new oxField('IdNumber');
 
-        $this->assertSame('IdNumber', $oUser->getOeTBEVATVatIn());
+        $this->assertSame('IdNumber', $oUser->getOeVATTBEVatIn());
     }
 
     /**
      * Vat id getter test
      */
-    public function testGetOeTBEVATVatInStoreDate()
+    public function testGetOeVATTBEVatInStoreDate()
     {
         $oUser = oxNew('oxUser');
         $oUser->oxuser__oevattbe_vatinenterdate = new oxField('2014-12-12 12:12:12');
 
-        $this->assertSame('2014-12-12 12:12:12', $oUser->getOeTBEVATVatInStoreDate());
+        $this->assertSame('2014-12-12 12:12:12', $oUser->getOeVATTBEVatInStoreDate());
     }
 
     /**
@@ -84,7 +84,7 @@ class Unit_oeVatTbe_models_oeVATTBEOxUserTest extends OxidTestCase
         $oUser = oxNew('oxUser');
         $oUser->load('userId');
 
-        $this->assertSame('2014-01-02 13:12:12', $oUser->getOeTBEVATVatInStoreDate());
+        $this->assertSame('2014-01-02 13:12:12', $oUser->getOeVATTBEVatInStoreDate());
     }
 
     /**
@@ -101,7 +101,7 @@ class Unit_oeVatTbe_models_oeVATTBEOxUserTest extends OxidTestCase
         $oUser = oxNew('oxUser');
         $oUser->load('userId');
 
-        $this->assertSame('0000-00-00 00:00:00', $oUser->getOeTBEVATVatInStoreDate());
+        $this->assertSame('0000-00-00 00:00:00', $oUser->getOeVATTBEVatInStoreDate());
     }
 
     /**
@@ -128,7 +128,7 @@ class Unit_oeVatTbe_models_oeVATTBEOxUserTest extends OxidTestCase
         $oUser = oxNew('oxUser');
         $oUser->load('userId');
 
-        $this->assertSame('2014-01-02 13:12:12', $oUser->getOeTBEVATVatInStoreDate());
+        $this->assertSame('2014-01-02 13:12:12', $oUser->getOeVATTBEVatInStoreDate());
     }
 
     /**
@@ -154,7 +154,7 @@ class Unit_oeVatTbe_models_oeVATTBEOxUserTest extends OxidTestCase
         $oUser = oxNew('oxUser');
         $oUser->load('userId');
 
-        $this->assertSame('0000-00-00 00:00:00', $oUser->getOeTBEVATVatInStoreDate());
+        $this->assertSame('0000-00-00 00:00:00', $oUser->getOeVATTBEVatInStoreDate());
     }
 
     /**
@@ -183,7 +183,7 @@ class Unit_oeVatTbe_models_oeVATTBEOxUserTest extends OxidTestCase
         $oUser = oxNew('oxUser');
         $oUser->load('userId');
 
-        $this->assertSame('2014-01-02 13:12:12', $oUser->getOeTBEVATVatInStoreDate());
+        $this->assertSame('2014-01-02 13:12:12', $oUser->getOeVATTBEVatInStoreDate());
     }
 
     /**
@@ -210,7 +210,7 @@ class Unit_oeVatTbe_models_oeVATTBEOxUserTest extends OxidTestCase
         $oUser = oxNew('oxUser');
         $oUser->load('userId');
 
-        $this->assertSame('0000-00-00 00:00:00', $oUser->getOeTBEVATVatInStoreDate());
+        $this->assertSame('0000-00-00 00:00:00', $oUser->getOeVATTBEVatInStoreDate());
     }
 
     /**
@@ -233,7 +233,7 @@ class Unit_oeVatTbe_models_oeVATTBEOxUserTest extends OxidTestCase
 
         $oUser = oxNew('oxUser');
         $oUser->load('userId');
-        $this->assertSame('2014-12-12 12:12:12', $oUser->getOeTBEVATVatInStoreDate());
+        $this->assertSame('2014-12-12 12:12:12', $oUser->getOeVATTBEVatInStoreDate());
     }
 
     /**
@@ -257,6 +257,6 @@ class Unit_oeVatTbe_models_oeVATTBEOxUserTest extends OxidTestCase
         $oUser = oxNew('oxUser');
         $oUser->load('userId');
 
-        $this->assertSame('2014-12-12 12:12:12', $oUser->getOeTBEVATVatInStoreDate());
+        $this->assertSame('2014-12-12 12:12:12', $oUser->getOeVATTBEVatInStoreDate());
     }
 }
