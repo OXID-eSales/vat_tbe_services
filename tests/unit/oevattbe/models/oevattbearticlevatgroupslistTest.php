@@ -85,7 +85,7 @@ class Unit_oeVatTbe_Models_oeVATTBEArticleVATGroupsListTest extends OxidTestCase
     /**
      * Test loading article groups list.
      */
-    public function testLoadingEvidenceList()
+    public function testLoadingArticleVATGroupsList()
     {
         $aData = array(
             array(
@@ -118,7 +118,7 @@ class Unit_oeVatTbe_Models_oeVATTBEArticleVATGroupsListTest extends OxidTestCase
     /**
      * Test loading article groups list.
      */
-    public function testLoadingEvidenceListById()
+    public function testLoadingArticleVATGroupsListById()
     {
         $aData = array(
             array(
@@ -147,7 +147,7 @@ class Unit_oeVatTbe_Models_oeVATTBEArticleVATGroupsListTest extends OxidTestCase
     /**
      * Test deleting article groups list.
      */
-    public function testDeletingEvidenceList()
+    public function testDeletingArticleVATGroupsList()
     {
         /** @var oeVATTBEArticleVATGroupsDbGateway|PHPUnit_Framework_MockObject_MockObject $oGateway */
         $oGateway = $this->getMock('oeVATTBEArticleVATGroupsDbGateway', array('delete'));
