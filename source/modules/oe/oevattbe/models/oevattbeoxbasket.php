@@ -50,7 +50,7 @@ class oeVATTBEOxBasket extends oeVatTbeOxBasket_parent
      *
      * @return bool
      */
-    public function hasVATTBEArticles()
+    public function hasOeTBEVATArticles()
     {
         $blHasTBEArticles = false;
         $oBasketArticles = $this->getBasketArticles();

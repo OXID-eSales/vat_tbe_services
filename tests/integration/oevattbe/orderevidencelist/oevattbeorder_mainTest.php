@@ -81,8 +81,8 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrder_MainTest extends Oxid
     private function _createOrder()
     {
         /** @var oeVATTBEOxBasket|oxBasket|PHPUnit_Framework_MockObject_MockObject $oBasket */
-        $oBasket = $this->getMock('oeVATTBEOxBasket', array('hasVATTBEArticles'));
-        $oBasket->expects($this->any())->method('hasVATTBEArticles')->will($this->returnValue(true));
+        $oBasket = $this->getMock('oeVATTBEOxBasket', array('hasOeTBEVATArticles'));
+        $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue(true));
         /** @var oeVATTBEOxUser|oxUser $oUser */
         $oUser = oxNew('oxUser');
         $oUser->oxuser__oxcountryid = new oxField('a7c40f631fc920687.20179984');

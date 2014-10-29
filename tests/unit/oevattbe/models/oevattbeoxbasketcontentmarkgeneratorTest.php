@@ -32,8 +32,8 @@ class Unit_oeVATTBE_models_oeVATTBEOxBasketContentMarkGeneratorTest extends Oxid
      */
     public function testGetMark()
     {
-        $oBasket = $this->getMock('oeVATTBEOxBasket', array('hasVATTBEArticles'));
-        $oBasket->expects($this->any())->method('hasVATTBEArticles')->will($this->returnValue(true));
+        $oBasket = $this->getMock('oeVATTBEOxBasket', array('hasOeTBEVATArticles'));
+        $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue(true));
 
         $oGenerator = oxNew('oxBasketContentMarkGenerator', $oBasket);
 
@@ -45,8 +45,8 @@ class Unit_oeVATTBE_models_oeVATTBEOxBasketContentMarkGeneratorTest extends Oxid
      */
     public function testGetMarkHasOtherMarks()
     {
-        $oBasket = $this->getMock('oeVATTBEOxBasket', array('hasVATTBEArticles', 'hasArticlesWithDownloadableAgreement'));
-        $oBasket->expects($this->any())->method('hasVATTBEArticles')->will($this->returnValue(true));
+        $oBasket = $this->getMock('oeVATTBEOxBasket', array('hasOeTBEVATArticles', 'hasArticlesWithDownloadableAgreement'));
+        $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue(true));
         $oBasket->expects($this->any())->method('hasArticlesWithDownloadableAgreement')->will($this->returnValue(true));
 
         $oGenerator = oxNew('oxBasketContentMarkGenerator', $oBasket);
@@ -60,8 +60,8 @@ class Unit_oeVATTBE_models_oeVATTBEOxBasketContentMarkGeneratorTest extends Oxid
      */
     public function testGetMarkHasOtherMarksButNotTBE()
     {
-        $oBasket = $this->getMock('oeVATTBEOxBasket', array('hasVATTBEArticles', 'hasArticlesWithDownloadableAgreement'));
-        $oBasket->expects($this->any())->method('hasVATTBEArticles')->will($this->returnValue(false));
+        $oBasket = $this->getMock('oeVATTBEOxBasket', array('hasOeTBEVATArticles', 'hasArticlesWithDownloadableAgreement'));
+        $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue(false));
         $oBasket->expects($this->any())->method('hasArticlesWithDownloadableAgreement')->will($this->returnValue(true));
 
         $oGenerator = oxNew('oxBasketContentMarkGenerator', $oBasket);

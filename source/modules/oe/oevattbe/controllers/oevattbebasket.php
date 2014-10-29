@@ -54,7 +54,7 @@ class oeVATTBEBasket extends oeVATTBEBasket_parent
         $oCountry = $oBasket->getTBECountry();
         $oMarkGenerator =  $this->getBasketContentMarkGenerator();
 
-        if ($oBasket->hasVATTBEArticles()) {
+        if ($oBasket->hasOeTBEVATArticles()) {
             if (!$oBasket->getUser()) {
                 $sMessage = $oMarkGenerator->getMark('tbeService') . ' - ';
                 $sMessage .= oxRegistry::getLang()->translateString('OEVATTBE_VAT_WILL_BE_CALCULATED_BY_USER_COUNTRY');

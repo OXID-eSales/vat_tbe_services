@@ -45,7 +45,7 @@ class oeVATTBEOxBasketContentMarkGenerator extends oeVATTBEOxBasketContentMarkGe
      */
     public function getMark($sMarkIdentification)
     {
-        if ($this->_oTBEBasket->hasVATTBEArticles()) {
+        if ($this->_oTBEBasket->hasOeTBEVATArticles()) {
             $sCurrentMark = self::DEFAULT_EXPLANATION_MARK;
             $aMarks = $this->_formMarks($sCurrentMark);
             $sMark = $aMarks[$sMarkIdentification];
@@ -68,7 +68,7 @@ class oeVATTBEOxBasketContentMarkGenerator extends oeVATTBEOxBasketContentMarkGe
         $oBasket = $this->_oTBEBasket;
         $aMarks = array();
 
-        if ($oBasket->hasVATTBEArticles()) {
+        if ($oBasket->hasOeTBEVATArticles()) {
             $aMarks['tbeService'] = $sCurrentMark;
             $sCurrentMark .= '*';
         }

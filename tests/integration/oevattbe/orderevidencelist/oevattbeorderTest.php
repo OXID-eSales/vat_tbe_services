@@ -54,8 +54,8 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderTest extends OxidTestC
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
 
         /** @var oeVATTBEOxBasket|oxBasket|PHPUnit_Framework_MockObject_MockObject $oBasket */
-        $oBasket = $this->getMock('oeVATTBEOxBasket', array('hasVATTBEArticles'));
-        $oBasket->expects($this->any())->method('hasVATTBEArticles')->will($this->returnValue(true));
+        $oBasket = $this->getMock('oeVATTBEOxBasket', array('hasOeTBEVATArticles'));
+        $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue(true));
         /** @var oeVATTBEOxUser|oxUser $oUser */
         $oUser = oxNew('oxUser');
 
@@ -94,8 +94,8 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderTest extends OxidTestC
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
 
         /** @var oeVATTBEOxBasket|oxBasket|PHPUnit_Framework_MockObject_MockObject $oBasket */
-        $oBasket = $this->getMock('oeVATTBEOxBasket', array('hasVATTBEArticles'));
-        $oBasket->expects($this->any())->method('hasVATTBEArticles')->will($this->returnValue(true));
+        $oBasket = $this->getMock('oeVATTBEOxBasket', array('hasOeTBEVATArticles'));
+        $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue(true));
         /** @var oeVATTBEOxUser|oxUser $oUser */
         $oUser = oxNew('oxUser');
 
@@ -152,8 +152,8 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderTest extends OxidTestC
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
 
         /** @var oeVATTBEOxBasket|oxBasket|PHPUnit_Framework_MockObject_MockObject $oBasket */
-        $oBasket = $this->getMock('oeVATTBEOxBasket', array('hasVATTBEArticles'));
-        $oBasket->expects($this->any())->method('hasVATTBEArticles')->will($this->returnValue($blHasTBEArticles));
+        $oBasket = $this->getMock('oeVATTBEOxBasket', array('hasOeTBEVATArticles'));
+        $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue($blHasTBEArticles));
         /** @var oeVATTBEOxUser|oxUser $oUser */
         $oUser = oxNew('oxUser');
 

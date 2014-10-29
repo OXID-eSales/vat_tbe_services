@@ -207,7 +207,7 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
      */
     protected function _loadFromBasket(oxBasket $oBasket)
     {
-        $this->oxorder__oevattbe_hastbeservices = new oxField($oBasket->hasVATTBEArticles());
+        $this->oxorder__oevattbe_hastbeservices = new oxField($oBasket->hasOeTBEVATArticles());
         parent::_loadFromBasket($oBasket);
     }
 
@@ -291,6 +291,6 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
     {
         $blCorrectOrderState = $iRet === oxOrder::ORDER_STATE_OK || $iRet === oxOrder::ORDER_STATE_MAILINGERROR;
 
-        return !$blRecalculatingOrder && $blCorrectOrderState && $oBasket->hasVATTBEArticles();
+        return !$blRecalculatingOrder && $blCorrectOrderState && $oBasket->hasOeTBEVATArticles();
     }
 }
