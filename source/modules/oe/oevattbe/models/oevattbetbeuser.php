@@ -53,7 +53,7 @@ class oeVATTBETBEUser
      *
      * @return array
      */
-    public function getTBEEvidenceList()
+    public function getOeVATTBEEvidenceList()
     {
         $this->_loadEvidenceDataToSession();
         return $this->_getSession()->getVariable('TBEEvidenceList');

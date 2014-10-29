@@ -43,10 +43,10 @@ class oeVATTBEOxUser extends oeVatTbeOxUser_parent
      *
      * @return string
      */
-    public function getTBEEvidenceList()
+    public function getOeVATTBEEvidenceList()
     {
         $oTBEUser = $this->_getTBEUser();
-        return $oTBEUser->getTBEEvidenceList();
+        return $oTBEUser->getOeVATTBEEvidenceList();
     }
 
     /**

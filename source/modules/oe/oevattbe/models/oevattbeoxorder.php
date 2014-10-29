@@ -111,7 +111,7 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
             $oOrderEvidenceList = $this->_factoryOeVATTBEOrderEvidenceList();
 
             $oOrderEvidenceList->setId($this->getId());
-            $aEvidenceList = $oUser->getTBEEvidenceList();
+            $aEvidenceList = $oUser->getOeVATTBEEvidenceList();
             $oOrderEvidenceList->setData($aEvidenceList);
 
             $oOrderEvidenceList->save();

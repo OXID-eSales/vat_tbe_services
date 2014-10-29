@@ -52,7 +52,7 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
                 'name' => 'billing_country', 'countryId' => 'GermanyId'
             ),
         );
-        $this->assertEquals($aExpected, $oTBEUser->getTBEEvidenceList());
+        $this->assertEquals($aExpected, $oTBEUser->getOeVATTBEEvidenceList());
 
         return $oTBEUser;
     }
@@ -100,7 +100,7 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
         /** @var oeVATTBETBEUser $oTBEUser */
         $oTBEUser = oxNew('oeVATTBETBEUser', $oUser, $oSession, $oConfig);
 
-        $this->assertEquals(array(), $oTBEUser->getTBEEvidenceList());
+        $this->assertEquals(array(), $oTBEUser->getOeVATTBEEvidenceList());
         return $oTBEUser;
     }
 
@@ -151,7 +151,7 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
 
         /** @var oeVATTBETBEUser $oTBEUser */
         $oTBEUser = oxNew('oeVATTBETBEUser', $oUser, $oSession, $oConfig);
-        $oTBEUser->getTBEEvidenceList();
+        $oTBEUser->getOeVATTBEEvidenceList();
 
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEGeoLocationEvidence'));
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'geo_location');
@@ -166,7 +166,7 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
 
         /** @var oeVATTBETBEUser $oTBEUser */
         $oTBEUser = oxNew('oeVATTBETBEUser', $oUser, $oSession, $oConfig);
-        $this->assertEquals($aExpectedList, $oTBEUser->getTBEEvidenceList());
+        $this->assertEquals($aExpectedList, $oTBEUser->getOeVATTBEEvidenceList());
 
         return $oTBEUser;
     }
