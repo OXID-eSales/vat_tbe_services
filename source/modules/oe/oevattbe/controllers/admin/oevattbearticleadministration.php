@@ -35,7 +35,7 @@ class oeVATTBEArticleAdministration extends oxAdminDetails
     {
         parent::render();
         /** @var oeVATTBEOxArticle|oxArticle $oArticle */
-        $oArticle = oxNew('oeVATTBEOxArticle');
+        $oArticle = oxNew('oxArticle');
         $sCurrentArticleId = $this->getEditObjectId();
         $oArticle->load($sCurrentArticleId);
         /** @var oxCountry $oCountry */
@@ -63,7 +63,7 @@ class oeVATTBEArticleAdministration extends oxAdminDetails
         $oArticleVATGroupsList->save();
 
         /** @var oeVATTBEOxArticle|oxArticle $oArticle */
-        $oArticle = oxNew('oeVATTBEOxArticle');
+        $oArticle = oxNew('oxArticle');
         $oArticle->load($sCurrentArticleId);
         $oArticle->oxarticles__oevattbe_istbeservice = new oxField($aParams['oevattbe_istbeservice']);
         $oArticle->save();
