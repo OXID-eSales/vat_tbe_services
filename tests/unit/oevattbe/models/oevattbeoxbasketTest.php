@@ -71,7 +71,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxBasketTest extends OxidTestCase
     public function testShowTBECountryChangedErrorShow()
     {
         $oBasket = oxNew('oxBasket');
-        $oBasket->setTBECountryChanged();
+        $oBasket->setOeVATTBECountryChanged();
         $this->assertTrue($oBasket->showTBECountryChangedError());
         $this->assertFalse($oBasket->showTBECountryChangedError());
     }

@@ -99,7 +99,7 @@ class oeVATTBEOxBasket extends oeVatTbeOxBasket_parent
      *
      * @return bool
      */
-    public function setTBECountryChanged($blChanged = true)
+    public function setOeVATTBECountryChanged($blChanged = true)
     {
         return $this->_isTBECountryChanged = $blChanged;
     }
@@ -112,7 +112,7 @@ class oeVATTBEOxBasket extends oeVatTbeOxBasket_parent
     public function showTBECountryChangedError()
     {
         $blChanged = $this->_isTBECountryChanged;
-        $this->setTBECountryChanged(false);
+        $this->setOeVATTBECountryChanged(false);
 
         return $blChanged;
     }

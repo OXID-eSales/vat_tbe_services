@@ -57,7 +57,7 @@ class oeVATTBEOxCmp_Basket extends oeVatTbeOxCmp_Basket_parent
         if ((is_null($oBasket->getOeVATTBETbeCountryId()) || ($oBasket->getOeVATTBETbeCountryId() != $oUser->getOeVATTBETbeCountryId()))) {
             $oBasket->setOeVATTBECountryId($oUser->getOeVATTBETbeCountryId());
             if ($oBasket->hasOeTBEVATArticles() && $oBasket->getOeVATTBECountry()->appliesTBEVAT()) {
-                $oBasket->setTBECountryChanged();
+                $oBasket->setOeVATTBECountryChanged();
             }
             $oBasket->calculateBasket(true);
         }
