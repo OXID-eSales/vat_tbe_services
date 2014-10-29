@@ -56,7 +56,7 @@ class oeVATTBEBasketItemVATFormatter
         $sMessage = $oBasketItem->getVatPercent() . '%';
         $oArticle = $oBasketItem->getArticle();
         $oCountry = $oBasket->getOeVATTBECountry();
-        $aInValidArticles = $oBasket->getTBEInValidArticles();
+        $aInValidArticles = $oBasket->getOeVATTBEInValidArticles();
 
         if ($oArticle->isOeVATTBETBEService()) {
             if ($oBasket->getUser()) {
