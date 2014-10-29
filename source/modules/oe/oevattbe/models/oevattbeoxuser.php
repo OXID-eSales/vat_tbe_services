@@ -125,7 +125,7 @@ class oeVATTBEOxUser extends oeVatTbeOxUser_parent
      */
     public function save()
     {
-        if ($this->getVatIn() && $this->_isVATINStoredDateEmpty()) {
+        if ($this->getOeTBEVATVatIn() && $this->_isVATINStoredDateEmpty()) {
             $this->oxuser__oevattbe_vatinenterdate = new oxField(date('Y-m-d H:i:s', oxRegistry::get("oxUtilsDate")->getTime()));
         }
         $this->unsetTbeCountryFromCaching();
@@ -138,7 +138,7 @@ class oeVATTBEOxUser extends oeVatTbeOxUser_parent
      *
      * @return string
      */
-    public function getVatInStoreDate()
+    public function getOeTBEVATVatInStoreDate()
     {
         return $this->oxuser__oevattbe_vatinenterdate->value;
     }
@@ -148,7 +148,7 @@ class oeVATTBEOxUser extends oeVatTbeOxUser_parent
      *
      * @return string
      */
-    public function getVatIn()
+    public function getOeTBEVATVatIn()
     {
         return $this->oxuser__oxustid->value;
     }
@@ -160,6 +160,6 @@ class oeVATTBEOxUser extends oeVatTbeOxUser_parent
      */
     protected function _isVATINStoredDateEmpty()
     {
-        return  is_null($this->getVatInStoreDate()) || $this->getVatInStoreDate() == '0000-00-00 00:00:00';
+        return  is_null($this->getOeTBEVATVatInStoreDate()) || $this->getOeTBEVATVatInStoreDate() == '0000-00-00 00:00:00';
     }
 }
