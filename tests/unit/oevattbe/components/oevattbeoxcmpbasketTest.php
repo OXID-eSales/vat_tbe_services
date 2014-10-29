@@ -50,7 +50,7 @@ class Unit_oeVatTbe_components_oeVATTBEOxCmpBasketTest extends OxidTestCase
         $oBasket = $oCmp_Basket->render();
 
         $this->assertSame('DE', $oBasket->getOeVATTBETbeCountryId());
-        $this->assertTrue($oBasket->showTBECountryChangedError());
+        $this->assertTrue($oBasket->showOeVATTBECountryChangedError());
     }
 
     /**
@@ -77,7 +77,7 @@ class Unit_oeVatTbe_components_oeVATTBEOxCmpBasketTest extends OxidTestCase
         $oBasket = $oCmp_Basket->render();
 
         $this->assertSame('DE', $oBasket->getOeVATTBETbeCountryId());
-        $this->assertTrue($oBasket->showTBECountryChangedError());
+        $this->assertTrue($oBasket->showOeVATTBECountryChangedError());
     }
 
     /**
@@ -104,7 +104,7 @@ class Unit_oeVatTbe_components_oeVATTBEOxCmpBasketTest extends OxidTestCase
         $oBasket = $oCmp_Basket->render();
 
         $this->assertSame('DE', $oBasket->getOeVATTBETbeCountryId());
-        $this->assertFalse($oBasket->showTBECountryChangedError());
+        $this->assertFalse($oBasket->showOeVATTBECountryChangedError());
     }
 
 
@@ -129,7 +129,7 @@ class Unit_oeVatTbe_components_oeVATTBEOxCmpBasketTest extends OxidTestCase
         $oBasket = $oCmp_Basket->render();
 
         $this->assertSame('DE', $oBasket->getOeVATTBETbeCountryId());
-        $this->assertFalse($oBasket->showTBECountryChangedError());
+        $this->assertFalse($oBasket->showOeVATTBECountryChangedError());
     }
 
     /**
@@ -152,6 +152,6 @@ class Unit_oeVatTbe_components_oeVATTBEOxCmpBasketTest extends OxidTestCase
         $oBasket = $oCmp_Basket->render();
 
         $this->assertSame('DE', $oBasket->getOeVATTBETbeCountryId());
-        $this->assertFalse($oBasket->showTBECountryChangedError());
+        $this->assertFalse($oBasket->showOeVATTBECountryChangedError());
     }
 }

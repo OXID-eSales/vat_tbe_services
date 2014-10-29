@@ -59,21 +59,21 @@ class Unit_oeVATTBE_models_oeVATTBEOxBasketTest extends OxidTestCase
     /**
      * Show error default value
      */
-    public function testShowTBECountryChangedErrorDefault()
+    public function testShowOeVATTBECountryChangedErrorDefault()
     {
         $oBasket = oxNew('oxBasket');
-        $this->assertFalse($oBasket->showTBECountryChangedError());
+        $this->assertFalse($oBasket->showOeVATTBECountryChangedError());
     }
 
     /**
      * Show error after set and show one time
      */
-    public function testShowTBECountryChangedErrorShow()
+    public function testShowOeVATTBECountryChangedErrorShow()
     {
         $oBasket = oxNew('oxBasket');
         $oBasket->setOeVATTBECountryChanged();
-        $this->assertTrue($oBasket->showTBECountryChangedError());
-        $this->assertFalse($oBasket->showTBECountryChangedError());
+        $this->assertTrue($oBasket->showOeVATTBECountryChangedError());
+        $this->assertFalse($oBasket->showOeVATTBECountryChangedError());
     }
 
     /**
