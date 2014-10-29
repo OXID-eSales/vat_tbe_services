@@ -39,7 +39,7 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
      *
      * @return boolean
      */
-    public function getHasOrderTBEServicesInInvoice()
+    public function getOeVATTBEHasOrderTBEServicesInInvoice()
     {
         return (bool)$this->_blHasOrderTBEServicesInInvoice;
     }
@@ -49,7 +49,7 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
      *
      * @param boolean $blHasOrderTBEServicesInInvoice
      */
-    public function setHasOrderTBEServicesInInvoice($blHasOrderTBEServicesInInvoice)
+    public function setOeVATTBEHasOrderTBEServicesInInvoice($blHasOrderTBEServicesInInvoice)
     {
         $this->_blHasOrderTBEServicesInInvoice = $blHasOrderTBEServicesInInvoice;
     }
@@ -185,7 +185,7 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
                 // Add mark for TBE service.
                 if ($oOrderArt->getArticle()->isOeVATTBETBEService()) {
                     $oPdf->text(140, $iStartPosForMark, '*');
-                    $this->setHasOrderTBEServicesInInvoice(true);
+                    $this->setOeVATTBEHasOrderTBEServicesInInvoice(true);
                 }
             }
             // additional variant info
@@ -193,7 +193,7 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
                 $iStartPosForMark = $iStartPosForMark + 4;
             }
         }
-        if ($this->getHasOrderTBEServicesInInvoice()) {
+        if ($this->getOeVATTBEHasOrderTBEServicesInInvoice()) {
             $iStartPos += 5;
             $sCountryTitle = $this->oeVATTBEGetCountryTitle();
             $oPdf->text(15, $iStartPos, '* ' . sprintf(oxRegistry::getLang()->translateString('OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY_INVOICE', $this->getSelectedLang()), $sCountryTitle));
