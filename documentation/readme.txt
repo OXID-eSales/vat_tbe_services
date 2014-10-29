@@ -51,7 +51,6 @@ TBE articles are calculated with user location country VAT rate.
 *oxcmp_basket
 --render
 *oxorder
---setHasOrderTBEServicesInInvoice
 --validateOrder
 --delete
 --finalizeOrder
