@@ -31,12 +31,12 @@ class oeVATTBEEvents
     public static function onActivate()
     {
         self::_addArticleVatGroupTable();
+        self::_addCategoryVatGroupTable();
         self::_addCountryVatGroupTable();
         self::_addOrderEvidences();
         self::_addFields();
         self::_regenerateViews();
         self::_configureCountries();
-        //self::_addDemoData();
 
         /** @var oeVATTBEEvidenceRegister $oEvidenceRegister */
         $oEvidenceRegister = oxNew('oeVATTBEEvidenceRegister', oxRegistry::getConfig());
@@ -95,6 +95,25 @@ class oeVATTBEEvents
               `OEVATTBE_TIMESTAMP` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
               UNIQUE KEY `OEVATTBE_ARTICLEID_2` (`OEVATTBE_ARTICLEID`,`OEVATTBE_COUNTRYID`),
               KEY `OEVATTBE_ARTICLEID` (`OEVATTBE_ARTICLEID`),
+              KEY `OEVATTBE_COUNTRYID` (`OEVATTBE_COUNTRYID`),
+              KEY `OEVATTBE_VATGROUPID` (`OEVATTBE_VATGROUPID`)
+            ) ENGINE=InnoDB;";
+
+        oxDb::getDb()->execute($sSql);
+    }
+
+    /**
+     * Add category VAT group table
+     */
+    protected static function _addCategoryVatGroupTable()
+    {
+        $sSql = "CREATE TABLE IF NOT EXISTS `oevattbe_categoryvat` (
+              `OEVATTBE_CATEGORYID` char(32) character set latin1 collate latin1_general_ci NOT NULL,
+              `OEVATTBE_COUNTRYID` char(32) character set latin1 collate latin1_general_ci NOT NULL,
+              `OEVATTBE_VATGROUPID` int(11) unsigned NOT NULL,
+              `OEVATTBE_TIMESTAMP` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+              UNIQUE KEY `OEVATTBE_CATEGORYID_2` (`OEVATTBE_CATEGORYID`,`OEVATTBE_COUNTRYID`),
+              KEY `OEVATTBE_CATEGORYID` (`OEVATTBE_CATEGORYID`),
               KEY `OEVATTBE_COUNTRYID` (`OEVATTBE_COUNTRYID`),
               KEY `OEVATTBE_VATGROUPID` (`OEVATTBE_VATGROUPID`)
             ) ENGINE=InnoDB;";
