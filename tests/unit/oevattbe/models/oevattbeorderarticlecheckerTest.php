@@ -50,8 +50,8 @@ class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends OxidTestCase
     /**
      * Checks articles with empty list.
      *
-     * @param array|null      $mEmptyList
-     * @param oeVATTBETBEUser $oUser
+     * @param array|null      $mEmptyList article list
+     * @param oeVATTBETBEUser $oUser      user
      *
      * @dataProvider providerCheckingArticlesWithEmptyList
      */
@@ -137,7 +137,6 @@ class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends OxidTestCase
      */
     public function testReturningInvalidArticlesWhenIncorrectArticlesExists()
     {
-        $this->markTestSkippedUntil('2014-10-29', 'Skiped to see that all tests run when renaming methods');
         $oArticleWithoutVAT = $this->_createArticle(false, null, 'id');
         $oTBEArticleWithoutVAT1 = $this->_createArticle(true, null, 'id1');
         $oTBEArticleWithoutVAT2 = $this->_createArticle(true, null, 'id2');
@@ -213,12 +212,13 @@ class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends OxidTestCase
     /**
      * Creates article.
      *
-     * @param bool $blTBEService
-     * @param int  $iVat
+     * @param bool   $blTBEService is article tbe service or not
+     * @param int    $iVat         VAT rate
+     * @param string $sId          article id
      *
      * @return oxArticle|PHPUnit_Framework_MockObject_MockObject
      */
-    protected function _createArticle($blTBEService, $iVat)
+    protected function _createArticle($blTBEService, $iVat, $sId = null)
     {
         $oArticle = $this->getMock('oxArticle', array('isOeVATTBETBEService', 'getOeVATTBETBEVat'));
         $oArticle->expects($this->any())->method('isOeVATTBETBEService')->will($this->returnValue($blTBEService));
