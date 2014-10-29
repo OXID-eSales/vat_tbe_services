@@ -20,7 +20,7 @@
  */
 
 /**
- * Test class for oeVATTBECountryVATGroupsDbGateway.
+ * Test class for oeVATTBEArticleVATGroupsDbGateway.
  *
  * @covers oeVATTBEArticleVATGroupsDbGateway
  */
@@ -149,7 +149,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBEArticleVATGroupsDbGatewayTest exten
     /**
      * Testing deletion of VAT Group from database.
      *
-     * @param string $sArticleId
+     * @param string $sArticleId article id
      *
      * @depends testVATGroupLoadingByGroupId
      */

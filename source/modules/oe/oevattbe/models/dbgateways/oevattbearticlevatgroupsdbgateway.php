@@ -27,7 +27,7 @@ class oeVATTBEArticleVATGroupsDbGateway extends oeVATTBEModelDbGateway
     /**
      * Saves VAT Group data to database.
      *
-     * @param array $aData
+     * @param array $aData data
      *
      * @return bool
      */
