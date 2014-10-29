@@ -125,7 +125,7 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
      *
      * @return string
      */
-    public function oeVATTBEGetCountryTitle()
+    public function getOeVATTBECountryTitle()
     {
         $oOrderEvidenceList = $this->_factoryOeVATTBEOrderEvidenceList();
         $oOrderEvidenceList->load($this->getId());
@@ -195,7 +195,7 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
         }
         if ($this->getOeVATTBEHasOrderTBEServicesInInvoice()) {
             $iStartPos += 5;
-            $sCountryTitle = $this->oeVATTBEGetCountryTitle();
+            $sCountryTitle = $this->getOeVATTBECountryTitle();
             $oPdf->text(15, $iStartPos, '* ' . sprintf(oxRegistry::getLang()->translateString('OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY_INVOICE', $this->getSelectedLang()), $sCountryTitle));
         }
     }

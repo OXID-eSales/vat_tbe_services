@@ -137,7 +137,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxOrderTest extends OxidTestCase
         $this->assertSame(1, $oOrder->validateOrder($oBasket, $oUser));
     }
 
-    public function providerOeVATTBEGetCountryTitle()
+    public function providerGetOeVATTBECountryTitle()
     {
         return array(
             array(0, 'Deutschland'),
@@ -151,9 +151,9 @@ class Unit_oeVATTBE_models_oeVATTBEOxOrderTest extends OxidTestCase
      * @param int    $iLanguageId    Which is used in invoice pdf to set language.
      * @param string $sCountryResult Country which will be displayed in invoice.
      *
-     * @dataProvider providerOeVATTBEGetCountryTitle
+     * @dataProvider providerGetOeVATTBECountryTitle
      */
-    public function testOeVATTBEGetCountryTitle($iLanguageId, $sCountryResult)
+    public function testGetOeVATTBECountryTitle($iLanguageId, $sCountryResult)
     {
         $aEvidenceData = array(
             'usedOrderEvidenceId' => array('countryId' => 'a7c40f631fc920687.20179984')
@@ -173,7 +173,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxOrderTest extends OxidTestCase
         $oOrder->expects($this->any())->method('_oeVATTBEGetUsedEvidenceId')->will($this->returnValue('usedOrderEvidenceId'));
 
 
-        $this->assertSame($sCountryResult, $oOrder->oeVATTBEGetCountryTitle());
+        $this->assertSame($sCountryResult, $oOrder->getOeVATTBECountryTitle());
     }
 
     public function providerSetGetOrderTBEServicesInInvoice()
