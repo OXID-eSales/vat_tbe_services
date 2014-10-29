@@ -70,7 +70,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupsEditingTest extends
             $aResultGroups[] = $aCountryVatGroup->getId();
         }
 
-        $this->assertSame($aExpectedGroups, $aResultGroups);
+        $this->assertEquals($aExpectedGroups, $aResultGroups);
     }
 
     /**
