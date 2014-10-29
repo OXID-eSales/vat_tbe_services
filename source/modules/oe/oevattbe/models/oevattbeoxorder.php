@@ -256,12 +256,7 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
      */
     protected function _factoryOeVATTBEOrderEvidenceList()
     {
-        /** @var oeVATTBEOrderEvidenceListDbGateway $oGateway */
-        $oGateway = oxNew('oeVATTBEOrderEvidenceListDbGateway');
-
-        /** @var oeVATTBEOrderEvidenceList $oOrderEvidenceList */
-        $oOrderEvidenceList = oxNew('oeVATTBEOrderEvidenceList', $oGateway);
-
+        $oOrderEvidenceList = oeVATTBEOrderEvidenceList::createOrderEvidenceList();
         return $oOrderEvidenceList;
     }
 
