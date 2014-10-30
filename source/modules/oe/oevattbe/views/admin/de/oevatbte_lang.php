@@ -26,6 +26,7 @@ $aLang = array(
     'charset'                                    => 'ISO-8859-15',
     'oevattbe_country_vat_groups' => 'Landes MwSt. Sätze',
     'oevattbe_article_administration' => 'eVAT config',
+    'oevattbe_category_administration' => '[tr]eVAT config',
     'OEVATTBE_VAT_IN_STORE_DATE' => 'Datum der Eingabe der USt-IdNr.',
     'HELP_OEVATTBE_VAT_IN_STORE_DATE' => 'Für Telekommunikations-, Rundfunk-, Fernseh- oder auf elektronischem Weg erbrachte Dienstleistung gilt ein Kunde als steuerpflichtig, wenn er eine USt-IdNr. angegeben hat. Um dem Shop-Betreiber einen Hinweis darauf zu geben, ab wann ein Kunde für den Shop als steuerpflichtig betrachtet wurde, wird das Datum der Ersteingabe der USt-IdNr. angezeigt.',
     'OEVATTBE_TITLE_EVIDENCES_FOR_TBE'=> 'Kundenstandort Bestimmungen',
@@ -51,4 +52,8 @@ $aLang = array(
     'OEVATTBE_SAVE_BUTTON' => 'Speichern',
     'OEVATTBE_CREATE_NEW_COUNTRY_VAT_GROUP_LEGEND' => 'neuen MwSt.-Satz anlegen',
     'OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY_INVOICE' => '[tr]This VAT was calculated according residence country: %s',
+    'OEVATTBE_CATEGORY_SUBMIT_LABEL' => '[tr]Products of this category is a telecommunication, broadcasting or electronic services',
+    'OEVATTBE_CATEGORY_COUNTRY' => '[tr]Country',
+    'OEVATTBE_CATEGORY_VAT_GROUP' => '[tr]VAT rate applicable to article for country',
+    'OEVATTBE_CATEGORY_VAT_RATES' => '[tr]VAT rates:',
 );

@@ -25,6 +25,7 @@ $aLang = array(
     'charset'                                    => 'ISO-8859-15',
     'oevattbe_country_vat_groups' => 'Country VAT rates',
     'oevattbe_article_administration' => 'eVAT config',
+    'oevattbe_category_administration' => '[tr]eVAT config',
     'OEVATTBE_VAT_IN_STORE_DATE' => 'Date, VAT-ID was entered',
     'HELP_OEVATTBE_VAT_IN_STORE_DATE' => 'For telecommunication, broadcasting and electronic services, a customer is taxable, if he has  supplied a valid VAT ID. In order for the shop owner to have a record of when a customer entered this VAT ID, the date it was first entered is shown.',
     'OEVATTBE_TITLE_EVIDENCES_FOR_TBE'=> 'Evidence methods for Customer Location',
@@ -50,4 +51,8 @@ $aLang = array(
     'OEVATTBE_SAVE_BUTTON' => 'Save',
     'OEVATTBE_CREATE_NEW_COUNTRY_VAT_GROUP_LEGEND' => 'Create new VAT rate',
     'OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY_INVOICE' => '[tr]This VAT was calculated according residence country: %s',
+    'OEVATTBE_CATEGORY_SUBMIT_LABEL' => '[tr]Products of this category is a telecommunication, broadcasting or electronic services',
+    'OEVATTBE_CATEGORY_COUNTRY' => '[tr]Country',
+    'OEVATTBE_CATEGORY_VAT_GROUP' => '[tr]VAT rate applicable to article for country',
+    'OEVATTBE_CATEGORY_VAT_RATES' => '[tr]VAT rates:',
 );
