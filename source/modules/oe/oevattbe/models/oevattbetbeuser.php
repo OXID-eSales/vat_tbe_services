@@ -110,6 +110,21 @@ class oeVATTBETBEUser
     }
 
     /**
+     * Returns whether user is from domestic country.
+     *
+     * @return bool
+     */
+    public function isUserFromDomesticCountry()
+    {
+        $sDomesticCountryAbbr = $this->_getConfig()->getConfigParam('sOeVATTBEDomesticCountry');
+        $oUserCountry = $this->getCountry();
+
+        $blResult = $oUserCountry->oxcountry__oxisoalpha2->value == $sDomesticCountryAbbr;
+
+        return $sDomesticCountryAbbr ? $blResult : false;
+    }
+
+    /**
      * Returns user object.
      *
      * @return oxUser
