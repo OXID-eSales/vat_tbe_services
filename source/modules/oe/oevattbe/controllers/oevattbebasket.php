@@ -38,7 +38,7 @@ class oeVATTBEBasket extends oeVATTBEBasket_parent
         if ($oBasket = $this->getSession()->getBasket()) {
             $oBasketArticles = $oBasket->getBasketArticles();
             /** @var oeVATTBEBasketItemsValidator $oVATTBEBasketItemsValidator */
-            $oVATTBEBasketItemsValidator = oeVATTBEBasketItemsValidator::getInstance($oBasketArticles);
+            $oVATTBEBasketItemsValidator = oeVATTBEBasketItemsValidator::createInstance($oBasketArticles);
             $oVATTBEBasketItemsValidator->validateTbeArticlesAndShowMessageIfNeeded('basket');
         }
 

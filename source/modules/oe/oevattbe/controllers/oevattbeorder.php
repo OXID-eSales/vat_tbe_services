@@ -38,7 +38,7 @@ class oeVATTBEOrder extends oeVATTBEOrder_parent
         if ($oBasket = $this->getBasket()) {
             $oBasketArticles = $oBasket->getBasketArticles();
             /** @var oeVATTBEBasketItemsValidator $oVATTBEBasketItemsValidator */
-            $oVATTBEBasketItemsValidator = oeVATTBEBasketItemsValidator::getInstance($oBasketArticles);
+            $oVATTBEBasketItemsValidator = oeVATTBEBasketItemsValidator::createInstance($oBasketArticles);
             $oVATTBEBasketItemsValidator->validateTbeArticlesAndShowMessageIfNeeded('order');
         }
 
