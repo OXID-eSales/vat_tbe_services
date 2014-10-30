@@ -307,4 +307,14 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
 
         $this->assertSame(false, $oUser->isUserFromDomesticCountry());
     }
+
+    /**
+     * Testing creation of instance with creation method.
+     */
+    public function testCreateInstance()
+    {
+        $oUserCountry = oeVATTBETBEUser::createInstance();
+
+        $this->assertInstanceOf('oeVATTBETBEUser', $oUserCountry);
+    }
 }

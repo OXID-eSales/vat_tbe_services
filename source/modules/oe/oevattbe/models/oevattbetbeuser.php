@@ -49,6 +49,22 @@ class oeVATTBETBEUser
     }
 
     /**
+     * Creates self instance.
+     *
+     * @return oeVATTBETBEUser
+     */
+    public static function createInstance()
+    {
+        $oSession = oxRegistry::getSession();
+        $oConfig = oxRegistry::getConfig();
+        $oUser = $oSession->getUser();
+
+        /** @var oeVATTBETBEUser $oInstance */
+        $oInstance = oxNew('oeVATTBETBEUser', $oUser, $oSession, $oConfig);
+        return $oInstance;
+    }
+
+    /**
      * Returns users TBE country
      *
      * @return array
