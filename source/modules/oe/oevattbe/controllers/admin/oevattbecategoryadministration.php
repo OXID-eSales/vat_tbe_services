@@ -112,8 +112,8 @@ class oeVATTBECategoryAdministration extends oxAdminDetails
     {
         /** @var oxCategory $oCategory */
         $oCategory = oxNew('oxCategory');
-        $sCurrentArticleId = $this->getEditObjectId();
-        $oCategory->load($sCurrentArticleId);
+        $sCurrentCategoryId = $this->getEditObjectId();
+        $oCategory->load($sCurrentCategoryId);
 
         return (int)$oCategory->oxcategories__oevattbe_istbe->value;
     }
