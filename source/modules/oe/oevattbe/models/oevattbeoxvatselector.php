@@ -27,18 +27,34 @@ class oeVATTBEOxVatSelector extends oeVATTBEOxVatSelector_parent
     /**
      * get article user vat
      *
-     * @param oxArticle $oArticle article object
+     * @param oeVatTbeOxArticle|oxArticle $oArticle Article object.
      *
      * @return double
      */
     public function getArticleUserVat(oxArticle $oArticle)
     {
-        /** @var oeVatTbeOxArticle $oArticle */
-        $sVat = $oArticle->getOeVATTBETBEVat();
-        if (!$oArticle->isOeVATTBETBEService() || $sVat === null || $this->isAdmin()) {
+        if ($this->_oeVATTBEUseTBEVAT($oArticle)) {
+            $sVat = $oArticle->getOeVATTBETBEVat();
+        } else {
             $sVat = parent::getArticleUserVat($oArticle);
         }
 
         return $sVat;
+    }
+
+    /**
+     * Returns whether TBE VAT for given article should be used.
+     *
+     * @param oeVatTbeOxArticle|oxArticle $oArticle Article object.
+     *
+     * @return bool
+     */
+    private function _oeVATTBEUseTBEVAT($oArticle)
+    {
+        $oUserCountry = oeVATTBETBEUser::createInstance();
+
+        $blIsTBEArticle = $oArticle->isOeVATTBETBEService() && $oArticle->getOeVATTBETBEVat() !== null;
+
+        return $blIsTBEArticle && !$oUserCountry->isUserFromDomesticCountry() && !$this->isAdmin();
     }
 }
