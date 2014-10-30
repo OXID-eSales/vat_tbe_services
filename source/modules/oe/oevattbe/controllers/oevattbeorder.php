@@ -35,9 +35,12 @@ class oeVATTBEOrder extends oeVATTBEOrder_parent
      */
     public function render()
     {
-        /** @var oeVATTBEBasketItemsValidator $oVATTBEBasketItemsValidator */
-        $oVATTBEBasketItemsValidator = oeVATTBEBasketItemsValidator::getInstance($this->getBasketArticles());
-        $oVATTBEBasketItemsValidator->validateTbeArticlesAndShowMessageIfNeeded('order');
+        if ($oBasket = $this->getBasket()) {
+            $oBasketArticles = $oBasket->getBasketArticles();
+            /** @var oeVATTBEBasketItemsValidator $oVATTBEBasketItemsValidator */
+            $oVATTBEBasketItemsValidator = oeVATTBEBasketItemsValidator::getInstance($oBasketArticles);
+            $oVATTBEBasketItemsValidator->validateTbeArticlesAndShowMessageIfNeeded('order');
+        }
 
         return parent::render();
     }
