@@ -118,7 +118,8 @@ $aModule = array(
         array('template' => 'country_main.tpl', 'block'=>'admin_country_main_form', 'file'=>'/views/blocks/admin/country_main.tpl'),
     ),
     'settings' => array(
-        array('group' => 'oevattbe', 'name' => 'aOeVATTBECountryEvidences',      'type' => 'aarr',   'value' => array('billing_country' => 1, 'geo_location' => 1)),
-        array('group' => 'oevattbe', 'name' => 'sOeVATTBEDefaultEvidence',        'type' => 'str',   'value' => 'billing_country'),
+        array('group' => 'oevattbe', 'name' => 'aOeVATTBECountryEvidences', 'type' => 'aarr',   'value' => array('billing_country' => 1, 'geo_location' => 1)),
+        array('group' => 'oevattbe', 'name' => 'sOeVATTBEDefaultEvidence',  'type' => 'str',   'value' => 'billing_country'),
+        array('group' => 'oevattbe', 'name' => 'sOeVATTBEDomesticCountry',  'type' => 'str',   'value' => 'DE'),
     )
 );
