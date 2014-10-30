@@ -69,6 +69,10 @@ TBE articles are calculated with user location country VAT rate.
 --render
 *oxcountry
 
+==Extend invoicePDF==
+*oxorder
+--_setOrderArticlesToPdf
+
 ==Installation==
 1. Copy the module source files to your shop directory.
 2. Activate the module.
