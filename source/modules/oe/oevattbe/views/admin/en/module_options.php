@@ -24,12 +24,11 @@
 // -------------------------------
 $aLang = array(
     'charset'                                        => 'ISO-8859-15',
-    'SHOP_MODULE_GROUP_oevattbe'                     => '[TR] VAT TBE services options',
-
-    'SHOP_MODULE_aOeVATTBECountryEvidences'          => '[TR] Activate or deactivate user country evidences.',
-    'HELP_SHOP_MODULE_aOeVATTBECountryEvidences'     => '[TR] Country evidences can be marked as active (1) or inactive (0). Only active evidences are used in user country calculation. Evidences should not be removed from the list, only activation state should be changed when needed.',
-    'SHOP_MODULE_sOeVATTBEDefaultEvidence'           => '[TR] Default evidence id.',
-    'HELP_SHOP_MODULE_sOeVATTBEDefaultEvidence'      => '[TR] In case of contradicting evidences this evidence will be used when deciding user country. If user country can not be determined by default evidence, first registered evidence with country will be used.',
+    'SHOP_MODULE_GROUP_oevattbe'                     => 'eVAT customer location method',
+    'SHOP_MODULE_aOeVATTBECountryEvidences'          => 'Activate or deactivate customer location method',
+    'HELP_SHOP_MODULE_aOeVATTBECountryEvidences'     => 'A customer location method may be marked as active (1) or inactive (0). Only active location methods are used for customer location. Please do not remove any lines in this list ? only change the digit ?0? or ?1? as needed.',
+    'SHOP_MODULE_sOeVATTBEDefaultEvidence'           => 'Default customer location method',
+    'HELP_SHOP_MODULE_sOeVATTBEDefaultEvidence'      => 'This method is used as default for the location of the customer. It must be active.',
     'SHOP_MODULE_sOeVATTBEDomesticCountry'           => '[TR] Domestic country.',
     'HELP_SHOP_MODULE_sOeVATTBEDomesticCountry'      => '[TR] Shop\'s domestic country. For users from this country information about TBE products will not be shown.',
 );
