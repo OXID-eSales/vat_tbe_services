@@ -25,7 +25,7 @@
 class oeVATTBECategoryAdministration extends oxAdminDetails
 {
     /** @var array Used to cache VAT Groups data. */
-    private $_aCategoryVATGroupData;
+    private $_aCategoryVATGroupData = null;
 
     /**
      * Renders template for VAT TBE administration in category page.

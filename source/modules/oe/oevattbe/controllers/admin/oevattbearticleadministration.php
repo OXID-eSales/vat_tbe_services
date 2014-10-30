@@ -24,7 +24,7 @@
 class oeVATTBEArticleAdministration extends oxAdminDetails
 {
     /** @var array Used to cache VAT Groups data. */
-    private $_aArticleVATGroupData;
+    private $_aArticleVATGroupData = null;
 
     /**
      * Renders template for VAT TBE administration in article page.
