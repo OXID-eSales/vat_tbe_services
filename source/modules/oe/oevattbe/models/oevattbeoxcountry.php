@@ -20,7 +20,7 @@
  */
 
 /**
- * VAT TBE oxArticle class
+ * VAT TBE oxCountry class
  */
 class oeVATTBEOxCountry extends oeVATTBEOxCountry_parent
 {
