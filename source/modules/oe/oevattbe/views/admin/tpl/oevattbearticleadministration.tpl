@@ -43,7 +43,7 @@
                 <table class="vattbeAdministrationList">
                     <tr>
                         <td colspan="2">
-                            [{oxmultilang ident="OEVATTBE_VAT_RATES"}]
+                            [{oxmultilang ident="OEVATTBE_ARTICLE_VAT_RATES"}]
                         </td>
                     </tr>
                     <tr>
