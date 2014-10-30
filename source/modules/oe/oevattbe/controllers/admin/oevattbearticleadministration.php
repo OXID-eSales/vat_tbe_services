@@ -91,7 +91,7 @@ class oeVATTBEArticleAdministration extends oxAdminDetails
     /**
      * Forms view VAT groups data for template.
      *
-     * @param oxCountry $oCountry Country object used to get country title.
+     * @param oxCountry|oeVATTBEoxCountry $oCountry Country object used to get country title.
      *
      * @return array
      */
@@ -103,7 +103,7 @@ class oeVATTBEArticleAdministration extends oxAdminDetails
         foreach ($aVATGroupList as $sCountryId => $aGroupsList) {
             $oCountry->load($sCountryId);
             $aViewData[$sCountryId] = array(
-                'countryTitle' => $oCountry->oxcountry__oxtitle->value,
+                'countryTitle' => $oCountry->getOeVATTBEName(),
                 'countryGroups' => $aGroupsList
             );
         }
