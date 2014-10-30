@@ -49,7 +49,7 @@ class oeVATTBEOxCountry extends oeVATTBEOxCountry_parent
      *
      * @return string
      */
-    public function getVATTBEName()
+    public function getOeVATTBEName()
     {
         return $this->oxcountry__oxtitle->value;
     }

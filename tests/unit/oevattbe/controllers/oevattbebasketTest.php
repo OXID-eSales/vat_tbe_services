@@ -59,9 +59,9 @@ class Unit_oeVATTBE_controllers_oeVATTBEBasketTest extends OxidTestCase
     {
         $oUser = oxNew("oxUser");
 
-        $oCountry = $this->getMock("oeVATTBEOxCountry", array("appliesOeTBEVATTbeVat",'getVATTBEName'));
+        $oCountry = $this->getMock("oeVATTBEOxCountry", array("appliesOeTBEVATTbeVat",'getOeVATTBEName'));
         $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->will($this->returnValue(true));
-        $oCountry->expects($this->any())->method("getVATTBEName")->will($this->returnValue('LT'));
+        $oCountry->expects($this->any())->method("getOeVATTBEName")->will($this->returnValue('LT'));
 
         $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasOeTBEVATArticles', 'getUser', 'getOeVATTBECountry'));
         $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(true));
@@ -71,7 +71,7 @@ class Unit_oeVATTBE_controllers_oeVATTBEBasketTest extends OxidTestCase
         $this->getSession()->setBasket($oBasket);
 
         $oBasketController = oxNew('oeVATTBEBasket');
-        $this->assertStringEndsWith(sprintf(oxRegistry::getLang()->translateString('OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY'), $oCountry->getVATTBEName()), $oBasketController->getOeVATTBEMarkMessage());
+        $this->assertStringEndsWith(sprintf(oxRegistry::getLang()->translateString('OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY'), $oCountry->getOeVATTBEName()), $oBasketController->getOeVATTBEMarkMessage());
         $this->assertStringStartsWith('**', $oBasketController->getOeVATTBEMarkMessage());
     }
 
@@ -141,7 +141,7 @@ class Unit_oeVATTBE_controllers_oeVATTBEBasketTest extends OxidTestCase
     {
         $oUser = oxNew("oxUser");
 
-        $oCountry = $this->getMock("oeVATTBEOxCountry", array("appliesOeTBEVATTbeVat",'getVATTBEName'));
+        $oCountry = $this->getMock("oeVATTBEOxCountry", array("appliesOeTBEVATTbeVat"));
         $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->will($this->returnValue(false));
 
         $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasOeTBEVATArticles', 'getUser', 'getOeVATTBECountry'));

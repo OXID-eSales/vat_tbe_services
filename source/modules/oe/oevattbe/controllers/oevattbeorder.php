@@ -76,7 +76,7 @@ class oeVATTBEOrder extends oeVATTBEOrder_parent
 
         if ($oBasket->hasOeTBEVATArticles() && $oBasket->isOeVATTBEValid() && $oCountry && $oCountry->appliesOeTBEVATTbeVat()) {
             $sMessage = $oMarkGenerator->getMark('tbeService') . ' - ';
-            $sMessage .= sprintf(oxRegistry::getLang()->translateString('OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY'), $oCountry->getVATTBEName());
+            $sMessage .= sprintf(oxRegistry::getLang()->translateString('OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY'), $oCountry->getOeVATTBEName());
         }
 
         return $sMessage;

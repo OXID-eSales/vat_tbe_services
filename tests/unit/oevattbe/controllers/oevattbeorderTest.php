@@ -81,9 +81,9 @@ class Unit_oeVATTBE_controllers_oeVATTBEOrderTest extends OxidTestCase
 
     public function testGetOeVATTBEMarkMessageHasTBEArticleInBasketValidCountryTBE()
     {
-        $oCountry = $this->getMock("oeVATTBEOxCountry", array("appliesOeTBEVATTbeVat",'getVATTBEName'));
+        $oCountry = $this->getMock("oeVATTBEOxCountry", array("appliesOeTBEVATTbeVat",'getOeVATTBEName'));
         $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->will($this->returnValue(true));
-        $oCountry->expects($this->any())->method("getVATTBEName")->will($this->returnValue('LT'));
+        $oCountry->expects($this->any())->method("getOeVATTBEName")->will($this->returnValue('LT'));
 
         $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasOeTBEVATArticles', 'isOeVATTBEValid', 'getOeVATTBECountry'));
         $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(true));
@@ -94,7 +94,7 @@ class Unit_oeVATTBE_controllers_oeVATTBEOrderTest extends OxidTestCase
 
         $oOrder = oxNew('oeVATTBEOrder');
 
-        $this->assertStringEndsWith(sprintf(oxRegistry::getLang()->translateString('OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY'), $oCountry->getVATTBEName()), $oOrder->getOeVATTBEMarkMessage());
+        $this->assertStringEndsWith(sprintf(oxRegistry::getLang()->translateString('OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY'), $oCountry->getOeVATTBEName()), $oOrder->getOeVATTBEMarkMessage());
         $this->assertStringStartsWith('**', $oOrder->getOeVATTBEMarkMessage());
     }
 
