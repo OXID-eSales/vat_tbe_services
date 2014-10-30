@@ -24,6 +24,9 @@
  */
 class oeVATTBECategoryAdministration extends oxAdminDetails
 {
+    /** @var array Used to cache VAT Groups data. */
+    private $_aCategoryVATGroupData;
+
     /**
      * Renders template for VAT TBE administration in category page.
      *
@@ -33,6 +36,80 @@ class oeVATTBECategoryAdministration extends oxAdminDetails
     {
         parent::render();
 
+        /** @var oxCategory $oCategory */
+        $oCategory = oxNew('oxCategory');
+        $sCurrentArticleId = $this->getEditObjectId();
+        $oCategory->load($sCurrentArticleId);
+        /** @var oxCountry $oCountry */
+        $oCountry = oxNew('oxCountry');
+
+        $this->_aViewData['iIsTbeService'] = $oCategory->oxcategories__oevattbe_istbe->value;
+        $this->_aViewData['aCountriesAndVATGroups'] = $this->_getCountryAndVATGroupsData($oCountry);
+
         return 'oevattbecategoryadministration.tpl';
+    }
+
+    /**
+     * Updates category information related with TBE.
+     */
+    public function save()
+    {
+        parent::save();
+        $sCurrentCategoryId = $this->getEditObjectId();
+        $oConfig = $this->getConfig();
+        $aParams = $oConfig->getRequestParameter('editval');
+        $aVATGroupsParams = $oConfig->getRequestParameter('VATGroupsByCountry');
+        $oCategoryVATGroupsList = oeVATTBECategoryVATGroupsList::createInstance();
+        $oCategoryVATGroupsList->setId($sCurrentCategoryId);
+        $oCategoryVATGroupsList->setData($aVATGroupsParams);
+        $oCategoryVATGroupsList->save();
+
+        /** @var oxCategory $oCategory */
+        $oCategory = oxNew('oxCategory');
+        $oCategory->load($sCurrentCategoryId);
+        $oCategory->oxcategories__oevattbe_istbe = new oxField($aParams['oevattbe_istbe']);
+        $oCategory->save();
+    }
+
+    /**
+     * Used in template to check if select element was selected.
+     *
+     * @param string $sCountryId  Html select element country.
+     * @param string $sVATGroupId Group which is checked.
+     *
+     * @return bool
+     */
+    public function isSelected($sCountryId, $sVATGroupId)
+    {
+        $oCategoryVATGroupsList = oeVATTBECategoryVATGroupsList::createInstance();
+        $oCategoryVATGroupsList->load($this->getEditObjectId());
+        if (is_null($this->_aCategoryVATGroupData)) {
+            $this->_aCategoryVATGroupData = $oCategoryVATGroupsList->getData();
+        }
+
+        return $this->_aCategoryVATGroupData[$sCountryId] === $sVATGroupId;
+    }
+
+    /**
+     * Forms view VAT groups data for template.
+     *
+     * @param oxCountry $oCountry Country object used to get country title.
+     *
+     * @return array
+     */
+    protected function _getCountryAndVATGroupsData($oCountry)
+    {
+        $aViewData = array();
+        $oCountryVATGroupsList = oeVATTBECountryVATGroupsList::createInstance();
+        $aVATGroupList = $oCountryVATGroupsList->getList();
+        foreach ($aVATGroupList as $sCountryId => $aGroupsList) {
+            $oCountry->load($sCountryId);
+            $aViewData[$sCountryId] = array(
+                'countryTitle' => $oCountry->oxcountry__oxtitle->value,
+                'countryGroups' => $aGroupsList
+            );
+        }
+
+        return $aViewData;
     }
 }
