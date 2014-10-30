@@ -10,6 +10,9 @@
             <SUBMENU id="mxarticles" cl="article" list="article_list">
                 <TAB id="oevattbe_article_administration" cl="oevattbearticleadministration" />
             </SUBMENU>
+            <SUBMENU id="mxcategories" cl="category" list="category_list">
+                <TAB id="oevattbe_category_administration" cl="oevattbecategoryadministration" />
+            </SUBMENU>
         </MAINMENU>
     </OXMENU>
 </OX>

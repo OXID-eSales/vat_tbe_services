@@ -84,6 +84,7 @@ $aModule = array(
         'oeVATTBECategoryVATGroupsList'                 => 'oe/oevattbe/models/oevattbecategoryvatgroupslist.php',
         'oeVATTBEVATGroupArticleCacheInvalidator'      => 'oe/oevattbe/models/oevattbevatgrouparticlescacheinvalidator.php',
         'oeVATTBEArticleAdministration'                => 'oe/oevattbe/controllers/admin/oevattbearticleadministration.php',
+        'oeVATTBECategoryAdministration'               => 'oe/oevattbe/controllers/admin/oevattbecategoryadministration.php',
         'oeVATTBEBasketItemVATFormatter'               => 'oe/oevattbe/models/oevattbebasketitemvatformatter.php',
     ),
     'events'       => array(
@@ -93,6 +94,7 @@ $aModule = array(
     'templates' => array(
         'oevattbecountryvatgroups.tpl' => 'oe/oevattbe/views/admin/tpl/oevattbecountryvatgroups.tpl',
         'oevattbearticleadministration.tpl' => 'oe/oevattbe/views/admin/tpl/oevattbearticleadministration.tpl',
+        'oevattbecategoryadministration.tpl' => 'oe/oevattbe/views/admin/tpl/oevattbecategoryadministration.tpl',
     ),
     'blocks' => array(
         array('template' => 'layout/base.tpl', 'block'=>'base_style', 'file'=>'/views/blocks/layout/base.tpl'),
