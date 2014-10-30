@@ -144,7 +144,7 @@ class oeVATTBEOxBasket extends oeVatTbeOxBasket_parent
      */
     protected function _getOeVATTBEOrderArticleChecker()
     {
-        $oTBEUser  = oxNew('oeVATTBETBEUser', oxNew('oxUser'), oxRegistry::getSession(), oxRegistry::getConfig());
+        $oTBEUser = oeVATTBETBEUser::createInstance();
         return oxNew('oeVATTBEOrderArticleChecker', $this->getBasketArticles(), $oTBEUser);
     }
 }
