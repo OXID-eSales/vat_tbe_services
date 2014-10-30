@@ -155,6 +155,9 @@ class Unit_oeVATTBE_controllers_oeVATTBEBasketTest extends OxidTestCase
         $this->assertSame('', $oBasketController->getOeVATTBEMarkMessage());
     }
 
+    /**
+     * Test if formatter was used
+     */
     public function testGetOeVATTBETBEVatFormatted()
     {
         $oFormatter = $this->getMock("oeVATTBEBasketItemVATFormatter", array("formatVAT"), array(), '', false);
