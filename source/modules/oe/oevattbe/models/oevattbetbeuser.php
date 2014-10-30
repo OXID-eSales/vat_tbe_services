@@ -93,6 +93,23 @@ class oeVATTBETBEUser
     }
 
     /**
+     * Returns country
+     *
+     * @return oxCountry
+     */
+    public function getCountry()
+    {
+        $oCountry = null;
+
+        if (!is_null($this->getOeVATTBETbeCountryId())) {
+            $oCountry = oxNew('oxCountry');
+            $oCountry->load($this->getOeVATTBETbeCountryId());
+        }
+
+        return $oCountry;
+    }
+
+    /**
      * Returns user object.
      *
      * @return oxUser
@@ -156,22 +173,5 @@ class oeVATTBETBEUser
         $oEvidenceSelector = oxNew('oeVATTBEEvidenceSelector', $oEvidenceList, $oConfig);
 
         return $oEvidenceSelector;
-    }
-
-    /**
-     * Returns country
-     *
-     * @return oxCountry
-     */
-    public function getCountry()
-    {
-        $oCountry = null;
-
-        if (!is_null($this->getOeVATTBETbeCountryId())) {
-            $oCountry = oxNew('oxCountry');
-            $oCountry->load($this->getOeVATTBETbeCountryId());
-        }
-
-        return $oCountry;
     }
 }
