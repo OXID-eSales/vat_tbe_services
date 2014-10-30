@@ -56,8 +56,12 @@ class oeVATTBEBasket extends oeVATTBEBasket_parent
 
         if ($oBasket->hasOeTBEVATArticles()) {
             if (!$oBasket->getUser()) {
+                /** @var oeVATTBEoxShop $oShop */
+                $oShop = oxNew('oxShop');
+                $oDomesticCountry = $oShop->getOeVATTBEDomesticCountry();
+                $sCountryName = ($oDomesticCountry) ? $oDomesticCountry->getOeVATTBEName(): '';
                 $sMessage = $oMarkGenerator->getMark('tbeService') . ' - ';
-                $sMessage .= oxRegistry::getLang()->translateString('OEVATTBE_VAT_WILL_BE_CALCULATED_BY_USER_COUNTRY');
+                $sMessage .= sprintf(oxRegistry::getLang()->translateString('OEVATTBE_VAT_WILL_BE_CALCULATED_BY_USER_COUNTRY'), $sCountryName);
             } elseif ($oBasket->isOeVATTBEValid()) {
                 if ($oCountry && $oCountry->appliesOeTBEVATTbeVat()) {
                     $sMessage = $oMarkGenerator->getMark('tbeService') . ' - ';

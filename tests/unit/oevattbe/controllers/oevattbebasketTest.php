@@ -30,7 +30,7 @@ class Unit_oeVATTBE_controllers_oeVATTBEBasketTest extends OxidTestCase
 
     /**
      * TBE Articles are in basket;
-     * User is logged in;
+     * User is not logged in;
      * User country was found;
      * User country is TBE country;
      * Marks (stars) should be set.
@@ -44,7 +44,29 @@ class Unit_oeVATTBE_controllers_oeVATTBEBasketTest extends OxidTestCase
         $this->getSession()->setBasket($oBasket);
 
         $oBasketController = oxNew('oeVATTBEBasket');
-        $this->assertStringEndsWith(oxRegistry::getLang()->translateString('OEVATTBE_VAT_WILL_BE_CALCULATED_BY_USER_COUNTRY'), $oBasketController->getOeVATTBEMarkMessage());
+        $this->assertStringEndsWith(sprintf(oxRegistry::getLang()->translateString('OEVATTBE_VAT_WILL_BE_CALCULATED_BY_USER_COUNTRY'), 'Deutschland'), $oBasketController->getOeVATTBEMarkMessage());
+        $this->assertStringStartsWith('**', $oBasketController->getOeVATTBEMarkMessage());
+    }
+
+    /**
+     * TBE Articles are in basket;
+     * User is not logged in;
+     * User country was found;
+     * User country is TBE country;
+     * Marks (stars) should be set.
+     */
+    public function testGetOeVATTBEMarkMessageHasTBEArticleUserNotLoggedInBadDomesticCountry()
+    {
+        oxRegistry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'blabla');
+
+        $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasOeTBEVATArticles', 'getUser'));
+        $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(true));
+        $oBasket->expects($this->any())->method("getUser")->will($this->returnValue(null));
+
+        $this->getSession()->setBasket($oBasket);
+
+        $oBasketController = oxNew('oeVATTBEBasket');
+        $this->assertStringEndsWith(sprintf(oxRegistry::getLang()->translateString('OEVATTBE_VAT_WILL_BE_CALCULATED_BY_USER_COUNTRY'), ''), $oBasketController->getOeVATTBEMarkMessage());
         $this->assertStringStartsWith('**', $oBasketController->getOeVATTBEMarkMessage());
     }
 
@@ -92,7 +114,7 @@ class Unit_oeVATTBE_controllers_oeVATTBEBasketTest extends OxidTestCase
 
     /**
      * TBE Articles are in basket;
-     * User is not logged in;
+     * User is logged in;
      * Marks (stars) should not be set.
      */
     public function testGetOeVATTBEMarkMessageHasTBEArticleUserLoggedInBasketInvalid()
