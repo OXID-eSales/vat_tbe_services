@@ -105,6 +105,10 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
      */
     public function finalizeOrder(oxBasket $oBasket, $oUser, $blRecalculatingOrder = false)
     {
+        if (!$blRecalculatingOrder) {
+            $this->oxorder__oevattbe_evidenceused = new oxField($oUser->getOeVATTBETbeEvidenceUsed());
+        }
+
         $iRet = $this->_getFinalizeOrderParent($oBasket, $oUser, $blRecalculatingOrder);
 
         if ($this->_shouldOeVATTBEStoreEvidences($iRet, $oBasket, $blRecalculatingOrder)) {
@@ -198,28 +202,6 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
             $sCountryTitle = $this->getOeVATTBECountryTitle();
             $oPdf->text(15, $iStartPos, '* ' . sprintf(oxRegistry::getLang()->translateString('OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY_INVOICE', $this->getSelectedLang()), $sCountryTitle));
         }
-    }
-
-    /**
-     * Adds flag whether this order has TBE articles in it.
-     *
-     * @param oxBasket $oBasket Shopping basket object
-     */
-    protected function _loadFromBasket(oxBasket $oBasket)
-    {
-        $this->oxorder__oevattbe_hastbeservices = new oxField($oBasket->hasOeTBEVATArticles());
-        parent::_loadFromBasket($oBasket);
-    }
-
-    /**
-     * Sets default evidence used for deciding user country.
-     *
-     * @param oxUser|oeVATTBEOxUser $oUser user object
-     */
-    protected function _setUser($oUser)
-    {
-        $this->oxorder__oevattbe_evidenceused = new oxField($oUser->getOeVATTBETbeEvidenceUsed());
-        parent::_setUser($oUser);
     }
 
     /**

@@ -85,6 +85,55 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderTest extends OxidTestC
     }
 
     /**
+     * Order was successful;
+     * Order was not recalculating;
+     * Evidence used should be saved to database.
+     */
+    public function testSavingEvidenceUsedSavedOnFinalizeOrder()
+    {
+        /** @var oxBasket| $oBasket */
+        $oBasket = oxNew('oxBasket');
+
+        /** @var oxUser|PHPUnit_Framework_MockObject_MockObject $oUser */
+        $oUser = $this->getMock('oeVATTBEOxUser', array('getOeVATTBETbeEvidenceUsed'));
+        $oUser->expects($this->any())->method('getOeVATTBETbeEvidenceUsed')->will($this->returnValue('billing_country'));
+
+        /** @var oeVATTBEOxOrder|oxOrder|PHPUnit_Framework_MockObject_MockObject $oOrder */
+        $oOrder = $this->getMock("oeVATTBEOxOrder", array("_getFinalizeOrderParent"));
+        $oOrder->expects($this->any())->method("_getFinalizeOrderParent")->will($this->returnValue(oxOrder::ORDER_STATE_PAYMENTERROR));
+
+        $oOrder->setId('order_id');
+        $oOrder->finalizeOrder($oBasket, $oUser, false);
+
+        $this->assertEquals('billing_country', $oOrder->oxorder__oevattbe_evidenceused->value);
+    }
+
+    /**
+     * Order was successful;
+     * Order was recalculating;
+     * Evidence used should not be changed.
+     */
+    public function testEvidenceUsedNotChangedOnOrderRecalculation()
+    {
+        /** @var oxBasket| $oBasket */
+        $oBasket = oxNew('oxBasket');
+
+        /** @var oxUser|PHPUnit_Framework_MockObject_MockObject $oUser */
+        $oUser = $this->getMock('oeVATTBEOxUser', array('getOeVATTBETbeEvidenceUsed'));
+        $oUser->expects($this->any())->method('getOeVATTBETbeEvidenceUsed')->will($this->returnValue('geo_location'));
+
+        /** @var oeVATTBEOxOrder|oxOrder|PHPUnit_Framework_MockObject_MockObject $oOrder */
+        $oOrder = $this->getMock("oeVATTBEOxOrder", array("_getFinalizeOrderParent"));
+        $oOrder->expects($this->any())->method("_getFinalizeOrderParent")->will($this->returnValue(oxOrder::ORDER_STATE_PAYMENTERROR));
+        $oOrder->oxorder__oevattbe_evidenceused = new oxField('billing_country');
+
+        $oOrder->setId('order_id');
+        $oOrder->finalizeOrder($oBasket, $oUser, true);
+
+        $this->assertEquals('billing_country', $oOrder->oxorder__oevattbe_evidenceused->value);
+    }
+
+    /**
      * Test deleting evidences list.
      */
     public function testDeletingEvidenceList()
