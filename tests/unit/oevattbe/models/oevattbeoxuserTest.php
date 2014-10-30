@@ -25,7 +25,6 @@
  */
 class Unit_oeVatTbe_models_oeVATTBEOxUserTest extends OxidTestCase
 {
-
     /**
      * Select Country test
      */

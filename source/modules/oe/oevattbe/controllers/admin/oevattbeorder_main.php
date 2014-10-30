@@ -37,7 +37,7 @@ class oeVATTBEOrder_Main extends oeVATTBEOrder_Main_parent
         $oOrder = oxNew('oxOrder');
         $sOrderEvidenceId = $this->_getOeVATTBECurrentOrderEvidenceId($oOrder, $sOrderId);
 
-        $oEvidenceList = oeVATTBEOrderEvidenceList::createOrderEvidenceList();
+        $oEvidenceList = oeVATTBEOrderEvidenceList::createInstance();
         $oEvidenceList->loadWithCountryNames($sOrderId);
         $aEvidencesData = $oEvidenceList->getData();
 

@@ -32,7 +32,7 @@ class oeVATTBEArticleVATGroupsList extends oeVATTBEModel
      *
      * @return oeVATTBEArticleVATGroupsList;
      */
-    public static function createArticleVATGroupsList()
+    public static function createInstance()
     {
         $oGateway = oxNew('oeVATTBEArticleVATGroupsDbGateway');
         $oList = oxNew('oeVATTBEArticleVATGroupsList', $oGateway);

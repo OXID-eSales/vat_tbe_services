@@ -95,7 +95,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupsDbGatewayTest exten
      */
     public function testDeletingVATGroupAndArticlesRelations()
     {
-        $oRelationsList = oeVATTBEArticleVATGroupsList::createArticleVATGroupsList();
+        $oRelationsList = oeVATTBEArticleVATGroupsList::createInstance();
         $oRelationsList->setId('articleid');
         $oRelationsList->setData(array('germanyid' => '10', 'lithuaniaid' => '12'));
         $oRelationsList->save();

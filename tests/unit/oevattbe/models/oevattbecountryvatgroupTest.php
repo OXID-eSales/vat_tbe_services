@@ -129,7 +129,7 @@ class Unit_oeVatTbe_Models_oeVATTBECountryVATGroupTest extends OxidTestCase
      */
     public function testCreatingGroupWithCreationMethod()
     {
-        $oGroup = oeVATTBECountryVATGroup::createCountryVATGroup();
+        $oGroup = oeVATTBECountryVATGroup::createInstance();
 
         $this->assertInstanceOf('oeVATTBECountryVATGroup', $oGroup);
     }

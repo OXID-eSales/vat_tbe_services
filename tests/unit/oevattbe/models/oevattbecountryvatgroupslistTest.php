@@ -106,7 +106,7 @@ class Unit_oeVatTbe_models_oeVATTBECountryVATGroupsListTest extends OxidTestCase
      */
     protected function _createGroupObject($aData)
     {
-        $oGroupsList = oeVATTBECountryVATGroup::createCountryVATGroup();
+        $oGroupsList = oeVATTBECountryVATGroup::createInstance();
         $oGroupsList->setId($aData['OEVATTBE_ID']);
         $oGroupsList->setData($aData);
 
@@ -118,7 +118,7 @@ class Unit_oeVatTbe_models_oeVATTBECountryVATGroupsListTest extends OxidTestCase
      */
     public function testCreatingListWithCreationMethod()
     {
-        $oList = oeVATTBECountryVATGroupsList::createCountryVATGroupsList();
+        $oList = oeVATTBECountryVATGroupsList::createInstance();
 
         $this->assertInstanceOf('oeVATTBECountryVATGroupsList', $oList);
     }

@@ -88,7 +88,7 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
      */
     public function delete($sOxId = null)
     {
-        $oOrderEvidenceList = $this->_factoryOeVATTBEOrderEvidenceList();
+        $oOrderEvidenceList = oeVATTBEOrderEvidenceList::createInstance();
         $oOrderEvidenceList->delete($sOxId ? $sOxId : $this->getId());
 
         parent::delete($sOxId);
@@ -108,7 +108,7 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
         $iRet = $this->_getFinalizeOrderParent($oBasket, $oUser, $blRecalculatingOrder);
 
         if ($this->_shouldOeVATTBEStoreEvidences($iRet, $oBasket, $blRecalculatingOrder)) {
-            $oOrderEvidenceList = $this->_factoryOeVATTBEOrderEvidenceList();
+            $oOrderEvidenceList = oeVATTBEOrderEvidenceList::createInstance();
 
             $oOrderEvidenceList->setId($this->getId());
             $aEvidenceList = $oUser->getOeVATTBEEvidenceList();
@@ -256,7 +256,7 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
      */
     protected function _factoryOeVATTBEOrderEvidenceList()
     {
-        $oOrderEvidenceList = oeVATTBEOrderEvidenceList::createOrderEvidenceList();
+        $oOrderEvidenceList = oeVATTBEOrderEvidenceList::createInstance();
         return $oOrderEvidenceList;
     }
 

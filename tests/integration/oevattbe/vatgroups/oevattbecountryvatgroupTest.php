@@ -36,7 +36,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupTest extends OxidTes
      */
     public function testSavingGroup()
     {
-        $oGroup = oeVATTBECountryVATGroup::createCountryVATGroup();
+        $oGroup = oeVATTBECountryVATGroup::createInstance();
 
         $oGroup->setCountryId('8f241f11095410f38.37165361');
         $oGroup->setName('Group Name');
@@ -45,7 +45,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupTest extends OxidTes
 
         $sGroupId = $oGroup->save();
 
-        $oExpectedGroup = oeVATTBECountryVATGroup::createCountryVATGroup();
+        $oExpectedGroup = oeVATTBECountryVATGroup::createInstance();
         $oExpectedGroup->load($sGroupId);
 
         $this->assertEquals($oGroup->getCountryId(), $oExpectedGroup->getCountryId());
@@ -65,7 +65,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupTest extends OxidTes
      */
     public function testUpdatingGroupWithoutLoadingIt($sGroupId)
     {
-        $oGroup = oeVATTBECountryVATGroup::createCountryVATGroup();
+        $oGroup = oeVATTBECountryVATGroup::createInstance();
 
         $oGroup->setId($sGroupId);
         $oGroup->setCountryId('8f241f11095410f38.37165361');
@@ -75,7 +75,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupTest extends OxidTes
 
         $oGroup->save();
 
-        $oExpectedGroup = oeVATTBECountryVATGroup::createCountryVATGroup();
+        $oExpectedGroup = oeVATTBECountryVATGroup::createInstance();
         $oExpectedGroup->load($sGroupId);
 
         $this->assertEquals($oGroup->getCountryId(), $oExpectedGroup->getCountryId());

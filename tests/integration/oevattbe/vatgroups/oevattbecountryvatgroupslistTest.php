@@ -79,7 +79,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupsListTest extends Ox
      */
     protected function _createGroupObject($aData)
     {
-        $oGroup = oeVATTBECountryVATGroup::createCountryVATGroup();
+        $oGroup = oeVATTBECountryVATGroup::createInstance();
         $oGroup->setId($aData['OEVATTBE_ID']);
         $oGroup->setData($aData);
         $aData['OEVATTBE_ID'] = $oGroup->save();

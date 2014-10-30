@@ -45,7 +45,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECountryInformationAboutVatGroupsTes
         $oCountry->load($sCountryId);
         $this->assertFalse($oCountry->isOEVATTBEAtLeastOneGroupConfigured(), 'Country should not be marked as configured before test.');
 
-        $oGroup = oeVATTBECountryVATGroup::createCountryVATGroup();
+        $oGroup = oeVATTBECountryVATGroup::createInstance();
 
         $oGroup->setCountryId($sCountryId);
         $oGroup->setName('Group Name');

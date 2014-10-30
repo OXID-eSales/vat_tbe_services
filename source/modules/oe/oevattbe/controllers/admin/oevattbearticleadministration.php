@@ -57,7 +57,7 @@ class oeVATTBEArticleAdministration extends oxAdminDetails
         $oConfig = $this->getConfig();
         $aParams = $oConfig->getRequestParameter('editval');
         $aVATGroupsParams = $oConfig->getRequestParameter('VATGroupsByCountry');
-        $oArticleVATGroupsList = oeVATTBEArticleVATGroupsList::createArticleVATGroupsList();
+        $oArticleVATGroupsList = oeVATTBEArticleVATGroupsList::createInstance();
         $oArticleVATGroupsList->setId($sCurrentArticleId);
         $oArticleVATGroupsList->setData($aVATGroupsParams);
         $oArticleVATGroupsList->save();
@@ -79,7 +79,7 @@ class oeVATTBEArticleAdministration extends oxAdminDetails
      */
     public function isSelected($sCountryId, $sVATGroupId)
     {
-        $oArticleVATGroupsList = oeVATTBEArticleVATGroupsList::createArticleVATGroupsList();
+        $oArticleVATGroupsList = oeVATTBEArticleVATGroupsList::createInstance();
         $oArticleVATGroupsList->load($this->getEditObjectId());
         if (is_null($this->_aArticleVATGroupData)) {
             $this->_aArticleVATGroupData = $oArticleVATGroupsList->getData();
@@ -98,7 +98,7 @@ class oeVATTBEArticleAdministration extends oxAdminDetails
     protected function _getCountryAndVATGroupsData($oCountry)
     {
         $aViewData = array();
-        $oCountryVATGroupsList = oeVATTBECountryVATGroupsList::createCountryVATGroupsList();
+        $oCountryVATGroupsList = oeVATTBECountryVATGroupsList::createInstance();
         $aVATGroupList = $oCountryVATGroupsList->getList();
         foreach ($aVATGroupList as $sCountryId => $aGroupsList) {
             $oCountry->load($sCountryId);

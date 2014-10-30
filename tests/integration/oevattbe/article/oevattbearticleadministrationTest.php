@@ -55,11 +55,11 @@ class Integration_oeVATTBE_article_oeVATTBEArticleAdministrationTest extends Oxi
         $oArticleAdministration->render();
         $aViewData = $oArticleAdministration->getViewData();
 
-        $oCountryVATGroup1 = oeVATTBECountryVATGroup::createCountryVATGroup();
+        $oCountryVATGroup1 = oeVATTBECountryVATGroup::createInstance();
         $oCountryVATGroup1->setId(2);
         $oCountryVATGroup1->setData($aData1);
 
-        $oCountryVATGroup2 = oeVATTBECountryVATGroup::createCountryVATGroup();
+        $oCountryVATGroup2 = oeVATTBECountryVATGroup::createInstance();
         $oCountryVATGroup2->setId(3);
         $oCountryVATGroup2->setData($aData2);
 

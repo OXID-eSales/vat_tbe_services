@@ -32,7 +32,7 @@ class oeVATTBEOrderEvidenceList extends oeVATTBEModel
      *
      * @return oeVATTBEOrderEvidenceList;
      */
-    public static function createOrderEvidenceList()
+    public static function createInstance()
     {
         /** @var oeVATTBEOrderEvidenceListDbGateway $oGateway */
         $oGateway = oxNew('oeVATTBEOrderEvidenceListDbGateway');

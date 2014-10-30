@@ -77,7 +77,7 @@ class oeVATTBECountryVatGroups extends oxAdminDetails
             return null;
         }
 
-        $oGroup = $this->_factoryVATGroup();
+        $oGroup = oeVATTBECountryVATGroup::createInstance();
         $oGroup->setCountryId($sCountryId);
         $oGroup->setName($sGroupName);
         $oGroup->setRate($fVATRate);
@@ -94,7 +94,7 @@ class oeVATTBECountryVatGroups extends oxAdminDetails
     {
         $aVatGroups = oxRegistry::getConfig()->getRequestParameter('updateval');
 
-        $oVatGroup = $this->_factoryVATGroup();
+        $oVatGroup = oeVATTBECountryVATGroup::createInstance();
         foreach ($aVatGroups as $aVatGroup) {
             if (!$aVatGroup['oevattbe_id'] || !$aVatGroup['oevattbe_name']) {
                 if (!$this->_blMissingParameterErrorSet) {
@@ -118,21 +118,11 @@ class oeVATTBECountryVatGroups extends oxAdminDetails
     {
         $iVATGroupId = oxRegistry::getConfig()->getRequestParameter('countryVATGroupId');
 
-        $oVATGroup = $this->_factoryVATGroup();
+        $oVATGroup = oeVATTBECountryVATGroup::createInstance();
         $oVATGroup->setId($iVATGroupId);
         $oVATGroup->delete();
 
         $this->_aViewData['updatelist'] = '1';
-    }
-
-    /**
-     * Create class to deal with VAT Group together with its dependencies.
-     *
-     * @return oeVATTBECountryVATGroup
-     */
-    protected function _factoryVATGroup()
-    {
-        return oeVATTBECountryVATGroup::createCountryVATGroup();
     }
 
     /**

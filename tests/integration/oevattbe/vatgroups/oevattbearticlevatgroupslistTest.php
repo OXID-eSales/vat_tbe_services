@@ -41,7 +41,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBEArticleVATGroupsListTest extends Ox
             'LithuaniaId' => '13'
         );
 
-        $oGroupsList = oeVATTBEArticleVATGroupsList::createArticleVATGroupsList();
+        $oGroupsList = oeVATTBEArticleVATGroupsList::createInstance();
         $oGroupsList->setId('articleId');
         $oGroupsList->setData($aData);
         $this->assertEquals('articleId', $oGroupsList->save());
@@ -59,7 +59,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBEArticleVATGroupsListTest extends Ox
      */
     public function testLoadingGroupsListWhenGroupsExists($sArticleId)
     {
-        $oGroupsList = oeVATTBEArticleVATGroupsList::createArticleVATGroupsList();
+        $oGroupsList = oeVATTBEArticleVATGroupsList::createInstance();
 
         $aExpectedData = array(
             'germanyid' => '12',
@@ -76,7 +76,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBEArticleVATGroupsListTest extends Ox
      */
     public function testLoadingGroupsListWhenNoGroupsExists()
     {
-        $oGroupsList = oeVATTBEArticleVATGroupsList::createArticleVATGroupsList();
+        $oGroupsList = oeVATTBEArticleVATGroupsList::createInstance();
         $oGroupsList->load('NonExistingCountryId');
 
         $this->assertEquals(array(), $oGroupsList->getData());

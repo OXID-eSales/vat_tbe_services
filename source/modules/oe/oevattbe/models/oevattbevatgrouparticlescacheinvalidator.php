@@ -47,10 +47,10 @@ class oeVATTBEVATGroupArticleCacheInvalidator extends oeVATTBEModel
      *
      * @return oeVATTBEVATGroupArticleCacheInvalidator
      */
-    public static function createCacheInvalidator()
+    public static function createInstance()
     {
         $oCacheBackend = oxRegistry::get('oxCacheBackend');
-        $ArticleGroupsList = oeVATTBEArticleVATGroupsList::createArticleVATGroupsList();
+        $ArticleGroupsList = oeVATTBEArticleVATGroupsList::createInstance();
 
         return oxNew('oeVATTBEVATGroupArticleCacheInvalidator', $ArticleGroupsList, $oCacheBackend);
     }

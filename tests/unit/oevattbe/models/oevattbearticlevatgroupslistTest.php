@@ -164,7 +164,7 @@ class Unit_oeVatTbe_Models_oeVATTBEArticleVATGroupsListTest extends OxidTestCase
      */
     public function testCreatingListWithCreationMethod()
     {
-        $oList = oeVATTBEArticleVATGroupsList::createArticleVATGroupsList();
+        $oList = oeVATTBEArticleVATGroupsList::createInstance();
 
         $this->assertInstanceOf('oeVATTBEArticleVATGroupsList', $oList);
     }

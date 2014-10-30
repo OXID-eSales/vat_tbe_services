@@ -30,7 +30,7 @@ class oeVATTBECountryVATGroupsList extends oeVATTBEModel
      *
      * @return oeVATTBECountryVATGroupsList;
      */
-    public static function createCountryVATGroupsList()
+    public static function createInstance()
     {
         $oGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
         $oList = oxNew('oeVATTBECountryVATGroupsList', $oGateway);
@@ -57,7 +57,7 @@ class oeVATTBECountryVATGroupsList extends oeVATTBEModel
         if (is_array($aGroupsData) && count($aGroupsData)) {
             foreach ($aGroupsData as $aData) {
                 /** @var oeVATTBECountryVATGroup $oGroup */
-                $oGroup = oeVATTBECountryVATGroup::createCountryVATGroup();
+                $oGroup = oeVATTBECountryVATGroup::createInstance();
                 $oGroup->setId($aData['OEVATTBE_ID']);
                 $oGroup->setData($aData);
                 $aGroups[] = $oGroup;
@@ -81,7 +81,7 @@ class oeVATTBECountryVATGroupsList extends oeVATTBEModel
         if (is_array($aGroupsData) && count($aGroupsData)) {
             foreach ($aGroupsData as $aData) {
                 /** @var oeVATTBECountryVATGroup $oGroup */
-                $oGroup = oeVATTBECountryVATGroup::createCountryVATGroup();
+                $oGroup = oeVATTBECountryVATGroup::createInstance();
                 $oGroup->setId($aData['OEVATTBE_ID']);
                 $oGroup->setData($aData);
                 $aGroups[$aData['OEVATTBE_COUNTRYID']][] = $oGroup;
