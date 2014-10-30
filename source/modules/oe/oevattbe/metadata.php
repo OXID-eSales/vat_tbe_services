@@ -53,6 +53,7 @@ $aModule = array(
         'oxbasketcontentmarkgenerator' => 'oe/oevattbe/models/oevattbeoxbasketcontentmarkgenerator',
         'order_main' => 'oe/oevattbe/controllers/admin/oevattbeorder_main',
         'oxcountry'         => 'oe/oevattbe/models/oevattbeoxcountry',
+        'oxshop'            => 'oe/oevattbe/models/oevattbeoxshop',
     ),
     'files' => array(
         'oeVATTBEModel'                                => 'oe/oevattbe/core/oevattbemodel.php',
