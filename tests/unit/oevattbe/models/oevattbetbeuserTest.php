@@ -237,6 +237,9 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
         $this->assertEquals('', $oTBEUser->getOeVATTBETbeCountryId());
     }
 
+    /**
+     * Testing
+     */
     public function testGetCountry()
     {
         $sGermanyId = 'a7c40f631fc920687.20179984';
@@ -249,5 +252,59 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
         $oUser = oxNew('oeVATTBETBEUser', oxNew('oxUser'), $oSession, $oConfig);
 
         $this->assertSame('Deutschland', $oUser->getCountry()->oxcountry__oxtitle->value);
+    }
+
+    /**
+     * Testing isUserFromDomesticCountry when user is from domestic country.
+     */
+    public function testIsUserFromDomesticCountryWhenCountriesMatch()
+    {
+        $oConfig = $this->getConfig();
+        $oConfig->setConfigParam('sOeVATTBEDomesticCountry', 'LT');
+
+        $sLithuaniaId = '8f241f11095d6ffa8.86593236';
+        $oSession = $this->getSession();
+        $oSession->setVariable('TBECountryId', $sLithuaniaId);
+
+        $oUser = oxNew('oeVATTBETBEUser', oxNew('oxUser'), $oSession, $oConfig);
+
+        $this->assertSame(true, $oUser->isUserFromDomesticCountry());
+    }
+
+    /**
+     * Not matching countries provider for testIsUserFromDomesticCountryWhenCountriesDoesNotMatch
+     *
+     * @return array
+     */
+    public function providerIsUserFromDomesticCountryWhenCountriesDoesNotMatch()
+    {
+        return array(
+            array('LT', 'a7c40f631fc920687.20179984'),
+            array('', 'a7c40f631fc920687.20179984'),
+            array('LT', ''),
+            array('LT', 'LT'),
+            array('', ''),
+        );
+    }
+
+    /**
+     * Testing isUserFromDomesticCountry when user is from domestic country.
+     *
+     * @param string $sDomesticCountryAbbr Domestic country abbreviation.
+     * @param string $sUserCountryId       User country id.
+     *
+     * @dataProvider providerIsUserFromDomesticCountryWhenCountriesDoesNotMatch
+     */
+    public function testIsUserFromDomesticCountryWhenCountriesDoesNotMatch($sDomesticCountryAbbr, $sUserCountryId)
+    {
+        $oConfig = $this->getConfig();
+        $oConfig->setConfigParam('sOeVATTBEDomesticCountry', $sDomesticCountryAbbr);
+
+        $oSession = $this->getSession();
+        $oSession->setVariable('TBECountryId', $sUserCountryId);
+
+        $oUser = oxNew('oeVATTBETBEUser', oxNew('oxUser'), $oSession, $oConfig);
+
+        $this->assertSame(false, $oUser->isUserFromDomesticCountry());
     }
 }

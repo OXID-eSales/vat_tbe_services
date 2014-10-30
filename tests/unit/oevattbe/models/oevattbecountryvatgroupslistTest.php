@@ -100,7 +100,7 @@ class Unit_oeVatTbe_models_oeVATTBECountryVATGroupsListTest extends OxidTestCase
     /**
      * Creates VAT Group object and sets given data to it.
      *
-     * @param array                             $aData
+     * @param array $aData
      *
      * @return oeVATTBECountryVATGroup
      */
