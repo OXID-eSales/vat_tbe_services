@@ -35,7 +35,7 @@
     <p>
         <label for="isOeVATTBETBEService">[{oxmultilang ident="OEVATTBE_CATEGORY_SUBMIT_LABEL"}]</label>
         <input type="hidden" name="editval[oevattbe_istbe]" value="0">
-        <input id="isOeVATTBETBEService" class="edittext" type="checkbox" name="editval[oevattbe_istbe]" value="1" [{if $iIsTbeService == 1}]checked[{/if}]>
+        <input id="isOeVATTBETBEService" class="edittext" type="checkbox" name="editval[oevattbe_istbe]" value="1" [{if $oView->isCategoryTBE() == 1}]checked[{/if}]>
     </p>
     <table class="vattbeAdministration">
         <tr>
@@ -54,7 +54,7 @@
                             [{oxmultilang ident="OEVATTBE_CATEGORY_VAT_GROUP"}]
                         </th>
                     </tr>
-                    [{foreach from=$aCountriesAndVATGroups key=sCountryId item=aVATInformation}]
+                    [{foreach from=$oView->getCountryAndVATGroupsData() key=sCountryId item=aVATInformation}]
                     <tr>
                         <td>[{$aVATInformation.countryTitle}]</td>
                         <td>

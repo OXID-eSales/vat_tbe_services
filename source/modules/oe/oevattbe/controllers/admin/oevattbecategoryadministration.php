@@ -36,16 +36,6 @@ class oeVATTBECategoryAdministration extends oxAdminDetails
     {
         parent::render();
 
-        /** @var oxCategory $oCategory */
-        $oCategory = oxNew('oxCategory');
-        $sCurrentArticleId = $this->getEditObjectId();
-        $oCategory->load($sCurrentArticleId);
-        /** @var oxCountry $oCountry */
-        $oCountry = oxNew('oxCountry');
-
-        $this->_aViewData['iIsTbeService'] = $oCategory->oxcategories__oevattbe_istbe->value;
-        $this->_aViewData['aCountriesAndVATGroups'] = $this->_getCountryAndVATGroupsData($oCountry);
-
         return 'oevattbecategoryadministration.tpl';
     }
 
@@ -93,12 +83,12 @@ class oeVATTBECategoryAdministration extends oxAdminDetails
     /**
      * Forms view VAT groups data for template.
      *
-     * @param oxCountry $oCountry Country object used to get country title.
-     *
      * @return array
      */
-    protected function _getCountryAndVATGroupsData($oCountry)
+    public function getCountryAndVATGroupsData()
     {
+        /** @var oxCountry $oCountry */
+        $oCountry = oxNew('oxCountry');
         $aViewData = array();
         $oCountryVATGroupsList = oeVATTBECountryVATGroupsList::createInstance();
         $aVATGroupList = $oCountryVATGroupsList->getList();
@@ -111,5 +101,20 @@ class oeVATTBECategoryAdministration extends oxAdminDetails
         }
 
         return $aViewData;
+    }
+
+    /**
+     * Returns if selected category is TBE.
+     *
+     * @return int
+     */
+    public function isCategoryTBE()
+    {
+        /** @var oxCategory $oCategory */
+        $oCategory = oxNew('oxCategory');
+        $sCurrentArticleId = $this->getEditObjectId();
+        $oCategory->load($sCurrentArticleId);
+
+        return (int)$oCategory->oxcategories__oevattbe_istbe->value;
     }
 }

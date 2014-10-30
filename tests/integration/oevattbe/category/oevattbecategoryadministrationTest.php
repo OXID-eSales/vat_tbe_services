@@ -51,8 +51,6 @@ class Integration_oeVATTBE_category_oeVATTBECategoryAdministrationTest extends O
 
         /** @var oeVATTBECategoryAdministration $oCategoryAdministration */
         $oCategoryAdministration = oxNew('oeVATTBECategoryAdministration');
-        $oCategoryAdministration->render();
-        $aViewData = $oCategoryAdministration->getViewData();
 
         $oCountryVATGroup1 = oeVATTBECountryVATGroup::createInstance();
         $oCountryVATGroup1->setId(2);
@@ -77,7 +75,7 @@ class Integration_oeVATTBE_category_oeVATTBECategoryAdministrationTest extends O
             ),
         );
 
-        $this->assertEquals($aExpectedViewData, $aViewData['aCountriesAndVATGroups'], 'Data which should go to template is not correct.');
+        $this->assertEquals($aExpectedViewData, $oCategoryAdministration->getCountryAndVATGroupsData(), 'Data which should go to template is not correct.');
     }
 
     /**
@@ -114,10 +112,8 @@ class Integration_oeVATTBE_category_oeVATTBECategoryAdministrationTest extends O
         /** @var oeVATTBECategoryAdministration $oCategoriesAdministration */
         $oCategoriesAdministration = oxNew('oeVATTBECategoryAdministration');
         $oCategoriesAdministration->setEditObjectId('_testCategory');
-        $oCategoriesAdministration->render();
-        $aViewData = $oCategoriesAdministration->getViewData();
 
-        $this->assertSame("$iIsTBECategory", $aViewData['iIsTbeService']);
+        $this->assertSame($iIsTBECategory, $oCategoriesAdministration->isCategoryTBE());
     }
 
     /**
