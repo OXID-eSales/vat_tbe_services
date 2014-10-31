@@ -80,18 +80,24 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
     }
 
     /**
-     * Delete order.
+     * Updates stock information, deletes current ordering details from DB,
+     * returns true on success.
+     * Also deletes order evidences
      *
-     * @param string $sOxId id
+     * @param string $sOxId Ordering ID (default null)
      *
-     * @return null
+     * @return bool
      */
     public function delete($sOxId = null)
     {
-        $oOrderEvidenceList = oeVATTBEOrderEvidenceList::createInstance();
-        $oOrderEvidenceList->delete($sOxId ? $sOxId : $this->getId());
+        $blSuccess = parent::delete($sOxId);
 
-        parent::delete($sOxId);
+        if ($blSuccess) {
+            $oOrderEvidenceList = oeVATTBEOrderEvidenceList::createInstance();
+            $oOrderEvidenceList->delete($sOxId ? $sOxId : $this->getId());
+        }
+
+        return $blSuccess;
     }
 
     /**

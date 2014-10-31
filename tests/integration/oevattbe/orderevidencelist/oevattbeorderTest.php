@@ -153,6 +153,7 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderTest extends OxidTestC
         $oOrder->expects($this->any())->method("_getFinalizeOrderParent")->will($this->returnValue(oxOrder::ORDER_STATE_OK));
 
         $oOrder->setId('order_id');
+        $oOrder->save();
         $oOrder->finalizeOrder($oBasket, $oUser, false);
 
         $oOrder->delete('order_id');
