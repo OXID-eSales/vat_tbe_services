@@ -20,7 +20,7 @@
  */
 
 /**
- * Adds additional functionality needed for oeVATTBE module when managing orders.
+ * Adds additional functionality needed for oeVATTBE module when managing articles.
  */
 class oeVATTBEArticle_Main extends oeVATTBEArticle_Main_parent
 {

@@ -20,7 +20,7 @@
  */
 
 /**
- * Adds additional functionality needed for oeVATTBE module when managing orders.
+ * Adds additional functionality needed for oeVATTBE module when managing articles.
  */
 class oeVATTBEArticle_Extend_Ajax extends oeVATTBEArticle_Extend_Ajax_parent
 {
