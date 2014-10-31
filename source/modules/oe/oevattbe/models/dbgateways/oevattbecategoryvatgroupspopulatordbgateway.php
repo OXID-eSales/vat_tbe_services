@@ -69,8 +69,8 @@ class oeVATTBECategoryVATGroupsPopulatorDbGateway
 
         $sSql = 'INSERT INTO `oevattbe_articlevat` (`oevattbe_articleid`, `oevattbe_countryid`, `oevattbe_vatgroupid`)
               SELECT `oxobject2category`.`oxobjectid`, `oevattbe_categoryvat`.`oevattbe_countryid`, `oevattbe_categoryvat`.`oevattbe_vatgroupid`
-              FROM `oevattbe_categoryvat`
-              LEFT JOIN `oxobject2category` ON `oxobject2category`.`oxcatnid` = `oevattbe_categoryvat`.`oevattbe_categoryid`
+              FROM `oxobject2category`
+              LEFT JOIN `oevattbe_categoryvat` ON `oxobject2category`.`oxcatnid` = `oevattbe_categoryvat`.`oevattbe_categoryid`
               WHERE `oevattbe_categoryvat`.`oevattbe_categoryid` = '. $oDb->quote($sCategoryId);
 
         return $oDb->execute($sSql);
@@ -89,8 +89,8 @@ class oeVATTBECategoryVATGroupsPopulatorDbGateway
 
         $sSql = 'UPDATE `oxarticles`
               INNER JOIN `oxobject2category` ON `oxobject2category`.`oxobjectid` = `oxarticles`.`oxid`
-              LEFT JOIN `oxcategories` ON `oxobject2category`.`oxcatnid` = oxcategories.oxid
-              SET  oxarticles.oevattbe_istbeservice = oxcategories.oevattbe_istbe
+              LEFT JOIN `oxcategories` ON `oxobject2category`.`oxcatnid` = `oxcategories`.`oxid`
+              SET  `oxarticles`.`oevattbe_istbeservice` = `oxcategories`.`oevattbe_istbe`
               WHERE `oxobject2category`.`oxcatnid` = '. $oDb->quote($sCategoryId);
 
         return $oDb->execute($sSql);
