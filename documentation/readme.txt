@@ -68,6 +68,13 @@ TBE articles are calculated with user location country VAT rate.
 *order_main
 --render
 *oxcountry
+*oxcategory
+*article_extend_ajax
+--addCat
+*article_main
+--addToCategory
+*category_main_ajax
+--addArticle
 
 ==Extend invoicePDF==
 *oxorder
