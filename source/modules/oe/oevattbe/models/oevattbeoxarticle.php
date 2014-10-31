@@ -81,7 +81,7 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
      */
     public function buildSelectString($aWhere = null)
     {
-        if (!$this->_isOeVATTBEConfigured()) {
+        if (!$this->_isOeVATTBEConfigured() || $this->isAdmin()) {
             return parent::buildSelectString($aWhere);
         }
 
@@ -121,14 +121,8 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
      */
     private function _getOeVATTBETbeCountryId()
     {
-        $sCountryId = null;
-        $oUser = $this->getUser();
-
-        if ($oUser) {
-            $sCountryId = $oUser->getOeVATTBETbeCountryId();
-        }
-
-        return $sCountryId;
+        $oUserCountry = oeVATTBETBEUser::createInstance();
+        return $oUserCountry->getOeVATTBETbeCountryId();
     }
 
     /**

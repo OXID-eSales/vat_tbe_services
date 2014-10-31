@@ -35,10 +35,12 @@ class Integration_oeVATTBE_article_oeVATTBEOxArticleTest extends OxidTestCase
     {
         $this->_prepareData();
 
+        $this->getSession()->setVariable('TBECountryId', 'a7c40f631fc920687.20179984');
         $oUser = $this->getMock("oeVATTBEOxUser", array("getOeVATTBETbeCountryId"));
         $oUser->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue('a7c40f631fc920687.20179984'));
 
         $oArticle = oxNew('oxArticle');
+        $oArticle->setAdminMode(false);
         $oArticle->setUser($oUser);
 
         $oArticle->load('1126');

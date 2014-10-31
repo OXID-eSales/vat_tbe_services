@@ -307,6 +307,20 @@ class Integration_oeVATTBE_article_oeVATTBEOxArticleListTest extends OxidTestCas
     }
 
     /**
+     * Test forming of articles list in admin when user country is found but shop is in admin mode.
+     */
+    public function testLoadingArticlesInAdminWithFilter()
+    {
+        $this->getSession()->setVariable('TBECountryId', 'a7c40f631fc920687.20179984');
+        $this->getConfig()->setParameter('art_category', 'cat@@30e44ab8593023055.23928895');
+        $oArticleList = oxNew("Article_List");
+        $oArticleList->setAdminMode(true);
+        $aListItems = $oArticleList->getItemList();
+
+        $this->assertSame(9, count($aListItems));
+    }
+
+    /**
      * prepare data
      *
      */
