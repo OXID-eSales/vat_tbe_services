@@ -39,10 +39,10 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupsEditingTest extends
     public function providerGetVatGroupsForCountry()
     {
         $sAustriaId = 'a7c40f6320aeb2ec2.72885259';
-        $aAustriaGroups = array(0 => '56', 1 => '57', 2 => '58');
+        $aAustriaGroups = array(56 => '', 57 => '', 58 => '');
 
         $sGermanyId = 'a7c40f631fc920687.20179984';
-        $aGermanyGroups = array(0 => '10', 1 => '11');
+        $aGermanyGroups = array(10 => '', 11 => '');
 
         return array(
             array($sAustriaId, $aAustriaGroups),
@@ -67,7 +67,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupsEditingTest extends
 
         /** @var oeVATTBECountryVATGroup $aCountryVatGroup */
         foreach ($aCountryVatGroups as $aCountryVatGroup) {
-            $aResultGroups[] = $aCountryVatGroup->getId();
+            $aResultGroups[$aCountryVatGroup->getId()] = '';
         }
 
         $this->assertEquals($aExpectedGroups, $aResultGroups);
