@@ -55,7 +55,6 @@ TBE articles are calculated with user location country VAT rate.
 --delete
 --finalizeOrder
 --_loadFromBasket
---_setUser
 *basket
 --render
 *order
