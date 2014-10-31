@@ -317,7 +317,11 @@ class Integration_oeVATTBE_article_oeVATTBEOxArticleListTest extends OxidTestCas
         $oArticleList->setAdminMode(true);
         $aListItems = $oArticleList->getItemList();
 
-        $this->assertSame(9, count($aListItems));
+        $sCount = 9;
+        if ($this->getConfig()->getEdition() != 'EE') {
+            $sCount = 1;
+        }
+        $this->assertSame($sCount, count($aListItems));
     }
 
     /**
