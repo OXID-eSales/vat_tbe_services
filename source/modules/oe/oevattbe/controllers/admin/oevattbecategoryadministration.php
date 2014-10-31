@@ -59,6 +59,8 @@ class oeVATTBECategoryAdministration extends oxAdminDetails
         $oCategory->load($sCurrentCategoryId);
         $oCategory->oxcategories__oevattbe_istbe = new oxField($aParams['oevattbe_istbe']);
         $oCategory->save();
+
+        oeVATTBECategoryVATGroupsPopulator::createInstance()->populate($oCategory);
     }
 
     /**
