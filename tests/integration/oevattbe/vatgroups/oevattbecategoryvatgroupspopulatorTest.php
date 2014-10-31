@@ -156,13 +156,91 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorTest exte
     }
 
     /**
-     * prepare data for test case
+     * test populate not existing category data
+     *
+     * @covers Article_Main
      */
-    protected function _prepareData()
+    public function testPopulateOnCategoryConfiguration()
+    {
+        $this->_prepareData(true);
+
+        $this->setRequestParam('oxid', 'categoryId');
+        $this->setRequestParam('editval', array('oevattbe_istbe' => 1));
+        $aSelectParams = array(
+            'a7c40f631fc920687.20179984' => 10,
+            'a7c40f631fc920687.20179985' => 11
+        );
+        $this->setRequestParam('VATGroupsByCountry', $aSelectParams);
+
+        $oController = oxNew('oeVATTBECategoryAdministration');
+        $oController->save();
+
+        $this->assertEquals(2, $this->_getAssignedToCategoryProductsCount());
+        $this->assertEquals(4, $this->_getAssignedVATGroupsToArticles());
+        $this->assertEquals(2, $this->_getTBEServiceCount());
+    }
+
+    /**
+     * test populate not existing category data
+     *
+     * @covers Article_Main
+     */
+    public function testPopulateOnCategoryConfigurationNotTbe()
+    {
+        $this->_prepareData(true);
+
+        $this->setRequestParam('oxid', 'categoryId');
+        $this->setRequestParam('editval', array('oevattbe_istbe' => 0));
+        $aSelectParams = array(
+            'a7c40f631fc920687.20179984' => 10,
+            'a7c40f631fc920687.20179985' => 11
+        );
+        $this->setRequestParam('VATGroupsByCountry', $aSelectParams);
+
+        $oController = oxNew('oeVATTBECategoryAdministration');
+        $oController->save();
+
+        $this->assertEquals(2, $this->_getAssignedToCategoryProductsCount());
+        $this->assertEquals(4, $this->_getAssignedVATGroupsToArticles());
+        $this->assertEquals(0, $this->_getTBEServiceCount());
+    }
+
+    /**
+     * test populate not existing category data
+     *
+     * @covers Article_Main
+     */
+    public function testPopulateOnCategoryConfigurationNoGroups()
+    {
+        $this->_prepareData(true);
+
+        $this->setRequestParam('oxid', 'categoryId');
+        $this->setRequestParam('editval', array('oevattbe_istbe' => 1));
+        $aSelectParams = array();
+        $this->setRequestParam('VATGroupsByCountry', $aSelectParams);
+
+        $oController = oxNew('oeVATTBECategoryAdministration');
+        $oController->save();
+
+        $this->assertEquals(2, $this->_getAssignedToCategoryProductsCount());
+        $this->assertEquals(0, $this->_getAssignedVATGroupsToArticles());
+        $this->assertEquals(2, $this->_getTBEServiceCount());
+    }
+
+    /**
+     * Prepare data for test case.
+     *
+     * @param bool $blAssign assign products to category or not
+     */
+    protected function _prepareData($blAssign = false)
     {
         $aSqlQueries = array();
         $aSqlQueries[] = "INSERT INTO `oevattbe_categoryvat` SET `OEVATTBE_CATEGORYID` = 'categoryId', `OEVATTBE_COUNTRYID` = 'a7c40f631fc920687.20179984', `OEVATTBE_VATGROUPID` = '10'";
         $aSqlQueries[] = "INSERT INTO `oevattbe_categoryvat` SET `OEVATTBE_CATEGORYID` = 'categoryId', `OEVATTBE_COUNTRYID` = 'a7c40f631fc920687.20179985', `OEVATTBE_VATGROUPID` = '11'";
+        if ($blAssign) {
+            $aSqlQueries[] = "INSERT INTO `oxobject2category` SET `oxcatnid` = 'categoryId', `oxobjectid` = 'article1', `oxid` = 1";
+            $aSqlQueries[] = "INSERT INTO `oxobject2category` SET `oxcatnid` = 'categoryId', `oxobjectid` = 'article2', `oxid` = 2";
+        }
         $aSqlQueries[] = "INSERT INTO `oxcategories` SET `oxid` = 'categoryId', `oevattbe_istbe` = '1'";
         $aSqlQueries[] = "INSERT INTO `oxcategories` SET `oxid` = 'categoryId2', `oevattbe_istbe` = '0'";
         $aSqlQueries[] = "INSERT INTO `oxarticles` SET `oxid` = 'article1', `oevattbe_istbeservice` = '0'";
