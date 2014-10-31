@@ -22,30 +22,32 @@
 /**
  * Adds additional functionality needed for oeVATTBE module when managing orders.
  */
-class oeVATTBECategory_Main_Ajax extends oeVATTBECategory_Main_Ajax_parent
+class oeVATTBEArticle_Main extends oeVATTBEArticle_Main_parent
 {
     /**
-     * Adds article to category
-     * Creates new list
+     * Add article to category.
+     *
+     * @param string $sCatID Category id
+     * @param string $sOXID  Article id
      */
-    public function addArticle()
+    public function addToCategory($sCatID, $sOXID)
     {
-        parent::addArticle();
-        $this->_populateOeVATTBEConfiguration();
+        parent::addToCategory($sCatID, $sOXID);
+        $this->_populateOeVATTBEConfiguration($sCatID);
     }
 
     /**
      * Populates VAT groups configuration
+     *
+     * @param string $sCategoryId category id
      */
-    protected function _populateOeVATTBEConfiguration()
+    protected function _populateOeVATTBEConfiguration($sCategoryId)
     {
-        $sCategoryId = oxRegistry::getConfig()->getRequestParameter('synchoxid');
         /** @var oxCategory|oeVATTBEOxCategory $oCategory */
         $oCategory = oxNew('oxCategory');
         $oCategory->load($sCategoryId);
         if ($oCategory->isOeVATTBETBE()) {
             oeVATTBECategoryVATGroupsPopulator::createInstance()->populate($oCategory);
         }
-
     }
 }
