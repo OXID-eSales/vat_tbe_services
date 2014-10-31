@@ -96,7 +96,7 @@ class Integration_oeVATTBE_category_oeVATTBECategoryAdministrationTest extends O
     /**
      * Check view data for correct value which shows if category is TBE.
      *
-     * @param int $iIsTBECategory
+     * @param int $iIsTBECategory is tbe or not
      *
      * @dataProvider providerViewDataIsTBEService
      */
@@ -142,7 +142,7 @@ class Integration_oeVATTBE_category_oeVATTBECategoryAdministrationTest extends O
     /**
      * Checks if rate was not selected.
      *
-     * @param oeVATTBECategoryAdministration $oCategoryAdministration
+     * @param oeVATTBECategoryAdministration $oCategoryAdministration controller
      *
      * @depends testSelectedRateForCountry
      *
@@ -158,7 +158,7 @@ class Integration_oeVATTBE_category_oeVATTBECategoryAdministrationTest extends O
     /**
      * Checks if method returns correct value for non existing country.
      *
-     * @param oeVATTBECategoryAdministration $oCategoryAdministration
+     * @param oeVATTBECategoryAdministration $oCategoryAdministration controller
      *
      * @depends testNotSelectedRateForCountry
      */
