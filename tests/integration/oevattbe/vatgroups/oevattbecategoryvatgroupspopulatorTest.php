@@ -54,14 +54,9 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorTest exte
 
         $oController->addCat();
 
-        $iRecordCount = oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oxobject2category`");
-        $this->assertEquals(1, $iRecordCount);
-
-        $iRecordCount = oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oevattbe_articlevat`");
-        $this->assertEquals(0, $iRecordCount);
-
-        $iRecordCount = oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oxarticles` WHERE  `oevattbe_istbeservice` = '1'");
-        $this->assertEquals(0, $iRecordCount);
+        $this->assertEquals(1, $this->_getAssignedToCategoryProductsCount());
+        $this->assertEquals(0, $this->_getAssignedVATGroupsToArticles());
+        $this->assertEquals(0, $this->_getTBEServiceCount());
     }
 
     /**
@@ -80,14 +75,9 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorTest exte
 
         $oController->addCat();
 
-        $iRecordCount = oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oxobject2category`");
-        $this->assertEquals(1, $iRecordCount);
-
-        $iRecordCount = oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oevattbe_articlevat`");
-        $this->assertEquals(2, $iRecordCount);
-
-        $iRecordCount = oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oxarticles` WHERE  `oevattbe_istbeservice` = '1'");
-        $this->assertEquals(1, $iRecordCount);
+        $this->assertEquals(1, $this->_getAssignedToCategoryProductsCount());
+        $this->assertEquals(2, $this->_getAssignedVATGroupsToArticles());
+        $this->assertEquals(1, $this->_getTBEServiceCount());
     }
 
     /**
@@ -106,14 +96,9 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorTest exte
 
         $oController->addArticle();
 
-        $iRecordCount = oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oxobject2category`");
-        $this->assertEquals(1, $iRecordCount);
-
-        $iRecordCount = oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oevattbe_articlevat`");
-        $this->assertEquals(0, $iRecordCount);
-
-        $iRecordCount = oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oxarticles` WHERE  `oevattbe_istbeservice` = '1'");
-        $this->assertEquals(0, $iRecordCount);
+        $this->assertEquals(1, $this->_getAssignedToCategoryProductsCount());
+        $this->assertEquals(0, $this->_getAssignedVATGroupsToArticles());
+        $this->assertEquals(0, $this->_getTBEServiceCount());
     }
 
     /**
@@ -131,14 +116,9 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorTest exte
         $oController->expects($this->any())->method('_getActionIds')->will($this->returnValue(array('article1')));
         $oController->addArticle();
 
-        $iRecordCount = oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oxobject2category`");
-        $this->assertEquals(1, $iRecordCount);
-
-        $iRecordCount = oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oevattbe_articlevat`");
-        $this->assertEquals(2, $iRecordCount);
-
-        $iRecordCount = oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oxarticles` WHERE  `oevattbe_istbeservice` = '1'");
-        $this->assertEquals(1, $iRecordCount);
+        $this->assertEquals(1, $this->_getAssignedToCategoryProductsCount());
+        $this->assertEquals(2, $this->_getAssignedVATGroupsToArticles());
+        $this->assertEquals(1, $this->_getTBEServiceCount());
     }
 
     /**
@@ -153,14 +133,9 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorTest exte
         $oController = oxNew('oeVATTBEArticle_Main');
         $oController->addToCategory('categoryId2', 'article1');
 
-        $iRecordCount = oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oxobject2category`");
-        $this->assertEquals(1, $iRecordCount);
-
-        $iRecordCount = oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oevattbe_articlevat`");
-        $this->assertEquals(0, $iRecordCount);
-
-        $iRecordCount = oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oxarticles` WHERE  `oevattbe_istbeservice` = '1'");
-        $this->assertEquals(0, $iRecordCount);
+        $this->assertEquals(1, $this->_getAssignedToCategoryProductsCount());
+        $this->assertEquals(0, $this->_getAssignedVATGroupsToArticles());
+        $this->assertEquals(0, $this->_getTBEServiceCount());
     }
 
     /**
@@ -175,14 +150,9 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorTest exte
         $oController = oxNew('oeVATTBEArticle_Main');
         $oController->addToCategory('categoryId', 'article1');
 
-        $iRecordCount = oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oxobject2category`");
-        $this->assertEquals(1, $iRecordCount);
-
-        $iRecordCount = oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oevattbe_articlevat`");
-        $this->assertEquals(2, $iRecordCount);
-
-        $iRecordCount = oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oxarticles` WHERE  `oevattbe_istbeservice` = '1'");
-        $this->assertEquals(1, $iRecordCount);
+        $this->assertEquals(1, $this->_getAssignedToCategoryProductsCount());
+        $this->assertEquals(2, $this->_getAssignedVATGroupsToArticles());
+        $this->assertEquals(1, $this->_getTBEServiceCount());
     }
 
     /**
@@ -201,5 +171,35 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorTest exte
         foreach ($aSqlQueries as $sSql) {
             oxDb::getDb()->execute($sSql);
         }
+    }
+
+    /**
+     * Returns assigned to category products count.
+     *
+     * @return int
+     */
+    protected function _getAssignedToCategoryProductsCount()
+    {
+        return oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oxobject2category`");
+    }
+
+    /**
+     * Returns assigned vat groups to articles count
+     *
+     * @return int
+     */
+    protected function _getAssignedVATGroupsToArticles()
+    {
+        return oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oevattbe_articlevat`");
+    }
+
+    /**
+     * Returns tbe service count
+     *
+     * @return int
+     */
+    protected function _getTBEServiceCount()
+    {
+        return oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oxarticles` WHERE  `oevattbe_istbeservice` = '1'");
     }
 }
