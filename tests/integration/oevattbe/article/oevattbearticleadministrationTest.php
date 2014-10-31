@@ -52,8 +52,6 @@ class Integration_oeVATTBE_article_oeVATTBEArticleAdministrationTest extends Oxi
 
         /** @var oeVATTBEArticleAdministration $oArticleAdministration */
         $oArticleAdministration = oxNew('oeVATTBEArticleAdministration');
-        $oArticleAdministration->render();
-        $aViewData = $oArticleAdministration->getViewData();
 
         $oCountryVATGroup1 = oeVATTBECountryVATGroup::createInstance();
         $oCountryVATGroup1->setId(2);
@@ -78,7 +76,7 @@ class Integration_oeVATTBE_article_oeVATTBEArticleAdministrationTest extends Oxi
             ),
         );
 
-        $this->assertEquals($aExpectedViewData, $aViewData['aCountriesAndVATGroups'], 'Data which should go to template is not correct.');
+        $this->assertEquals($aExpectedViewData, $oArticleAdministration->getCountryAndVATGroupsData(), 'Data which should go to template is not correct.');
     }
 
     /**
@@ -114,10 +112,8 @@ class Integration_oeVATTBE_article_oeVATTBEArticleAdministrationTest extends Oxi
         /** @var oeVATTBEArticleAdministration $oArticleAdministration */
         $oArticleAdministration = oxNew('oeVATTBEArticleAdministration');
         $oArticleAdministration->setEditObjectId('_testArticle');
-        $oArticleAdministration->render();
-        $aViewData = $oArticleAdministration->getViewData();
 
-        $this->assertSame("$iIsTBEArticle", $aViewData['iIsTbeService']);
+        $this->assertSame($iIsTBEArticle, $oArticleAdministration->isArticleTBE());
     }
 
     /**

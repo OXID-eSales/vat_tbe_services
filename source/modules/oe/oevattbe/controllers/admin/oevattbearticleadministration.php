@@ -34,15 +34,6 @@ class oeVATTBEArticleAdministration extends oxAdminDetails
     public function render()
     {
         parent::render();
-        /** @var oeVATTBEOxArticle|oxArticle $oArticle */
-        $oArticle = oxNew('oxArticle');
-        $sCurrentArticleId = $this->getEditObjectId();
-        $oArticle->load($sCurrentArticleId);
-        /** @var oxCountry $oCountry */
-        $oCountry = oxNew('oxCountry');
-
-        $this->_aViewData['iIsTbeService'] = $oArticle->isOeVATTBETBEService();
-        $this->_aViewData['aCountriesAndVATGroups'] = $this->_getCountryAndVATGroupsData($oCountry);
 
         return 'oevattbearticleadministration.tpl';
     }
@@ -91,12 +82,12 @@ class oeVATTBEArticleAdministration extends oxAdminDetails
     /**
      * Forms view VAT groups data for template.
      *
-     * @param oxCountry|oeVATTBEoxCountry $oCountry Country object used to get country title.
-     *
      * @return array
      */
-    protected function _getCountryAndVATGroupsData($oCountry)
+    public function getCountryAndVATGroupsData()
     {
+        /** @var oxCountry|oeVATTBEoxCountry $oCountry */
+        $oCountry = oxNew('oxCountry');
         $aViewData = array();
         $oCountryVATGroupsList = oeVATTBECountryVATGroupsList::createInstance();
         $aVATGroupList = $oCountryVATGroupsList->getList();
@@ -109,5 +100,20 @@ class oeVATTBEArticleAdministration extends oxAdminDetails
         }
 
         return $aViewData;
+    }
+
+    /**
+     * Returns if selected article is TBE service.
+     *
+     * @return int
+     */
+    public function isArticleTBE()
+    {
+        /** @var oxCategory $oArticle */
+        $oArticle = oxNew('oxArticle');
+        $sCurrentArticleId = $this->getEditObjectId();
+        $oArticle->load($sCurrentArticleId);
+
+        return (int)$oArticle->oxarticles__oevattbe_istbeservice->value;
     }
 }
