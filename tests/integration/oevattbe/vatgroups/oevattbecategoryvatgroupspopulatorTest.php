@@ -158,7 +158,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorTest exte
     /**
      * test populate not existing category data
      *
-     * @covers Article_Main
+     * @covers oeVATTBECategoryAdministration
      */
     public function testPopulateOnCategoryConfiguration()
     {
@@ -183,7 +183,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorTest exte
     /**
      * test populate not existing category data
      *
-     * @covers Article_Main
+     * @covers oeVATTBECategoryAdministration
      */
     public function testPopulateOnCategoryConfigurationNotTbe()
     {
@@ -208,7 +208,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorTest exte
     /**
      * test populate not existing category data
      *
-     * @covers Article_Main
+     * @covers oeVATTBECategoryAdministration
      */
     public function testPopulateOnCategoryConfigurationNoGroups()
     {
