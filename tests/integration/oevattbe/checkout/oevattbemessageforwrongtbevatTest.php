@@ -159,7 +159,7 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
         $oBasket = oxNew('oxBasket');
 
         $oUser = $this->_createUser();
-        $blLogin = $oUser->login($this->_sDefaultUserName, $this->_sDefaultPassword);
+        $blLogin = $oUser->login($this->_sDefaultUserName, $this->_sDefaultUserPassword);
         $this->assertTrue($blLogin, 'User must login successfully.');
         $oSession->setUser($oUser);
 
@@ -178,6 +178,38 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
         $this->assertRegExp($sErrorMessage, $aEx['default'][0], 'Error message: '. $aEx['default'][0]);
     }
 
+    /**
+     * TBE Article with no VAT calculated is added to basket;
+     * User is logged in;
+     * User country matches shops domestic country;
+     * Basket controller is loaded;
+     * Error message should not be shown.
+     */
+    public function testBasketErrorMessageNotSetForWrongVATArticlesWhenUserCountryIsDomestic()
+    {
+        $oSession = oxRegistry::getSession();
+
+        /** @var oxBasket $oBasket */
+        $oBasket = oxNew('oxBasket');
+
+        $oConfig = $this->getConfig();
+        $oConfig->setConfigParam('sOeVATTBEDomesticCountry', 'AT');
+
+        $oUser = $this->_createUser();
+        $blLogin = $oUser->login($this->_sDefaultUserName, $this->_sDefaultUserPassword);
+        $this->assertTrue($blLogin, 'User must login successfully.');
+        $oSession->setUser($oUser);
+        $oBasket->addToBasket('1127', 1);
+
+        $oSession->setBasket($oBasket);
+
+        /** @var basket $oBasket */
+        $oBasketController = oxNew('basket');
+        $oBasketController->render();
+
+        $aEx = oxRegistry::getSession()->getVariable('Errors');
+        $this->assertFalse(isset($aEx['default'][0]));
+    }
 
     /**
      * Provides with articles to check if error message is formed.
@@ -210,7 +242,7 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
         $oBasket = oxNew('oxBasket');
 
         $oUser = $this->_createUser();
-        $blLogin = $oUser->login($this->_sDefaultUserName, $this->_sDefaultPassword);
+        $blLogin = $oUser->login($this->_sDefaultUserName, $this->_sDefaultUserPassword);
         $this->assertTrue($blLogin, 'User must login successfully.');
         $oSession->setUser($oUser);
 
@@ -244,7 +276,7 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
         $oBasket->setOeVATTBECountryId('a7c40f6320aeb2ec2.72885259');
 
         $oUser = $this->_createUser();
-        $blLogin = $oUser->login($this->_sDefaultUserName, $this->_sDefaultPassword);
+        $blLogin = $oUser->login($this->_sDefaultUserName, $this->_sDefaultUserPassword);
         $this->assertTrue($blLogin, 'User must login successfully.');
         $oSession->setUser($oUser);
 
@@ -279,7 +311,7 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
         $oBasket->setOeVATTBECountryId('a7c40f6320aeb2ec2.72885259');
 
         $oUser = $this->_createUser();
-        $blLogin = $oUser->login($this->_sDefaultUserName, $this->_sDefaultPassword);
+        $blLogin = $oUser->login($this->_sDefaultUserName, $this->_sDefaultUserPassword);
         $this->assertTrue($blLogin, 'User must login successfully.');
         $oSession->setUser($oUser);
 
@@ -314,7 +346,7 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
         $oBasket->setOeVATTBECountryId('a7c40f6320aeb2ec2.72885259');
 
         $oUser = $this->_createUser();
-        $blLogin = $oUser->login($this->_sDefaultUserName, $this->_sDefaultPassword);
+        $blLogin = $oUser->login($this->_sDefaultUserName, $this->_sDefaultUserPassword);
         $this->assertTrue($blLogin, 'User must login successfully.');
         $oSession->setUser($oUser);
 

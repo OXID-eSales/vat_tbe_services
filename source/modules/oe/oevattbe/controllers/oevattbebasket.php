@@ -35,7 +35,8 @@ class oeVATTBEBasket extends oeVATTBEBasket_parent
      */
     public function render()
     {
-        if ($oBasket = $this->getSession()->getBasket()) {
+        $oUserCountry = oeVATTBETBEUser::createInstance();
+        if (!$oUserCountry->isUserFromDomesticCountry() && $oBasket = $this->getSession()->getBasket()) {
             $oBasketArticles = $oBasket->getBasketArticles();
             /** @var oeVATTBEBasketItemsValidator $oVATTBEBasketItemsValidator */
             $oVATTBEBasketItemsValidator = oeVATTBEBasketItemsValidator::createInstance($oBasketArticles);
