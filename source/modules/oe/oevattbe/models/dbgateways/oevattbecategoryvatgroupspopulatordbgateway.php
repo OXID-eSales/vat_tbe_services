@@ -20,7 +20,7 @@
  */
 
 /**
- * VAT Groups db gateway class.
+ * Category VAT Groups populator db gateway class.
  */
 class oeVATTBECategoryVATGroupsPopulatorDbGateway
 {
@@ -57,7 +57,7 @@ class oeVATTBECategoryVATGroupsPopulatorDbGateway
     }
 
     /**
-     * Populates category info to articles
+     * Populates category VAT Group info to articles
      *
      * @param string $sCategoryId categoryId
      *
@@ -77,7 +77,7 @@ class oeVATTBECategoryVATGroupsPopulatorDbGateway
     }
 
     /**
-     * Populates category info to articles
+     * Populates category tbe service info to articles
      *
      * @param string $sCategoryId categoryId
      *
