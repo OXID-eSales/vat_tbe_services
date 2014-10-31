@@ -39,7 +39,7 @@ class oeVATTBEModel
     /**
      * Handles class dependencies.
      *
-     * @param oeVATTBEModelDbGateway $oDbGateway
+     * @param oeVATTBEModelDbGateway $oDbGateway db gateway
      */
     public function __construct($oDbGateway)
     {
