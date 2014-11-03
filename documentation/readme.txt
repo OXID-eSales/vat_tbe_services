@@ -82,3 +82,4 @@ TBE articles are calculated with user location country VAT rate.
 ==Installation==
 1. Copy the module source files to your shop directory.
 2. Activate the module.
+3. Clean database cache from source/tmp/ directory.
