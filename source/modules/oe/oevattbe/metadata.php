@@ -96,7 +96,7 @@ Telecommunication, Broadcasting or Electronic (TBE) service according to
         'oeVATTBEVATGroupArticleCacheInvalidator'      => 'oe/oevattbe/models/oevattbevatgrouparticlescacheinvalidator.php',
         'oeVATTBEArticleAdministration'                => 'oe/oevattbe/controllers/admin/oevattbearticleadministration.php',
         'oeVATTBECategoryAdministration'               => 'oe/oevattbe/controllers/admin/oevattbecategoryadministration.php',
-        'oeVATTBEBasketItemVATFormatter'               => 'oe/oevattbe/models/oevattbebasketitemvatformatter.php',
+        'oeVATTBEBasketVATValidator'                   => 'oe/oevattbe/models/oevattbebasketvatvalidator.php',
     ),
     'events'       => array(
         'onActivate'   => 'oeVatTbeEvents::onActivate',
