@@ -32,7 +32,10 @@ $aModule = array(
     'title'        => 'OXID eShop eVAT',
     'description'  => array(
         'de' => 'OXID eShop eVAT Modul.',
-        'en' => 'OXID eShop eVAT module.',
+        'en' => 'The OXID eVat module allows you to configure a range of tax rates for a
+country, and additionally enables you to define a product as a
+Telecommunication, Broadcasting or Electronic (TBE) service according to
+<a href="http://ec.europa.eu/taxation_customs/taxation/vat/how_vat_works/telecom/index_en.htm" target="_blank">European tax directive as of 2015</a>',
     ),
     'thumbnail'    => 'logo.png',
     'version'      => '1.0.0',
