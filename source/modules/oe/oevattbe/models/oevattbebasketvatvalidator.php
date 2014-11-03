@@ -109,7 +109,7 @@ class oeVATTBEBasketVATValidator
 
         /** @var oxArticle|oeVATTBEOxArticle $oArticle */
         $oArticle = $oBasketItem->getArticle();
-        if ($oArticle->isOeVATTBETBEService()  && !$oUserCountry->isUserFromDomesticCountry() && (!$oUser || ($oCountry && $oCountry->appliesOeTBEVATTbeVat()))) {
+        if ($oArticle->isOeVATTBETBEService() && !$oUserCountry->isUserFromDomesticCountry() && (!$oUser || ($oCountry && $oCountry->appliesOeTBEVATTbeVat()))) {
             $blShowMark = true;
         }
 
