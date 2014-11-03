@@ -78,7 +78,7 @@ class oeVATTBEOxBasket extends oeVatTbeOxBasket_parent
     /**
      * Returns TBE country
      *
-     * @return oxCountry
+     * @return oxCountry|oeVATTBEOxCountry
      */
     public function getOeVATTBECountry()
     {
