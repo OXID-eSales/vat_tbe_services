@@ -137,7 +137,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorTest exte
     public function testRemoveArticlesWhenUnsassignAllIsClicked()
     {
         $this->_cleanData();
-        $this->_prepareDataForRemoveTesting();
+        $this->_prepareDataForRemovingArticlesFromCategory();
 
         $this->setRequestParam('synchoxid', 'categoryId');
 
@@ -287,7 +287,10 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorTest exte
         }
     }
 
-    protected function _prepareDataForRemoveTesting()
+    /**
+     * Adds some records to DB for testing.
+     */
+    protected function _prepareDataForRemovingArticlesFromCategory()
     {
         $aSqlQueries[] = "INSERT INTO `oxarticles` SET `oxid` = 'article3', `oevattbe_istbeservice` = '1'";
         $aSqlQueries[] = "INSERT INTO `oxarticles` SET `oxid` = 'article4', `oevattbe_istbeservice` = '1'";
