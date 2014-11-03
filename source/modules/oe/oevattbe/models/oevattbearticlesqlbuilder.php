@@ -60,9 +60,13 @@ class oeVATTBEArticleSQLBuilder
     {
         $oArticle = $this->_oArticle;
 
+        $oUser = $oArticle->getUser();
+
         $sSelect = '';
         $sSelect .= " LEFT JOIN `oevattbe_articlevat` ON `".$oArticle->getViewName()."`.`oxid` = `oevattbe_articlevat`.`oevattbe_articleid` ";
-        $sSelect .= " AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($oArticle->getUser()->getOeVATTBETbeCountryId());
+        if ($oUser) {
+            $sSelect .= " AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($oUser->getOeVATTBETbeCountryId());
+        }
         $sSelect .= " LEFT JOIN `oevattbe_countryvatgroups` ON `oevattbe_articlevat`.`oevattbe_VATGROUPID` = `oevattbe_countryvatgroups`.`oevattbe_id` ";
 
         return $sSelect;
