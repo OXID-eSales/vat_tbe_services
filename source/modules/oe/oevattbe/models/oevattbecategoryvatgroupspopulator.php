@@ -24,7 +24,6 @@
  */
 class oeVATTBECategoryVATGroupsPopulator
 {
-
     /**
      * Handles class dependencies.
      *
