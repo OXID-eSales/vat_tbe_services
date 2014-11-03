@@ -48,7 +48,7 @@ class oeVATTBECategoryVATGroupsPopulatorDbGateway
         $blResult = false;
         if ($aArticleIds) {
             /** @var oxDb $oDb */
-            $oDb = oxRegistry::get('oxDb');
+            $oDb = oxNew('oxDb');
             $sArticleIds = implode(', ', $oDb->quoteArray($aArticleIds));
             $sSqlToUpdateArticles = '
               UPDATE `oxarticles`
