@@ -53,4 +53,21 @@ class Unit_oeVatTbe_Models_oeVATTBECategoryVATGroupsPopulatorTest extends OxidTe
         $oPopulator = oxNew('oeVATTBECategoryVATGroupsPopulator', $oGateway);
         $oPopulator->populate($oCategory);
     }
+
+    /**
+     * Test if DB gateway method was called.
+     */
+    public function testResetArticles()
+    {
+        $aArticles = array(
+            '_testId'
+        );
+        /** @var oeVATTBECategoryVATGroupsPopulatorDbGateway|PHPUnit_Framework_MockObject_MockObject $oGateway */
+        $oGateway = $this->getMock('oeVATTBECategoryVATGroupsPopulatorDbGateway', array('reset'));
+        $oGateway->expects($this->once())->method('reset')->with($aArticles);
+
+        /** @var oeVATTBECategoryVATGroupsPopulator $oList */
+        $oPopulator = oxNew('oeVATTBECategoryVATGroupsPopulator', $oGateway);
+        $oPopulator->reset($aArticles);
+    }
 }
