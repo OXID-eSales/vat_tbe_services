@@ -52,18 +52,16 @@ class oeVATTBECategoryVATGroupsPopulator
      * Method for model saving (insert and update data).
      *
      * @param oxCategory|oeVATTBEOxCategory $oCategory category
-     *
-     * @return bool
      */
     public function populate($oCategory)
     {
-        return $this->_getDbGateway()->populate($oCategory->getId());
+        $this->_getDbGateway()->populate($oCategory->getId());
     }
 
     /**
      * Returns model database gateway.
      *
-     * @return oeVATTBEModelDbGateway
+     * @return oeVATTBECategoryVATGroupsPopulatorDbGateway
      */
     protected function _getDbGateway()
     {
