@@ -73,17 +73,34 @@ class oeVATTBEOrder extends oeVATTBEOrder_parent
      */
     public function getOeVATTBEMarkMessage()
     {
-        $sMessage ='';
+        /** @var oxBasket|oeVATTBEOxBasket $oBasket */
         $oBasket = $this->getSession()->getBasket();
-        $oCountry = $oBasket->getOeVATTBECountry();
         $oMarkGenerator = $this->getBasketContentMarkGenerator();
+        $oCountry = $oBasket->getOeVATTBECountry();
+        $sCountryName = $oCountry ? $oCountry->getOeVATTBEName() : '';
 
-        if ($oBasket->hasOeTBEVATArticles() && $oBasket->isOeVATTBEValid() && $oCountry && $oCountry->appliesOeTBEVATTbeVat()) {
-            $sMessage = $oMarkGenerator->getMark('tbeService') . ' - ';
-            $sMessage .= sprintf(oxRegistry::getLang()->translateString('OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY'), $oCountry->getOeVATTBEName());
-        }
+        $sMessage = $oMarkGenerator->getMark('tbeService') . ' - ';
+        $sMessage .= sprintf(oxRegistry::getLang()->translateString('OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY'), $sCountryName);
 
         return $sMessage;
+    }
+
+    /**
+     * Return whether to show VAT TBE Mark message.
+     *
+     * @return bool
+     */
+    public function oeVATTBEShowVATTBEMarkMessage()
+    {
+        /** @var oxBasket|oeVATTBEOxBasket $oBasket */
+        $oBasket = $this->getSession()->getBasket();
+        $oCountry = $oBasket->getOeVATTBECountry();
+        $oTBEUserCountry = oeVATTBETBEUser::createInstance();
+
+        $blBasketValid = $oBasket->hasOeTBEVATArticles() && $oBasket->isOeVATTBEValid();
+        $blCountryAppliesTBEVAT = !$oCountry || $oCountry->appliesOeTBEVATTbeVat();
+
+        return !$oTBEUserCountry->isUserFromDomesticCountry() && $blBasketValid && $blCountryAppliesTBEVAT;
     }
 
     /**

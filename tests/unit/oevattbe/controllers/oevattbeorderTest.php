@@ -27,63 +27,85 @@
  */
 class Unit_oeVATTBE_controllers_oeVATTBEOrderTest extends OxidTestCase
 {
-    public function testGetOeVATTBEMarkMessageNoTBEArticleInBasket()
+
+    /**
+     * Provider for testOeVATTBEShowVATTBEMarkMessage.
+     *
+     * @return array
+     */
+    public function providerShowVATTBEMarkMessageWhenMessageShouldBeHidden()
     {
-        $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasOeTBEVATArticles'));
-        $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(false));
-
-        $this->getSession()->setBasket($oBasket);
-
-        $oOrder = oxNew('oeVATTBEOrder');
-        $this->assertSame('', $oOrder->getOeVATTBEMarkMessage());
+        return array(
+            array(true, true, true, true),
+            array(false, true, false, true),
+            array(false, true, true, false),
+            array(false, false, true, true),
+            array(false, false, false, false),
+        );
     }
 
-    public function testGetOeVATTBEMarkMessageHasTBEArticleInBasketButInvalid()
+    /**
+     * Tests showing of TBE mark message. Message should be shown depending on given parameters.
+     *
+     * @param bool $blIsDomesticCountry    Whether user country is domestic country
+     * @param bool $blHasTBEArticles       Whether basket has TBE articles.
+     * @param bool $blValidArticles        Is all basket articles valid.
+     * @param bool $blCountryAppliesTBEVAT Whether country is configured as TBE country.
+     *
+     * @dataProvider providerShowVATTBEMarkMessageWhenMessageShouldBeHidden
+     */
+    public function testShowVATTBEMarkMessageWhenMessageShouldBeHidden($blIsDomesticCountry, $blHasTBEArticles, $blValidArticles, $blCountryAppliesTBEVAT)
     {
-        $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasOeTBEVATArticles', 'isOeVATTBEValid'));
-        $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(true));
-        $oBasket->expects($this->any())->method("isOeVATTBEValid")->will($this->returnValue(false));
+        $sDomesticCountryAbbr = $blIsDomesticCountry ? 'LT' : 'DE';
+        $this->getConfig()->setConfigParam('sOeVATTBEDomesticCountry', $sDomesticCountryAbbr);
+        $this->getSession()->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
 
-        $this->getSession()->setBasket($oBasket);
+        $oCountry = $this->getMock("oeVATTBEOxCountry", array('appliesOeTBEVATTbeVat'));
+        $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->will($this->returnValue($blCountryAppliesTBEVAT));
 
-        $oOrder = oxNew('oeVATTBEOrder');
-        $this->assertSame('', $oOrder->getOeVATTBEMarkMessage());
-    }
-
-    public function testGetOeVATTBEMarkMessageHasTBEArticleInBasketValidButNoCountry()
-    {
         $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasOeTBEVATArticles', 'isOeVATTBEValid', 'getOeVATTBECountry'));
-        $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(true));
-        $oBasket->expects($this->any())->method("isOeVATTBEValid")->will($this->returnValue(true));
-        $oBasket->expects($this->any())->method("getOeVATTBECountry")->will($this->returnValue(null));
-
+        $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue($blHasTBEArticles));
+        $oBasket->expects($this->any())->method("isOeVATTBEValid")->will($this->returnValue($blValidArticles));
+        $oBasket->expects($this->any())->method("getOeVATTBECountry")->will($this->returnValue($oCountry));
         $this->getSession()->setBasket($oBasket);
 
-        $oOrder = oxNew('oeVATTBEOrder');
-        $this->assertSame('', $oOrder->getOeVATTBEMarkMessage());
+        $oOrderController = oxNew('oeVATTBEOrder');
+        $this->assertFalse($oOrderController->oeVATTBEShowVATTBEMarkMessage());
     }
 
-    public function testGetOeVATTBEMarkMessageHasTBEArticleInBasketValidCountryNotTBE()
+    /**
+     * User country does not match shop domestic country;
+     * Basket has TBE articles;
+     * TBE articles are valid (has VAT set);
+     * User country is TBE country;
+     * Marks message should be shown.
+     */
+    public function testShowVATTBEMarkMessageWhenMessageShouldBeShown()
     {
-        $oCountry = $this->getMock("oeVATTBEOxCountry", array("appliesOeTBEVATTbeVat"));
-        $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->will($this->returnValue(false));
+        $this->getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
+        $this->getSession()->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
+
+        $oCountry = $this->getMock("oeVATTBEOxCountry", array('appliesOeTBEVATTbeVat'));
+        $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->will($this->returnValue(true));
 
         $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasOeTBEVATArticles', 'isOeVATTBEValid', 'getOeVATTBECountry'));
         $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(true));
         $oBasket->expects($this->any())->method("isOeVATTBEValid")->will($this->returnValue(true));
         $oBasket->expects($this->any())->method("getOeVATTBECountry")->will($this->returnValue($oCountry));
-
         $this->getSession()->setBasket($oBasket);
 
-        $oOrder = oxNew('oeVATTBEOrder');
-        $this->assertSame('', $oOrder->getOeVATTBEMarkMessage());
+        $oOrderController = oxNew('oeVATTBEOrder');
+        $this->assertTrue($oOrderController->oeVATTBEShowVATTBEMarkMessage());
     }
 
-    public function testGetOeVATTBEMarkMessageHasTBEArticleInBasketValidCountryTBE()
+    /**
+     * Testing message formation for showing it in order step.
+     */
+    public function testGetMarkMessageHasTBEArticleInBasketValidCountryTBE()
     {
         $oCountry = $this->getMock("oeVATTBEOxCountry", array("appliesOeTBEVATTbeVat",'getOeVATTBEName'));
         $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->will($this->returnValue(true));
-        $oCountry->expects($this->any())->method("getOeVATTBEName")->will($this->returnValue('LT'));
+        $oCountry->expects($this->any())->method("getOeVATTBEName")->will($this->returnValue('Deutschland'));
 
         $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasOeTBEVATArticles', 'isOeVATTBEValid', 'getOeVATTBECountry'));
         $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(true));
@@ -92,9 +114,10 @@ class Unit_oeVATTBE_controllers_oeVATTBEOrderTest extends OxidTestCase
 
         $this->getSession()->setBasket($oBasket);
 
-        $oOrder = oxNew('oeVATTBEOrder');
+        $oOrderController = oxNew('oeVATTBEOrder');
 
-        $this->assertStringEndsWith(sprintf(oxRegistry::getLang()->translateString('OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY'), $oCountry->getOeVATTBEName()), $oOrder->getOeVATTBEMarkMessage());
-        $this->assertStringStartsWith('**', $oOrder->getOeVATTBEMarkMessage());
+        $sExpectedMessage = '** - ';
+        $sExpectedMessage .= sprintf(oxRegistry::getLang()->translateString('OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY'), 'Deutschland');
+        $this->assertEquals($sExpectedMessage, $oOrderController->getOeVATTBEMarkMessage());
     }
 }

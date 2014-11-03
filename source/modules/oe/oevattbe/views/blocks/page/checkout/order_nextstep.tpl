@@ -1,4 +1,4 @@
-[{if $oView->getOeVATTBEMarkMessage()}]
+[{if $oView->oeVATTBEShowVATTBEMarkMessage()}]
     <div>
         [{$oView->getOeVATTBEMarkMessage()}]
     </div>
