@@ -45,21 +45,25 @@ class oeVATTBECategoryVATGroupsPopulatorDbGateway
      */
     public function reset($aArticleIds)
     {
-        $oDb = $this->_getDb();
-
-        $sArticleIds = implode(', ', $oDb->quoteArray($aArticleIds));
-        $sSqlToUpdateArticles = '
+        $blResult = false;
+        if ($aArticleIds) {
+            $oDb = $this->_getDb();
+            $sArticleIds = implode(', ', $oDb->quoteArray($aArticleIds));
+            $sSqlToUpdateArticles = '
               UPDATE `oxarticles`
               SET  `oxarticles`.`oevattbe_istbeservice` = 0
               WHERE `oxarticles`.`oxid`
               IN ('. $sArticleIds .')';
 
-        $sSqlToRemoveRates = '
+            $sSqlToRemoveRates = '
               DELETE FROM `oevattbe_articlevat`
               WHERE `oevattbe_articlevat`.`oevattbe_articleid`
               IN ('. $sArticleIds . ')';
+            $blResult = $oDb->execute($sSqlToUpdateArticles) && $oDb->execute($sSqlToRemoveRates);
+        }
 
-        return $oDb->execute($sSqlToUpdateArticles) && $oDb->execute($sSqlToRemoveRates);
+
+        return $blResult;
     }
 
     /**
