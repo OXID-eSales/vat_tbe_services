@@ -25,26 +25,13 @@
 class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorTest extends OxidTestCase
 {
     /**
-     * Tear down
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        oxDb::getDb()->execute('TRUNCATE TABLE `oevattbe_articlevat`');
-        oxDb::getDb()->execute('TRUNCATE TABLE `oevattbe_categoryvat`');
-        oxDb::getDb()->execute('TRUNCATE TABLE `oxobject2category`');
-        oxDb::getDb()->execute('TRUNCATE TABLE `oxcategories`');
-        oxDb::getDb()->execute('TRUNCATE TABLE `oxarticles`');
-    }
-
-    /**
      * test populate not existing category data
      *
      * @covers Article_Extend_Ajax
      */
     public function testPopulateAddingCategoriesToArticle()
     {
+        $this->_cleanData();
         $this->_prepareData();
 
         $this->setRequestParam('synchoxid', 'article1');
@@ -66,6 +53,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorTest exte
      */
     public function testPopulateAddingCategoriesTBEToArticle()
     {
+        $this->_cleanData();
         $this->_prepareData();
 
         $this->setRequestParam('synchoxid', 'article1');
@@ -87,6 +75,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorTest exte
      */
     public function testPopulateAddingArticleToCategory()
     {
+        $this->_cleanData();
         $this->_prepareData();
 
         $this->setRequestParam('synchoxid', 'categoryId2');
@@ -108,6 +97,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorTest exte
      */
     public function testPopulateAddingArticleToCategoryTBE()
     {
+        $this->_cleanData();
         $this->_prepareData();
 
         $this->setRequestParam('synchoxid', 'categoryId');
@@ -122,12 +112,54 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorTest exte
     }
 
     /**
+     * Test check when 1 article is unassigned from category.
+     *
+     * @depends testPopulateAddingArticleToCategoryTBE
+     *
+     * @covers oeVATTBECategory_Main_Ajax
+     */
+    public function testRemoveArticleFromCategoryWhenOneArticleIsRemoved()
+    {
+        /** @var oeVATTBECategory_Main_Ajax|PHPUnit_Framework_MockObject_MockObject $oController */
+        $oController = $this->getMock('oeVATTBECategory_Main_Ajax', array('_getActionIds'));
+        $oController->expects($this->any())->method('_getActionIds')->will($this->returnValue(array('article1')));
+        $oController->removeArticle();
+
+        $this->assertEquals(0, $this->_getAssignedVATGroupsToArticles());
+        $this->assertEquals(0, $this->_getTBEServiceCount());
+    }
+
+    /**
+     * When all articles are unassigned by clicking button "Unassign all".
+     *
+     * @covers oeVATTBECategory_Main_Ajax
+     */
+    public function testRemoveArticlesWhenUnsassignAllIsClicked()
+    {
+        $this->_cleanData();
+        $this->_prepareDataForRemoveTesting();
+
+        $this->setRequestParam('synchoxid', 'categoryId');
+
+        /** @var oeVATTBECategory_Main_Ajax|PHPUnit_Framework_MockObject_MockObject $oController */
+        $oController = $this->getMock('oeVATTBECategory_Main_Ajax', array('_getActionIds', '_getAll', '_addFilter'));
+        $oController->expects($this->atLeastOnce())->method('_getAll')->will($this->returnValue(array('article3', 'article4')));
+
+        $this->setRequestParam('all', 1);
+        $oController->removeArticle();
+
+        $this->assertEquals(1, $this->_getAssignedVATGroupsToArticles());
+        $this->assertEquals(1, $this->_getTBEServiceCount());
+    }
+
+    /**
      * test populate not existing category data
      *
      * @covers Article_Main
      */
     public function testPopulateAddingArticleToCategoryOnCreate()
     {
+        $this->_cleanData();
         $this->_prepareData();
 
         $oController = oxNew('oeVATTBEArticle_Main');
@@ -145,6 +177,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorTest exte
      */
     public function testPopulateAddingArticleToCategoryOnCreateTBECAtegory()
     {
+        $this->_cleanData();
         $this->_prepareData();
 
         $oController = oxNew('oeVATTBEArticle_Main');
@@ -162,6 +195,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorTest exte
      */
     public function testPopulateOnCategoryConfiguration()
     {
+        $this->_cleanData();
         $this->_prepareData(true);
 
         $this->setRequestParam('oxid', 'categoryId');
@@ -187,6 +221,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorTest exte
      */
     public function testPopulateOnCategoryConfigurationNotTbe()
     {
+        $this->_cleanData();
         $this->_prepareData(true);
 
         $this->setRequestParam('oxid', 'categoryId');
@@ -212,6 +247,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorTest exte
      */
     public function testPopulateOnCategoryConfigurationNoGroups()
     {
+        $this->_cleanData();
         $this->_prepareData(true);
 
         $this->setRequestParam('oxid', 'categoryId');
@@ -249,6 +285,32 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorTest exte
         foreach ($aSqlQueries as $sSql) {
             oxDb::getDb()->execute($sSql);
         }
+    }
+
+    protected function _prepareDataForRemoveTesting()
+    {
+        $aSqlQueries[] = "INSERT INTO `oxarticles` SET `oxid` = 'article3', `oevattbe_istbeservice` = '1'";
+        $aSqlQueries[] = "INSERT INTO `oxarticles` SET `oxid` = 'article4', `oevattbe_istbeservice` = '1'";
+        $aSqlQueries[] = "INSERT INTO `oxarticles` SET `oxid` = 'article5', `oevattbe_istbeservice` = '1'";
+        $aSqlQueries[] = "INSERT INTO `oevattbe_articlevat` SET `OEVATTBE_ARTICLEID` = 'article3', `OEVATTBE_COUNTRYID` = 'a7c40f631fc920687.20179984', `OEVATTBE_VATGROUPID` = 10";
+        $aSqlQueries[] = "INSERT INTO `oevattbe_articlevat` SET `OEVATTBE_ARTICLEID` = 'article4', `OEVATTBE_COUNTRYID` = 'a7c40f631fc920687.20179984', `OEVATTBE_VATGROUPID` = 10";
+        $aSqlQueries[] = "INSERT INTO `oevattbe_articlevat` SET `OEVATTBE_ARTICLEID` = 'article5', `OEVATTBE_COUNTRYID` = 'a7c40f631fc920687.20179984', `OEVATTBE_VATGROUPID` = 10";
+
+        foreach ($aSqlQueries as $sSql) {
+            oxDb::getDb()->execute($sSql);
+        }
+    }
+
+    /**
+     * Truncates tables.
+     */
+    protected function _cleanData()
+    {
+        oxDb::getDb()->execute('TRUNCATE TABLE `oevattbe_articlevat`');
+        oxDb::getDb()->execute('TRUNCATE TABLE `oevattbe_categoryvat`');
+        oxDb::getDb()->execute('TRUNCATE TABLE `oxobject2category`');
+        oxDb::getDb()->execute('TRUNCATE TABLE `oxcategories`');
+        oxDb::getDb()->execute('TRUNCATE TABLE `oxarticles`');
     }
 
     /**
