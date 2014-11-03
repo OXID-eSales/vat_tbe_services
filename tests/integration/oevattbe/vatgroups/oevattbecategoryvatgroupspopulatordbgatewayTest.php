@@ -27,7 +27,7 @@
 class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorDbGatewayTest extends OxidTestCase
 {
     /**
-     * Tear down
+     * Tear down.
      */
     public function setUp()
     {
@@ -41,7 +41,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorDbGateway
     }
 
     /**
-     * test populate not existing category data
+     * Test populate not existing category data.
      */
     public function testPopulateNotExistingCategory()
     {
@@ -59,7 +59,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorDbGateway
 
 
     /**
-     * test populate existing category data
+     * Test populate existing category data.
      */
     public function testPopulateExistingCategory()
     {
@@ -75,7 +75,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorDbGateway
     }
 
     /**
-     * prepare data for test case
+     * Prepare data for test case.
      */
     protected function _prepareData()
     {
