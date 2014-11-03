@@ -29,7 +29,7 @@ class oeVATTBEBasket extends oeVATTBEBasket_parent
      * Returns name of template file basket::_sThisTemplate (for Search
      * engines return "content.tpl" template to avoid fake orders etc).
      *
-     * @return  string   $this->_sThisTemplate  current template file name
+     * @return  string   $this->_sThisTemplate  current template file name.
      */
     public function render()
     {
@@ -45,34 +45,40 @@ class oeVATTBEBasket extends oeVATTBEBasket_parent
     }
 
     /**
-     * Format message if basket has tbe articles
+     * Returns TBE Articles VAT explanation message.
      *
      * @return string
      */
     public function getOeVATTBEMarkMessage()
     {
-        $sMessage ='';
-        $oBasket = $this->getSession()->getBasket();
-        $oCountry = $oBasket->getOeVATTBECountry();
         $oMarkGenerator =  $this->getBasketContentMarkGenerator();
 
-        if ($oBasket->hasOeTBEVATArticles()) {
-            if (!$oBasket->getUser()) {
-                /** @var oeVATTBEoxShop $oShop */
-                $oShop = oxNew('oxShop');
-                $oDomesticCountry = $oShop->getOeVATTBEDomesticCountry();
-                $sCountryName = ($oDomesticCountry) ? $oDomesticCountry->getOeVATTBEName(): '';
-                $sMessage = $oMarkGenerator->getMark('tbeService') . ' - ';
-                $sMessage .= sprintf(oxRegistry::getLang()->translateString('OEVATTBE_VAT_WILL_BE_CALCULATED_BY_USER_COUNTRY'), $sCountryName);
-            } elseif ($oBasket->isOeVATTBEValid()) {
-                if ($oCountry && $oCountry->appliesOeTBEVATTbeVat()) {
-                    $sMessage = $oMarkGenerator->getMark('tbeService') . ' - ';
-                    $sMessage .= sprintf(oxRegistry::getLang()->translateString('OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY'), $oCountry->getOeVATTBEName());
-                }
-            }
+        $sMessage = $oMarkGenerator->getMark('tbeService') . ' - ';
+        if (!$this->getUser()) {
+            $sMessage .= $this->_getOeVATTBEMarkMessageForAnonymousUser();
+        } else {
+            $sMessage .= $this->_getOeVATTBEMarkExplanationForLoggedInUser();
         }
 
         return $sMessage;
+    }
+
+    /**
+     * Return whether to show VAT TBE Mark message.
+     *
+     * @return bool
+     */
+    public function oeVATTBEShowVATTBEMarkMessage()
+    {
+        /** @var oxBasket|oeVATTBEOxBasket $oBasket */
+        $oBasket = $this->getSession()->getBasket();
+        $oCountry = $oBasket->getOeVATTBECountry();
+        $oTBEUserCountry = oeVATTBETBEUser::createInstance();
+
+        $blBasketValid = $oBasket->hasOeTBEVATArticles() && $oBasket->isOeVATTBEValid();
+        $blCountryAppliesTBEVAT = !$oCountry || $oCountry->appliesOeTBEVATTbeVat();
+
+        return !$oTBEUserCountry->isUserFromDomesticCountry() && $blBasketValid && $blCountryAppliesTBEVAT;
     }
 
     /**
@@ -101,5 +107,38 @@ class oeVATTBEBasket extends oeVATTBEBasket_parent
         $oValidator = oeVATTBEBasketVATValidator::createInstance();
 
         return $oValidator->showVATTBEMark($oBasketItem);
+    }
+
+    /**
+     * Forms VAT TBE Articles Mark message for anonymous user.
+     *
+     * @return string
+     */
+    private function _getOeVATTBEMarkMessageForAnonymousUser()
+    {
+        /** @var oeVATTBEoxShop $oShop */
+        $oShop = oxNew('oxShop');
+        $oLang = oxRegistry::getLang();
+
+        $oDomesticCountry = $oShop->getOeVATTBEDomesticCountry();
+        $sCountryName = $oDomesticCountry ? $oDomesticCountry->getOeVATTBEName(): '';
+
+        return sprintf($oLang->translateString('OEVATTBE_VAT_WILL_BE_CALCULATED_BY_USER_COUNTRY'), $sCountryName);
+    }
+
+    /**
+     * Forms VAT TBE Articles Mark message for logged in user.
+     *
+     * @return string
+     */
+    private function _getOeVATTBEMarkExplanationForLoggedInUser()
+    {
+        /** @var oxBasket|oeVATTBEOxBasket $oBasket */
+        $oBasket = $this->getSession()->getBasket();
+        $oLang = oxRegistry::getLang();
+
+        $oCountry = $oBasket->getOeVATTBECountry();
+        $sCountryName = $oCountry ? $oCountry->getOeVATTBEName() : '';
+        return sprintf($oLang->translateString('OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY'), $sCountryName);
     }
 }

@@ -1,4 +1,4 @@
-[{if $oView->getOeVATTBEMarkMessage()}]
+[{if $oView->oeVATTBEShowVATTBEMarkMessage()}]
     <div class="lineBox clear">
         [{$oView->getOeVATTBEMarkMessage()}]
     </div>
