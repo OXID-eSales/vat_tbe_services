@@ -91,26 +91,26 @@ class oeVATTBEOrder extends oeVATTBEOrder_parent
      *
      * @param oxBasketItem $oBasketItem - basket item
      *
-     * @return string
+     * @return bool
      */
-    public function getOeVATTBETBEVatFormatted($oBasketItem)
+    public function isOeVATTBETBEArticleValid($oBasketItem)
     {
-        return $this->_getOeVATTBEBasketItemVATFormatter()->formatVAT($oBasketItem);
+        $oValidator = oeVATTBEBasketVATValidator::createInstance();
+
+        return $oValidator->isArticleValid($oBasketItem);
     }
 
     /**
-     * Returns vat formatter
+     * Return formatted vat rate
      *
-     * @return oeVATTBEBasketItemVATFormatter
+     * @param oxBasketItem $oBasketItem - basket item
+     *
+     * @return bool
      */
-    protected function _getOeVATTBEBasketItemVATFormatter()
+    public function oeVATTBEShowVATTBEMark($oBasketItem)
     {
-        if (is_null($this->_getOeVATTBEBasketItemVATFormatter)) {
-            $oBasket = $this->getSession()->getBasket();
-            $oMarkGenerator =  $this->getBasketContentMarkGenerator();
-            $this->_getOeVATTBEBasketItemVATFormatter = oxNew('oeVATTBEBasketItemVATFormatter', $oBasket, $oMarkGenerator);
-        }
+        $oValidator = oeVATTBEBasketVATValidator::createInstance();
 
-        return $this->_getOeVATTBEBasketItemVATFormatter;
+        return $oValidator->showVATTBEMark($oBasketItem);
     }
 }
