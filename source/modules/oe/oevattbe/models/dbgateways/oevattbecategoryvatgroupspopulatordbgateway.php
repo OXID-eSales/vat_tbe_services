@@ -47,7 +47,8 @@ class oeVATTBECategoryVATGroupsPopulatorDbGateway
     {
         $blResult = false;
         if ($aArticleIds) {
-            $oDb = $this->_getDb();
+            /** @var oxDb $oDb */
+            $oDb = oxRegistry::get('oxDb');
             $sArticleIds = implode(', ', $oDb->quoteArray($aArticleIds));
             $sSqlToUpdateArticles = '
               UPDATE `oxarticles`
@@ -59,7 +60,8 @@ class oeVATTBECategoryVATGroupsPopulatorDbGateway
               DELETE FROM `oevattbe_articlevat`
               WHERE `oevattbe_articlevat`.`oevattbe_articleid`
               IN ('. $sArticleIds . ')';
-            $blResult = $oDb->execute($sSqlToUpdateArticles) && $oDb->execute($sSqlToRemoveRates);
+            $oLegacyDb = $this->_getDb();
+            $blResult = $oLegacyDb->execute($sSqlToUpdateArticles) && $oLegacyDb->execute($sSqlToRemoveRates);
         }
 
 
