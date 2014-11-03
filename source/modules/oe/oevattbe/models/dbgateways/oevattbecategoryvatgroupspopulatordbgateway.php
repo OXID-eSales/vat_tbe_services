@@ -37,6 +37,28 @@ class oeVATTBECategoryVATGroupsPopulatorDbGateway
     }
 
     /**
+     * Resets articles to be not TBE services.
+     *
+     * @param array $aArticleIds
+     *
+     * @return bool
+     */
+    public function reset($aArticleIds)
+    {
+        $oDb = $this->_getDb();
+
+        $sArticleIds = implode(', ', $oDb->quoteArray($aArticleIds));
+        $sSqlToUpdateArticles = 'UPDATE `oxarticles`
+              SET  `oxarticles`.`oevattbe_istbeservice` = 0
+              WHERE `oxarticles`.`oxid` IN ('. $sArticleIds .')';
+
+        $sSqlToRemoveRates = 'DELETE FROM `oevattbe_articlevat`
+              WHERE `oevattbe_articlevat`.`oevattbe_articleid` IN ('. $sArticleIds . ')';
+
+        return $oDb->execute($sSqlToUpdateArticles) && $oDb->execute($sSqlToRemoveRates);
+    }
+
+    /**
      * Delete category articles VAT Group data from database.
      *
      * @param string $sCategoryId category id.

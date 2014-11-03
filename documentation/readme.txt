@@ -74,6 +74,9 @@ TBE articles are calculated with user location country VAT rate.
 --addToCategory
 *category_main_ajax
 --addArticle
+*oeVATTBECategory_Main_Ajax
+--addArticle
+--removeArticle
 
 ==Extend invoicePDF==
 *oxorder

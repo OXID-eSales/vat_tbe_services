@@ -37,7 +37,7 @@ class oeVATTBECategoryVATGroupsPopulator
     /**
      * Creates an instance of oeVATTBECategoryVATGroupsPopulator.
      *
-     * @return oeVATTBECategoryVATGroupsPopulator;
+     * @return oeVATTBECategoryVATGroupsPopulator
      */
     public static function createInstance()
     {
@@ -55,6 +55,16 @@ class oeVATTBECategoryVATGroupsPopulator
     public function populate($oCategory)
     {
         $this->_getDbGateway()->populate($oCategory->getId());
+    }
+
+    /**
+     * Resets articles to be not TBE services.
+     *
+     * @param array $aArticles
+     */
+    public function reset($aArticles)
+    {
+        $this->_getDbGateway()->reset($aArticles);
     }
 
     /**

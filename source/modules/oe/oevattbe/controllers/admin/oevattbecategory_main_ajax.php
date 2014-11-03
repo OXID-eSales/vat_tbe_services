@@ -35,6 +35,20 @@ class oeVATTBECategory_Main_Ajax extends oeVATTBECategory_Main_Ajax_parent
     }
 
     /**
+     * Removed article from category.
+     */
+    public function removeArticle()
+    {
+        $aArticles = $this->_getActionIds('oxarticles.oxid');
+        if (oxRegistry::getConfig()->getRequestParameter('all')) {
+            $sArticleTable = $this->_getViewName('oxarticles');
+            $aArticles = $this->_getAll($this->_addFilter("select $sArticleTable.oxid " . $this->_getQuery()));
+        }
+        oeVATTBECategoryVATGroupsPopulator::createInstance()->reset($aArticles);
+        parent::removeArticle();
+    }
+
+    /**
      * Populates VAT groups configuration
      */
     protected function _populateOeVATTBEConfiguration()
@@ -46,6 +60,5 @@ class oeVATTBECategory_Main_Ajax extends oeVATTBECategory_Main_Ajax_parent
         if ($oCategory->isOeVATTBETBE()) {
             oeVATTBECategoryVATGroupsPopulator::createInstance()->populate($oCategory);
         }
-
     }
 }
