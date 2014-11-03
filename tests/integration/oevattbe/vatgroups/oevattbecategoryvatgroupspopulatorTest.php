@@ -27,7 +27,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorTest exte
     /**
      * test populate not existing category data
      *
-     * @covers Article_Extend_Ajax
+     * @covers oeVATTBEArticle_Extend_Ajax
      */
     public function testPopulateAddingCategoriesToArticle()
     {
@@ -49,7 +49,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorTest exte
     /**
      * test populate not existing category data
      *
-     * @covers Article_Extend_Ajax
+     * @covers oeVATTBEArticle_Extend_Ajax
      */
     public function testPopulateAddingCategoriesTBEToArticle()
     {
@@ -71,7 +71,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorTest exte
     /**
      * test populate not existing category data
      *
-     * @covers Category_Main_Ajax
+     * @covers oeVATTBECategory_Main_Ajax
      */
     public function testPopulateAddingArticleToCategory()
     {
@@ -93,7 +93,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorTest exte
     /**
      * test populate not existing category data
      *
-     * @covers Category_Main_Ajax
+     * @covers oeVATTBECategory_Main_Ajax
      */
     public function testPopulateAddingArticleToCategoryTBE()
     {
@@ -155,7 +155,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorTest exte
     /**
      * test populate not existing category data
      *
-     * @covers Article_Main
+     * @covers oeVATTBEArticle_Main
      */
     public function testPopulateAddingArticleToCategoryOnCreate()
     {
@@ -173,7 +173,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorTest exte
     /**
      * test populate not existing category data
      *
-     * @covers Article_Main
+     * @covers oeVATTBEArticle_Main
      */
     public function testPopulateAddingArticleToCategoryOnCreateTBECAtegory()
     {
