@@ -25,8 +25,8 @@
 class oeVATTBECategory_Main_Ajax extends oeVATTBECategory_Main_Ajax_parent
 {
     /**
-     * Adds article to category
-     * Creates new list
+     * Adds article to category.
+     * Creates new list.
      */
     public function addArticle()
     {
@@ -35,7 +35,7 @@ class oeVATTBECategory_Main_Ajax extends oeVATTBECategory_Main_Ajax_parent
     }
 
     /**
-     * Removed article from category.
+     * Removes article from category.
      */
     public function removeArticle()
     {
@@ -49,7 +49,7 @@ class oeVATTBECategory_Main_Ajax extends oeVATTBECategory_Main_Ajax_parent
     }
 
     /**
-     * Populates VAT groups configuration
+     * Populates VAT groups configuration.
      */
     protected function _populateOeVATTBEConfiguration()
     {
