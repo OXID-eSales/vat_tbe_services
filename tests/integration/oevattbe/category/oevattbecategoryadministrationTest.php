@@ -47,7 +47,9 @@ class Integration_oeVATTBE_category_oeVATTBECategoryAdministrationTest extends O
             'oevattbe_rate'        => '11.11',
             'oevattbe_timestamp'   => '2014-10-24 09:46:11'
         );
-        $this->_prepareData($aData1, $aData2);
+        $this->_cleanData();
+        $this->_addData($aData1);
+        $this->_addData($aData2);
 
         /** @var oeVATTBECategoryAdministration $oCategoryAdministration */
         $oCategoryAdministration = oxNew('oeVATTBECategoryAdministration');
@@ -170,18 +172,25 @@ class Integration_oeVATTBE_category_oeVATTBECategoryAdministrationTest extends O
     /**
      * Prepares VAT TBE groups data.
      *
-     * @param array $aData1
-     * @param array $aData2
+     * @param array $aData
      */
-    private function _prepareData($aData1, $aData2)
+    private function _addData($aData)
+    {
+        /** @var oeVATTBECountryVATGroupsDbGateway $oGateway */
+        $oGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
+
+        $oGateway->save($aData);
+    }
+
+    /**
+     * Cleans current data.
+     */
+    private function _cleanData()
     {
         /** @var oeVATTBECountryVATGroupsDbGateway $oGateway */
         $oGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
         foreach ($oGateway->getList() as $aGroupInformation) {
             $oGateway->delete($aGroupInformation['OEVATTBE_ID']);
         }
-
-        $oGateway->save($aData1);
-        $oGateway->save($aData2);
     }
 }
