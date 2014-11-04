@@ -25,7 +25,7 @@
  *
  * @covers oeVATTBECategoryVATGroupsPopulator
  */
-class Unit_oeVatTbe_Models_oeVATTBECategoryVATGroupsPopulatorTest extends OxidTestCase
+class Unit_oeVatTbe_Models_oeVATTBECategoryArticlesUpdaterTest extends OxidTestCase
 {
     /**
      * Tests creating of oeVATTBECategoryArticlesUpdater.

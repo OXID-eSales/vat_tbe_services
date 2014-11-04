@@ -22,7 +22,7 @@
 /**
  * Test class for.
  */
-class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorTest extends OxidTestCase
+class Integration_oeVatTbe_VATGroups_oeVATTBECategoryArticlesUpdaterTest extends OxidTestCase
 {
     /**
      * test populate not existing category data
