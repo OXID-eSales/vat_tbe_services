@@ -21,20 +21,20 @@
 
 
 /**
- * Testing oeVATTBECategoryVATGroupsPopulator class.
+ * Testing oeVATTBECategoryArticlesUpdater class.
  *
  * @covers oeVATTBECategoryVATGroupsPopulator
  */
 class Unit_oeVatTbe_Models_oeVATTBECategoryVATGroupsPopulatorTest extends OxidTestCase
 {
     /**
-     * Tests creating of oeVATTBECategoryVATGroupsPopulator.
+     * Tests creating of oeVATTBECategoryArticlesUpdater.
      */
     public function testCreating()
     {
-        $oPopulator = oeVATTBECategoryVATGroupsPopulator::createInstance();
+        $oPopulator = oeVATTBECategoryArticlesUpdater::createInstance();
 
-        $this->assertInstanceOf('oeVATTBECategoryVATGroupsPopulator', $oPopulator);
+        $this->assertInstanceOf('oeVATTBECategoryArticlesUpdater', $oPopulator);
     }
 
     /**
@@ -49,8 +49,8 @@ class Unit_oeVatTbe_Models_oeVATTBECategoryVATGroupsPopulatorTest extends OxidTe
         $oGateway = $this->getMock('oeVATTBECategoryVATGroupsPopulatorDbGateway', array('populate'));
         $oGateway->expects($this->once())->method('populate')->with('categoryId');
 
-        /** @var oeVATTBECategoryVATGroupsPopulator $oList */
-        $oPopulator = oxNew('oeVATTBECategoryVATGroupsPopulator', $oGateway);
+        /** @var oeVATTBECategoryArticlesUpdater $oList */
+        $oPopulator = oxNew('oeVATTBECategoryArticlesUpdater', $oGateway);
         $oPopulator->populate($oCategory);
     }
 
@@ -66,8 +66,8 @@ class Unit_oeVatTbe_Models_oeVATTBECategoryVATGroupsPopulatorTest extends OxidTe
         $oGateway = $this->getMock('oeVATTBECategoryVATGroupsPopulatorDbGateway', array('reset'));
         $oGateway->expects($this->once())->method('reset')->with($aArticles);
 
-        /** @var oeVATTBECategoryVATGroupsPopulator $oList */
-        $oPopulator = oxNew('oeVATTBECategoryVATGroupsPopulator', $oGateway);
+        /** @var oeVATTBECategoryArticlesUpdater $oList */
+        $oPopulator = oxNew('oeVATTBECategoryArticlesUpdater', $oGateway);
         $oPopulator->reset($aArticles);
     }
 }

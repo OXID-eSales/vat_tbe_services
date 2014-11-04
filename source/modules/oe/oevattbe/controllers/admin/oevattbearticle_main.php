@@ -47,7 +47,7 @@ class oeVATTBEArticle_Main extends oeVATTBEArticle_Main_parent
         $oCategory = oxNew('oxCategory');
         $oCategory->load($sCategoryId);
         if ($oCategory->isOeVATTBETBE()) {
-            oeVATTBECategoryVATGroupsPopulator::createInstance()->populate($oCategory);
+            oeVATTBECategoryArticlesUpdater::createInstance()->populate($oCategory);
         }
     }
 }

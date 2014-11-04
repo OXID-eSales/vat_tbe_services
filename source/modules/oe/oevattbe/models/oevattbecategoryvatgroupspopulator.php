@@ -22,7 +22,7 @@
 /**
  * VAT Groups handling class
  */
-class oeVATTBECategoryVATGroupsPopulator
+class oeVATTBECategoryArticlesUpdater
 {
     /**
      * Handles class dependencies.
@@ -35,14 +35,14 @@ class oeVATTBECategoryVATGroupsPopulator
     }
 
     /**
-     * Creates an instance of oeVATTBECategoryVATGroupsPopulator.
+     * Creates an instance of oeVATTBECategoryArticlesUpdater.
      *
-     * @return oeVATTBECategoryVATGroupsPopulator
+     * @return oeVATTBECategoryArticlesUpdater
      */
     public static function createInstance()
     {
         $oGateway = oxNew('oeVATTBECategoryVATGroupsPopulatorDbGateway');
-        $oList = oxNew('oeVATTBECategoryVATGroupsPopulator', $oGateway);
+        $oList = oxNew('oeVATTBECategoryArticlesUpdater', $oGateway);
 
         return $oList;
     }

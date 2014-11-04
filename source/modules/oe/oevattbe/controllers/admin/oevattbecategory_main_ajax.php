@@ -44,7 +44,7 @@ class oeVATTBECategory_Main_Ajax extends oeVATTBECategory_Main_Ajax_parent
             $sArticleTable = $this->_getViewName('oxarticles');
             $aArticles = $this->_getAll($this->_addFilter("select $sArticleTable.oxid " . $this->_getQuery()));
         }
-        oeVATTBECategoryVATGroupsPopulator::createInstance()->reset($aArticles);
+        oeVATTBECategoryArticlesUpdater::createInstance()->reset($aArticles);
         parent::removeArticle();
     }
 
@@ -58,7 +58,7 @@ class oeVATTBECategory_Main_Ajax extends oeVATTBECategory_Main_Ajax_parent
         $oCategory = oxNew('oxCategory');
         $oCategory->load($sCategoryId);
         if ($oCategory->isOeVATTBETBE()) {
-            oeVATTBECategoryVATGroupsPopulator::createInstance()->populate($oCategory);
+            oeVATTBECategoryArticlesUpdater::createInstance()->populate($oCategory);
         }
     }
 }

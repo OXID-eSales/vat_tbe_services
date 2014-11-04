@@ -92,7 +92,7 @@ Telecommunication, Broadcasting or Electronic (TBE) service according to
         'oeVATTBECategoryVATGroupsPopulatorDbGateway'  => 'oe/oevattbe/models/dbgateways/oevattbecategoryvatgroupspopulatordbgateway.php',
         'oeVATTBEArticleVATGroupsList'                 => 'oe/oevattbe/models/oevattbearticlevatgroupslist.php',
         'oeVATTBECategoryVATGroupsList'                => 'oe/oevattbe/models/oevattbecategoryvatgroupslist.php',
-        'oeVATTBECategoryVATGroupsPopulator'           => 'oe/oevattbe/models/oevattbecategoryvatgroupspopulator.php',
+        'oeVATTBECategoryArticlesUpdater'              => 'oe/oevattbe/models/oevattbecategoryvatgroupspopulator.php',
         'oeVATTBEVATGroupArticleCacheInvalidator'      => 'oe/oevattbe/models/oevattbevatgrouparticlescacheinvalidator.php',
         'oeVATTBEArticleAdministration'                => 'oe/oevattbe/controllers/admin/oevattbearticleadministration.php',
         'oeVATTBECategoryAdministration'               => 'oe/oevattbe/controllers/admin/oevattbecategoryadministration.php',
