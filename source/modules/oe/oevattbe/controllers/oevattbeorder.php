@@ -24,8 +24,6 @@
  */
 class oeVATTBEOrder extends oeVATTBEOrder_parent
 {
-    private $_getOeVATTBEBasketItemVATFormatter = null;
-
     /**
      * Executes parent::render(), creates list with basket articles
      * Returns name of template file basket::_sThisTemplate (for Search
