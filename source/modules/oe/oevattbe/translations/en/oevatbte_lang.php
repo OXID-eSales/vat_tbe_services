@@ -23,11 +23,11 @@
 // RESOURCE IDENTIFIER = STRING
 // -------------------------------
 $aLang = array(
-    'charset'                                => 'ISO-8859-15',
-    'PLUS_SHIPPING2'                         => '[tr]shipping ** TBE VAT',
+    'charset'                                         => 'ISO-8859-15',
+    'PLUS_SHIPPING2'                                  => '[tr]shipping ** TBE VAT',
     'OEVATTBE_ERROR_MESSAGE_TBE_ARTICLE_VAT_PROBLEMS' => 'Unfortunately, it was not possible to calculate the VAT rate for some articles in your basket and can therefore not be sold. Please remove the following articles from your basket: %s',
-    'OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY' => 'This VAT was calculated for your location: %s.',
-    'OEVATTBE_VAT_WILL_BE_CALCULATED_BY_USER_COUNTRY' => 'VAT depends on customer location. Assumption (%s) may be corrected after login.',
-    'OEVATTBE_RESIDENCE_COUNTRY_CHANGED_MESSAGE' => 'Your location has been identified as %s. This location will be used in VAT calculation for e.g. eBooks or MP3s.',
-    'OEVATTBE_VAT_EXCLUDED' => 'VAT was excluded from the calculated price.',
+    'OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY'         => 'This VAT was calculated for your location: %s.',
+    'OEVATTBE_VAT_WILL_BE_CALCULATED_BY_USER_COUNTRY' => 'VAT rate depends on customer\'s location (currently %s) and might change after login.',
+    'OEVATTBE_RESIDENCE_COUNTRY_CHANGED_MESSAGE'      => 'Your location has been identified as %s. This location will be used in VAT calculation for e.g. eBooks or MP3s.',
+    'OEVATTBE_VAT_EXCLUDED'                           => 'VAT was excluded from the calculated price.',
 );
