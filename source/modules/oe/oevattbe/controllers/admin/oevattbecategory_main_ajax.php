@@ -58,7 +58,7 @@ class oeVATTBECategory_Main_Ajax extends oeVATTBECategory_Main_Ajax_parent
         $oCategory = oxNew('oxCategory');
         $oCategory->load($sCategoryId);
         if ($oCategory->isOeVATTBETBE()) {
-            oeVATTBECategoryArticlesUpdater::createInstance()->populate($oCategory);
+            oeVATTBECategoryArticlesUpdater::createInstance()->addCategoryTBEInformationToArticles($oCategory);
         }
     }
 }

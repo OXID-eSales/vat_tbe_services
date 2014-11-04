@@ -52,7 +52,7 @@ class oeVATTBECategoryArticlesUpdater
      *
      * @param oxCategory|oeVATTBEOxCategory $oCategory category
      */
-    public function populate($oCategory)
+    public function addCategoryTBEInformationToArticles($oCategory)
     {
         $this->_getDbGateway()->populate($oCategory->getId());
     }

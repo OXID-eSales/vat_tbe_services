@@ -49,9 +49,9 @@ class Unit_oeVatTbe_Models_oeVATTBECategoryArticlesUpdaterTest extends OxidTestC
         $oGateway = $this->getMock('oeVATTBECategoryVATGroupsPopulatorDbGateway', array('populate'));
         $oGateway->expects($this->once())->method('populate')->with('categoryId');
 
-        /** @var oeVATTBECategoryArticlesUpdater $oList */
+        /** @var oeVATTBECategoryArticlesUpdater $oArticlesUpdater */
         $oArticlesUpdater = oxNew('oeVATTBECategoryArticlesUpdater', $oGateway);
-        $oArticlesUpdater->populate($oCategory);
+        $oArticlesUpdater->addCategoryTBEInformationToArticles($oCategory);
     }
 
     /**
