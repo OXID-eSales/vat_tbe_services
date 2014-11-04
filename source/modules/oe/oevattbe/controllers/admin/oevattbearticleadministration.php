@@ -35,6 +35,12 @@ class oeVATTBEArticleAdministration extends oxAdminDetails
     {
         parent::render();
 
+        $oConfig = $this->getConfig();
+        $oArticle = $this->_loadCurrentArticle();
+        if ('EE' == $oConfig->getEdition() && $oArticle->isDerived()) {
+            $this->_aViewData['readonly'] = true;
+        }
+
         return 'oevattbearticleadministration.tpl';
     }
 
@@ -53,9 +59,7 @@ class oeVATTBEArticleAdministration extends oxAdminDetails
         $oArticleVATGroupsList->setData($aVATGroupsParams);
         $oArticleVATGroupsList->save();
 
-        /** @var oeVATTBEOxArticle|oxArticle $oArticle */
-        $oArticle = oxNew('oxArticle');
-        $oArticle->load($sCurrentArticleId);
+        $oArticle = $this->_loadCurrentArticle();
         $oArticle->oxarticles__oevattbe_istbeservice = new oxField($aParams['oevattbe_istbeservice']);
         $oArticle->save();
     }
@@ -115,5 +119,20 @@ class oeVATTBEArticleAdministration extends oxAdminDetails
         $oArticle->load($sCurrentArticleId);
 
         return (int)$oArticle->oxarticles__oevattbe_istbeservice->value;
+    }
+
+    /**
+     * Load current article object.
+     *
+     * @return oeVATTBEOxArticle|oxArticle
+     */
+    protected function _loadCurrentArticle()
+    {
+        $sCurrentArticleId = $this->getEditObjectId();
+        /** @var oeVATTBEOxArticle|oxArticle $oArticle */
+        $oArticle = oxNew('oxArticle');
+        $oArticle->load($sCurrentArticleId);
+
+        return $oArticle;
     }
 }

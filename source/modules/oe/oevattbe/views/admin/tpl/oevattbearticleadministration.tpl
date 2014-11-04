@@ -26,6 +26,12 @@
     }
 </style>
 
+[{if $readonly}]
+    [{assign var="readonly" value="readonly disabled"}]
+[{else}]
+    [{assign var="readonly" value=""}]
+[{/if}]
+
 <form action="[{$oViewConf->getSelfLink()}]" method="post">
     [{$oViewConf->getHiddenSid()}]
     <input type="hidden" name="cl" value="oevattbearticleadministration">
@@ -35,7 +41,7 @@
     <p>
         <label for="isOeVATTBETBEService">[{oxmultilang ident="OEVATTBE_ARTICLE_SUBMIT_LABEL"}]</label>
         <input type="hidden" name="editval[oevattbe_istbeservice]" value="0">
-        <input id="isOeVATTBETBEService" class="edittext" type="checkbox" name="editval[oevattbe_istbeservice]" value="1" [{if $oView->isArticleTBE() == 1}]checked[{/if}]>
+        <input id="isOeVATTBETBEService" class="edittext" type="checkbox" name="editval[oevattbe_istbeservice]" value="1" [{if $oView->isArticleTBE() == 1}]checked[{/if}] [{$readonly}]>
     </p>
     <table class="vattbeAdministration">
         <tr>
@@ -58,7 +64,7 @@
                     <tr>
                         <td>[{$aVATInformation.countryTitle}]</td>
                         <td>
-                            <select name="VATGroupsByCountry[[{$sCountryId}]]">
+                            <select name="VATGroupsByCountry[[{$sCountryId}]]" [{$readonly}]>
                                 <option value="">[{oxmultilang ident="OEVATTBE_CHOOSE_VAT_RATE"}]</option>
                                 [{foreach from=$aVATInformation.countryGroups item=oVATTBECountryVATGroup}]
                                     <option value="[{$oVATTBECountryVATGroup->getId()}]"
@@ -75,7 +81,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                <input type="submit" class="edittext" name="save" value="[{oxmultilang ident="OEVATTBE_SAVE_BUTTON"}]" onClick="Javascript:document.myedit.fnc.value='save'">
+                <input type="submit" class="edittext" name="save" value="[{oxmultilang ident="OEVATTBE_SAVE_BUTTON"}]" onClick="Javascript:document.myedit.fnc.value='save'" [{$readonly}]>
             </td>
         </tr>
     </table>

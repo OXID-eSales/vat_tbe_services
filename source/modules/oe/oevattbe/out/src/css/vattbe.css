@@ -35,3 +35,7 @@
 .specBoxInfo .tbePrice {
     padding-left: 5px;
 }
+
+.oeVATTBEBasketItemInvalid {
+    background-color: #e70404;
+}
