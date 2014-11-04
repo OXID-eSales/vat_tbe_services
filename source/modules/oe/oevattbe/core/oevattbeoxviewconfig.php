@@ -38,4 +38,16 @@ class oeVATTBEOxViewConfig extends oeVATTBEOxViewConfig_parent
 
         return $oArticle->isOeVATTBETBEService() && !$oTBEUserCountry->isUserFromDomesticCountry();
     }
+
+    /**
+     * Return shop edition (EE|CE|PE)
+     * Wrapper to get Shop edition.
+     * Is needed for shop versions lower then 5.2.
+     *
+     * @return string
+     */
+    public function getOeVATTBEShowTBEEdition()
+    {
+        return $this->getConfig()->getEdition();
+    }
 }

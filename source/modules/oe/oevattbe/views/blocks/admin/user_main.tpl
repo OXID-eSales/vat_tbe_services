@@ -196,7 +196,7 @@
     </td>
 </tr>
 
-[{if 'EE' == $oViewConf->getEdition() }]
+[{if 'EE' == $oViewConf->getOeVATTBEShowTBEEdition() }]
     [{if $edit->oxuser__oxldapkey->value }]
         <tr>
             <td class="edittext"><br>
