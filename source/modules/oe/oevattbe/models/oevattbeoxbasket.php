@@ -87,8 +87,6 @@ class oeVATTBEOxBasket extends oeVatTbeOxBasket_parent
     {
         if (!is_null($this->getOeVATTBETbeCountryId())) {
             $oCountry = oxNew('oxCountry');
-
-
             $oCountry->load($this->getOeVATTBETbeCountryId());
         }
 

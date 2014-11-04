@@ -47,6 +47,84 @@ class Unit_oeVATTBE_models_oeVATTBEOxBasketTest extends OxidTestCase
     }
 
     /**
+     * Data provider for testSetCountryIdOnChangeEvent test.
+     *
+     * @return array
+     */
+    public function providerSetCountryIdOnChangeEvent()
+    {
+        return array(
+            array(true, true, true),
+            array(false, false, true),
+            array(false, true, false),
+            array(false, false, false),
+        );
+    }
+
+    /**
+     * Test on basket country change event when no message should be shown after country change.
+     *
+     * @param bool $blDomesticCountry     Is user from shops domestic country.
+     * @param bool $blTBECountry          Is user country TBE country.
+     * @param bool $blIsArticleTbeService Is basket article TBE service.
+     *
+     * @dataProvider providerSetCountryIdOnChangeEvent
+     */
+    public function testSetCountryIdOnChangeEvent($blDomesticCountry, $blTBECountry, $blIsArticleTbeService)
+    {
+        $sDomesticCountry = $blDomesticCountry ? 'LT' : 'DE';
+        $this->getConfig()->setConfigParam('sOeVATTBEDomesticCountry', $sDomesticCountry);
+        $this->getSession()->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
+
+        /** @var oxCountry $oCountry */
+        $oCountry = oxNew('oxCountry');
+        $oCountry->load('8f241f11095d6ffa8.86593236');
+        $oCountry->oxcountry__oevattbe_appliestbevat = new oxField($blTBECountry);
+        $oCountry->save();
+
+        /** @var oxArticle $oArticle */
+        $oArticle = oxNew('oxArticle');
+        $oArticle->setId('_testArticle1');
+        $oArticle->oxarticles__oevattbe_istbeservice = new oxField($blIsArticleTbeService);
+        $oArticle->save();
+
+        /** @var oxBasket|oeVATTBEOxBasket $oBasket */
+        $oBasket = oxNew('oxBasket');
+        $oBasket->addToBasket('_testArticle1', 1);
+        $oBasket->setOeVATTBECountryId('8f241f11095d6ffa8.86593236');
+
+        $this->assertFalse($oBasket->showOeVATTBECountryChangedError());
+    }
+
+    /**
+     * Test on basket country change event when message should be shown after country change.
+     */
+    public function testSetCountryIdOnChangeEventWhenMessageShouldBeShown()
+    {
+        $this->getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
+        $this->getSession()->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
+
+        /** @var oxCountry $oCountry */
+        $oCountry = oxNew('oxCountry');
+        $oCountry->setId('8f241f11095d6ffa8.86593236');
+        $oCountry->oxcountry__oevattbe_appliestbevat = new oxField(true);
+        $oCountry->save();
+
+        /** @var oxArticle $oArticle */
+        $oArticle = oxNew('oxArticle');
+        $oArticle->setId('_testArticle1');
+        $oArticle->oxarticles__oevattbe_istbeservice = new oxField(true);
+        $oArticle->save();
+
+        /** @var oxBasket|oeVATTBEOxBasket $oBasket */
+        $oBasket = oxNew('oxBasket');
+        $oBasket->addToBasket('_testArticle1', 1);
+        $oBasket->setOeVATTBECountryId('8f241f11095d6ffa8.86593236');
+
+        $this->assertTrue($oBasket->showOeVATTBECountryChangedError());
+    }
+
+    /**
      * Test get country when it is set
      */
     public function testGetOeVATTBETbeCountryIdSet()
