@@ -50,18 +50,7 @@ class oeVATTBECategoryVATGroupsPopulatorDbGateway
             /** @var oxDb $oDb */
             $oDb = oxNew('oxDb');
             $sArticleIds = implode(', ', $oDb->quoteArray($aArticleIds));
-            $sSqlToUpdateArticles = '
-              UPDATE `oxarticles`
-              SET  `oxarticles`.`oevattbe_istbeservice` = 0
-              WHERE `oxarticles`.`oxid`
-              IN ('. $sArticleIds .')';
-
-            $sSqlToRemoveRates = '
-              DELETE FROM `oevattbe_articlevat`
-              WHERE `oevattbe_articlevat`.`oevattbe_articleid`
-              IN ('. $sArticleIds . ')';
-            $oLegacyDb = $this->_getDb();
-            $blResult = $oLegacyDb->execute($sSqlToUpdateArticles) && $oLegacyDb->execute($sSqlToRemoveRates);
+            $blResult = $this->_makeArticlesNotTBE($sArticleIds) && $this->_removeFromVATGroups($sArticleIds);
         }
 
 
@@ -136,5 +125,40 @@ class oeVATTBECategoryVATGroupsPopulatorDbGateway
     protected function _getDb()
     {
         return oxDb::getDb(oxDb::FETCH_MODE_ASSOC);
+    }
+
+    /**
+     * Removes TBE flag from articles.
+     *
+     * @param string $sArticleIds
+     *
+     * @return array
+     */
+    protected function _makeArticlesNotTBE($sArticleIds)
+    {
+        $sSqlToUpdateArticles = '
+              UPDATE `oxarticles`
+              SET  `oxarticles`.`oevattbe_istbeservice` = 0
+              WHERE `oxarticles`.`oxid`
+              IN (' . $sArticleIds . ')';
+
+        return $this->_getDb()->execute($sSqlToUpdateArticles);
+    }
+
+    /**
+     * Removes from articles VAT groups.
+     *
+     * @param string $sArticleIds
+     *
+     * @return bool
+     */
+    protected function _removeFromVATGroups($sArticleIds)
+    {
+        $sSqlToRemoveRates = '
+              DELETE FROM `oevattbe_articlevat`
+              WHERE `oevattbe_articlevat`.`oevattbe_articleid`
+              IN (' . $sArticleIds . ')';
+
+        return $this->_getDb()->execute($sSqlToRemoveRates);
     }
 }
