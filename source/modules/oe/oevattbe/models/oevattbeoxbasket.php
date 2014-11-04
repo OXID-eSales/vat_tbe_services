@@ -72,7 +72,10 @@ class oeVATTBEOxBasket extends oeVatTbeOxBasket_parent
      */
     public function setOeVATTBECountryId($sTBECountryId)
     {
-        $this->_sTBECountryId = $sTBECountryId;
+        if ($this->_sTBECountryId !== $sTBECountryId) {
+            $this->_sTBECountryId = $sTBECountryId;
+            $this->_onOeVATTBECountryChange();
+        }
     }
 
     /**
@@ -146,5 +149,22 @@ class oeVATTBEOxBasket extends oeVatTbeOxBasket_parent
     {
         $oTBEUser = oeVATTBETBEUser::createInstance();
         return oxNew('oeVATTBEOrderArticleChecker', $this->getBasketArticles(), $oTBEUser);
+    }
+
+    /**
+     * Executes necessary actions on basket country change.
+     */
+    private function _onOeVATTBECountryChange()
+    {
+        $oUserCountry = oeVATTBETBEUser::createInstance();
+        $oCountry = $this->getOeVATTBECountry();
+
+        $blUserFromDomesticCountry = $oUserCountry->isUserFromDomesticCountry();
+        $blCountryAppliesTBEVAT = $oCountry && $oCountry->appliesOeTBEVATTbeVat();
+        if (!$blUserFromDomesticCountry && $this->hasOeTBEVATArticles() && $blCountryAppliesTBEVAT) {
+            $this->setOeVATTBECountryChanged();
+        }
+
+        $this->calculateBasket(true);
     }
 }

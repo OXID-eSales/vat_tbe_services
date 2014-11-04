@@ -28,14 +28,18 @@ class oeVATTBEOxCmp_Basket extends oeVatTbeOxCmp_Basket_parent
      * Loads basket ($oBasket = $mySession->getBasket()), calls oBasket->calculateBasket,
      * executes parent::render() and returns basket object.
      *
-     * @return object   $oBasket    basket object
+     * @return object $oBasket Basket object.
      */
     public function render()
     {
-        if ($oBasket = $this->getSession()->getBasket()) {
+        /** @var oxBasket|oeVATTBEOxBasket $oBasket */
+        $oBasket = $this->getSession()->getBasket();
+        if ($oBasket) {
+            /** @var oxUser|oeVATTBEOxUser $oUser */
             $oUser = $this->getUser();
             if ($oUser) {
-                $this->_oeVATTBEManageBasketForLoggedInUser($oBasket, $oUser);
+                $sUserCountryId = $oUser->getOeVATTBETbeCountryId();
+                $oBasket->setOeVATTBECountryId($sUserCountryId);
             } else {
                 $oBasket->calculateBasket(false);
             }
@@ -44,22 +48,5 @@ class oeVATTBEOxCmp_Basket extends oeVatTbeOxCmp_Basket_parent
         parent::render();
 
         return $oBasket;
-    }
-
-    /**
-     * Manage basket if needed add errors and recalculation
-     *
-     * @param oeVATTBEOxBasket $oBasket basket
-     * @param oeVATTBEOxUser   $oUser   user
-     */
-    protected function _oeVATTBEManageBasketForLoggedInUser($oBasket, $oUser)
-    {
-        if ((is_null($oBasket->getOeVATTBETbeCountryId()) || ($oBasket->getOeVATTBETbeCountryId() != $oUser->getOeVATTBETbeCountryId()))) {
-            $oBasket->setOeVATTBECountryId($oUser->getOeVATTBETbeCountryId());
-            if ($oBasket->hasOeTBEVATArticles() && $oBasket->getOeVATTBECountry()->appliesOeTBEVATTbeVat()) {
-                $oBasket->setOeVATTBECountryChanged();
-            }
-            $oBasket->calculateBasket(true);
-        }
     }
 }
