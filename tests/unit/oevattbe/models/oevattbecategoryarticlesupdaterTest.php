@@ -32,9 +32,9 @@ class Unit_oeVatTbe_Models_oeVATTBECategoryArticlesUpdaterTest extends OxidTestC
      */
     public function testCreating()
     {
-        $oPopulator = oeVATTBECategoryArticlesUpdater::createInstance();
+        $oArticlesUpdater = oeVATTBECategoryArticlesUpdater::createInstance();
 
-        $this->assertInstanceOf('oeVATTBECategoryArticlesUpdater', $oPopulator);
+        $this->assertInstanceOf('oeVATTBECategoryArticlesUpdater', $oArticlesUpdater);
     }
 
     /**
@@ -50,8 +50,8 @@ class Unit_oeVatTbe_Models_oeVATTBECategoryArticlesUpdaterTest extends OxidTestC
         $oGateway->expects($this->once())->method('populate')->with('categoryId');
 
         /** @var oeVATTBECategoryArticlesUpdater $oList */
-        $oPopulator = oxNew('oeVATTBECategoryArticlesUpdater', $oGateway);
-        $oPopulator->populate($oCategory);
+        $oArticlesUpdater = oxNew('oeVATTBECategoryArticlesUpdater', $oGateway);
+        $oArticlesUpdater->populate($oCategory);
     }
 
     /**
@@ -67,7 +67,7 @@ class Unit_oeVatTbe_Models_oeVATTBECategoryArticlesUpdaterTest extends OxidTestC
         $oGateway->expects($this->once())->method('reset')->with($aArticles);
 
         /** @var oeVATTBECategoryArticlesUpdater $oList */
-        $oPopulator = oxNew('oeVATTBECategoryArticlesUpdater', $oGateway);
-        $oPopulator->reset($aArticles);
+        $oArticlesUpdater = oxNew('oeVATTBECategoryArticlesUpdater', $oGateway);
+        $oArticlesUpdater->reset($aArticles);
     }
 }
