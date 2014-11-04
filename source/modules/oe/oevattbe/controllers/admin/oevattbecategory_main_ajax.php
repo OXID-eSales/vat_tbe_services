@@ -44,7 +44,7 @@ class oeVATTBECategory_Main_Ajax extends oeVATTBECategory_Main_Ajax_parent
             $sArticleTable = $this->_getViewName('oxarticles');
             $aArticles = $this->_getAll($this->_addFilter("select $sArticleTable.oxid " . $this->_getQuery()));
         }
-        oeVATTBECategoryArticlesUpdater::createInstance()->reset($aArticles);
+        oeVATTBECategoryArticlesUpdater::createInstance()->removeCategoryTBEInformationFromArticles($aArticles);
         parent::removeArticle();
     }
 

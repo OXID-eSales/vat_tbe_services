@@ -62,7 +62,7 @@ class oeVATTBECategoryArticlesUpdater
      *
      * @param array $aArticles
      */
-    public function reset($aArticles)
+    public function removeCategoryTBEInformationFromArticles($aArticles)
     {
         $this->_getDbGateway()->reset($aArticles);
     }
