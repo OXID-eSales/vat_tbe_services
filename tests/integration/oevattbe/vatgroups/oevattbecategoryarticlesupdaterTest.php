@@ -278,8 +278,9 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryArticlesUpdaterTest extends
             $aSqlQueries[] = "INSERT INTO `oxobject2category` SET `oxcatnid` = 'categoryId', `oxobjectid` = 'article1', `oxid` = 1";
             $aSqlQueries[] = "INSERT INTO `oxobject2category` SET `oxcatnid` = 'categoryId', `oxobjectid` = 'article2', `oxid` = 2";
         }
-        $aSqlQueries[] = "INSERT INTO `oxcategories` SET `oxid` = 'categoryId', `oevattbe_istbe` = '1'";
-        $aSqlQueries[] = "INSERT INTO `oxcategories` SET `oxid` = 'categoryId2', `oevattbe_istbe` = '0'";
+
+        $this->_createCategory('categoryId', true);
+        $this->_createCategory('categoryId2', false);
         $aSqlQueries[] = "INSERT INTO `oxarticles` SET `oxid` = 'article1', `oevattbe_istbeservice` = '0'";
         $aSqlQueries[] = "INSERT INTO `oxarticles` SET `oxid` = 'article2', `oevattbe_istbeservice` = '0'";
 
@@ -345,5 +346,24 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryArticlesUpdaterTest extends
     protected function _getTBEServiceCount()
     {
         return oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oxarticles` WHERE  `oevattbe_istbeservice` = '1'");
+    }
+
+    /**
+     * Helper to create category
+     *
+     * @param string $sCategoryId category id which be used to create new category.
+     * @param bool   $bIsTbe      bool if new category is TBE.
+     *
+     * @return oxCategory
+     */
+    private function _createCategory($sCategoryId, $bIsTbe)
+    {
+        /** @var oxCategory $oCategory */
+        $oCategory = oxNew('oxCategory');
+        $oCategory->setId($sCategoryId);
+        $oCategory->oxcategories__oevattbe_istbe = new oxField($bIsTbe);
+        $oCategory->oxcategories__oxparentid = new oxField('oxrootid');
+        $oCategory->save();
+        return $oCategory;
     }
 }
