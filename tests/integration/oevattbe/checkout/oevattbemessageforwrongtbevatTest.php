@@ -302,6 +302,7 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
     {
         $this->getConfig()->setRequestParameter('stoken', 'stoken');
         $this->getConfig()->setRequestParameter('sDeliveryAddressMD5', 'b4ebffc0f1940d9a54599ec7e21d2f2c');
+        oxAddClassModule('oeVATTBENullMailer', 'oxEmail');
 
         $oSession = oxRegistry::getSession();
         $oSession->setVariable('sess_stoken', 'stoken');
@@ -338,6 +339,7 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
     {
         $this->getConfig()->setRequestParameter('stoken', 'stoken');
         $this->getConfig()->setRequestParameter('sDeliveryAddressMD5', 'b4ebffc0f1940d9a54599ec7e21d2f2c');
+        oxAddClassModule('oeVATTBENullMailer', 'oxEmail');
 
         $oSession = oxRegistry::getSession();
         $oSession->setVariable('sess_stoken', 'stoken');
