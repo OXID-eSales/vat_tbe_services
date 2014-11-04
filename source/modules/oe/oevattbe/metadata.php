@@ -31,8 +31,11 @@ $aModule = array(
     'id'           => 'oevattbe',
     'title'        => 'OXID eShop eVAT',
     'description'  => array(
-        'de' => 'OXID eShop eVAT Modul.',
-        'en' => 'The OXID eVat module allows you to configure a range of tax rates for a
+        'de' => 'Das Modul eVAT ermöglicht es, einem Land verschiedene Mehrwertsteuersätze
+zuzuweisen und zusätzlich Artikel als Telekommunikations-, Rundfunk-, Fernseh- und auf
+elektronischem Weg erbrachte Dienstleistungen gemäß der
+<a href="http://ec.europa.eu/taxation_customs/taxation/vat/how_vat_works/telecom/index_de.htm" target="_blank">Europäischen Steuervorschrift ab 2015</a> zu definieren.',
+        'en' => 'The OXID eVAT module allows you to configure a range of tax rates for a
 country, and additionally enables you to define a product as a
 Telecommunication, Broadcasting or Electronic (TBE) service according to
 <a href="http://ec.europa.eu/taxation_customs/taxation/vat/how_vat_works/telecom/index_en.htm" target="_blank">European tax directive as of 2015</a>',
