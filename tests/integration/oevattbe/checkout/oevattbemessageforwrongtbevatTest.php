@@ -296,8 +296,8 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
     }
 
     /**
- * Check if message is set in forth checkout step for TBE articles with wrong VAT.
- */
+     * Check if message is set in forth checkout step for TBE articles with wrong VAT.
+     */
     public function testAllowOrderIfVATConfigured()
     {
         $this->getConfig()->setRequestParameter('stoken', 'stoken');
@@ -326,6 +326,7 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
         $oBasket->calculateBasket(true);
         $oSession->setBasket($oBasket);
 
+        /** @var order $oOrder */
         $oOrder = oxNew('order');
         $this->assertSame('thankyou', $oOrder->execute());
     }
