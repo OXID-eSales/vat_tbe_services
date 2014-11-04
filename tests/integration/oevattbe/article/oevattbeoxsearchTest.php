@@ -49,6 +49,7 @@ class Integration_oeVATTBE_article_oeVATTBEOxSearchTest extends OxidTestCase
         /** @var oxArticle $oArticle */
         $oArticle = $oArticleList['1126'];
 
+        $this->assertInstanceOf('oxArticle', $oArticle);
         $this->assertSame('8.00', $oArticle->getOeVATTBETBEVat());
     }
 
