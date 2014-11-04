@@ -58,6 +58,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryArticlesUpdaterTest extends
 
         $this->setRequestParam('synchoxid', 'article1');
 
+        /** @var oeVATTBEArticle_Extend_Ajax|PHPUnit_Framework_MockObject_MockObject $oController */
         $oController = $this->getMock('oeVATTBEArticle_Extend_Ajax', array('_getActionIds'));
         $oController->expects($this->any())->method('_getActionIds')->will($this->returnValue(array('categoryId')));
 
