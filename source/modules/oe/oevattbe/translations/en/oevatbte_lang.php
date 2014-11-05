@@ -25,7 +25,7 @@
 $aLang = array(
     'charset'                                         => 'ISO-8859-15',
     'PLUS_SHIPPING2'                                  => 'shipping ** Electronic Service',
-    'OEVATTBE_ERROR_MESSAGE_TBE_ARTICLE_VAT_PROBLEMS' => 'Unfortunately, it was not possible to calculate the VAT rate for some articles in your basket and can therefore not be sold. Please remove the following articles from your basket: %s',
+    'OEVATTBE_ERROR_MESSAGE_TBE_ARTICLE_VAT_PROBLEMS' => 'Unfortunately, it was not possible to calculate the VAT rate for some products in your basket and can therefore not be sold. Please remove the following products from your basket: %s',
     'OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY'         => 'This VAT was calculated for your location: %s.',
     'OEVATTBE_VAT_WILL_BE_CALCULATED_BY_USER_COUNTRY' => 'VAT rate depends on customer\'s location (currently %s) and might change after login.',
     'OEVATTBE_RESIDENCE_COUNTRY_CHANGED_MESSAGE'      => 'Your location has been identified as %s. This location will be used in VAT calculation for e.g. eBooks or MP3s.',
