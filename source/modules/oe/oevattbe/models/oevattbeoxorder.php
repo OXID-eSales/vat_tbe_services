@@ -58,24 +58,30 @@ class oeVATTBEOxOrder extends oeVATTBEOxOrder_parent
      * Validates order parameters like stock, delivery and payment
      * parameters
      *
-     * @param oxbasket $oBasket basket object
-     * @param oxuser   $oUser   order user
+     * @param oxBasket|oeVATTBEOxBasket $oBasket basket object
+     * @param oxUser|oeVATTBEOxUser     $oUser   order user
      *
      * @return null
      */
     public function validateOrder($oBasket, $oUser)
     {
         $iValidState = $this->_getValidateOrderParent($oBasket, $oUser);
+        $oUserCountry = oeVATTBETBEUser::createInstance();
 
-        if (!$iValidState && $oUser->getOeVATTBETbeCountryId() && ($oBasket->getOeVATTBETbeCountryId() != $oUser->getOeVATTBETbeCountryId())) {
+        $blUserCountryChanged = $oBasket->getOeVATTBETbeCountryId() != $oUserCountry->getOeVATTBETbeCountryId();
+        if (!$iValidState && $blUserCountryChanged) {
             $iValidState = oxOrder::ORDER_STATE_INVALIDDElADDRESSCHANGED;
         }
 
-        $oVATTBEOrderArticleChecker = $this->_getOeVATTBEOrderArticleChecker($oBasket);
+        $oArticleChecker = $this->_getOeVATTBEOrderArticleChecker($oBasket);
 
-        if (!$iValidState && !$oVATTBEOrderArticleChecker->isValid()) {
+        $blUserFromDomesticCountry = $oUserCountry->isUserFromDomesticCountry();
+        $blOrderValid = !$oBasket->hasOeTBEVATArticles() || ($oArticleChecker->isValid() && $oUserCountry->getOeVATTBETbeCountryId());
+
+        if (!$iValidState && !$blUserFromDomesticCountry && !$blOrderValid) {
             $iValidState = oeVATTBEOxOrder::ORDER_STATE_TBE_NOT_CONFIGURED;
         }
+
         return $iValidState;
     }
 
