@@ -71,7 +71,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxOrderTest extends OxidTestCase
     public function providerValidateOrderWithInvalidArticles()
     {
         return array(
-            array('a7c40f631fc920687.20179984', false),
+//            array('a7c40f631fc920687.20179984', false),
 //            array('NonExistingCountry', true),
             array('', true),
         );
