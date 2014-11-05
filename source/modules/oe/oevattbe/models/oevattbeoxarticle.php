@@ -71,7 +71,6 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
         return $aKeys;
     }
 
-
     /**
      * Builds and returns SQL query string.
      *
@@ -115,17 +114,6 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
     }
 
     /**
-     * Returns users tbe country.
-     *
-     * @return string
-     */
-    private function _getOeVATTBETbeCountryId()
-    {
-        $oUserCountry = oeVATTBETBEUser::createInstance();
-        return $oUserCountry->getOeVATTBETbeCountryId();
-    }
-
-    /**
      * Returns users tbe country
      *
      * @return string
@@ -133,10 +121,10 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
     private function _isOeVATTBEConfigured()
     {
         $isConfigured = false;
-        $sCountryId = $this->_getOeVATTBETbeCountryId();
-        if (!is_null($sCountryId)) {
-            $oCountry = oxNew('oxCountry');
-            $oCountry->load($sCountryId);
+
+        $oUserCountry = oeVATTBETBEUser::createInstance();
+        $oCountry = $oUserCountry->getCountry();
+        if (!is_null($oCountry)) {
             $isConfigured = $oCountry->appliesOeTBEVATTbeVat();
         }
 
