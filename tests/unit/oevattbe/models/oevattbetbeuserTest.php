@@ -238,9 +238,42 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
     }
 
     /**
-     * Testing
+     * Provider for testGetCountry.
+     *
+     * @return array
      */
-    public function testGetCountry()
+    public function providerGetCountry()
+    {
+        return array(
+            array(''),
+            array('NonExistingCountryId'),
+        );
+    }
+
+    /**
+     * Testing getting of country when invalid user country id is set.
+     *
+     * @param string $sCountryId
+     *
+     * @dataProvider providerGetCountry
+     */
+    public function testGetCountryWithInvalidCountryId($sCountryId)
+    {
+        $oSession = $this->getSession();
+        $oSession->setVariable('TBECountryId', $sCountryId);
+
+        $oConfig = $this->getConfig();
+        $oSession = $this->getSession();
+
+        $oUser = oxNew('oeVATTBETBEUser', oxNew('oxUser'), $oSession, $oConfig);
+
+        $this->assertNull($oUser->getCountry());
+    }
+
+    /**
+     * Testing getting of country when valid user country id is set.
+     */
+    public function testGetCountryWithValidCountryId()
     {
         $sGermanyId = 'a7c40f631fc920687.20179984';
         $oSession = $this->getSession();

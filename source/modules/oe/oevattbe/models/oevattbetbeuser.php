@@ -109,17 +109,18 @@ class oeVATTBETBEUser
     }
 
     /**
-     * Returns country
+     * Returns country object. If country was not found, returns null.
      *
-     * @return oxCountry
+     * @return oxCountry|oeVATTBEOxCountry|null
      */
     public function getCountry()
     {
         $oCountry = null;
 
-        if (!is_null($this->getOeVATTBETbeCountryId())) {
-            $oCountry = oxNew('oxCountry');
-            $oCountry->load($this->getOeVATTBETbeCountryId());
+        $sCountryId = $this->getOeVATTBETbeCountryId();
+        $oCountry = oxNew('oxCountry');
+        if (!$oCountry->load($sCountryId)) {
+            $oCountry = null;
         }
 
         return $oCountry;
