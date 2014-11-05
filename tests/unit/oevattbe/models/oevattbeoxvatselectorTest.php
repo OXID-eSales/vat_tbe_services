@@ -130,4 +130,51 @@ class Unit_oeVatTbe_models_oeVATTBEOxVatSelectorTest extends OxidTestCase
 
         $this->assertSame(15, $oVatSelector->getArticleUserVat($oArticle));
     }
+
+    /**
+     * Test if VAT applied for not business customer
+     * when article is TBE service and user is not from shop's domestic country.
+     */
+    public function testGetArticleForNotBusinessCustomer()
+    {
+        /** @var oxUser $oUser */
+        $oUser = oxNew('oxUser');
+        $oUser->oxuser__oxustid = new oxField('0');
+
+        $this->getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'LT');
+        $this->getSession()->setVariable('TBECountryId', 'a7c40f631fc920687.20179984');
+        $oArticle = $this->getMock('oeVatTbeOxArticle', array('getOeVATTBETBEVat', 'isOeVATTBETBEService'));
+        $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->will($this->returnValue(15));
+        $oArticle->expects($this->any())->method('isOeVATTBETBEService')->will($this->returnValue(true));
+        $oArticle->setArticleUser($oUser);
+
+        /** @var oeVATTBEOxVatSelector $oVatSelector */
+        $oVatSelector = oxNew('oeVATTBEOxVatSelector');
+
+        $this->assertSame(15, $oVatSelector->getArticleUserVat($oArticle));
+    }
+
+    /**
+     * Test if 0 VAT applied for business customer
+     * when article is TBE service and user is not from shop's domestic country.
+     */
+    public function testGetArticleForBusinessCustomer()
+    {
+        /** @var oxUser $oUser */
+        $oUser = oxNew('oxUser');
+        $oUser->oxuser__oxustid = new oxField('1');
+
+        $this->getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'LT');
+        $this->getSession()->setVariable('TBECountryId', 'a7c40f631fc920687.20179984');
+        $oArticle = $this->getMock('oeVatTbeOxArticle', array('getOeVATTBETBEVat', 'isOeVATTBETBEService'));
+        $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->will($this->returnValue(15));
+        $oArticle->expects($this->any())->method('isOeVATTBETBEService')->will($this->returnValue(true));
+        $oArticle->setArticleUser($oUser);
+
+        /** @var oeVATTBEOxVatSelector $oVatSelector */
+        $oVatSelector = oxNew('oeVATTBEOxVatSelector');
+
+        $this->assertNotSame(15, $oVatSelector->getArticleUserVat($oArticle));
+        $this->assertEquals(false, $oVatSelector->getArticleUserVat($oArticle));
+    }
 }

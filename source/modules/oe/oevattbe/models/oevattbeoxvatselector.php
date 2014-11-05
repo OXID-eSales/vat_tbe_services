@@ -33,7 +33,9 @@ class oeVATTBEOxVatSelector extends oeVATTBEOxVatSelector_parent
      */
     public function getArticleUserVat(oxArticle $oArticle)
     {
-        if ($this->_oeVATTBEUseTBEVAT($oArticle)) {
+        $oUser = $oArticle->getArticleUser();
+
+        if (!$oUser->oxuser__oxustid->value && $this->_oeVATTBEUseTBEVAT($oArticle)) {
             $sVat = $oArticle->getOeVATTBETBEVat();
         } else {
             $sVat = parent::getArticleUserVat($oArticle);
