@@ -117,7 +117,6 @@ class Unit_oeVATTBE_controllers_oeVATTBEBasketTest extends OxidTestCase
     {
         return array(
             array(true, true, true, true),
-            array(false, true, false, true),
             array(false, true, true, false),
             array(false, false, true, true),
             array(false, false, false, false),

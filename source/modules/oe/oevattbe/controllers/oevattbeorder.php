@@ -95,7 +95,7 @@ class oeVATTBEOrder extends oeVATTBEOrder_parent
         $oCountry = $oBasket->getOeVATTBECountry();
         $oTBEUserCountry = oeVATTBETBEUser::createInstance();
 
-        $blBasketValid = $oBasket->hasOeTBEVATArticles() && $oBasket->isOeVATTBEValid();
+        $blBasketValid = $oBasket->hasOeTBEVATArticles();
         $blCountryAppliesTBEVAT = !$oCountry || $oCountry->appliesOeTBEVATTbeVat();
 
         return !$oTBEUserCountry->isUserFromDomesticCountry() && $blBasketValid && $blCountryAppliesTBEVAT;

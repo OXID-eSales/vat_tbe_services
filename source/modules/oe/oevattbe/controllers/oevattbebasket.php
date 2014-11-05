@@ -34,7 +34,8 @@ class oeVATTBEBasket extends oeVATTBEBasket_parent
     public function render()
     {
         $oUserCountry = oeVATTBETBEUser::createInstance();
-        if (!$oUserCountry->isUserFromDomesticCountry() && $oBasket = $this->getSession()->getBasket()) {
+        $oBasket = $this->getSession()->getBasket();
+        if ($this->getUser() && !$oUserCountry->isUserFromDomesticCountry() && $oBasket) {
             $oBasketArticles = $oBasket->getBasketArticles();
             /** @var oeVATTBEBasketItemsValidator $oVATTBEBasketItemsValidator */
             $oVATTBEBasketItemsValidator = oeVATTBEBasketItemsValidator::createInstance($oBasketArticles);
@@ -75,7 +76,7 @@ class oeVATTBEBasket extends oeVATTBEBasket_parent
         $oCountry = $oBasket->getOeVATTBECountry();
         $oTBEUserCountry = oeVATTBETBEUser::createInstance();
 
-        $blBasketValid = $oBasket->hasOeTBEVATArticles() && $oBasket->isOeVATTBEValid();
+        $blBasketValid = $oBasket->hasOeTBEVATArticles();
         $blCountryAppliesTBEVAT = !$oCountry || $oCountry->appliesOeTBEVATTbeVat();
 
         return !$oTBEUserCountry->isUserFromDomesticCountry() && $blBasketValid && $blCountryAppliesTBEVAT;
