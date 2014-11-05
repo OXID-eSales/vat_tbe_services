@@ -30,5 +30,5 @@ $aLang = array(
     'SHOP_MODULE_sOeVATTBEDefaultEvidence'           => 'Default Kundenstandorts-Bestimmungmethode',
     'HELP_SHOP_MODULE_sOeVATTBEDefaultEvidence'      => 'Diese Methode wird zur Standortbestimmung benutzt. Sie muss aktiv sein.',
     'SHOP_MODULE_sOeVATTBEDomesticCountry'           => 'Sitz des Shops',
-    'HELP_SHOP_MODULE_sOeVATTBEDomesticCountry'      => 'ISO2-Kürzel des Landes, der den Sitz des Shops bzw. der Firma .',
+    'HELP_SHOP_MODULE_sOeVATTBEDomesticCountry'      => 'ISO2-Kürzel des Landes, in dem der Shop bzw. die Firma ansässig ist.',
 );
