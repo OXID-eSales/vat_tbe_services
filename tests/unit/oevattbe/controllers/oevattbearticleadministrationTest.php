@@ -96,6 +96,6 @@ class Unit_oeVATTBE_controllers_oeVATTBEArticleAdministrationTest extends OxidTe
         $oArticleAdministration->render();
 
         $aViewData = $oArticleAdministration->getViewData();
-        $this->assertFalse($aViewData['readonly'], 'View data contains: '. serialize($aViewData));
+        $this->assertTrue(!isset($aViewData['readonly']), 'View data contains: '. serialize($aViewData));
     }
 }
