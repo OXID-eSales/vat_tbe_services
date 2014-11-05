@@ -29,6 +29,6 @@ $aLang = array(
     'HELP_SHOP_MODULE_aOeVATTBECountryEvidences'     => 'Eine Kundenstandorts-Bestimmungmethode kann als aktiv (1) oder inaktiv (0) markiert werden. Nur aktive Kundenstandorts-Bestimmungmethoden werden in der Kundenstandorts-Bestimmung benutzt. Bitte löschen Sie keine Einträge aus dieser Liste - ändern Sie nur die Ziffern ?0? oder ?1? wie benötigt.',
     'SHOP_MODULE_sOeVATTBEDefaultEvidence'           => 'Default Kundenstandorts-Bestimmungmethode',
     'HELP_SHOP_MODULE_sOeVATTBEDefaultEvidence'      => 'Diese Methode wird zur Standortbestimmung benutzt. Sie muss aktiv sein.',
-    'SHOP_MODULE_sOeVATTBEDomesticCountry'           => '[TR] Domestic country.',
-    'HELP_SHOP_MODULE_sOeVATTBEDomesticCountry'      => '[TR] Shop\'s domestic country. For users from this country information about TBE products will not be shown.',
+    'SHOP_MODULE_sOeVATTBEDomesticCountry'           => 'Sitz des Shops',
+    'HELP_SHOP_MODULE_sOeVATTBEDomesticCountry'      => 'ISO2-Kürzel des Landes, der den Sitz des Shops bzw. der Firma .',
 );
