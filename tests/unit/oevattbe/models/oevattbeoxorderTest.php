@@ -70,8 +70,11 @@ class Unit_oeVATTBE_models_oeVATTBEOxOrderTest extends OxidTestCase
      */
     public function providerValidateOrderWithInvalidArticles()
     {
+        // Non domestic country.
+        $sAustriaId = 'a7c40f6320aeb2ec2.72885259';
+
         return array(
-            array('a7c40f631fc920687.20179984', false),
+            array($sAustriaId, false),
             array('NonExistingCountry', true),
             array('', true),
         );
@@ -115,10 +118,19 @@ class Unit_oeVATTBE_models_oeVATTBEOxOrderTest extends OxidTestCase
      */
     public function providerValidateOrderWithValidArticles()
     {
+        // Domestic country.
+        $sGermanyId = 'a7c40f631fc920687.20179984';
+
+        // Non domestic non EU country.
+        $sAustraliaId = '8f241f11095410f38.37165361';
+
         return array(
-            array('a7c40f631fc920687.20179984', true, true),  // DE
-            array('a7c40f631fc920687.20179984', false, false), // AU
-            array('8f241f11095410f38.37165361', true, false), // AU
+            array($sGermanyId, true, true),
+            array($sGermanyId, false, true),
+            array($sGermanyId, false, false),
+            array($sAustraliaId, true, true),
+            array($sAustraliaId, false, true),
+            array($sAustraliaId, false, false),
         );
     }
 
