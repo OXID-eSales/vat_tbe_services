@@ -56,7 +56,6 @@ class Unit_oeVATTBE_models_oeVATTBEOxBasketTest extends OxidTestCase
         return array(
             array(true, true, true),
             array(false, false, true),
-            array(false, true, false),
             array(false, false, false),
         );
     }
@@ -98,9 +97,26 @@ class Unit_oeVATTBE_models_oeVATTBEOxBasketTest extends OxidTestCase
     }
 
     /**
-     * Test on basket country change event when message should be shown after country change.
+     * Provides information if need to add article to basket or leave it empty.
+     *
+     * @return array
      */
-    public function testSetCountryIdOnChangeEventWhenMessageShouldBeShown()
+    public function providerSetCountryIdOnChangeEventWhenMessageShouldBeShown()
+    {
+        return array(
+            array(true),
+            array(false),
+        );
+    }
+
+    /**
+     * Test on basket country change event when message should be shown after country change.
+     *
+     * @param bool $bAddToBasket if some article are in basket.
+     *
+     * @dataProvider providerSetCountryIdOnChangeEventWhenMessageShouldBeShown
+     */
+    public function testSetCountryIdOnChangeEventWhenMessageShouldBeShown($bAddToBasket)
     {
         $this->getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
         $sLithuaniaId = '8f241f11095d6ffa8.86593236';
@@ -120,8 +136,10 @@ class Unit_oeVATTBE_models_oeVATTBEOxBasketTest extends OxidTestCase
 
         /** @var oxBasket|oeVATTBEOxBasket $oBasket */
         $oBasket = oxNew('oxBasket');
-        $oBasket->addToBasket('_testArticle1', 1);
         $oBasket->setOeVATTBECountryId($sLithuaniaId);
+        if ($bAddToBasket) {
+            $oBasket->addToBasket('_testArticle1', 1);
+        }
 
         $this->assertTrue($oBasket->showOeVATTBECountryChangedError());
     }

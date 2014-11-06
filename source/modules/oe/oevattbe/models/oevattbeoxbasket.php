@@ -159,7 +159,7 @@ class oeVATTBEOxBasket extends oeVatTbeOxBasket_parent
 
         $blUserFromDomesticCountry = $oUserCountry->isUserFromDomesticCountry();
         $blCountryAppliesTBEVAT = $oCountry && $oCountry->appliesOeTBEVATTbeVat();
-        if (!$blUserFromDomesticCountry && $this->hasOeTBEVATArticles() && $blCountryAppliesTBEVAT) {
+        if (!$blUserFromDomesticCountry && $blCountryAppliesTBEVAT) {
             $this->setOeVATTBECountryChanged();
         }
 
