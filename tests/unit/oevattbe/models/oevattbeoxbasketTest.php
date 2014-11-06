@@ -73,12 +73,13 @@ class Unit_oeVATTBE_models_oeVATTBEOxBasketTest extends OxidTestCase
     public function testSetCountryIdOnChangeEvent($blDomesticCountry, $blTBECountry, $blIsArticleTbeService)
     {
         $sDomesticCountry = $blDomesticCountry ? 'LT' : 'DE';
+        $sLithuaniaId = '8f241f11095d6ffa8.86593236';
         $this->getConfig()->setConfigParam('sOeVATTBEDomesticCountry', $sDomesticCountry);
-        $this->getSession()->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
+        $this->getSession()->setVariable('TBECountryId', $sLithuaniaId);
 
         /** @var oxCountry $oCountry */
         $oCountry = oxNew('oxCountry');
-        $oCountry->load('8f241f11095d6ffa8.86593236');
+        $oCountry->load($sLithuaniaId);
         $oCountry->oxcountry__oevattbe_appliestbevat = new oxField($blTBECountry);
         $oCountry->save();
 
@@ -91,7 +92,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxBasketTest extends OxidTestCase
         /** @var oxBasket|oeVATTBEOxBasket $oBasket */
         $oBasket = oxNew('oxBasket');
         $oBasket->addToBasket('_testArticle1', 1);
-        $oBasket->setOeVATTBECountryId('8f241f11095d6ffa8.86593236');
+        $oBasket->setOeVATTBECountryId($sLithuaniaId);
 
         $this->assertFalse($oBasket->showOeVATTBECountryChangedError());
     }
@@ -102,11 +103,12 @@ class Unit_oeVATTBE_models_oeVATTBEOxBasketTest extends OxidTestCase
     public function testSetCountryIdOnChangeEventWhenMessageShouldBeShown()
     {
         $this->getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
-        $this->getSession()->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
+        $sLithuaniaId = '8f241f11095d6ffa8.86593236';
+        $this->getSession()->setVariable('TBECountryId', $sLithuaniaId); // LT
 
         /** @var oxCountry $oCountry */
         $oCountry = oxNew('oxCountry');
-        $oCountry->setId('8f241f11095d6ffa8.86593236');
+        $oCountry->setId($sLithuaniaId);
         $oCountry->oxcountry__oevattbe_appliestbevat = new oxField(true);
         $oCountry->save();
 
@@ -119,7 +121,7 @@ class Unit_oeVATTBE_models_oeVATTBEOxBasketTest extends OxidTestCase
         /** @var oxBasket|oeVATTBEOxBasket $oBasket */
         $oBasket = oxNew('oxBasket');
         $oBasket->addToBasket('_testArticle1', 1);
-        $oBasket->setOeVATTBECountryId('8f241f11095d6ffa8.86593236');
+        $oBasket->setOeVATTBECountryId($sLithuaniaId);
 
         $this->assertTrue($oBasket->showOeVATTBECountryChangedError());
     }
