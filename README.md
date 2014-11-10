@@ -9,7 +9,7 @@ This module implements requirements that is to allow an OXID eShop to comply wit
 
 ###Setup
 
-For installation instructions please see /documentation/UserManual_en.pdf in this package.
+For installation instructions please see /documentation/UserManual_de.pdf in this package.
 
 ###How to Contribute
 
