@@ -55,4 +55,5 @@ $aLang = array(
     'OEVATTBE_CATEGORY_COUNTRY' => 'Country',
     'OEVATTBE_CATEGORY_VAT_GROUP' => 'VAT rate for electronic services',
     'OEVATTBE_CATEGORY_VAT_RATES' => 'Country-specific VAT rate settings',
+    'GENERAL_ARTICLE_OEVATTBE_ISTBESERVICE' => 'Country-specific VAT rate settings',
 );

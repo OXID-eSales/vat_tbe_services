@@ -56,4 +56,5 @@ $aLang = array(
     'OEVATTBE_CATEGORY_COUNTRY' => 'Land',
     'OEVATTBE_CATEGORY_VAT_GROUP' => 'MwSt.-Satz je Land für elektron. Dienstleistungen',
     'OEVATTBE_CATEGORY_VAT_RATES' => 'Zuweisung von Mehrwertsteuersätzen',
+    'GENERAL_ARTICLE_OEVATTBE_ISTBESERVICE' => 'Zuweisung von Mehrwertsteuersätzen',
 );
