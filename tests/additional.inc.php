@@ -19,4 +19,11 @@
  * @copyright (C) OXID eSales AG 2003-2014
  */
 
+$testConfig = new oxTestConfig();
+$edition = $testConfig->getShopEdition();
+
+$serviceCaller = new oxServiceCaller();
+$serviceCaller->setParameter('importSql', '@'. __DIR__ ."/testsql/testdata_$edition.sql");
+$serviceCaller->callService('ShopPreparation', 1);
+
 include_once 'libs/oevattbenullmailer.php';
