@@ -9,8 +9,10 @@ This module implements requirements that is to allow an OXID eShop to comply wit
 
 ###Setup
 
-For installation instructions please see /documentation/UserManual_de.pdf in this package.
+For installation instructions please see /documentation/UserManual_de.pdf in this package. Please note that for previous shop releases, this module requires the following OXID eShop versions:
 
+- 5.0/4.7 releases: 5.0.12/4.7.12 or above
+- 5.1/4.8 releases: 5.1.6/4.8.6 or above
 
 ###License
 
