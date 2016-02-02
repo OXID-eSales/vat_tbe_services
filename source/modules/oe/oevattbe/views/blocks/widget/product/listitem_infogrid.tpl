@@ -1,6 +1,6 @@
 [{$smarty.block.parent}]
 [{if $oViewConf->oeVATTBEShowTBEArticlePriceNotice($product) && $oView->isVatIncluded()}]
 [{if !($product->hasMdVariants() || ($oViewConf->showSelectListsInList() && $product->getSelections(1)) || $product->getVariants())}]
-    <span class="price tbePrice">**</span>
+    <label class="price lead text-nowrap tbePrice">**</label>
 [{/if}]
 [{/if}]

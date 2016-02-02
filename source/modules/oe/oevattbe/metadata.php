@@ -121,6 +121,7 @@ Telecommunication, Broadcasting or Electronic (TBE) service according to
         array('template' => 'widget/product/compareitem.tpl', 'block'=>'widget_product_compareitem_price_value', 'file'=>'/views/blocks/widget/product/compareitem.tpl'),
         array('template' => 'user_main.tpl', 'block'=>'admin_user_main_form', 'file'=>'/views/blocks/admin/user_main.tpl'),
         array('template' => 'page/checkout/inc/basketcontents.tpl', 'block'=>'checkout_basketcontents_basketitem_vat', 'file'=>'/views/blocks/page/checkout/inc/basketitem_vat.tpl'),
+        array('template' => 'page/checkout/inc/basketcontents_table.tpl', 'block'=>'checkout_basketcontents_basketitem_vat', 'file'=>'/views/blocks/page/checkout/inc/basketitem_vat_in_table.tpl'),
         array('template' => 'page/checkout/basket.tpl', 'block'=>'checkout_basket_next_step_bottom', 'file'=>'/views/blocks/page/checkout/basket_nextstep.tpl'),
         array('template' => 'page/checkout/order.tpl', 'block'=>'checkout_order_next_step_bottom', 'file'=>'/views/blocks/page/checkout/order_nextstep.tpl'),
         array('template' => 'order_main.tpl', 'block'=>'admin_order_main_form', 'file'=>'/views/admin/tpl/oevattbeorder_main.tpl'),
