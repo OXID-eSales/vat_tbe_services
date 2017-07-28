@@ -131,8 +131,8 @@ class Integration_oeVATTBE_category_oeVATTBECategoryAdministrationTest extends O
             'a7c40f632e04633c9.47194042' => 2,
             '8f241f110955d3260.55487539' => ''
         );
-        $oConfig = $this->getConfig();
-        $oConfig::setRequestParameter('VATGroupsByCountry', $aSelectParams);
+
+        $this->setRequestParameter('VATGroupsByCountry', $aSelectParams);
         $oCategoryAdministration->setEditObjectId('_testCategory');
         $oCategoryAdministration->save();
 

@@ -109,7 +109,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupsEditingTest extends
         $aRequestParameters[$iGroupId]['oevattbe_rate'] = $fVATRate;
         $aRequestParameters[$iGroupId]['oevattbe_description'] = 'some other description';
 
-        $this->setRequestParam('updateval', $aRequestParameters);
+        $this->setRequestParameter('updateval', $aRequestParameters);
 
         $sAustriaId = 'a7c40f6320aeb2ec2.72885259';
         /** @var oeVATTBECountryVatGroups $oVATTBECountryVatGroups */
@@ -148,7 +148,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupsEditingTest extends
         $aRequestParameters[$iGroupId]['oevattbe_rate'] = 55.5;
         $aRequestParameters[$iGroupId]['oevattbe_description'] = 'some other description';
 
-        $this->setRequestParam('updateval', $aRequestParameters);
+        $this->setRequestParameter('updateval', $aRequestParameters);
 
         $sAustriaId = 'a7c40f6320aeb2ec2.72885259';
         /** @var oeVATTBECountryVatGroups $oVATTBECountryVatGroups */
@@ -187,13 +187,13 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupsEditingTest extends
 
         $this->assertSame(2, count($aCountryVatGroups));
 
-        $this->setRequestParam('countryVATGroupId', '79');
+        $this->setRequestParameter('countryVATGroupId', '79');
         $oVATTBECountryVatGroups->deleteCountryVatGroup();
 
         $aCountryVatGroups = $oVATTBECountryVatGroups->getVatGroups();
         $this->assertSame(1, count($aCountryVatGroups));
 
-        $this->setRequestParam('countryVATGroupId', '80');
+        $this->setRequestParameter('countryVATGroupId', '80');
         $oVATTBECountryVatGroups->deleteCountryVatGroup();
 
         $aCountryVatGroups = $oVATTBECountryVatGroups->getVatGroups();

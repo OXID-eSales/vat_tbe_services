@@ -75,12 +75,12 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECountryInformationAboutVatGroupsTes
         $oVATTBECountryVatGroups = oxNew('oeVATTBECountryVatGroups');
         $oVATTBECountryVatGroups->setEditObjectId($sCountryId);
 
-        $this->setRequestParam('countryVATGroupId', '79');
+        $this->setRequestParameter('countryVATGroupId', '79');
         $oVATTBECountryVatGroups->deleteCountryVatGroup();
         $oCountry->load($sCountryId);
         $this->assertTrue($oCountry->isOEVATTBEAtLeastOneGroupConfigured(), 'Country should be still marked as configured as one more group left.');
 
-        $this->setRequestParam('countryVATGroupId', '80');
+        $this->setRequestParameter('countryVATGroupId', '80');
         $oVATTBECountryVatGroups->deleteCountryVatGroup();
         $oCountry->load($sCountryId);
         $this->assertFalse($oCountry->isOEVATTBEAtLeastOneGroupConfigured(), 'Country should be marked as not configured as no more groups left.');

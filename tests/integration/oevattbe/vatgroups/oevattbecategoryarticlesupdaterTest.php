@@ -34,7 +34,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryArticlesUpdaterTest extends
         $this->_cleanData();
         $this->_prepareData();
 
-        $this->setRequestParam('synchoxid', 'article1');
+        $this->setRequestParameter('synchoxid', 'article1');
 
         $oController = $this->getMock('oeVATTBEArticle_Extend_Ajax', array('_getActionIds'));
         $oController->expects($this->any())->method('_getActionIds')->will($this->returnValue(array('categoryId2')));
@@ -56,7 +56,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryArticlesUpdaterTest extends
         $this->_cleanData();
         $this->_prepareData();
 
-        $this->setRequestParam('synchoxid', 'article1');
+        $this->setRequestParameter('synchoxid', 'article1');
 
         /** @var oeVATTBEArticle_Extend_Ajax|PHPUnit_Framework_MockObject_MockObject $oController */
         $oController = $this->getMock('oeVATTBEArticle_Extend_Ajax', array('_getActionIds'));
@@ -79,7 +79,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryArticlesUpdaterTest extends
         $this->_cleanData();
         $this->_prepareData();
 
-        $this->setRequestParam('synchoxid', 'categoryId2');
+        $this->setRequestParameter('synchoxid', 'categoryId2');
 
         $oController = $this->getMock('Category_Main_Ajax', array('_getActionIds'));
         $oController->expects($this->any())->method('_getActionIds')->will($this->returnValue(array('article1')));
@@ -101,7 +101,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryArticlesUpdaterTest extends
         $this->_cleanData();
         $this->_prepareData();
 
-        $this->setRequestParam('synchoxid', 'categoryId');
+        $this->setRequestParameter('synchoxid', 'categoryId');
 
         $oController = $this->getMock('oeVATTBECategory_Main_Ajax', array('_getActionIds'));
         $oController->expects($this->any())->method('_getActionIds')->will($this->returnValue(array('article1')));
@@ -140,13 +140,13 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryArticlesUpdaterTest extends
         $this->_cleanData();
         $this->_prepareDataForRemovingArticlesFromCategory();
 
-        $this->setRequestParam('synchoxid', 'categoryId');
+        $this->setRequestParameter('synchoxid', 'categoryId');
 
         /** @var oeVATTBECategory_Main_Ajax|PHPUnit_Framework_MockObject_MockObject $oController */
         $oController = $this->getMock('oeVATTBECategory_Main_Ajax', array('_getActionIds', '_getAll', '_addFilter'));
         $oController->expects($this->atLeastOnce())->method('_getAll')->will($this->returnValue(array('article3', 'article4')));
 
-        $this->setRequestParam('all', 1);
+        $this->setRequestParameter('all', 1);
         $oController->removeArticle();
 
         $this->assertEquals(1, $this->_getAssignedVATGroupsToArticles());
@@ -199,13 +199,13 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryArticlesUpdaterTest extends
         $this->_cleanData();
         $this->_prepareData(true);
 
-        $this->setRequestParam('oxid', 'categoryId');
-        $this->setRequestParam('editval', array('oevattbe_istbe' => 1));
+        $this->setRequestParameter('oxid', 'categoryId');
+        $this->setRequestParameter('editval', array('oevattbe_istbe' => 1));
         $aSelectParams = array(
             'a7c40f631fc920687.20179984' => 10,
             'a7c40f631fc920687.20179985' => 11
         );
-        $this->setRequestParam('VATGroupsByCountry', $aSelectParams);
+        $this->setRequestParameter('VATGroupsByCountry', $aSelectParams);
 
         $oController = oxNew('oeVATTBECategoryAdministration');
         $oController->save();
@@ -225,13 +225,13 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryArticlesUpdaterTest extends
         $this->_cleanData();
         $this->_prepareData(true);
 
-        $this->setRequestParam('oxid', 'categoryId');
-        $this->setRequestParam('editval', array('oevattbe_istbe' => 0));
+        $this->setRequestParameter('oxid', 'categoryId');
+        $this->setRequestParameter('editval', array('oevattbe_istbe' => 0));
         $aSelectParams = array(
             'a7c40f631fc920687.20179984' => 10,
             'a7c40f631fc920687.20179985' => 11
         );
-        $this->setRequestParam('VATGroupsByCountry', $aSelectParams);
+        $this->setRequestParameter('VATGroupsByCountry', $aSelectParams);
 
         $oController = oxNew('oeVATTBECategoryAdministration');
         $oController->save();
@@ -251,10 +251,10 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECategoryArticlesUpdaterTest extends
         $this->_cleanData();
         $this->_prepareData(true);
 
-        $this->setRequestParam('oxid', 'categoryId');
-        $this->setRequestParam('editval', array('oevattbe_istbe' => 1));
+        $this->setRequestParameter('oxid', 'categoryId');
+        $this->setRequestParameter('editval', array('oevattbe_istbe' => 1));
         $aSelectParams = array();
-        $this->setRequestParam('VATGroupsByCountry', $aSelectParams);
+        $this->setRequestParameter('VATGroupsByCountry', $aSelectParams);
 
         $oController = oxNew('oeVATTBECategoryAdministration');
         $oController->save();

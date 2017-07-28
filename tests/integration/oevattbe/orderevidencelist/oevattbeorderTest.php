@@ -180,7 +180,6 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderTest extends OxidTestC
             array(oxOrder::ORDER_STATE_ORDEREXISTS, true),
             array(oxOrder::ORDER_STATE_INVALIDDELIVERY, true),
             array(oxOrder::ORDER_STATE_INVALIDPAYMENT, true),
-            array(oxOrder::ORDER_STATE_INVALIDTSPROTECTION, true),
             array(oxOrder::ORDER_STATE_INVALIDDElADDRESSCHANGED, true),
             array(oxOrder::ORDER_STATE_BELOWMINPRICE, true),
         );

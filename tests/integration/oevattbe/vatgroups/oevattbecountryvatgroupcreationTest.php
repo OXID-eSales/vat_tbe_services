@@ -71,7 +71,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupCreationTest extends
             $aParameters['oevattbe_description'] = $sGroupDescription;
         }
 
-        $this->setRequestParam('editval', $aParameters);
+        $this->setRequestParameter('editval', $aParameters);
 
         /** @var oeVATTBECountryVatGroups $oVATTBECountryVatGroups */
         $oVATTBECountryVatGroups = oxNew('oeVATTBECountryVatGroups');
@@ -140,7 +140,7 @@ class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupCreationTest extends
         }
         $aParameters['oevattbe_description'] = $sGroupDescription;
 
-        $this->setRequestParam('editval', $aParameters);
+        $this->setRequestParameter('editval', $aParameters);
 
         /** @var oeVATTBECountryVatGroups $oVATTBECountryVatGroups */
         $oVATTBECountryVatGroups = oxNew('oeVATTBECountryVatGroups');
