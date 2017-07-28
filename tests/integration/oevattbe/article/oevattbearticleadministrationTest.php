@@ -131,8 +131,7 @@ class Integration_oeVATTBE_article_oeVATTBEArticleAdministrationTest extends Oxi
             'a7c40f632e04633c9.47194042' => 2,
             '8f241f110955d3260.55487539' => ''
         );
-        $oConfig = $this->getConfig();
-        $oConfig::setRequestParameter('VATGroupsByCountry', $aSelectParams);
+        $this->setRequestParameter('VATGroupsByCountry', $aSelectParams);
         $oArticleAdministration->setEditObjectId('_testArticle');
         $oArticleAdministration->save();
 
