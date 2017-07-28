@@ -12,7 +12,7 @@
     "oxideshop": {
       "target-directory": "oe/oevattbe",
       "blacklist-filter": [
-        "documentation/*",
+        "documentation/**",
         "README.md",
         "CONTRIBUTING.md",
         "composer.json"
