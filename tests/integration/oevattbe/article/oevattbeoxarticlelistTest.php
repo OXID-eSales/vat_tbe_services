@@ -127,31 +127,6 @@ class Integration_oeVATTBE_article_oeVATTBEOxArticleListTest extends OxidTestCas
      *
      * @dataProvider userConfiguration
      */
-    public function testTagList($sUserStatus, $sVat)
-    {
-        $oArticleTagList = oxNew('oxArticleTagList');
-        $oArticleTagList->setArticleId('1126');
-        $oArticleTagList->set('tag');
-        $oArticleTagList->save();
-
-        $oArticleList = $this->_getArticleList($sUserStatus);
-        $oArticleList->loadTagArticles('tag', oxRegistry::getLang()->getBaseLanguage());
-
-        /** @var oeVATTBEOxArticle|oxArticle $oArticle */
-        $oArticle = $oArticleList['1126'];
-
-        $this->assertInstanceOf('oxArticle', $oArticle);
-        $this->assertSame($sVat, $oArticle->getOeVATTBETBEVat());
-    }
-
-    /**
-     * Category list test case
-     *
-     * @param string $sUserStatus user status
-     * @param string $sVat        vat value
-     *
-     * @dataProvider userConfiguration
-     */
     public function testPriceCategoryList($sUserStatus, $sVat)
     {
         $oArticleList = $this->_getArticleList($sUserStatus);
@@ -323,16 +298,12 @@ class Integration_oeVATTBE_article_oeVATTBEOxArticleListTest extends OxidTestCas
     public function testLoadingArticlesInAdminWithFilter()
     {
         $this->getSession()->setVariable('TBECountryId', 'a7c40f631fc920687.20179984');
-        $this->getConfig()->setParameter('art_category', 'cat@@30e44ab8593023055.23928895');
+        $this->setConfigParam('art_category', 'cat@@30e44ab8593023055.23928895');
         $oArticleList = oxNew("Article_List");
         $oArticleList->setAdminMode(true);
         $aListItems = $oArticleList->getItemList();
 
-        $sCount = 9;
-        if ($this->getConfig()->getEdition() != 'EE') {
-            $sCount = 1;
-        }
-        $this->assertSame($sCount, count($aListItems));
+        $this->assertSame(9, count($aListItems));
     }
 
     /**
