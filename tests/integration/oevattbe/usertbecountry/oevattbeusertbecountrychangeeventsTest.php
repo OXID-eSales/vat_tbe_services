@@ -25,6 +25,7 @@
  */
 class Integration_oeVatTbe_userTBECountry_oeVATTBEUserTBECountryChangeEventsTest extends OxidTestCase
 {
+    protected $backupGlobalsBlacklist = array('_SESSION');
 
     /**
      * User created with billing country set as germany;
