@@ -22,9 +22,8 @@
 $serviceCaller = new \OxidEsales\TestingLibrary\ServiceCaller();
 $testConfig = new \OxidEsales\TestingLibrary\TestConfig();
 
-$edition = $testConfig->getShopEdition();
-
-$serviceCaller->setParameter('importSql', '@'. __DIR__ ."/testsql/testdata_$edition.sql");
+$testDirectory = $testConfig->getEditionTestsPath($testConfig->getShopEdition());
+$serviceCaller->setParameter('importSql', '@' . $testDirectory . '/Fixtures/testdata.sql');
 $serviceCaller->callService('ShopPreparation', 1);
 
 include_once 'libs/oevattbenullmailer.php';
