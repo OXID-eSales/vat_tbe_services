@@ -302,7 +302,7 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
     {
         $this->setRequestParameter('stoken', 'stoken');
         $this->setRequestParameter('sDeliveryAddressMD5', 'b4ebffc0f1940d9a54599ec7e21d2f2c');
-        $this->setConfigParam('sTheme', 'azure');
+        $this->setConfigParam('sTheme', 'flow');
 
         oxAddClassModule('oeVATTBENullMailer', 'oxEmail');
 
@@ -341,7 +341,7 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
     {
         $this->setRequestParameter('stoken', 'stoken');
         $this->setRequestParameter('sDeliveryAddressMD5', 'b4ebffc0f1940d9a54599ec7e21d2f2c');
-        $this->setConfigParam('sTheme', 'azure');
+        $this->setConfigParam('sTheme', 'flow');
 
         oxAddClassModule('oeVATTBENullMailer', 'oxEmail');
 
