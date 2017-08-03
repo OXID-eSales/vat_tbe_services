@@ -41,7 +41,7 @@ Telecommunication, Broadcasting or Electronic (TBE) service according to
 <a href="http://ec.europa.eu/taxation_customs/taxation/vat/how_vat_works/telecom/index_en.htm" target="_blank">European tax directive as of 2015</a>',
     ),
     'thumbnail'    => 'logo.png',
-    'version'      => '1.0.0',
+    'version'      => '2.0.0',
     'author'       => 'OXID eSales AG',
     'url'          => 'http://www.oxid-esales.com',
     'email'        => 'info@oxid-esales.com',

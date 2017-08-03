@@ -34,7 +34,7 @@ $aModule = array(
         'de' => 'This module shows one of the possible ways to add new evidence collectors to OXID eShop eVAT module.',
         'en' => 'This module shows one of the possible ways to add new evidence collectors to OXID eShop eVAT module.',
     ),
-    'version'      => '1.0.0',
+    'version'      => '2.0.0',
     'author'       => 'OXID eSales AG',
     'url'          => 'http://www.oxid-esales.com',
     'email'        => 'info@oxid-esales.com',

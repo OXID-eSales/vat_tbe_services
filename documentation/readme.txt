@@ -8,7 +8,7 @@ OXID eSales AG
 oe
 
 ==Version==
-1.0.0
+2.0.0
 
 ==Link==
 http://www.oxid-esales.com
@@ -83,6 +83,6 @@ TBE articles are calculated with user location country VAT rate.
 --_setOrderArticlesToPdf
 
 ==Installation==
-1. Copy the module source files to your shop directory.
+1. Install the module as described in README.md Install section.
 2. Activate the module.
 3. Clean database cache from source/tmp/ directory.
