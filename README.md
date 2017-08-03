@@ -1,7 +1,7 @@
 eVAT module
 ===========
 
-This module implements requirements that is to allow an OXID eShop to comply with the 
+This module implements requirements which allow the OXID eShop to comply with the 
 EU regulations as specified by the EU VAT directive 1042/2013 regarding VAT for 
 telecommunications, broadcasting and electronic services.
 
@@ -10,7 +10,7 @@ telecommunications, broadcasting and electronic services.
 ### Module installation via composer
 
 In order to install the module via composer, run one of the following commands 
-in commandline of your shop base directory (where the shop's composer.json file resides).
+on commandline in your shop base directory (where the shop's composer.json file resides).
 
 * **composer require oxid-esales/evat-module:^2.0** to install the released version compatible with OXID eShop RC2
 * **composer require oxid-esales/evat-module:dev-master** to install the latest unreleased version from github
