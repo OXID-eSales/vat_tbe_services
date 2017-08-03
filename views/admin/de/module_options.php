@@ -23,12 +23,12 @@
 // RESOURCE IDENTIFIER = STRING
 // -------------------------------
 $aLang = array(
-    'charset'                                        => 'ISO-8859-15',
-    'SHOP_MODULE_GROUP_oevattbe'                     => 'Bestimmungsmethode f¸r Kundenstandort',
-    'SHOP_MODULE_aOeVATTBECountryEvidences'          => 'Bestimmungsmethode f¸r Kundenstandort aktivieren oder deaktivieren',
-    'HELP_SHOP_MODULE_aOeVATTBECountryEvidences'     => 'Eine Kundenstandorts-Bestimmungmethode kann als aktiv (1) oder inaktiv (0) markiert werden. Nur aktive Kundenstandorts-Bestimmungmethoden werden in der Kundenstandorts-Bestimmung benutzt. Bitte lˆschen Sie keine Eintr‰ge aus dieser Liste - ‰ndern Sie nur die Ziffern "0" oder "1" wie benˆtigt.',
-    'SHOP_MODULE_sOeVATTBEDefaultEvidence'           => 'Standard-Bestimmungsmethode f¸r Kundenstandort',
+    'charset'                                        => 'UTF-8',
+    'SHOP_MODULE_GROUP_oevattbe'                     => 'Bestimmungsmethode f√ºr Kundenstandort',
+    'SHOP_MODULE_aOeVATTBECountryEvidences'          => 'Bestimmungsmethode f√ºr Kundenstandort aktivieren oder deaktivieren',
+    'HELP_SHOP_MODULE_aOeVATTBECountryEvidences'     => 'Eine Kundenstandorts-Bestimmungmethode kann als aktiv (1) oder inaktiv (0) markiert werden. Nur aktive Kundenstandorts-Bestimmungmethoden werden in der Kundenstandorts-Bestimmung benutzt. Bitte l√∂schen Sie keine Eintr√§ge aus dieser Liste - √§ndern Sie nur die Ziffern "0" oder "1" wie ben√∂tigt.',
+    'SHOP_MODULE_sOeVATTBEDefaultEvidence'           => 'Standard-Bestimmungsmethode f√ºr Kundenstandort',
     'HELP_SHOP_MODULE_sOeVATTBEDefaultEvidence'      => 'Diese Methode wird zur Standortbestimmung benutzt. Sie muss aktiv sein.',
     'SHOP_MODULE_sOeVATTBEDomesticCountry'           => 'Sitz des Shops',
-    'HELP_SHOP_MODULE_sOeVATTBEDomesticCountry'      => 'ISO2-K¸rzel des Landes, in dem der Shop bzw. die Firma ans‰ssig ist.',
+    'HELP_SHOP_MODULE_sOeVATTBEDomesticCountry'      => 'ISO2-K√ºrzel des Landes, in dem der Shop bzw. die Firma ans√§ssig ist.',
 );

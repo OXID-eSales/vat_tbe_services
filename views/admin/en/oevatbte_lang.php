@@ -22,7 +22,7 @@
 // RESOURCE IDENTIFIER = STRING
 // -------------------------------
 $aLang = array(
-    'charset'                                    => 'ISO-8859-15',
+    'charset'                                    => 'UTF-8',
     'oevattbe_country_vat_groups' => 'Country VAT rates',
     'oevattbe_article_administration' => 'eVAT Settings',
     'oevattbe_category_administration' => 'eVAT Settings',

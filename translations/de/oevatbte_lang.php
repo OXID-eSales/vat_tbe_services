@@ -23,11 +23,11 @@
 // RESOURCE IDENTIFIER = STRING
 // -------------------------------
 $aLang = array(
-    'charset'                                         => 'ISO-8859-15',
+    'charset'                                         => 'UTF-8',
     'PLUS_SHIPPING2'                                  => 'Versandkosten ** Elektronische Dienstleistung',
-    'OEVATTBE_ERROR_MESSAGE_TBE_ARTICLE_VAT_PROBLEMS' => 'Es war leider nicht möglich, die MwSt. für einige Artikel in Ihrem Warenkorb zu berechnen. Sie können daher nicht verkauft werden. Bitte entfernen Sie diese aus dem Warenkorb: %s.',
-    'OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY'         => 'Diese MwSt. wurde für Ihren Standort berechnet: %s.',
-    'OEVATTBE_VAT_WILL_BE_CALCULATED_BY_USER_COUNTRY' => 'Die MwSt. ist abhängig vom Kundenstandort (aktuell %s) und kann sich nach der Anmeldung ändern.',
-    'OEVATTBE_RESIDENCE_COUNTRY_CHANGED_MESSAGE'      => 'Ihr Standort wurde als %s identifiziert. Dieser Standort wird in der MwSt.-Berechnung für z.B. eBooks oder MP3s verwandt.',
+    'OEVATTBE_ERROR_MESSAGE_TBE_ARTICLE_VAT_PROBLEMS' => 'Es war leider nicht mÃ¶glich, die MwSt. fÃ¼r einige Artikel in Ihrem Warenkorb zu berechnen. Sie kÃ¶nnen daher nicht verkauft werden. Bitte entfernen Sie diese aus dem Warenkorb: %s.',
+    'OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY'         => 'Diese MwSt. wurde fÃ¼r Ihren Standort berechnet: %s.',
+    'OEVATTBE_VAT_WILL_BE_CALCULATED_BY_USER_COUNTRY' => 'Die MwSt. ist abhÃ¤ngig vom Kundenstandort (aktuell %s) und kann sich nach der Anmeldung Ã¤ndern.',
+    'OEVATTBE_RESIDENCE_COUNTRY_CHANGED_MESSAGE'      => 'Ihr Standort wurde als %s identifiziert. Dieser Standort wird in der MwSt.-Berechnung fÃ¼r z.B. eBooks oder MP3s verwandt.',
     'OEVATTBE_VAT_EXCLUDED'                           => 'MwSt. wurde nicht berechnet.',
 );

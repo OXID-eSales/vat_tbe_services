@@ -23,7 +23,7 @@
 // RESOURCE IDENTIFIER = STRING
 // -------------------------------
 $aLang = array(
-    'charset'                                         => 'ISO-8859-15',
+    'charset'                                         => 'UTF-8',
     'PLUS_SHIPPING2'                                  => 'shipping ** Electronic Service',
     'OEVATTBE_ERROR_MESSAGE_TBE_ARTICLE_VAT_PROBLEMS' => 'Unfortunately, it was not possible to calculate the VAT rate for some products in your basket and can therefore not be sold. Please remove the following products from your basket: %s',
     'OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY'         => 'This VAT was calculated for your location: %s.',

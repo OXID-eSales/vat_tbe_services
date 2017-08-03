@@ -23,7 +23,7 @@
 // RESOURCE IDENTIFIER = STRING
 // -------------------------------
 $aLang = array(
-    'charset'                                        => 'ISO-8859-15',
+    'charset'                                        => 'UTF-8',
     'SHOP_MODULE_GROUP_oevattbe'                     => 'eVAT customer location method',
     'SHOP_MODULE_aOeVATTBECountryEvidences'          => 'Activate or deactivate customer location method',
     'HELP_SHOP_MODULE_aOeVATTBECountryEvidences'     => 'A customer location method may be marked as active (1) or inactive (0). Only active location methods are used for customer location. Please do not remove any lines in this list - only change the digit "0" or "1" as needed.',
