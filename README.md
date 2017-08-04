@@ -1,6 +1,9 @@
 eVAT module
 ===========
 
+.. image:: https://img.shields.io/packagist/v/oxid-esales/evat-module.svg?maxAge=3600
+    :target: https://packagist.org/packages/oxid-esales/evat-module
+
 This module implements requirements which allow the OXID eShop to comply with the 
 EU regulations as specified by the EU VAT directive 1042/2013 regarding VAT for 
 telecommunications, broadcasting and electronic services.
