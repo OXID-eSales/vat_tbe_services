@@ -17,6 +17,10 @@ on commandline in your shop base directory (where the shop's composer.json file 
 * **composer require oxid-esales/evat-module:^2.0** to install the released version compatible with OXID eShop RC2
 * **composer require oxid-esales/evat-module:dev-master** to install the latest unreleased version from github
 
+## Bugs and Issues
+
+If you experience any bugs or issues, please report them in the section **Module eVAT** of https://bugs.oxid-esales.com.
+
 ## License
 
 Licensing of the software product depends on the shop edition used.
