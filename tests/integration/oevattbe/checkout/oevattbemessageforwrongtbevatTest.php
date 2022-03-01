@@ -27,7 +27,7 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends Ox
     /**
      * Prepare articles data: set articles to be TBE.
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setup();
         $this->_prepareArticlesData();

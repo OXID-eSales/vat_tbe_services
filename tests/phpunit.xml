@@ -6,17 +6,17 @@
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
          forceCoversAnnotation="false"
-         mapTestClassNameToCoveredClassName="false"
          processIsolation="false"
          stopOnError="false"
          stopOnFailure="false"
          stopOnIncomplete="false"
          stopOnSkipped="false"
-         strict="false"
          verbose="false">
     <testsuites>
-        <testsuite>
+        <testsuite name="UnitTests">
             <directory>unit</directory>
+        </testsuite>
+        <testsuite name="IntegrationTests">
             <directory>integration</directory>
         </testsuite>
     </testsuites>

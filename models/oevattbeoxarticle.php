@@ -92,7 +92,7 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
 
         if ($aWhere) {
             reset($aWhere);
-            while (list($name, $value) = each($aWhere)) {
+            foreach ($aWhere as $name => $value) {
                 $sSelect .= ' and ' . $name . ' = ' . oxDb::getDb()->quote($value);
             }
         }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of OXID eSales eVAT module.
  *
@@ -19,51 +20,43 @@
  * @copyright (C) OXID eSales AG 2003-2014
  */
 
+declare(strict_types=1);
+
+use OxidEsales\TestingLibrary\UnitTestCase;
+
 /**
  * Testing oeVATTBEOrderEvidenceList class.
  */
-class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderEvidenceListTest extends OxidTestCase
+class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderEvidenceListTest extends UnitTestCase
 {
-    /**
-     * Saves evidence list.
-     *
-     * @return oeVATTBEOrderEvidenceList
-     */
-    public function testSavingEvidenceList()
+    private $orderEvidenceList;
+
+    protected function setUp(): void
     {
-        $aData = array(
-            'evidence1' => array(
+        parent::setUp();
+
+        $aData = [
+            'evidence1' => [
                 'name' => 'evidence1',
                 'countryId' => 'a7c40f631fc920687.20179984',
-            ),
-            'evidence2' => array(
+            ],
+            'evidence2' => [
                 'name' => 'evidence2',
                 'countryId' => 'NonExisting',
-            ),
-        );
+            ],
+        ];
+
         $oGateway = oxNew('oeVATTBEOrderEvidenceListDbGateway');
-
-        /** @var oeVATTBEOrderEvidenceList $oList */
-        $oList = oxNew('oeVATTBEOrderEvidenceList', $oGateway);
-
-        $oList->setId('order_id');
-        $oList->setData($aData);
-
-        $oList->save();
-
-        return $oList;
+        $this->orderEvidenceList = oxNew('oeVATTBEOrderEvidenceList', $oGateway);
+        $this->orderEvidenceList->setId('order_id');
+        $this->orderEvidenceList->setData($aData);
+        $this->orderEvidenceList->save();
     }
 
     /**
      * Checks evidence list load.
-     *
-     * @param oeVATTBEOrderEvidenceList $oList
-     *
-     * @depends testSavingEvidenceList
-     *
-     * @return oeVATTBEOrderEvidenceList
      */
-    public function testLoadingEvidenceList($oList)
+    public function testLoadingEvidenceList()
     {
         $oGateway = oxNew('oeVATTBEOrderEvidenceListDbGateway');
 
@@ -87,20 +80,12 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderEvidenceListTest exten
         );
 
         $this->assertEquals($aExpectedData, $aData);
-
-        return $oList;
     }
 
     /**
      * Loads with country names and checks.
-     *
-     * @param oeVATTBEOrderEvidenceList $oList
-     *
-     * @depends testSavingEvidenceList
-     *
-     * @return oeVATTBEOrderEvidenceList
      */
-    public function testLoadWithCountryNamesEvidenceList($oList)
+    public function testLoadWithCountryNamesEvidenceList()
     {
         $oGateway = oxNew('oeVATTBEOrderEvidenceListDbGateway');
 
@@ -132,15 +117,11 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderEvidenceListTest exten
 
     /**
      * Checks if deletes.
-     *
-     * @param oeVATTBEOrderEvidenceList $oList
-     *
-     * @depends testSavingEvidenceList
      */
-    public function testDeletingEvidenceList($oList)
+    public function testDeletingEvidenceList()
     {
-        $oList->delete();
-        $oList->load();
-        $this->assertEquals(array(), $oList->getData());
+        $this->orderEvidenceList->delete();
+        $this->orderEvidenceList->load();
+        $this->assertEmpty($this->orderEvidenceList->getData());
     }
 }

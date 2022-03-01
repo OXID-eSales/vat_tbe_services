@@ -85,7 +85,7 @@ class Integration_oeVATTBE_article_oeVATTBEOxArticleTest extends OxidTestCase
     public function testGetCacheKeysWithoutActiveUser()
     {
         if ($this->getConfig()->getEdition() != 'EE') {
-            return;
+            $this->markTestSkipped('Test only on Enterprise shop');
         }
 
         $oArticleWithoutModules = new oxArticle();
@@ -103,7 +103,7 @@ class Integration_oeVATTBE_article_oeVATTBEOxArticleTest extends OxidTestCase
     public function testGetCacheKeysForNotTbeArticleWithActiveUser()
     {
         if ($this->getConfig()->getEdition() != 'EE') {
-            return;
+            $this->markTestSkipped('Test only on Enterprise shop');
         }
 
         $sAustriaId = 'a7c40f6320aeb2ec2.72885259';
@@ -126,7 +126,7 @@ class Integration_oeVATTBE_article_oeVATTBEOxArticleTest extends OxidTestCase
     public function testGetCacheKeysForTbeArticleWithActiveUser()
     {
         if ($this->getConfig()->getEdition() != 'EE') {
-            return;
+            $this->markTestSkipped('Test only on Enterprise shop');
         }
 
         $sAustriaId = 'a7c40f6320aeb2ec2.72885259';

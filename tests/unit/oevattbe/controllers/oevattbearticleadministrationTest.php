@@ -35,7 +35,7 @@ class Unit_oeVATTBE_controllers_oeVATTBEArticleAdministrationTest extends OxidTe
     public function testRenderSetsReadOnlyModeForSubshops()
     {
         if ('EE' != $this->getConfig()->getEdition()) {
-            return true;
+            $this->markTestSkipped('Test only on Enterprise shop');
         }
 
         /** @var oxArticle|PHPUnit_Framework_MockObject_MockObject oxArticle */
@@ -59,7 +59,7 @@ class Unit_oeVATTBE_controllers_oeVATTBEArticleAdministrationTest extends OxidTe
     public function testRenderDoNotSetsReadOnlyModeForMainShop()
     {
         if ('EE' != $this->getConfig()->getEdition()) {
-            return true;
+            $this->markTestSkipped('Test only on Enterprise shop');
         }
 
         /** @var oxArticle|PHPUnit_Framework_MockObject_MockObject oxArticle */
@@ -83,7 +83,7 @@ class Unit_oeVATTBE_controllers_oeVATTBEArticleAdministrationTest extends OxidTe
     public function testRenderDoesNotSetsReadOnlyModeForDifferentEditions()
     {
         if ('EE' == $this->getConfig()->getEdition()) {
-            return true;
+            $this->markTestSkipped('Test only on Enterprise shop');
         }
 
         /** @var oxArticle|PHPUnit_Framework_MockObject_MockObject oxArticle */

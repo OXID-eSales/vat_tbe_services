@@ -27,7 +27,7 @@ class Integration_oeVATTBE_article_oeVATTBEOxSearchTest extends OxidTestCase
     /**
      * Initialize the fixture.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->_prepareData();
         parent::setup();

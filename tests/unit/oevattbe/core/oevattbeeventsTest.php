@@ -29,7 +29,7 @@ class Unit_oeVATTBE_Core_oeVATTBEEventsTest extends OxidTestCase
     /**
      * Tear down
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         oxDb::getDb()->execute('DROP TABLE IF EXISTS `oevattbe_articlevat`');
         oxDb::getDb()->execute('DROP TABLE IF EXISTS `oevattbe_categoryvat`');

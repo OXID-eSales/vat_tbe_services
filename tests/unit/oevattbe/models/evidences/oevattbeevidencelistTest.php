@@ -46,7 +46,7 @@ class Unit_oeVATTBE_Models_Evidences_oeVATTBEEvidenceListTest extends OxidTestCa
     {
         $oList = new oeVATTBEEvidenceList();
 
-        $this->setExpectedException('oxException');
+        $this->expectException('oxException');
 
         $oList->add(1);
     }
