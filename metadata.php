@@ -34,11 +34,11 @@ $aModule = array(
         'de' => 'Das Modul eVAT erm&ouml;glicht es,
 einem Land verschiedene Mehrwertsteuers&auml;tze zuzuweisen und zus&auml;tzlich
 Artikel als Telekommunikations-, Rundfunk-, Fernseh- und auf elektronischem Weg erbrachte Dienstleistungen gem&auml;&szlig; der
-<a href="http://ec.europa.eu/taxation_customs/taxation/vat/how_vat_works/telecom/index_de.htm" target="_blank">Europ&auml;ischen Steuervorschrift ab 2015</a> zu definieren.',
+<a href="https://ec.europa.eu/taxation_customs/news/vat-updated-version-moss-report-has-just-been-published-2016-05-12_de" target="_blank">Europ&auml;ischen Steuervorschrift ab 2015</a> zu definieren.',
         'en' => 'The OXID eVAT module allows you to configure a range of tax rates for a
 country, and additionally enables you to define a product as a
 Telecommunication, Broadcasting or Electronic (TBE) service according to
-<a href="http://ec.europa.eu/taxation_customs/taxation/vat/how_vat_works/telecom/index_en.htm" target="_blank">European tax directive as of 2015</a>',
+<a href="https://ec.europa.eu/taxation_customs/news/vat-updated-version-moss-report-has-just-been-published-2016-05-12_en" target="_blank">European tax directive as of 2015</a>',
     ),
     'thumbnail'    => 'logo.png',
     'version'      => '2.0.0',
