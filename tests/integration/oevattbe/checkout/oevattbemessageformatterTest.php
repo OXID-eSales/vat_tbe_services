@@ -45,8 +45,8 @@ class Integration_oeVatTbe_checkout_oeVATTBEMessageFormatterTest extends OxidTes
         $oLang = oxRegistry::getLang();
 
         return array(
-            array($oInvalidArticles1, sprintf($oLang->translateString(OEVATTBE_ERROR_MESSAGE_TBE_ARTICLE_VAT_PROBLEMS), 'some article name')),
-            array($oInvalidArticles2, sprintf($oLang->translateString(OEVATTBE_ERROR_MESSAGE_TBE_ARTICLE_VAT_PROBLEMS), 'some article name, some other name')),
+            array($oInvalidArticles1, sprintf($oLang->translateString('OEVATTBE_ERROR_MESSAGE_TBE_ARTICLE_VAT_PROBLEMS'), 'some article name')),
+            array($oInvalidArticles2, sprintf($oLang->translateString('OEVATTBE_ERROR_MESSAGE_TBE_ARTICLE_VAT_PROBLEMS'), 'some article name, some other name')),
         );
     }
 

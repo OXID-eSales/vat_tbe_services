@@ -106,8 +106,14 @@ class Integration_oeVatTbe_userTBECountry_oeVATTBEUserTBECountryChangeEventsTest
         $sWrongUserPassword = 'wrong password';
 
         $this->assertNotSame($sAustriaId, $oUser->getOeVATTBETbeCountryId());
-        $blLogsIn = $oUser->login($sUserName, $sWrongUserPassword);
-        $this->assertTrue($blLogsIn, 'User did not log in successfully.');
+
+        try {
+            $oUser->login($sUserName, $sWrongUserPassword);
+            $this->fail('expected to see an exception');
+        } catch (\OxidEsales\Eshop\Core\Exception\UserException $exception) {
+            $this->assertEquals('ERROR_MESSAGE_USER_NOVALIDLOGIN', $exception->getMessage());
+        }
+
         $this->assertNotSame($sAustriaId, $oUser->getOeVATTBETbeCountryId());
 
         return $oUser;
