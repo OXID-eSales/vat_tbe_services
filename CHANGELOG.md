@@ -8,16 +8,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Undecided] - Unreleased
 
 ### Added
+- Method `oeVATTBEOxViewConfig::isActiveThemeBasedOnFlow()`.
 
 ### Changed
 - Adapt tests to work with OXID eShop compilation 6.4.x and up.
 - Update License and Readme.
+- Move documentation to OXID docs.
 
 ### Deprecated
 
 ### Removed
 
 ### Fixed
+- Templates now detect not only flow but all flow based themes as well.
 
 ### Security
 

@@ -31,6 +31,10 @@ The module documentation can be found on our documentation platform: https://doc
 
 If you experience any bugs or issues, please report them in the section **Module eVAT** of https://bugs.oxid-esales.com.
 
+### Documentation
+
+The module documentation can be found on our documentation platform: https://docs.oxid-esales.com/modules/evat/en/latest/index.html.
+
 ## License
 
 See LICENSE file for license details.

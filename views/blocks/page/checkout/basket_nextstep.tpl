@@ -1,5 +1,5 @@
 [{if $oView->oeVATTBEShowVATTBEMarkMessage()}]
-    [{if $oViewConf->getActiveTheme() == 'flow'}]
+    [{if $oViewConf->isActiveThemeBasedOnFlow()}]
         <div class="well well-sm clear">[{$oView->getOeVATTBEMarkMessage()}]</div>
     [{else}]
         <div class="lineBox clear">[{$oView->getOeVATTBEMarkMessage()}]</div>
