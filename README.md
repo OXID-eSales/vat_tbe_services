@@ -23,17 +23,13 @@ on commandline in your shop base directory (where the shop's composer.json file 
 
 and [activate the module](https://docs.oxid-esales.com/developer/en/6.4/development/modules_components_themes/module/installation_setup/setup.html#setup-activation).
 
-### Documentation
-
-The module documentation can be found on our documentation platform: https://docs.oxid-esales.com/modules/evat/en/latest/index.html.
-
 ## Bugs and Issues
 
 If you experience any bugs or issues, please report them in the section **Module eVAT** of https://bugs.oxid-esales.com.
 
-### Documentation
+## Documentation
 
-The module documentation can be found on our documentation platform: https://docs.oxid-esales.com/modules/evat/en/latest/index.html.
+The module documentation can be found on our documentation platform: https://docs.oxid-esales.com/modules/vat-tbe-services/en/latest/.
 
 ## License
 

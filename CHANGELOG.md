@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
-## [Undecided] - Unreleased
+## [2.1.0] - 2022-08-02
 
 ### Added
 - Method `oeVATTBEOxViewConfig::isActiveThemeBasedOnFlow()`.
@@ -31,6 +31,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [1.0.0] - 2015-03-24
 
-[Unreleased]: https://github.com/OXID-eSales/vat_tbe_services/compare/v2.0.0...HEAD
+[2.1.0]: https://github.com/OXID-eSales/vat_tbe_services/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/OXID-eSales/vat_tbe_services/compare/v1.0.0...v2.0.0
 [1.0.0]: https://github.com/OXID-eSales/vat_tbe_services/commits/v1.0.0
