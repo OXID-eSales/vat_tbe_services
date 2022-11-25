@@ -23,10 +23,8 @@
  *
  * @covers oeVATTBEEvidenceSelector
 */
-class Unit_oeVATTBE_Models_Evidences_oeVATTBEEvidenceSelectorTest extends OxidTestCase
+class Unit_oeVATTBE_Models_Evidences_oeVATTBEEvidenceSelectorTest extends \OxidEsales\TestingLibrary\UnitTestCase
 {
-
-
     public function providerGetCountryWhenBothEvidenceDoNotMatch()
     {
         $oBillingEvidence = $this->_createEvidence('billing_address', 'Germany');
@@ -127,8 +125,7 @@ class Unit_oeVATTBE_Models_Evidences_oeVATTBEEvidenceSelectorTest extends OxidTe
      */
     protected function _createEvidence($sName, $sCountry)
     {
-        /** @var oeVATTBEEvidence|PHPUnit_Framework_MockObject_MockObject $oUser */
-        $oEvidence = $this->getMock('oeVATTBEEvidence', array('getId', 'getCountryId'), array(), '', false);
+        $oEvidence = $this->createMock(oeVATTBEEvidence::class);
         $oEvidence->expects($this->any())->method('getId')->will($this->returnValue($sName));
         $oEvidence->expects($this->any())->method('getCountryId')->will($this->returnValue($sCountry));
 
