@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of OXID eSales eVAT module.
  *
@@ -18,6 +19,10 @@
  * @link      http://www.oxid-esales.com
  * @copyright (C) OXID eSales AG 2003-2014
  */
+
+require_once  __DIR__ . '/../../../../../models/evidences/items/oevattbeevidence.php';
+require_once  __DIR__ . '/../../../../../models/evidences/oevattbeevidencelist.php';
+
 /**
  * Test class for oeVATTBEEvidenceCalculator.
  *

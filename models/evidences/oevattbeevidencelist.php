@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of OXID eSales eVAT module.
  *
@@ -19,6 +20,7 @@
  * @copyright (C) OXID eSales AG 2003-2014
  */
 
+require_once  __DIR__ . '/../oevattbelist.php';
 
 /**
  * Class for storing evidences.
