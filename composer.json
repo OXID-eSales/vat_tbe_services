@@ -7,15 +7,18 @@
   "license": [
     "GPL-3.0-only"
   ],
-  "extra": {
-    "oxideshop": {
-      "target-directory": "oe/oevattbe",
-      "blacklist-filter": [
-        "documentation/**",
-        "README.md",
-        "CONTRIBUTING.md",
-        "composer.json"
-      ]
+  "prefer-stable": true,
+  "require": {
+    "php": "^8.0 | ^8.1"
+  },
+  "minimum-stability": "dev",
+  "conflict": {
+    "oxid-esales/oxideshop-ce": "<7.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "OxidEsales\\EVatModule\\": "./src",
+      "OxidEsales\\EVatModule\\Tests\\": "./tests"
     }
   }
 }

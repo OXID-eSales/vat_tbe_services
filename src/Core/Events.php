@@ -19,16 +19,20 @@
  * @copyright (C) OXID eSales AG 2003-2014
  */
 
+namespace OxidEsales\EVatModule\Core;
+
+use \oxDb;
+use OxidEsales\Eshop\Core\Registry;
 
 /**
  * Class defines what module does on Shop events.
  */
-class oeVATTBEEvents
+class Events
 {
     /**
      * Execute action on activate event
      */
-    public static function onActivate()
+    public static function onActivate(): void
     {
         self::_addArticleVatGroupTable();
         self::_addCategoryVatGroupTable();
@@ -38,23 +42,24 @@ class oeVATTBEEvents
         self::_regenerateViews();
         self::_configureCountries();
 
-        /** @var oeVATTBEEvidenceRegister $oEvidenceRegister */
-        $oEvidenceRegister = oxNew('oeVATTBEEvidenceRegister', oxRegistry::getConfig());
-        $oEvidenceRegister->registerEvidence('oeVATTBEBillingCountryEvidence', true);
-        $oEvidenceRegister->registerEvidence('oeVATTBEGeoLocationEvidence', true);
+        //TODO: uncomment after model is registered in services.yaml
+//        /** @var oeVATTBEEvidenceRegister $oEvidenceRegister */
+//        $oEvidenceRegister = oxNew('oeVATTBEEvidenceRegister', Registry::getConfig());
+//        $oEvidenceRegister->registerEvidence('oeVATTBEBillingCountryEvidence', true);
+//        $oEvidenceRegister->registerEvidence('oeVATTBEGeoLocationEvidence', true);
     }
 
     /**
      * Execute action on deactivate event
      */
-    public static function onDeactivate()
+    public static function onDeactivate(): void
     {
     }
 
     /**
      * Add fields to oxArticle table
      */
-    protected static function _addFields()
+    protected static function _addFields(): void
     {
         $oDbMetaDataHandler = oxNew('oxDbMetaDataHandler');
 
@@ -87,7 +92,7 @@ class oeVATTBEEvents
     /**
      * Add article VAT group table
      */
-    protected static function _addArticleVatGroupTable()
+    protected static function _addArticleVatGroupTable(): void
     {
         $sSql = "CREATE TABLE IF NOT EXISTS `oevattbe_articlevat` (
               `OEVATTBE_ARTICLEID` char(32) character set latin1 collate latin1_general_ci NOT NULL,
@@ -106,7 +111,7 @@ class oeVATTBEEvents
     /**
      * Add category VAT group table
      */
-    protected static function _addCategoryVatGroupTable()
+    protected static function _addCategoryVatGroupTable(): void
     {
         $sSql = "CREATE TABLE IF NOT EXISTS `oevattbe_categoryvat` (
               `OEVATTBE_CATEGORYID` char(32) character set latin1 collate latin1_general_ci NOT NULL,
@@ -125,7 +130,7 @@ class oeVATTBEEvents
     /**
      * Add country VAT group table
      */
-    protected static function _addCountryVatGroupTable()
+    protected static function _addCountryVatGroupTable(): void
     {
         $sSql = "CREATE TABLE IF NOT EXISTS `oevattbe_countryvatgroups` (
               `OEVATTBE_ID` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -143,7 +148,7 @@ class oeVATTBEEvents
     /**
      * Add order evidence table
      */
-    protected static function _addOrderEvidences()
+    protected static function _addOrderEvidences(): void
     {
         $sSql = "CREATE TABLE IF NOT EXISTS `oevattbe_orderevidences` (
               `OEVATTBE_ORDERID` char(32) character set latin1 collate latin1_general_ci NOT NULL,
@@ -160,7 +165,7 @@ class oeVATTBEEvents
     /**
      * regenerate views for changed tables
      */
-    protected static function _regenerateViews()
+    protected static function _regenerateViews(): void
     {
         $oDbMetaDataHandler = oxNew('oxDbMetaDataHandler');
         $oDbMetaDataHandler->updateViews();
@@ -169,7 +174,7 @@ class oeVATTBEEvents
     /**
      * insert demo data
      */
-    protected static function _addDemoData()
+    protected static function _addDemoData(): void
     {
         $oDb = oxDb::getDb();
 
@@ -187,7 +192,7 @@ class oeVATTBEEvents
     /**
      * insert demo data
      */
-    protected static function _configureCountries()
+    protected static function _configureCountries(): void
     {
         $aCountryVATs = self::_getCountryVatRates();
         $oDb = oxDb::getDb();
@@ -216,7 +221,7 @@ class oeVATTBEEvents
      *
      * @return array
      */
-    protected static function _getCountryVatRates()
+    protected static function _getCountryVatRates(): array
     {
         $aCountryVATs = array(
             'BE' => array(
