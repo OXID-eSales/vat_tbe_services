@@ -22,7 +22,9 @@
 namespace OxidEsales\EVatModule\Core;
 
 use \oxDb;
+use OxidEsales\Eshop\Core\DbMetaDataHandler;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EVatModule\Model\Evidence\oeVATTBEEvidenceRegister;
 
 /**
  * Class defines what module does on Shop events.
@@ -42,11 +44,10 @@ class Events
         self::_regenerateViews();
         self::_configureCountries();
 
-        //TODO: uncomment after model is registered in services.yaml
-//        /** @var oeVATTBEEvidenceRegister $oEvidenceRegister */
-//        $oEvidenceRegister = oxNew('oeVATTBEEvidenceRegister', Registry::getConfig());
-//        $oEvidenceRegister->registerEvidence('oeVATTBEBillingCountryEvidence', true);
-//        $oEvidenceRegister->registerEvidence('oeVATTBEGeoLocationEvidence', true);
+        /** @var oeVATTBEEvidenceRegister $oEvidenceRegister */
+        $oEvidenceRegister = oxNew(oeVATTBEEvidenceRegister::class, Registry::getConfig());
+        $oEvidenceRegister->registerEvidence('oeVATTBEBillingCountryEvidence', true);
+        $oEvidenceRegister->registerEvidence('oeVATTBEGeoLocationEvidence', true);
     }
 
     /**
@@ -61,7 +62,7 @@ class Events
      */
     protected static function _addFields(): void
     {
-        $oDbMetaDataHandler = oxNew('oxDbMetaDataHandler');
+        $oDbMetaDataHandler = oxNew(DbMetaDataHandler::class);
 
         $aTableFields = array(
             'oxarticles'  => array('oevattbe_istbeservice'),
@@ -167,7 +168,7 @@ class Events
      */
     protected static function _regenerateViews(): void
     {
-        $oDbMetaDataHandler = oxNew('oxDbMetaDataHandler');
+        $oDbMetaDataHandler = oxNew(DbMetaDataHandler::class);
         $oDbMetaDataHandler->updateViews();
     }
 

@@ -1,0 +1,47 @@
+services:
+
+  _defaults:
+    public: false
+    autowire: true
+
+  OxidEsales\Eshop\Core\Config:
+    factory: [ 'OxidEsales\Eshop\Core\Registry', 'getConfig' ]
+
+  OxidEsales\Eshop\Core\Session:
+    factory: [ 'OxidEsales\Eshop\Core\Registry', 'getSession' ]
+
+  OxidEsales\Eshop\Core\UtilsObject:
+    public: true
+    factory: ['OxidEsales\Eshop\Core\UtilsObject', 'getInstance']
+
+  OxidEsales\EshopEnterprise\Core\Cache\Generic\Cache:
+    factory: ['@OxidEsales\Eshop\Core\UtilsObject', 'oxNew']
+    arguments: ['OxidEsales\EshopEnterprise\Core\Cache\Generic\Cache']
+
+  OxidEsales\Eshop\Core\UtilsView:
+    factory: ['@OxidEsales\Eshop\Core\UtilsObject', 'oxNew']
+    arguments: ['OxidEsales\Eshop\Core\UtilsView']
+
+  OxidEsales\Eshop\Application\Model\Basket:
+    factory: ['@OxidEsales\Eshop\Core\UtilsObject', 'oxNew']
+    arguments: ['OxidEsales\Eshop\Application\Model\Basket']
+
+  OxidEsales\Eshop\Application\Model\User:
+    factory: ['@OxidEsales\Eshop\Core\UtilsObject', 'oxNew']
+    arguments: ['OxidEsales\Eshop\Application\Model\User']
+
+  OxidEsales\Eshop\Application\Model\Article:
+    factory: ['@OxidEsales\Eshop\Core\UtilsObject', 'oxNew']
+    arguments: ['OxidEsales\Eshop\Application\Model\Article']
+
+  OxidEsales\EVatModule\Core\oeVATTBEModelDbGateway:
+    abstract: true
+
+  OxidEsales\EVatModule\Model\Evidence\Item\oeVATTBEEvidence:
+    abstract: true
+    arguments: ['OxidEsales\Eshop\Application\Model\User']
+
+  OxidEsales\EVatModule\:
+    resource: 'src/*'
+    exclude: 'src/{Shop,Component,Controller,Controller/Admin}/*.php'
+    public: true
