@@ -85,7 +85,7 @@ class oeVATTBEOrder extends oeVATTBEOrder_parent
     public function getOeVATTBEMarkMessage()
     {
         /** @var Basket|oeVATTBEOxBasket $oBasket */
-        $oBasket = $this->getSession()->getBasket();
+        $oBasket = Registry::getSession()->getBasket();
         $oMarkGenerator = $this->getBasketContentMarkGenerator();
         $oCountry = $oBasket->getOeVATTBECountry();
         $sCountryName = $oCountry ? $oCountry->getOeVATTBEName() : '';
@@ -104,7 +104,7 @@ class oeVATTBEOrder extends oeVATTBEOrder_parent
     public function oeVATTBEShowVATTBEMarkMessage()
     {
         /** @var Basket|oeVATTBEOxBasket $oBasket */
-        $oBasket = $this->getSession()->getBasket();
+        $oBasket = Registry::getSession()->getBasket();
         $oCountry = $oBasket->getOeVATTBECountry();
         $oTBEUserCountry = oeVATTBETBEUser::createInstance();
 

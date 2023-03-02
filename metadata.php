@@ -85,8 +85,8 @@ Telecommunication, Broadcasting or Electronic (TBE) service according to
     ),
     'templates' => array(
         '@oevattbe/admin/oevattbecountryvatgroups.tpl'       => 'views/smarty/admin/oevattbecountryvatgroups.tpl',
-        '@oevattbe/admin/oevattbearticleadministration.tpl'  => 'views/smarty/admin/tpl/oevattbearticleadministration.tpl',
-        '@oevattbe/admin/oevattbecategoryadministration.tpl' => 'views/smarty/admin/tpl/oevattbecategoryadministration.tpl',
+        '@oevattbe/admin/oevattbearticleadministration.tpl'  => 'views/smarty/admin/oevattbearticleadministration.tpl',
+        '@oevattbe/admin/oevattbecategoryadministration.tpl' => 'views/smarty/admin/oevattbecategoryadministration.tpl',
     ),
     'blocks'    => array(
         array('template' => 'layout/base.tpl', 'block' => 'base_style', 'file' => 'views/blocks/layout/base.tpl'),

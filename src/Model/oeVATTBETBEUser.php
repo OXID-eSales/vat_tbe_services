@@ -69,6 +69,10 @@ class oeVATTBETBEUser
         $oSession = Registry::getSession();
         $oConfig = Registry::getConfig();
         $oUser = $oSession->getUser();
+        //todo: do proper implement
+        if($oUser === false) {
+            $oUser = oxNew(User::class);
+        }
 
         /** @var oeVATTBETBEUser $oInstance */
         $oInstance = oxNew(oeVATTBETBEUser::class, $oUser, $oSession, $oConfig);

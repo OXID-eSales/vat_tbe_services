@@ -39,9 +39,7 @@ services:
 
   OxidEsales\EVatModule\Model\Evidence\Item\oeVATTBEEvidence:
     abstract: true
-    arguments: ['OxidEsales\Eshop\Application\Model\User']
 
   OxidEsales\EVatModule\:
-    resource: 'src/*'
-    exclude: 'src/{Shop,Component,Controller,Controller/Admin}/*.php'
+    resource: 'src/{Service,Core,Model}'
     public: true

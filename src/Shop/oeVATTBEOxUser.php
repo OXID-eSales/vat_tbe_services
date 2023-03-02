@@ -152,8 +152,8 @@ class oeVATTBEOxUser extends oeVatTbeOxUser_parent
     protected function _getOeVATTBETBEUser()
     {
         if (!$this->_oTBEUser) {
-            $oSession = $this->getSession();
-            $oConfig = $this->getConfig();
+            $oSession = Registry::getSession();
+            $oConfig = Registry::getConfig();
 
             $this->_oTBEUser = oxNew(oeVATTBETBEUser::class, $this, $oSession, $oConfig);
         }

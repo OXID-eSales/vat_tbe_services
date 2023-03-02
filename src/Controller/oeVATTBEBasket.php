@@ -46,7 +46,7 @@ class oeVATTBEBasket extends oeVATTBEBasket_parent
     public function render()
     {
         $oUserCountry = oeVATTBETBEUser::createInstance();
-        $oBasket = $this->getSession()->getBasket();
+        $oBasket = Registry::getSession()->getBasket();
         if ($this->getUser() && !$oUserCountry->isUserFromDomesticCountry() && $oBasket) {
             $oBasketArticles = $oBasket->getBasketArticles();
             /** @var oeVATTBEBasketItemsValidator $oVATTBEBasketItemsValidator */
@@ -84,7 +84,7 @@ class oeVATTBEBasket extends oeVATTBEBasket_parent
     public function oeVATTBEShowVATTBEMarkMessage()
     {
         /** @var Basket|oeVATTBEOxBasket $oBasket */
-        $oBasket = $this->getSession()->getBasket();
+        $oBasket = Registry::getSession()->getBasket();
         $oCountry = $oBasket->getOeVATTBECountry();
         $oTBEUserCountry = oeVATTBETBEUser::createInstance();
 
@@ -147,7 +147,7 @@ class oeVATTBEBasket extends oeVATTBEBasket_parent
     private function _getOeVATTBEMarkExplanationForLoggedInUser()
     {
         /** @var Basket|oeVATTBEOxBasket $oBasket */
-        $oBasket = $this->getSession()->getBasket();
+        $oBasket = Registry::getSession()->getBasket();
         $oLang = Registry::getLang();
 
         $oCountry = $oBasket->getOeVATTBECountry();
