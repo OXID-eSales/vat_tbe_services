@@ -46,38 +46,38 @@ Telecommunication, Broadcasting or Electronic (TBE) service according to
     'url'          => 'http://www.oxid-esales.com',
     'email'        => 'info@oxid-esales.com',
     'controllers' => [
-        'oevattbecountryvatgroups'                     => \OxidEsales\EVatModule\Controller\Admin\oeVATTBECountryVatGroups::class,
-        'oevattbearticleadministration'                => \OxidEsales\EVatModule\Controller\Admin\oeVATTBEArticleAdministration::class,
-        'oevattbecategoryadministration'               => \OxidEsales\EVatModule\Controller\Admin\oeVATTBECategoryAdministration::class,
+        'oevattbecountryvatgroups'                     => \OxidEsales\EVatModule\Controller\Admin\CountryVatGroups::class,
+        'oevattbearticleadministration'                => \OxidEsales\EVatModule\Controller\Admin\ArticleAdministration::class,
+        'oevattbecategoryadministration'               => \OxidEsales\EVatModule\Controller\Admin\CategoryAdministration::class,
     ],
     'extend'       => [
         //Components
-        \OxidEsales\Eshop\Application\Component\BasketComponent::class => \OxidEsales\EVatModule\Component\oeVATTBEOxCmp_Basket::class,
+        \OxidEsales\Eshop\Application\Component\BasketComponent::class => \OxidEsales\EVatModule\Component\BasketComponent::class,
 
         //Controllers
-        \OxidEsales\Eshop\Application\Controller\BasketController::class  => \OxidEsales\EVatModule\Controller\oeVATTBEBasket::class,
+        \OxidEsales\Eshop\Application\Controller\BasketController::class  => \OxidEsales\EVatModule\Controller\BasketController::class,
 
-        \OxidEsales\Eshop\Application\Controller\Admin\OrderMain::class => \OxidEsales\EVatModule\Controller\Admin\oeVATTBEOrder_Main::class,
-        \OxidEsales\Eshop\Application\Controller\Admin\CategoryMainAjax::class => \OxidEsales\EVatModule\Controller\Admin\oeVATTBECategory_Main_Ajax::class,
-        \OxidEsales\Eshop\Application\Controller\Admin\ArticleExtendAjax::class => \OxidEsales\EVatModule\Controller\Admin\oeVATTBEArticle_Extend_Ajax::class,
-        \OxidEsales\Eshop\Application\Controller\Admin\ArticleMain::class => \OxidEsales\EVatModule\Controller\Admin\oeVATTBEArticle_Main::class,
-        \OxidEsales\Eshop\Application\Controller\Admin\OrderArticle::class => \OxidEsales\EVatModule\Controller\oeVATTBEOrder::class,
+        \OxidEsales\Eshop\Application\Controller\Admin\OrderMain::class => \OxidEsales\EVatModule\Controller\Admin\OrderMain::class,
+        \OxidEsales\Eshop\Application\Controller\Admin\CategoryMainAjax::class => \OxidEsales\EVatModule\Controller\Admin\CategoryMainAjax::class,
+        \OxidEsales\Eshop\Application\Controller\Admin\ArticleExtendAjax::class => \OxidEsales\EVatModule\Controller\Admin\ArticleExtendAjax::class,
+        \OxidEsales\Eshop\Application\Controller\Admin\ArticleMain::class => \OxidEsales\EVatModule\Controller\Admin\ArticleMain::class,
+        \OxidEsales\Eshop\Application\Controller\Admin\OrderArticle::class => \OxidEsales\EVatModule\Controller\OrderArticle::class,
 
         //Models
-        \OxidEsales\Eshop\Application\Model\Article::class => \OxidEsales\EVatModule\Shop\oeVATTBEOxArticle::class,
-        \OxidEsales\Eshop\Application\Model\ArticleList::class => \OxidEsales\EVatModule\Shop\oeVATTBEOxArticleList::class,
-        \OxidEsales\Eshop\Application\Model\User::class => \OxidEsales\EVatModule\Shop\oeVATTBEOxUser::class,
-        \OxidEsales\Eshop\Application\Model\Search::class => \OxidEsales\EVatModule\Shop\oeVATTBEOxSearch::class,
-        \OxidEsales\Eshop\Application\Model\VatSelector::class => \OxidEsales\EVatModule\Shop\oeVATTBEOxVatSelector::class,
-        \OxidEsales\Eshop\Application\Model\Basket::class => \OxidEsales\EVatModule\Shop\oeVATTBEOxBasket::class,
-        \OxidEsales\Eshop\Application\Model\Order::class => \OxidEsales\EVatModule\Shop\oeVATTBEOxOrder::class,
-        \OxidEsales\Eshop\Application\Model\BasketContentMarkGenerator::class => \OxidEsales\EVatModule\Shop\oeVATTBEOxBasketContentMarkGenerator::class,
-        \OxidEsales\Eshop\Application\Model\Country::class => \OxidEsales\EVatModule\Shop\oeVATTBEOxCountry::class,
-        \OxidEsales\Eshop\Application\Model\Category::class => \OxidEsales\EVatModule\Shop\oeVATTBEOxCategory::class,
-        \OxidEsales\Eshop\Application\Model\Shop::class => \OxidEsales\EVatModule\Shop\oeVATTBEOxShop::class,
+        \OxidEsales\Eshop\Application\Model\Article::class => \OxidEsales\EVatModule\Shop\Article::class,
+        \OxidEsales\Eshop\Application\Model\ArticleList::class => \OxidEsales\EVatModule\Shop\ArticleList::class,
+        \OxidEsales\Eshop\Application\Model\User::class => \OxidEsales\EVatModule\Shop\User::class,
+        \OxidEsales\Eshop\Application\Model\Search::class => \OxidEsales\EVatModule\Shop\Search::class,
+        \OxidEsales\Eshop\Application\Model\VatSelector::class => \OxidEsales\EVatModule\Shop\VatSelector::class,
+        \OxidEsales\Eshop\Application\Model\Basket::class => \OxidEsales\EVatModule\Shop\Basket::class,
+        \OxidEsales\Eshop\Application\Model\Order::class => \OxidEsales\EVatModule\Shop\Order::class,
+        \OxidEsales\Eshop\Application\Model\BasketContentMarkGenerator::class => \OxidEsales\EVatModule\Shop\BasketContentMarkGenerator::class,
+        \OxidEsales\Eshop\Application\Model\Country::class => \OxidEsales\EVatModule\Shop\Country::class,
+        \OxidEsales\Eshop\Application\Model\Category::class => \OxidEsales\EVatModule\Shop\Category::class,
+        \OxidEsales\Eshop\Application\Model\Shop::class => \OxidEsales\EVatModule\Shop\Shop::class,
 
         //Core
-        \OxidEsales\Eshop\Core\ViewConfig::class => \OxidEsales\EVatModule\Shop\oeVATTBEOxViewConfig::class,
+        \OxidEsales\Eshop\Core\ViewConfig::class => \OxidEsales\EVatModule\Shop\ViewConfig::class,
     ],
     'events'    => array(
         'onActivate'   => '\OxidEsales\EVatModule\Core\Events::onActivate',

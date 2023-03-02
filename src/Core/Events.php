@@ -24,7 +24,9 @@ namespace OxidEsales\EVatModule\Core;
 use \oxDb;
 use OxidEsales\Eshop\Core\DbMetaDataHandler;
 use OxidEsales\Eshop\Core\Registry;
-use OxidEsales\EVatModule\Model\Evidence\oeVATTBEEvidenceRegister;
+use OxidEsales\EVatModule\Model\Evidence\Item\BillingCountryEvidence;
+use OxidEsales\EVatModule\Model\Evidence\EvidenceRegister;
+use OxidEsales\EVatModule\Model\Evidence\Item\GeoLocationEvidence;
 
 /**
  * Class defines what module does on Shop events.
@@ -44,10 +46,10 @@ class Events
         self::_regenerateViews();
         self::_configureCountries();
 
-        /** @var oeVATTBEEvidenceRegister $oEvidenceRegister */
-        $oEvidenceRegister = oxNew(oeVATTBEEvidenceRegister::class, Registry::getConfig());
-        $oEvidenceRegister->registerEvidence('oeVATTBEBillingCountryEvidence', true);
-        $oEvidenceRegister->registerEvidence('oeVATTBEGeoLocationEvidence', true);
+        /** @var EvidenceRegister $oEvidenceRegister */
+        $oEvidenceRegister = oxNew(EvidenceRegister::class, Registry::getConfig());
+        $oEvidenceRegister->registerEvidence(BillingCountryEvidence::class, true);
+        $oEvidenceRegister->registerEvidence(GeoLocationEvidence::class, true);
     }
 
     /**
