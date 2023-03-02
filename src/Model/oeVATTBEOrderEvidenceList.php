@@ -33,20 +33,10 @@ class oeVATTBEOrderEvidenceList extends oeVATTBEModel
     /** @var array Model data. */
     protected $_aData = array();
 
-    /**
-     * Creates an instance of oeVATTBEOrderEvidenceList.
-     *
-     * @return oeVATTBEOrderEvidenceList;
-     */
-    public static function createInstance()
+    public function __construct(
+        protected oeVATTBEOrderEvidenceListDbGateway $_oDbGateway
+    )
     {
-        /** @var oeVATTBEOrderEvidenceListDbGateway $oGateway */
-        $oGateway = oxNew(oeVATTBEOrderEvidenceListDbGateway::class);
-
-        /** @var oeVATTBEOrderEvidenceList $oList */
-        $oList = oxNew(oeVATTBEOrderEvidenceList::class, $oGateway);
-
-        return $oList;
     }
 
     /**

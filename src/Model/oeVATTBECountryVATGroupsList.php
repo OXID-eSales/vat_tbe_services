@@ -23,24 +23,19 @@ namespace OxidEsales\EVatModule\Model;
 
 use OxidEsales\EVatModule\Core\oeVATTBEModel;
 use OxidEsales\EVatModule\Model\DbGateway\oeVATTBECountryVATGroupsDbGateway;
+use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
  * VAT Groups handling class
  */
 class oeVATTBECountryVATGroupsList extends oeVATTBEModel
 {
+    use ServiceContainer;
 
-    /**
-     * Creates an instance of oeVATTBECountryVATGroupsList.
-     *
-     * @return oeVATTBECountryVATGroupsList;
-     */
-    public static function createInstance()
+    public function __construct(
+        protected oeVATTBECountryVATGroupsDbGateway $_oDbGateway
+    )
     {
-        $oGateway = oxNew(oeVATTBECountryVATGroupsDbGateway::class);
-        $oList = oxNew(oeVATTBECountryVATGroupsList::class, $oGateway);
-
-        return $oList;
     }
 
     /**
@@ -62,7 +57,7 @@ class oeVATTBECountryVATGroupsList extends oeVATTBEModel
         if (is_array($aGroupsData) && count($aGroupsData)) {
             foreach ($aGroupsData as $aData) {
                 /** @var oeVATTBECountryVATGroup $oGroup */
-                $oGroup = oeVATTBECountryVATGroup::createInstance();
+                $oGroup = clone $this->getServiceFromContainer(oeVATTBECountryVATGroup::class);
                 $oGroup->setId($aData['OEVATTBE_ID']);
                 $oGroup->setData($aData);
                 $aGroups[] = $oGroup;
@@ -86,7 +81,7 @@ class oeVATTBECountryVATGroupsList extends oeVATTBEModel
         if (is_array($aGroupsData) && count($aGroupsData)) {
             foreach ($aGroupsData as $aData) {
                 /** @var oeVATTBECountryVATGroup $oGroup */
-                $oGroup = oeVATTBECountryVATGroup::createInstance();
+                $oGroup = clone $this->getServiceFromContainer(oeVATTBECountryVATGroup::class);
                 $oGroup->setId($aData['OEVATTBE_ID']);
                 $oGroup->setData($aData);
                 $aGroups[$aData['OEVATTBE_COUNTRYID']][] = $oGroup;

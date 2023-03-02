@@ -63,7 +63,7 @@ class oeVATTBEBasketItemsValidator
      * Create instance of this object by creating dependencies.
      * Later should be replaced with DIC.
      *
-     * @param oeVATTBEOxArticle $oBasketArticles basket article list to check if has article with wrong TBE VAT .
+     * @param array $oBasketArticles basket article list to check if has article with wrong TBE VAT .
      *
      * @return oeVATTBEBasketItemsValidator
      */

@@ -25,15 +25,19 @@ use OxidEsales\Eshop\Application\Controller\Admin\AdminDetailsController;
 use OxidEsales\Eshop\Application\Model\Category;
 use OxidEsales\Eshop\Application\Model\Country;
 use OxidEsales\Eshop\Core\Field;
+use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Model\oeVATTBECategoryArticlesUpdater;
 use OxidEsales\EVatModule\Model\oeVATTBECategoryVATGroupsList;
 use OxidEsales\EVatModule\Model\oeVATTBECountryVATGroupsList;
+use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
  * Class responsible for TBE services administration using categories.
  */
 class oeVATTBECategoryAdministration extends AdminDetailsController
 {
+    use ServiceContainer;
+
     /** @var array Used to cache VAT Groups data. */
     private $_aCategoryVATGroupData = null;
 
@@ -56,10 +60,10 @@ class oeVATTBECategoryAdministration extends AdminDetailsController
     {
         parent::save();
         $sCurrentCategoryId = $this->getEditObjectId();
-        $oConfig = $this->getConfig();
-        $aParams = $oConfig->getRequestParameter('editval');
-        $aVATGroupsParams = $oConfig->getRequestParameter('VATGroupsByCountry');
-        $oCategoryVATGroupsList = oeVATTBECategoryVATGroupsList::createInstance();
+        $request = Registry::getRequest();
+        $aParams = $request->getRequestParameter('editval');
+        $aVATGroupsParams = $request->getRequestParameter('VATGroupsByCountry');
+        $oCategoryVATGroupsList = $this->getServiceFromContainer(oeVATTBECategoryVATGroupsList::class);
         $oCategoryVATGroupsList->setId($sCurrentCategoryId);
         $oCategoryVATGroupsList->setData($aVATGroupsParams);
         $oCategoryVATGroupsList->save();
@@ -83,7 +87,7 @@ class oeVATTBECategoryAdministration extends AdminDetailsController
      */
     public function isSelected($sCountryId, $sVATGroupId)
     {
-        $oCategoryVATGroupsList = oeVATTBECategoryVATGroupsList::createInstance();
+        $oCategoryVATGroupsList = $this->getServiceFromContainer(oeVATTBECategoryVATGroupsList::class);
         $oCategoryVATGroupsList->load($this->getEditObjectId());
         if (is_null($this->_aCategoryVATGroupData)) {
             $this->_aCategoryVATGroupData = $oCategoryVATGroupsList->getData();
@@ -102,7 +106,7 @@ class oeVATTBECategoryAdministration extends AdminDetailsController
         /** @var Country $oCountry */
         $oCountry = oxNew(Country::class);
         $aViewData = array();
-        $oCountryVATGroupsList = oeVATTBECountryVATGroupsList::createInstance();
+        $oCountryVATGroupsList = $this->getServiceFromContainer(oeVATTBECountryVATGroupsList::class);
         $aVATGroupList = $oCountryVATGroupsList->getList();
         foreach ($aVATGroupList as $sCountryId => $aGroupsList) {
             $oCountry->load($sCountryId);

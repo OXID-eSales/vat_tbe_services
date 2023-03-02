@@ -29,24 +29,11 @@ class oeVATTBEModel
     /** @var string Model id. */
     protected $_sId = null;
 
-    /** @var oeVATTBEModelDbGateway Data base gateway. */
-    protected $_oDbGateway = null;
-
     /** @var array Model data. */
     protected $_aData = null;
 
     /** @var bool Was object information found in database. */
     protected $_blIsLoaded = false;
-
-    /**
-     * Handles class dependencies.
-     *
-     * @param oeVATTBEModelDbGateway $oDbGateway db gateway
-     */
-//    public function __construct($oDbGateway)
-//    {
-//        $this->_oDbGateway = $oDbGateway;
-//    }
 
     /**
      * Sets model id.
@@ -137,9 +124,7 @@ class oeVATTBEModel
         }
 
         $this->_blIsLoaded = false;
-        //TODO: fix dbgateway abstract class
-        //check __constructor also
-//        $aData = $this->_getDbGateway()->load($this->getId());
+        $aData = $this->_getDbGateway()->load($this->getId());
         if ($aData) {
             $this->setData($aData);
             $this->_blIsLoaded = true;

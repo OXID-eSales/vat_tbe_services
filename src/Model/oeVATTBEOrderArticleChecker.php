@@ -42,10 +42,10 @@ class oeVATTBEOrderArticleChecker
     /**
      * Handles dependencies.
      *
-     * @param array|ArticleList $mArticleList    Articles list to check.
+     * @param array $mArticleList    Articles list to check.
      * @param oeVATTBETBEUser     $oTBEUserCountry TBE user country
      */
-    public function __construct(Article $mArticleList, oeVATTBETBEUser $oTBEUserCountry)
+    public function __construct(array $mArticleList = [], oeVATTBETBEUser $oTBEUserCountry)
     {
         if (!is_array($mArticleList) && !($mArticleList instanceof ArticleList)) {
             $mArticleList = array();

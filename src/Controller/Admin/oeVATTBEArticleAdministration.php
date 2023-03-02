@@ -25,16 +25,21 @@ use OxidEsales\Eshop\Application\Controller\Admin\AdminDetailsController;
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Application\Model\Country;
 use OxidEsales\Eshop\Core\Field;
+use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Model\oeVATTBEArticleVATGroupsList;
 use OxidEsales\EVatModule\Model\oeVATTBECountryVATGroupsList;
 use OxidEsales\EVatModule\Shop\oeVATTBEOxArticle;
 use OxidEsales\EVatModule\Shop\oeVATTBEOxCountry;
+use OxidEsales\EVatModule\Traits\ServiceContainer;
+use OxidEsales\Facts\Facts;
 
 /**
  * Class responsible for TBE service administration.
  */
 class oeVATTBEArticleAdministration extends AdminDetailsController
 {
+    use ServiceContainer;
+
     /** @var array Used to cache VAT Groups data. */
     private $_aArticleVATGroupData = null;
 
@@ -48,7 +53,7 @@ class oeVATTBEArticleAdministration extends AdminDetailsController
         parent::render();
 
         $oArticle = $this->_loadCurrentArticle();
-        if ('EE' == $this->getViewConfig()->getEdition() && $oArticle->isDerived()) {
+        if ('EE' == (new Facts())->getEdition() && $oArticle->isDerived()) {
             $this->_aViewData['readonly'] = true;
         }
 
@@ -62,10 +67,10 @@ class oeVATTBEArticleAdministration extends AdminDetailsController
     {
         parent::save();
         $sCurrentArticleId = $this->getEditObjectId();
-        $oConfig = $this->getConfig();
-        $aParams = $oConfig->getRequestParameter('editval');
-        $aVATGroupsParams = $oConfig->getRequestParameter('VATGroupsByCountry');
-        $oArticleVATGroupsList = oeVATTBEArticleVATGroupsList::createInstance();
+        $request = Registry::getRequest();
+        $aParams = $request->getRequestParameter('editval');
+        $aVATGroupsParams = $request->getRequestParameter('VATGroupsByCountry');
+        $oArticleVATGroupsList = $this->getServiceFromContainer(oeVATTBEArticleVATGroupsList::class);
         $oArticleVATGroupsList->setId($sCurrentArticleId);
         $oArticleVATGroupsList->setData($aVATGroupsParams);
         $oArticleVATGroupsList->save();
@@ -85,7 +90,7 @@ class oeVATTBEArticleAdministration extends AdminDetailsController
      */
     public function isSelected($sCountryId, $sVATGroupId)
     {
-        $oArticleVATGroupsList = oeVATTBEArticleVATGroupsList::createInstance();
+        $oArticleVATGroupsList = $this->getServiceFromContainer(oeVATTBEArticleVATGroupsList::class);
         $oArticleVATGroupsList->load($this->getEditObjectId());
         if (is_null($this->_aArticleVATGroupData)) {
             $this->_aArticleVATGroupData = $oArticleVATGroupsList->getData();
@@ -104,7 +109,7 @@ class oeVATTBEArticleAdministration extends AdminDetailsController
         /** @var Country|oeVATTBEOxCountry $oCountry */
         $oCountry = oxNew(Country::class);
         $aViewData = array();
-        $oCountryVATGroupsList = oeVATTBECountryVATGroupsList::createInstance();
+        $oCountryVATGroupsList = $this->getServiceFromContainer(oeVATTBECountryVATGroupsList::class);
         $aVATGroupList = $oCountryVATGroupsList->getList();
         foreach ($aVATGroupList as $sCountryId => $aGroupsList) {
             $oCountry->load($sCountryId);

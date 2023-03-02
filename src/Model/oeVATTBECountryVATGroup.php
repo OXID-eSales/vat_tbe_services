@@ -21,7 +21,6 @@
 
 namespace OxidEsales\EVatModule\Model;
 
-use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Core\oeVATTBEModel;
 use OxidEsales\EVatModule\Model\DbGateway\oeVATTBECountryVATGroupsDbGateway;
 
@@ -32,22 +31,10 @@ class oeVATTBECountryVATGroup extends oeVATTBEModel
 {
     private $_oVATGroupArticleCacheInvalidator = null;
 
-    /**
-     * Creates an instance of oeVATTBECountryVATGroup.
-     *
-     * @return oeVATTBECountryVATGroup;
-     */
-    public static function createInstance()
+    public function __construct(
+        protected oeVATTBECountryVATGroupsDbGateway $_oDbGateway
+    )
     {
-        $oGateway = oxNew(oeVATTBECountryVATGroupsDbGateway::class);
-        $oGroup = oxNew(oeVATTBECountryVATGroup::class, $oGateway);
-
-        if (Registry::getConfig()->getEdition() === 'EE') {
-            $oInvalidator = oeVATTBEVATGroupArticleCacheInvalidator::createInstance();
-            $oGroup->setVATGroupArticleCacheInvalidator($oInvalidator);
-        }
-
-        return $oGroup;
     }
 
     /**

@@ -29,12 +29,15 @@ use OxidEsales\Eshop\Core\UtilsView;
 use OxidEsales\EVatModule\Model\DbGateway\oeVATTBECountryVATGroupsDbGateway;
 use OxidEsales\EVatModule\Model\oeVATTBECountryVATGroup;
 use OxidEsales\EVatModule\Model\oeVATTBECountryVATGroupsList;
+use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
  * Display VAT groups for particular country.
  */
 class oeVATTBECountryVatGroups extends AdminDetailsController
 {
+    use ServiceContainer;
+
     /**
      * To set only one error message in session.
      *
@@ -78,7 +81,7 @@ class oeVATTBECountryVatGroups extends AdminDetailsController
      */
     public function addCountryVATGroup()
     {
-        $aParams = Registry::getConfig()->getRequestParameter('editval');
+        $aParams = Registry::getRequest()->getRequestParameter('editval');
         $sCountryId = $aParams['oxcountry__oxid'];
         $sGroupName = $aParams['oevattbe_name'];
         $fVATRate = $aParams['oevattbe_rate'];
@@ -89,7 +92,7 @@ class oeVATTBECountryVatGroups extends AdminDetailsController
             return null;
         }
 
-        $oGroup = oeVATTBECountryVATGroup::createInstance();
+        $oGroup = $this->getServiceFromContainer(oeVATTBECountryVATGroup::class);
         $oGroup->setCountryId($sCountryId);
         $oGroup->setName($sGroupName);
         $oGroup->setRate($fVATRate);
@@ -104,9 +107,9 @@ class oeVATTBECountryVatGroups extends AdminDetailsController
      */
     public function changeCountryVATGroups()
     {
-        $aVatGroups = Registry::getConfig()->getRequestParameter('updateval');
+        $aVatGroups = Registry::getRequest()->getRequestParameter('updateval');
 
-        $oVatGroup = oeVATTBECountryVATGroup::createInstance();
+        $oVatGroup = $this->getServiceFromContainer(oeVATTBECountryVATGroup::class);
         foreach ($aVatGroups as $aVatGroup) {
             if (!$aVatGroup['oevattbe_id'] || !$aVatGroup['oevattbe_name']) {
                 if (!$this->_blMissingParameterErrorSet) {
@@ -128,9 +131,9 @@ class oeVATTBECountryVatGroups extends AdminDetailsController
      */
     public function deleteCountryVatGroup()
     {
-        $iVATGroupId = Registry::getConfig()->getRequestParameter('countryVATGroupId');
+        $iVATGroupId = Registry::getRequest()->getRequestParameter('countryVATGroupId');
 
-        $oVATGroup = oeVATTBECountryVATGroup::createInstance();
+        $oVATGroup = $this->getServiceFromContainer(oeVATTBECountryVATGroup::class);
         $oVATGroup->setId($iVATGroupId);
         $oVATGroup->delete();
 

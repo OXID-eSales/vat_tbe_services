@@ -21,11 +21,11 @@
 
 namespace OxidEsales\EVatModule\Shop;
 
-use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Model\oeVATTBEArticleSQLBuilder;
 use OxidEsales\EVatModule\Model\oeVATTBETBEArticleCacheKey;
 use OxidEsales\EVatModule\Model\oeVATTBETBEUser;
 use \oxDb;
+use OxidEsales\Facts\Facts;
 
 /**
  * VAT TBE oxArticle class.
@@ -106,7 +106,7 @@ class oeVATTBEOxArticle extends oeVATTBEOxArticle_parent
         }
 
         // add active shop
-        if (Registry::getConfig()->getEdition() == 'EE') {
+        if ((new Facts())->getEdition() == 'EE') {
             if ($this->getShopId() && $this->_blDisableShopCheck === false) {
                 $sLongFieldName = $this->_getFieldLongName('oxshopid');
                 if (isset($this->$sLongFieldName)) {

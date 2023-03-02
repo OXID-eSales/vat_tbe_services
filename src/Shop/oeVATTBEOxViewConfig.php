@@ -23,6 +23,7 @@ namespace OxidEsales\EVatModule\Shop;
 
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\EVatModule\Model\oeVATTBETBEUser;
+use OxidEsales\Facts\Facts;
 
 /**
  * Extended oxViewConfig class
@@ -53,7 +54,7 @@ class oeVATTBEOxViewConfig extends oeVATTBEOxViewConfig_parent
      */
     public function getOeVATTBEShowTBEEdition()
     {
-        return $this->getConfig()->getEdition();
+        return (new Facts())->getEdition();
     }
 
     /**
