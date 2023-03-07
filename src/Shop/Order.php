@@ -77,7 +77,7 @@ class Order extends Order_parent
      */
     public function validateOrder($oBasket, $oUser)
     {
-        $iValidState = $this->_getValidateOrderParent($oBasket, $oUser);
+        $iValidState = $this->getValidateOrderParent($oBasket, $oUser);
         $oUserCountry = User::createInstance();
 
         $blUserCountryChanged = $oBasket->getOeVATTBETbeCountryId() != $oUserCountry->getOeVATTBETbeCountryId();
@@ -85,7 +85,7 @@ class Order extends Order_parent
             $iValidState = EShopOrder::ORDER_STATE_INVALIDDElADDRESSCHANGED;
         }
 
-        $oArticleChecker = $this->_getOeVATTBEOrderArticleChecker($oBasket);
+        $oArticleChecker = $this->getOeVATTBEOrderArticleChecker($oBasket);
 
         $blUserFromDomesticCountry = $oUserCountry->isUserFromDomesticCountry();
         $blOrderValid = !$oBasket->hasOeTBEVATArticles() || ($oArticleChecker->isValid() && $oUserCountry->getOeVATTBETbeCountryId());
@@ -133,9 +133,9 @@ class Order extends Order_parent
             $this->oxorder__oevattbe_evidenceused = new Field($oUser->getOeVATTBETbeEvidenceUsed());
         }
 
-        $iRet = $this->_getFinalizeOrderParent($oBasket, $oUser, $blRecalculatingOrder);
+        $iRet = $this->getFinalizeOrderParent($oBasket, $oUser, $blRecalculatingOrder);
 
-        if ($this->_shouldOeVATTBEStoreEvidences($iRet, $oBasket, $blRecalculatingOrder)) {
+        if ($this->shouldOeVATTBEStoreEvidences($iRet, $oBasket, $blRecalculatingOrder)) {
             $oOrderEvidenceList = OrderEvidenceList::createInstance();
 
             $oOrderEvidenceList->setId($this->getId());
@@ -155,11 +155,11 @@ class Order extends Order_parent
      */
     public function getOeVATTBECountryTitle()
     {
-        $oOrderEvidenceList = $this->_factoryOeVATTBEOrderEvidenceList();
+        $oOrderEvidenceList = $this->factoryOeVATTBEOrderEvidenceList();
         $oOrderEvidenceList->load($this->getId());
         $aOrderEvidences = $oOrderEvidenceList->getData();
 
-        $sCountryId = $aOrderEvidences[$this->_getOeVATTBEUsedEvidenceId()]['countryId'];
+        $sCountryId = $aOrderEvidences[$this->getOeVATTBEUsedEvidenceId()]['countryId'];
 
         /** @var Country $oCountry */
         $oCountry = oxNew(Country::class);
@@ -175,7 +175,7 @@ class Order extends Order_parent
      *
      * @return string
      */
-    protected function _getOeVATTBEUsedEvidenceId()
+    protected function getOeVATTBEUsedEvidenceId()
     {
         return $this->oxorder__oevattbe_evidenceused->value;
     }
@@ -188,10 +188,10 @@ class Order extends Order_parent
      * @param int   $iStartPos   text start position from top
      * @param bool  $blShowPrice show articles prices / VAT info or not
      */
-    protected function _setOrderArticlesToPdf($oPdf, &$iStartPos, $blShowPrice = true)
+    protected function setOrderArticlesToPdf($oPdf, &$iStartPos, $blShowPrice = true)
     {
         $iStartPosForMark = $iStartPos;
-        parent::_setOrderArticlesToPdf($oPdf, $iStartPos, $blShowPrice);
+        parent::setOrderArticlesToPdf($oPdf, $iStartPos, $blShowPrice);
 
         $iCurrentPage = 1;
         $oPdf->setPage($iCurrentPage);
@@ -237,7 +237,7 @@ class Order extends Order_parent
      *
      * @return mixed
      */
-    protected function _getValidateOrderParent($oBasket, $oUser)
+    protected function getValidateOrderParent($oBasket, $oUser)
     {
         return parent::validateOrder($oBasket, $oUser);
     }
@@ -251,7 +251,7 @@ class Order extends Order_parent
      *
      * @return mixed
      */
-    protected function _getFinalizeOrderParent(Basket $oBasket, $oUser, $blRecalculatingOrder = false)
+    protected function getFinalizeOrderParent(Basket $oBasket, $oUser, $blRecalculatingOrder = false)
     {
         return parent::finalizeOrder($oBasket, $oUser, $blRecalculatingOrder);
     }
@@ -261,7 +261,7 @@ class Order extends Order_parent
      *
      * @return OrderEvidenceList
      */
-    protected function _factoryOeVATTBEOrderEvidenceList()
+    protected function factoryOeVATTBEOrderEvidenceList()
     {
         $oOrderEvidenceList = OrderEvidenceList::createInstance();
         return $oOrderEvidenceList;
@@ -274,7 +274,7 @@ class Order extends Order_parent
      *
      * @return OrderArticleChecker
      */
-    protected function _getOeVATTBEOrderArticleChecker($oBasket)
+    protected function getOeVATTBEOrderArticleChecker($oBasket)
     {
         $oTBEUser = User::createInstance();
         return oxNew(OrderArticleChecker::class, $oBasket->getBasketArticles(), $oTBEUser);
@@ -289,7 +289,7 @@ class Order extends Order_parent
      *
      * @return bool
      */
-    private function _shouldOeVATTBEStoreEvidences($iRet, $oBasket, $blRecalculatingOrder)
+    private function shouldOeVATTBEStoreEvidences($iRet, $oBasket, $blRecalculatingOrder)
     {
         $blCorrectOrderState = $iRet === EShopOrder::ORDER_STATE_OK || $iRet === EShopOrder::ORDER_STATE_MAILINGERROR;
 

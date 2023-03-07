@@ -38,7 +38,7 @@ class CategoryMainAjax extends CategoryMainAjax_parent
     public function addArticle()
     {
         parent::addArticle();
-        $this->_populateOeVATTBEConfiguration();
+        $this->populateOeVATTBEConfiguration();
     }
 
     /**
@@ -46,10 +46,10 @@ class CategoryMainAjax extends CategoryMainAjax_parent
      */
     public function removeArticle()
     {
-        $aArticles = $this->_getActionIds('oxarticles.oxid');
+        $aArticles = $this->getActionIds('oxarticles.oxid');
         if (Registry::getRequest()->getRequestParameter('all')) {
-            $sArticleTable = $this->_getViewName('oxarticles');
-            $aArticles = $this->_getAll($this->_addFilter("select $sArticleTable.oxid " . $this->_getQuery()));
+            $sArticleTable = $this->getViewName('oxarticles');
+            $aArticles = $this->getAll($this->addFilter("select $sArticleTable.oxid " . $this->getQuery()));
         }
 
         CategoryArticlesUpdater::createInstance()->removeCategoryTBEInformationFromArticles($aArticles);
@@ -59,7 +59,7 @@ class CategoryMainAjax extends CategoryMainAjax_parent
     /**
      * Populates VAT groups configuration.
      */
-    protected function _populateOeVATTBEConfiguration()
+    protected function populateOeVATTBEConfiguration()
     {
         $sCategoryId = Registry::getRequest()->getRequestParameter('synchoxid');
         /** @var EShopCategory|Category $oCategory */

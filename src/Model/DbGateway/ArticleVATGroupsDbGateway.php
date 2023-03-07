@@ -37,7 +37,7 @@ class ArticleVATGroupsDbGateway extends ModelDbGateway
      */
     public function save($aData)
     {
-        $oDb = $this->_getDb();
+        $oDb = $this->getDb();
 
         $sArticleId = $aData['articleid'];
 
@@ -68,7 +68,7 @@ class ArticleVATGroupsDbGateway extends ModelDbGateway
      */
     public function load($sArticleId)
     {
-        $oDb = $this->_getDb();
+        $oDb = $this->getDb();
         $aData = $oDb->getAll('SELECT * FROM `oevattbe_articlevat` WHERE `oevattbe_articleid` = ' . $oDb->quote($sArticleId));
 
         return $aData;
@@ -83,7 +83,7 @@ class ArticleVATGroupsDbGateway extends ModelDbGateway
      */
     public function loadByGroupId($sGroupId)
     {
-        $oDb = $this->_getDb();
+        $oDb = $this->getDb();
         $aData = $oDb->getAll('SELECT * FROM `oevattbe_articlevat` WHERE `oevattbe_vatgroupid` = ' . $oDb->quote($sGroupId));
 
         return $aData;
@@ -98,7 +98,7 @@ class ArticleVATGroupsDbGateway extends ModelDbGateway
      */
     public function delete($sGroupId)
     {
-        $oDb = $this->_getDb();
+        $oDb = $this->getDb();
         $oDb->startTransaction();
 
         $blDeleteResult = $oDb->execute('DELETE FROM `oevattbe_articlevat` WHERE `oevattbe_articleid` = ' . $oDb->quote($sGroupId));

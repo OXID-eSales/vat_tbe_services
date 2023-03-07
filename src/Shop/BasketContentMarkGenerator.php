@@ -51,7 +51,7 @@ class BasketContentMarkGenerator extends BasketContentMarkGenerator_parent
     {
         if ($this->_oTBEBasket->hasOeTBEVATArticles()) {
             $sCurrentMark = self::DEFAULT_EXPLANATION_MARK;
-            $aMarks = $this->_formMarks($sCurrentMark);
+            $aMarks = $this->formMarks($sCurrentMark);
             $sMark = $aMarks[$sMarkIdentification];
         } else {
             $sMark = parent::getMark($sMarkIdentification);
@@ -67,7 +67,7 @@ class BasketContentMarkGenerator extends BasketContentMarkGenerator_parent
      *
      * @return array
      */
-    private function _formMarks($sCurrentMark)
+    private function formMarks($sCurrentMark)
     {
         $oBasket = $this->_oTBEBasket;
         $aMarks = array();

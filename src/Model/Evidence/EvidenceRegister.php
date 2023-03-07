@@ -52,7 +52,7 @@ class EvidenceRegister
      */
     public function getRegisteredEvidences()
     {
-        $oConfig = $this->_getConfig();
+        $oConfig = $this->getConfig();
         return (array) $oConfig->getConfigParam('aOeVATTBECountryEvidenceClasses');
     }
 
@@ -63,7 +63,7 @@ class EvidenceRegister
      */
     public function getActiveEvidences()
     {
-        $oConfig = $this->_getConfig();
+        $oConfig = $this->getConfig();
         return (array) $oConfig->getConfigParam('aOeVATTBECountryEvidences');
     }
 
@@ -85,7 +85,7 @@ class EvidenceRegister
                 Registry::getConfig()->saveShopConfVar('arr', 'aOeVATTBECountryEvidenceClasses', $aEvidences);
             }
 
-            $this->_addEvidenceToEvidenceList($sEvidenceClass, $blActive);
+            $this->addEvidenceToEvidenceList($sEvidenceClass, $blActive);
         }
     }
 
@@ -105,7 +105,7 @@ class EvidenceRegister
             unset($aEvidenceClasses[$key]);
             Registry::getConfig()->saveShopConfVar('arr', 'aOeVATTBECountryEvidenceClasses', $aEvidenceClasses);
         }
-        $this->_removeEvidenceToEvidenceList($sEvidenceClass, $sEvidenceId);
+        $this->removeEvidenceToEvidenceList($sEvidenceClass, $sEvidenceId);
     }
 
     /**
@@ -141,7 +141,7 @@ class EvidenceRegister
      *
      * @return Config
      */
-    protected function _getConfig()
+    protected function getConfig()
     {
         return $this->_oConfig;
     }
@@ -153,10 +153,10 @@ class EvidenceRegister
      * @param string $sEvidenceClass Evidence class name.
      * @param bool   $blActive       Whether to activate evidence.
      */
-    private function _addEvidenceToEvidenceList($sEvidenceClass, $blActive = false)
+    private function addEvidenceToEvidenceList($sEvidenceClass, $blActive = false)
     {
         $aEvidences = $this->getActiveEvidences();
-        $sEvidenceId = $this->_getEvidenceId($sEvidenceClass);
+        $sEvidenceId = $this->getEvidenceId($sEvidenceClass);
         if (!isset($aEvidences[$sEvidenceId])) {
             $aEvidences[$sEvidenceId] = $blActive ? 1 : 0;
             Registry::getConfig()->saveShopConfVar('aarr', 'aOeVATTBECountryEvidences', $aEvidences, null, 'module:oevattbe');
@@ -170,10 +170,10 @@ class EvidenceRegister
      * @param string $sEvidenceClass Evidence class name.
      * @param bool   $sEvidenceId    Whether to activate evidence.
      */
-    private function _removeEvidenceToEvidenceList($sEvidenceClass, $sEvidenceId = false)
+    private function removeEvidenceToEvidenceList($sEvidenceClass, $sEvidenceId = false)
     {
         if (!$sEvidenceId && class_exists($sEvidenceClass)) {
-            $sEvidenceId = $this->_getEvidenceId($sEvidenceClass);
+            $sEvidenceId = $this->getEvidenceId($sEvidenceClass);
         }
 
         $aEvidences = $this->getActiveEvidences();
@@ -191,7 +191,7 @@ class EvidenceRegister
      *
      * @return string
      */
-    private function _getEvidenceId($sEvidenceClass)
+    private function getEvidenceId($sEvidenceClass)
     {
         $user = oxNew(EShopUser::class);
 

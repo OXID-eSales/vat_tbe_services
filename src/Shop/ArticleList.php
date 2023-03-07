@@ -43,10 +43,10 @@ class ArticleList extends ArticleList_parent
      *
      * @return string SQL
      */
-    protected function _getCategorySelect($sFields, $sCatId, $aSessionFilter)
+    protected function getCategorySelect($sFields, $sCatId, $aSessionFilter)
     {
-        if (!$this->_isOeVATTBEConfigured()) {
-            return parent::_getCategorySelect($sFields, $sCatId, $aSessionFilter);
+        if (!$this->isOeVATTBEConfigured()) {
+            return parent::getCategorySelect($sFields, $sCatId, $aSessionFilter);
         }
 
         $sArticleTable = getViewName('oxarticles');
@@ -64,16 +64,16 @@ class ArticleList extends ArticleList_parent
         $sFilterSql = '';
         $iLang = Registry::getLang()->getBaseLanguage();
         if ($aSessionFilter && isset($aSessionFilter[$sCatId][$iLang])) {
-            $sFilterSql = $this->_getFilterSql($sCatId, $aSessionFilter[$sCatId][$iLang]);
+            $sFilterSql = $this->getFilterSql($sCatId, $aSessionFilter[$sCatId][$iLang]);
         }
 
         $oDb = oxDb::getDb();
 
         $sSelect = "SELECT $sArticleTable.oxtimestamp, ";
-        $sSelect .= $this->_getOeVATTBEArticleSqlBuilder()->getSelectFields();
+        $sSelect .= $this->getOeVATTBEArticleSqlBuilder()->getSelectFields();
         $sSelect .= " FROM $sO2CView as oc";
         $sSelect .= " left join $sArticleTable ON $sArticleTable.oxid = oc.oxobjectid";
-        $sSelect .= $this->_getOeVATTBEArticleSqlBuilder()->getJoins();
+        $sSelect .= $this->getOeVATTBEArticleSqlBuilder()->getJoins();
         $sSelect .= " WHERE " . $this->getBaseObject()->getSqlActiveSnippet() . " and $sArticleTable.oxparentid = ''";
         $sSelect .= " and oc.oxcatnid = " . $oDb->quote($sCatId) . " $sFilterSql ORDER BY $sSorting oc.oxpos, oc.oxobjectid ";
 
@@ -87,19 +87,19 @@ class ArticleList extends ArticleList_parent
      *
      * @return string
      */
-    protected function _getVendorSelect($sVendorId)
+    protected function getVendorSelect($sVendorId)
     {
-        if (!$this->_isOeVATTBEConfigured()) {
-            return parent::_getVendorSelect($sVendorId);
+        if (!$this->isOeVATTBEConfigured()) {
+            return parent::getVendorSelect($sVendorId);
         }
 
         $sArticleTable = getViewName('oxarticles');
         $oBaseObject = $this->getBaseObject();
 
         $sSelect = "select ";
-        $sSelect .= $this->_getOeVATTBEArticleSqlBuilder()->getSelectFields();
+        $sSelect .= $this->getOeVATTBEArticleSqlBuilder()->getSelectFields();
         $sSelect .= " from $sArticleTable ";
-        $sSelect .= $this->_getOeVATTBEArticleSqlBuilder()->getJoins();
+        $sSelect .= $this->getOeVATTBEArticleSqlBuilder()->getJoins();
         $sSelect .= "where $sArticleTable.oxvendorid = " . oxDb::getDb()->quote($sVendorId) . " ";
         $sSelect .= " and " . $oBaseObject->getSqlActiveSnippet() . " and $sArticleTable.oxparentid = ''  ";
 
@@ -117,19 +117,19 @@ class ArticleList extends ArticleList_parent
      *
      * @return string
      */
-    protected function _getManufacturerSelect($sManufacturerId)
+    protected function getManufacturerSelect($sManufacturerId)
     {
-        if (!$this->_isOeVATTBEConfigured()) {
-            return parent::_getManufacturerSelect($sManufacturerId);
+        if (!$this->isOeVATTBEConfigured()) {
+            return parent::getManufacturerSelect($sManufacturerId);
         }
 
         $sArticleTable = getViewName('oxarticles');
         $oBaseObject = $this->getBaseObject();
 
         $sSelect = "select ";
-        $sSelect .= $this->_getOeVATTBEArticleSqlBuilder()->getSelectFields();
+        $sSelect .= $this->getOeVATTBEArticleSqlBuilder()->getSelectFields();
         $sSelect .= " from $sArticleTable ";
-        $sSelect .= $this->_getOeVATTBEArticleSqlBuilder()->getJoins();
+        $sSelect .= $this->getOeVATTBEArticleSqlBuilder()->getJoins();
         $sSelect .= "where $sArticleTable.oxmanufacturerid = " . oxDb::getDb()->quote($sManufacturerId) . " ";
         $sSelect .= " and " . $oBaseObject->getSqlActiveSnippet() . " and $sArticleTable.oxparentid = ''  ";
 
@@ -148,19 +148,19 @@ class ArticleList extends ArticleList_parent
      *
      * @return string
      */
-    protected function _getPriceSelect($dPriceFrom, $dPriceTo)
+    protected function getPriceSelect($dPriceFrom, $dPriceTo)
     {
-        if (!$this->_isOeVATTBEConfigured()) {
-            return parent::_getPriceSelect($dPriceFrom, $dPriceTo);
+        if (!$this->isOeVATTBEConfigured()) {
+            return parent::getPriceSelect($dPriceFrom, $dPriceTo);
         }
 
         $oBaseObject = $this->getBaseObject();
         $sArticleTable = $oBaseObject->getViewName();
 
         $sSelect = "select ";
-        $sSelect .= $this->_getOeVATTBEArticleSqlBuilder()->getSelectFields();
+        $sSelect .= $this->getOeVATTBEArticleSqlBuilder()->getSelectFields();
         $sSelect .= " from $sArticleTable ";
-        $sSelect .= $this->_getOeVATTBEArticleSqlBuilder()->getJoins();
+        $sSelect .= $this->getOeVATTBEArticleSqlBuilder()->getJoins();
         $sSelect .= " where oxvarminprice >= 0 ";
         $sSelect .= $dPriceTo ? "and oxvarminprice <= " . (double) $dPriceTo . " " : " ";
         $sSelect .= $dPriceFrom ? "and oxvarminprice  >= " . (double) $dPriceFrom . " " : " ";
@@ -186,7 +186,7 @@ class ArticleList extends ArticleList_parent
      */
     public function loadTagArticles($sTag, $iLang)
     {
-        if (!$this->_isOeVATTBEConfigured()) {
+        if (!$this->isOeVATTBEConfigured()) {
             return parent::loadTagArticles($sTag, $iLang);
         }
         $oListObject = $this->getBaseObject();
@@ -199,10 +199,10 @@ class ArticleList extends ArticleList_parent
         $sTag = $oTag->get();
 
         $sQ = "select ";
-        $sQ .= $this->_getOeVATTBEArticleSqlBuilder()->getSelectFields();
+        $sQ .= $this->getOeVATTBEArticleSqlBuilder()->getSelectFields();
         $sQ .= " from {$sViewName} ";
         $sQ .= " inner join {$sArticleTable} on {$sArticleTable}.oxid = {$sViewName}.oxid ";
-        $sQ .= $this->_getOeVATTBEArticleSqlBuilder()->getJoins();
+        $sQ .= $this->getOeVATTBEArticleSqlBuilder()->getJoins();
         $sQ .= " where {$sArticleTable}.oxparentid = '' AND match ( {$sViewName}.oxtags ) ";
         $sQ .= " against( " . oxDb::getDb()->quote("\"" . $sTag . "\"") . " IN BOOLEAN MODE )";
 
@@ -235,7 +235,7 @@ class ArticleList extends ArticleList_parent
      */
     public function loadActionArticles($sActionID, $iLimit = null)
     {
-        if (!$this->_isOeVATTBEConfigured()) {
+        if (!$this->isOeVATTBEConfigured()) {
             parent::loadActionArticles($sActionID, $iLimit = null);
             return;
         }
@@ -244,7 +244,7 @@ class ArticleList extends ArticleList_parent
             return;
         }
 
-        $sShopID = $this->getConfig()->getShopId();
+        $sShopID = Registry::getConfig()->getShopId();
         $sActionID = oxDb::getDb()->quote(strtolower($sActionID));
 
         //echo $sSelect;
@@ -259,11 +259,11 @@ class ArticleList extends ArticleList_parent
         $sLimit = ($iLimit > 0) ? "limit " . $iLimit : '';
 
         $sSelect = "select ";
-        $sSelect .= $this->_getOeVATTBEArticleSqlBuilder()->getSelectFields();
+        $sSelect .= $this->getOeVATTBEArticleSqlBuilder()->getSelectFields();
         $sSelect .= " from oxactions2article";
         $sSelect .= " left join $sArticleTable on $sArticleTable.oxid = oxactions2article.oxartid";
         $sSelect .= " left join $sViewName on $sViewName.oxid = oxactions2article.oxactionid";
-        $sSelect .= $this->_getOeVATTBEArticleSqlBuilder()->getJoins();
+        $sSelect .= $this->getOeVATTBEArticleSqlBuilder()->getJoins();
         $sSelect .= " where oxactions2article.oxshopid = '$sShopID' and oxactions2article.oxactionid = $sActionID and $sActiveSql";
         $sSelect .= " and $sArticleTable.oxid is not null and " . $oBaseObject->getSqlActiveSnippet();
         $sSelect .= " order by oxactions2article.oxsort $sLimit";
@@ -280,11 +280,11 @@ class ArticleList extends ArticleList_parent
      */
     public function loadArticleAccessoires($sArticleId)
     {
-        if (!$this->_isOeVATTBEConfigured()) {
+        if (!$this->isOeVATTBEConfigured()) {
             parent::loadArticleAccessoires($sArticleId);
             return;
         }
-        $myConfig = $this->getConfig();
+        $myConfig = Registry::getConfig();
 
         // Performance
         if (!$myConfig->getConfigParam('bl_perfLoadAccessoires')) {
@@ -297,10 +297,10 @@ class ArticleList extends ArticleList_parent
         $sArticleTable = $oBaseObject->getViewName();
 
         $sSelect = "select ";
-        $sSelect .= $this->_getOeVATTBEArticleSqlBuilder()->getSelectFields();
+        $sSelect .= $this->getOeVATTBEArticleSqlBuilder()->getSelectFields();
         $sSelect .= " from oxaccessoire2article ";
         $sSelect .= " left join $sArticleTable on oxaccessoire2article.oxobjectid=$sArticleTable.oxid ";
-        $sSelect .= $this->_getOeVATTBEArticleSqlBuilder()->getJoins();
+        $sSelect .= $this->getOeVATTBEArticleSqlBuilder()->getJoins();
         $sSelect .= "where oxaccessoire2article.oxarticlenid = $sArticleId ";
         $sSelect .= " and $sArticleTable.oxid is not null and " . $oBaseObject->getSqlActiveSnippet();
         //sorting articles
@@ -318,12 +318,12 @@ class ArticleList extends ArticleList_parent
      */
     public function loadArticleCrossSell($sArticleId)
     {
-        if (!$this->_isOeVATTBEConfigured()) {
+        if (!$this->isOeVATTBEConfigured()) {
             parent::loadArticleCrossSell($sArticleId);
             return;
         }
 
-        $myConfig = $this->getConfig();
+        $myConfig = Registry::getConfig();
 
         // Performance
         if (!$myConfig->getConfigParam('bl_perfLoadCrossselling')) {
@@ -336,10 +336,10 @@ class ArticleList extends ArticleList_parent
         $sArticleId = oxDb::getDb()->quote($sArticleId);
 
         $sSelect = "SELECT ";
-        $sSelect .= $this->_getOeVATTBEArticleSqlBuilder()->getSelectFields();
+        $sSelect .= $this->getOeVATTBEArticleSqlBuilder()->getSelectFields();
         $sSelect .= " FROM $sArticleTable ";
         $sSelect .= " INNER JOIN oxobject2article ON oxobject2article.oxobjectid=$sArticleTable.oxid ";
-        $sSelect .= $this->_getOeVATTBEArticleSqlBuilder()->getJoins();
+        $sSelect .= $this->getOeVATTBEArticleSqlBuilder()->getJoins();
         $sSelect .= "WHERE oxobject2article.oxarticlenid = $sArticleId ";
         $sSelect .= " AND " . $oBaseObject->getSqlActiveSnippet();
 
@@ -378,11 +378,11 @@ class ArticleList extends ArticleList_parent
      */
     public function loadNewestArticles($iLimit = null)
     {
-        if (!$this->_isOeVATTBEConfigured()) {
+        if (!$this->isOeVATTBEConfigured()) {
             parent::loadNewestArticles($iLimit);
             return;
         }
-        $myConfig = $this->getConfig();
+        $myConfig = Registry::getConfig();
 
         if (!$myConfig->getConfigParam('bl_perfLoadPriceForAddList')) {
             $this->getBaseObject()->disablePriceLoad();
@@ -406,9 +406,9 @@ class ArticleList extends ArticleList_parent
                     $sType = 'oxtimestamp';
                 }
                 $sSelect = "select ";
-                $sSelect .= $this->_getOeVATTBEArticleSqlBuilder()->getSelectFields();
+                $sSelect .= $this->getOeVATTBEArticleSqlBuilder()->getSelectFields();
                 $sSelect .= " from $sArticleTable ";
-                $sSelect .= $this->_getOeVATTBEArticleSqlBuilder()->getJoins();
+                $sSelect .= $this->getOeVATTBEArticleSqlBuilder()->getJoins();
                 $sSelect .= "where oxparentid = '' and " . $this->getBaseObject()->getSqlActiveSnippet() . " and oxissearch = 1 order by $sType desc ";
                 if (!($iLimit = (int) $iLimit)) {
                     $iLimit = $myConfig->getConfigParam('iNrofNewcomerArticles');
@@ -430,11 +430,11 @@ class ArticleList extends ArticleList_parent
      */
     public function loadTop5Articles($iLimit = null)
     {
-        if (!$this->_isOeVATTBEConfigured()) {
+        if (!$this->isOeVATTBEConfigured()) {
             parent::loadTop5Articles($iLimit);
             return;
         }
-        $myConfig = $this->getConfig();
+        $myConfig = Registry::getConfig();
 
         if (!$myConfig->getConfigParam('bl_perfLoadPriceForAddList')) {
             $this->getBaseObject()->disablePriceLoad();
@@ -455,9 +455,9 @@ class ArticleList extends ArticleList_parent
                 $sLimit = ($iLimit > 0) ? "limit " . $iLimit : 'limit 5';
 
                 $sSelect = "select ";
-                $sSelect .= $this->_getOeVATTBEArticleSqlBuilder()->getSelectFields();
+                $sSelect .= $this->getOeVATTBEArticleSqlBuilder()->getSelectFields();
                 $sSelect .= " from $sArticleTable ";
-                $sSelect .= $this->_getOeVATTBEArticleSqlBuilder()->getJoins();
+                $sSelect .= $this->getOeVATTBEArticleSqlBuilder()->getJoins();
                 $sSelect .= "where " . $this->getBaseObject()->getSqlActiveSnippet() . " and $sArticleTable.oxissearch = 1 ";
                 $sSelect .= "and $sArticleTable.oxparentid = '' and $sArticleTable.oxsoldamount>0 ";
                 $sSelect .= "order by $sArticleTable.oxsoldamount desc $sLimit";
@@ -475,10 +475,10 @@ class ArticleList extends ArticleList_parent
      *
      * @return string
      */
-    protected function _getArticleSelect($sRecommendationId, $sArticlesFilter = null)
+    protected function getArticleSelect($sRecommendationId, $sArticlesFilter = null)
     {
-        if (!$this->_isOeVATTBEConfigured()) {
-            return parent::_getArticleSelect($sRecommendationId, $sArticlesFilter);
+        if (!$this->isOeVATTBEConfigured()) {
+            return parent::getArticleSelect($sRecommendationId, $sArticlesFilter);
         }
 
         $sRecommendationId = oxDb::getDb()->quote($sRecommendationId);
@@ -486,10 +486,10 @@ class ArticleList extends ArticleList_parent
         $sArticleTable = getViewName('oxarticles');
 
         $sSelect = "select distinct oxobject2list.oxdesc, ";
-        $sSelect .= $this->_getOeVATTBEArticleSqlBuilder()->getSelectFields();
+        $sSelect .= $this->getOeVATTBEArticleSqlBuilder()->getSelectFields();
         $sSelect .= " from oxobject2list ";
         $sSelect .= " left join $sArticleTable on oxobject2list.oxobjectid = $sArticleTable.oxid ";
-        $sSelect .= $this->_getOeVATTBEArticleSqlBuilder()->getJoins();
+        $sSelect .= $this->getOeVATTBEArticleSqlBuilder()->getJoins();
         $sSelect .= "where (oxobject2list.oxlistid = $sRecommendationId) " . $sArticlesFilter;
 
         return $sSelect;
@@ -500,7 +500,7 @@ class ArticleList extends ArticleList_parent
      *
      * @return string
      */
-    private function _getOeVATTBETbeCountryId()
+    private function getOeVATTBETbeCountryId()
     {
         $sCountryId = null;
         $oUser = $this->getBaseObject()->getUser();
@@ -518,10 +518,10 @@ class ArticleList extends ArticleList_parent
      *
      * @return string
      */
-    private function _isOeVATTBEConfigured()
+    private function isOeVATTBEConfigured()
     {
         $isConfigured = false;
-        $sCountryId = $this->_getOeVATTBETbeCountryId();
+        $sCountryId = $this->getOeVATTBETbeCountryId();
         if (!is_null($sCountryId)) {
             $oCountry = oxNew(Country::class);
             $oCountry->load($sCountryId);
@@ -536,7 +536,7 @@ class ArticleList extends ArticleList_parent
      *
      * @return ArticleSQLBuilder
      */
-    protected function _getOeVATTBEArticleSqlBuilder()
+    protected function getOeVATTBEArticleSqlBuilder()
     {
         if (is_null($this->_oVATTBEArticleSQLBuilder)) {
             $this->_oVATTBEArticleSQLBuilder = oxNew(ArticleSQLBuilder::class, $this->getBaseObject());

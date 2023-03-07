@@ -59,7 +59,7 @@ class BillingCountryEvidence extends Evidence
     public function getCountryId()
     {
         if (!$this->_sCountry) {
-            $this->_sCountry = $this->_getBillingCountryId();
+            $this->_sCountry = $this->getBillingCountryId();
         }
 
         return $this->_sCountry;
@@ -70,9 +70,9 @@ class BillingCountryEvidence extends Evidence
      *
      * @return string
      */
-    private function _getBillingCountryId()
+    private function getBillingCountryId()
     {
-        $oUser = $this->_getUser();
+        $oUser = $this->getUser();
 
         return $oUser->oxuser__oxcountryid->value;
     }

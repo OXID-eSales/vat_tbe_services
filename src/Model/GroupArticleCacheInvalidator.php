@@ -69,13 +69,13 @@ class GroupArticleCacheInvalidator extends Model
      */
     public function invalidate($sGroupId)
     {
-        $oArticleVATGroupsList = $this->_getArticleVATGroupsList();
+        $oArticleVATGroupsList = $this->getArticleVATGroupsList();
         $aArticleIds = $oArticleVATGroupsList->getArticlesAssignedToGroup($sGroupId);
 
         /** @var Article $oArticle */
         $oArticle = oxNew(Article::class);
         /** @var Cache $oCacheBackend */
-        $oCacheBackend = $this->_getCacheBackend();
+        $oCacheBackend = $this->getCacheBackend();
         foreach ($aArticleIds as $sArticleId) {
             $oArticle->setId($sArticleId);
 
@@ -90,7 +90,7 @@ class GroupArticleCacheInvalidator extends Model
      *
      * @return Cache
      */
-    protected function _getCacheBackend()
+    protected function getCacheBackend()
     {
         return $this->_oCacheBackend;
     }
@@ -101,7 +101,7 @@ class GroupArticleCacheInvalidator extends Model
      *
      * @return ArticleVATGroupsList
      */
-    protected function _getArticleVATGroupsList()
+    protected function getArticleVATGroupsList()
     {
         return $this->_oArticleVATGroupsList;
     }

@@ -73,7 +73,7 @@ class User extends User_parent
      */
     public function save()
     {
-        if ($this->getOeVATTBEVatIn() && $this->_isOeVATTBEINStoredDateEmpty()) {
+        if ($this->getOeVATTBEVatIn() && $this->isOeVATTBEINStoredDateEmpty()) {
             $this->oxuser__oevattbe_vatinenterdate = new Field(date('Y-m-d H:i:s', Registry::get("oxUtilsDate")->getTime()));
         }
         $this->unsetOeVATTBETbeCountryFromCaching();
@@ -88,7 +88,7 @@ class User extends User_parent
      */
     public function getOeVATTBETbeCountryId()
     {
-        $oTBEUser = $this->_getOeVATTBETBEUser();
+        $oTBEUser = $this->getOeVATTBETBEUser();
         return $oTBEUser->getOeVATTBETbeCountryId();
     }
 
@@ -99,7 +99,7 @@ class User extends User_parent
      */
     public function getOeVATTBEEvidenceList()
     {
-        $oTBEUser = $this->_getOeVATTBETBEUser();
+        $oTBEUser = $this->getOeVATTBETBEUser();
         return $oTBEUser->getOeVATTBEEvidenceList();
     }
 
@@ -110,7 +110,7 @@ class User extends User_parent
      */
     public function getOeVATTBETbeEvidenceUsed()
     {
-        $oTBEUser = $this->_getOeVATTBETBEUser();
+        $oTBEUser = $this->getOeVATTBETBEUser();
         return $oTBEUser->getOeVATTBETbeEvidenceUsed();
     }
 
@@ -120,7 +120,7 @@ class User extends User_parent
      */
     public function unsetOeVATTBETbeCountryFromCaching()
     {
-        $oTBEUser = $this->_getOeVATTBETBEUser();
+        $oTBEUser = $this->getOeVATTBETBEUser();
         $oTBEUser->unsetOeVATTBETbeCountryFromCaching();
     }
 
@@ -149,7 +149,7 @@ class User extends User_parent
      *
      * @return EVatUser
      */
-    protected function _getOeVATTBETBEUser()
+    protected function getOeVATTBETBEUser()
     {
         if (!$this->_oTBEUser) {
             $oSession = Registry::getSession();
@@ -166,7 +166,7 @@ class User extends User_parent
      *
      * @return bool
      */
-    protected function _isOeVATTBEINStoredDateEmpty()
+    protected function isOeVATTBEINStoredDateEmpty()
     {
         return  is_null($this->getOeVATTBEVatInStoreDate()) || $this->getOeVATTBEVatInStoreDate() == '0000-00-00 00:00:00';
     }

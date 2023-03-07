@@ -50,7 +50,7 @@ class OrderEvidenceList extends Model
             'evidenceList' => $this->getData(),
             'orderId' => $this->getId()
         );
-        $this->_getDbGateway()->save($aData);
+        $this->getDbGateway()->save($aData);
 
         return $this->getId();
     }

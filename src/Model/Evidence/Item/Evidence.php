@@ -64,7 +64,7 @@ abstract class Evidence
      *
      * @return User
      */
-    protected function _getUser()
+    protected function getUser()
     {
         return $this->_oUser;
     }

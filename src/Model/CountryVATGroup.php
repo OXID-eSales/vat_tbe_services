@@ -56,7 +56,7 @@ class CountryVATGroup extends Model
     public function save()
     {
         $blResult = parent::save();
-        $this->_invalidateGroupArticlesCache();
+        $this->invalidateGroupArticlesCache();
 
         return $blResult;
     }
@@ -71,7 +71,7 @@ class CountryVATGroup extends Model
     public function delete($sId = null)
     {
         $blResult = parent::delete($sId);
-        $this->_invalidateGroupArticlesCache();
+        $this->invalidateGroupArticlesCache();
 
         return $blResult;
     }
@@ -84,7 +84,7 @@ class CountryVATGroup extends Model
     public function setId($sId)
     {
         parent::setId($sId);
-        $this->_setValue('oevattbe_id', $sId);
+        $this->setValue('oevattbe_id', $sId);
     }
 
     /**
@@ -94,7 +94,7 @@ class CountryVATGroup extends Model
      */
     public function getCountryId()
     {
-        return $this->_getValue('oevattbe_countryid');
+        return $this->getValue('oevattbe_countryid');
     }
 
     /**
@@ -104,7 +104,7 @@ class CountryVATGroup extends Model
      */
     public function setCountryId($sCountryId)
     {
-        $this->_setValue('oevattbe_countryid', $sCountryId);
+        $this->setValue('oevattbe_countryid', $sCountryId);
     }
 
     /**
@@ -114,7 +114,7 @@ class CountryVATGroup extends Model
      */
     public function getName()
     {
-        return $this->_getValue('oevattbe_name');
+        return $this->getValue('oevattbe_name');
     }
 
     /**
@@ -124,7 +124,7 @@ class CountryVATGroup extends Model
      */
     public function setName($sName)
     {
-        $this->_setValue('oevattbe_name', $sName);
+        $this->setValue('oevattbe_name', $sName);
     }
 
     /**
@@ -134,7 +134,7 @@ class CountryVATGroup extends Model
      */
     public function getDescription()
     {
-        return $this->_getValue('oevattbe_description');
+        return $this->getValue('oevattbe_description');
     }
 
     /**
@@ -144,7 +144,7 @@ class CountryVATGroup extends Model
      */
     public function setDescription($sDescription)
     {
-        $this->_setValue('oevattbe_description', $sDescription);
+        $this->setValue('oevattbe_description', $sDescription);
     }
 
     /**
@@ -154,7 +154,7 @@ class CountryVATGroup extends Model
      */
     public function getRate()
     {
-        return $this->_getValue('oevattbe_rate');
+        return $this->getValue('oevattbe_rate');
     }
 
     /**
@@ -164,7 +164,7 @@ class CountryVATGroup extends Model
      */
     public function setRate($dRate)
     {
-        $this->_setValue('oevattbe_rate', $dRate);
+        $this->setValue('oevattbe_rate', $dRate);
     }
 
     /**
@@ -172,7 +172,7 @@ class CountryVATGroup extends Model
      *
      * @return GroupArticleCacheInvalidator
      */
-    protected function _getVATGroupArticleCacheInvalidator()
+    protected function getVATGroupArticleCacheInvalidator()
     {
         return $this->_oVATGroupArticleCacheInvalidator;
     }
@@ -180,9 +180,9 @@ class CountryVATGroup extends Model
     /**
      * Clears cache for VAT group articles.
      */
-    private function _invalidateGroupArticlesCache()
+    private function invalidateGroupArticlesCache()
     {
-        $oInvalidator = $this->_getVATGroupArticleCacheInvalidator();
+        $oInvalidator = $this->getVATGroupArticleCacheInvalidator();
         if ($oInvalidator) {
             $oInvalidator->invalidate($this->getId());
         }

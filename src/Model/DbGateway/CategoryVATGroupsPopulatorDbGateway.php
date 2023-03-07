@@ -36,9 +36,9 @@ class CategoryVATGroupsPopulatorDbGateway
      */
     public function populate($sCategoryId)
     {
-        $this->_deleteArticlesGroups($sCategoryId);
-        $this->_setArticlesGroups($sCategoryId);
-        $this->_setArticlesAsTBEServices($sCategoryId);
+        $this->deleteArticlesGroups($sCategoryId);
+        $this->setArticlesGroups($sCategoryId);
+        $this->setArticlesAsTBEServices($sCategoryId);
     }
 
     /**
@@ -55,7 +55,7 @@ class CategoryVATGroupsPopulatorDbGateway
             /** @var oxDb $oDb */
             $oDb = oxNew(oxDb::class)->getDb();
             $sArticleIds = implode(', ', $oDb->quoteArray($aArticleIds));
-            $blResult = $this->_makeArticlesNotTBE($sArticleIds) && $this->_removeFromVATGroups($sArticleIds);
+            $blResult = $this->makeArticlesNotTBE($sArticleIds) && $this->removeFromVATGroups($sArticleIds);
         }
 
 
@@ -69,9 +69,9 @@ class CategoryVATGroupsPopulatorDbGateway
      *
      * @return bool
      */
-    protected function _deleteArticlesGroups($sCategoryId)
+    protected function deleteArticlesGroups($sCategoryId)
     {
-        $oDb = $this->_getDb();
+        $oDb = $this->getDb();
 
         $sSql = '
           DELETE `oevattbe_articlevat`.*
@@ -89,9 +89,9 @@ class CategoryVATGroupsPopulatorDbGateway
      *
      * @return bool
      */
-    protected function _setArticlesGroups($sCategoryId)
+    protected function setArticlesGroups($sCategoryId)
     {
-        $oDb = $this->_getDb();
+        $oDb = $this->getDb();
 
         $sSql = 'INSERT INTO `oevattbe_articlevat` (`oevattbe_articleid`, `oevattbe_countryid`, `oevattbe_vatgroupid`)
               SELECT `oxobject2category`.`oxobjectid`, `oevattbe_categoryvat`.`oevattbe_countryid`, `oevattbe_categoryvat`.`oevattbe_vatgroupid`
@@ -109,9 +109,9 @@ class CategoryVATGroupsPopulatorDbGateway
      *
      * @return bool
      */
-    protected function _setArticlesAsTBEServices($sCategoryId)
+    protected function setArticlesAsTBEServices($sCategoryId)
     {
-        $oDb = $this->_getDb();
+        $oDb = $this->getDb();
 
         $sSql = 'UPDATE `oxarticles`
               INNER JOIN `oxobject2category` ON `oxobject2category`.`oxobjectid` = `oxarticles`.`oxid`
@@ -127,7 +127,7 @@ class CategoryVATGroupsPopulatorDbGateway
      *
      * @return DatabaseInterface
      */
-    protected function _getDb()
+    protected function getDb()
     {
         return oxDb::getDb(oxDb::FETCH_MODE_ASSOC);
     }
@@ -139,7 +139,7 @@ class CategoryVATGroupsPopulatorDbGateway
      *
      * @return array
      */
-    protected function _makeArticlesNotTBE($sArticleIds)
+    protected function makeArticlesNotTBE($sArticleIds)
     {
         $sSqlToUpdateArticles = '
               UPDATE `oxarticles`
@@ -147,7 +147,7 @@ class CategoryVATGroupsPopulatorDbGateway
               WHERE `oxarticles`.`oxid`
               IN (' . $sArticleIds . ')';
 
-        return $this->_getDb()->execute($sSqlToUpdateArticles);
+        return $this->getDb()->execute($sSqlToUpdateArticles);
     }
 
     /**
@@ -157,13 +157,13 @@ class CategoryVATGroupsPopulatorDbGateway
      *
      * @return bool
      */
-    protected function _removeFromVATGroups($sArticleIds)
+    protected function removeFromVATGroups($sArticleIds)
     {
         $sSqlToRemoveRates = '
               DELETE FROM `oevattbe_articlevat`
               WHERE `oevattbe_articlevat`.`oevattbe_articleid`
               IN (' . $sArticleIds . ')';
 
-        return $this->_getDb()->execute($sSqlToRemoveRates);
+        return $this->getDb()->execute($sSqlToRemoveRates);
     }
 }

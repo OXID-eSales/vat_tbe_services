@@ -58,13 +58,13 @@ class EvidenceCollector
      */
     public function getEvidenceList()
     {
-        $oConfig = $this->_getConfig();
+        $oConfig = $this->getConfig();
         $aEvidenceClasses = (array) $oConfig->getConfigParam('aOeVATTBECountryEvidenceClasses');
         $aEvidences = (array) $oConfig->getConfigParam('aOeVATTBECountryEvidences');
 
         /** @var EvidenceList $oList */
         $oList = oxNew(EvidenceList::class);
-        $aUpdatedEvidences = $this->_fillEvidenceList($oList, $aEvidenceClasses, $aEvidences);
+        $aUpdatedEvidences = $this->fillEvidenceList($oList, $aEvidenceClasses, $aEvidences);
 
         if ($aEvidences !== $aUpdatedEvidences) {
             Registry::getConfig()->saveShopConfVar('aarr', 'aOeVATTBECountryEvidences', $aUpdatedEvidences, null, 'module:oevattbe');
@@ -78,7 +78,7 @@ class EvidenceCollector
      *
      * @return Config
      */
-    protected function _getConfig()
+    protected function getConfig()
     {
         return $this->_oConfig;
     }
@@ -89,7 +89,7 @@ class EvidenceCollector
      *
      * @return User
      */
-    protected function _getUser()
+    protected function getUser()
     {
         return $this->_oUser;
     }
@@ -103,9 +103,9 @@ class EvidenceCollector
      *
      * @return array
      */
-    private function _fillEvidenceList($oList, $aEvidenceClasses, $aEvidences)
+    private function fillEvidenceList($oList, $aEvidenceClasses, $aEvidences)
     {
-        $oUser = $this->_getUser();
+        $oUser = $this->getUser();
         $aUpdatedEvidences = array();
 
         foreach ($aEvidenceClasses as $sEvidenceClass) {

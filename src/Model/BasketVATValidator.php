@@ -88,9 +88,9 @@ class BasketVATValidator
     {
         $blValid = true;
 
-        $oUserCountry = $this->_getTBEUserCountry();
-        $oBasket = $this->_getBasket();
-        $oUser = $this->_getUser();
+        $oUserCountry = $this->getTBEUserCountry();
+        $oBasket = $this->getBasket();
+        $oUser = $this->getUser();
 
         /** @var EShopArticle|Article $oArticle */
         $oArticle = $oBasketItem->getArticle();
@@ -115,9 +115,9 @@ class BasketVATValidator
     {
         $blShowMark = false;
 
-        $oUserCountry = $this->_getTBEUserCountry();
-        $oBasket = $this->_getBasket();
-        $oUser = $this->_getUser();
+        $oUserCountry = $this->getTBEUserCountry();
+        $oBasket = $this->getBasket();
+        $oUser = $this->getUser();
         $oCountry = $oBasket->getOeVATTBECountry();
 
         /** @var EShopArticle|Article $oArticle */
@@ -134,7 +134,7 @@ class BasketVATValidator
      *
      * @return EShopBasket|Basket
      */
-    protected function _getBasket()
+    protected function getBasket()
     {
         return $this->_oBasket;
     }
@@ -144,7 +144,7 @@ class BasketVATValidator
      *
      * @return User
      */
-    protected function _getUser()
+    protected function getUser()
     {
         return $this->_oUser;
     }
@@ -154,7 +154,7 @@ class BasketVATValidator
      *
      * @return Country
      */
-    protected function _getTBEUserCountry()
+    protected function getTBEUserCountry()
     {
         return $this->_oTBEUserCountry;
     }

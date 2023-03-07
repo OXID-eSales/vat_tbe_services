@@ -99,7 +99,7 @@ class OrderArticleChecker
     public function getInvalidArticles()
     {
         if (is_null($this->_aInvalidArticles)) {
-            $mArticleList = $this->_getArticleList();
+            $mArticleList = $this->getArticleList();
 
             $this->_aInvalidArticles = array();
             foreach ($mArticleList as $oArticle) {
@@ -118,7 +118,7 @@ class OrderArticleChecker
      *
      * @return array|ArticleList
      */
-    protected function _getArticleList()
+    protected function getArticleList()
     {
         return $this->_mArticleList;
     }

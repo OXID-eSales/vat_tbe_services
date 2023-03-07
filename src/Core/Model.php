@@ -83,7 +83,7 @@ class Model
      */
     public function save()
     {
-        $mId = $this->_getDbGateway()->save($this->getData());
+        $mId = $this->getDbGateway()->save($this->getData());
         $this->setId($mId);
 
         return $mId;
@@ -102,7 +102,7 @@ class Model
             $this->setId($sId);
         }
 
-        $blResult = $this->_getDbGateway()->delete($this->getId());
+        $blResult = $this->getDbGateway()->delete($this->getId());
         if ($blResult) {
             $this->setData(array());
         }
@@ -124,7 +124,7 @@ class Model
         }
 
         $this->_blIsLoaded = false;
-        $aData = $this->_getDbGateway()->load($this->getId());
+        $aData = $this->getDbGateway()->load($this->getId());
         if ($aData) {
             $this->setData($aData);
             $this->_blIsLoaded = true;
@@ -150,7 +150,7 @@ class Model
      *
      * @return string
      */
-    protected function _getValue($sKey)
+    protected function getValue($sKey)
     {
         $aData = $this->getData();
 
@@ -163,7 +163,7 @@ class Model
      * @param string $sKey   key of data value
      * @param string $sValue data value
      */
-    protected function _setValue($sKey, $sValue)
+    protected function setValue($sKey, $sValue)
     {
         $this->_aData[$sKey] = $sValue;
     }
@@ -173,7 +173,7 @@ class Model
      *
      * @return ModelDbGateway
      */
-    protected function _getDbGateway()
+    protected function getDbGateway()
     {
         return $this->_oDbGateway;
     }

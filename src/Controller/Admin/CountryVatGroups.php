@@ -88,7 +88,7 @@ class CountryVatGroups extends AdminDetailsController
         $sGroupDescription = trim($aParams['oevattbe_description']);
 
         if (!$sCountryId || !$sGroupName) {
-            $this->_setMissingParameterMessage();
+            $this->setMissingParameterMessage();
             return null;
         }
 
@@ -114,7 +114,7 @@ class CountryVatGroups extends AdminDetailsController
             if (!$aVatGroup['oevattbe_id'] || !$aVatGroup['oevattbe_name']) {
                 if (!$this->_blMissingParameterErrorSet) {
                     $this->_blMissingParameterErrorSet = true;
-                    $this->_setMissingParameterMessage();
+                    $this->setMissingParameterMessage();
                 }
                 continue;
             }
@@ -143,7 +143,7 @@ class CountryVatGroups extends AdminDetailsController
     /**
      * Set error message if some required parameter is missing.
      */
-    protected function _setMissingParameterMessage()
+    protected function setMissingParameterMessage()
     {
         /** @var Language $oLang */
         $oLang = Registry::getLang();

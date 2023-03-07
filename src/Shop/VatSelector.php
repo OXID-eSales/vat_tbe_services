@@ -40,7 +40,7 @@ class VatSelector extends VatSelector_parent
     {
         $oUser = $oArticle->getArticleUser();
 
-        if (!$oUser->oxuser__oxustid->value && $this->_oeVATTBEUseTBEVAT($oArticle)) {
+        if (!$oUser->oxuser__oxustid->value && $this->oeVATTBEUseTBEVAT($oArticle)) {
             $sVat = $oArticle->getOeVATTBETBEVat();
         } else {
             $sVat = parent::getArticleUserVat($oArticle);
@@ -56,7 +56,7 @@ class VatSelector extends VatSelector_parent
      *
      * @return bool
      */
-    private function _oeVATTBEUseTBEVAT($oArticle)
+    private function oeVATTBEUseTBEVAT($oArticle)
     {
         $oUserCountry = User::createInstance();
 

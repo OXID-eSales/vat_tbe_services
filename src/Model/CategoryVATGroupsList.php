@@ -61,7 +61,7 @@ class CategoryVATGroupsList extends Model
             'categoryid' => $this->getId(),
             'relations' => $aDbData
         );
-        $this->_getDbGateway()->save($aData);
+        $this->getDbGateway()->save($aData);
 
         return $this->getId();
     }
@@ -80,7 +80,7 @@ class CategoryVATGroupsList extends Model
         }
 
         $this->_blIsLoaded = false;
-        $aDbData = $this->_getDbGateway()->load($this->getId());
+        $aDbData = $this->getDbGateway()->load($this->getId());
         if ($aDbData) {
             $aData = array();
             foreach ($aDbData as $aRecord) {

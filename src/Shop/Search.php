@@ -27,6 +27,7 @@ use OxidEsales\Eshop\Application\Model\Category;
 use OxidEsales\Eshop\Application\Model\Country;
 use OxidEsales\Eshop\Application\Model\Manufacturer;
 use OxidEsales\Eshop\Application\Model\Vendor;
+use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Model\ArticleSQLBuilder;
 
 /**
@@ -48,10 +49,10 @@ class Search extends Search_parent
      *
      * @return string
      */
-    protected function _getSearchSelect($sSearchParamForQuery = false, $sInitialSearchCat = false, $sInitialSearchVendor = false, $sInitialSearchManufacturer = false, $sSortBy = false)
+    protected function getSearchSelect($sSearchParamForQuery = false, $sInitialSearchCat = false, $sInitialSearchVendor = false, $sInitialSearchManufacturer = false, $sSortBy = false)
     {
-        if (!$this->_isOeVATTBEConfigured()) {
-            return parent::_getSearchSelect($sSearchParamForQuery, $sInitialSearchCat, $sInitialSearchVendor, $sInitialSearchManufacturer, $sSortBy);
+        if (!$this->isOeVATTBEConfigured()) {
+            return parent::getSearchSelect($sSearchParamForQuery, $sInitialSearchCat, $sInitialSearchVendor, $sInitialSearchManufacturer, $sSortBy);
         }
 
         $oDb = oxDb::getDb();
@@ -98,7 +99,7 @@ class Search extends Search_parent
         $sWhere = null;
 
         if ($sSearchParamForQuery) {
-            $sWhere = $this->_getWhere($sSearchParamForQuery);
+            $sWhere = $this->getWhere($sSearchParamForQuery);
         } elseif (!$sInitialSearchCat && !$sInitialSearchVendor && !$sInitialSearchManufacturer) {
             //no search string
             return null;
@@ -108,12 +109,12 @@ class Search extends Search_parent
         $sArticleTable = $oArticle->getViewName();
         $sO2CView = getViewName('oxobject2category');
 
-        $sSelectFields = $this->_getOeVATTBEArticleSqlBuilder()->getSelectFields();
+        $sSelectFields = $this->getOeVATTBEArticleSqlBuilder()->getSelectFields();
 
 
         // longdesc field now is kept on different table
         $sDescJoin = '';
-        if (is_array($aSearchCols = $this->getConfig()->getConfigParam('aSearchCols'))) {
+        if (is_array($aSearchCols = Registry::getConfig()->getConfigParam('aSearchCols'))) {
             if (in_array('oxlongdesc', $aSearchCols) || in_array('oxtags', $aSearchCols)) {
                 $sDescView = getViewName('oxartextends', $this->_iLanguage);
                 $sDescJoin = " LEFT JOIN {$sDescView} ON {$sArticleTable}.oxid={$sDescView}.oxid ";
@@ -168,7 +169,7 @@ class Search extends Search_parent
      *
      * @return string
      */
-    private function _getOeVATTBECountryId()
+    private function getOeVATTBECountryId()
     {
         $sCountryId = null;
         $oUser = $this->getUser();
@@ -185,10 +186,10 @@ class Search extends Search_parent
      *
      * @return string
      */
-    private function _isOeVATTBEConfigured()
+    private function isOeVATTBEConfigured()
     {
         $isConfigured = false;
-        $sCountryId = $this->_getOeVATTBECountryId();
+        $sCountryId = $this->getOeVATTBECountryId();
         if (!is_null($sCountryId)) {
             $oCountry = oxNew(Country::class);
             $oCountry->load($sCountryId);
@@ -203,7 +204,7 @@ class Search extends Search_parent
      *
      * @return ArticleSQLBuilder
      */
-    protected function _getOeVATTBEArticleSqlBuilder()
+    protected function getOeVATTBEArticleSqlBuilder()
     {
         if (is_null($this->_oVATTBEArticleSQLBuilder)) {
             $oArticle = oxNew(Article::class);

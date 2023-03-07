@@ -68,9 +68,9 @@ class BasketController extends BasketController_parent
 
         $sMessage = $oMarkGenerator->getMark('tbeService') . ' - ';
         if (!$this->getUser()) {
-            $sMessage .= $this->_getOeVATTBEMarkMessageForAnonymousUser();
+            $sMessage .= $this->getOeVATTBEMarkMessageForAnonymousUser();
         } else {
-            $sMessage .= $this->_getOeVATTBEMarkExplanationForLoggedInUser();
+            $sMessage .= $this->getOeVATTBEMarkExplanationForLoggedInUser();
         }
 
         return $sMessage;
@@ -127,7 +127,7 @@ class BasketController extends BasketController_parent
      *
      * @return string
      */
-    private function _getOeVATTBEMarkMessageForAnonymousUser()
+    private function getOeVATTBEMarkMessageForAnonymousUser()
     {
         /** @var Shop $oShop */
         $oShop = oxNew(EShopShop::class);
@@ -144,7 +144,7 @@ class BasketController extends BasketController_parent
      *
      * @return string
      */
-    private function _getOeVATTBEMarkExplanationForLoggedInUser()
+    private function getOeVATTBEMarkExplanationForLoggedInUser()
     {
         /** @var EShopBasket|Basket $oBasket */
         $oBasket = Registry::getSession()->getBasket();

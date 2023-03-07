@@ -81,7 +81,7 @@ class Basket extends Basket_parent
     {
         if ($this->_sTBECountryId !== $sTBECountryId) {
             $this->_sTBECountryId = $sTBECountryId;
-            $this->_onOeVATTBECountryChange();
+            $this->onOeVATTBECountryChange();
         }
     }
 
@@ -132,7 +132,7 @@ class Basket extends Basket_parent
      */
     public function isOeVATTBEValid()
     {
-        return $this->_getOeVATTBEOrderArticleChecker()->isValid();
+        return $this->getOeVATTBEOrderArticleChecker()->isValid();
     }
 
     /**
@@ -142,7 +142,7 @@ class Basket extends Basket_parent
      */
     public function getOeVATTBEInValidArticles()
     {
-        return $this->_getOeVATTBEOrderArticleChecker()->getInvalidArticles();
+        return $this->getOeVATTBEOrderArticleChecker()->getInvalidArticles();
     }
 
     /**
@@ -150,7 +150,7 @@ class Basket extends Basket_parent
      *
      * @return OrderArticleChecker
      */
-    protected function _getOeVATTBEOrderArticleChecker()
+    protected function getOeVATTBEOrderArticleChecker()
     {
         $oTBEUser = User::createInstance();
         return oxNew(OrderArticleChecker::class, $this->getBasketArticles(), $oTBEUser);
@@ -159,7 +159,7 @@ class Basket extends Basket_parent
     /**
      * Executes necessary actions on basket country change.
      */
-    private function _onOeVATTBECountryChange()
+    private function onOeVATTBECountryChange()
     {
         $oUserCountry = User::createInstance();
         $oCountry = $this->getOeVATTBECountry();

@@ -38,13 +38,13 @@ class Events
      */
     public static function onActivate(): void
     {
-        self::_addArticleVatGroupTable();
-        self::_addCategoryVatGroupTable();
-        self::_addCountryVatGroupTable();
-        self::_addOrderEvidences();
-        self::_addFields();
-        self::_regenerateViews();
-        self::_configureCountries();
+        self::addArticleVatGroupTable();
+        self::addCategoryVatGroupTable();
+        self::addCountryVatGroupTable();
+        self::addOrderEvidences();
+        self::addFields();
+        self::regenerateViews();
+        self::configureCountries();
 
         /** @var EvidenceRegister $oEvidenceRegister */
         $oEvidenceRegister = oxNew(EvidenceRegister::class, Registry::getConfig());
@@ -62,7 +62,7 @@ class Events
     /**
      * Add fields to oxArticle table
      */
-    protected static function _addFields(): void
+    protected static function addFields(): void
     {
         $oDbMetaDataHandler = oxNew(DbMetaDataHandler::class);
 
@@ -95,7 +95,7 @@ class Events
     /**
      * Add article VAT group table
      */
-    protected static function _addArticleVatGroupTable(): void
+    protected static function addArticleVatGroupTable(): void
     {
         $sSql = "CREATE TABLE IF NOT EXISTS `oevattbe_articlevat` (
               `OEVATTBE_ARTICLEID` char(32) character set latin1 collate latin1_general_ci NOT NULL,
@@ -114,7 +114,7 @@ class Events
     /**
      * Add category VAT group table
      */
-    protected static function _addCategoryVatGroupTable(): void
+    protected static function addCategoryVatGroupTable(): void
     {
         $sSql = "CREATE TABLE IF NOT EXISTS `oevattbe_categoryvat` (
               `OEVATTBE_CATEGORYID` char(32) character set latin1 collate latin1_general_ci NOT NULL,
@@ -133,7 +133,7 @@ class Events
     /**
      * Add country VAT group table
      */
-    protected static function _addCountryVatGroupTable(): void
+    protected static function addCountryVatGroupTable(): void
     {
         $sSql = "CREATE TABLE IF NOT EXISTS `oevattbe_countryvatgroups` (
               `OEVATTBE_ID` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -151,7 +151,7 @@ class Events
     /**
      * Add order evidence table
      */
-    protected static function _addOrderEvidences(): void
+    protected static function addOrderEvidences(): void
     {
         $sSql = "CREATE TABLE IF NOT EXISTS `oevattbe_orderevidences` (
               `OEVATTBE_ORDERID` char(32) character set latin1 collate latin1_general_ci NOT NULL,
@@ -168,7 +168,7 @@ class Events
     /**
      * regenerate views for changed tables
      */
-    protected static function _regenerateViews(): void
+    protected static function regenerateViews(): void
     {
         $oDbMetaDataHandler = oxNew(DbMetaDataHandler::class);
         $oDbMetaDataHandler->updateViews();
@@ -177,7 +177,7 @@ class Events
     /**
      * insert demo data
      */
-    protected static function _addDemoData(): void
+    protected static function addDemoData(): void
     {
         $oDb = oxDb::getDb();
 
@@ -195,9 +195,9 @@ class Events
     /**
      * insert demo data
      */
-    protected static function _configureCountries(): void
+    protected static function configureCountries(): void
     {
-        $aCountryVATs = self::_getCountryVatRates();
+        $aCountryVATs = self::getCountryVatRates();
         $oDb = oxDb::getDb();
 
         foreach ($aCountryVATs as $sCountryCode => $aVATRates) {
@@ -224,7 +224,7 @@ class Events
      *
      * @return array
      */
-    protected static function _getCountryVatRates(): array
+    protected static function getCountryVatRates(): array
     {
         $aCountryVATs = array(
             'BE' => array(

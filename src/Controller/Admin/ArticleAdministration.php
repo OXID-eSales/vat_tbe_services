@@ -52,7 +52,7 @@ class ArticleAdministration extends AdminDetailsController
     {
         parent::render();
 
-        $oArticle = $this->_loadCurrentArticle();
+        $oArticle = $this->loadCurrentArticle();
         if ('EE' == (new Facts())->getEdition() && $oArticle->isDerived()) {
             $this->_aViewData['readonly'] = true;
         }
@@ -75,7 +75,7 @@ class ArticleAdministration extends AdminDetailsController
         $oArticleVATGroupsList->setData($aVATGroupsParams);
         $oArticleVATGroupsList->save();
 
-        $oArticle = $this->_loadCurrentArticle();
+        $oArticle = $this->loadCurrentArticle();
         $oArticle->oxarticles__oevattbe_istbeservice = new Field($aParams['oevattbe_istbeservice']);
         $oArticle->save();
     }
@@ -142,7 +142,7 @@ class ArticleAdministration extends AdminDetailsController
      *
      * @return EShopArticle|Article
      */
-    protected function _loadCurrentArticle()
+    protected function loadCurrentArticle()
     {
         $sCurrentArticleId = $this->getEditObjectId();
         /** @var EShopArticle|Article $oArticle */

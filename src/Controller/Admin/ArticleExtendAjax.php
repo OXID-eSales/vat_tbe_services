@@ -37,9 +37,9 @@ class ArticleExtendAjax extends ArticleExtendAjax_parent
     public function addCat()
     {
         parent::addCat();
-        $aCategories = $this->_getActionIds('oxcategories.oxid');
+        $aCategories = $this->getActionIds('oxcategories.oxid');
         foreach ($aCategories as $sCategoryId) {
-            $this->_populateOeVATTBEConfiguration($sCategoryId);
+            $this->populateOeVATTBEConfiguration($sCategoryId);
         }
     }
 
@@ -48,7 +48,7 @@ class ArticleExtendAjax extends ArticleExtendAjax_parent
      *
      * @param string $sCategoryId categoryId
      */
-    protected function _populateOeVATTBEConfiguration($sCategoryId)
+    protected function populateOeVATTBEConfiguration($sCategoryId)
     {
         /** @var EShopCategory|Category $oCategory */
         $oCategory = oxNew(EShopCategory::class);

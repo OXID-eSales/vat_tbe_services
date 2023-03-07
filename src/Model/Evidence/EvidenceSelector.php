@@ -64,7 +64,7 @@ class EvidenceSelector
      */
     public function getEvidence()
     {
-        $oConfig = $this->_getConfig();
+        $oConfig = $this->getConfig();
         $sDefaultEvidenceName = $oConfig->getConfigParam('sOeVATTBEDefaultEvidence');
 
         $oEvidenceList = $this->getEvidenceList();
@@ -109,7 +109,7 @@ class EvidenceSelector
      *
      * @return Config
      */
-    protected function _getConfig()
+    protected function getConfig()
     {
         return $this->_oConfig;
     }

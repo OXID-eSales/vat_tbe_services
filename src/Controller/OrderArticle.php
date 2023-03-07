@@ -66,12 +66,12 @@ class OrderArticle extends OrderArticle_parent
      *
      * @return  string  $sNextStep  partial parameter url for next step
      */
-    protected function _getNextStep($iSuccess)
+    protected function getNextStep($iSuccess)
     {
         if ($iSuccess == Order::ORDER_STATE_TBE_NOT_CONFIGURED) {
             $sNextStep = 'order';
         } else {
-            $sNextStep = parent::_getNextStep($iSuccess);
+            $sNextStep = parent::getNextStep($iSuccess);
         }
 
         return $sNextStep;

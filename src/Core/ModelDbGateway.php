@@ -34,7 +34,7 @@ abstract class ModelDbGateway
      *
      * @return DatabaseInterface
      */
-    protected function _getDb()
+    protected function getDb()
     {
         return oxDb::getDb(oxDb::FETCH_MODE_ASSOC);
     }

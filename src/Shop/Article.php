@@ -71,7 +71,7 @@ class Article extends Article_parent
     {
         $aKeys = parent::getCacheKeys($aLanguages, $aShops);
 
-        $oTBEArticleCacheKey = $this->_getOeVATTBETBEArticleCacheKey();
+        $oTBEArticleCacheKey = $this->getOeVATTBETBEArticleCacheKey();
         if ($this->isOeVATTBETBEService() && $oTBEArticleCacheKey->needToCalculateKeys()) {
             $aKeys = $oTBEArticleCacheKey->updateCacheKeys($aKeys);
         }
@@ -88,14 +88,14 @@ class Article extends Article_parent
      */
     public function buildSelectString($aWhere = null)
     {
-        if (!$this->_isOeVATTBEConfigured() || $this->isAdmin()) {
+        if (!$this->isOeVATTBEConfigured() || $this->isAdmin()) {
             return parent::buildSelectString($aWhere);
         }
 
         $sSelect = "SELECT ";
-        $sSelect .= $this->_getOeVATTBETBEArticleSqlBuilder()->getSelectFields();
+        $sSelect .= $this->getOeVATTBETBEArticleSqlBuilder()->getSelectFields();
         $sSelect .= " FROM " . $this->getViewName();
-        $sSelect .= $this->_getOeVATTBETBEArticleSqlBuilder()->getJoins();
+        $sSelect .= $this->getOeVATTBETBEArticleSqlBuilder()->getJoins();
         $sSelect .= " WHERE 1 ";
 
         if ($aWhere) {
@@ -108,7 +108,7 @@ class Article extends Article_parent
         // add active shop
         if ((new Facts())->getEdition() == 'EE') {
             if ($this->getShopId() && $this->_blDisableShopCheck === false) {
-                $sLongFieldName = $this->_getFieldLongName('oxshopid');
+                $sLongFieldName = $this->getFieldLongName('oxshopid');
                 if (isset($this->$sLongFieldName)) {
                     $sFieldName = $this->getViewName() . ".oxshopid";
                     if (!isset($aWhere[$sFieldName])) {
@@ -126,7 +126,7 @@ class Article extends Article_parent
      *
      * @return string
      */
-    private function _isOeVATTBEConfigured()
+    private function isOeVATTBEConfigured()
     {
         $isConfigured = false;
 
@@ -145,7 +145,7 @@ class Article extends Article_parent
      *
      * @return ArticleCacheKey
      */
-    protected function _getOeVATTBETBEArticleCacheKey()
+    protected function getOeVATTBETBEArticleCacheKey()
     {
         if (!$this->_oVATTBEArticle) {
             $this->_oVATTBEArticle = oxNew(ArticleCacheKey::class, $this->getUser());
@@ -159,7 +159,7 @@ class Article extends Article_parent
      *
      * @return ArticleSQLBuilder
      */
-    protected function _getOeVATTBETBEArticleSqlBuilder()
+    protected function getOeVATTBETBEArticleSqlBuilder()
     {
         if (is_null($this->_oVATTBEArticleSQLBuilder)) {
             $this->_oVATTBEArticleSQLBuilder = oxNew(ArticleSQLBuilder::class, $this);

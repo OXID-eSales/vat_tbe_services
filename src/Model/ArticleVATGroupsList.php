@@ -61,7 +61,7 @@ class ArticleVATGroupsList extends Model
             'articleid' => $this->getId(),
             'relations' => $aDbData
         );
-        $this->_getDbGateway()->save($aData);
+        $this->getDbGateway()->save($aData);
 
         return $this->getId();
     }
@@ -80,7 +80,7 @@ class ArticleVATGroupsList extends Model
         }
 
         $this->_blIsLoaded = false;
-        $aDbData = $this->_getDbGateway()->load($this->getId());
+        $aDbData = $this->getDbGateway()->load($this->getId());
         if ($aDbData) {
             $aData = array();
             foreach ($aDbData as $aRecord) {
@@ -103,7 +103,7 @@ class ArticleVATGroupsList extends Model
     public function getArticlesAssignedToGroup($sGroupId = null)
     {
         $aData = array();
-        $aDbData = $this->_getDbGateway()->loadByGroupId($sGroupId);
+        $aDbData = $this->getDbGateway()->loadByGroupId($sGroupId);
         if ($aDbData) {
             foreach ($aDbData as $aRecord) {
                 $aData[] = $aRecord['OEVATTBE_ARTICLEID'];

@@ -37,7 +37,7 @@ class OrderEvidenceListDbGateway extends ModelDbGateway
      */
     public function save($aData)
     {
-        $oDb = $this->_getDb();
+        $oDb = $this->getDb();
 
         $sSql = 'INSERT INTO `oevattbe_orderevidences` (oevattbe_orderid, oevattbe_evidence, oevattbe_countryid) VALUES ';
         $aSqlValues = array();
@@ -68,7 +68,7 @@ class OrderEvidenceListDbGateway extends ModelDbGateway
      */
     public function load($sOrderId)
     {
-        $oDb = $this->_getDb();
+        $oDb = $this->getDb();
         $sQuery = 'SELECT * FROM `oevattbe_orderevidences` WHERE `oevattbe_orderid` = ' . $oDb->quote($sOrderId);
         $aRecords = $oDb->getAll($sQuery);
 
@@ -92,7 +92,7 @@ class OrderEvidenceListDbGateway extends ModelDbGateway
      */
     public function delete($sOrderId)
     {
-        $oDb = $this->_getDb();
+        $oDb = $this->getDb();
         $sQ = "delete from oevattbe_orderevidences where oevattbe_orderid = " . $oDb->quote($sOrderId);
 
         return $oDb->execute($sQ);

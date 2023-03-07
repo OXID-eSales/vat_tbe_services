@@ -37,7 +37,7 @@ class CategoryVATGroupsDbGateway extends ModelDbGateway
      */
     public function save($aData)
     {
-        $oDb = $this->_getDb();
+        $oDb = $this->getDb();
 
         $sCategoryId = $aData['categoryid'];
 
@@ -68,7 +68,7 @@ class CategoryVATGroupsDbGateway extends ModelDbGateway
      */
     public function load($sCategoryId)
     {
-        $oDb = $this->_getDb();
+        $oDb = $this->getDb();
         $aData = $oDb->getAll('SELECT * FROM `oevattbe_categoryvat` WHERE `oevattbe_categoryid` = ' . $oDb->quote($sCategoryId));
 
         return $aData;
@@ -83,7 +83,7 @@ class CategoryVATGroupsDbGateway extends ModelDbGateway
      */
     public function loadByGroupId($sGroupId)
     {
-        $oDb = $this->_getDb();
+        $oDb = $this->getDb();
         $aData = $oDb->getAll('SELECT * FROM `oevattbe_categoryvat` WHERE `oevattbe_vatgroupid` = ' . $oDb->quote($sGroupId));
 
         return $aData;
@@ -98,7 +98,7 @@ class CategoryVATGroupsDbGateway extends ModelDbGateway
      */
     public function delete($sGroupId)
     {
-        $oDb = $this->_getDb();
+        $oDb = $this->getDb();
         $oDb->startTransaction();
 
         $blDeleteResult = $oDb->execute('DELETE FROM `oevattbe_categoryvat` WHERE `oevattbe_categoryid` = ' . $oDb->quote($sGroupId));

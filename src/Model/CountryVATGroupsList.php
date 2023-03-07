@@ -52,7 +52,7 @@ class CountryVATGroupsList extends Model
         }
 
         $aGroups = array();
-        $oGateway = $this->_getDbGateway();
+        $oGateway = $this->getDbGateway();
         $aGroupsData = $oGateway->getList($this->getId());
         if (is_array($aGroupsData) && count($aGroupsData)) {
             foreach ($aGroupsData as $aData) {
@@ -76,7 +76,7 @@ class CountryVATGroupsList extends Model
     public function getList()
     {
         $aGroups = array();
-        $oGateway = $this->_getDbGateway();
+        $oGateway = $this->getDbGateway();
         $aGroupsData = $oGateway->getList();
         if (is_array($aGroupsData) && count($aGroupsData)) {
             foreach ($aGroupsData as $aData) {

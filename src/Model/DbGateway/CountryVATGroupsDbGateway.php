@@ -37,7 +37,7 @@ class CountryVATGroupsDbGateway extends ModelDbGateway
      */
     public function save($aData)
     {
-        $oDb = $this->_getDb();
+        $oDb = $this->getDb();
 
         foreach ($aData as $sField => $sData) {
             $aSql[] = '`' . $sField . '` = ' . $oDb->quote($sData);
@@ -68,7 +68,7 @@ class CountryVATGroupsDbGateway extends ModelDbGateway
      */
     public function getList($sCountryId = null)
     {
-        $oDb = $this->_getDb();
+        $oDb = $this->getDb();
         $sQuery = 'SELECT * FROM `oevattbe_countryvatgroups`';
         if ($sCountryId) {
             $sQuery .= 'WHERE `oevattbe_countryid` = ' . $oDb->quote($sCountryId);
@@ -87,7 +87,7 @@ class CountryVATGroupsDbGateway extends ModelDbGateway
      */
     public function load($sGroupId)
     {
-        $oDb = $this->_getDb();
+        $oDb = $this->getDb();
         $aData = $oDb->getRow('SELECT * FROM `oevattbe_countryvatgroups` WHERE `oevattbe_id` = ' . $oDb->quote($sGroupId));
 
         return $aData;
@@ -102,7 +102,7 @@ class CountryVATGroupsDbGateway extends ModelDbGateway
      */
     public function delete($sGroupId)
     {
-        $oDb = $this->_getDb();
+        $oDb = $this->getDb();
         $oDb->startTransaction();
 
         $aGroupInformation = $this->load($sGroupId);

@@ -43,7 +43,7 @@ class OrderMain extends OrderMain_parent
 
         /** @var Order $oOrder */
         $oOrder = oxNew(Order::class);
-        $sOrderEvidenceId = $this->_getOeVATTBECurrentOrderEvidenceId($oOrder, $sOrderId);
+        $sOrderEvidenceId = $this->getOeVATTBECurrentOrderEvidenceId($oOrder, $sOrderId);
 
         $oEvidenceList = $this->getServiceFromContainer(OrderEvidenceList::class);
         $oEvidenceList->loadWithCountryNames($sOrderId);
@@ -64,7 +64,7 @@ class OrderMain extends OrderMain_parent
      *
      * @return string
      */
-    protected function _getOeVATTBECurrentOrderEvidenceId($oOrder, $sOrderId)
+    protected function getOeVATTBECurrentOrderEvidenceId($oOrder, $sOrderId)
     {
         $oOrder->load($sOrderId);
         $sEvidenceId = $oOrder->oxorder__oevattbe_evidenceused->value;

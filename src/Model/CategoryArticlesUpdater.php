@@ -60,7 +60,7 @@ class CategoryArticlesUpdater
      */
     public function addCategoryTBEInformationToArticles($oCategory)
     {
-        $this->_getDbGateway()->populate($oCategory->getId());
+        $this->getDbGateway()->populate($oCategory->getId());
     }
 
     /**
@@ -70,7 +70,7 @@ class CategoryArticlesUpdater
      */
     public function removeCategoryTBEInformationFromArticles($aArticles)
     {
-        $this->_getDbGateway()->reset($aArticles);
+        $this->getDbGateway()->reset($aArticles);
     }
 
     /**
@@ -78,7 +78,7 @@ class CategoryArticlesUpdater
      *
      * @return CategoryVATGroupsPopulatorDbGateway
      */
-    protected function _getDbGateway()
+    protected function getDbGateway()
     {
         return $this->_oDbGateway;
     }

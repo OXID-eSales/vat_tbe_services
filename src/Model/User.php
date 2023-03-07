@@ -85,8 +85,8 @@ class User
      */
     public function getOeVATTBEEvidenceList()
     {
-        $this->_loadEvidenceDataToSession();
-        return $this->_getSession()->getVariable('TBEEvidenceList');
+        $this->loadEvidenceDataToSession();
+        return $this->getSession()->getVariable('TBEEvidenceList');
     }
 
     /**
@@ -96,8 +96,8 @@ class User
      */
     public function getOeVATTBETbeCountryId()
     {
-        $this->_loadEvidenceDataToSession();
-        return $this->_getSession()->getVariable('TBECountryId');
+        $this->loadEvidenceDataToSession();
+        return $this->getSession()->getVariable('TBECountryId');
     }
 
     /**
@@ -107,8 +107,8 @@ class User
      */
     public function getOeVATTBETbeEvidenceUsed()
     {
-        $this->_loadEvidenceDataToSession();
-        return $this->_getSession()->getVariable('TBEEvidenceUsed');
+        $this->loadEvidenceDataToSession();
+        return $this->getSession()->getVariable('TBEEvidenceUsed');
     }
 
     /**
@@ -116,7 +116,7 @@ class User
      */
     public function unsetOeVATTBETbeCountryFromCaching()
     {
-        $oSession = $this->_getSession();
+        $oSession = $this->getSession();
         $oSession->deleteVariable('TBEEvidenceList');
         $oSession->deleteVariable('TBECountryId');
         $oSession->deleteVariable('TBEEvidenceUsed');
@@ -147,7 +147,7 @@ class User
      */
     public function isUserFromDomesticCountry()
     {
-        $sDomesticCountryAbbr = $this->_getConfig()->getConfigParam('sOeVATTBEDomesticCountry');
+        $sDomesticCountryAbbr = $this->getConfig()->getConfigParam('sOeVATTBEDomesticCountry');
         $oUserCountry = $this->getCountry();
 
         $blResult = $oUserCountry->oxcountry__oxisoalpha2->value == $sDomesticCountryAbbr;
@@ -160,7 +160,7 @@ class User
      *
      * @return EShopUser
      */
-    protected function _getUser()
+    protected function getUser()
     {
         return $this->_oUser;
     }
@@ -170,7 +170,7 @@ class User
      *
      * @return Session
      */
-    protected function _getSession()
+    protected function getSession()
     {
         return $this->_oSession;
     }
@@ -180,7 +180,7 @@ class User
      *
      * @return Config
      */
-    protected function _getConfig()
+    protected function getConfig()
     {
         return $this->_oConfig;
     }
@@ -188,11 +188,11 @@ class User
     /**
      * Loads evidence information to session if not already there.
      */
-    private function _loadEvidenceDataToSession()
+    private function loadEvidenceDataToSession()
     {
-        $oSession = $this->_getSession();
+        $oSession = $this->getSession();
         if (is_null($oSession->getVariable('TBECountryId'))) {
-            $oEvidenceSelector = $this->_factoryEvidenceSelector();
+            $oEvidenceSelector = $this->factoryEvidenceSelector();
             $oSession->setVariable('TBEEvidenceList', $oEvidenceSelector->getEvidenceList()->getArray());
 
             $oEvidence = $oEvidenceSelector->getEvidence();
@@ -208,10 +208,10 @@ class User
      *
      * @return EvidenceSelector
      */
-    private function _factoryEvidenceSelector()
+    private function factoryEvidenceSelector()
     {
-        $oConfig = $this->_getConfig();
-        $oUser = $this->_getUser();
+        $oConfig = $this->getConfig();
+        $oUser = $this->getUser();
 
         /** @var EvidenceCollector $oEvidenceCollector */
         $oEvidenceCollector = oxNew(EvidenceCollector::class, $oUser, $oConfig);

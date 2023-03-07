@@ -39,7 +39,7 @@ class ArticleMain extends ArticleMain_parent
     public function addToCategory($sCatID, $sOXID)
     {
         parent::addToCategory($sCatID, $sOXID);
-        $this->_populateOeVATTBEConfiguration($sCatID);
+        $this->populateOeVATTBEConfiguration($sCatID);
     }
 
     /**
@@ -47,7 +47,7 @@ class ArticleMain extends ArticleMain_parent
      *
      * @param string $sCategoryId category id
      */
-    protected function _populateOeVATTBEConfiguration($sCategoryId)
+    protected function populateOeVATTBEConfiguration($sCategoryId)
     {
         /** @var EShopCategory|Category $oCategory */
         $oCategory = oxNew(EShopCategory::class);
