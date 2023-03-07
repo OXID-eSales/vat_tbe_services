@@ -1,0 +1,16 @@
+{% extends 'country_main.html.twig' %}
+
+{% block admin_country_main_form %}
+{{ parent() }}
+
+<tr>
+    <td class="edittext" width="120">
+        {{ translate({ ident: "OEVATTBE_TBE_COUNTRY" }) }}
+    </td>
+    <td class="edittext">
+        <input type="hidden" name="editval[oxcountry__oevattbe_appliestbevat]" value="0">
+        <input class="edittext" type="checkbox" name="editval[oxcountry__oevattbe_appliestbevat]" value='1' {% if edit.oxcountry__oevattbe_appliestbevat.value == 1 %}checked{% endif %} {{ readonly }}>
+        {% include "inputhelp.html.twig" with {'sHelpId': help_id("HELP_OEVATTBE_TBE_COUNTRY"), 'sHelpText': help_text("HELP_OEVATTBE_TBE_COUNTRY")} %}
+    </td>
+</tr>
+{% endblock %}

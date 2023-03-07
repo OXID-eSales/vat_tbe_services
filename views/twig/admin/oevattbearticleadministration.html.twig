@@ -1,13 +1,13 @@
-[{*Required for admin tabs to work*}]
-[{include file="headitem.tpl" title="GENERAL_ADMIN_TITLE"|oxmultilangassign}]
-<form name="transfer" id="transfer" action="[{$oViewConf->getSelfLink()}]" method="post">
-    [{$oViewConf->getHiddenSid()}]
-    <input type="hidden" name="oxid" value="[{$oxid}]">
-    <input type="hidden" name="oxidCopy" value="[{$oxid}]">
+{# Required for admin tabs to work #}
+{% include "headitem.html.twig" with {title: "GENERAL_ADMIN_TITLE"|translate} %}
+<form name="transfer" id="transfer" action="{{ oViewConf.getSelfLink() }}" method="post">
+    {{ oViewConf.getHiddenSid()|raw() }}
+    <input type="hidden" name="oxid" value="{{ oxid }}">
+    <input type="hidden" name="oxidCopy" value="{{ oxid }}">
     <input type="hidden" name="cl" value="article_main">
-    <input type="hidden" name="language" value="[{$actlang}]">
+    <input type="hidden" name="language" value="{{ actlang }}">
 </form>
-[{*/*}]
+{# / #}
 
 <style>
     .vattbeAdministration {
@@ -26,22 +26,22 @@
     }
 </style>
 
-[{if $readonly}]
-    [{assign var="readonly" value="readonly disabled"}]
-[{else}]
-    [{assign var="readonly" value=""}]
-[{/if}]
+{% if readonly %}
+    {% set readonly = "readonly disabled" %}
+{% else %}
+    {% set readonly = "" %}
+{% endif %}
 
-<form action="[{$oViewConf->getSelfLink()}]" method="post">
-    [{$oViewConf->getHiddenSid()}]
+<form action="{{ oViewConf.getSelfLink() }}" method="post">
+    {{ oViewConf.getHiddenSid()|raw() }}
     <input type="hidden" name="cl" value="oevattbearticleadministration">
     <input type="hidden" name="fnc" value="save">
-    <input type="hidden" name="oxid" value="[{$oxid}]">
+    <input type="hidden" name="oxid" value="{{ oxid }}">
 
     <p>
-        <label for="isOeVATTBETBEService">[{oxmultilang ident="OEVATTBE_ARTICLE_SUBMIT_LABEL"}]</label>
+        <label for="isOeVATTBETBEService">{{ translate({ ident: "OEVATTBE_ARTICLE_SUBMIT_LABEL" }) }}</label>
         <input type="hidden" name="editval[oevattbe_istbeservice]" value="0">
-        <input id="isOeVATTBETBEService" class="edittext" type="checkbox" name="editval[oevattbe_istbeservice]" value="1" [{if $oView->isArticleTBE() == 1}]checked[{/if}] [{$readonly}]>
+        <input id="isOeVATTBETBEService" class="edittext" type="checkbox" name="editval[oevattbe_istbeservice]" value="1" {% if oView.isArticleTBE() == 1 %}checked{% endif %} {{ readonly }}>
     </p>
     <table class="vattbeAdministration">
         <tr>
@@ -49,45 +49,45 @@
                 <table class="vattbeAdministrationList">
                     <tr>
                         <td colspan="2">
-                            [{oxmultilang ident="OEVATTBE_ARTICLE_VAT_RATES"}]
+                            {{ translate({ ident: "OEVATTBE_ARTICLE_VAT_RATES" }) }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            [{oxmultilang ident="OEVATTBE_ARTICLE_COUNTRY"}]
+                            {{ translate({ ident: "OEVATTBE_ARTICLE_COUNTRY" }) }}
                         </th>
                         <th>
-                            [{oxmultilang ident="OEVATTBE_ARTICLE_VAT_GROUP"}]
+                            {{ translate({ ident: "OEVATTBE_ARTICLE_VAT_GROUP" }) }}
                         </th>
                     </tr>
-                    [{foreach from=$oView->getCountryAndVATGroupsData() key=sCountryId item=aVATInformation}]
+                    {% for sCountryId, aVATInformation in oView.getCountryAndVATGroupsData() %}
                     <tr>
-                        <td>[{$aVATInformation.countryTitle}]</td>
+                        <td>{{ aVATInformation.countryTitle }}</td>
                         <td>
-                            <select name="VATGroupsByCountry[[{$sCountryId}]]" [{$readonly}]>
-                                <option value="">[{oxmultilang ident="OEVATTBE_CHOOSE_VAT_RATE"}]</option>
-                                [{foreach from=$aVATInformation.countryGroups item=oVATTBECountryVATGroup}]
-                                    <option value="[{$oVATTBECountryVATGroup->getId()}]"
-                                        [{if $oView->isSelected($sCountryId, $oVATTBECountryVATGroup->getId())}]selected="selected"[{/if}]>
-                                        [{$oVATTBECountryVATGroup->getName()}] - [{$oVATTBECountryVATGroup->getRate()}]%
+                            <select name="VATGroupsByCountry[{{ sCountryId }}]" {{ readonly }}>
+                                <option value="">{{ translate({ ident: "OEVATTBE_CHOOSE_VAT_RATE" }) }}</option>
+                                {% for oVATTBECountryVATGroup in aVATInformation.countryGroups %}
+                                    <option value="{{ oVATTBECountryVATGroup.getId() }}"
+                                        {% if oView.isSelected(sCountryId, oVATTBECountryVATGroup.getId()) %}selected="selected"{% endif %}>
+                                        {{ oVATTBECountryVATGroup.getName() }} - {{ oVATTBECountryVATGroup.getRate() }}%
                                     </option>
-                                [{/foreach}]
+                                {% endfor %}
                             </select>
                         </td>
                     </tr>
-                    [{/foreach}]
+                    {% endfor %}
                 </table>
             </td>
         </tr>
         <tr>
             <td colspan="2">
-                <input type="submit" class="edittext" name="save" value="[{oxmultilang ident="OEVATTBE_SAVE_BUTTON"}]" onClick="Javascript:document.myedit.fnc.value='save'" [{$readonly}]>
+                <input type="submit" class="edittext" name="save" value="{{ translate({ ident: "OEVATTBE_SAVE_BUTTON" }) }}" onClick="Javascript:document.myedit.fnc.value='save'" {{ readonly }}>
             </td>
         </tr>
     </table>
 </form>
 
-[{*Required for admin tabs to work*}]
-[{include file="bottomnaviitem.tpl"}]
-[{include file="bottomitem.tpl"}]
-[{*/*}]
+{# Required for admin tabs to work #}
+{% include "bottomnaviitem.html.twig" %}
+{% include "bottomitem.html.twig" %}
+{# / #}
