@@ -106,7 +106,7 @@ Telecommunication, Broadcasting or Electronic (TBE) service according to
         array('template' => 'page/checkout/inc/basketcontents_table.tpl', 'block' => 'checkout_basketcontents_basketitem_vat', 'file' => 'views/blocks/page/checkout/inc/basketitem_vat_in_table.tpl'),
         array('template' => 'page/checkout/basket.tpl', 'block' => 'checkout_basket_next_step_bottom', 'file' => 'views/blocks/page/checkout/basket_nextstep.tpl'),
         array('template' => 'page/checkout/order.tpl', 'block' => 'checkout_order_next_step_bottom', 'file' => 'views/blocks/page/checkout/order_nextstep.tpl'),
-        array('template' => 'order_main.tpl', 'block' => 'admin_order_main_form', 'file' => 'views/admin/tpl/oevattbeorder_main.tpl'),
+        ['template' => 'order_main.tpl', 'block' => 'admin_order_main_form', 'file' => 'views/admin/tpl/oevattbeorder_main.tpl'],
         array('template' => 'layout/page.tpl', 'block' => 'content_main', 'file' => 'views/blocks/layout/page.tpl'),
         array('template' => 'country_list.tpl', 'block' => 'admin_country_list_colgroup', 'file' => 'views/blocks/admin/country_list_colgroup.tpl'),
         array('template' => 'country_list.tpl', 'block' => 'admin_country_list_filter', 'file' => 'views/blocks/admin/country_list_filter.tpl'),
