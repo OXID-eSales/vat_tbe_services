@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of OXID eSales eVAT module.
  *
@@ -28,13 +29,17 @@ use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\Session;
 use OxidEsales\EVatModule\Model\Evidence\EvidenceCollector;
 use OxidEsales\EVatModule\Model\Evidence\EvidenceSelector;
+use OxidEsales\EVatModule\Service\ModuleSettings;
 use OxidEsales\EVatModule\Shop\Country;
+use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
  * VAT TBE User class
  */
 class User
 {
+    use ServiceContainer;
+
     /** @var EShopUser  */
     private $_oUser = null;
 
@@ -147,7 +152,8 @@ class User
      */
     public function isUserFromDomesticCountry()
     {
-        $sDomesticCountryAbbr = $this->getConfig()->getConfigParam('sOeVATTBEDomesticCountry');
+        $sDomesticCountryAbbr = $this->getServiceFromContainer(ModuleSettings::class)->getDomesticCountry();
+
         $oUserCountry = $this->getCountry();
 
         $blResult = $oUserCountry->oxcountry__oxisoalpha2->value == $sDomesticCountryAbbr;

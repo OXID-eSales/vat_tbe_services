@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of OXID eSales eVAT module.
  *
@@ -19,6 +20,9 @@
  * @copyright (C) OXID eSales AG 2003-2014
  */
 
+use OxidEsales\EVatModule\Core\Module;
+use OxidEsales\EVatModule\Service\ModuleSettings;
+
 /**
  * Metadata version
  */
@@ -28,7 +32,7 @@ $sMetadataVersion = '2.0';
  * Module information
  */
 $aModule = array(
-    'id'           => 'oevattbe',
+    'id'           => Module::MODULE_ID,
     'title'        => 'OXID eShop eVAT',
     'description'  => array(
         'de' => 'Das Modul eVAT erm&ouml;glicht es,
@@ -113,6 +117,6 @@ Telecommunication, Broadcasting or Electronic (TBE) service according to
     'settings'  => array(
         array('group' => 'oevattbe', 'name' => 'aOeVATTBECountryEvidences', 'type' => 'aarr', 'value' => array('billing_country' => 1, 'geo_location' => 1)),
         array('group' => 'oevattbe', 'name' => 'sOeVATTBEDefaultEvidence', 'type' => 'str', 'value' => 'billing_country'),
-        array('group' => 'oevattbe', 'name' => 'sOeVATTBEDomesticCountry', 'type' => 'str', 'value' => 'DE'),
+        ['group' => 'oevattbe', 'name' => ModuleSettings::DOMESTIC_COUNTRY, 'type' => 'str', 'value' => 'DE'],
     )
 );
