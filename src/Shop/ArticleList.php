@@ -21,9 +21,11 @@
 
 namespace OxidEsales\EVatModule\Shop;
 
+use OxidEsales\Eshop\Application\Model\Actions;
 use OxidEsales\Eshop\Application\Model\Country;
 use OxidEsales\Eshop\Core\Registry;
 use \oxDb;
+use OxidEsales\Eshop\Core\TableViewNameGenerator;
 use OxidEsales\EVatModule\Model\ArticleSQLBuilder;
 
 /**
@@ -49,8 +51,9 @@ class ArticleList extends ArticleList_parent
             return parent::getCategorySelect($sFields, $sCatId, $aSessionFilter);
         }
 
-        $sArticleTable = getViewName('oxarticles');
-        $sO2CView = getViewName('oxobject2category');
+        $tableViewNameGenerator = oxNew(TableViewNameGenerator::class);
+        $sArticleTable = $tableViewNameGenerator->getViewName('oxarticles');
+        $sO2CView = $tableViewNameGenerator->getViewName('oxobject2category');
 
         // ----------------------------------
         // sorting
@@ -93,7 +96,8 @@ class ArticleList extends ArticleList_parent
             return parent::getVendorSelect($sVendorId);
         }
 
-        $sArticleTable = getViewName('oxarticles');
+        $tableViewNameGenerator = oxNew(TableViewNameGenerator::class);
+        $sArticleTable = $tableViewNameGenerator->getViewName('oxarticles');
         $oBaseObject = $this->getBaseObject();
 
         $sSelect = "select ";
@@ -123,7 +127,8 @@ class ArticleList extends ArticleList_parent
             return parent::getManufacturerSelect($sManufacturerId);
         }
 
-        $sArticleTable = getViewName('oxarticles');
+        $tableViewNameGenerator = oxNew(TableViewNameGenerator::class);
+        $sArticleTable = $tableViewNameGenerator->getViewName('oxarticles');
         $oBaseObject = $this->getBaseObject();
 
         $sSelect = "select ";
@@ -177,55 +182,6 @@ class ArticleList extends ArticleList_parent
     }
 
     /**
-     * Loads a list of articles having
-     *
-     * @param string $sTag  Searched tag
-     * @param int    $iLang Active language
-     *
-     * @return int
-     */
-    public function loadTagArticles($sTag, $iLang)
-    {
-        if (!$this->isOeVATTBEConfigured()) {
-            return parent::loadTagArticles($sTag, $iLang);
-        }
-        $oListObject = $this->getBaseObject();
-        $sArticleTable = $oListObject->getViewName();
-        $sViewName = getViewName('oxartextends', $iLang);
-
-        //TODO: check if tags still exists
-        $oTag = oxNew('oxtag', $sTag);
-        $oTag->addUnderscores();
-        $sTag = $oTag->get();
-
-        $sQ = "select ";
-        $sQ .= $this->getOeVATTBEArticleSqlBuilder()->getSelectFields();
-        $sQ .= " from {$sViewName} ";
-        $sQ .= " inner join {$sArticleTable} on {$sArticleTable}.oxid = {$sViewName}.oxid ";
-        $sQ .= $this->getOeVATTBEArticleSqlBuilder()->getJoins();
-        $sQ .= " where {$sArticleTable}.oxparentid = '' AND match ( {$sViewName}.oxtags ) ";
-        $sQ .= " against( " . oxDb::getDb()->quote("\"" . $sTag . "\"") . " IN BOOLEAN MODE )";
-
-        // checking stock etc
-        if (($sActiveSnippet = $oListObject->getSqlActiveSnippet())) {
-            $sQ .= " and {$sActiveSnippet}";
-        }
-
-        if ($this->_sCustomSorting) {
-            $sSort = $this->_sCustomSorting;
-            if (strpos($sSort, '.') === false) {
-                $sSort = $sArticleTable . '.' . $sSort;
-            }
-            $sQ .= " order by $sSort ";
-        }
-
-        $this->selectString($sQ);
-
-        // calc count - we can not use count($this) here as we might have paging enabled
-        return Registry::getUtilsCount()->getTagArticleCount($sTag, $iLang);
-    }
-
-    /**
      * Loads shop AktionArticles.
      *
      * @param string $sActionID Action id
@@ -252,7 +208,7 @@ class ArticleList extends ArticleList_parent
         $sArticleTable = $oBaseObject->getViewName();
         $sArticleFields = $oBaseObject->getSelectFields();
 
-        $oBase = oxNew("oxactions");
+        $oBase = oxNew(Actions::class);
         $sActiveSql = $oBase->getSqlActiveSnippet();
         $sViewName = $oBase->getViewName();
 
@@ -398,8 +354,8 @@ class ArticleList extends ArticleList_parent
                 $this->loadActionArticles('oxnewest', $iLimit);
                 break;
             case 2:
-
-                $sArticleTable = getViewName('oxarticles');
+                $tableViewNameGenerator = oxNew(TableViewNameGenerator::class);
+                $sArticleTable = $tableViewNameGenerator->getViewName('oxarticles');
                 if ($myConfig->getConfigParam('blNewArtByInsert')) {
                     $sType = 'oxinsert';
                 } else {
@@ -449,7 +405,8 @@ class ArticleList extends ArticleList_parent
                 $this->loadActionArticles('oxtop5', $iLimit);
                 break;
             case 2:
-                $sArticleTable = getViewName('oxarticles');
+                $tableViewNameGenerator = oxNew(TableViewNameGenerator::class);
+                $sArticleTable = $tableViewNameGenerator->getViewName('oxarticles');
 
                 //by default limit 5
                 $sLimit = ($iLimit > 0) ? "limit " . $iLimit : 'limit 5';
@@ -483,7 +440,8 @@ class ArticleList extends ArticleList_parent
 
         $sRecommendationId = oxDb::getDb()->quote($sRecommendationId);
 
-        $sArticleTable = getViewName('oxarticles');
+        $tableViewNameGenerator = oxNew(TableViewNameGenerator::class);
+        $sArticleTable = $tableViewNameGenerator->getViewName('oxarticles');
 
         $sSelect = "select distinct oxobject2list.oxdesc, ";
         $sSelect .= $this->getOeVATTBEArticleSqlBuilder()->getSelectFields();

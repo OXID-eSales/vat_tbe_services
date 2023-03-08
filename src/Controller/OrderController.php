@@ -33,7 +33,7 @@ use OxidEsales\EVatModule\Shop\Order;
 /**
  * Hooks to order class to get events.
  */
-class OrderArticle extends OrderArticle_parent
+class OrderController extends OrderController_parent
 {
     /**
      * Executes parent::render(), creates list with basket articles
@@ -45,8 +45,7 @@ class OrderArticle extends OrderArticle_parent
     public function render()
     {
         $oUserCountry = User::createInstance();
-        //TODO: get basket
-//        $oBasket = $this->getBasket();
+        $oBasket = $this->getBasket();
         if ($this->getUser() && !$oUserCountry->isUserFromDomesticCountry() && $oBasket) {
             $oBasketArticles = $oBasket->getBasketArticles();
             /** @var BasketItemsValidator $oVATTBEBasketItemsValidator */

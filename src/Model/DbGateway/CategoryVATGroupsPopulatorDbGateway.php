@@ -52,7 +52,6 @@ class CategoryVATGroupsPopulatorDbGateway
     {
         $blResult = false;
         if ($aArticleIds) {
-            /** @var oxDb $oDb */
             $oDb = oxNew(oxDb::class)->getDb();
             $sArticleIds = implode(', ', $oDb->quoteArray($aArticleIds));
             $blResult = $this->makeArticlesNotTBE($sArticleIds) && $this->removeFromVATGroups($sArticleIds);

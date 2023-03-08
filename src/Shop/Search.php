@@ -28,6 +28,7 @@ use OxidEsales\Eshop\Application\Model\Country;
 use OxidEsales\Eshop\Application\Model\Manufacturer;
 use OxidEsales\Eshop\Application\Model\Vendor;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\Eshop\Core\TableViewNameGenerator;
 use OxidEsales\EVatModule\Model\ArticleSQLBuilder;
 
 /**
@@ -105,9 +106,11 @@ class Search extends Search_parent
             return null;
         }
 
+        $tableViewNameGenerator = oxNew(TableViewNameGenerator::class);
+
         $oArticle = oxNew(Article::class);
         $sArticleTable = $oArticle->getViewName();
-        $sO2CView = getViewName('oxobject2category');
+        $sO2CView = $tableViewNameGenerator->getViewName('oxobject2category');
 
         $sSelectFields = $this->getOeVATTBEArticleSqlBuilder()->getSelectFields();
 
@@ -116,7 +119,7 @@ class Search extends Search_parent
         $sDescJoin = '';
         if (is_array($aSearchCols = Registry::getConfig()->getConfigParam('aSearchCols'))) {
             if (in_array('oxlongdesc', $aSearchCols) || in_array('oxtags', $aSearchCols)) {
-                $sDescView = getViewName('oxartextends', $this->_iLanguage);
+                $sDescView = $tableViewNameGenerator->getViewName('oxartextends', $this->_iLanguage);
                 $sDescJoin = " LEFT JOIN {$sDescView} ON {$sArticleTable}.oxid={$sDescView}.oxid ";
             }
         }
@@ -128,7 +131,7 @@ class Search extends Search_parent
 
         // must be additional conditions in select if searching in category
         if ($sInitialSearchCat) {
-            $sCatView = getViewName('oxcategories', $this->_iLanguage);
+            $sCatView = $tableViewNameGenerator->getViewName('oxcategories', $this->_iLanguage);
             $sInitialSearchCatQuoted = $oDb->quote($sInitialSearchCat);
             $sSelectCat = "select oxid from {$sCatView} where oxid = $sInitialSearchCatQuoted and (oxpricefrom != '0' or oxpriceto != 0)";
             if ($oDb->getOne($sSelectCat)) {

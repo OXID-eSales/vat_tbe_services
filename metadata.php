@@ -56,12 +56,12 @@ Telecommunication, Broadcasting or Electronic (TBE) service according to
 
         //Controllers
         \OxidEsales\Eshop\Application\Controller\BasketController::class  => \OxidEsales\EVatModule\Controller\BasketController::class,
+        \OxidEsales\Eshop\Application\Controller\OrderController::class  => \OxidEsales\EVatModule\Controller\OrderController::class,
 
         \OxidEsales\Eshop\Application\Controller\Admin\OrderMain::class => \OxidEsales\EVatModule\Controller\Admin\OrderMain::class,
         \OxidEsales\Eshop\Application\Controller\Admin\CategoryMainAjax::class => \OxidEsales\EVatModule\Controller\Admin\CategoryMainAjax::class,
         \OxidEsales\Eshop\Application\Controller\Admin\ArticleExtendAjax::class => \OxidEsales\EVatModule\Controller\Admin\ArticleExtendAjax::class,
         \OxidEsales\Eshop\Application\Controller\Admin\ArticleMain::class => \OxidEsales\EVatModule\Controller\Admin\ArticleMain::class,
-        \OxidEsales\Eshop\Application\Controller\Admin\OrderArticle::class => \OxidEsales\EVatModule\Controller\OrderArticle::class,
 
         //Models
         \OxidEsales\Eshop\Application\Model\Article::class => \OxidEsales\EVatModule\Shop\Article::class,

@@ -30,12 +30,15 @@ use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Model\OrderArticleChecker;
 use OxidEsales\EVatModule\Model\OrderEvidenceList;
 use OxidEsales\EVatModule\Model\User;
+use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
  * VAT TBE User class
  */
 class Order extends Order_parent
 {
+    use ServiceContainer;
+
     /**
      * Protection parameters used for some data in order are invalid
      *
@@ -111,7 +114,7 @@ class Order extends Order_parent
         $blSuccess = parent::delete($sOxId);
 
         if ($blSuccess) {
-            $oOrderEvidenceList = OrderEvidenceList::createInstance();
+            $oOrderEvidenceList = $this->getServiceFromContainer(OrderEvidenceList::class);
             $oOrderEvidenceList->delete($sOxId ? $sOxId : $this->getId());
         }
 
@@ -136,7 +139,7 @@ class Order extends Order_parent
         $iRet = $this->getFinalizeOrderParent($oBasket, $oUser, $blRecalculatingOrder);
 
         if ($this->shouldOeVATTBEStoreEvidences($iRet, $oBasket, $blRecalculatingOrder)) {
-            $oOrderEvidenceList = OrderEvidenceList::createInstance();
+            $oOrderEvidenceList = $this->getServiceFromContainer(OrderEvidenceList::class);
 
             $oOrderEvidenceList->setId($this->getId());
             $aEvidenceList = $oUser->getOeVATTBEEvidenceList();
@@ -263,7 +266,7 @@ class Order extends Order_parent
      */
     protected function factoryOeVATTBEOrderEvidenceList()
     {
-        $oOrderEvidenceList = OrderEvidenceList::createInstance();
+        $oOrderEvidenceList = $this->getServiceFromContainer(OrderEvidenceList::class);
         return $oOrderEvidenceList;
     }
 

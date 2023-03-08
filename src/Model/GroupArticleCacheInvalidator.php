@@ -25,6 +25,7 @@ use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopEnterprise\Core\Cache\Generic\Cache;
 use OxidEsales\EVatModule\Core\Model;
+use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
  * VAT Groups handling class
@@ -47,19 +48,6 @@ class GroupArticleCacheInvalidator extends Model
     {
         $this->_oArticleVATGroupsList = $oArticleVATGroupsList;
         $this->_oCacheBackend = $oCacheBackend;
-    }
-
-    /**
-     * Creates instance of GroupArticleCacheInvalidator.
-     *
-     * @return GroupArticleCacheInvalidator
-     */
-    public static function createInstance()
-    {
-        $oCacheBackend = Registry::get(\OxidEsales\Eshop\Core\Cache\Generic\Cache::class);
-        $ArticleGroupsList = ArticleVATGroupsList::createInstance();
-
-        return oxNew(GroupArticleCacheInvalidator::class, $ArticleGroupsList, $oCacheBackend);
     }
 
     /**
