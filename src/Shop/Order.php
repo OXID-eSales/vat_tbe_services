@@ -85,7 +85,7 @@ class Order extends Order_parent
 
         $blUserCountryChanged = $oBasket->getOeVATTBETbeCountryId() != $oUserCountry->getOeVATTBETbeCountryId();
         if (!$iValidState && $blUserCountryChanged) {
-            $iValidState = EShopOrder::ORDER_STATE_INVALIDDElADDRESSCHANGED;
+            $iValidState = EShopOrder::ORDER_STATE_INVALIDDELADDRESSCHANGED;
         }
 
         $oArticleChecker = $this->getOeVATTBEOrderArticleChecker($oBasket);
