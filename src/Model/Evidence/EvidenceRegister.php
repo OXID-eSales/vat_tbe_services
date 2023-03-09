@@ -24,7 +24,9 @@ namespace OxidEsales\EVatModule\Model\Evidence;
 use OxidEsales\Eshop\Core\Config;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Model\Evidence\Item\BillingCountryEvidence;
+use OxidEsales\EVatModule\Service\ModuleSettings;
 use OxidEsales\EVatModule\Shop\User as EShopUser;
+use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
  * Class for registering evidences.
@@ -32,6 +34,11 @@ use OxidEsales\EVatModule\Shop\User as EShopUser;
  */
 class EvidenceRegister
 {
+    use ServiceContainer;
+
+    /** @var ModuleSettings */
+    private $moduleSettings;
+
     /** @var Config Shop configuration object. */
     private $_oConfig = null;
 
@@ -43,6 +50,7 @@ class EvidenceRegister
     public function __construct(Config $oConfig)
     {
         $this->_oConfig = $oConfig;
+        $this->moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
     }
 
     /**
@@ -63,8 +71,7 @@ class EvidenceRegister
      */
     public function getActiveEvidences()
     {
-        $oConfig = $this->getConfig();
-        return (array) $oConfig->getConfigParam('aOeVATTBECountryEvidences');
+        return $this->moduleSettings->getCountryEvidences();
     }
 
     /**
@@ -118,7 +125,7 @@ class EvidenceRegister
         $aEvidences = $this->getActiveEvidences();
         if (isset($aEvidences[$sEvidenceId]) && $aEvidences[$sEvidenceId] !== 1) {
             $aEvidences[$sEvidenceId] = 1;
-            Registry::getConfig()->saveShopConfVar('aarr', 'aOeVATTBECountryEvidences', $aEvidences, null, 'module:oevattbe');
+            $this->moduleSettings->saveCountryEvidences($aEvidences);
         }
     }
 
@@ -132,7 +139,7 @@ class EvidenceRegister
         $aEvidences = $this->getActiveEvidences();
         if (isset($aEvidences[$sEvidenceId]) && $aEvidences[$sEvidenceId] !== 0) {
             $aEvidences[$sEvidenceId] = 0;
-            Registry::getConfig()->saveShopConfVar('aarr', 'aOeVATTBECountryEvidences', $aEvidences, null, 'module:oevattbe');
+            $this->moduleSettings->saveCountryEvidences($aEvidences);
         }
     }
 
@@ -159,7 +166,7 @@ class EvidenceRegister
         $sEvidenceId = $this->getEvidenceId($sEvidenceClass);
         if (!isset($aEvidences[$sEvidenceId])) {
             $aEvidences[$sEvidenceId] = $blActive ? 1 : 0;
-            Registry::getConfig()->saveShopConfVar('aarr', 'aOeVATTBECountryEvidences', $aEvidences, null, 'module:oevattbe');
+            $this->moduleSettings->saveCountryEvidences($aEvidences);
         }
     }
 
@@ -179,7 +186,7 @@ class EvidenceRegister
         $aEvidences = $this->getActiveEvidences();
         if (isset($aEvidences[$sEvidenceId])) {
             unset($aEvidences[$sEvidenceId]);
-            Registry::getConfig()->saveShopConfVar('aarr', 'aOeVATTBECountryEvidences', $aEvidences, null, 'module:oevattbe');
+            $this->moduleSettings->saveCountryEvidences($aEvidences);
         }
     }
 

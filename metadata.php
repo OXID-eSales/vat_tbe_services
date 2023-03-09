@@ -115,8 +115,8 @@ Telecommunication, Broadcasting or Electronic (TBE) service according to
         array('template' => 'country_main.tpl', 'block' => 'admin_country_main_form', 'file' => 'views/blocks/admin/country_main.tpl'),
     ),
     'settings'  => array(
-        array('group' => 'oevattbe', 'name' => 'aOeVATTBECountryEvidences', 'type' => 'aarr', 'value' => array('billing_country' => 1, 'geo_location' => 1)),
-        array('group' => 'oevattbe', 'name' => 'sOeVATTBEDefaultEvidence', 'type' => 'str', 'value' => 'billing_country'),
+        ['group' => 'oevattbe', 'name' => ModuleSettings::COUNTRY_EVIDENCES, 'type' => 'aarr', 'value' => ['billing_country' => 1, 'geo_location' => 1]],
+        ['group' => 'oevattbe', 'name' => ModuleSettings::DEFAULT_EVIDENCE, 'type' => 'str', 'value' => 'billing_country'],
         ['group' => 'oevattbe', 'name' => ModuleSettings::DOMESTIC_COUNTRY, 'type' => 'str', 'value' => 'DE'],
     )
 );

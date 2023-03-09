@@ -21,8 +21,8 @@
 
 namespace OxidEsales\EVatModule\Model\Evidence;
 
-use OxidEsales\Eshop\Core\Config;
 use OxidEsales\EVatModule\Model\Evidence\Item\Evidence;
+use OxidEsales\EVatModule\Service\ModuleSettings;
 
 /**
  * Class checks all evidences and provides the one that should be used in VAT calculations.
@@ -32,19 +32,17 @@ class EvidenceSelector
     /** @var array List of evidences. */
     private $_oEvidenceList = array();
 
-    /** @var Config Configuration object. */
-    private $_oConfig = array();
-
     /**
      * Handles required dependencies.
      *
-     * @param EvidenceList $oEvidenceList List of evidences.
-     * @param Config             $oConfig       Shop Configuration object.
+     * @param EvidenceList   $oEvidenceList List of evidences.
+     * @param ModuleSettings $moduleSettings Shop Configuration object.
      */
-    public function __construct(EvidenceList $oEvidenceList, Config $oConfig)
-    {
+    public function __construct(
+        EvidenceList $oEvidenceList,
+        private ModuleSettings $moduleSettings
+    ) {
         $this->_oEvidenceList = $oEvidenceList;
-        $this->_oConfig = $oConfig;
     }
 
     /**
@@ -64,8 +62,7 @@ class EvidenceSelector
      */
     public function getEvidence()
     {
-        $oConfig = $this->getConfig();
-        $sDefaultEvidenceName = $oConfig->getConfigParam('sOeVATTBEDefaultEvidence');
+        $sDefaultEvidenceName = $this->moduleSettings->getDefaultEvidence();
 
         $oEvidenceList = $this->getEvidenceList();
 
@@ -102,15 +99,5 @@ class EvidenceSelector
         }
 
         return (count($aUniqueCountries) === 1) ? false : true;
-    }
-
-    /**
-     * Returns shop configuration object.
-     *
-     * @return Config
-     */
-    protected function getConfig()
-    {
-        return $this->_oConfig;
     }
 }

@@ -216,13 +216,14 @@ class User
      */
     private function factoryEvidenceSelector()
     {
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
         $oConfig = $this->getConfig();
         $oUser = $this->getUser();
 
         /** @var EvidenceCollector $oEvidenceCollector */
-        $oEvidenceCollector = oxNew(EvidenceCollector::class, $oUser, $oConfig);
+        $oEvidenceCollector = oxNew(EvidenceCollector::class, $oUser, $oConfig, $moduleSettings);
         $oEvidenceList = $oEvidenceCollector->getEvidenceList();
-        $oEvidenceSelector = oxNew(EvidenceSelector::class, $oEvidenceList, $oConfig);
+        $oEvidenceSelector = oxNew(EvidenceSelector::class, $oEvidenceList, $moduleSettings);
 
         return $oEvidenceSelector;
     }

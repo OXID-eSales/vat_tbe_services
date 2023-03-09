@@ -25,6 +25,7 @@ use OxidEsales\Eshop\Application\Model\User;
 use OxidEsales\Eshop\Core\Config;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Model\Evidence\Item\Evidence;
+use OxidEsales\EVatModule\Service\ModuleSettings;
 
 /**
  * Class creates list of evidences.
@@ -44,7 +45,7 @@ class EvidenceCollector
      * @param User   $oUser   User object passed to every evidence.
      * @param Config $oConfig Config object to find out about existing evidences.
      */
-    public function __construct(User $oUser, Config $oConfig)
+    public function __construct(User $oUser, Config $oConfig, private ModuleSettings $moduleSettings)
     {
         $this->_oUser = $oUser;
         $this->_oConfig = $oConfig;
@@ -60,14 +61,14 @@ class EvidenceCollector
     {
         $oConfig = $this->getConfig();
         $aEvidenceClasses = (array) $oConfig->getConfigParam('aOeVATTBECountryEvidenceClasses');
-        $aEvidences = (array) $oConfig->getConfigParam('aOeVATTBECountryEvidences');
+        $aEvidences = $this->moduleSettings->getCountryEvidences();
 
         /** @var EvidenceList $oList */
         $oList = oxNew(EvidenceList::class);
         $aUpdatedEvidences = $this->fillEvidenceList($oList, $aEvidenceClasses, $aEvidences);
 
         if ($aEvidences !== $aUpdatedEvidences) {
-            Registry::getConfig()->saveShopConfVar('aarr', 'aOeVATTBECountryEvidences', $aUpdatedEvidences, null, 'module:oevattbe');
+            $this->moduleSettings->saveCountryEvidences($aUpdatedEvidences);
         }
 
         return $oList;
