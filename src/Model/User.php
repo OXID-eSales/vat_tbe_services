@@ -25,7 +25,6 @@ namespace OxidEsales\EVatModule\Model;
 use OxidEsales\Eshop\Application\Model\Country as EShopCountry;
 use OxidEsales\Eshop\Application\Model\User as EShopUser;
 use OxidEsales\Eshop\Core\Config;
-use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\Session;
 use OxidEsales\EVatModule\Model\Evidence\EvidenceCollector;
 use OxidEsales\EVatModule\Model\Evidence\EvidenceSelector;
@@ -40,47 +39,18 @@ class User
 {
     use ServiceContainer;
 
-    /** @var EShopUser  */
-    private $_oUser = null;
-
-    /** @var Session  */
-    private $_oSession = null;
-
-    /** @var Config  */
-    private $_oConfig = null;
-
     /**
      * Handles dependencies.
      *
-     * @param EShopUser    $oUser    User object. Will be used for country calculations.
-     * @param Session $oSession Communicator with session. Should have setVariable, getVariable methods.
-     * @param Config  $oConfig  Communicator with config.
+     * @param EShopUser $user User object. Will be used for country calculations.
+     * @param Session $session Communicator with session. Should have setVariable, getVariable methods.
+     * @param Config  $config  Communicator with config.
      */
-    public function __construct(EShopUser $oUser, Session $oSession, Config $oConfig)
-    {
-        $this->_oUser = $oUser;
-        $this->_oSession = $oSession;
-        $this->_oConfig = $oConfig;
-    }
-
-    /**
-     * Creates self instance.
-     *
-     * @return User
-     */
-    public static function createInstance()
-    {
-        $oSession = Registry::getSession();
-        $oConfig = Registry::getConfig();
-        $oUser = $oSession->getUser();
-        //todo: do proper implement
-        if($oUser === false) {
-            $oUser = oxNew(EShopUser::class);
-        }
-
-        /** @var User $oInstance */
-        $oInstance = oxNew(User::class, $oUser, $oSession, $oConfig);
-        return $oInstance;
+    public function __construct(
+        private EShopUser $user,
+        private Session $session,
+        private Config $config
+    ) {
     }
 
     /**
@@ -91,7 +61,7 @@ class User
     public function getOeVATTBEEvidenceList()
     {
         $this->loadEvidenceDataToSession();
-        return $this->getSession()->getVariable('TBEEvidenceList');
+        return $this->session->getVariable('TBEEvidenceList');
     }
 
     /**
@@ -102,7 +72,7 @@ class User
     public function getOeVATTBETbeCountryId()
     {
         $this->loadEvidenceDataToSession();
-        return $this->getSession()->getVariable('TBECountryId');
+        return $this->session->getVariable('TBECountryId');
     }
 
     /**
@@ -113,7 +83,7 @@ class User
     public function getOeVATTBETbeEvidenceUsed()
     {
         $this->loadEvidenceDataToSession();
-        return $this->getSession()->getVariable('TBEEvidenceUsed');
+        return $this->session->getVariable('TBEEvidenceUsed');
     }
 
     /**
@@ -121,10 +91,9 @@ class User
      */
     public function unsetOeVATTBETbeCountryFromCaching()
     {
-        $oSession = $this->getSession();
-        $oSession->deleteVariable('TBEEvidenceList');
-        $oSession->deleteVariable('TBECountryId');
-        $oSession->deleteVariable('TBEEvidenceUsed');
+        $this->session->deleteVariable('TBEEvidenceList');
+        $this->session->deleteVariable('TBECountryId');
+        $this->session->deleteVariable('TBEEvidenceUsed');
     }
 
     /**
@@ -162,50 +131,19 @@ class User
     }
 
     /**
-     * Returns user object.
-     *
-     * @return EShopUser
-     */
-    protected function getUser()
-    {
-        return $this->_oUser;
-    }
-
-    /**
-     * Returns session object.
-     *
-     * @return Session
-     */
-    protected function getSession()
-    {
-        return $this->_oSession;
-    }
-
-    /**
-     * Returns configuration object.
-     *
-     * @return Config
-     */
-    protected function getConfig()
-    {
-        return $this->_oConfig;
-    }
-
-    /**
      * Loads evidence information to session if not already there.
      */
     private function loadEvidenceDataToSession()
     {
-        $oSession = $this->getSession();
-        if (is_null($oSession->getVariable('TBECountryId'))) {
+        if (is_null($this->session->getVariable('TBECountryId'))) {
             $oEvidenceSelector = $this->factoryEvidenceSelector();
-            $oSession->setVariable('TBEEvidenceList', $oEvidenceSelector->getEvidenceList()->getArray());
+            $this->session->setVariable('TBEEvidenceList', $oEvidenceSelector->getEvidenceList()->getArray());
 
             $oEvidence = $oEvidenceSelector->getEvidence();
             $sTBECountryId = $oEvidence ? $oEvidence->getCountryId() : '';
             $sEvidenceUser = $oEvidence ? $oEvidence->getId() : '';
-            $oSession->setVariable('TBECountryId', $sTBECountryId);
-            $oSession->setVariable('TBEEvidenceUsed', $sEvidenceUser);
+            $this->session->setVariable('TBECountryId', $sTBECountryId);
+            $this->session->setVariable('TBEEvidenceUsed', $sEvidenceUser);
         }
     }
 
@@ -217,11 +155,9 @@ class User
     private function factoryEvidenceSelector()
     {
         $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
-        $oConfig = $this->getConfig();
-        $oUser = $this->getUser();
 
         /** @var EvidenceCollector $oEvidenceCollector */
-        $oEvidenceCollector = oxNew(EvidenceCollector::class, $oUser, $oConfig, $moduleSettings);
+        $oEvidenceCollector = oxNew(EvidenceCollector::class, $this->user, $this->config, $moduleSettings);
         $oEvidenceList = $oEvidenceCollector->getEvidenceList();
         $oEvidenceSelector = oxNew(EvidenceSelector::class, $oEvidenceList, $moduleSettings);
 

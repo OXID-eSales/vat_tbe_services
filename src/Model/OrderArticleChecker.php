@@ -22,45 +22,25 @@
 namespace OxidEsales\EVatModule\Model;
 
 use OxidEsales\Eshop\Application\Model\Article as EShopArticle;
-use OxidEsales\Eshop\Application\Model\ArticleList;
+use OxidEsales\Eshop\Core\Registry;
 
 /**
  * VAT TBE order articles checker class
  */
 class OrderArticleChecker
 {
-    /** @var array|ArticleList */
-    private $_mArticleList = null;
-
-    /** @var User */
-    private $_oTBEUserCountry = null;
-
     /** @var array List of incorrect TBE articles */
     private $_aInvalidArticles = null;
 
     /**
      * Handles dependencies.
      *
-     * @param array $mArticleList    Articles list to check.
      * @param User  $oTBEUserCountry TBE user country
+     * @param array $mArticleList    Articles list to check.
      */
-    public function __construct(array $mArticleList = [], User $oTBEUserCountry)
-    {
-        if (!is_array($mArticleList) && !($mArticleList instanceof ArticleList)) {
-            $mArticleList = array();
-        }
-        $this->_mArticleList = $mArticleList;
-        $this->_oTBEUserCountry = $oTBEUserCountry;
-    }
-
-    /**
-     * Return tbe user
-     *
-     * @return User
-     */
-    public function getTBEUserCountry()
-    {
-        return $this->_oTBEUserCountry;
+    public function __construct(
+        private User $user
+    ) {
     }
 
     /**
@@ -72,8 +52,7 @@ class OrderArticleChecker
      */
     public function isValid()
     {
-        $oTBEUserCountry = $this->getTBEUserCountry();
-        $oCountry = $oTBEUserCountry->getCountry();
+        $oCountry = $this->user->getCountry();
 
         $isValid = $oCountry ? true : false;
 
@@ -99,27 +78,18 @@ class OrderArticleChecker
     public function getInvalidArticles()
     {
         if (is_null($this->_aInvalidArticles)) {
-            $mArticleList = $this->getArticleList();
+            $basket = Registry::getSession()->getBasket();
+            $basketArticles = $basket->getBasketArticles();
 
             $this->_aInvalidArticles = array();
-            foreach ($mArticleList as $oArticle) {
-                /** @var EShopArticle $oArticle */
-                if ($oArticle->isOeVATTBETBEService() && is_null($oArticle->getOeVATTBETBEVat())) {
-                    $this->_aInvalidArticles[$oArticle->getId()] = $oArticle;
+            foreach ($basketArticles as $basketArticle) {
+                /** @var EShopArticle $basketArticle */
+                if ($basketArticle->isOeVATTBETBEService() && is_null($basketArticle->getOeVATTBETBEVat())) {
+                    $this->_aInvalidArticles[$basketArticle->getId()] = $basketArticle;
                 }
             }
         }
 
         return $this->_aInvalidArticles;
-    }
-
-    /**
-     * Returns articles to work with.
-     *
-     * @return array|ArticleList
-     */
-    protected function getArticleList()
-    {
-        return $this->_mArticleList;
     }
 }

@@ -33,24 +33,12 @@ class CategoryArticlesUpdater
     /**
      * Handles class dependencies.
      *
-     * @param CategoryVATGroupsPopulatorDbGateway $oDbGateway db gateway
+     * @param CategoryVATGroupsPopulatorDbGateway $dbGateway db gateway
      */
-    public function __construct(CategoryVATGroupsPopulatorDbGateway $oDbGateway)
+    public function __construct(
+        private CategoryVATGroupsPopulatorDbGateway $dbGateway
+    )
     {
-        $this->_oDbGateway = $oDbGateway;
-    }
-
-    /**
-     * Creates an instance of CategoryArticlesUpdater.
-     *
-     * @return CategoryArticlesUpdater
-     */
-    public static function createInstance()
-    {
-        $oGateway = oxNew(CategoryVATGroupsPopulatorDbGateway::class);
-        $oList = oxNew(CategoryArticlesUpdater::class, $oGateway);
-
-        return $oList;
     }
 
     /**
@@ -60,7 +48,7 @@ class CategoryArticlesUpdater
      */
     public function addCategoryTBEInformationToArticles($oCategory)
     {
-        $this->getDbGateway()->populate($oCategory->getId());
+        $this->dbGateway->populate($oCategory->getId());
     }
 
     /**
@@ -70,16 +58,6 @@ class CategoryArticlesUpdater
      */
     public function removeCategoryTBEInformationFromArticles($aArticles)
     {
-        $this->getDbGateway()->reset($aArticles);
-    }
-
-    /**
-     * Returns model database gateway.
-     *
-     * @return CategoryVATGroupsPopulatorDbGateway
-     */
-    protected function getDbGateway()
-    {
-        return $this->_oDbGateway;
+        $this->dbGateway->reset($aArticles);
     }
 }

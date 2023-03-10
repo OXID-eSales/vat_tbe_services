@@ -22,10 +22,8 @@
 namespace OxidEsales\EVatModule\Model;
 
 use OxidEsales\Eshop\Application\Model\Article;
-use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopEnterprise\Core\Cache\Generic\Cache;
 use OxidEsales\EVatModule\Core\Model;
-use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
  * VAT Groups handling class

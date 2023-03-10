@@ -25,12 +25,15 @@ use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Application\Model\Country as EShopCountry;
 use OxidEsales\EVatModule\Model\OrderArticleChecker;
 use OxidEsales\EVatModule\Model\User;
+use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
  * VAT TBE oxBasket class
  */
 class Basket extends Basket_parent
 {
+    use ServiceContainer;
+
     /**
      * TBE country id
      *
@@ -152,8 +155,7 @@ class Basket extends Basket_parent
      */
     protected function getOeVATTBEOrderArticleChecker()
     {
-        $oTBEUser = User::createInstance();
-        return oxNew(OrderArticleChecker::class, $this->getBasketArticles(), $oTBEUser);
+        return $this->getServiceFromContainer(OrderArticleChecker::class);
     }
 
     /**
@@ -161,7 +163,7 @@ class Basket extends Basket_parent
      */
     private function onOeVATTBECountryChange()
     {
-        $oUserCountry = User::createInstance();
+        $oUserCountry = $this->getServiceFromContainer(User::class);
         $oCountry = $this->getOeVATTBECountry();
 
         $blUserFromDomesticCountry = $oUserCountry->isUserFromDomesticCountry();

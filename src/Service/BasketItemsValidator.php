@@ -21,60 +21,30 @@
 
 namespace OxidEsales\EVatModule\Service;
 
-use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\UtilsView;
 use OxidEsales\EVatModule\Model\IncorrectVATArticlesMessageFormatter;
 use OxidEsales\EVatModule\Model\OrderArticleChecker;
-use OxidEsales\EVatModule\Model\User;
+use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
  * Store logic how to find articles with wrong TBE VAT.
  */
 class BasketItemsValidator
 {
-    /** @var OrderArticleChecker */
-    private $_oVATTBEOrderArticleChecker;
-
-    /** @var IncorrectVATArticlesMessageFormatter */
-    private $_oVATTBEArticleMessageFormer;
-
-    /** @var UtilsView */
-    private $_oUtilsView;
+    use ServiceContainer;
 
     /**
      * Sets dependencies.
      *
-     * @param OrderArticleChecker                  $oVATTBEOrderArticleChecker  checks if article list has article with wrong TBE VAT.
-     * @param IncorrectVATArticlesMessageFormatter $oVATTBEArticleMessageFormer forms error message if article list has article with wrong TBE VAT.
-     * @param UtilsView                            $oUtilsView                  stores error message.
+     * @param OrderArticleChecker                  $orderArticleChecker  checks if article list has article with wrong TBE VAT.
+     * @param IncorrectVATArticlesMessageFormatter $incorrectVATArticlesMessageFormatter forms error message if article list has article with wrong TBE VAT.
+     * @param UtilsView                            $utilsView                  stores error message.
      */
     public function __construct(
-        OrderArticleChecker $oVATTBEOrderArticleChecker,
-        IncorrectVATArticlesMessageFormatter $oVATTBEArticleMessageFormer,
-        UtilsView $oUtilsView
+        private OrderArticleChecker $orderArticleChecker,
+        private IncorrectVATArticlesMessageFormatter $incorrectVATArticlesMessageFormatter,
+        private UtilsView $utilsView
     ) {
-        $this->_oVATTBEOrderArticleChecker = $oVATTBEOrderArticleChecker;
-        $this->_oVATTBEArticleMessageFormer = $oVATTBEArticleMessageFormer;
-        $this->_oUtilsView = $oUtilsView;
-    }
-
-    /**
-     * Create instance of this object by creating dependencies.
-     * Later should be replaced with DIC.
-     *
-     * @param array $oBasketArticles basket article list to check if has article with wrong TBE VAT .
-     *
-     * @return BasketItemsValidator
-     */
-    public static function createInstance($oBasketArticles)
-    {
-        $oTBEUser = User::createInstance();
-        $oVATTBEOrderArticleChecker = oxNew(OrderArticleChecker::class, $oBasketArticles, $oTBEUser);
-        $oUtilsView = Registry::getUtilsView();
-        $oVATTBEArticleMessageFormer = oxNew(IncorrectVATArticlesMessageFormatter::class);
-
-        $oVATTBEBasketItemsValidator = oxNew(BasketItemsValidator::class, $oVATTBEOrderArticleChecker, $oVATTBEArticleMessageFormer, $oUtilsView);
-        return $oVATTBEBasketItemsValidator;
     }
 
     /**
@@ -85,12 +55,12 @@ class BasketItemsValidator
      */
     public function validateTbeArticlesAndShowMessageIfNeeded($sControllerWhereToShowMessage)
     {
-        $oVATTBEOrderArticleChecker = $this->_oVATTBEOrderArticleChecker;
+        $oVATTBEOrderArticleChecker = $this->orderArticleChecker;
         $blAllBasketArticlesValid = $oVATTBEOrderArticleChecker->isValid();
         if (!$blAllBasketArticlesValid) {
             $oInvalidArticles = $oVATTBEOrderArticleChecker->getInvalidArticles();
-            $oEx = $this->_oVATTBEArticleMessageFormer->getMessage($oInvalidArticles);
-            $this->_oUtilsView->addErrorToDisplay($oEx, false, true, '', $sControllerWhereToShowMessage);
+            $oEx = $this->incorrectVATArticlesMessageFormatter->getMessage($oInvalidArticles);
+            $this->utilsView->addErrorToDisplay($oEx, false, true, '', $sControllerWhereToShowMessage);
         }
     }
 }

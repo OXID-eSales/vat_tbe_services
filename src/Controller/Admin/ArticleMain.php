@@ -24,12 +24,15 @@ namespace OxidEsales\EVatModule\Controller\Admin;
 use OxidEsales\Eshop\Application\Model\Category as EShopCategory;
 use OxidEsales\EVatModule\Model\CategoryArticlesUpdater;
 use OxidEsales\EVatModule\Shop\Category;
+use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
  * Adds additional functionality needed for oeVATTBE module when managing articles.
  */
 class ArticleMain extends ArticleMain_parent
 {
+    use ServiceContainer;
+
     /**
      * Add article to category.
      *
@@ -53,7 +56,9 @@ class ArticleMain extends ArticleMain_parent
         $oCategory = oxNew(EShopCategory::class);
         $oCategory->load($sCategoryId);
         if ($oCategory->isOeVATTBETBE()) {
-            CategoryArticlesUpdater::createInstance()->addCategoryTBEInformationToArticles($oCategory);
+            $this
+                ->getServiceFromContainer(CategoryArticlesUpdater::class)
+                ->addCategoryTBEInformationToArticles($oCategory);
         }
     }
 }

@@ -29,12 +29,15 @@ use OxidEsales\EVatModule\Model\User;
 use OxidEsales\EVatModule\Service\BasketItemsValidator;
 use OxidEsales\EVatModule\Shop\Basket;
 use OxidEsales\EVatModule\Shop\Order;
+use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
  * Hooks to order class to get events.
  */
 class OrderController extends OrderController_parent
 {
+    use ServiceContainer;
+
     /**
      * Executes parent::render(), creates list with basket articles
      * Returns name of template file basket::_sThisTemplate (for Search
@@ -44,12 +47,11 @@ class OrderController extends OrderController_parent
      */
     public function render()
     {
-        $oUserCountry = User::createInstance();
+        $oUserCountry = $this->getServiceFromContainer(User::class);
         $oBasket = $this->getBasket();
         if ($this->getUser() && !$oUserCountry->isUserFromDomesticCountry() && $oBasket) {
-            $oBasketArticles = $oBasket->getBasketArticles();
             /** @var BasketItemsValidator $oVATTBEBasketItemsValidator */
-            $oVATTBEBasketItemsValidator = BasketItemsValidator::createInstance($oBasketArticles);
+            $oVATTBEBasketItemsValidator = $this->getServiceFromContainer(BasketItemsValidator::class);
             $oVATTBEBasketItemsValidator->validateTbeArticlesAndShowMessageIfNeeded('order');
         }
 
@@ -105,7 +107,7 @@ class OrderController extends OrderController_parent
         /** @var EShopBasket|Basket $oBasket */
         $oBasket = Registry::getSession()->getBasket();
         $oCountry = $oBasket->getOeVATTBECountry();
-        $oTBEUserCountry = User::createInstance();
+        $oTBEUserCountry = $this->getServiceFromContainer(User::class);
 
         $blBasketValid = $oBasket->hasOeTBEVATArticles();
         $blCountryAppliesTBEVAT = !$oCountry || $oCountry->appliesOeTBEVATTbeVat();
@@ -122,9 +124,9 @@ class OrderController extends OrderController_parent
      */
     public function isOeVATTBETBEArticleValid($oBasketItem)
     {
-        $oValidator = BasketVATValidator::createInstance();
-
-        return $oValidator->isArticleValid($oBasketItem);
+        return $this
+            ->getServiceFromContainer(BasketVATValidator::class)
+            ->isArticleValid($oBasketItem);
     }
 
     /**
@@ -136,8 +138,8 @@ class OrderController extends OrderController_parent
      */
     public function oeVATTBEShowVATTBEMark($oBasketItem)
     {
-        $oValidator = BasketVATValidator::createInstance();
-
-        return $oValidator->showVATTBEMark($oBasketItem);
+        return $this
+            ->getServiceFromContainer(BasketVATValidator::class)
+            ->showVATTBEMark($oBasketItem);
     }
 }

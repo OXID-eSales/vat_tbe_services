@@ -81,7 +81,7 @@ class Order extends Order_parent
     public function validateOrder($oBasket, $oUser)
     {
         $iValidState = $this->getValidateOrderParent($oBasket, $oUser);
-        $oUserCountry = User::createInstance();
+        $oUserCountry = $this->getServiceFromContainer(User::class);
 
         $blUserCountryChanged = $oBasket->getOeVATTBETbeCountryId() != $oUserCountry->getOeVATTBETbeCountryId();
         if (!$iValidState && $blUserCountryChanged) {
@@ -279,8 +279,7 @@ class Order extends Order_parent
      */
     protected function getOeVATTBEOrderArticleChecker($oBasket)
     {
-        $oTBEUser = User::createInstance();
-        return oxNew(OrderArticleChecker::class, $oBasket->getBasketArticles(), $oTBEUser);
+        return $this->getServiceFromContainer(OrderArticleChecker::class);
     }
 
     /**

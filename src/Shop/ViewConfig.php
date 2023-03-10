@@ -23,6 +23,7 @@ namespace OxidEsales\EVatModule\Shop;
 
 use OxidEsales\Eshop\Application\Model\Article as EShopArticle;
 use OxidEsales\EVatModule\Model\User;
+use OxidEsales\EVatModule\Traits\ServiceContainer;
 use OxidEsales\Facts\Facts;
 
 /**
@@ -30,6 +31,7 @@ use OxidEsales\Facts\Facts;
  */
 class ViewConfig extends ViewConfig_parent
 {
+    use ServiceContainer;
 
     /**
      * Returns whether to show notice starts for given article.
@@ -40,7 +42,7 @@ class ViewConfig extends ViewConfig_parent
      */
     public function oeVATTBEShowTBEArticlePriceNotice($oArticle)
     {
-        $oTBEUserCountry = User::createInstance();
+        $oTBEUserCountry = $this->getServiceFromContainer(User::class);
 
         return $oArticle->isOeVATTBETBEService() && !$oTBEUserCountry->isUserFromDomesticCountry();
     }

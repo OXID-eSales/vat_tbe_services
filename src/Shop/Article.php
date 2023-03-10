@@ -25,6 +25,7 @@ use OxidEsales\EVatModule\Model\ArticleSQLBuilder;
 use OxidEsales\EVatModule\Model\ArticleCacheKey;
 use OxidEsales\EVatModule\Model\User;
 use \oxDb;
+use OxidEsales\EVatModule\Traits\ServiceContainer;
 use OxidEsales\Facts\Facts;
 
 /**
@@ -32,6 +33,8 @@ use OxidEsales\Facts\Facts;
  */
 class Article extends Article_parent
 {
+    use ServiceContainer;
+
     /** @var ArticleCacheKey */
     private $_oVATTBEArticle = null;
 
@@ -130,7 +133,7 @@ class Article extends Article_parent
     {
         $isConfigured = false;
 
-        $oUserCountry = User::createInstance();
+        $oUserCountry = $this->getServiceFromContainer(User::class);
         $oCountry = $oUserCountry->getCountry();
         if (!is_null($oCountry)) {
             $isConfigured = $oCountry->appliesOeTBEVATTbeVat();

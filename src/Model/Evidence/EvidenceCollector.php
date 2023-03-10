@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of OXID eSales eVAT module.
  *
@@ -23,7 +24,6 @@ namespace OxidEsales\EVatModule\Model\Evidence;
 
 use OxidEsales\Eshop\Application\Model\User;
 use OxidEsales\Eshop\Core\Config;
-use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Model\Evidence\Item\Evidence;
 use OxidEsales\EVatModule\Service\ModuleSettings;
 
@@ -32,23 +32,18 @@ use OxidEsales\EVatModule\Service\ModuleSettings;
  */
 class EvidenceCollector
 {
-
-    /** @var Config Config object to find out about existing evidences */
-    private $_oConfig = null;
-
-    /** @var User User object passed to every evidence. */
-    private $_oUser = null;
-
     /**
      * Handles required dependencies.
      *
-     * @param User   $oUser   User object passed to every evidence.
-     * @param Config $oConfig Config object to find out about existing evidences.
+     * @param User   $user   User object passed to every evidence.
+     * @param Config $config Config object to find out about existing evidences.
+     * @param ModuleSettings $moduleSettings Config object to find out about existing evidences.
      */
-    public function __construct(User $oUser, Config $oConfig, private ModuleSettings $moduleSettings)
-    {
-        $this->_oUser = $oUser;
-        $this->_oConfig = $oConfig;
+    public function __construct(
+        private User $user,
+        private Config $config,
+        private ModuleSettings $moduleSettings
+    ) {
     }
 
     /**
@@ -59,8 +54,7 @@ class EvidenceCollector
      */
     public function getEvidenceList()
     {
-        $oConfig = $this->getConfig();
-        $aEvidenceClasses = (array) $oConfig->getConfigParam('aOeVATTBECountryEvidenceClasses');
+        $aEvidenceClasses = (array) $this->config->getConfigParam('aOeVATTBECountryEvidenceClasses');
         $aEvidences = $this->moduleSettings->getCountryEvidences();
 
         /** @var EvidenceList $oList */
@@ -75,27 +69,6 @@ class EvidenceCollector
     }
 
     /**
-     * Returns config object.
-     *
-     * @return Config
-     */
-    protected function getConfig()
-    {
-        return $this->_oConfig;
-    }
-
-    /**
-     * Returns user object.
-     * User object is passed to every evidence.
-     *
-     * @return User
-     */
-    protected function getUser()
-    {
-        return $this->_oUser;
-    }
-
-    /**
      * Fills provided evidence list with available active evidences and returns updated active evidences array.
      *
      * @param EvidenceList $oList
@@ -106,13 +79,12 @@ class EvidenceCollector
      */
     private function fillEvidenceList($oList, $aEvidenceClasses, $aEvidences)
     {
-        $oUser = $this->getUser();
         $aUpdatedEvidences = array();
 
         foreach ($aEvidenceClasses as $sEvidenceClass) {
             if (class_exists($sEvidenceClass)) {
                 /** @var Evidence $oEvidence */
-                $oEvidence = oxNew($sEvidenceClass, $oUser);
+                $oEvidence = oxNew($sEvidenceClass, $this->user);
                 $sName = $oEvidence->getId();
                 if (isset($aEvidences[$sName]) && $aEvidences[$sName] == 1) {
                     $oList->add($oEvidence);

@@ -39,17 +39,14 @@ class EvidenceRegister
     /** @var ModuleSettings */
     private $moduleSettings;
 
-    /** @var Config Shop configuration object. */
-    private $_oConfig = null;
-
     /**
      * Handles class dependencies.
      *
-     * @param Config $oConfig Shop configuration object.
+     * @param Config $config Shop configuration object.
      */
-    public function __construct(Config $oConfig)
-    {
-        $this->_oConfig = $oConfig;
+    public function __construct(
+        private Config $config
+    ) {
         $this->moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
     }
 
@@ -60,8 +57,7 @@ class EvidenceRegister
      */
     public function getRegisteredEvidences()
     {
-        $oConfig = $this->getConfig();
-        return (array) $oConfig->getConfigParam('aOeVATTBECountryEvidenceClasses');
+        return (array) $this->config->getConfigParam('aOeVATTBECountryEvidenceClasses');
     }
 
     /**
@@ -141,16 +137,6 @@ class EvidenceRegister
             $aEvidences[$sEvidenceId] = 0;
             $this->moduleSettings->saveCountryEvidences($aEvidences);
         }
-    }
-
-    /**
-     * Returns shop configuration object.
-     *
-     * @return Config
-     */
-    protected function getConfig()
-    {
-        return $this->_oConfig;
     }
 
     /**

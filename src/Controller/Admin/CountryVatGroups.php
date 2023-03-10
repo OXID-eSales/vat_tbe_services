@@ -26,7 +26,6 @@ use OxidEsales\Eshop\Core\DisplayError;
 use OxidEsales\Eshop\Core\Language;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\UtilsView;
-use OxidEsales\EVatModule\Model\DbGateway\CountryVATGroupsDbGateway;
 use OxidEsales\EVatModule\Model\CountryVATGroup;
 use OxidEsales\EVatModule\Model\CountryVATGroupsList;
 use OxidEsales\EVatModule\Traits\ServiceContainer;
@@ -64,14 +63,9 @@ class CountryVatGroups extends AdminDetailsController
      */
     public function getVatGroups()
     {
-        /** @var CountryVATGroupsDbGateway $oGateway */
-        $oGateway = oxNew(CountryVATGroupsDbGateway::class);
-
-        /** @var CountryVATGroupsList $oVATTBECountryVATGroupsList */
-        $oVATTBECountryVATGroupsList = oxNew(CountryVATGroupsList::class, $oGateway);
-        $aVATTBECountryVATGroupsList = $oVATTBECountryVATGroupsList->load($this->getEditObjectId());
-
-        return $aVATTBECountryVATGroupsList;
+        return $this
+            ->getServiceFromContainer(CountryVATGroupsList::class)
+            ->load($this->getEditObjectId());
     }
 
     /**

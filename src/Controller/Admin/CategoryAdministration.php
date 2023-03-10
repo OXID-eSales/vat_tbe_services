@@ -59,6 +59,7 @@ class CategoryAdministration extends AdminDetailsController
     public function save()
     {
         parent::save();
+
         $sCurrentCategoryId = $this->getEditObjectId();
         $request = Registry::getRequest();
         $aParams = $request->getRequestParameter('editval');
@@ -74,7 +75,9 @@ class CategoryAdministration extends AdminDetailsController
         $oCategory->oxcategories__oevattbe_istbe = new Field($aParams['oevattbe_istbe']);
         $oCategory->save();
 
-        CategoryArticlesUpdater::createInstance()->addCategoryTBEInformationToArticles($oCategory);
+        $this
+            ->getServiceFromContainer(CategoryArticlesUpdater::class)
+            ->addCategoryTBEInformationToArticles($oCategory);
     }
 
     /**
