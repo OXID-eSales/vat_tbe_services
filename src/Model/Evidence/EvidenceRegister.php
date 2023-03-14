@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of OXID eSales eVAT module.
  *
@@ -21,11 +22,8 @@
 
 namespace OxidEsales\EVatModule\Model\Evidence;
 
-use OxidEsales\Eshop\Core\Config;
 use OxidEsales\Eshop\Core\Registry;
-use OxidEsales\EVatModule\Model\Evidence\Item\BillingCountryEvidence;
 use OxidEsales\EVatModule\Service\ModuleSettings;
-use OxidEsales\EVatModule\Shop\User as EShopUser;
 use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
@@ -36,20 +34,6 @@ class EvidenceRegister
 {
     use ServiceContainer;
 
-    /** @var ModuleSettings */
-    private $moduleSettings;
-
-    /**
-     * Handles class dependencies.
-     *
-     * @param Config $config Shop configuration object.
-     */
-    public function __construct(
-        private Config $config
-    ) {
-        $this->moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
-    }
-
     /**
      * Returns registered evidences.
      *
@@ -57,7 +41,7 @@ class EvidenceRegister
      */
     public function getRegisteredEvidences()
     {
-        return (array) $this->config->getConfigParam('aOeVATTBECountryEvidenceClasses');
+        return (array) Registry::getConfig()->getConfigParam('aOeVATTBECountryEvidenceClasses');
     }
 
     /**
@@ -67,7 +51,7 @@ class EvidenceRegister
      */
     public function getActiveEvidences()
     {
-        return $this->moduleSettings->getCountryEvidences();
+        return $this->getServiceFromContainer(ModuleSettings::class)->getCountryEvidences();
     }
 
     /**
@@ -121,7 +105,7 @@ class EvidenceRegister
         $aEvidences = $this->getActiveEvidences();
         if (isset($aEvidences[$sEvidenceId]) && $aEvidences[$sEvidenceId] !== 1) {
             $aEvidences[$sEvidenceId] = 1;
-            $this->moduleSettings->saveCountryEvidences($aEvidences);
+            $this->getServiceFromContainer(ModuleSettings::class)->saveCountryEvidences($aEvidences);
         }
     }
 
@@ -135,7 +119,7 @@ class EvidenceRegister
         $aEvidences = $this->getActiveEvidences();
         if (isset($aEvidences[$sEvidenceId]) && $aEvidences[$sEvidenceId] !== 0) {
             $aEvidences[$sEvidenceId] = 0;
-            $this->moduleSettings->saveCountryEvidences($aEvidences);
+            $this->getServiceFromContainer(ModuleSettings::class)->saveCountryEvidences($aEvidences);
         }
     }
 
@@ -149,10 +133,10 @@ class EvidenceRegister
     private function addEvidenceToEvidenceList($sEvidenceClass, $blActive = false)
     {
         $aEvidences = $this->getActiveEvidences();
-        $sEvidenceId = $this->getEvidenceId($sEvidenceClass);
+        $sEvidenceId = $this->getServiceFromContainer($sEvidenceClass)->getId();;
         if (!isset($aEvidences[$sEvidenceId])) {
             $aEvidences[$sEvidenceId] = $blActive ? 1 : 0;
-            $this->moduleSettings->saveCountryEvidences($aEvidences);
+            $this->getServiceFromContainer(ModuleSettings::class)->saveCountryEvidences($aEvidences);
         }
     }
 
@@ -166,30 +150,13 @@ class EvidenceRegister
     private function removeEvidenceToEvidenceList($sEvidenceClass, $sEvidenceId = false)
     {
         if (!$sEvidenceId && class_exists($sEvidenceClass)) {
-            $sEvidenceId = $this->getEvidenceId($sEvidenceClass);
+            $sEvidenceId = $this->getServiceFromContainer($sEvidenceClass)->getId();
         }
 
         $aEvidences = $this->getActiveEvidences();
         if (isset($aEvidences[$sEvidenceId])) {
             unset($aEvidences[$sEvidenceId]);
-            $this->moduleSettings->saveCountryEvidences($aEvidences);
+            $this->getServiceFromContainer(ModuleSettings::class)->saveCountryEvidences($aEvidences);
         }
-    }
-
-    /**
-     * Returns evidence id by its class name. Does not check if evidence class exist,
-     * so validation of the must be done before.
-     *
-     * @param string $sEvidenceClass Evidence class name.
-     *
-     * @return string
-     */
-    private function getEvidenceId($sEvidenceClass)
-    {
-        $user = oxNew(EShopUser::class);
-
-        /** @var BillingCountryEvidence $oEvidence */
-        $oEvidence = oxNew($sEvidenceClass, $user);
-        return $oEvidence->getId();
     }
 }

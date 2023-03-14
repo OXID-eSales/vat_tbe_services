@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of OXID eSales eVAT module.
  *
@@ -22,50 +23,34 @@
 namespace OxidEsales\EVatModule\Model\Evidence\Item;
 
 use OxidEsales\Eshop\Application\Model\User;
+use OxidEsales\Eshop\Core\Session;
 
-/**
- * Abstract class for all evidences.
- */
 abstract class Evidence
 {
-    /** @var User User object to get data needed for finding user country. */
-    private $_oUser = null;
+    private ?User $user;
 
-    /**
-     * Handles required dependencies.
-     *
-     * @param User $oUser User object to get data needed for finding user country.
-     */
-    public function __construct(User $oUser)
-    {
-        $this->_oUser = $oUser;
+    public function __construct(
+        Session $session
+    ) {
+        $this->user = $session->getUser() ?: null;
     }
 
     /**
      * Returns evidence id.
      * Evidence id is shown in module configuration screen for admin to be able to active or deactivate this evidence.
      * It is also shown in order page if order has TBE articles and this evidence was used for country selection.
-     *
-     * @return string Evidence id.
      */
-    abstract public function getId();
+    abstract public function getId(): string;
 
     /**
      * Calculates user country id and returns it.
      * For performance reasons country id should be cached locally,
      * so that country would not be checked on every call.
-     *
-     * @return string Country id.
      */
-    abstract public function getCountryId();
+    abstract public function getCountryId(): string;
 
-    /**
-     * Returns oxUser object.
-     *
-     * @return User
-     */
-    protected function getUser()
+    protected function getUser(): ?User
     {
-        return $this->_oUser;
+        return $this->user;
     }
 }

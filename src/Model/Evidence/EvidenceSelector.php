@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of OXID eSales eVAT module.
  *
@@ -29,20 +30,10 @@ use OxidEsales\EVatModule\Service\ModuleSettings;
  */
 class EvidenceSelector
 {
-    /** @var array List of evidences. */
-    private $_oEvidenceList = array();
-
-    /**
-     * Handles required dependencies.
-     *
-     * @param EvidenceList   $oEvidenceList List of evidences.
-     * @param ModuleSettings $moduleSettings Shop Configuration object.
-     */
     public function __construct(
-        EvidenceList $oEvidenceList,
-        private ModuleSettings $moduleSettings
+        private ModuleSettings $moduleSettings,
+        private EvidenceCollector $evidenceCollector
     ) {
-        $this->_oEvidenceList = $oEvidenceList;
     }
 
     /**
@@ -52,7 +43,7 @@ class EvidenceSelector
      */
     public function getEvidenceList()
     {
-        return $this->_oEvidenceList;
+        return $this->evidenceCollector->getEvidenceList();
     }
 
     /**

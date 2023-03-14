@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of OXID eSales eVAT module.
  *
@@ -25,8 +26,8 @@ use OxidEsales\Eshop\Application\Model\Article as EShopArticle;
 use OxidEsales\Eshop\Application\Model\Basket as EShopBasket;
 use OxidEsales\Eshop\Application\Model\BasketItem;
 use OxidEsales\Eshop\Application\Model\User as EShopUser;
+use OxidEsales\Eshop\Core\Session;
 use OxidEsales\EVatModule\Shop\Article;
-use OxidEsales\EVatModule\Shop\Basket;
 use OxidEsales\EVatModule\Model\User as UserModel;
 
 /**
@@ -34,18 +35,21 @@ use OxidEsales\EVatModule\Model\User as UserModel;
  */
 class BasketVATValidator
 {
+    private EShopBasket $basket;
+
+    private ?EShopUser $user;
+
     /**
      * Handles class dependencies.
      *
-     * @param Basket    $basket      Basket object.
-     * @param EShopUser $user        User object.
      * @param UserModel $userCountry TBE User country object.
      */
     public function __construct(
-        private EShopBasket $basket,
-        private EShopUser $user,
-        private UserModel $userCountry
+        Session $session,
+        private UserModel $userCountry,
     ) {
+        $this->basket = $session->getBasket();
+        $this->user = $session->getUser() ?: null;
     }
 
     /**

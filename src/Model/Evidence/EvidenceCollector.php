@@ -22,25 +22,25 @@
 
 namespace OxidEsales\EVatModule\Model\Evidence;
 
-use OxidEsales\Eshop\Application\Model\User;
 use OxidEsales\Eshop\Core\Config;
 use OxidEsales\EVatModule\Model\Evidence\Item\Evidence;
 use OxidEsales\EVatModule\Service\ModuleSettings;
+use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
  * Class creates list of evidences.
  */
 class EvidenceCollector
 {
+    use ServiceContainer;
+
     /**
      * Handles required dependencies.
      *
-     * @param User   $user   User object passed to every evidence.
      * @param Config $config Config object to find out about existing evidences.
      * @param ModuleSettings $moduleSettings Config object to find out about existing evidences.
      */
     public function __construct(
-        private User $user,
         private Config $config,
         private ModuleSettings $moduleSettings
     ) {
@@ -72,8 +72,8 @@ class EvidenceCollector
      * Fills provided evidence list with available active evidences and returns updated active evidences array.
      *
      * @param EvidenceList $oList
-     * @param array                $aEvidenceClasses
-     * @param array                $aEvidences
+     * @param array        $aEvidenceClasses
+     * @param array        $aEvidences
      *
      * @return array
      */
@@ -84,7 +84,7 @@ class EvidenceCollector
         foreach ($aEvidenceClasses as $sEvidenceClass) {
             if (class_exists($sEvidenceClass)) {
                 /** @var Evidence $oEvidence */
-                $oEvidence = oxNew($sEvidenceClass, $this->user);
+                $oEvidence = $this->getServiceFromContainer($sEvidenceClass);
                 $sName = $oEvidence->getId();
                 if (isset($aEvidences[$sName]) && $aEvidences[$sName] == 1) {
                     $oList->add($oEvidence);

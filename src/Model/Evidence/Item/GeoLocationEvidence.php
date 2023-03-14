@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of OXID eSales eVAT module.
  *
@@ -32,31 +33,25 @@ class GeoLocationEvidence extends Evidence
     /**
      * Evidence id is shown in module configuration screen for admin to be able to active or deactivate this evidence.
      * It is also shown in order page if order has TBE articles and this evidence was used for country selection.
-     *
-     * @var string
      */
-    private $_sId = 'geo_location';
+    private string $id = 'geo_location';
 
     /**
      * Returns evidence id.
      * Evidence id is shown in module configuration screen for admin to be able to active or deactivate this evidence.
      * It is also shown in order page if order has TBE articles and this evidence was used for country selection.
-     *
-     * @return string Evidence id.
      */
-    public function getId()
+    public function getId(): string
     {
-        return $this->_sId;
+        return $this->id;
     }
 
     /**
      * Calculates user country id and returns it.
      * For performance reasons country id should be cached locally,
      * so that country would not be checked on every call.
-     *
-     * @return string Country id.
      */
-    public function getCountryId()
+    public function getCountryId(): string
     {
         return '';
     }

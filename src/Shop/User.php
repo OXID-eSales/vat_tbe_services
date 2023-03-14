@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of OXID eSales eVAT module.
  *
@@ -26,12 +27,15 @@ use OxidEsales\Eshop\Core\Exception\UserException;
 use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Model\User as EVatUser;
+use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
  * VAT TBE oxUser class
  */
 class User extends User_parent
 {
+    use ServiceContainer;
+
     /** @var EVatUser */
     private $_oTBEUser = null;
 
@@ -152,10 +156,7 @@ class User extends User_parent
     protected function getOeVATTBETBEUser()
     {
         if (!$this->_oTBEUser) {
-            $oSession = Registry::getSession();
-            $oConfig = Registry::getConfig();
-
-            $this->_oTBEUser = oxNew(EVatUser::class, $this, $oSession, $oConfig);
+            $this->_oTBEUser = $this->getServiceFromContainer(EVatUser::class);
         }
 
         return $this->_oTBEUser;

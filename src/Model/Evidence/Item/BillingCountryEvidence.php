@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of OXID eSales eVAT module.
  *
@@ -29,51 +30,32 @@ class BillingCountryEvidence extends Evidence
     /**
      * Evidence name. Will be stored in Admin Order page if this evidence was used for selection.
      * Also used when selecting default evidence.
-     *
-     * @var string
      */
-    private $_sId = 'billing_country';
+    private string $id = 'billing_country';
 
-    /** @var string Calculated user country. */
-    private $_sCountry = null;
+    private string $countryId = '';
 
     /**
      * Returns evidence id.
      * Evidence id is shown in module configuration screen for admin to be able to active or deactivate this evidence.
      * It is also shown in order page if order has TBE articles and this evidence was used for country selection.
-     *
-     * @return string Evidence id.
      */
-    public function getId()
+    public function getId(): string
     {
-        return $this->_sId;
+        return $this->id;
     }
 
     /**
      * Calculates user country id and returns it.
      * For performance reasons country id is cached locally,
      * so that country would not be checked on every call.
-     *
-     * @return string Country id.
      */
-    public function getCountryId()
+    public function getCountryId(): string
     {
-        if (!$this->_sCountry) {
-            $this->_sCountry = $this->getBillingCountryId();
+        if (!$this->countryId && $this->getUser()) {
+            $this->countryId = $this->getUser()->getFieldData('oxcountryid');
         }
 
-        return $this->_sCountry;
-    }
-
-    /**
-     * Returns Billing country id.
-     *
-     * @return string
-     */
-    private function getBillingCountryId()
-    {
-        $oUser = $this->getUser();
-
-        return $oUser->oxuser__oxcountryid->value;
+        return $this->countryId;
     }
 }

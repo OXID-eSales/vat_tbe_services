@@ -23,13 +23,10 @@
 namespace OxidEsales\EVatModule\Model;
 
 use OxidEsales\Eshop\Application\Model\Country as EShopCountry;
-use OxidEsales\Eshop\Application\Model\User as EShopUser;
 use OxidEsales\Eshop\Core\Config;
 use OxidEsales\Eshop\Core\Session;
-use OxidEsales\EVatModule\Model\Evidence\EvidenceCollector;
 use OxidEsales\EVatModule\Model\Evidence\EvidenceSelector;
 use OxidEsales\EVatModule\Service\ModuleSettings;
-use OxidEsales\EVatModule\Shop\Country;
 use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
@@ -39,17 +36,9 @@ class User
 {
     use ServiceContainer;
 
-    /**
-     * Handles dependencies.
-     *
-     * @param EShopUser $user User object. Will be used for country calculations.
-     * @param Session $session Communicator with session. Should have setVariable, getVariable methods.
-     * @param Config  $config  Communicator with config.
-     */
     public function __construct(
-        private EShopUser $user,
         private Session $session,
-        private Config $config
+        private Config $config,
     ) {
     }
 
@@ -96,22 +85,12 @@ class User
         $this->session->deleteVariable('TBEEvidenceUsed');
     }
 
-    /**
-     * Returns country object. If country was not found, returns null.
-     *
-     * @return EShopCountry|Country|null
-     */
-    public function getCountry()
+    public function getCountry(): ?EshopCountry
     {
-        $oCountry = null;
+        $countryId = $this->getOeVATTBETbeCountryId();
+        $country = oxNew(EShopCountry::class);
 
-        $sCountryId = $this->getOeVATTBETbeCountryId();
-        $oCountry = oxNew(EShopCountry::class);
-        if (!$oCountry->load($sCountryId)) {
-            $oCountry = null;
-        }
-
-        return $oCountry;
+        return $country->load($countryId) ? $country : null;
     }
 
     /**
@@ -136,31 +115,15 @@ class User
     private function loadEvidenceDataToSession()
     {
         if (is_null($this->session->getVariable('TBECountryId'))) {
-            $oEvidenceSelector = $this->factoryEvidenceSelector();
-            $this->session->setVariable('TBEEvidenceList', $oEvidenceSelector->getEvidenceList()->getArray());
+            /** @var EvidenceSelector $evidenceSelector */
+            $evidenceSelector = $this->getServiceFromContainer(EvidenceSelector::class);
+            $this->session->setVariable('TBEEvidenceList', $evidenceSelector->getEvidenceList()->getArray());
 
-            $oEvidence = $oEvidenceSelector->getEvidence();
+            $oEvidence = $evidenceSelector->getEvidence();
             $sTBECountryId = $oEvidence ? $oEvidence->getCountryId() : '';
             $sEvidenceUser = $oEvidence ? $oEvidence->getId() : '';
             $this->session->setVariable('TBECountryId', $sTBECountryId);
             $this->session->setVariable('TBEEvidenceUsed', $sEvidenceUser);
         }
-    }
-
-    /**
-     * Forms evidence selector object.
-     *
-     * @return EvidenceSelector
-     */
-    private function factoryEvidenceSelector()
-    {
-        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
-
-        /** @var EvidenceCollector $oEvidenceCollector */
-        $oEvidenceCollector = oxNew(EvidenceCollector::class, $this->user, $this->config, $moduleSettings);
-        $oEvidenceList = $oEvidenceCollector->getEvidenceList();
-        $oEvidenceSelector = oxNew(EvidenceSelector::class, $oEvidenceList, $moduleSettings);
-
-        return $oEvidenceSelector;
     }
 }

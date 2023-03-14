@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of OXID eSales eVAT module.
  *
@@ -32,12 +33,6 @@ class OrderArticleChecker
     /** @var array List of incorrect TBE articles */
     private $_aInvalidArticles = null;
 
-    /**
-     * Handles dependencies.
-     *
-     * @param User  $oTBEUserCountry TBE user country
-     * @param array $mArticleList    Articles list to check.
-     */
     public function __construct(
         private User $user
     ) {

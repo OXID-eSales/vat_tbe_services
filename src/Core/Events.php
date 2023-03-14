@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of OXID eSales eVAT module.
  *
@@ -23,7 +24,6 @@ namespace OxidEsales\EVatModule\Core;
 
 use \oxDb;
 use OxidEsales\Eshop\Core\DbMetaDataHandler;
-use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Model\Evidence\Item\BillingCountryEvidence;
 use OxidEsales\EVatModule\Model\Evidence\EvidenceRegister;
 use OxidEsales\EVatModule\Model\Evidence\Item\GeoLocationEvidence;
@@ -46,10 +46,10 @@ class Events
         self::regenerateViews();
         self::configureCountries();
 
-        /** @var EvidenceRegister $oEvidenceRegister */
-        $oEvidenceRegister = oxNew(EvidenceRegister::class, Registry::getConfig());
-        $oEvidenceRegister->registerEvidence(BillingCountryEvidence::class, true);
-        $oEvidenceRegister->registerEvidence(GeoLocationEvidence::class, true);
+        /** @var EvidenceRegister $evidenceRegister */
+        $evidenceRegister = oxNew(EvidenceRegister::class);
+        $evidenceRegister->registerEvidence(BillingCountryEvidence::class, true);
+        $evidenceRegister->registerEvidence(GeoLocationEvidence::class, true);
     }
 
     /**

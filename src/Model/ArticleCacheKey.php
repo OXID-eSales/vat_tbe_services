@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of OXID eSales eVAT module.
  *
@@ -28,17 +29,9 @@ use OxidEsales\Eshop\Application\Model\User;
  */
 class ArticleCacheKey
 {
-    /** @var User */
-    private $_oUser = null;
-
-    /**
-     * Create class with dependency.
-     *
-     * @param User $oUser user to get country for cache key.
-     */
-    public function __construct(User $oUser)
-    {
-        $this->_oUser = $oUser;
+    public function __construct(
+        private User $user
+    ) {
     }
 
     /**
@@ -76,12 +69,6 @@ class ArticleCacheKey
      */
     private function getOeVATTBETbeCountryId()
     {
-        $sCountryId = null;
-
-        if ($this->_oUser) {
-            $sCountryId = $this->_oUser->getOeVATTBETbeCountryId();
-        }
-
-        return $sCountryId;
+        return ($this->user) ? $this->user->getOeVATTBETbeCountryId() : null;
     }
 }
