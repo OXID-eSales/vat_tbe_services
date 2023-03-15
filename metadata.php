@@ -118,5 +118,6 @@ Telecommunication, Broadcasting or Electronic (TBE) service according to
         ['group' => 'oevattbe', 'name' => ModuleSettings::COUNTRY_EVIDENCES, 'type' => 'aarr', 'value' => ['billing_country' => 1, 'geo_location' => 1]],
         ['group' => 'oevattbe', 'name' => ModuleSettings::DEFAULT_EVIDENCE, 'type' => 'str', 'value' => 'billing_country'],
         ['group' => 'oevattbe', 'name' => ModuleSettings::DOMESTIC_COUNTRY, 'type' => 'str', 'value' => 'DE'],
+        ['name' => ModuleSettings::EVIDENCE_CLASSES, 'type' => 'arr', 'value' => []],
     )
 );

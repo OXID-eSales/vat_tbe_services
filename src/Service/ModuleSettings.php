@@ -23,6 +23,8 @@ class ModuleSettings
 
     public const DOMESTIC_COUNTRY = 'sOeVATTBEDomesticCountry';
 
+    public const EVIDENCE_CLASSES = 'aOeVATTBECountryEvidenceClasses';
+
     public function __construct(
         private ModuleSettingServiceInterface $moduleSettingService
     ) {
@@ -62,5 +64,15 @@ class ModuleSettings
     public function saveDomesticCountry(string $value): void
     {
         $this->moduleSettingService->saveString(self::DOMESTIC_COUNTRY, $value, Module::MODULE_ID);
+    }
+
+    public function getEvidenceClasses(): array
+    {
+        return $this->moduleSettingService->getCollection(self::EVIDENCE_CLASSES, Module::MODULE_ID);
+    }
+
+    public function saveEvidenceClasses(array $value): void
+    {
+        $this->moduleSettingService->saveCollection(self::EVIDENCE_CLASSES, $value, Module::MODULE_ID);
     }
 }

@@ -54,7 +54,7 @@ class EvidenceCollector
      */
     public function getEvidenceList()
     {
-        $aEvidenceClasses = (array) $this->config->getConfigParam('aOeVATTBECountryEvidenceClasses');
+        $aEvidenceClasses = $this->moduleSettings->getEvidenceClasses();
         $aEvidences = $this->moduleSettings->getCountryEvidences();
 
         /** @var EvidenceList $oList */

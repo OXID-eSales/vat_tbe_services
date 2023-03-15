@@ -22,7 +22,6 @@
 
 namespace OxidEsales\EVatModule\Model\Evidence;
 
-use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Service\ModuleSettings;
 use OxidEsales\EVatModule\Traits\ServiceContainer;
 
@@ -35,23 +34,28 @@ class EvidenceRegister
     use ServiceContainer;
 
     /**
-     * Returns registered evidences.
+     * Registers evidence to config.
+     * This evidence will be used when calculating user country.
+     * By default registered evidence is made inactive,
+     * but shop administrator can go to module configuration and activate it.
      *
-     * @return array
+     * @param string $evidenceClass Evidence class name. It should be reachable by shop (e.g. in activated module).
+     * @param bool   $isActive      Whether to make this evidence active after registration. Default is false.
      */
-    public function getRegisteredEvidences()
+    public function registerEvidence(string $evidenceClass, bool $isActive = false): void
     {
-        return (array) Registry::getConfig()->getConfigParam('aOeVATTBECountryEvidenceClasses');
-    }
+        if (!class_exists($evidenceClass)) {
+            return;
+        }
 
-    /**
-     * Returns active evidences.
-     *
-     * @return array
-     */
-    public function getActiveEvidences()
-    {
-        return $this->getServiceFromContainer(ModuleSettings::class)->getCountryEvidences();
+        $evidenceClasses = $this->getServiceFromContainer(ModuleSettings::class)->getEvidenceClasses();
+
+        if (!in_array($evidenceClass, $evidenceClasses)) {
+            $evidenceClasses[] = $evidenceClass;
+            $this->getServiceFromContainer(ModuleSettings::class)->saveEvidenceClasses($evidenceClasses);
+        }
+
+        $this->addEvidenceToEvidenceList($evidenceClass, $isActive);
     }
 
     /**
@@ -60,66 +64,52 @@ class EvidenceRegister
      * By default registered evidence is made inactive,
      * but shop administrator can go to module configuration and activate it.
      *
-     * @param string $sEvidenceClass Evidence class name. It should be reachable by shop (e.g. in activated module).
-     * @param bool   $blActive       Whether to make this evidence active after registration. Default is false.
+     * @param string $evidenceClass Evidence class name. It should be reachable by shop (e.g. in activated module).
      */
-    public function registerEvidence($sEvidenceClass, $blActive = false)
+    public function unregisterEvidence(string $evidenceClass): void
     {
-        $aEvidences = $this->getRegisteredEvidences();
-        if (class_exists($sEvidenceClass)) {
-            if (!in_array($sEvidenceClass, $aEvidences)) {
-                $aEvidences[] = $sEvidenceClass;
-                Registry::getConfig()->saveShopConfVar('arr', 'aOeVATTBECountryEvidenceClasses', $aEvidences);
-            }
-
-            $this->addEvidenceToEvidenceList($sEvidenceClass, $blActive);
+        if (!class_exists($evidenceClass)) {
+            return;
         }
-    }
 
-    /**
-     * Registers evidence to config.
-     * This evidence will be used when calculating user country.
-     * By default registered evidence is made inactive,
-     * but shop administrator can go to module configuration and activate it.
-     *
-     * @param string $sEvidenceClass Evidence class name. It should be reachable by shop (e.g. in activated module).
-     * @param string $sEvidenceId    Evidence id. In case no evidence id is given, evidence class must be still reachable.
-     */
-    public function unregisterEvidence($sEvidenceClass, $sEvidenceId = null)
-    {
-        $aEvidenceClasses = $this->getRegisteredEvidences();
-        if (($key = array_search($sEvidenceClass, $aEvidenceClasses)) !== false) {
-            unset($aEvidenceClasses[$key]);
-            Registry::getConfig()->saveShopConfVar('arr', 'aOeVATTBECountryEvidenceClasses', $aEvidenceClasses);
+        $evidenceClasses = $this->getServiceFromContainer(ModuleSettings::class)->getEvidenceClasses();
+
+        // Check whether this class was registered in first place
+        if (($key = array_search($evidenceClass, $evidenceClasses)) !== false) {
+            unset($evidenceClasses[$key]);
+            $this->getServiceFromContainer(ModuleSettings::class)->saveEvidenceClasses($evidenceClasses);
         }
-        $this->removeEvidenceToEvidenceList($sEvidenceClass, $sEvidenceId);
+
+        $this->removeEvidenceToEvidenceList($evidenceClass);
     }
 
     /**
      * Activates evidence by id.
      *
-     * @param string $sEvidenceId Evidence Id. This is should be defined in evidence class.
+     * @param string $evidenceId Evidence Id. This is should be defined in evidence class.
      */
-    public function activateEvidence($sEvidenceId)
+    public function activateEvidence(string $evidenceId): void
     {
-        $aEvidences = $this->getActiveEvidences();
-        if (isset($aEvidences[$sEvidenceId]) && $aEvidences[$sEvidenceId] !== 1) {
-            $aEvidences[$sEvidenceId] = 1;
-            $this->getServiceFromContainer(ModuleSettings::class)->saveCountryEvidences($aEvidences);
+        $countryEvidences = $this->getServiceFromContainer(ModuleSettings::class)->getCountryEvidences();
+
+        if (isset($countryEvidences[$evidenceId]) && $countryEvidences[$evidenceId] !== 1) {
+            $countryEvidences[$evidenceId] = 1;
+            $this->getServiceFromContainer(ModuleSettings::class)->saveCountryEvidences($countryEvidences);
         }
     }
 
     /**
      * Deactivates evidence by id.
      *
-     * @param string $sEvidenceId Evidence Id. This is should be defined in evidence class.
+     * @param string $evidenceId Evidence Id. This is should be defined in evidence class.
      */
-    public function deactivateEvidence($sEvidenceId)
+    public function deactivateEvidence(string $evidenceId): void
     {
-        $aEvidences = $this->getActiveEvidences();
-        if (isset($aEvidences[$sEvidenceId]) && $aEvidences[$sEvidenceId] !== 0) {
-            $aEvidences[$sEvidenceId] = 0;
-            $this->getServiceFromContainer(ModuleSettings::class)->saveCountryEvidences($aEvidences);
+        $countryEvidences = $this->getServiceFromContainer(ModuleSettings::class)->getCountryEvidences();
+
+        if (isset($countryEvidences[$evidenceId]) && $countryEvidences[$evidenceId] !== 0) {
+            $countryEvidences[$evidenceId] = 0;
+            $this->getServiceFromContainer(ModuleSettings::class)->saveCountryEvidences($countryEvidences);
         }
     }
 
@@ -127,16 +117,17 @@ class EvidenceRegister
      * Adds evidence id to evidence list. If $blActive is set to true, also activates it.
      * If evidence is already in the list, its activation state will not be changed.
      *
-     * @param string $sEvidenceClass Evidence class name.
-     * @param bool   $blActive       Whether to activate evidence.
+     * @param string $evidenceClass Evidence class name.
+     * @param bool   $isActive      Whether to activate evidence.
      */
-    private function addEvidenceToEvidenceList($sEvidenceClass, $blActive = false)
+    private function addEvidenceToEvidenceList(string $evidenceClass, bool $isActive): void
     {
-        $aEvidences = $this->getActiveEvidences();
-        $sEvidenceId = $this->getServiceFromContainer($sEvidenceClass)->getId();;
-        if (!isset($aEvidences[$sEvidenceId])) {
-            $aEvidences[$sEvidenceId] = $blActive ? 1 : 0;
-            $this->getServiceFromContainer(ModuleSettings::class)->saveCountryEvidences($aEvidences);
+        $evidences  = $this->getServiceFromContainer(ModuleSettings::class)->getCountryEvidences();
+        $evidenceId = $this->getServiceFromContainer($evidenceClass)->getId();
+
+        if (!isset($evidences[$evidenceId])) {
+            $evidences[$evidenceId] = (int) $isActive;
+            $this->getServiceFromContainer(ModuleSettings::class)->saveCountryEvidences($evidences);
         }
     }
 
@@ -144,19 +135,16 @@ class EvidenceRegister
      * Adds evidence id to evidence list. If $blActive is set to true, also activates it.
      * If evidence is already in the list, its activation state will not be changed.
      *
-     * @param string $sEvidenceClass Evidence class name.
-     * @param bool   $sEvidenceId    Whether to activate evidence.
+     * @param string $evidenceClass Evidence class name.
      */
-    private function removeEvidenceToEvidenceList($sEvidenceClass, $sEvidenceId = false)
+    private function removeEvidenceToEvidenceList(string $evidenceClass): void
     {
-        if (!$sEvidenceId && class_exists($sEvidenceClass)) {
-            $sEvidenceId = $this->getServiceFromContainer($sEvidenceClass)->getId();
-        }
+        $evidences  = $this->getServiceFromContainer(ModuleSettings::class)->getCountryEvidences();
+        $evidenceId = $this->getServiceFromContainer($evidenceClass)->getId();
 
-        $aEvidences = $this->getActiveEvidences();
-        if (isset($aEvidences[$sEvidenceId])) {
-            unset($aEvidences[$sEvidenceId]);
-            $this->getServiceFromContainer(ModuleSettings::class)->saveCountryEvidences($aEvidences);
+        if (isset($evidences[$evidenceId])) {
+            unset($evidences[$evidenceId]);
+            $this->getServiceFromContainer(ModuleSettings::class)->saveCountryEvidences($evidences);
         }
     }
 }
