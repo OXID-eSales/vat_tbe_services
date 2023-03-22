@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of OXID eSales eVAT module.
  *
@@ -49,9 +50,9 @@ class OrderMain extends OrderMain_parent
         $oEvidenceList->loadWithCountryNames($sOrderId);
         $aEvidencesData = $oEvidenceList->getData();
 
-        $this->_aViewData['sTBECountry'] = $aEvidencesData[$sOrderEvidenceId]['countryTitle'];
-        $this->_aViewData['aEvidenceUsed'] = $sOrderEvidenceId;
-        $this->_aViewData['aEvidencesData'] = $aEvidencesData;
+        $this->addTplParam('sTBECountry', $aEvidencesData[$sOrderEvidenceId]['countryTitle']);
+        $this->addTplParam('aEvidenceUsed', $sOrderEvidenceId);
+        $this->addTplParam('aEvidencesData', $aEvidencesData);
 
         return parent::render();
     }
