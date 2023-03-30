@@ -4,7 +4,6 @@
  * See LICENSE file for license details.
  */
 
-
 /**
  * Testing oeVATTBECountryVatGroups class.
  *

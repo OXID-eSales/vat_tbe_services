@@ -4,7 +4,6 @@
  * See LICENSE file for license details.
  */
 
-
 /**
  * Class checks all evidences and provides the one that should be used in VAT calculations.
  */

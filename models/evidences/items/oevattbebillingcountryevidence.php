@@ -4,7 +4,6 @@
  * See LICENSE file for license details.
  */
 
-
 /**
  * Class to get user country from billing address.
  */

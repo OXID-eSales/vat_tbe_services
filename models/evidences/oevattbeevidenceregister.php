@@ -4,7 +4,6 @@
  * See LICENSE file for license details.
  */
 
-
 /**
  * Class for registering evidences.
  * After registration these evidences will be available

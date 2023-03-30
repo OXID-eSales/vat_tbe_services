@@ -4,7 +4,6 @@
  * See LICENSE file for license details.
  */
 
-
 /**
  * Base class for lists. Implements Iterator and Countable interfaces.
  */

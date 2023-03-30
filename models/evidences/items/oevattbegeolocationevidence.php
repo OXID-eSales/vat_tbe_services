@@ -4,7 +4,6 @@
  * See LICENSE file for license details.
  */
 
-
 /**
  * Class to get user country from geo location.
  * This class is not implemented and should be extended if this functionality is needed.
