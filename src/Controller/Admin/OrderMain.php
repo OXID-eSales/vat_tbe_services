@@ -26,9 +26,9 @@ class OrderMain extends OrderMain_parent
     {
         $sOrderId = $this->getEditObjectId();
 
-        /** @var Order $oOrder */
-        $oOrder = oxNew(Order::class);
-        $sOrderEvidenceId = $this->getOeVATTBECurrentOrderEvidenceId($oOrder, $sOrderId);
+        /** @var Order $order */
+        $order = oxNew(Order::class);
+        $sOrderEvidenceId = $this->getOeVATTBECurrentOrderEvidenceId($order, $sOrderId);
 
         $oEvidenceList = $this->getServiceFromContainer(OrderEvidenceList::class);
         $oEvidenceList->loadWithCountryNames($sOrderId);
@@ -44,15 +44,15 @@ class OrderMain extends OrderMain_parent
     /**
      * Returns currently selected order evidence id.
      *
-     * @param Order $oOrder   Used to get evidence id.
+     * @param Order $order   Used to get evidence id.
      * @param string  $sOrderId Order id.
      *
      * @return string
      */
-    protected function getOeVATTBECurrentOrderEvidenceId($oOrder, $sOrderId)
+    protected function getOeVATTBECurrentOrderEvidenceId($order, $sOrderId)
     {
-        $oOrder->load($sOrderId);
-        $sEvidenceId = $oOrder->oxorder__oevattbe_evidenceused->value;
+        $order->load($sOrderId);
+        $sEvidenceId = $order->getFieldData('oevattbe_evidenceused');
 
         return $sEvidenceId;
     }

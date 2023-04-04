@@ -89,7 +89,7 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderTest extends OxidTestC
         $oOrder->setId('order_id');
         $oOrder->finalizeOrder($oBasket, $oUser, false);
 
-        $this->assertEquals('billing_country', $oOrder->oxorder__oevattbe_evidenceused->value);
+        $this->assertEquals('billing_country', $oOrder->getFieldData('oevattbe_evidenceused'));
     }
 
     /**
@@ -114,7 +114,7 @@ class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderTest extends OxidTestC
         $oOrder->setId('order_id');
         $oOrder->finalizeOrder($oBasket, $oUser, true);
 
-        $this->assertEquals('billing_country', $oOrder->oxorder__oevattbe_evidenceused->value);
+        $this->assertEquals('billing_country', $oOrder->getFieldData('oevattbe_evidenceused'));
     }
 
     /**

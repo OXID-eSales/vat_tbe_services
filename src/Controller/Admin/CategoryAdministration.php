@@ -91,15 +91,15 @@ class CategoryAdministration extends AdminDetailsController
      */
     public function getCountryAndVATGroupsData()
     {
-        /** @var Country $oCountry */
-        $oCountry = oxNew(Country::class);
+        /** @var Country $country */
+        $country = oxNew(Country::class);
         $aViewData = array();
-        $oCountryVATGroupsList = $this->getServiceFromContainer(CountryVATGroupsList::class);
-        $aVATGroupList = $oCountryVATGroupsList->getList();
+        $countryVATGroupsList = $this->getServiceFromContainer(CountryVATGroupsList::class);
+        $aVATGroupList = $countryVATGroupsList->getList();
         foreach ($aVATGroupList as $sCountryId => $aGroupsList) {
-            $oCountry->load($sCountryId);
+            $country->load($sCountryId);
             $aViewData[$sCountryId] = array(
-                'countryTitle' => $oCountry->oxcountry__oxtitle->value,
+                'countryTitle' => $country->getFieldData('oxtitle'),
                 'countryGroups' => $aGroupsList
             );
         }
@@ -119,6 +119,6 @@ class CategoryAdministration extends AdminDetailsController
         $sCurrentCategoryId = $this->getEditObjectId();
         $oCategory->load($sCurrentCategoryId);
 
-        return (int)$oCategory->oxcategories__oevattbe_istbe->value;
+        return (int) $oCategory->getFieldData('oevattbe_istbe');
     }
 }

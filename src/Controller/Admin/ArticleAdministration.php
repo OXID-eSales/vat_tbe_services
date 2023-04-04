@@ -37,8 +37,8 @@ class ArticleAdministration extends AdminDetailsController
     {
         parent::render();
 
-        $oArticle = $this->loadCurrentArticle();
-        if ('EE' == (new Facts())->getEdition() && $oArticle->isDerived()) {
+        $article = $this->loadCurrentArticle();
+        if ('EE' == (new Facts())->getEdition() && $article->isDerived()) {
             $this->_aViewData['readonly'] = true;
         }
 
@@ -55,14 +55,14 @@ class ArticleAdministration extends AdminDetailsController
         $request = Registry::getRequest();
         $aParams = $request->getRequestParameter('editval');
         $aVATGroupsParams = $request->getRequestParameter('VATGroupsByCountry');
-        $oArticleVATGroupsList = $this->getServiceFromContainer(ArticleVATGroupsList::class);
-        $oArticleVATGroupsList->setId($sCurrentArticleId);
-        $oArticleVATGroupsList->setData($aVATGroupsParams);
-        $oArticleVATGroupsList->save();
+        $articleVATGroupsList = $this->getServiceFromContainer(ArticleVATGroupsList::class);
+        $articleVATGroupsList->setId($sCurrentArticleId);
+        $articleVATGroupsList->setData($aVATGroupsParams);
+        $articleVATGroupsList->save();
 
-        $oArticle = $this->loadCurrentArticle();
-        $oArticle->oxarticles__oevattbe_istbeservice = new Field($aParams['oevattbe_istbeservice']);
-        $oArticle->save();
+        $article = $this->loadCurrentArticle();
+        $article->oxarticles__oevattbe_istbeservice = new Field($aParams['oevattbe_istbeservice']);
+        $article->save();
     }
 
     /**
@@ -75,10 +75,10 @@ class ArticleAdministration extends AdminDetailsController
      */
     public function isSelected($sCountryId, $sVATGroupId)
     {
-        $oArticleVATGroupsList = $this->getServiceFromContainer(ArticleVATGroupsList::class);
-        $oArticleVATGroupsList->load($this->getEditObjectId());
+        $articleVATGroupsList = $this->getServiceFromContainer(ArticleVATGroupsList::class);
+        $articleVATGroupsList->load($this->getEditObjectId());
         if (is_null($this->_aArticleVATGroupData)) {
-            $this->_aArticleVATGroupData = $oArticleVATGroupsList->getData();
+            $this->_aArticleVATGroupData = $articleVATGroupsList->getData();
         }
 
         return $this->_aArticleVATGroupData[$sCountryId] === $sVATGroupId;
@@ -114,12 +114,12 @@ class ArticleAdministration extends AdminDetailsController
      */
     public function isArticleTBE()
     {
-        /** @var EShopArticle $oArticle */
-        $oArticle = oxNew(EShopArticle::class);
+        /** @var EShopArticle $article */
+        $article = oxNew(EShopArticle::class);
         $sCurrentArticleId = $this->getEditObjectId();
-        $oArticle->load($sCurrentArticleId);
+        $article->load($sCurrentArticleId);
 
-        return (int)$oArticle->oxarticles__oevattbe_istbeservice->value;
+        return (int) $article->getFieldData('oevattbe_istbeservice');
     }
 
     /**
@@ -130,10 +130,10 @@ class ArticleAdministration extends AdminDetailsController
     protected function loadCurrentArticle()
     {
         $sCurrentArticleId = $this->getEditObjectId();
-        /** @var EShopArticle|Article $oArticle */
-        $oArticle = oxNew(EShopArticle::class);
-        $oArticle->load($sCurrentArticleId);
+        /** @var EShopArticle|Article $article */
+        $article = oxNew(EShopArticle::class);
+        $article->load($sCurrentArticleId);
 
-        return $oArticle;
+        return $article;
     }
 }

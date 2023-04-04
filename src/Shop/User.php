@@ -119,7 +119,7 @@ class User extends User_parent
      */
     public function getOeVATTBEVatInStoreDate()
     {
-        return $this->oxuser__oevattbe_vatinenterdate->value;
+        return $this->getFieldData('oevattbe_vatinenterdate');
     }
 
     /**
@@ -129,7 +129,7 @@ class User extends User_parent
      */
     public function getOeVATTBEVatIn()
     {
-        return $this->oxuser__oxustid->value;
+        return $this->getFieldData('oxustid');
     }
 
     /**

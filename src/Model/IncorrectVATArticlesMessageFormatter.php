@@ -31,10 +31,10 @@ class IncorrectVATArticlesMessageFormatter
         /** @var Language $oLang */
         $oLang = Registry::getLang();
 
-        /** @var Article $oInvalidArticle */
+        /** @var Article $invalidArticle */
         $aArticleNames = array();
-        foreach ($aInvalidArticles as $oInvalidArticle) {
-            $aArticleNames[] = $oInvalidArticle->oxarticles__oxtitle->value;
+        foreach ($aInvalidArticles as $invalidArticle) {
+            $aArticleNames[] = $invalidArticle->getFieldData('oxtitle');
         }
         $sArticleNames = implode(', ', $aArticleNames);
 

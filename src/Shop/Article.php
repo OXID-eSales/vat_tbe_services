@@ -33,7 +33,7 @@ class Article extends Article_parent
      */
     public function getOeVATTBETBEVat()
     {
-        return $this->oxarticles__oevattbe_rate->value;
+        return $this->getFieldData('oevattbe_rate');
     }
 
     /**
@@ -43,7 +43,7 @@ class Article extends Article_parent
      */
     public function isOeVATTBETBEService()
     {
-        return $this->oxarticles__oevattbe_istbeservice->value;
+        return $this->getFieldData('oevattbe_istbeservice');
     }
 
     /**

@@ -18,7 +18,7 @@ class Country extends Country_parent
      */
     public function appliesOeTBEVATTbeVat()
     {
-        return (bool) $this->oxcountry__oevattbe_appliestbevat->value;
+        return (bool) $this->getFieldData('oevattbe_appliestbevat');
     }
 
     /**
@@ -28,7 +28,7 @@ class Country extends Country_parent
      */
     public function isOEVATTBEAtLeastOneGroupConfigured()
     {
-        return (bool) $this->oxcountry__oevattbe_istbevatconfigured->value;
+        return (bool) $this->getFieldData('oevattbe_istbevatconfigured');
     }
 
     /**
@@ -38,6 +38,6 @@ class Country extends Country_parent
      */
     public function getOeVATTBEName()
     {
-        return $this->oxcountry__oxtitle->value;
+        return $this->getFieldData('oxtitle');
     }
 }

@@ -153,7 +153,7 @@ class Order extends Order_parent
         $oCountry = oxNew(Country::class);
         $oCountry->setLanguage($this->getSelectedLang());
         $oCountry->load($sCountryId);
-        $sCountryTitle = $oCountry->oxcountry__oxtitle->value;
+        $sCountryTitle = $oCountry->getFieldData('oxtitle');
 
         return $sCountryTitle;
     }
@@ -165,7 +165,7 @@ class Order extends Order_parent
      */
     protected function getOeVATTBEUsedEvidenceId()
     {
-        return $this->oxorder__oevattbe_evidenceused->value;
+        return $this->getFieldData('oevattbe_evidenceused');
     }
 
     /**
@@ -189,7 +189,7 @@ class Order extends Order_parent
         }
 
         // product list
-        foreach ($this->_oArticles as $key => $oOrderArt) {
+        foreach ($this->_oArticles as $key => $orderProduct) {
             // starting a new page ...
             if ($iStartPosForMark > 243) {
                 $iStartPosForMark = 56;
@@ -200,13 +200,13 @@ class Order extends Order_parent
 
             if ($blShowPrice) {
                 // Add mark for TBE service.
-                if ($oOrderArt->getArticle()->isOeVATTBETBEService()) {
+                if ($orderProduct->getArticle()->isOeVATTBETBEService()) {
                     $oPdf->text(140, $iStartPosForMark, '*');
                     $this->setOeVATTBEHasOrderTBEServicesInInvoice(true);
                 }
             }
             // additional variant info
-            if ($oOrderArt->oxorderarticles__oxselvariant->value) {
+            if ($orderProduct->getFieldData('oxselvariant')) {
                 $iStartPosForMark = $iStartPosForMark + 4;
             }
         }

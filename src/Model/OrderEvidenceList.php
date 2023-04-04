@@ -47,13 +47,13 @@ class OrderEvidenceList extends Model
      */
     public function loadWithCountryNames($sId = null)
     {
-        /** @var Country $oCountry */
-        $oCountry = oxNew(Country::class);
+        /** @var Country $country */
+        $country = oxNew(Country::class);
         $this->load($sId);
         $aData = $this->getData();
         foreach ($aData as $sEvidenceId => $aOrderInfo) {
-            if ($oCountry->load($aOrderInfo['countryId'])) {
-                $aData[$sEvidenceId]['countryTitle'] = $oCountry->oxcountry__oxtitle->value;
+            if ($country->load($aOrderInfo['countryId'])) {
+                $aData[$sEvidenceId]['countryTitle'] = $country->getFieldData('oxtitle');
             } else {
                 $aData[$sEvidenceId]['countryTitle'] = '-';
             }

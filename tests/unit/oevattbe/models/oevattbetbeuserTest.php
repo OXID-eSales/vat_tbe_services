@@ -183,7 +183,7 @@ class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends OxidTestCase
 
         $oUser = oxNew('oeVATTBETBEUser', oxNew('oxUser'), $oSession, $oConfig);
 
-        $this->assertSame('Deutschland', $oUser->getCountry()->oxcountry__oxtitle->value);
+        $this->assertSame('Deutschland', $oUser->getCountry()->getFieldData('oxtitle'));
     }
 
     /**

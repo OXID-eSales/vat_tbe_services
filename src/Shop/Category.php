@@ -18,6 +18,6 @@ class Category extends Category_parent
      */
     public function isOeVATTBETBE()
     {
-        return (bool) $this->oxcategories__oevattbe_istbe->value;
+        return (bool) $this->getFieldData('oevattbe_istbe');
     }
 }

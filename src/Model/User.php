@@ -86,9 +86,9 @@ class User
     {
         $sDomesticCountryAbbr = $this->getServiceFromContainer(ModuleSettings::class)->getDomesticCountry();
 
-        $oUserCountry = $this->getCountry();
+        $userCountry = $this->getCountry();
 
-        $blResult = $oUserCountry->oxcountry__oxisoalpha2->value == $sDomesticCountryAbbr;
+        $blResult = $userCountry->getFieldData('oxisoalpha2') == $sDomesticCountryAbbr;
 
         return $sDomesticCountryAbbr ? $blResult : false;
     }

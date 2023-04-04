@@ -26,9 +26,9 @@ class VatSelector extends VatSelector_parent
      */
     public function getArticleUserVat(EShopArticle $oArticle)
     {
-        $oUser = $oArticle->getArticleUser();
+        $user = $oArticle->getArticleUser();
 
-        if (!$oUser->oxuser__oxustid->value && $this->oeVATTBEUseTBEVAT($oArticle)) {
+        if (!$user->getFieldData('oxustid') && $this->oeVATTBEUseTBEVAT($oArticle)) {
             $sVat = $oArticle->getOeVATTBETBEVat();
         } else {
             $sVat = parent::getArticleUserVat($oArticle);
