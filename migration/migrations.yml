@@ -1,0 +1,4 @@
+table_storage:
+  table_name: oxmigrations_evat
+migrations_paths:
+  'OxidEsales\ModuleTemplate\Migrations': data
