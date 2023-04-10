@@ -11,9 +11,9 @@ use PHPUnit\Framework\TestCase;
 /**
  * Test class for oeVATTBEOrderEvidenceList.
  *
- * @covers oeVATTBEOrderEvidenceList
+ * @covers OrderEvidenceList
  */
-class Unit_oeVATTBE_Models_oeVATTBEOrderEvidenceListTest extends TestCase
+class OrderEvidenceListTest extends TestCase
 {
     /**
      * Saves evidence list.

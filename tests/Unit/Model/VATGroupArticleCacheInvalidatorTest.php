@@ -6,16 +6,16 @@
 
 namespace OxidEsales\VisualCmsModule\Tests\Unit\Model;
 
-include_once __DIR__ . '/../../../libs/oxtestcacheconnector.php';
+//include_once __DIR__ . '/../../../libs/oxtestcacheconnector.php';
 
 use PHPUnit\Framework\TestCase;
 
 /**
  * Test class for oeVATTBEVATGroupArticleCacheInvalidator.
  *
- * @covers oeVATTBEVATGroupArticleCacheInvalidator
+ * @covers VATGroupArticleCacheInvalidator
  */
-class Unit_oeVATTBE_Models_oeVATTBEVATGroupArticleCacheInvalidatorTest extends TestCase
+class VATGroupArticleCacheInvalidatorTest extends TestCase
 {
     /**
      * Test if error message is formed correctly.

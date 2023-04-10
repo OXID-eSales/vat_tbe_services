@@ -11,9 +11,9 @@ use PHPUnit\Framework\TestCase;
 /**
  * Test class for oeVATTBEList.
  *
- * @covers oeVATTBEList
+ * @covers BaseList
  */
-class Unit_oeVATTBE_Models_oeVATTBEListTest extends TestCase
+class BaseListTest extends TestCase
 {
     /**
      * Two items is set to list;

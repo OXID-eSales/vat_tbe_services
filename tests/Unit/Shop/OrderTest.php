@@ -4,16 +4,16 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\VisualCmsModule\Tests\Unit\Model;
+namespace OxidEsales\VisualCmsModule\Tests\Unit\Shop;
 
 use PHPUnit\Framework\TestCase;
 
 /**
  * Testing extended oxArticle class.
  *
- * @covers oeVATTBEOxOrder
+ * @covers Order
  */
-class Unit_oeVATTBE_models_oeVATTBEOxOrderTest extends TestCase
+class OrderTest extends TestCase
 {
     /**
      * When user and basket countries does not match error code should be returned.

@@ -11,11 +11,10 @@ use PHPUnit\Framework\TestCase;
 /**
  * Testing oeVATTBECountryVATGroupsList class.
  *
- * @covers oeVATTBECountryVATGroupsList
+ * @covers CountryVATGroupsList
  */
-class Unit_oeVatTbe_models_oeVATTBECountryVATGroupsListTest extends TestCase
+class CountryVATGroupsListTest extends TestCase
 {
-
     /**
      * Two Country Groups exits;
      * List is successfully loaded and array of groups is returned.

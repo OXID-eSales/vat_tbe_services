@@ -11,9 +11,9 @@ use PHPUnit\Framework\TestCase;
 /**
  * Test class for oeVATTBEEvidenceRegister.
  *
- * @covers oeVATTBEEvidenceRegister
+ * @covers EvidenceRegister
  */
-class Unit_oeVATTBE_Models_Evidences_oeVATTBEEvidenceRegisterTest extends TestCase
+class EvidenceRegisterTest extends TestCase
 {
     /**
      * No evidences are registered;

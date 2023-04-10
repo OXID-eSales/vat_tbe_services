@@ -4,16 +4,16 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\VisualCmsModule\Tests\Unit\Model;
+namespace OxidEsales\VisualCmsModule\Tests\Unit\Shop;
 
 use PHPUnit\Framework\TestCase;
 
 /**
  * Testing extended oxCategory class.
  *
- * @covers oeVATTBEOxCategory
+ * @covers Category
  */
-class Unit_oeVATTBE_models_oeVATTBEOxCategoryTest extends TestCase
+class CategoryTest extends TestCase
 {
     /**
      * Test if getter for data field works correct.

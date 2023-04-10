@@ -11,9 +11,9 @@ use PHPUnit\Framework\TestCase;
 /**
  * Test class for oeVATTBEEvidenceCalculator.
  *
- * @covers oeVATTBEGeoLocationEvidence
+ * @covers GeoLocationEvidence
  */
-class Unit_oeVATTBE_Models_Evidences_Items_oeVATTBEGeoLocationEvidenceTest extends TestCase
+class GeoLocationEvidenceTest extends TestCase
 {
     public function testGetId()
     {

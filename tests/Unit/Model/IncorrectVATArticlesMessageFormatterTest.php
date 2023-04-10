@@ -11,9 +11,9 @@ use PHPUnit\Framework\TestCase;
 /**
  * Test class for oeVATTBEArticleMessageFormatter.
  *
- * @covers oeVATTBEIncorrectVATArticlesMessageFormatter
+ * @covers IncorrectVATArticlesMessageFormatter
  */
-class Unit_oeVATTBE_Models_oeVATTBEIncorrectVATArticlesMessageFormatterTest extends TestCase
+class IncorrectVATArticlesMessageFormatterTest extends TestCase
 {
     /**
      * Test if error message is formed correctly.

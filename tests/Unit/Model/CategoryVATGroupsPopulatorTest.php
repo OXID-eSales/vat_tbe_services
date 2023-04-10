@@ -11,9 +11,9 @@ use PHPUnit\Framework\TestCase;
 /**
  * Testing oeVATTBECategoryArticlesUpdater class.
  *
- * @covers oeVATTBECategoryVATGroupsPopulator
+ * @covers CategoryVATGroupsPopulator
  */
-class Unit_oeVatTbe_Models_oeVATTBECategoryArticlesUpdaterTest extends TestCase
+class CategoryVATGroupsPopulatorTest extends TestCase
 {
     /**
      * Tests creating of oeVATTBECategoryArticlesUpdater.

@@ -4,16 +4,16 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\VisualCmsModule\Tests\Unit\Model;
+namespace OxidEsales\VisualCmsModule\Tests\Unit\Shop;
 
 use PHPUnit\Framework\TestCase;
 
 /**
  * Testing extended oxShop class.
  *
- * @covers oeVATTBEOxShop
+ * @covers Shop
  */
-class Unit_oeVATTBE_models_oeVATTBEOxShopTest extends TestCase
+class ShopTest extends TestCase
 {
     /**
      * Test country not set

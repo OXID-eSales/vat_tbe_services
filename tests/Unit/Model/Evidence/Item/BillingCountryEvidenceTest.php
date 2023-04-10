@@ -11,9 +11,9 @@ use PHPUnit\Framework\TestCase;
 /**
  * Test class for oeVATTBEEvidenceCalculator.
  *
- * @covers oeVATTBEBillingCountryEvidence
+ * @covers BillingCountryEvidence
  */
-class Unit_oeVATTBE_Models_Evidences_Items_oeVATTBEBillingCountryEvidenceTest extends TestCase
+class BillingCountryEvidenceTest extends TestCase
 {
     public function testGetId()
     {

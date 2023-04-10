@@ -11,11 +11,10 @@ use PHPUnit\Framework\TestCase;
 /**
  * Testing oeVATTBEBasketVATValidator class.
  *
- * @covers oeVATTBEBasketVATValidator
+ * @covers BasketVATValidator
  */
-class Unit_oeVatTbe_models_oeVATTBEBasketVATValidatorTest extends TestCase
+class BasketVATValidatorTest extends TestCase
 {
-
     /**
      * data provider for test testShowVATTBEMark
      *

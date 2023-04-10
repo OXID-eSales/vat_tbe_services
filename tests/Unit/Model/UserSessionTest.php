@@ -11,9 +11,9 @@ use PHPUnit\Framework\TestCase;
 /**
  * Testing TBEUser class session related functionality.
  *
- * @covers oeVATTBETBEUser
+ * @covers User
  */
-class Unit_oeVatTbe_models_oeVATTBETBEUserSessionTest extends TestCase
+class UserSessionTest extends TestCase
 {
     protected $backupGlobalsBlacklist = array('_SESSION');
 

@@ -11,9 +11,9 @@ use PHPUnit\Framework\TestCase;
 /**
  * Testing oeVATTBEArticleVATGroupsList class.
  *
- * @covers oeVATTBEArticleVATGroupsList
+ * @covers ArticleVATGroupsList
  */
-class Unit_oeVatTbe_Models_oeVATTBEArticleVATGroupsListTest extends TestCase
+class ArticleVATGroupsListTest extends TestCase
 {
     /**
      * Test saving of article groups list.

@@ -11,9 +11,9 @@ use PHPUnit\Framework\TestCase;
 /**
  * Test class for oeVATTBEEvidenceCalculator.
  *
- * @covers oeVATTBEEvidenceCollector
+ * @covers EvidenceCollector
  */
-class Unit_oeVATTBE_Models_Evidences_oeVATTBEEvidenceCollectorTest extends TestCase
+class EvidenceCollectorTest extends TestCase
 {
     /**
      * Evidence is registered;

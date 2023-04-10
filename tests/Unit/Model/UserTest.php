@@ -11,9 +11,9 @@ use PHPUnit\Framework\TestCase;
 /**
  * Testing TBEUser class.
  *
- * @covers oeVATTBETBEUser
+ * @covers \OxidEsales\EVatModule\Model\User
  */
-class Unit_oeVatTbe_models_oeVATTBETBEUserTest extends TestCase
+class UserTest extends TestCase
 {
     /**
      * Tests collecting of TBE evidences when evidence collector is billing country and it is set as default.

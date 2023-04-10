@@ -9,9 +9,9 @@ namespace OxidEsales\VisualCmsModule\Tests\Unit\Model;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Testing oeVATTBEOrderArticleChecker class.
+ * Testing OrderArticleChecker class.
  */
-class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends TestCase
+class OrderArticleCheckerTest extends TestCase
 {
     /**
      * Provider for test.

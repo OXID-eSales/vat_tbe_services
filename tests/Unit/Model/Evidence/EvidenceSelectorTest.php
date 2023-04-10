@@ -6,15 +6,17 @@
 
 namespace OxidEsales\VisualCmsModule\Tests\Unit\Model\Evidence;
 
-require_once  __DIR__ . '/../../../../../models/evidences/items/oevattbeevidence.php';
-require_once  __DIR__ . '/../../../../../models/evidences/oevattbeevidencelist.php';
+use PHPUnit\Framework\TestCase;
+
+//require_once  __DIR__ . '/../../../../../models/evidences/items/oevattbeevidence.php';
+//require_once  __DIR__ . '/../../../../../models/evidences/oevattbeevidencelist.php';
 
 /**
  * Test class for oeVATTBEEvidenceCalculator.
  *
- * @covers oeVATTBEEvidenceSelector
+ * @covers EvidenceSelector
 */
-class Unit_oeVATTBE_Models_Evidences_oeVATTBEEvidenceSelectorTest extends \OxidEsales\TestingLibrary\UnitTestCase
+class EvidenceSelectorTest extends TestCase
 {
     public function providerGetCountryWhenBothEvidenceDoNotMatch()
     {

@@ -11,9 +11,9 @@ use PHPUnit\Framework\TestCase;
 /**
  * Testing oeVATTBECountryVATGroup class.
  *
- * @covers oeVATTBECountryVATGroup
+ * @covers CountryVATGroup
  */
-class Unit_oeVatTbe_Models_oeVATTBECountryVATGroupTest extends TestCase
+class CountryVATGroupTest extends TestCase
 {
     /**
      * Information is set to Group entity;

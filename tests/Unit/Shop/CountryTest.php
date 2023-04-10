@@ -4,16 +4,16 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\VisualCmsModule\Tests\Unit\Model;
+namespace OxidEsales\VisualCmsModule\Tests\Unit\Shop;
 
 use PHPUnit\Framework\TestCase;
 
 /**
  * Testing extended oxCountry class.
  *
- * @covers oeVATTBEOxCountry
+ * @covers Country
  */
-class Unit_oeVATTBE_models_oeVATTBEOxCountryTest extends TestCase
+class CountryTest extends TestCase
 {
     /**
      * Test for vat tbe getter

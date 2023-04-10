@@ -11,9 +11,9 @@ use PHPUnit\Framework\TestCase;
 /**
  * Test class for oeVATTBEEvidenceCalculator.
  *
- * @covers oeVATTBEEvidenceList
+ * @covers EvidenceList
  */
-class Unit_oeVATTBE_Models_Evidences_oeVATTBEEvidenceListTest extends TestCase
+class EvidenceListTest extends TestCase
 {
     public function testAddingToList()
     {

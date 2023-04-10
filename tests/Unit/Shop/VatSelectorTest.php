@@ -4,16 +4,16 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\VisualCmsModule\Tests\Unit\Model;
+namespace OxidEsales\VisualCmsModule\Tests\Unit\Shop;
 
 use PHPUnit\Framework\TestCase;
 
 /**
  * Testing extended oxUser class.
  *
- * @covers oeVATTBEOxVatSelector
+ * @covers VatSelector
  */
-class Unit_oeVatTbe_models_oeVATTBEOxVatSelectorTest extends TestCase
+class VatSelectorTest extends TestCase
 {
     public function providerArticleUserVatCalculationWhenHasTbeVatAndIsTbeArticle()
     {
