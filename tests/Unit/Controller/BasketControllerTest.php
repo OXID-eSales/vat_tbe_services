@@ -4,8 +4,9 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\VisualCmsModule\Tests\Unit\Controller;
+namespace OxidEsales\EVatModule\Tests\Unit\Controller;
 
+use OxidEsales\Eshop\Core\Registry;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -22,11 +23,11 @@ class BasketControllerTest extends TestCase
      */
     public function testGetOeVATTBEMarkMessageWhenUserIsNotLoggedIn()
     {
-        $this->getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
+        Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
 
         $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasOeTBEVATArticles'));
         $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(true));
-        $this->getSession()->setBasket($oBasket);
+        Registry::getSession()->setBasket($oBasket);
 
         /** @var oeVATTBEBasket|Basket $oBasketController */
         $oBasketController = oxNew('oeVATTBEBasket');
@@ -45,7 +46,7 @@ class BasketControllerTest extends TestCase
      */
     public function testGetOeVATTBEMarkMessageWhenUserIsLoggedIn()
     {
-        $this->getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
+        Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
 
         /** @var oxCountry|oeVATTBEOxCategory|PHPUnit_Framework_MockObject_MockObject $oCountry */
         $oCountry = $this->getMock("oeVATTBEOxCategory", array('getOeVATTBEName'));
@@ -55,7 +56,7 @@ class BasketControllerTest extends TestCase
         $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasOeTBEVATArticles', 'getOeVATTBECountry'));
         $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(true));
         $oBasket->expects($this->any())->method("getOeVATTBECountry")->will($this->returnValue($oCountry));
-        $this->getSession()->setBasket($oBasket);
+        Registry::getSession()->setBasket($oBasket);
 
         /** @var oxUser|oeVATTBEOxUser $oUser */
         $oUser = oxNew('oxUser');
@@ -76,13 +77,13 @@ class BasketControllerTest extends TestCase
      */
     public function testGetOeVATTBEMarkMessageWhenUserIsLoggedInAndUserCountryNotFound()
     {
-        $this->getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
+        Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
 
         /** @var oxBasket|oeVATTBEOxBasket|PHPUnit_Framework_MockObject_MockObject $oBasket */
         $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasOeTBEVATArticles', 'getOeVATTBECountry'));
         $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(true));
         $oBasket->expects($this->any())->method("getOeVATTBECountry")->will($this->returnValue(null));
-        $this->getSession()->setBasket($oBasket);
+        Registry::getSession()->setBasket($oBasket);
 
         /** @var oxUser|oeVATTBEOxUser $oUser */
         $oUser = oxNew('oxUser');
@@ -123,8 +124,8 @@ class BasketControllerTest extends TestCase
     public function testShowVATTBEMarkMessageWhenMessageShouldBeHidden($blIsDomesticCountry, $blHasTBEArticles, $blValidArticles, $blCountryAppliesTBEVAT)
     {
         $sDomesticCountryAbbr = $blIsDomesticCountry ? 'LT' : 'DE';
-        $this->getConfig()->setConfigParam('sOeVATTBEDomesticCountry', $sDomesticCountryAbbr);
-        $this->getSession()->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
+        Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', $sDomesticCountryAbbr);
+        Registry::getSession()->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
 
         $oCountry = $this->getMock("oeVATTBEOxCountry", array('appliesOeTBEVATTbeVat'));
         $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->will($this->returnValue($blCountryAppliesTBEVAT));
@@ -133,7 +134,7 @@ class BasketControllerTest extends TestCase
         $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue($blHasTBEArticles));
         $oBasket->expects($this->any())->method("isOeVATTBEValid")->will($this->returnValue($blValidArticles));
         $oBasket->expects($this->any())->method("getOeVATTBECountry")->will($this->returnValue($oCountry));
-        $this->getSession()->setBasket($oBasket);
+        Registry::getSession()->setBasket($oBasket);
 
         $oBasketController = oxNew('oeVATTBEBasket');
         $this->assertFalse($oBasketController->oeVATTBEShowVATTBEMarkMessage());
@@ -148,8 +149,8 @@ class BasketControllerTest extends TestCase
      */
     public function testShowVATTBEMarkMessageWhenMessageShouldBeShown()
     {
-        $this->getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
-        $this->getSession()->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
+        Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
+        Registry::getSession()->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
 
         $oCountry = $this->getMock("oeVATTBEOxCountry", array('appliesOeTBEVATTbeVat'));
         $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->will($this->returnValue(true));
@@ -158,7 +159,7 @@ class BasketControllerTest extends TestCase
         $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(true));
         $oBasket->expects($this->any())->method("isOeVATTBEValid")->will($this->returnValue(true));
         $oBasket->expects($this->any())->method("getOeVATTBECountry")->will($this->returnValue($oCountry));
-        $this->getSession()->setBasket($oBasket);
+        Registry::getSession()->setBasket($oBasket);
 
         $oBasketController = oxNew('oeVATTBEBasket');
         $this->assertTrue($oBasketController->oeVATTBEShowVATTBEMarkMessage());

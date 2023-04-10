@@ -4,7 +4,7 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\VisualCmsModule\Tests\Unit\Service;
+namespace OxidEsales\EVatModule\Tests\Unit\Service;
 
 use OxidEsales\EVatModule\Service\BasketItemsValidator;
 use PHPUnit\Framework\TestCase;

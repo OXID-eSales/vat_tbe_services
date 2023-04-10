@@ -4,8 +4,9 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\VisualCmsModule\Tests\Unit\Shop;
+namespace OxidEsales\EVatModule\Tests\Unit\Shop;
 
+use OxidEsales\Eshop\Core\Registry;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -22,7 +23,7 @@ class OrderTest extends TestCase
     {
         $oBasket = $this->getMock("oeVATTBEOxBasket", array("getOeVATTBETbeCountryId"));
         $oBasket->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue('LithuaniaId'));
-        $this->getSession()->setVariable('TBECountryId', 'GermanyId');
+        Registry::getSession()->setVariable('TBECountryId', 'GermanyId');
 
         /** @var oxUser|oeVATTBEOxUser $oUser */
         $oUser = oxNew('oxUser');
@@ -40,7 +41,7 @@ class OrderTest extends TestCase
     {
         $oBasket = $this->getMock("oeVATTBEOxBasket", array("getOeVATTBETbeCountryId"));
         $oBasket->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue('LithuaniaId'));
-        $this->getSession()->setVariable('TBECountryId', 'GermanyId');
+        Registry::getSession()->setVariable('TBECountryId', 'GermanyId');
 
         /** @var oxUser|oeVATTBEOxUser $oUser */
         $oUser = oxNew('oxUser');
@@ -88,7 +89,7 @@ class OrderTest extends TestCase
         $oBasket->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue($sUserCountry));
         $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(true));
         $oBasket->expects($this->any())->method("getBasketArticles")->will($this->returnValue(array($oArticle)));
-        $this->getSession()->setVariable('TBECountryId', $sUserCountry);
+        Registry::getSession()->setVariable('TBECountryId', $sUserCountry);
 
         /** @var oxUser|oeVATTBEOxUser $oUser */
         $oUser = oxNew('oxUser');
@@ -143,7 +144,7 @@ class OrderTest extends TestCase
         $oBasket->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue($sUserCountry));
         $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(true));
         $oBasket->expects($this->any())->method("getBasketArticles")->will($this->returnValue(array($oArticle)));
-        $this->getSession()->setVariable('TBECountryId', $sUserCountry);
+        Registry::getSession()->setVariable('TBECountryId', $sUserCountry);
 
         /** @var oxUser|oeVATTBEOxUser $oUser */
         $oUser = oxNew('oxUser');

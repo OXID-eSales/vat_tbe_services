@@ -4,10 +4,11 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\VisualCmsModule\Tests\Unit\Model;
+namespace OxidEsales\EVatModule\Tests\Unit\Model;
 
 //include_once __DIR__ . '/../../../libs/oxtestcacheconnector.php';
 
+use OxidEsales\Eshop\Core\Registry;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -22,10 +23,10 @@ class VATGroupArticleCacheInvalidatorTest extends TestCase
      */
     public function testArticleInvalidation()
     {
-        if ($this->getConfig()->getEdition() != 'EE') {
+        if (Registry::getConfig()->getEdition() != 'EE') {
             $this->markTestSkipped('Test only on Enterprise shop');
         }
-        $this->getConfig()->setConfigParam('blCacheActive', true);
+        Registry::getConfig()->setConfigParam('blCacheActive', true);
 
         $aMethods = array('getArticlesAssignedToGroup' => array('article1', 'article2'));
         $oArticleVATGroupsList = $this->_createStub('oeVATTBEArticleVATGroupsList', $aMethods);

@@ -4,7 +4,7 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\VisualCmsModule\Tests\Unit\Component;
+namespace OxidEsales\EVatModule\Tests\Unit\Component;
 
 use OxidEsales\EshopCommunity\Core\Registry;
 use OxidEsales\EVatModule\Component\BasketComponent;

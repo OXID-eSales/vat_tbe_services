@@ -4,8 +4,9 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\VisualCmsModule\Tests\Unit\Model;
+namespace OxidEsales\EVatModule\Tests\Unit\Model;
 
+use OxidEsales\Eshop\Core\Registry;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -25,8 +26,8 @@ class UserSessionTest extends TestCase
      */
     public function testTBEEvidenceListCaching()
     {
-        $oConfig = $this->getConfig();
-        $oSession = $this->getSession();
+        $oConfig = Registry::getConfig();
+        $oSession = Registry::getSession();
         $oSession->setVariable('TBECountryId', null);
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence'));
         $oConfig->setConfigParam('aOeVATTBECountryEvidences', array('billing_country' => 1));

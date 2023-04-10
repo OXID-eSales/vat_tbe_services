@@ -4,8 +4,9 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\VisualCmsModule\Tests\Unit\Shop;
+namespace OxidEsales\EVatModule\Tests\Unit\Shop;
 
+use OxidEsales\Eshop\Core\Registry;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -18,7 +19,7 @@ class UserTest extends TestCase
      */
     public function testTBECountryIdSelecting()
     {
-        $oConfig = $this->getConfig();
+        $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence'));
         $oConfig->setConfigParam('aOeVATTBECountryEvidences', array('billing_country' => 1));
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');

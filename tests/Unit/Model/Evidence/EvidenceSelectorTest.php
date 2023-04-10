@@ -4,8 +4,9 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\VisualCmsModule\Tests\Unit\Model\Evidence;
+namespace OxidEsales\EVatModule\Tests\Unit\Model\Evidence;
 
+use OxidEsales\Eshop\Core\Registry;
 use PHPUnit\Framework\TestCase;
 
 //require_once  __DIR__ . '/../../../../../models/evidences/items/oevattbeevidence.php';
@@ -39,7 +40,7 @@ class EvidenceSelectorTest extends TestCase
      */
     public function testGetCountryWhenBothEvidenceDoNotMatchDefaultTaken($oEvidenceList, $sDefaultEvidence, $sExpectedEvidence)
     {
-        $oConfig = $this->getConfig();
+        $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', $sDefaultEvidence);
 
         $oCalculator = new oeVATTBEEvidenceSelector($oEvidenceList, $oConfig);
@@ -49,7 +50,7 @@ class EvidenceSelectorTest extends TestCase
 
     public function testGetCountryWhenDefaultEvidenceEmpty()
     {
-        $oConfig = $this->getConfig();
+        $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'default_evidence');
 
         $oBillingEvidence = $this->_createEvidence('billing_address', 'Germany');
@@ -64,7 +65,7 @@ class EvidenceSelectorTest extends TestCase
 
     public function testGetCountryWhenDefaultAndFirstEvidenceEmpty()
     {
-        $oConfig = $this->getConfig();
+        $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'default_evidence');
 
         $oBillingEvidence = $this->_createEvidence('billing_address', '');
@@ -79,7 +80,7 @@ class EvidenceSelectorTest extends TestCase
 
     public function testGetCountryWithEmptyList()
     {
-        $oConfig = $this->getConfig();
+        $oConfig = Registry::getConfig();
         $oEvidenceList = new oeVATTBEEvidenceList();
         $oCalculator = new oeVATTBEEvidenceSelector($oEvidenceList, $oConfig);
 
@@ -92,7 +93,7 @@ class EvidenceSelectorTest extends TestCase
         $oGeoLocationEvidence = $this->_createEvidence('geo_location', 'Germany');
         $oEvidenceList = new oeVATTBEEvidenceList(array($oBillingEvidence, $oGeoLocationEvidence));
 
-        $oCalculator = new oeVATTBEEvidenceSelector($oEvidenceList, $this->getConfig());
+        $oCalculator = new oeVATTBEEvidenceSelector($oEvidenceList, Registry::getConfig());
 
         $this->assertSame(false, $oCalculator->isEvidencesContradicting());
     }
@@ -103,7 +104,7 @@ class EvidenceSelectorTest extends TestCase
         $oGeoLocationEvidence = $this->_createEvidence('geo_location', 'Lithuania');
         $oEvidenceList = new oeVATTBEEvidenceList(array($oBillingEvidence, $oGeoLocationEvidence));
 
-        $oCalculator = new oeVATTBEEvidenceSelector($oEvidenceList, $this->getConfig());
+        $oCalculator = new oeVATTBEEvidenceSelector($oEvidenceList, Registry::getConfig());
 
         $this->assertSame(true, $oCalculator->isEvidencesContradicting());
     }

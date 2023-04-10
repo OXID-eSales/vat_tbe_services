@@ -4,8 +4,9 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\VisualCmsModule\Tests\Unit\Model\Evidence;
+namespace OxidEsales\EVatModule\Tests\Unit\Model\Evidence;
 
+use OxidEsales\Eshop\Core\Registry;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -24,7 +25,7 @@ class EvidenceRegisterTest extends TestCase
      */
     public function testRegisteringEvidenceWhenNoEvidencesRegistered()
     {
-        $oConfig = oxRegistry::getConfig();
+        $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('aOeVATTBECountryEvidences', array());
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array());
 
@@ -58,7 +59,7 @@ class EvidenceRegisterTest extends TestCase
      */
     public function testRegisteringEvidenceWhenDefaultEvidencesRegistered()
     {
-        $oConfig = oxRegistry::getConfig();
+        $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('aOeVATTBECountryEvidences', array());
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeDefaultEvidence1', 'oeDefaultEvidence2'));
 
@@ -79,7 +80,7 @@ class EvidenceRegisterTest extends TestCase
      */
     public function testUnregisteringEvidenceWhenItIsRegistered()
     {
-        $oConfig = oxRegistry::getConfig();
+        $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('aOeVATTBECountryEvidences', array('billing_country' => 1));
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence'));
 
@@ -116,7 +117,7 @@ class EvidenceRegisterTest extends TestCase
      */
     public function testUnregisteringEvidenceWhenItIsRegisteredAndMoreEvidencesExist()
     {
-        $oConfig = oxRegistry::getConfig();
+        $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('aOeVATTBECountryEvidences', array('billing_country' => 1, 'geo_location' => 1));
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence', 'GeoClass'));
 
@@ -153,7 +154,7 @@ class EvidenceRegisterTest extends TestCase
      */
     public function testUnregisteringEvidenceWhenEvidenceIsNotRegistered()
     {
-        $oConfig = oxRegistry::getConfig();
+        $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('aOeVATTBECountryEvidences', array('billing_country' => 1));
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence'));
 
@@ -190,7 +191,7 @@ class EvidenceRegisterTest extends TestCase
      */
     public function testUnregisteringEvidenceWhenItIsNotRegistered()
     {
-        $oConfig = oxRegistry::getConfig();
+        $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('aOeVATTBECountryEvidences', array('billing_country' => 1, 'geo_location' => 1));
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence', 'GeoClass'));
 
@@ -210,7 +211,7 @@ class EvidenceRegisterTest extends TestCase
      */
     public function testActivatingEvidenceWhenItIsRegistered()
     {
-        $oConfig = oxRegistry::getConfig();
+        $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('aOeVATTBECountryEvidences', array('InactiveEvidenceId' => 0));
 
         /** @var oeVATTBEEvidenceRegister $oCollector */
@@ -227,7 +228,7 @@ class EvidenceRegisterTest extends TestCase
      */
     public function testDeactivatingEvidenceWhenItIsRegistered()
     {
-        $oConfig = oxRegistry::getConfig();
+        $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('aOeVATTBECountryEvidences', array('InactiveEvidenceId' => 1));
 
         /** @var oeVATTBEEvidenceRegister $oCollector */
@@ -244,7 +245,7 @@ class EvidenceRegisterTest extends TestCase
      */
     public function testDeactivatingEvidenceWhenItIsNotRegistered()
     {
-        $oConfig = oxRegistry::getConfig();
+        $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('aOeVATTBECountryEvidences', array());
 
         /** @var oeVATTBEEvidenceRegister $oCollector */

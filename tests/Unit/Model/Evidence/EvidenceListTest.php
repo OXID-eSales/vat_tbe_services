@@ -4,7 +4,7 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\VisualCmsModule\Tests\Unit\Model\Evidence;
+namespace OxidEsales\EVatModule\Tests\Unit\Model\Evidence;
 
 use PHPUnit\Framework\TestCase;
 

@@ -4,8 +4,9 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\VisualCmsModule\Tests\Unit\Controller;
+namespace OxidEsales\EVatModule\Tests\Unit\Controller;
 
+use OxidEsales\Eshop\Core\Registry;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -22,7 +23,7 @@ class ArticleAdministrationTest extends TestCase
      */
     public function testRenderSetsReadOnlyModeForSubshops()
     {
-        if ('EE' != $this->getConfig()->getEdition()) {
+        if ('EE' != Registry::getConfig()->getEdition()) {
             $this->markTestSkipped('Test only on Enterprise shop');
         }
 
@@ -46,7 +47,7 @@ class ArticleAdministrationTest extends TestCase
      */
     public function testRenderDoNotSetsReadOnlyModeForMainShop()
     {
-        if ('EE' != $this->getConfig()->getEdition()) {
+        if ('EE' != Registry::getConfig()->getEdition()) {
             $this->markTestSkipped('Test only on Enterprise shop');
         }
 
@@ -70,7 +71,7 @@ class ArticleAdministrationTest extends TestCase
      */
     public function testRenderDoesNotSetsReadOnlyModeForDifferentEditions()
     {
-        if ('EE' == $this->getConfig()->getEdition()) {
+        if ('EE' == Registry::getConfig()->getEdition()) {
             $this->markTestSkipped('Test only on Enterprise shop');
         }
 

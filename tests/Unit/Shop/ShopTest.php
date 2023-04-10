@@ -4,8 +4,9 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\VisualCmsModule\Tests\Unit\Shop;
+namespace OxidEsales\EVatModule\Tests\Unit\Shop;
 
+use OxidEsales\Eshop\Core\Registry;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -20,7 +21,7 @@ class ShopTest extends TestCase
      */
     public function testGetDomesticCountryNotSet()
     {
-        oxRegistry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', null);
+        Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', null);
 
         /** @var oeVATTBEOxShop $oShop */
         $oShop = oxNew('oeVATTBEOxShop');
@@ -32,7 +33,7 @@ class ShopTest extends TestCase
      */
     public function testGetDomesticCountryWrong()
     {
-        oxRegistry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'blabla');
+        Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'blabla');
 
         /** @var oeVATTBEOxShop $oShop */
         $oShop = oxNew('oeVATTBEOxShop');
@@ -44,7 +45,7 @@ class ShopTest extends TestCase
      */
     public function testGetDomesticCountry()
     {
-        oxRegistry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
+        Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
 
         /** @var oeVATTBEOxShop $oShop */
         $oShop = oxNew('oeVATTBEOxShop');

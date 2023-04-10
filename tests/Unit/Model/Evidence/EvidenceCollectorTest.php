@@ -4,8 +4,9 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\VisualCmsModule\Tests\Unit\Model\Evidence;
+namespace OxidEsales\EVatModule\Tests\Unit\Model\Evidence;
 
+use OxidEsales\Eshop\Core\Registry;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -22,7 +23,7 @@ class EvidenceCollectorTest extends TestCase
      */
     public function testGetEvidencesWhenEvidencesExistAndIsActive()
     {
-        $oConfig = $this->getConfig();
+        $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('aOeVATTBECountryEvidences', array('billing_country' => 1));
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence'));
 
@@ -44,7 +45,7 @@ class EvidenceCollectorTest extends TestCase
      */
     public function testGetEvidencesWhenEvidenceExistsButIsNotActive()
     {
-        $oConfig = $this->getConfig();
+        $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('aOeVATTBECountryEvidences', array('billing_country' => 0));
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence'));
 
@@ -64,7 +65,7 @@ class EvidenceCollectorTest extends TestCase
      */
     public function testGetEvidencesWhenEvidenceIsRegisteredButActiveEvidencesListIsEmpty()
     {
-        $oConfig = oxRegistry::getConfig();
+        $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('aOeVATTBECountryEvidences', array());
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence'));
 
@@ -83,7 +84,7 @@ class EvidenceCollectorTest extends TestCase
      */
     public function testGetEvidencesWhenNoEvidencesAreSet()
     {
-        $oConfig = $this->getConfig();
+        $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('aOeVATTBECountryEvidences', array());
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array());
 
@@ -103,7 +104,7 @@ class EvidenceCollectorTest extends TestCase
      */
     public function testGetEvidencesWhenNoEvidenceIsRegisteredButActiveEvidenceListIsNotEmpty()
     {
-        $oConfig = oxRegistry::getConfig();
+        $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('aOeVATTBECountryEvidences', array('non_existing_id' => 1));
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array());
 
@@ -122,7 +123,7 @@ class EvidenceCollectorTest extends TestCase
      */
     public function testGetEvidencesWhenEvidencesDoesNotExists()
     {
-        $oConfig = $this->getConfig();
+        $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('aOeVATTBECountryEvidences', array('non_existing_id' => 1));
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('NonExistingEvidenceClass'));
 

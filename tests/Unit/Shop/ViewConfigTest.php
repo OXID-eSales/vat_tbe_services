@@ -4,8 +4,9 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\VisualCmsModule\Tests\Unit\Shop;
+namespace OxidEsales\EVatModule\Tests\Unit\Shop;
 
+use OxidEsales\Eshop\Core\Registry;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -22,8 +23,8 @@ class ViewConfigTest extends TestCase
      */
     public function testShowTBEArticlePriceNoticeWhenUserIsNotFromDomesticCountry()
     {
-        $this->getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
-        $this->getSession()->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
+        Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
+        Registry::getSession()->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
 
         /** @var oeVATTBEOxArticle|oxArticle $oArticle */
         $oArticle = $this->_createStub('oeVATTBEOxArticle', array('isOeVATTBETBEService' => true));
@@ -41,8 +42,8 @@ class ViewConfigTest extends TestCase
      */
     public function testShowTBEArticlePriceNoticeWhenUserIsFromDomesticCountry()
     {
-        $this->getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
-        $this->getSession()->setVariable('TBECountryId', 'a7c40f631fc920687.20179984'); // DE
+        Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
+        Registry::getSession()->setVariable('TBECountryId', 'a7c40f631fc920687.20179984'); // DE
 
         /** @var oeVATTBEOxArticle|oxArticle $oArticle */
         $oArticle = $this->_createStub('oeVATTBEOxArticle', array('isOeVATTBETBEService' => true));
@@ -60,8 +61,8 @@ class ViewConfigTest extends TestCase
      */
     public function testShowTBEArticlePriceNoticeWhenArticleIsNotTBE()
     {
-        $this->getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
-        $this->getSession()->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
+        Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
+        Registry::getSession()->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
 
         /** @var oeVATTBEOxArticle|oxArticle $oArticle */
         $oArticle = $this->_createStub('oeVATTBEOxArticle', array('isOeVATTBETBEService' => false));

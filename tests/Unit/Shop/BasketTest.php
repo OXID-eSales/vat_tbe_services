@@ -4,8 +4,9 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\VisualCmsModule\Tests\Unit\Shop;
+namespace OxidEsales\EVatModule\Tests\Unit\Shop;
 
+use OxidEsales\Eshop\Core\Registry;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -61,8 +62,8 @@ class BasketTest extends TestCase
     {
         $sDomesticCountry = $blDomesticCountry ? 'LT' : 'DE';
         $sLithuaniaId = '8f241f11095d6ffa8.86593236';
-        $this->getConfig()->setConfigParam('sOeVATTBEDomesticCountry', $sDomesticCountry);
-        $this->getSession()->setVariable('TBECountryId', $sLithuaniaId);
+        Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', $sDomesticCountry);
+        Registry::getSession()->setVariable('TBECountryId', $sLithuaniaId);
 
         /** @var oxCountry $oCountry */
         $oCountry = oxNew('oxCountry');
@@ -106,9 +107,9 @@ class BasketTest extends TestCase
      */
     public function testSetCountryIdOnChangeEventWhenMessageShouldBeShown($bAddToBasket)
     {
-        $this->getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
+        Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
         $sLithuaniaId = '8f241f11095d6ffa8.86593236';
-        $this->getSession()->setVariable('TBECountryId', $sLithuaniaId); // LT
+        Registry::getSession()->setVariable('TBECountryId', $sLithuaniaId); // LT
 
         /** @var oxCountry $oCountry */
         $oCountry = oxNew('oxCountry');

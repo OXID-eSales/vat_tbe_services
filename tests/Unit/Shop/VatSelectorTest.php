@@ -4,8 +4,9 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\VisualCmsModule\Tests\Unit\Shop;
+namespace OxidEsales\EVatModule\Tests\Unit\Shop;
 
+use OxidEsales\Eshop\Core\Registry;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -91,8 +92,8 @@ class VatSelectorTest extends TestCase
      */
     public function testArticleUserVatCalculationWhenUserFromDomesticCountry()
     {
-        $this->getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
-        $this->getSession()->setVariable('TBECountryId', 'a7c40f631fc920687.20179984');
+        Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
+        Registry::getSession()->setVariable('TBECountryId', 'a7c40f631fc920687.20179984');
         $oArticle = $this->getMock('oeVatTbeOxArticle', array('getOeVATTBETBEVat', 'isOeVATTBETBEService'));
         $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->will($this->returnValue(15));
         $oArticle->expects($this->any())->method('isOeVATTBETBEService')->will($this->returnValue(true));
@@ -107,8 +108,8 @@ class VatSelectorTest extends TestCase
      */
     public function testArticleUserVatCalculationWhenUserNotFromDomesticCountry()
     {
-        $this->getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'LT');
-        $this->getSession()->setVariable('TBECountryId', 'a7c40f631fc920687.20179984');
+        Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'LT');
+        Registry::getSession()->setVariable('TBECountryId', 'a7c40f631fc920687.20179984');
         $oArticle = $this->getMock('oeVatTbeOxArticle', array('getOeVATTBETBEVat', 'isOeVATTBETBEService'));
         $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->will($this->returnValue(15));
         $oArticle->expects($this->any())->method('isOeVATTBETBEService')->will($this->returnValue(true));
@@ -128,8 +129,8 @@ class VatSelectorTest extends TestCase
         $oUser = oxNew('oxUser');
         $oUser->oxuser__oxustid = new oxField('0');
 
-        $this->getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'LT');
-        $this->getSession()->setVariable('TBECountryId', 'a7c40f631fc920687.20179984');
+        Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'LT');
+        Registry::getSession()->setVariable('TBECountryId', 'a7c40f631fc920687.20179984');
         $oArticle = $this->getMock('oeVatTbeOxArticle', array('getOeVATTBETBEVat', 'isOeVATTBETBEService'));
         $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->will($this->returnValue(15));
         $oArticle->expects($this->any())->method('isOeVATTBETBEService')->will($this->returnValue(true));
@@ -151,8 +152,8 @@ class VatSelectorTest extends TestCase
         $oUser = oxNew('oxUser');
         $oUser->oxuser__oxustid = new oxField('1');
 
-        $this->getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'LT');
-        $this->getSession()->setVariable('TBECountryId', 'a7c40f631fc920687.20179984');
+        Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'LT');
+        Registry::getSession()->setVariable('TBECountryId', 'a7c40f631fc920687.20179984');
         $oArticle = $this->getMock('oeVatTbeOxArticle', array('getOeVATTBETBEVat', 'isOeVATTBETBEService'));
         $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->will($this->returnValue(15));
         $oArticle->expects($this->any())->method('isOeVATTBETBEService')->will($this->returnValue(true));

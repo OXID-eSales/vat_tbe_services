@@ -4,8 +4,9 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\VisualCmsModule\Tests\Unit\Model;
+namespace OxidEsales\EVatModule\Tests\Unit\Model;
 
+use OxidEsales\Eshop\Core\Registry;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -22,8 +23,8 @@ class UserTest extends TestCase
      */
     public function testCollectingTBEEvidenceList()
     {
-        $oConfig = $this->getConfig();
-        $oSession = $this->getSession();
+        $oConfig = Registry::getConfig();
+        $oSession = Registry::getSession();
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence'));
         $oConfig->setConfigParam('aOeVATTBECountryEvidences', array('billing_country' => 1));
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
@@ -78,8 +79,8 @@ class UserTest extends TestCase
      */
     public function testCollectingOfTBEEvidenceListWhenEvidenceListIsEmpty()
     {
-        $oConfig = $this->getConfig();
-        $oSession = $this->getSession();
+        $oConfig = Registry::getConfig();
+        $oSession = Registry::getSession();
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array());
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', '');
 
@@ -123,8 +124,8 @@ class UserTest extends TestCase
      */
     public function testCountryIdCachingWhenCountryIsNotFound()
     {
-        $oConfig = $this->getConfig();
-        $oSession = $this->getSession();
+        $oConfig = Registry::getConfig();
+        $oSession = Registry::getSession();
         $oSession->setVariable('TBECountryId', null);
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence'));
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
@@ -161,11 +162,11 @@ class UserTest extends TestCase
      */
     public function testGetCountryWithInvalidCountryId($sCountryId)
     {
-        $oSession = $this->getSession();
+        $oSession = Registry::getSession();
         $oSession->setVariable('TBECountryId', $sCountryId);
 
-        $oConfig = $this->getConfig();
-        $oSession = $this->getSession();
+        $oConfig = Registry::getConfig();
+        $oSession = Registry::getSession();
 
         $oUser = oxNew('oeVATTBETBEUser', oxNew('oxUser'), $oSession, $oConfig);
 
@@ -178,11 +179,11 @@ class UserTest extends TestCase
     public function testGetCountryWithValidCountryId()
     {
         $sGermanyId = 'a7c40f631fc920687.20179984';
-        $oSession = $this->getSession();
+        $oSession = Registry::getSession();
         $oSession->setVariable('TBECountryId', $sGermanyId);
 
-        $oConfig = $this->getConfig();
-        $oSession = $this->getSession();
+        $oConfig = Registry::getConfig();
+        $oSession = Registry::getSession();
 
         $oUser = oxNew('oeVATTBETBEUser', oxNew('oxUser'), $oSession, $oConfig);
 
@@ -194,11 +195,11 @@ class UserTest extends TestCase
      */
     public function testIsUserFromDomesticCountryWhenCountriesMatch()
     {
-        $oConfig = $this->getConfig();
+        $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('sOeVATTBEDomesticCountry', 'LT');
 
         $sLithuaniaId = '8f241f11095d6ffa8.86593236';
-        $oSession = $this->getSession();
+        $oSession = Registry::getSession();
         $oSession->setVariable('TBECountryId', $sLithuaniaId);
 
         $oUser = oxNew('oeVATTBETBEUser', oxNew('oxUser'), $oSession, $oConfig);
@@ -232,10 +233,10 @@ class UserTest extends TestCase
      */
     public function testIsUserFromDomesticCountryWhenCountriesDoesNotMatch($sDomesticCountryAbbr, $sUserCountryId)
     {
-        $oConfig = $this->getConfig();
+        $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('sOeVATTBEDomesticCountry', $sDomesticCountryAbbr);
 
-        $oSession = $this->getSession();
+        $oSession = Registry::getSession();
         $oSession->setVariable('TBECountryId', $sUserCountryId);
 
         $oUser = oxNew('oeVATTBETBEUser', oxNew('oxUser'), $oSession, $oConfig);
