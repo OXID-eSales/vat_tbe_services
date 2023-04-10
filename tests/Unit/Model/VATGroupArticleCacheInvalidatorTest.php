@@ -9,6 +9,7 @@ namespace OxidEsales\EVatModule\Tests\Unit\Model;
 //include_once __DIR__ . '/../../../libs/oxtestcacheconnector.php';
 
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\Facts\Facts;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -23,7 +24,7 @@ class VATGroupArticleCacheInvalidatorTest extends TestCase
      */
     public function testArticleInvalidation()
     {
-        if (Registry::getConfig()->getEdition() != 'EE') {
+        if ((new Facts())->getEdition() != 'EE') {
             $this->markTestSkipped('Test only on Enterprise shop');
         }
         Registry::getConfig()->setConfigParam('blCacheActive', true);

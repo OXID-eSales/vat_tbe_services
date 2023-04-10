@@ -6,6 +6,7 @@
 
 namespace OxidEsales\EVatModule\Tests\Unit\Shop;
 
+use OxidEsales\Eshop\Core\Field;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -22,7 +23,7 @@ class ArticleTest extends TestCase
     public function testTbeVatGetter()
     {
         $oArticle = oxNew('oxArticle');
-        $oArticle->oxarticles__oevattbe_rate = new oxField(9);
+        $oArticle->oxarticles__oevattbe_rate = new Field(9);
         $this->assertSame(9, $oArticle->getOeVATTBETBEVat());
     }
 

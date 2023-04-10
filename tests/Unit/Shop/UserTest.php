@@ -6,8 +6,10 @@
 
 namespace OxidEsales\EVatModule\Tests\Unit\Shop;
 
+use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
 use PHPUnit\Framework\TestCase;
+use oxDb;
 
 /**
  * Testing extended oxUser class.
@@ -25,7 +27,7 @@ class UserTest extends TestCase
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
 
         $oUser = oxNew('oxUser');
-        $oUser->oxuser__oxcountryid = new oxField('GermanyId');
+        $oUser->oxuser__oxcountryid = new Field('GermanyId');
 
         $this->assertEquals('GermanyId', $oUser->getOeVATTBETbeCountryId());
     }
@@ -36,7 +38,7 @@ class UserTest extends TestCase
     public function testGetOeVATTBEVatIn()
     {
         $oUser = oxNew('oxUser');
-        $oUser->oxuser__oxustid = new oxField('IdNumber');
+        $oUser->oxuser__oxustid = new Field('IdNumber');
 
         $this->assertSame('IdNumber', $oUser->getOeVATTBEVatIn());
     }
@@ -47,7 +49,7 @@ class UserTest extends TestCase
     public function testGetOeVATTBEVatInStoreDate()
     {
         $oUser = oxNew('oxUser');
-        $oUser->oxuser__oevattbe_vatinenterdate = new oxField('2014-12-12 12:12:12');
+        $oUser->oxuser__oevattbe_vatinenterdate = new Field('2014-12-12 12:12:12');
 
         $this->assertSame('2014-12-12 12:12:12', $oUser->getOeVATTBEVatInStoreDate());
     }
@@ -66,7 +68,7 @@ class UserTest extends TestCase
         $oUser = oxNew('oxUser');
         $oUser->delete('userId');
         $oUser->setId('userId');
-        $oUser->oxuser__oxustid = new oxField('IdNumber');
+        $oUser->oxuser__oxustid = new Field('IdNumber');
         $oUser->save();
 
         $oUser = oxNew('oxUser');
@@ -110,7 +112,7 @@ class UserTest extends TestCase
 
         $oUser = oxNew('oxUser');
         $oUser->load('userId');
-        $oUser->oxuser__oxustid = new oxField('IdNumber');
+        $oUser->oxuser__oxustid = new Field('IdNumber');
         $oUser->save();
 
         $oUser = oxNew('oxUser');
@@ -159,13 +161,13 @@ class UserTest extends TestCase
         $oUser = oxNew('oxUser');
         $oUser->delete('userId');
         $oUser->setId('userId');
-        $oUser->oxuser__oxustid = new oxField('IdNumber');
-        $oUser->oxuser__oevattbe_vatinenterdate = new oxField('0000-00-00 00:00:00');
+        $oUser->oxuser__oxustid = new Field('IdNumber');
+        $oUser->oxuser__oevattbe_vatinenterdate = new Field('0000-00-00 00:00:00');
         $oUser->save();
 
         $oUser = oxNew('oxUser');
         $oUser->load('userId');
-        $oUser->oxuser__oxustid = new oxField('IdNumber2');
+        $oUser->oxuser__oxustid = new Field('IdNumber2');
         $oUser->save();
 
         $oUser = oxNew('oxUser');
@@ -184,7 +186,7 @@ class UserTest extends TestCase
         $oUser->delete('userId');
 
         $oUser->setId('userId');
-        $oUser->oxuser__oxustid = new oxField('IdNumber');
+        $oUser->oxuser__oxustid = new Field('IdNumber');
         $oUser->save();
 
         //removing set date
@@ -192,7 +194,7 @@ class UserTest extends TestCase
 
         $oUser = oxNew('oxUser');
         $oUser->load('userId');
-        $oUser->oxuser__oxustid = new oxField('');
+        $oUser->oxuser__oxustid = new Field('');
         $oUser->save();
 
         $oUser = oxNew('oxUser');
@@ -210,13 +212,13 @@ class UserTest extends TestCase
         $oUser = oxNew('oxUser');
         $oUser->delete('userId');
         $oUser->setId('userId');
-        $oUser->oxuser__oxustid = new oxField('IdNumber');
-        $oUser->oxuser__oevattbe_vatinenterdate = new oxField('2014-12-12 12:12:12');
+        $oUser->oxuser__oxustid = new Field('IdNumber');
+        $oUser->oxuser__oevattbe_vatinenterdate = new Field('2014-12-12 12:12:12');
         $oUser->save();
 
         $oUser = oxNew('oxUser');
         $oUser->load('userId');
-        $oUser->oxuser__oxustid = new oxField('');
+        $oUser->oxuser__oxustid = new Field('');
         $oUser->save();
 
         $oUser = oxNew('oxUser');
@@ -233,13 +235,13 @@ class UserTest extends TestCase
         $oUser = oxNew('oxUser');
         $oUser->delete('userId');
         $oUser->setId('userId');
-        $oUser->oxuser__oxustid = new oxField('IdNumber');
-        $oUser->oxuser__oevattbe_vatinenterdate = new oxField('2014-12-12 12:12:12');
+        $oUser->oxuser__oxustid = new Field('IdNumber');
+        $oUser->oxuser__oevattbe_vatinenterdate = new Field('2014-12-12 12:12:12');
         $oUser->save();
 
         $oUser = oxNew('oxUser');
         $oUser->load('userId');
-        $oUser->oxuser__oxustid = new oxField('IdNumber2');
+        $oUser->oxuser__oxustid = new Field('IdNumber2');
         $oUser->save();
 
         $oUser = oxNew('oxUser');

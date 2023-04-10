@@ -6,6 +6,7 @@
 
 namespace OxidEsales\EVatModule\Tests\Unit\Shop;
 
+use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
 use PHPUnit\Framework\TestCase;
 
@@ -127,7 +128,7 @@ class VatSelectorTest extends TestCase
     {
         /** @var oxUser $oUser */
         $oUser = oxNew('oxUser');
-        $oUser->oxuser__oxustid = new oxField('0');
+        $oUser->oxuser__oxustid = new Field('0');
 
         Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'LT');
         Registry::getSession()->setVariable('TBECountryId', 'a7c40f631fc920687.20179984');
@@ -150,7 +151,7 @@ class VatSelectorTest extends TestCase
     {
         /** @var oxUser $oUser */
         $oUser = oxNew('oxUser');
-        $oUser->oxuser__oxustid = new oxField('1');
+        $oUser->oxuser__oxustid = new Field('1');
 
         Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'LT');
         Registry::getSession()->setVariable('TBECountryId', 'a7c40f631fc920687.20179984');

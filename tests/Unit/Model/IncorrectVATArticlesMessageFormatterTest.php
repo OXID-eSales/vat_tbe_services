@@ -6,6 +6,7 @@
 
 namespace OxidEsales\EVatModule\Tests\Unit\Model;
 
+use OxidEsales\Eshop\Core\Field;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -22,7 +23,7 @@ class IncorrectVATArticlesMessageFormatterTest extends TestCase
     {
         /** @var oeVATTBEOxArticle|oxArticle $oArticle */
         $oArticle = oxNew('oxArticle');
-        $oArticle->oxarticles__oxtitle = new oxField('some other name', oxField::T_RAW);
+        $oArticle->oxarticles__oxtitle = new Field('some other name', oxField::T_RAW);
 
         /** @var oeVATTBEIncorrectVATArticlesMessageFormatter $oVATTBEArticleMessageFormer */
         $oVATTBEArticleMessageFormer = oxNew('oeVATTBEIncorrectVATArticlesMessageFormatter');

@@ -7,6 +7,7 @@
 namespace OxidEsales\EVatModule\Tests\Unit\Model;
 
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\Eshop\Core\Field;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -34,7 +35,7 @@ class UserSessionTest extends TestCase
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
 
         $oUser = oxNew('oxUser');
-        $oUser->oxuser__oxcountryid = new oxField('GermanyId');
+        $oUser->oxuser__oxcountryid = new Field('GermanyId');
 
         /** @var oeVATTBETBEUser $oTBEUser */
         $oTBEUser = oxNew('oeVATTBETBEUser', $oUser, $oSession, $oConfig);
@@ -42,7 +43,7 @@ class UserSessionTest extends TestCase
 
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEGeoLocationEvidence'));
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'geo_location');
-        $oUser->oxuser__oxcountryid = new oxField('LithuaniaId');
+        $oUser->oxuser__oxcountryid = new Field('LithuaniaId');
 
         $aExpectedList = array(
             'billing_country' => array(

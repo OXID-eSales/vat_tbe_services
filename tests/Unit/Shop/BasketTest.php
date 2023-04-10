@@ -6,6 +6,7 @@
 
 namespace OxidEsales\EVatModule\Tests\Unit\Shop;
 
+use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
 use PHPUnit\Framework\TestCase;
 
@@ -68,13 +69,13 @@ class BasketTest extends TestCase
         /** @var oxCountry $oCountry */
         $oCountry = oxNew('oxCountry');
         $oCountry->load($sLithuaniaId);
-        $oCountry->oxcountry__oevattbe_appliestbevat = new oxField($blTBECountry);
+        $oCountry->oxcountry__oevattbe_appliestbevat = new Field($blTBECountry);
         $oCountry->save();
 
         /** @var oxArticle $oArticle */
         $oArticle = oxNew('oxArticle');
         $oArticle->setId('_testArticle1');
-        $oArticle->oxarticles__oevattbe_istbeservice = new oxField($blIsArticleTbeService);
+        $oArticle->oxarticles__oevattbe_istbeservice = new Field($blIsArticleTbeService);
         $oArticle->save();
 
         /** @var oxBasket|oeVATTBEOxBasket $oBasket */
@@ -114,13 +115,13 @@ class BasketTest extends TestCase
         /** @var oxCountry $oCountry */
         $oCountry = oxNew('oxCountry');
         $oCountry->setId($sLithuaniaId);
-        $oCountry->oxcountry__oevattbe_appliestbevat = new oxField(true);
+        $oCountry->oxcountry__oevattbe_appliestbevat = new Field(true);
         $oCountry->save();
 
         /** @var oxArticle $oArticle */
         $oArticle = oxNew('oxArticle');
         $oArticle->setId('_testArticle1');
-        $oArticle->oxarticles__oevattbe_istbeservice = new oxField(true);
+        $oArticle->oxarticles__oevattbe_istbeservice = new Field(true);
         $oArticle->save();
 
         /** @var oxBasket|oeVATTBEOxBasket $oBasket */

@@ -6,6 +6,7 @@
 
 namespace OxidEsales\EVatModule\Tests\Unit\Shop;
 
+use OxidEsales\Eshop\Core\Field;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -21,10 +22,10 @@ class CategoryTest extends TestCase
     public function testIsOEVATTBETBE()
     {
         $oCategory = oxNew('oxCategory');
-        $oCategory->oxcategories__oevattbe_istbe = new oxField(1);
+        $oCategory->oxcategories__oevattbe_istbe = new Field(1);
         $this->assertTrue($oCategory->isOeVATTBETBE());
 
-        $oCategory->oxcategories__oevattbe_istbe = new oxField(0);
+        $oCategory->oxcategories__oevattbe_istbe = new Field(0);
         $this->assertFalse($oCategory->isOeVATTBETBE());
     }
 }

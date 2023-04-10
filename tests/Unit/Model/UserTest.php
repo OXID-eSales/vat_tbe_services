@@ -7,6 +7,7 @@
 namespace OxidEsales\EVatModule\Tests\Unit\Model;
 
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\Eshop\Core\Field;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -30,7 +31,7 @@ class UserTest extends TestCase
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
 
         $oUser = oxNew('oxUser');
-        $oUser->oxuser__oxcountryid = new oxField('GermanyId');
+        $oUser->oxuser__oxcountryid = new Field('GermanyId');
 
         /** @var oeVATTBETBEUser $oTBEUser */
         $oTBEUser = oxNew('oeVATTBETBEUser', $oUser, $oSession, $oConfig);
@@ -131,11 +132,11 @@ class UserTest extends TestCase
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
 
         $oUser = oxNew('oxUser');
-        $oUser->oxuser__oxcountryid = new oxField('');
+        $oUser->oxuser__oxcountryid = new Field('');
 
         $oTBEUser = oxNew('oeVATTBETBEUser', $oUser, $oSession, $oConfig);
         $oTBEUser->getOeVATTBETbeCountryId();
-        $oUser->oxuser__oxcountryid = new oxField('LithuaniaId');
+        $oUser->oxuser__oxcountryid = new Field('LithuaniaId');
 
         $this->assertEquals('', $oTBEUser->getOeVATTBETbeCountryId());
     }

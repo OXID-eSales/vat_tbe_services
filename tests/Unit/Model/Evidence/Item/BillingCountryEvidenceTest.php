@@ -6,6 +6,7 @@
 
 namespace OxidEsales\EVatModule\Tests\Unit\Model\Evidence\Item;
 
+use OxidEsales\Eshop\Core\Field;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -26,7 +27,7 @@ class BillingCountryEvidenceTest extends TestCase
     public function testGetCountryId()
     {
         $oUser = new oxUser();
-        $oUser->oxuser__oxcountryid = new oxField('a7c40f631fc920687.20179984');
+        $oUser->oxuser__oxcountryid = new Field('a7c40f631fc920687.20179984');
 
         $oEvidence = new oeVATTBEBillingCountryEvidence($oUser);
 

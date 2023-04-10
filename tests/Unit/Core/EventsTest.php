@@ -7,6 +7,7 @@
 namespace OxidEsales\EVatModule\Tests\Unit\Core;
 
 use PHPUnit\Framework\TestCase;
+use oxDb;
 
 /**
  * This is dummy test.
