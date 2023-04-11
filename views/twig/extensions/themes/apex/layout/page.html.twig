@@ -1,0 +1,10 @@
+{% extends 'layout/page.html.twig' %}
+
+{% block content_main %}
+    {% if oxcmp_basket.showOeVATTBECountryChangedError()  %}
+        {% set oCountry = oxcmp_basket.getOeVATTBECountry() %}
+        {% set sMessage = "OEVATTBE_RESIDENCE_COUNTRY_CHANGED_MESSAGE"|translate(oCountry.getOeVATTBEname()) %}
+        {% include "message/success.html.twig" with {statusMessage: sMessage} %}
+    {% endif %}
+    {{ parent() }}
+{% endblock %}
