@@ -1,0 +1,10 @@
+{% extends 'widget/product/listitem_grid.html.twig' %}
+
+{% block widget_product_listitem_grid_price_value %}
+    {{ parent() }}
+    {% if oViewConf.oeVATTBEShowTBEArticlePriceNotice(product) and oView.isVatIncluded() %}
+        {% if not (product.hasMdVariants() or (oViewConf.showSelectListsInList() and product.getSelections(1)) or product.getVariants()) %}
+            <span class="text-nowrap text-end">**</span>
+        {% endif %}
+    {% endif %}
+{% endblock %}

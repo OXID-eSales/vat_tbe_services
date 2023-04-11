@@ -1,0 +1,23 @@
+{% extends 'page/checkout/inc/basketcontents_list.html.twig' %}
+
+{% block checkout_basketcontents_basketitem_vat %}
+    {# product VAT percent #}
+    <span class="article-vat">
+        {% if oView.isOeVATTBETBEArticleValid(basketitem) %}
+            {{ basketitem.getVatPercent() }} % {{ translate({ ident: "VAT" }) }}
+            {% if oView.oeVATTBEShowVATTBEMark(basketitem) %}
+                {% set markGenerator = oView.getBasketContentMarkGenerator() %}
+                {{ markGenerator.getMark('tbeService') }}
+            {% endif %}
+        {% else %}
+            -
+        {% endif %}
+    </span>
+{% endblock %}
+
+{% block checkout_basketcontents_basketfunctions %}
+    {{ parent() }}
+    {% if oView.oeVATTBEShowVATTBEMarkMessage() %}
+        <div class="alert alert-info">{{ oView.getOeVATTBEMarkMessage() }}</div>
+    {% endif %}
+{% endblock %}

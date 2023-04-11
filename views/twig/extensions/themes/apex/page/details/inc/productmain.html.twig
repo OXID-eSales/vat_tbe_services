@@ -1,0 +1,10 @@
+{% extends 'page/details/inc/productmain.html.twig' %}
+
+{% block details_productmain_price_value %}
+    {{ parent() }}
+    {% if oViewConf.oeVATTBEShowTBEArticlePriceNotice(oDetailsProduct) and oView.isVatIncluded() %}
+        <span class="lead text-nowrap">
+            <span{% if tprice and tprice.getBruttoPrice() > price.getBruttoPrice() %} class="text-danger"{% endif %}>**</span>
+        </span>
+    {% endif %}
+{% endblock %}
