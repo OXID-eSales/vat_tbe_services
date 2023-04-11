@@ -4,10 +4,14 @@
  * See LICENSE file for license details.
  */
 
+namespace OxidEsales\EVatModule\Tests\Integration\Checkout;
+
+use PHPUnit\Framework\TestCase;
+
 /**
  * Testing message formatter in oeVATTBEIncorrectVATArticlesMessageFormatter.
  */
-class Integration_oeVatTbe_checkout_oeVATTBEMessageFormatterTest extends OxidTestCase
+class MessageFormatterTest extends TestCase
 {
 
     /**

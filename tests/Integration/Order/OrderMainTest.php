@@ -4,12 +4,16 @@
  * See LICENSE file for license details.
  */
 
+namespace OxidEsales\EVatModule\Tests\Integration\Order;
+
+use PHPUnit\Framework\TestCase;
+
 /**
  * Testing admin controller class.
  *
  * @covers oeVATTBEOrder_Main
  */
-class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrder_MainTest extends OxidTestCase
+class OrderMainTest extends TestCase
 {
     /**
      * Creates dummy order and checks country was set.

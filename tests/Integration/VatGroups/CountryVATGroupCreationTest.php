@@ -4,15 +4,19 @@
  * See LICENSE file for license details.
  */
 
+namespace OxidEsales\EVatModule\Tests\Integration\VatGroups;
+
+use PHPUnit\Framework\TestCase;
+
 /**
  * Testing oeVATTBECountryVatGroups class.
  *
- * @covers oeVATTBECountryVatGroups
- * @covers oeVATTBECountryVATGroupsDbGateway
- * @covers oeVATTBECountryVATGroup
- * @covers oeVATTBECountryVATGroupsList
+ * @covers CountryVatGroups
+ * @covers CountryVATGroupsDbGateway
+ * @covers CountryVATGroup
+ * @covers CountryVATGroupsList
  */
-class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupCreationTest extends OxidTestCase
+class CountryVATGroupCreationTest extends TestCase
 {
     /**
      * Return different variants of country VAT group data to save.

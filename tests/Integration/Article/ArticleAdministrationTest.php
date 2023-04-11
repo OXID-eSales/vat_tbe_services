@@ -4,12 +4,16 @@
  * See LICENSE file for license details.
  */
 
+namespace OxidEsales\EVatModule\Tests\Integration\Article;
+
+use PHPUnit\Framework\TestCase;
+
 /**
- * Testing VAT TBE administration in category page.
+ * Testing VAT TBE administration in article page.
  *
- * @covers oeVATTBECategoryAdministration
+ * @covers oeVATTBEArticleAdministration
  */
-class Integration_oeVATTBE_category_oeVATTBECategoryAdministrationTest extends OxidTestCase
+class ArticleAdministrationTest extends TestCase
 {
     /**
      * Check if view data is correct.
@@ -36,8 +40,8 @@ class Integration_oeVATTBE_category_oeVATTBECategoryAdministrationTest extends O
         $this->_addData($aData1);
         $this->_addData($aData2);
 
-        /** @var oeVATTBECategoryAdministration $oCategoryAdministration */
-        $oCategoryAdministration = oxNew('oeVATTBECategoryAdministration');
+        /** @var oeVATTBEArticleAdministration $oArticleAdministration */
+        $oArticleAdministration = oxNew('oeVATTBEArticleAdministration');
 
         $oCountryVATGroup1 = oeVATTBECountryVATGroup::createInstance();
         $oCountryVATGroup1->setId(2);
@@ -62,7 +66,7 @@ class Integration_oeVATTBE_category_oeVATTBECategoryAdministrationTest extends O
             ),
         );
 
-        $this->assertEquals($aExpectedViewData, $oCategoryAdministration->getCountryAndVATGroupsData(), 'Data which should go to template is not correct.');
+        $this->assertEquals($aExpectedViewData, $oArticleAdministration->getCountryAndVATGroupsData(), 'Data which should go to template is not correct.');
     }
 
     /**
@@ -81,77 +85,75 @@ class Integration_oeVATTBE_category_oeVATTBECategoryAdministrationTest extends O
     }
 
     /**
-     * Check view data for correct value which shows if category is TBE.
+     * Check view data for correct value which shows if article is TBE service.
      *
-     * @param int $iIsTBECategory is tbe or not
+     * @param int $iIsTBEArticle
      *
      * @dataProvider providerViewDataIsTBEService
      */
-    public function testViewDataIsTBEService($iIsTBECategory)
+    public function testViewDataIsTBEService($iIsTBEArticle)
     {
-        /** @var oxCategory $oCategory */
-        $oCategory = oxNew('oxCategory');
-        $oCategory->setId('_testCategory');
-        $oCategory->oxcategories__oevattbe_istbe = new oxField($iIsTBECategory);
-        $oCategory->oxcategories__oxparentid = new oxField('oxrootid');
-        $oCategory->save();
+        /** @var oeVATTBEOxArticle|oxArticle $oArticle */
+        $oArticle = oxNew('oxArticle');
+        $oArticle->setId('_testArticle');
+        $oArticle->oxarticles__oevattbe_istbeservice = new oxField($iIsTBEArticle);
+        $oArticle->save();
 
-        /** @var oeVATTBECategoryAdministration $oCategoriesAdministration */
-        $oCategoriesAdministration = oxNew('oeVATTBECategoryAdministration');
-        $oCategoriesAdministration->setEditObjectId('_testCategory');
+        /** @var oeVATTBEArticleAdministration $oArticleAdministration */
+        $oArticleAdministration = oxNew('oeVATTBEArticleAdministration');
+        $oArticleAdministration->setEditObjectId('_testArticle');
 
-        $this->assertSame($iIsTBECategory, $oCategoriesAdministration->isCategoryTBE());
+        $this->assertSame($iIsTBEArticle, $oArticleAdministration->isArticleTBE());
     }
 
     /**
      * Checks if selected option is saved rate.
      *
-     * @return oeVATTBECategoryAdministration
+     * @return oeVATTBEArticleAdministration
      */
     public function testSelectedRateForCountry()
     {
-        /** @var oeVATTBECategoryAdministration $oCategoryAdministration */
-        $oCategoryAdministration = oxNew('oeVATTBECategoryAdministration');
+        /** @var oeVATTBEArticleAdministration $oArticleAdministration */
+        $oArticleAdministration = oxNew('oeVATTBEArticleAdministration');
         $aSelectParams = array(
             'a7c40f632e04633c9.47194042' => 2,
             '8f241f110955d3260.55487539' => ''
         );
-
         $this->setRequestParameter('VATGroupsByCountry', $aSelectParams);
-        $oCategoryAdministration->setEditObjectId('_testCategory');
-        $oCategoryAdministration->save();
+        $oArticleAdministration->setEditObjectId('_testArticle');
+        $oArticleAdministration->save();
 
-        $this->assertSame(true, $oCategoryAdministration->isSelected('a7c40f632e04633c9.47194042', '2'));
+        $this->assertSame(true, $oArticleAdministration->isSelected('a7c40f632e04633c9.47194042', '2'));
 
-        return $oCategoryAdministration;
+        return $oArticleAdministration;
     }
 
     /**
      * Checks if rate was not selected.
      *
-     * @param oeVATTBECategoryAdministration $oCategoryAdministration controller
+     * @param oeVATTBEArticleAdministration $oArticleAdministration
      *
      * @depends testSelectedRateForCountry
      *
-     * @return oeVATTBECategoryAdministration
+     * @return oeVATTBEArticleAdministration
      */
-    public function testNotSelectedRateForCountry($oCategoryAdministration)
+    public function testNotSelectedRateForCountry($oArticleAdministration)
     {
-        $this->assertSame(false, $oCategoryAdministration->isSelected('8f241f110955d3260.55487539', ''));
+        $this->assertSame(false, $oArticleAdministration->isSelected('8f241f110955d3260.55487539', ''));
 
-        return $oCategoryAdministration;
+        return $oArticleAdministration;
     }
 
     /**
      * Checks if method returns correct value for non existing country.
      *
-     * @param oeVATTBECategoryAdministration $oCategoryAdministration controller
+     * @param oeVATTBEArticleAdministration $oArticleAdministration
      *
      * @depends testNotSelectedRateForCountry
      */
-    public function testSelectionForNonExistingCountry($oCategoryAdministration)
+    public function testSelectionForNonExistingCountry($oArticleAdministration)
     {
-        $this->assertSame(false, $oCategoryAdministration->isSelected('NoneExistingId', '2'));
+        $this->assertSame(false, $oArticleAdministration->isSelected('NoneExistingId', '2'));
     }
 
     /**

@@ -4,12 +4,16 @@
  * See LICENSE file for license details.
  */
 
+namespace OxidEsales\EVatModule\Tests\Integration\VatGroups;
+
+use PHPUnit\Framework\TestCase;
+
 /**
- * Test class for oeVATTBECategoryVATGroupsPopulatorDbGateway.
+ * Test class for CategoryVATGroupsPopulatorDbGateway.
  *
- * @covers oeVATTBECategoryVATGroupsPopulatorDbGateway
+ * @covers CategoryVATGroupsPopulatorDbGateway
  */
-class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorDbGatewayTest extends OxidTestCase
+class CategoryVATGroupsPopulatorDbGatewayTest extends TestCase
 {
     /**
      * Test populate not existing category data.

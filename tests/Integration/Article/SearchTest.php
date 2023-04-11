@@ -4,10 +4,14 @@
  * See LICENSE file for license details.
  */
 
+namespace OxidEsales\EVatModule\Tests\Integration\Article;
+
+use PHPUnit\Framework\TestCase;
+
 /**
  * Testing extended oxArticle class.
  */
-class Integration_oeVATTBE_article_oeVATTBEOxSearchTest extends OxidTestCase
+class SearchTest extends TestCase
 {
     /**
      * Initialize the fixture.

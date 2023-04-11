@@ -4,12 +4,16 @@
  * See LICENSE file for license details.
  */
 
+namespace OxidEsales\EVatModule\Tests\Integration\VatGroups;
+
+use PHPUnit\Framework\TestCase;
+
 /**
- * Test class for oeVATTBECategoryVATGroupsDbGateway.
+ * Test class for CategoryVATGroupsDbGateway.
  *
- * @covers oeVATTBECategoryVATGroupsDbGateway
+ * @covers CategoryVATGroupsDbGateway
  */
-class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsDbGatewayTest extends OxidTestCase
+class CategoryVATGroupsDbGatewayTest extends TestCase
 {
     /**
      * Testing VAT Group saving to database.

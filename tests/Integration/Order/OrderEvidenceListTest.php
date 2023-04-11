@@ -4,14 +4,14 @@
  * See LICENSE file for license details.
  */
 
-declare(strict_types=1);
+namespace OxidEsales\EVatModule\Tests\Integration\Order;
 
-use OxidEsales\TestingLibrary\UnitTestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Testing oeVATTBEOrderEvidenceList class.
  */
-class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderEvidenceListTest extends UnitTestCase
+class OrderEvidenceListTest extends TestCase
 {
     private $orderEvidenceList;
 

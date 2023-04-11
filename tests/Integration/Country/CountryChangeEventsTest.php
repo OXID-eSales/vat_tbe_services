@@ -4,10 +4,14 @@
  * See LICENSE file for license details.
  */
 
+namespace OxidEsales\EVatModule\Tests\Integration\Country;
+
+use PHPUnit\Framework\TestCase;
+
 /**
  * Testing TBEUser class.
  */
-class Integration_oeVatTbe_userTBECountry_oeVATTBEUserTBECountryChangeEventsTest extends OxidTestCase
+class CountryChangeEventsTest extends TestCase
 {
     protected $backupGlobalsBlacklist = array('_SESSION');
 

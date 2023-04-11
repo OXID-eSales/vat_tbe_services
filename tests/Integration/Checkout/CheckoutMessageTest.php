@@ -4,10 +4,14 @@
  * See LICENSE file for license details.
  */
 
+namespace OxidEsales\EVatModule\Tests\Integration\Checkout;
+
+use PHPUnit\Framework\TestCase;
+
 /**
  * Testing message in checkout process for TBE articles with wrong VAT.
  */
-class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends OxidTestCase
+class CheckoutMessageTest extends TestCase
 {
     /**
      * Prepare articles data: set articles to be TBE.

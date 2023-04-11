@@ -4,13 +4,17 @@
  * See LICENSE file for license details.
  */
 
+namespace OxidEsales\EVatModule\Tests\Integration\VatGroups;
+
+use PHPUnit\Framework\TestCase;
+
 /**
  * Testing oeVATTBEArticleVATGroupsList class.
  *
- * @covers oeVATTBEArticleVATGroupsList
- * @covers oeVATTBEArticleVATGroupsDbGateway
+ * @covers ArticleVATGroupsList
+ * @covers ArticleVATGroupsDbGateway
  */
-class Integration_oeVatTbe_VATGroups_oeVATTBEArticleVATGroupsListTest extends OxidTestCase
+class ArticleVATGroupsListTest extends TestCase
 {
     /**
      * Relations for two countries is passed;

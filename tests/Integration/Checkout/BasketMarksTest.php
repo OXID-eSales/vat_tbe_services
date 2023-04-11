@@ -4,13 +4,17 @@
  * See LICENSE file for license details.
  */
 
+namespace OxidEsales\EVatModule\Tests\Integration\Checkout;
+
+use PHPUnit\Framework\TestCase;
+
 /**
  * Testing oeVATTBEBasket class.
  *
  * @covers oeVATTBEBasket
  * @covers oeVATTBEBasketVATValidator
  */
-class Integration_oeVatTbe_Checkout_oeVATTBEBasketMarksTest extends OxidTestCase
+class BasketMarksTest extends TestCase
 {
 
     /**

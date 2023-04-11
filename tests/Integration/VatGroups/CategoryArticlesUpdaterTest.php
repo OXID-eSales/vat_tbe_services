@@ -4,10 +4,14 @@
  * See LICENSE file for license details.
  */
 
+namespace OxidEsales\EVatModule\Tests\Integration\VatGroups;
+
+use PHPUnit\Framework\TestCase;
+
 /**
  * Test class for.
  */
-class Integration_oeVatTbe_VATGroups_oeVATTBECategoryArticlesUpdaterTest extends OxidTestCase
+class CategoryArticlesUpdaterTest extends TestCase
 {
     /**
      * test populate not existing category data

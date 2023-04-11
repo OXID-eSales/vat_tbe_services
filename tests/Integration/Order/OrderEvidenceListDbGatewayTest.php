@@ -4,12 +4,16 @@
  * See LICENSE file for license details.
  */
 
+namespace OxidEsales\EVatModule\Tests\Integration\Order;
+
+use PHPUnit\Framework\TestCase;
+
 /**
  * Test class for oeVATTBEOrderEvidenceListDbGateway.
  *
  * @covers oeVATTBEOrderEvidenceListDbGateway
  */
-class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderEvidenceListDbGatewayTest extends OxidTestCase
+class OrderEvidenceListDbGatewayTest extends TestCase
 {
 
     /**

@@ -4,13 +4,17 @@
  * See LICENSE file for license details.
  */
 
+namespace OxidEsales\EVatModule\Tests\Integration\Article;
+
+use PHPUnit\Framework\TestCase;
+
 /**
  * Testing extended oxArticle class.
  *
  * @covers oeVATTBEOxArticle
  * @covers oeVATTBETBEArticleCacheKey
  */
-class Integration_oeVATTBE_article_oeVATTBEOxArticleTest extends OxidTestCase
+class ArticleTest extends TestCase
 {
     /**
      * Test case for loading article
