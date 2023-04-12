@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -19,6 +20,11 @@ class Model
 
     /** @var bool Was object information found in database. */
     protected $_blIsLoaded = false;
+
+    public function __construct(
+        protected ModelDbGateway $dbGateway
+    ) {
+    }
 
     /**
      * Sets model id.
@@ -158,8 +164,8 @@ class Model
      *
      * @return ModelDbGateway
      */
-    protected function getDbGateway()
+    protected function getDbGateway(): ModelDbGateway
     {
-        return $this->_oDbGateway;
+        return $this->dbGateway;
     }
 }

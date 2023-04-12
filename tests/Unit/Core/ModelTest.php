@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -7,6 +8,10 @@
 namespace OxidEsales\EVatModule\Tests\Unit\Core;
 
 use OxidEsales\EVatModule\Core\Model;
+use OxidEsales\EVatModule\Model\DbGateway\ArticleVATGroupsDbGateway;
+use OxidEsales\EVatModule\Model\DbGateway\CategoryVATGroupsDbGateway;
+use OxidEsales\EVatModule\Model\DbGateway\CountryVATGroupsDbGateway;
+use OxidEsales\EVatModule\Model\DbGateway\OrderEvidenceListDbGateway;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -16,117 +21,103 @@ use PHPUnit\Framework\TestCase;
  */
 class ModelTest extends TestCase
 {
+    public function gatewayProvider()
+    {
+        return [
+            [ArticleVATGroupsDbGateway::class],
+            [CategoryVATGroupsDbGateway::class],
+            [CountryVATGroupsDbGateway::class],
+            [OrderEvidenceListDbGateway::class],
+        ];
+    }
+
     /**
      * Loading of data by id, returned by getId method
+     *
+     * @dataProvider gatewayProvider
      */
-    public function testLoadWhenIdIsSetToModel()
+    public function testLoadWhenIdIsSetToModel(string $gateway): void
     {
-        $sId = 'RecordIdToLoad';
-        $aData = ['testkey' => 'testValue'];
-        $oGateway = $this->_createStub('TestGateway', ['load' => $aData]);
+        $data = ['testkey' => 'testValue'];
+        $gatewayMock = $this->createPartialMock($gateway, ['load']);
+        $gatewayMock->expects($this->any())->method('load')->will($this->returnValue($data));
+        $actualModel = $this->_getModel($gatewayMock, 'id-to-load');
 
-        $oModel = $this->_getModel($oGateway, $sId);
-
-        $this->assertTrue($oModel->load());
-        $this->assertEquals($aData, $oModel->getData());
+        $this->assertTrue($actualModel->load());
+        $this->assertEquals($data, $actualModel->getData());
     }
 
     /**
      * Loading of data by passed id
+     *
+     * @dataProvider gatewayProvider
      */
-    public function testLoadWhenIdPassedIdViaParameter()
+    public function testLoadWhenIdPassedIdViaParameter(string $gateway): void
     {
-        $sId = 'RecordIdToLoad';
-        $aData = ['testkey' => 'testValue'];
-        $oGateway = $this->_createStub('TestGateway', ['load' => $aData]);
+        $data = ['testkey' => 'testValue'];
+        $gatewayMock = $this->createPartialMock($gateway, ['load']);
+        $gatewayMock->expects($this->any())->method('load')->will($this->returnValue($data));
+        $actualModel = $this->_getModel($gatewayMock);
 
-        $oModel = $this->_getModel($oGateway);
-
-        $this->assertTrue($oModel->load($sId));
-        $this->assertEquals($aData, $oModel->getData());
+        $this->assertTrue($actualModel->load('id-to-load'));
+        $this->assertEquals($data, $actualModel->getData());
     }
 
     /**
      * Is loaded method returns false when record does not exists in database
+     *
+     * @dataProvider gatewayProvider
      */
-    public function testIsLoadedWhenDatabaseRecordNotFound()
+    public function testIsLoadedWhenDatabaseRecordNotFound(string $gateway): void
     {
-        $oGateway = $this->_createStub('TestGateway', ['load' => null]);
+        $gatewayMock = $this->createPartialMock($gateway, ['load']);
+        $gatewayMock->expects($this->any())->method('load')->will($this->returnValue(null));
+        $actualModel = $this->_getModel($gatewayMock);
 
-        $oModel = $this->_getModel($oGateway);
-        $oModel->load();
-
-        $this->assertFalse($oModel->isLoaded());
+        $this->assertFalse($actualModel->load());
     }
 
     /**
-     * Is loaded method returns false when record does not exists in database
+     * @dataProvider gatewayProvider
      */
-    public function testIsLoadedWhenDatabaseRecordFound()
+    public function testIsLoadedWhenDatabaseRecordFound(string $gateway): void
     {
-        $oGateway = $this->_createStub('TestGateway', ['load' => ['oeTBEVATId' => 'testId']]);
+        $data = ['oeTBEVATId' => 'testId'];
+        $gatewayMock = $this->createPartialMock($gateway, ['load']);
+        $gatewayMock->expects($this->any())->method('load')->will($this->returnValue($data));
+        $actualModel = $this->_getModel($gatewayMock);
 
-        $oModel = $this->_getModel($oGateway);
-        $oModel->load();
-
-        $this->assertTrue($oModel->isLoaded());
+        $this->assertTrue($actualModel->load());
     }
 
     /**
-     * Is loaded method returns false when record does not exists in database
+     * @dataProvider gatewayProvider
      */
-    public function testClearingDataAfterDeletion()
+    public function testClearingDataAfterDeletion(string $gateway)
     {
-        $oGateway = $this->_createStub('TestGateway', ['delete' => true]);
+        $gatewayMock = $this->createPartialMock($gateway, ['delete']);
+        $gatewayMock->expects($this->any())->method('delete')->will($this->returnValue(true));
+        $actualModel = $this->_getModel($gatewayMock);
+        $actualModel->setData(['some_field' => 'some_entry']);
+        $actualModel->delete();
 
-        $oModel = $this->_getModel($oGateway);
-        $oModel->setData(['some_field' => 'some_entry']);
-        $oModel->delete();
-
-        $this->assertEquals([], $oModel->getData());
+        $this->assertEquals([], $actualModel->getData());
     }
 
     /**
      * Creates Model with mocked abstract methods
      *
-     * @param object $oGateway
-     * @param string $sId
-     *
+     * @param $gateway
+     * @param ?string $id
      * @return Model
      */
-    protected function _getModel($oGateway, $sId = null)
+    protected function _getModel($gateway, string $id = null): Model
     {
-        $oModel = oxNew(Model::class, $oGateway);
-        if ($sId) {
-            $oModel->setId($sId);
+        $model = oxNew(Model::class, $gateway);
+        if ($id) {
+            $model->setId($id);
         }
 
-        return $oModel;
-    }
-
-    /**
-     * Creates stub object from given class
-     *
-     * @param string $sClass       Class name
-     * @param array  $aMethods     Assoc array with method => value
-     * @param array  $aTestMethods Array with test methods for mocking
-     *
-     * @return mixed
-     */
-    protected function _createStub($sClass, $aMethods, $aTestMethods = [])
-    {
-        $aMockedMethods = array_unique(array_merge(array_keys($aMethods), $aTestMethods));
-
-        $oObject = $this->createPartialMock($sClass, $aMockedMethods);
-
-        foreach ($aMethods as $sMethod => $sValue) {
-            if (!in_array($sMethod, $aTestMethods)) {
-                $oObject->expects($this->any())
-                    ->method($sMethod)
-                    ->will($this->returnValue($sValue));
-            }
-        }
-
-        return $oObject;
+        return $model;
     }
 }

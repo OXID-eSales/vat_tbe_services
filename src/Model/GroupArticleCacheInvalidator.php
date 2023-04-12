@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -8,12 +9,11 @@ namespace OxidEsales\EVatModule\Model;
 
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\EshopEnterprise\Core\Cache\Generic\Cache;
-use OxidEsales\EVatModule\Core\Model;
 
 /**
  * VAT Groups handling class
  */
-class GroupArticleCacheInvalidator extends Model
+class GroupArticleCacheInvalidator
 {
     /** @var Cache Cache backend. */
     private $_oCacheBackend = null;

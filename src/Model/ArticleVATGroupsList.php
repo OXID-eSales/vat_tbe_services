@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -7,7 +8,6 @@
 namespace OxidEsales\EVatModule\Model;
 
 use OxidEsales\EVatModule\Core\Model;
-use OxidEsales\EVatModule\Model\DbGateway\ArticleVATGroupsDbGateway;
 
 /**
  * VAT Groups handling class
@@ -16,12 +16,6 @@ class ArticleVATGroupsList extends Model
 {
     /** @var array Model data. */
     protected $_aData = array();
-
-    public function __construct(
-        protected ArticleVATGroupsDbGateway $_oDbGateway
-    )
-    {
-    }
 
     /**
      * Method for model saving (insert and update data).

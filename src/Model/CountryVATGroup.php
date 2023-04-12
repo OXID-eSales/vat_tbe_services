@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -7,7 +8,6 @@
 namespace OxidEsales\EVatModule\Model;
 
 use OxidEsales\EVatModule\Core\Model;
-use OxidEsales\EVatModule\Model\DbGateway\CountryVATGroupsDbGateway;
 
 /**
  * VAT Group handling class
@@ -15,12 +15,6 @@ use OxidEsales\EVatModule\Model\DbGateway\CountryVATGroupsDbGateway;
 class CountryVATGroup extends Model
 {
     private $_oVATGroupArticleCacheInvalidator = null;
-
-    public function __construct(
-        protected CountryVATGroupsDbGateway $_oDbGateway
-    )
-    {
-    }
 
     /**
      * Sets VAT group articles cache invalidator.
