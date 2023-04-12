@@ -8,7 +8,10 @@ namespace OxidEsales\EVatModule\Tests\Unit\Shop;
 
 use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EVatModule\Shop\Article;
+use OxidEsales\EVatModule\Shop\VatSelector;
 use PHPUnit\Framework\TestCase;
+use OxidEsales\Eshop\Application\Model\User;
 
 /**
  * Testing extended oxUser class.
@@ -17,14 +20,14 @@ use PHPUnit\Framework\TestCase;
  */
 class VatSelectorTest extends TestCase
 {
-    public function providerArticleUserVatCalculationWhenHasTbeVatAndIsTbeArticle()
+    public function providerArticleUserVatCalculationWhenHasTbeVatAndIsTbeArticle(): array
     {
-        return array(
-            array(100),
-            array(19),
-            array(0),
-            array(-25),
-        );
+        return [
+            [100],
+            [19],
+            [0],
+            [-25],
+        ];
     }
 
     /**
@@ -34,11 +37,11 @@ class VatSelectorTest extends TestCase
      */
     public function testArticleUserVatCalculationWhenHasTbeVatAndIsTbeArticle($iVat)
     {
-        $oArticle = $this->getMock('oeVatTbeOxArticle', array('getOeVATTBETBEVat', 'isOeVATTBETBEService'));
+        $oArticle = $this->createPartialMock(Article::class, ['getOeVATTBETBEVat', 'isOeVATTBETBEService']);
         $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->will($this->returnValue($iVat));
         $oArticle->expects($this->any())->method('isOeVATTBETBEService')->will($this->returnValue(true));
 
-        $oVatSelector = oxNew('oxVatSelector');
+        $oVatSelector = oxNew(VatSelector::class);
 
         $this->assertSame($iVat, $oVatSelector->getArticleUserVat($oArticle));
     }
@@ -49,11 +52,11 @@ class VatSelectorTest extends TestCase
      */
     public function testArticleUserVatCalculationWhenTbeVatNotSetAndIsTbeArticle()
     {
-        $oArticle = $this->getMock('oeVatTbeOxArticle', array('getOeVATTBETBEVat', 'isOeVATTBETBEService'));
+        $oArticle = $this->createPartialMock(Article::class, ['getOeVATTBETBEVat', 'isOeVATTBETBEService']);
         $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->will($this->returnValue(null));
         $oArticle->expects($this->any())->method('isOeVATTBETBEService')->will($this->returnValue(true));
 
-        $oVatSelector = oxNew('oxVatSelector');
+        $oVatSelector = oxNew(VatSelector::class);
 
         $this->assertSame(false, $oVatSelector->getArticleUserVat($oArticle));
     }
@@ -64,11 +67,11 @@ class VatSelectorTest extends TestCase
      */
     public function testArticleUserVatCalculationWhenTbeVatSetAndIsNotTbeArticle()
     {
-        $oArticle = $this->getMock('oeVatTbeOxArticle', array('getOeVATTBETBEVat', 'isOeVATTBETBEService'));
+        $oArticle = $this->createPartialMock(Article::class, ['getOeVATTBETBEVat', 'isOeVATTBETBEService']);
         $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->will($this->returnValue(15));
         $oArticle->expects($this->any())->method('isOeVATTBETBEService')->will($this->returnValue(false));
 
-        $oVatSelector = oxNew('oxVatSelector');
+        $oVatSelector = oxNew(VatSelector::class);
 
         $this->assertSame(false, $oVatSelector->getArticleUserVat($oArticle));
     }
@@ -78,12 +81,14 @@ class VatSelectorTest extends TestCase
      */
     public function testArticleUserVatCalculationWhenIsAdmin()
     {
-        $oArticle = $this->getMock('oeVatTbeOxArticle', array('getOeVATTBETBEVat', 'isOeVATTBETBEService'));
+        $oArticle = $this->createPartialMock(Article::class, ['getOeVATTBETBEVat', 'isOeVATTBETBEService']);
         $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->will($this->returnValue(15));
         $oArticle->expects($this->any())->method('isOeVATTBETBEService')->will($this->returnValue(true));
-        $this->setAdminMode(true);
 
-        $oVatSelector = oxNew('oxVatSelector');
+        Registry::getSession()->setAdminMode(true);
+        Registry::getConfig()->setAdminMode(true);
+
+        $oVatSelector = oxNew(VatSelector::class);
 
         $this->assertSame(false, $oVatSelector->getArticleUserVat($oArticle));
     }
@@ -95,11 +100,11 @@ class VatSelectorTest extends TestCase
     {
         Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
         Registry::getSession()->setVariable('TBECountryId', 'a7c40f631fc920687.20179984');
-        $oArticle = $this->getMock('oeVatTbeOxArticle', array('getOeVATTBETBEVat', 'isOeVATTBETBEService'));
+        $oArticle = $this->createPartialMock(Article::class, ['getOeVATTBETBEVat', 'isOeVATTBETBEService']);
         $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->will($this->returnValue(15));
         $oArticle->expects($this->any())->method('isOeVATTBETBEService')->will($this->returnValue(true));
 
-        $oVatSelector = oxNew('oxVatSelector');
+        $oVatSelector = oxNew(VatSelector::class);
 
         $this->assertSame(false, $oVatSelector->getArticleUserVat($oArticle));
     }
@@ -111,11 +116,11 @@ class VatSelectorTest extends TestCase
     {
         Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'LT');
         Registry::getSession()->setVariable('TBECountryId', 'a7c40f631fc920687.20179984');
-        $oArticle = $this->getMock('oeVatTbeOxArticle', array('getOeVATTBETBEVat', 'isOeVATTBETBEService'));
+        $oArticle = $this->createPartialMock(Article::class, ['getOeVATTBETBEVat', 'isOeVATTBETBEService']);
         $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->will($this->returnValue(15));
         $oArticle->expects($this->any())->method('isOeVATTBETBEService')->will($this->returnValue(true));
 
-        $oVatSelector = oxNew('oxVatSelector');
+        $oVatSelector = oxNew(VatSelector::class);
 
         $this->assertSame(15, $oVatSelector->getArticleUserVat($oArticle));
     }
@@ -126,19 +131,19 @@ class VatSelectorTest extends TestCase
      */
     public function testGetArticleForNotBusinessCustomer()
     {
-        /** @var oxUser $oUser */
-        $oUser = oxNew('oxUser');
+        /** @var User $oUser */
+        $oUser = oxNew(User::class);
         $oUser->oxuser__oxustid = new Field('0');
 
         Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'LT');
         Registry::getSession()->setVariable('TBECountryId', 'a7c40f631fc920687.20179984');
-        $oArticle = $this->getMock('oeVatTbeOxArticle', array('getOeVATTBETBEVat', 'isOeVATTBETBEService'));
+        $oArticle = $this->createPartialMock(Article::class, ['getOeVATTBETBEVat', 'isOeVATTBETBEService']);
         $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->will($this->returnValue(15));
         $oArticle->expects($this->any())->method('isOeVATTBETBEService')->will($this->returnValue(true));
         $oArticle->setArticleUser($oUser);
 
-        /** @var oeVATTBEOxVatSelector $oVatSelector */
-        $oVatSelector = oxNew('oeVATTBEOxVatSelector');
+        /** @var VatSelector $oVatSelector */
+        $oVatSelector = oxNew(VatSelector::class);
 
         $this->assertSame(15, $oVatSelector->getArticleUserVat($oArticle));
     }
@@ -149,19 +154,19 @@ class VatSelectorTest extends TestCase
      */
     public function testGetArticleForBusinessCustomer()
     {
-        /** @var oxUser $oUser */
-        $oUser = oxNew('oxUser');
+        /** @var User $oUser */
+        $oUser = oxNew(User::class);
         $oUser->oxuser__oxustid = new Field('1');
 
         Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'LT');
         Registry::getSession()->setVariable('TBECountryId', 'a7c40f631fc920687.20179984');
-        $oArticle = $this->getMock('oeVatTbeOxArticle', array('getOeVATTBETBEVat', 'isOeVATTBETBEService'));
+        $oArticle = $this->createPartialMock(Article::class, ['getOeVATTBETBEVat', 'isOeVATTBETBEService']);
         $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->will($this->returnValue(15));
         $oArticle->expects($this->any())->method('isOeVATTBETBEService')->will($this->returnValue(true));
         $oArticle->setArticleUser($oUser);
 
-        /** @var oeVATTBEOxVatSelector $oVatSelector */
-        $oVatSelector = oxNew('oeVATTBEOxVatSelector');
+        /** @var VatSelector $oVatSelector */
+        $oVatSelector = oxNew(VatSelector::class);
 
         $this->assertNotSame(15, $oVatSelector->getArticleUserVat($oArticle));
         $this->assertEquals(false, $oVatSelector->getArticleUserVat($oArticle));

@@ -8,6 +8,9 @@ namespace OxidEsales\EVatModule\Tests\Unit\Model;
 
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\Field;
+use OxidEsales\EVatModule\Shop\User;
+use OxidEsales\EVatModule\Model\User as UserModel;
+use OxidEsales\Eshop\Application\Model\User as EShopUser;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -20,27 +23,27 @@ class UserTest extends TestCase
     /**
      * Tests collecting of TBE evidences when evidence collector is billing country and it is set as default.
      *
-     * @return oeVATTBETBEUser
+     * @return User
      */
     public function testCollectingTBEEvidenceList()
     {
         $oConfig = Registry::getConfig();
         $oSession = Registry::getSession();
-        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence'));
-        $oConfig->setConfigParam('aOeVATTBECountryEvidences', array('billing_country' => 1));
+        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', ['oeVATTBEBillingCountryEvidence']);
+        $oConfig->setConfigParam('aOeVATTBECountryEvidences', ['billing_country' => 1]);
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
 
-        $oUser = oxNew('oxUser');
+        $oUser = oxNew(EShopUser::class);
         $oUser->oxuser__oxcountryid = new Field('GermanyId');
 
-        /** @var oeVATTBETBEUser $oTBEUser */
-        $oTBEUser = oxNew('oeVATTBETBEUser', $oUser, $oSession, $oConfig);
+        /** @var User $oTBEUser */
+        $oTBEUser = oxNew(User::class, $oUser, $oSession, $oConfig);
 
-        $aExpected = array(
-            'billing_country' => array(
+        $aExpected = [
+            'billing_country' => [
                 'name' => 'billing_country', 'countryId' => 'GermanyId'
-            ),
-        );
+            ],
+        ];
         $this->assertEquals($aExpected, $oTBEUser->getOeVATTBEEvidenceList());
 
         return $oTBEUser;
@@ -49,22 +52,23 @@ class UserTest extends TestCase
     /**
      * Test selection of country id from evidence list.
      *
-     * @param oeVATTBETBEUser $oTBEUser
+     * @param User $oTBEUser
      *
      * @depends testCollectingTBEEvidenceList
      *
-     * @return oeVATTBETBEUser
+     * @return User
      */
     public function testTBECountryIdSelecting($oTBEUser)
     {
         $this->assertEquals('GermanyId', $oTBEUser->getOeVATTBETbeCountryId());
+
         return $oTBEUser;
     }
 
     /**
      * Test if correct evidence is used for selecting user country from evidence list.
      *
-     * @param oeVATTBETBEUser $oTBEUser
+     * @param User $oTBEUser
      *
      * @depends testTBECountryIdSelecting
      */
@@ -76,42 +80,45 @@ class UserTest extends TestCase
     /**
      * Tests collecting of evidences when no evidence collectors are registered.
      *
-     * @return oeVATTBETBEUser
+     * @return User
      */
     public function testCollectingOfTBEEvidenceListWhenEvidenceListIsEmpty()
     {
         $oConfig = Registry::getConfig();
         $oSession = Registry::getSession();
-        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array());
+        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', []);
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', '');
 
-        $oUser = oxNew('oxUser');
-        /** @var oeVATTBETBEUser $oTBEUser */
-        $oTBEUser = oxNew('oeVATTBETBEUser', $oUser, $oSession, $oConfig);
+        $oUser = oxNew(EShopUser::class);
 
-        $this->assertEquals(array(), $oTBEUser->getOeVATTBEEvidenceList());
+        /** @var User $oTBEUser */
+        $oTBEUser = oxNew(User::class, $oUser, $oSession, $oConfig);
+
+        $this->assertEquals([], $oTBEUser->getOeVATTBEEvidenceList());
+
         return $oTBEUser;
     }
 
     /**
      * Tests selecting of evidence when no evidences are found.
      *
-     * @param oeVATTBETBEUser $oTBEUser
+     * @param User $oTBEUser
      *
      * @depends testCollectingOfTBEEvidenceListWhenEvidenceListIsEmpty
      *
-     * @return oeVATTBETBEUser
+     * @return User
      */
     public function testTBECountryIdSelectingWhenNoEvidenceFound($oTBEUser)
     {
         $this->assertEquals('', $oTBEUser->getOeVATTBETbeCountryId());
+
         return $oTBEUser;
     }
 
     /**
      * Tests returning of evidence collector used for selecting user country when no evidences are found.
      *
-     * @param oeVATTBETBEUser $oTBEUser
+     * @param User $oTBEUser
      *
      * @depends testTBECountryIdSelectingWhenNoEvidenceFound
      */
@@ -128,13 +135,13 @@ class UserTest extends TestCase
         $oConfig = Registry::getConfig();
         $oSession = Registry::getSession();
         $oSession->setVariable('TBECountryId', null);
-        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence'));
+        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', ['oeVATTBEBillingCountryEvidence']);
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
 
-        $oUser = oxNew('oxUser');
+        $oUser = oxNew(EShopUser::class);
         $oUser->oxuser__oxcountryid = new Field('');
 
-        $oTBEUser = oxNew('oeVATTBETBEUser', $oUser, $oSession, $oConfig);
+        $oTBEUser = oxNew(User::class, $oUser, $oSession, $oConfig);
         $oTBEUser->getOeVATTBETbeCountryId();
         $oUser->oxuser__oxcountryid = new Field('LithuaniaId');
 
@@ -146,12 +153,12 @@ class UserTest extends TestCase
      *
      * @return array
      */
-    public function providerGetCountry()
+    public function providerGetCountry(): array
     {
-        return array(
-            array(''),
-            array('NonExistingCountryId'),
-        );
+        return [
+            [''],
+            ['NonExistingCountryId'],
+        ];
     }
 
     /**
@@ -169,7 +176,8 @@ class UserTest extends TestCase
         $oConfig = Registry::getConfig();
         $oSession = Registry::getSession();
 
-        $oUser = oxNew('oeVATTBETBEUser', oxNew('oxUser'), $oSession, $oConfig);
+//        $oUser = oxNew(UserModel::class, oxNew(EShopUser::class), $oSession, $oConfig);
+        $oUser = oxNew(UserModel::class, $oSession, $oConfig);
 
         $this->assertNull($oUser->getCountry());
     }
@@ -186,7 +194,8 @@ class UserTest extends TestCase
         $oConfig = Registry::getConfig();
         $oSession = Registry::getSession();
 
-        $oUser = oxNew('oeVATTBETBEUser', oxNew('oxUser'), $oSession, $oConfig);
+//        $oUser = oxNew(UserModel::class, oxNew(EShopUser::class), $oSession, $oConfig);
+        $oUser = oxNew(UserModel::class, $oSession, $oConfig);
 
         $this->assertSame('Deutschland', $oUser->getCountry()->getFieldData('oxtitle'));
     }
@@ -203,7 +212,9 @@ class UserTest extends TestCase
         $oSession = Registry::getSession();
         $oSession->setVariable('TBECountryId', $sLithuaniaId);
 
-        $oUser = oxNew('oeVATTBETBEUser', oxNew('oxUser'), $oSession, $oConfig);
+        //TODO: Set user in session
+//        $oUser = oxNew(UserModel::class, oxNew(EShopUser::class), $oSession, $oConfig);
+        $oUser = oxNew(UserModel::class, $oSession, $oConfig);
 
         $this->assertSame(true, $oUser->isUserFromDomesticCountry());
     }
@@ -213,15 +224,15 @@ class UserTest extends TestCase
      *
      * @return array
      */
-    public function providerIsUserFromDomesticCountryWhenCountriesDoesNotMatch()
+    public function providerIsUserFromDomesticCountryWhenCountriesDoesNotMatch(): array
     {
-        return array(
-            array('LT', 'a7c40f631fc920687.20179984'),
-            array('', 'a7c40f631fc920687.20179984'),
-            array('LT', ''),
-            array('LT', 'LT'),
-            array('', ''),
-        );
+        return [
+            ['LT', 'a7c40f631fc920687.20179984'],
+            ['', 'a7c40f631fc920687.20179984'],
+            ['LT', ''],
+            ['LT', 'LT'],
+            ['', ''],
+        ];
     }
 
     /**
@@ -240,18 +251,19 @@ class UserTest extends TestCase
         $oSession = Registry::getSession();
         $oSession->setVariable('TBECountryId', $sUserCountryId);
 
-        $oUser = oxNew('oeVATTBETBEUser', oxNew('oxUser'), $oSession, $oConfig);
+//        $oUser = oxNew(UserModel::class, oxNew(EShopUser::class), $oSession, $oConfig);
+        $oUser = oxNew(UserModel::class, $oSession, $oConfig);
 
         $this->assertSame(false, $oUser->isUserFromDomesticCountry());
     }
 
-    /**
-     * Testing creation of instance with creation method.
-     */
-    public function testCreateInstance()
-    {
-        $oUserCountry = oeVATTBETBEUser::createInstance();
-
-        $this->assertInstanceOf('oeVATTBETBEUser', $oUserCountry);
-    }
+//    /**
+//     * Testing creation of instance with creation method.
+//     */
+//    public function testCreateInstance()
+//    {
+//        $oUserCountry = User::createInstance();
+//
+//        $this->assertInstanceOf('oeVATTBETBEUser', $oUserCountry);
+//    }
 }

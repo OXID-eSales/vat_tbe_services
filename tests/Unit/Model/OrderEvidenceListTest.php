@@ -6,6 +6,8 @@
 
 namespace OxidEsales\EVatModule\Tests\Unit\Model;
 
+use OxidEsales\EVatModule\Model\DbGateway\OrderEvidenceListDbGateway;
+use OxidEsales\EVatModule\Model\OrderEvidenceList;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -20,12 +22,12 @@ class OrderEvidenceListTest extends TestCase
      */
     public function testSavingEvidenceList()
     {
-        $aData = array('evidence' => 'evidenceData');
-        $oGateway = $this->getMock('TestGateway', array('save'));
-        $oGateway->expects($this->once())->method('save')->with(array('orderId' => 'order_id', 'evidenceList' => $aData));
+        $aData = ['evidence' => 'evidenceData'];
+        $oGateway = $this->createPartialMock(OrderEvidenceListDbGateway::class, ['save']);
+        $oGateway->expects($this->once())->method('save')->with(['orderId' => 'order_id', 'evidenceList' => $aData]);
 
-        /** @var oeVATTBEOrderEvidenceList $oList */
-        $oList = oxNew('oeVATTBEOrderEvidenceList', $oGateway);
+        /** @var OrderEvidenceList $oList */
+        $oList = oxNew(OrderEvidenceList::class, $oGateway);
 
         $oList->setId('order_id');
         $oList->setData($aData);
@@ -38,11 +40,11 @@ class OrderEvidenceListTest extends TestCase
      */
     public function testLoadingEvidenceList()
     {
-        $aData = array('evidence' => 'evidenceData');
-        $oGateway = $this->_createStub('TestGateway', array('load' => $aData));
+        $aData = ['evidence' => 'evidenceData'];
+        $oGateway = $this->_createStub(['load' => $aData]);
 
-        /** @var oeVATTBEOrderEvidenceList $oList */
-        $oList = oxNew('oeVATTBEOrderEvidenceList', $oGateway);
+        /** @var OrderEvidenceList $oList */
+        $oList = oxNew(OrderEvidenceList::class, $oGateway);
         $oList->load('order_id');
 
         $this->assertEquals($aData, $oList->getData());
@@ -53,12 +55,12 @@ class OrderEvidenceListTest extends TestCase
      */
     public function testDeletingEvidenceList()
     {
-        $oGateway = $this->getMock('TestGateway', array('load', 'delete'));
-        $oGateway->expects($this->any())->method('load')->will($this->returnValue(array('someData')));
+        $oGateway = $this->createPartialMock(OrderEvidenceListDbGateway::class, ['load', 'delete']);
+        $oGateway->expects($this->any())->method('load')->will($this->returnValue(['someData']));
         $oGateway->expects($this->once())->method('delete')->with('order_id');
 
-        /** @var oeVATTBEOrderEvidenceList $oList */
-        $oList = oxNew('oeVATTBEOrderEvidenceList', $oGateway);
+        /** @var OrderEvidenceList $oList */
+        $oList = oxNew(OrderEvidenceList::class, $oGateway);
         $oList->load('order_id');
 
         $oList->delete();
@@ -73,11 +75,11 @@ class OrderEvidenceListTest extends TestCase
      *
      * @return mixed
      */
-    protected function _createStub($sClass, $aMethods, $aTestMethods = array())
+    protected function _createStub($aMethods, $aTestMethods = [])
     {
         $aMockedMethods = array_unique(array_merge(array_keys($aMethods), $aTestMethods));
 
-        $oObject = $this->getMock($sClass, $aMockedMethods, array(), '', false);
+        $oObject = $this->createPartialMock(OrderEvidenceListDbGateway::class, $aMockedMethods);
 
         foreach ($aMethods as $sMethod => $sValue) {
             if (!in_array($sMethod, $aTestMethods)) {

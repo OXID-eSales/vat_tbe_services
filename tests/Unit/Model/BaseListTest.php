@@ -6,10 +6,11 @@
 
 namespace OxidEsales\EVatModule\Tests\Unit\Model;
 
+use OxidEsales\EVatModule\Model\BaseList;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Test class for oeVATTBEList.
+ * Test class for BaseList.
  *
  * @covers BaseList
  */
@@ -21,14 +22,14 @@ class BaseListTest extends TestCase
      */
     public function testIteratingThroughItems()
     {
-        $oList = new oeVATTBEList(array(1, 2));
+        $oList = new BaseList([1, 2]);
 
-        $aElements = array();
+        $aElements = [];
         foreach ($oList as $iItem) {
             $aElements[] = $iItem;
         }
 
-        $this->assertEquals(array(1, 2), $aElements);
+        $this->assertEquals([1, 2], $aElements);
     }
 
     /**
@@ -37,14 +38,14 @@ class BaseListTest extends TestCase
      */
     public function testIteratingThroughItemsWhenListIsEmpty()
     {
-        $oList = new oeVATTBEList();
+        $oList = new BaseList();
 
-        $aElements = array();
+        $aElements = [];
         foreach ($oList as $iItem) {
             $aElements[] = $iItem;
         }
 
-        $this->assertEquals(array(), $aElements);
+        $this->assertEquals([], $aElements);
     }
 
     /**
@@ -55,17 +56,17 @@ class BaseListTest extends TestCase
      */
     public function testIteratingMultipleTimes()
     {
-        $oList = new oeVATTBEList(array(1,2));
+        $oList = new BaseList([1, 2]);
 
         foreach ($oList as $iItem) {
         }
 
-        $aElements = array();
+        $aElements = [];
         foreach ($oList as $iItem) {
             $aElements[] = $iItem;
         }
 
-        $this->assertEquals(array(1, 2), $aElements);
+        $this->assertEquals([1, 2], $aElements);
     }
 
     /**
@@ -74,10 +75,10 @@ class BaseListTest extends TestCase
      */
     public function testReturningArray()
     {
-        $oList = new oeVATTBEList(array(1,2));
+        $oList = new BaseList([1, 2]);
         $oList->add(3);
 
-        $this->assertEquals(array(1, 2, 3), $oList->getArray());
+        $this->assertEquals([1, 2, 3], $oList->getArray());
     }
 
     /**
@@ -86,11 +87,11 @@ class BaseListTest extends TestCase
      */
     public function testAdditionOfItemsToEmptyList()
     {
-        $oList = new oeVATTBEList();
+        $oList = new BaseList();
         $oList->add(1);
         $oList->add(2);
 
-        $this->assertEquals(array(1, 2), $oList->getArray());
+        $this->assertEquals([1, 2], $oList->getArray());
     }
 
     /**
@@ -99,11 +100,11 @@ class BaseListTest extends TestCase
      */
     public function testAdditionOfItemsToNotEmptyList()
     {
-        $oList = new oeVATTBEList(array(1,2));
+        $oList = new BaseList([1, 2]);
         $oList->add(1);
         $oList->add(2);
 
-        $this->assertEquals(array(1, 2, 1, 2), $oList->getArray());
+        $this->assertEquals([1, 2, 1, 2], $oList->getArray());
     }
 
     /**
@@ -112,7 +113,7 @@ class BaseListTest extends TestCase
      */
     public function testCountingOfListItems()
     {
-        $oList = new oeVATTBEList(array(1,2));
+        $oList = new BaseList([1, 2]);
 
         $this->assertEquals(2, count($oList));
     }

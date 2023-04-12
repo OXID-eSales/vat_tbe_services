@@ -6,6 +6,10 @@
 
 namespace OxidEsales\EVatModule\Tests\Unit\Model\Evidence\Item;
 
+use OxidEsales\EshopCommunity\Core\Registry;
+use OxidEsales\EVatModule\Model\Evidence\Item\GeoLocationEvidence;
+use OxidEsales\EVatModule\Shop\User;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -17,18 +21,28 @@ class GeoLocationEvidenceTest extends TestCase
 {
     public function testGetId()
     {
-        /** @var oxUser|PHPUnit_Framework_MockObject_MockObject $oUser */
-        $oUser = $this->getMock('oeVATTBEOxUser', array(), array(), '', false);
-        $oEvidence = new oeVATTBEGeoLocationEvidence($oUser);
+        $session = Registry::getSession();
+
+        /** @var User|MockObject $oUser */
+        $oUser = $this->createMock(User::class);
+        $session->setUser($oUser);
+
+        //TODO: check if set user in session is necessary
+
+        $oEvidence = new GeoLocationEvidence($session);
 
         $this->assertEquals('geo_location', $oEvidence->getId());
     }
 
     public function testGetCountryId()
     {
-        /** @var oxUser|PHPUnit_Framework_MockObject_MockObject $oUser */
-        $oUser = $this->getMock('oeVATTBEOxUser', array(), array(), '', false);
-        $oEvidence = new oeVATTBEGeoLocationEvidence($oUser);
+        $session = Registry::getSession();
+
+        /** @var User|MockObject $oUser */
+        $oUser = $this->createMock(User::class);
+        $session->setUser($oUser);
+
+        $oEvidence = new GeoLocationEvidence($session);
 
         $this->assertEquals('', $oEvidence->getCountryId());
     }

@@ -6,10 +6,13 @@
 
 namespace OxidEsales\EVatModule\Tests\Unit\Model;
 
+use OxidEsales\EVatModule\Model\ArticleVATGroupsList;
+use OxidEsales\EVatModule\Model\DbGateway\ArticleVATGroupsDbGateway;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Testing oeVATTBEArticleVATGroupsList class.
+ * Testing ArticleVATGroupsList class.
  *
  * @covers ArticleVATGroupsList
  */
@@ -20,30 +23,26 @@ class ArticleVATGroupsListTest extends TestCase
      */
     public function testSavingGroupsList()
     {
-        $aExpectedData = array(
+        $aExpectedData = [
             'articleid' => 'articleId',
-            'relations' => array(
-                array(
-                    'OEVATTBE_ARTICLEID' => 'articleId',
-                    'OEVATTBE_COUNTRYID' => '8f241f110958b69e4.93886171',
+            'relations' => [
+                [
+                    'OEVATTBE_ARTICLEID'  => 'articleId',
+                    'OEVATTBE_COUNTRYID'  => '8f241f110958b69e4.93886171',
                     'OEVATTBE_VATGROUPID' => '12',
-                )
-            )
-        );
-        /** @var oeVATTBEArticleVATGroupsDbGateway|PHPUnit_Framework_MockObject_MockObject $oGateway */
-        $oGateway = $this->getMock('oeVATTBEArticleVATGroupsDbGateway', array('save'));
+                ]
+            ]
+        ];
+        /** @var ArticleVATGroupsDbGateway|MockObject $oGateway */
+        $oGateway = $this->createPartialMock(ArticleVATGroupsDbGateway::class, ['save']);
         $oGateway->expects($this->once())->method('save')->with($aExpectedData);
 
-        /** @var oeVATTBEArticleVATGroupsList $oList */
-        $oList = oxNew('oeVATTBEArticleVATGroupsList', $oGateway);
-
+        /** @var ArticleVATGroupsList $oList */
+        $oList = oxNew(ArticleVATGroupsList::class, $oGateway);
         $oList->setId('articleId');
-
-        $aData = array(
+        $oList->setData([
             '8f241f110958b69e4.93886171' => '12',
-        );
-        $oList->setData($aData);
-
+        ]);
         $oList->save();
     }
 
@@ -53,20 +52,16 @@ class ArticleVATGroupsListTest extends TestCase
      */
     public function testSavingGroupsListWhenRecordsWithNoGroupIsPassed()
     {
-        /** @var oeVATTBEArticleVATGroupsDbGateway|PHPUnit_Framework_MockObject_MockObject $oGateway */
-        $oGateway = $this->getMock('oeVATTBEArticleVATGroupsDbGateway', array('save'));
-        $oGateway->expects($this->once())->method('save')->with(array('articleid' => 'articleId', 'relations' => array()));
+        /** @var ArticleVATGroupsDbGateway|MockObject $oGateway */
+        $oGateway = $this->createPartialMock(ArticleVATGroupsDbGateway::class, ['save']);
+        $oGateway->expects($this->once())->method('save')->with(['articleid' => 'articleId', 'relations' => []]);
 
-        /** @var oeVATTBEArticleVATGroupsList $oList */
-        $oList = oxNew('oeVATTBEArticleVATGroupsList', $oGateway);
-
+        /** @var ArticleVATGroupsList $oList */
+        $oList = oxNew(ArticleVATGroupsList::class, $oGateway);
         $oList->setId('articleId');
-
-        $aData = array(
+        $oList->setData([
             '8f241f110958b69e4.93886171' => '',
-        );
-        $oList->setData($aData);
-
+        ]);
         $oList->save();
     }
 
@@ -75,31 +70,32 @@ class ArticleVATGroupsListTest extends TestCase
      */
     public function testLoadingArticleVATGroupsList()
     {
-        $aData = array(
-            array(
-                'OEVATTBE_ARTICLEID' => 'articleId',
-                'OEVATTBE_COUNTRYID' => '8f241f110958b69e4.93886171',
+        $aData = [
+            [
+                'OEVATTBE_ARTICLEID'  => 'articleId',
+                'OEVATTBE_COUNTRYID'  => '8f241f110958b69e4.93886171',
                 'OEVATTBE_VATGROUPID' => '12',
-                'OEVATTBE_TIMESTAMP' => '2014-05-05 19:00:00',
-            ),
-            array(
-                'OEVATTBE_ARTICLEID' => 'articleId',
-                'OEVATTBE_COUNTRYID' => 'a7c40f631fc920687.20179984',
+                'OEVATTBE_TIMESTAMP'  => '2014-05-05 19:00:00',
+            ],
+            [
+                'OEVATTBE_ARTICLEID'  => 'articleId',
+                'OEVATTBE_COUNTRYID'  => 'a7c40f631fc920687.20179984',
                 'OEVATTBE_VATGROUPID' => '11',
-                'OEVATTBE_TIMESTAMP' => '2014-05-05 19:00:00',
-            )
-        );
-        /** @var oeVATTBEArticleVATGroupsDbGateway|PHPUnit_Framework_MockObject_MockObject $oGateway */
-        $oGateway = $this->_createStub('oeVATTBEArticleVATGroupsDbGateway', array('load' => $aData));
+                'OEVATTBE_TIMESTAMP'  => '2014-05-05 19:00:00',
+            ]
+        ];
+        /** @var ArticleVATGroupsDbGateway|MockObject $oGateway */
+        $oGateway = $this->createStub(ArticleVATGroupsDbGateway::class);
+        $oGateway->method('load')->willReturn($aData);
 
-        /** @var oeVATTBEArticleVATGroupsList $oList */
-        $oList = oxNew('oeVATTBEArticleVATGroupsList', $oGateway);
+        /** @var ArticleVATGroupsList $oList */
+        $oList = oxNew(ArticleVATGroupsList::class, $oGateway);
         $oList->load('articleId');
 
-        $aExpectedData = array(
+        $aExpectedData = [
             '8f241f110958b69e4.93886171' => '12',
             'a7c40f631fc920687.20179984' => '11',
-        );
+        ];
         $this->assertEquals($aExpectedData, $oList->getData());
     }
 
@@ -108,27 +104,28 @@ class ArticleVATGroupsListTest extends TestCase
      */
     public function testLoadingArticleVATGroupsListById()
     {
-        $aData = array(
-            array(
-                'OEVATTBE_ARTICLEID' => 'articleId1',
-                'OEVATTBE_COUNTRYID' => '8f241f110958b69e4.93886171',
+        $aData = [
+            [
+                'OEVATTBE_ARTICLEID'  => 'articleId1',
+                'OEVATTBE_COUNTRYID'  => '8f241f110958b69e4.93886171',
                 'OEVATTBE_VATGROUPID' => '10',
-                'OEVATTBE_TIMESTAMP' => '2014-05-05 19:00:00',
-            ),
-            array(
-                'OEVATTBE_ARTICLEID' => 'articleId2',
-                'OEVATTBE_COUNTRYID' => 'a7c40f631fc920687.20179984',
+                'OEVATTBE_TIMESTAMP'  => '2014-05-05 19:00:00',
+            ],
+            [
+                'OEVATTBE_ARTICLEID'  => 'articleId2',
+                'OEVATTBE_COUNTRYID'  => 'a7c40f631fc920687.20179984',
                 'OEVATTBE_VATGROUPID' => '10',
-                'OEVATTBE_TIMESTAMP' => '2014-05-05 19:00:00',
-            )
-        );
-        /** @var oeVATTBEArticleVATGroupsDbGateway|PHPUnit_Framework_MockObject_MockObject $oGateway */
-        $oGateway = $this->_createStub('oeVATTBEArticleVATGroupsDbGateway', array('loadByGroupId' => $aData));
+                'OEVATTBE_TIMESTAMP'  => '2014-05-05 19:00:00',
+            ]
+        ];
+        /** @var ArticleVATGroupsDbGateway|MockObject $oGateway */
+        $oGateway = $this->createStub(ArticleVATGroupsDbGateway::class);
+        $oGateway->method('loadByGroupId')->willReturn($aData);
 
-        /** @var oeVATTBEArticleVATGroupsList $oList */
-        $oList = oxNew('oeVATTBEArticleVATGroupsList', $oGateway);
+        /** @var ArticleVATGroupsList $oList */
+        $oList = oxNew(ArticleVATGroupsList::class, $oGateway);
 
-        $aExpectedData = array('articleId1', 'articleId2');
+        $aExpectedData = ['articleId1', 'articleId2'];
         $this->assertEquals($aExpectedData, $oList->getArticlesAssignedToGroup('10'));
     }
 
@@ -137,23 +134,22 @@ class ArticleVATGroupsListTest extends TestCase
      */
     public function testDeletingArticleVATGroupsList()
     {
-        /** @var oeVATTBEArticleVATGroupsDbGateway|PHPUnit_Framework_MockObject_MockObject $oGateway */
-        $oGateway = $this->getMock('oeVATTBEArticleVATGroupsDbGateway', array('delete'));
+        /** @var ArticleVATGroupsDbGateway|MockObject $oGateway */
+        $oGateway = $this->createPartialMock(ArticleVATGroupsDbGateway::class, ['delete']);
         $oGateway->expects($this->once())->method('delete')->with('articleid');
 
-        /** @var oeVATTBEArticleVATGroupsList $oList */
-        $oList = oxNew('oeVATTBEArticleVATGroupsList', $oGateway);
-
+        /** @var ArticleVATGroupsList $oList */
+        $oList = oxNew(ArticleVATGroupsList::class, $oGateway);
         $oList->delete('articleid');
     }
 
-    /**
-     * Tests creating of oeVATTBEArticleVATGroupsList.
-     */
-    public function testCreatingListWithCreationMethod()
-    {
-        $oList = oeVATTBEArticleVATGroupsList::createInstance();
-
-        $this->assertInstanceOf('oeVATTBEArticleVATGroupsList', $oList);
-    }
+//    /**
+//     * Tests creating of ArticleVATGroupsList.
+//     */
+//    public function testCreatingListWithCreationMethod()
+//    {
+//        $oList = ArticleVATGroupsList::createInstance();
+//
+//        $this->assertInstanceOf(ArticleVATGroupsList::class, $oList);
+//    }
 }

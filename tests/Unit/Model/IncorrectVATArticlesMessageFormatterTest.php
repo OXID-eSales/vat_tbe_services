@@ -7,6 +7,8 @@
 namespace OxidEsales\EVatModule\Tests\Unit\Model;
 
 use OxidEsales\Eshop\Core\Field;
+use OxidEsales\EVatModule\Model\IncorrectVATArticlesMessageFormatter;
+use OxidEsales\EVatModule\Shop\Article;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -21,13 +23,12 @@ class IncorrectVATArticlesMessageFormatterTest extends TestCase
      */
     public function testGetMessage()
     {
-        /** @var oeVATTBEOxArticle|oxArticle $oArticle */
-        $oArticle = oxNew('oxArticle');
-        $oArticle->oxarticles__oxtitle = new Field('some other name', oxField::T_RAW);
+        $oArticle = oxNew(Article::class);
+        $oArticle->oxarticles__oxtitle = new Field('some other name', Field::T_RAW);
 
-        /** @var oeVATTBEIncorrectVATArticlesMessageFormatter $oVATTBEArticleMessageFormer */
-        $oVATTBEArticleMessageFormer = oxNew('oeVATTBEIncorrectVATArticlesMessageFormatter');
-        $oErrorMessage = $oVATTBEArticleMessageFormer->getMessage(array($oArticle));
+        /** @var IncorrectVATArticlesMessageFormatter $oVATTBEArticleMessageFormer */
+        $oVATTBEArticleMessageFormer = oxNew(IncorrectVATArticlesMessageFormatter::class);
+        $oErrorMessage = $oVATTBEArticleMessageFormer->getMessage([$oArticle]);
 
         $this->assertInstanceOf('oxDisplayError', $oErrorMessage);
     }

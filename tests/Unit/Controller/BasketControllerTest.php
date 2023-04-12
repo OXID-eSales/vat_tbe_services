@@ -7,7 +7,16 @@
 namespace OxidEsales\EVatModule\Tests\Unit\Controller;
 
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EVatModule\Controller\BasketController;
+use OxidEsales\Eshop\Application\Controller\BasketController as EShopBasketController;
+use OxidEsales\EVatModule\Shop\Basket;
+use OxidEsales\EVatModule\Shop\Country;
+use OxidEsales\Eshop\Application\Model\Country as EShopCountry;
+use OxidEsales\EVatModule\Shop\User;
+use OxidEsales\Eshop\Application\Model\User as EShopUser;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use OxidEsales\Eshop\Application\Model\Basket as EShopBasket;
 
 /**
  * Testing extended Basket controller.
@@ -25,16 +34,16 @@ class BasketControllerTest extends TestCase
     {
         Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
 
-        $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasOeTBEVATArticles'));
+        $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles']);
         $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(true));
         Registry::getSession()->setBasket($oBasket);
 
-        /** @var oeVATTBEBasket|Basket $oBasketController */
-        $oBasketController = oxNew('oeVATTBEBasket');
+        /** @var BasketController|EShopBasketController $oBasketController */
+        $oBasketController = oxNew(BasketController::class);
         $oBasketController->setUser(null);
 
         $sExpectedMessage = '** - ';
-        $sExpectedMessage .= sprintf(oxRegistry::getLang()->translateString('OEVATTBE_VAT_WILL_BE_CALCULATED_BY_USER_COUNTRY'), 'Deutschland');
+        $sExpectedMessage .= sprintf(Registry::getLang()->translateString('OEVATTBE_VAT_WILL_BE_CALCULATED_BY_USER_COUNTRY'), 'Deutschland');
         $this->assertEquals($sExpectedMessage, $oBasketController->getOeVATTBEMarkMessage());
     }
 
@@ -48,24 +57,24 @@ class BasketControllerTest extends TestCase
     {
         Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
 
-        /** @var oxCountry|oeVATTBEOxCategory|PHPUnit_Framework_MockObject_MockObject $oCountry */
-        $oCountry = $this->getMock("oeVATTBEOxCategory", array('getOeVATTBEName'));
+        /** @var Country|EShopCountry|MockObject $oCountry */
+        $oCountry = $this->createPartialMock(Country::class, ['getOeVATTBEName']);
         $oCountry->expects($this->any())->method("getOeVATTBEName")->will($this->returnValue('Deutschland'));
 
-        /** @var oxBasket|oeVATTBEOxBasket|PHPUnit_Framework_MockObject_MockObject $oBasket */
-        $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasOeTBEVATArticles', 'getOeVATTBECountry'));
+        /** @var Basket|EShopBasket|MockObject $oBasket */
+        $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'getOeVATTBECountry']);
         $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(true));
         $oBasket->expects($this->any())->method("getOeVATTBECountry")->will($this->returnValue($oCountry));
         Registry::getSession()->setBasket($oBasket);
 
-        /** @var oxUser|oeVATTBEOxUser $oUser */
-        $oUser = oxNew('oxUser');
+        /** @var User|EShopUser $oUser */
+        $oUser = oxNew(EShopUser::class);
 
-        $oBasketController = oxNew('oeVATTBEBasket');
+        $oBasketController = oxNew(BasketController::class);
         $oBasketController->setUser($oUser);
 
         $sExpectedMessage = '** - ';
-        $sExpectedMessage .= sprintf(oxRegistry::getLang()->translateString('OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY'), 'Deutschland');
+        $sExpectedMessage .= sprintf(Registry::getLang()->translateString('OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY'), 'Deutschland');
         $this->assertEquals($sExpectedMessage, $oBasketController->getOeVATTBEMarkMessage());
     }
 
@@ -79,20 +88,20 @@ class BasketControllerTest extends TestCase
     {
         Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
 
-        /** @var oxBasket|oeVATTBEOxBasket|PHPUnit_Framework_MockObject_MockObject $oBasket */
-        $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasOeTBEVATArticles', 'getOeVATTBECountry'));
+        /** @var Basket|EShopBasket|MockObject $oBasket */
+        $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'getOeVATTBECountry']);
         $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(true));
         $oBasket->expects($this->any())->method("getOeVATTBECountry")->will($this->returnValue(null));
         Registry::getSession()->setBasket($oBasket);
 
-        /** @var oxUser|oeVATTBEOxUser $oUser */
-        $oUser = oxNew('oxUser');
+        /** @var User|EShopUser $oUser */
+        $oUser = oxNew(EShopUser::class);
 
-        $oBasketController = oxNew('oeVATTBEBasket');
+        $oBasketController = oxNew(BasketController::class);
         $oBasketController->setUser($oUser);
 
         $sExpectedMessage = '** - ';
-        $sExpectedMessage .= sprintf(oxRegistry::getLang()->translateString('OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY'), '');
+        $sExpectedMessage .= sprintf(Registry::getLang()->translateString('OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY'), '');
         $this->assertEquals($sExpectedMessage, $oBasketController->getOeVATTBEMarkMessage());
     }
 
@@ -101,14 +110,14 @@ class BasketControllerTest extends TestCase
      *
      * @return array
      */
-    public function providerShowVATTBEMarkMessageWhenMessageShouldBeHidden()
+    public function providerShowVATTBEMarkMessageWhenMessageShouldBeHidden(): array
     {
-        return array(
-            array(true, true, true, true),
-            array(false, true, true, false),
-            array(false, false, true, true),
-            array(false, false, false, false),
-        );
+        return [
+            [true, true, true, true],
+            [false, true, true, false],
+            [false, false, true, true],
+            [false, false, false, false],
+        ];
     }
 
     /**
@@ -127,16 +136,16 @@ class BasketControllerTest extends TestCase
         Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', $sDomesticCountryAbbr);
         Registry::getSession()->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
 
-        $oCountry = $this->getMock("oeVATTBEOxCountry", array('appliesOeTBEVATTbeVat'));
+        $oCountry = $this->createPartialMock(Country::class, ['appliesOeTBEVATTbeVat']);
         $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->will($this->returnValue($blCountryAppliesTBEVAT));
 
-        $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasOeTBEVATArticles', 'isOeVATTBEValid', 'getOeVATTBECountry'));
+        $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'isOeVATTBEValid', 'getOeVATTBECountry']);
         $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue($blHasTBEArticles));
         $oBasket->expects($this->any())->method("isOeVATTBEValid")->will($this->returnValue($blValidArticles));
         $oBasket->expects($this->any())->method("getOeVATTBECountry")->will($this->returnValue($oCountry));
         Registry::getSession()->setBasket($oBasket);
 
-        $oBasketController = oxNew('oeVATTBEBasket');
+        $oBasketController = oxNew(BasketController::class);
         $this->assertFalse($oBasketController->oeVATTBEShowVATTBEMarkMessage());
     }
 
@@ -152,16 +161,16 @@ class BasketControllerTest extends TestCase
         Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
         Registry::getSession()->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
 
-        $oCountry = $this->getMock("oeVATTBEOxCountry", array('appliesOeTBEVATTbeVat'));
+        $oCountry = $this->createPartialMock(Country::class, ['appliesOeTBEVATTbeVat']);
         $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->will($this->returnValue(true));
 
-        $oBasket = $this->getMock("oeVATTBEOxBasket", array('hasOeTBEVATArticles', 'isOeVATTBEValid', 'getOeVATTBECountry'));
+        $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'isOeVATTBEValid', 'getOeVATTBECountry']);
         $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(true));
         $oBasket->expects($this->any())->method("isOeVATTBEValid")->will($this->returnValue(true));
         $oBasket->expects($this->any())->method("getOeVATTBECountry")->will($this->returnValue($oCountry));
         Registry::getSession()->setBasket($oBasket);
 
-        $oBasketController = oxNew('oeVATTBEBasket');
+        $oBasketController = oxNew(BasketController::class);
         $this->assertTrue($oBasketController->oeVATTBEShowVATTBEMarkMessage());
     }
 }

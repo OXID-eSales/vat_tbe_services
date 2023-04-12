@@ -6,8 +6,10 @@
 
 namespace OxidEsales\EVatModule\Tests\Unit\Controller;
 
-use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\Eshop\Application\Model\Article;
+use OxidEsales\EVatModule\Controller\Admin\ArticleAdministration;
 use OxidEsales\Facts\Facts;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -28,17 +30,17 @@ class ArticleAdministrationTest extends TestCase
             $this->markTestSkipped('Test only on Enterprise shop');
         }
 
-        /** @var oxArticle|PHPUnit_Framework_MockObject_MockObject oxArticle */
-        $oDerivedArticle = $this->getMock('oxArticle', array(), array(), '', false);
+        /** @var Article|MockObject oxArticle */
+        $oDerivedArticle = $this->createPartialMock(Article::class, ['isDerived']);
         $oDerivedArticle->expects($this->any())->method('isDerived')->will($this->returnValue(true));
 
-        /** @var oeVATTBEArticleAdministration|PHPUnit_Framework_MockObject_MockObject $oArticleAdministration */
-        $oArticleAdministration = $this->getMock('oeVATTBEArticleAdministration', array('_loadCurrentArticle'));
-        $oArticleAdministration->expects($this->atLeastOnce())->method('_loadCurrentArticle')->will($this->returnValue($oDerivedArticle));
+        /** @var ArticleAdministration|MockObject $oArticleAdministration */
+        $oArticleAdministration = $this->createPartialMock(ArticleAdministration::class, ['loadCurrentArticle']);
+        $oArticleAdministration->expects($this->atLeastOnce())->method('loadCurrentArticle')->will($this->returnValue($oDerivedArticle));
         $oArticleAdministration->render();
 
         $aViewData = $oArticleAdministration->getViewData();
-        $this->assertTrue($aViewData['readonly'], 'View data contains: '. serialize($aViewData));
+        $this->assertTrue($aViewData['readonly'], 'View data contains: ' . serialize($aViewData));
     }
 
     /**
@@ -52,17 +54,17 @@ class ArticleAdministrationTest extends TestCase
             $this->markTestSkipped('Test only on Enterprise shop');
         }
 
-        /** @var oxArticle|PHPUnit_Framework_MockObject_MockObject oxArticle */
-        $oDerivedArticle = $this->getMock('oxArticle', array(), array(), '', false);
+        /** @var Article|MockObject oxArticle */
+        $oDerivedArticle = $this->createPartialMock(Article::class, ['isDerived']);
         $oDerivedArticle->expects($this->any())->method('isDerived')->will($this->returnValue(false));
 
-        /** @var oeVATTBEArticleAdministration|PHPUnit_Framework_MockObject_MockObject $oArticleAdministration */
-        $oArticleAdministration = $this->getMock('oeVATTBEArticleAdministration', array('_loadCurrentArticle'));
-        $oArticleAdministration->expects($this->atLeastOnce())->method('_loadCurrentArticle')->will($this->returnValue($oDerivedArticle));
+        /** @var ArticleAdministration|MockObject $oArticleAdministration */
+        $oArticleAdministration = $this->createPartialMock(ArticleAdministration::class, ['loadCurrentArticle']);
+        $oArticleAdministration->expects($this->atLeastOnce())->method('loadCurrentArticle')->will($this->returnValue($oDerivedArticle));
         $oArticleAdministration->render();
 
         $aViewData = $oArticleAdministration->getViewData();
-        $this->assertTrue(!isset($aViewData['readonly']), 'View data contains: '. serialize($aViewData));
+        $this->assertTrue(!isset($aViewData['readonly']), 'View data contains: ' . serialize($aViewData));
     }
 
     /**
@@ -76,16 +78,16 @@ class ArticleAdministrationTest extends TestCase
             $this->markTestSkipped('Test only on Enterprise shop');
         }
 
-        /** @var oxArticle|PHPUnit_Framework_MockObject_MockObject oxArticle */
-        $oDerivedArticle = $this->getMock('oxArticle', array(), array(), '', false);
+        /** @var Article|MockObject oxArticle */
+        $oDerivedArticle = $this->createPartialMock(Article::class, ['isDerived']);
         $oDerivedArticle->expects($this->any())->method('isDerived')->will($this->returnValue(true));
 
-        /** @var oeVATTBEArticleAdministration|PHPUnit_Framework_MockObject_MockObject $oArticleAdministration */
-        $oArticleAdministration = $this->getMock('oeVATTBEArticleAdministration', array('_loadCurrentArticle'));
-        $oArticleAdministration->expects($this->atLeastOnce())->method('_loadCurrentArticle')->will($this->returnValue($oDerivedArticle));
+        /** @var ArticleAdministration|MockObject $oArticleAdministration */
+        $oArticleAdministration = $this->createPartialMock(ArticleAdministration::class, ['loadCurrentArticle']);
+        $oArticleAdministration->expects($this->atLeastOnce())->method('loadCurrentArticle')->will($this->returnValue($oDerivedArticle));
         $oArticleAdministration->render();
 
         $aViewData = $oArticleAdministration->getViewData();
-        $this->assertTrue(!isset($aViewData['readonly']), 'View data contains: '. serialize($aViewData));
+        $this->assertTrue(!isset($aViewData['readonly']), 'View data contains: ' . serialize($aViewData));
     }
 }

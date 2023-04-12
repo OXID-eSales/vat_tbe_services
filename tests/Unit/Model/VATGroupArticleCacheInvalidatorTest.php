@@ -6,9 +6,11 @@
 
 namespace OxidEsales\EVatModule\Tests\Unit\Model;
 
-//include_once __DIR__ . '/../../../libs/oxtestcacheconnector.php';
-
+use OxidEsales\Eshop\Core\Cache\Generic\Cache;
+use OxidEsales\Eshop\Core\Cache\Generic\Connector\FileCacheConnector;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EVatModule\Model\ArticleVATGroupsList;
+use OxidEsales\EVatModule\Model\GroupArticleCacheInvalidator;
 use OxidEsales\Facts\Facts;
 use PHPUnit\Framework\TestCase;
 
@@ -29,21 +31,23 @@ class VATGroupArticleCacheInvalidatorTest extends TestCase
         }
         Registry::getConfig()->setConfigParam('blCacheActive', true);
 
-        $aMethods = array('getArticlesAssignedToGroup' => array('article1', 'article2'));
-        $oArticleVATGroupsList = $this->_createStub('oeVATTBEArticleVATGroupsList', $aMethods);
+        $oArticleVATGroupsList = $this->createStub(ArticleVATGroupsList::class);
+        $oArticleVATGroupsList
+            ->method('getArticlesAssignedToGroup')
+            ->willReturn(['article1', 'article2']);
 
-        $oConnector = new oxTestCacheConnector();
+        $oConnector = new FileCacheConnector();
         $oConnector->set('oxArticle_article1_1_en', 1);
         $oConnector->set('oxArticle_article2_1_en', 1);
         $oConnector->set('oxArticle_article3_1_en', 1);
 
-        /** @var oxCacheBackend $oCacheBackend */
-        $oCacheBackend = oxNew('oxCacheBackend');
+        /** @var Cache $oCacheBackend */
+        $oCacheBackend = oxNew(Cache::class);
         $oCacheBackend->registerConnector($oConnector);
 
-        $oInvalidator = oxNew('oeVATTBEVATGroupArticleCacheInvalidator', $oArticleVATGroupsList, $oCacheBackend);
+        $oInvalidator = oxNew(GroupArticleCacheInvalidator::class, $oArticleVATGroupsList, $oCacheBackend);
         $oInvalidator->invalidate('groupId');
 
-        $this->assertEquals(array('oxArticle_article3_1_en' => 1), $oConnector->aCache);
+        $this->assertEquals(['oxArticle_article3_1_en' => 1], $oConnector->aCache);
     }
 }

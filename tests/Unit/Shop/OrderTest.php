@@ -6,8 +6,18 @@
 
 namespace OxidEsales\EVatModule\Tests\Unit\Shop;
 
+use OxidEsales\Eshop\Application\Model\Order as EShopOrder;
+use OxidEsales\Eshop\Application\Model\User as EShopUser;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EVatModule\Model\OrderEvidenceList;
+use OxidEsales\EVatModule\Shop\Article;
+use OxidEsales\Eshop\Application\Model\Article as EShopArticle;
+use OxidEsales\EVatModule\Shop\Basket;
+use OxidEsales\Eshop\Application\Model\Basket as EShopBasket;
+use OxidEsales\EVatModule\Shop\User;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use OxidEsales\EVatModule\Shop\Order;
 
 /**
  * Testing extended oxArticle class.
@@ -21,17 +31,17 @@ class OrderTest extends TestCase
      */
     public function testValidateOrderWhenUserDoesNotMatchBasketAddress()
     {
-        $oBasket = $this->getMock("oeVATTBEOxBasket", array("getOeVATTBETbeCountryId"));
+        $oBasket = $this->createPartialMock(Basket::class, ["getOeVATTBETbeCountryId"]);
         $oBasket->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue('LithuaniaId'));
         Registry::getSession()->setVariable('TBECountryId', 'GermanyId');
 
-        /** @var oxUser|oeVATTBEOxUser $oUser */
-        $oUser = oxNew('oxUser');
+        /** @var EShopUser|User $oUser */
+        $oUser = oxNew(EShopUser::class);
 
-        $oOrder = $this->getMock("oeVATTBEOxOrder", array("_getValidateOrderParent"));
-        $oOrder->expects($this->any())->method("_getValidateOrderParent")->will($this->returnValue(0));
+        $oOrder = $this->createPartialMock(Order::class, ["getValidateOrderParent"]);
+        $oOrder->expects($this->any())->method("getValidateOrderParent")->will($this->returnValue(0));
 
-        $this->assertSame(oxOrder::ORDER_STATE_INVALIDDElADDRESSCHANGED, $oOrder->validateOrder($oBasket, $oUser));
+        $this->assertSame(EShopOrder::ORDER_STATE_INVALIDDELADDRESSCHANGED, $oOrder->validateOrder($oBasket, $oUser));
     }
 
     /**
@@ -39,17 +49,17 @@ class OrderTest extends TestCase
      */
     public function testValidateOrderWhenUserDoesNotMatchBasketAddressAndOrderHadError()
     {
-        $oBasket = $this->getMock("oeVATTBEOxBasket", array("getOeVATTBETbeCountryId"));
+        $oBasket = $this->createPartialMock(Basket::class, ["getOeVATTBETbeCountryId"]);
         $oBasket->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue('LithuaniaId'));
         Registry::getSession()->setVariable('TBECountryId', 'GermanyId');
 
-        /** @var oxUser|oeVATTBEOxUser $oUser */
-        $oUser = oxNew('oxUser');
+        /** @var EShopUser|User $oUser */
+        $oUser = oxNew(EShopUser::class);
 
-        $oOrder = $this->getMock("oeVATTBEOxOrder", array("_getValidateOrderParent"));
-        $oOrder->expects($this->any())->method("_getValidateOrderParent")->will($this->returnValue(oxOrder::ORDER_STATE_PAYMENTERROR));
+        $oOrder = $this->createPartialMock(Order::class, ["getValidateOrderParent"]);
+        $oOrder->expects($this->any())->method("getValidateOrderParent")->will($this->returnValue(Order::ORDER_STATE_PAYMENTERROR));
 
-        $this->assertSame(oxOrder::ORDER_STATE_PAYMENTERROR, $oOrder->validateOrder($oBasket, $oUser));
+        $this->assertSame(EShopOrder::ORDER_STATE_PAYMENTERROR, $oOrder->validateOrder($oBasket, $oUser));
     }
 
     /**
@@ -57,16 +67,16 @@ class OrderTest extends TestCase
      *
      * @return array
      */
-    public function providerValidateOrderWithInvalidArticles()
+    public function providerValidateOrderWithInvalidArticles(): array
     {
         // Non domestic country.
         $sAustriaId = 'a7c40f6320aeb2ec2.72885259';
 
-        return array(
-            array($sAustriaId, false),
-            array('NonExistingCountry', true),
-            array('', true),
-        );
+        return [
+            [$sAustriaId, false],
+            ['NonExistingCountry', true],
+            ['', true],
+        ];
     }
 
     /**
@@ -79,25 +89,25 @@ class OrderTest extends TestCase
      */
     public function testValidateOrderWithInvalidArticles($sUserCountry, $blValidArticles)
     {
-        /** @var oxArticle|oeVATTBEOxArticle|PHPUnit_Framework_MockObject_MockObject $oArticle */
-        $oArticle = $this->getMock("oeVATTBEOxArticle", array("getOeVATTBETBEVat", "isOeVATTBETBEService"));
+        /** @var Article|EShopArticle|MockObject $oArticle */
+        $oArticle = $this->createPartialMock(Article::class, ["getOeVATTBETBEVat", "isOeVATTBETBEService"]);
         $oArticle->expects($this->any())->method("isOeVATTBETBEService")->will($this->returnValue(true));
         $oArticle->expects($this->any())->method("getOeVATTBETBEVat")->will($this->returnValue($blValidArticles ? 19 : null));
 
-        /** @var oxBasket|oeVATTBEOxBasket|PHPUnit_Framework_MockObject_MockObject $oArticle */
-        $oBasket = $this->getMock("oeVATTBEOxBasket", array("getOeVATTBETbeCountryId", "hasOeTBEVATArticles", "getBasketArticles"));
+        /** @var Basket|EShopBasket|MockObject $oArticle */
+        $oBasket = $this->createPartialMock(Basket::class, ["getOeVATTBETbeCountryId", "hasOeTBEVATArticles", "getBasketArticles"]);
         $oBasket->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue($sUserCountry));
         $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(true));
-        $oBasket->expects($this->any())->method("getBasketArticles")->will($this->returnValue(array($oArticle)));
+        $oBasket->expects($this->any())->method("getBasketArticles")->will($this->returnValue([$oArticle]));
         Registry::getSession()->setVariable('TBECountryId', $sUserCountry);
 
-        /** @var oxUser|oeVATTBEOxUser $oUser */
-        $oUser = oxNew('oxUser');
+        /** @var EShopUser|User $oUser */
+        $oUser = oxNew(EShopUser::class);
 
-        $oOrder = $this->getMock("oeVATTBEOxOrder", array("_getValidateOrderParent"));
-        $oOrder->expects($this->any())->method("_getValidateOrderParent")->will($this->returnValue(0));
+        $oOrder = $this->createPartialMock(Order::class, ["getValidateOrderParent"]);
+        $oOrder->expects($this->any())->method("getValidateOrderParent")->will($this->returnValue(0));
 
-        $this->assertSame(oeVATTBEOxOrder::ORDER_STATE_TBE_NOT_CONFIGURED, $oOrder->validateOrder($oBasket, $oUser));
+        $this->assertSame(Order::ORDER_STATE_TBE_NOT_CONFIGURED, $oOrder->validateOrder($oBasket, $oUser));
     }
 
     /**
@@ -105,7 +115,7 @@ class OrderTest extends TestCase
      *
      * @return array
      */
-    public function providerValidateOrderWithValidArticles()
+    public function providerValidateOrderWithValidArticles(): array
     {
         // Domestic country.
         $sGermanyId = 'a7c40f631fc920687.20179984';
@@ -113,14 +123,14 @@ class OrderTest extends TestCase
         // Non domestic non EU country.
         $sAustraliaId = '8f241f11095410f38.37165361';
 
-        return array(
-            array($sGermanyId, true, true),
-            array($sGermanyId, false, true),
-            array($sGermanyId, false, false),
-            array($sAustraliaId, true, true),
-            array($sAustraliaId, false, true),
-            array($sAustraliaId, false, false),
-        );
+        return [
+            [$sGermanyId, true, true],
+            [$sGermanyId, false, true],
+            [$sGermanyId, false, false],
+            [$sAustraliaId, true, true],
+            [$sAustraliaId, false, true],
+            [$sAustraliaId, false, false],
+        ];
     }
 
     /**
@@ -134,33 +144,33 @@ class OrderTest extends TestCase
      */
     public function testValidateOrderWithValidArticles($sUserCountry, $blHasTBEArticles, $blValidArticles)
     {
-        /** @var oxArticle|oeVATTBEOxArticle|PHPUnit_Framework_MockObject_MockObject $oArticle */
-        $oArticle = $this->getMock("oeVATTBEOxArticle", array("getOeVATTBETBEVat", "isOeVATTBETBEService"));
+        /** @var Article|EShopArticle|MockObject $oArticle */
+        $oArticle = $this->createPartialMock(Article::class, ["getOeVATTBETBEVat", "isOeVATTBETBEService"]);
         $oArticle->expects($this->any())->method("isOeVATTBETBEService")->will($this->returnValue($blHasTBEArticles));
         $oArticle->expects($this->any())->method("getOeVATTBETBEVat")->will($this->returnValue($blValidArticles ? 19 : null));
 
-        /** @var oxBasket|oeVATTBEOxBasket|PHPUnit_Framework_MockObject_MockObject $oArticle */
-        $oBasket = $this->getMock("oeVATTBEOxBasket", array("getOeVATTBETbeCountryId", "hasOeTBEVATArticles", "getBasketArticles"));
+        /** @var Basket|EShopBasket|MockObject $oArticle */
+        $oBasket = $this->createPartialMock(Basket::class, ["getOeVATTBETbeCountryId", "hasOeTBEVATArticles", "getBasketArticles"]);
         $oBasket->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue($sUserCountry));
         $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(true));
-        $oBasket->expects($this->any())->method("getBasketArticles")->will($this->returnValue(array($oArticle)));
+        $oBasket->expects($this->any())->method("getBasketArticles")->will($this->returnValue([$oArticle]));
         Registry::getSession()->setVariable('TBECountryId', $sUserCountry);
 
-        /** @var oxUser|oeVATTBEOxUser $oUser */
-        $oUser = oxNew('oxUser');
+        /** @var EShopUser|User $oUser */
+        $oUser = oxNew(EShopUser::class);
 
-        $oOrder = $this->getMock("oeVATTBEOxOrder", array("_getValidateOrderParent"));
-        $oOrder->expects($this->any())->method("_getValidateOrderParent")->will($this->returnValue(0));
+        $oOrder = $this->createPartialMock(Order::class, ["getValidateOrderParent"]);
+        $oOrder->expects($this->any())->method("getValidateOrderParent")->will($this->returnValue(0));
 
         $this->assertSame(0, $oOrder->validateOrder($oBasket, $oUser));
     }
 
-    public function providerGetOeVATTBECountryTitle()
+    public function providerGetOeVATTBECountryTitle(): array
     {
-        return array(
-            array(0, 'Deutschland'),
-            array(1, 'Germany'),
-        );
+        return [
+            [0, 'Deutschland'],
+            [1, 'Germany'],
+        ];
     }
 
     /**
@@ -173,34 +183,33 @@ class OrderTest extends TestCase
      */
     public function testGetOeVATTBECountryTitle($iLanguageId, $sCountryResult)
     {
-        $aEvidenceData = array(
-            'usedOrderEvidenceId' => array('countryId' => 'a7c40f631fc920687.20179984')
-        );
-        /** @var oeVATTBEOrderEvidenceList|PHPUnit_Framework_MockObject_MockObject $oOrderEvidenceList */
-        $oOrderEvidenceList = $this->getMock('oeVATTBEOrderEvidenceList', array('getData', 'load'), array(), '', false);
+        $aEvidenceData = [
+            'usedOrderEvidenceId' => ['countryId' => 'a7c40f631fc920687.20179984']
+        ];
+        /** @var OrderEvidenceList|MockObject $oOrderEvidenceList */
+        $oOrderEvidenceList = $this->createPartialMock(OrderEvidenceList::class, ['getData', 'load']);
         $oOrderEvidenceList->expects($this->once())->method('getData')->will($this->returnValue($aEvidenceData));
         $oOrderEvidenceList->expects($this->once())->method('load');
 
-        /** @var oxOrder|oeVATTBEOxOrder|PHPUnit_Framework_MockObject_MockObject $oOrder */
-        $oOrder = $this->getMock(
-            'oeVATTBEOxOrder',
-            array('getSelectedLang', '_factoryOeVATTBEOrderEvidenceList', 'load', '_getOeVATTBEUsedEvidenceId')
+        /** @var Order|EShopOrder|MockObject $oOrder */
+        $oOrder = $this->createPartialMock(
+            Order::class,
+            ['factoryOeVATTBEOrderEvidenceList', 'load', 'getOeVATTBEUsedEvidenceId']
         );
-        $oOrder->expects($this->any())->method('getSelectedLang')->will($this->returnValue($iLanguageId));
-        $oOrder->expects($this->any())->method('_factoryOeVATTBEOrderEvidenceList')->will($this->returnValue($oOrderEvidenceList));
-        $oOrder->expects($this->any())->method('_getOeVATTBEUsedEvidenceId')->will($this->returnValue('usedOrderEvidenceId'));
+        $oOrder->expects($this->any())->method('factoryOeVATTBEOrderEvidenceList')->will($this->returnValue($oOrderEvidenceList));
+        $oOrder->expects($this->any())->method('getOeVATTBEUsedEvidenceId')->will($this->returnValue('usedOrderEvidenceId'));
 
 
         $this->assertSame($sCountryResult, $oOrder->getOeVATTBECountryTitle());
     }
 
-    public function providerSetGetOrderTBEServicesInInvoice()
+    public function providerSetGetOrderTBEServicesInInvoice(): array
     {
-        return array(
-            array(null, false),
-            array(false, false),
-            array(true, true),
-        );
+        return [
+            [null, false],
+            [false, false],
+            [true, true],
+        ];
     }
 
     /**
@@ -213,8 +222,8 @@ class OrderTest extends TestCase
      */
     public function testSetGetOrderTBEServicesInInvoice($blValueToSet, $blResult)
     {
-        /** @var oeVATTBEOxOrder $oOrder */
-        $oOrder = oxNew('oxOrder');
+        /** @var Order $oOrder */
+        $oOrder = oxNew(Order::class);
         $oOrder->setOeVATTBEHasOrderTBEServicesInInvoice($blValueToSet);
 
         $this->assertSame($blResult, $oOrder->getOeVATTBEHasOrderTBEServicesInInvoice());

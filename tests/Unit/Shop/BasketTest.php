@@ -6,8 +6,13 @@
 
 namespace OxidEsales\EVatModule\Tests\Unit\Shop;
 
+use OxidEsales\Eshop\Application\Model\Article;
+use OxidEsales\Eshop\Application\Model\Country;
 use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EVatModule\Model\OrderArticleChecker;
+use OxidEsales\EVatModule\Shop\Basket;
+use OxidEsales\Eshop\Application\Model\Basket as EShopBasket;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -22,7 +27,7 @@ class BasketTest extends TestCase
      */
     public function testSetgetOeVATTBETbeCountryId()
     {
-        $oBasket = oxNew('oxBasket');
+        $oBasket = oxNew(Basket::class);
         $oBasket->setOeVATTBECountryId('de');
         $this->assertSame('de', $oBasket->getOeVATTBETbeCountryId());
     }
@@ -32,7 +37,7 @@ class BasketTest extends TestCase
      */
     public function testGetOeVATTBETbeCountryIdNotSet()
     {
-        $oBasket = oxNew('oxBasket');
+        $oBasket = oxNew(Basket::class);
         $this->assertNull($oBasket->getOeVATTBECountry());
     }
 
@@ -41,13 +46,13 @@ class BasketTest extends TestCase
      *
      * @return array
      */
-    public function providerSetCountryIdOnChangeEvent()
+    public function providerSetCountryIdOnChangeEvent(): array
     {
-        return array(
-            array(true, true, true),
-            array(false, false, true),
-            array(false, false, false),
-        );
+        return [
+            [true, true, true],
+            [false, false, true],
+            [false, false, false],
+        ];
     }
 
     /**
@@ -66,20 +71,20 @@ class BasketTest extends TestCase
         Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', $sDomesticCountry);
         Registry::getSession()->setVariable('TBECountryId', $sLithuaniaId);
 
-        /** @var oxCountry $oCountry */
-        $oCountry = oxNew('oxCountry');
+        /** @var Country $oCountry */
+        $oCountry = oxNew(Country::class);
         $oCountry->load($sLithuaniaId);
         $oCountry->oxcountry__oevattbe_appliestbevat = new Field($blTBECountry);
         $oCountry->save();
 
-        /** @var oxArticle $oArticle */
-        $oArticle = oxNew('oxArticle');
+        /** @var Article $oArticle */
+        $oArticle = oxNew(Article::class);
         $oArticle->setId('_testArticle1');
         $oArticle->oxarticles__oevattbe_istbeservice = new Field($blIsArticleTbeService);
         $oArticle->save();
 
-        /** @var oxBasket|oeVATTBEOxBasket $oBasket */
-        $oBasket = oxNew('oxBasket');
+        /** @var Basket|EShopBasket $oBasket */
+        $oBasket = oxNew(Basket::class);
         $oBasket->addToBasket('_testArticle1', 1);
         $oBasket->setOeVATTBECountryId($sLithuaniaId);
 
@@ -91,12 +96,12 @@ class BasketTest extends TestCase
      *
      * @return array
      */
-    public function providerSetCountryIdOnChangeEventWhenMessageShouldBeShown()
+    public function providerSetCountryIdOnChangeEventWhenMessageShouldBeShown(): array
     {
-        return array(
-            array(true),
-            array(false),
-        );
+        return [
+            [true],
+            [false],
+        ];
     }
 
     /**
@@ -112,20 +117,20 @@ class BasketTest extends TestCase
         $sLithuaniaId = '8f241f11095d6ffa8.86593236';
         Registry::getSession()->setVariable('TBECountryId', $sLithuaniaId); // LT
 
-        /** @var oxCountry $oCountry */
-        $oCountry = oxNew('oxCountry');
+        /** @var Country $oCountry */
+        $oCountry = oxNew(Country::class);
         $oCountry->setId($sLithuaniaId);
         $oCountry->oxcountry__oevattbe_appliestbevat = new Field(true);
         $oCountry->save();
 
-        /** @var oxArticle $oArticle */
-        $oArticle = oxNew('oxArticle');
+        /** @var Article $oArticle */
+        $oArticle = oxNew(Article::class);
         $oArticle->setId('_testArticle1');
         $oArticle->oxarticles__oevattbe_istbeservice = new Field(true);
         $oArticle->save();
 
-        /** @var oxBasket|oeVATTBEOxBasket $oBasket */
-        $oBasket = oxNew('oxBasket');
+        /** @var EShopBasket|Basket $oBasket */
+        $oBasket = oxNew(EShopBasket::class);
         $oBasket->setOeVATTBECountryId($sLithuaniaId);
         if ($bAddToBasket) {
             $oBasket->addToBasket('_testArticle1', 1);
@@ -139,7 +144,7 @@ class BasketTest extends TestCase
      */
     public function testGetOeVATTBETbeCountryIdSet()
     {
-        $oBasket = oxNew('oxBasket');
+        $oBasket = oxNew(Basket::class);
         $oBasket->setOeVATTBECountryId('a7c40f631fc920687.20179984');
         $this->assertSame('Deutschland', $oBasket->getOeVATTBECountry()->getFieldData('oxtitle'));
     }
@@ -149,7 +154,7 @@ class BasketTest extends TestCase
      */
     public function testShowOeVATTBECountryChangedErrorDefault()
     {
-        $oBasket = oxNew('oxBasket');
+        $oBasket = oxNew(Basket::class);
         $this->assertFalse($oBasket->showOeVATTBECountryChangedError());
     }
 
@@ -158,7 +163,7 @@ class BasketTest extends TestCase
      */
     public function testShowOeVATTBECountryChangedErrorShow()
     {
-        $oBasket = oxNew('oxBasket');
+        $oBasket = oxNew(Basket::class);
         $oBasket->setOeVATTBECountryChanged();
         $this->assertTrue($oBasket->showOeVATTBECountryChangedError());
         $this->assertFalse($oBasket->showOeVATTBECountryChangedError());
@@ -169,11 +174,11 @@ class BasketTest extends TestCase
      */
     public function testisOeVATTBEValidValid()
     {
-        $oChecker = $this->getMock('oeVATTBEOrderArticleChecker', array('isValid'), array(), '', false);
+        $oChecker = $this->createPartialMock(OrderArticleChecker::class, ['isValid']);
         $oChecker->expects($this->any())->method('isValid')->will($this->returnValue(true));
 
-        $oBasket = $this->getMock('oeVATTBEOxBasket', array('_getOeVATTBEOrderArticleChecker'));
-        $oBasket->expects($this->any())->method('_getOeVATTBEOrderArticleChecker')->will($this->returnValue($oChecker));
+        $oBasket = $this->createPartialMock(Basket::class, ['getOeVATTBEOrderArticleChecker']);
+        $oBasket->expects($this->any())->method('getOeVATTBEOrderArticleChecker')->will($this->returnValue($oChecker));
 
         $this->assertTrue($oBasket->isOeVATTBEValid());
     }
@@ -183,11 +188,11 @@ class BasketTest extends TestCase
      */
     public function testisOeVATTBEValidNotValid()
     {
-        $oChecker = $this->getMock('oeVATTBEOrderArticleChecker', array('isValid'), array(), '', false);
+        $oChecker = $this->createPartialMock(OrderArticleChecker::class, ['isValid']);
         $oChecker->expects($this->any())->method('isValid')->will($this->returnValue(false));
 
-        $oBasket = $this->getMock('oeVATTBEOxBasket', array('_getOeVATTBEOrderArticleChecker'));
-        $oBasket->expects($this->any())->method('_getOeVATTBEOrderArticleChecker')->will($this->returnValue($oChecker));
+        $oBasket = $this->createPartialMock(Basket::class, ['getOeVATTBEOrderArticleChecker']);
+        $oBasket->expects($this->any())->method('getOeVATTBEOrderArticleChecker')->will($this->returnValue($oChecker));
 
         $this->assertFalse($oBasket->isOeVATTBEValid());
     }

@@ -7,6 +7,8 @@
 namespace OxidEsales\EVatModule\Tests\Unit\Shop;
 
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EVatModule\Shop\Country;
+use OxidEsales\EVatModule\Shop\Shop;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -23,8 +25,8 @@ class ShopTest extends TestCase
     {
         Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', null);
 
-        /** @var oeVATTBEOxShop $oShop */
-        $oShop = oxNew('oeVATTBEOxShop');
+        /** @var Shop $oShop */
+        $oShop = oxNew(Shop::class);
         $this->assertNull($oShop->getOeVATTBEDomesticCountry());
     }
 
@@ -35,8 +37,8 @@ class ShopTest extends TestCase
     {
         Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'blabla');
 
-        /** @var oeVATTBEOxShop $oShop */
-        $oShop = oxNew('oeVATTBEOxShop');
+        /** @var Shop $oShop */
+        $oShop = oxNew(Shop::class);
         $this->assertNull($oShop->getOeVATTBEDomesticCountry());
     }
 
@@ -47,9 +49,9 @@ class ShopTest extends TestCase
     {
         Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
 
-        /** @var oeVATTBEOxShop $oShop */
-        $oShop = oxNew('oeVATTBEOxShop');
-        $this->assertTrue($oShop->getOeVATTBEDomesticCountry() instanceof oeVATTBEOxCountry);
+        /** @var Shop $oShop */
+        $oShop = oxNew(Shop::class);
+        $this->assertTrue($oShop->getOeVATTBEDomesticCountry() instanceof Country);
         $this->assertSame('Deutschland', $oShop->getOeVATTBEDomesticCountry()->getOeVATTBEName());
     }
 }

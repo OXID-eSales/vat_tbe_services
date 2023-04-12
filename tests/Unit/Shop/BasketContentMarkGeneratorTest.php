@@ -6,6 +6,8 @@
 
 namespace OxidEsales\EVatModule\Tests\Unit\Shop;
 
+use OxidEsales\Eshop\Application\Model\BasketContentMarkGenerator;
+use OxidEsales\EVatModule\Shop\Basket;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -20,10 +22,10 @@ class BasketContentMarkGeneratorTest extends TestCase
      */
     public function testGetMark()
     {
-        $oBasket = $this->getMock('oeVATTBEOxBasket', array('hasOeTBEVATArticles'));
+        $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles']);
         $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue(true));
 
-        $oGenerator = oxNew('oxBasketContentMarkGenerator', $oBasket);
+        $oGenerator = oxNew(BasketContentMarkGenerator::class, $oBasket);
 
         $this->assertSame('**', $oGenerator->getMark('tbeService'));
     }
@@ -33,11 +35,11 @@ class BasketContentMarkGeneratorTest extends TestCase
      */
     public function testGetMarkHasOtherMarks()
     {
-        $oBasket = $this->getMock('oeVATTBEOxBasket', array('hasOeTBEVATArticles', 'hasArticlesWithDownloadableAgreement'));
+        $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'hasArticlesWithDownloadableAgreement']);
         $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue(true));
         $oBasket->expects($this->any())->method('hasArticlesWithDownloadableAgreement')->will($this->returnValue(true));
 
-        $oGenerator = oxNew('oxBasketContentMarkGenerator', $oBasket);
+        $oGenerator = oxNew(BasketContentMarkGenerator::class, $oBasket);
 
         $this->assertSame('**', $oGenerator->getMark('tbeService'));
         $this->assertSame('***', $oGenerator->getMark('downloadable'));
@@ -48,11 +50,11 @@ class BasketContentMarkGeneratorTest extends TestCase
      */
     public function testGetMarkHasOtherMarksButNotTBE()
     {
-        $oBasket = $this->getMock('oeVATTBEOxBasket', array('hasOeTBEVATArticles', 'hasArticlesWithDownloadableAgreement'));
+        $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'hasArticlesWithDownloadableAgreement']);
         $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue(false));
         $oBasket->expects($this->any())->method('hasArticlesWithDownloadableAgreement')->will($this->returnValue(true));
 
-        $oGenerator = oxNew('oxBasketContentMarkGenerator', $oBasket);
+        $oGenerator = oxNew(BasketContentMarkGenerator::class, $oBasket);
 
         $this->assertSame(null, $oGenerator->getMark('tbeService'));
         $this->assertSame('**', $oGenerator->getMark('downloadable'));

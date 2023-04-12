@@ -6,6 +6,9 @@
 
 namespace OxidEsales\EVatModule\Tests\Unit\Service;
 
+use OxidEsales\Eshop\Core\UtilsView;
+use OxidEsales\EVatModule\Model\IncorrectVATArticlesMessageFormatter;
+use OxidEsales\EVatModule\Model\OrderArticleChecker;
 use OxidEsales\EVatModule\Service\BasketItemsValidator;
 use PHPUnit\Framework\TestCase;
 
@@ -21,12 +24,12 @@ class BasketItemsValidatorTest extends TestCase
      */
     public function testValidateTbeArticlesWhenAllArticlesCorrect()
     {
-        $oVATTBEOrderArticleChecker = $this->getMock('oeVATTBEOrderArticleChecker', array(), array(), '', false);
+        $oVATTBEOrderArticleChecker = $this->createPartialMock(OrderArticleChecker::class, ['isValid']);
         $oVATTBEOrderArticleChecker->expects($this->any())->method('isValid')->will($this->returnValue(true));
 
-        $oVATTBEArticleMessageFormer = $this->getMock('oeVATTBEIncorrectVATArticlesMessageFormatter');
+        $oVATTBEArticleMessageFormer = $this->createMock(IncorrectVATArticlesMessageFormatter::class);
 
-        $oUtilsView = $this->getMock('oxUtilsView');
+        $oUtilsView = $this->createMock(UtilsView::class);
         // Error message should not be set as oeVATTBEOrderArticleChecker indicates that there is no wrong article.
         $oUtilsView->expects($this->never())->method('addErrorToDisplay');
 
@@ -40,12 +43,12 @@ class BasketItemsValidatorTest extends TestCase
      */
     public function testValidateTbeArticlesWhenIncorrectArticleExist()
     {
-        $oVATTBEOrderArticleChecker = $this->getMock('oeVATTBEOrderArticleChecker', array(), array(), '', false);
+        $oVATTBEOrderArticleChecker = $this->createPartialMock(OrderArticleChecker::class, ['isValid']);
         $oVATTBEOrderArticleChecker->expects($this->any())->method('isValid')->will($this->returnValue(false));
 
-        $oVATTBEArticleMessageFormer = $this->getMock('oeVATTBEIncorrectVATArticlesMessageFormatter');
+        $oVATTBEArticleMessageFormer = $this->createMock(IncorrectVATArticlesMessageFormatter::class);
 
-        $oUtilsView = $this->getMock('oxUtilsView');
+        $oUtilsView = $this->createMock(UtilsView::class);
         // Error message should be set as oeVATTBEOrderArticleChecker indicates that there is wrong article.
         $oUtilsView->expects($this->atLeastOnce())->method('addErrorToDisplay');
 

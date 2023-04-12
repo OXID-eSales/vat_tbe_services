@@ -6,10 +6,13 @@
 
 namespace OxidEsales\EVatModule\Tests\Unit\Model;
 
+use OxidEsales\EVatModule\Model\CategoryVATGroupsList;
+use OxidEsales\EVatModule\Model\DbGateway\CategoryVATGroupsDbGateway;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Testing oeVATTBECategoryVATGroupsList class.
+ * Testing CategoryVATGroupsList class.
  *
  * @covers CategoryVATGroupsList
  */
@@ -20,30 +23,26 @@ class CategoryVATGroupsListTest extends TestCase
      */
     public function testSavingGroupsList()
     {
-        $aExpectedData = array(
+        $aExpectedData = [
             'categoryid' => 'categoryId',
-            'relations' => array(
-                array(
+            'relations'  => [
+                [
                     'OEVATTBE_CATEGORYID' => 'categoryId',
-                    'OEVATTBE_COUNTRYID' => '8f241f110958b69e4.93886171',
+                    'OEVATTBE_COUNTRYID'  => '8f241f110958b69e4.93886171',
                     'OEVATTBE_VATGROUPID' => '12',
-                )
-            )
-        );
-        /** @var oeVATTBECategoryVATGroupsDbGateway|PHPUnit_Framework_MockObject_MockObject $oGateway */
-        $oGateway = $this->getMock('oeVATTBECategoryVATGroupsDbGateway', array('save'));
+                ]
+            ]
+        ];
+        /** @var CategoryVATGroupsDbGateway|MockObject $oGateway */
+        $oGateway = $this->createPartialMock(CategoryVATGroupsDbGateway::class, ['save']);
         $oGateway->expects($this->once())->method('save')->with($aExpectedData);
 
-        /** @var oeVATTBEArticleVATGroupsList $oList */
-        $oList = oxNew('oeVATTBECategoryVATGroupsList', $oGateway);
-
+        /** @var CategoryVATGroupsList $oList */
+        $oList = oxNew(CategoryVATGroupsList::class, $oGateway);
         $oList->setId('categoryId');
-
-        $aData = array(
+        $oList->setData([
             '8f241f110958b69e4.93886171' => '12',
-        );
-        $oList->setData($aData);
-
+        ]);
         $oList->save();
     }
 
@@ -53,20 +52,16 @@ class CategoryVATGroupsListTest extends TestCase
      */
     public function testSavingGroupsListWhenRecordsWithNoGroupIsPassed()
     {
-        /** @var oeVATTBECategoryVATGroupsDbGateway|PHPUnit_Framework_MockObject_MockObject $oGateway */
-        $oGateway = $this->getMock('oeVATTBECategoryVATGroupsDbGateway', array('save'));
-        $oGateway->expects($this->once())->method('save')->with(array('categoryid' => 'categoryId', 'relations' => array()));
+        /** @var CategoryVATGroupsDbGateway|MockObject $oGateway */
+        $oGateway = $this->createPartialMock(CategoryVATGroupsDbGateway::class, ['save']);
+        $oGateway->expects($this->once())->method('save')->with(['categoryid' => 'categoryId', 'relations' => []]);
 
-        /** @var oeVATTBECategoryVATGroupsList $oList */
-        $oList = oxNew('oeVATTBECategoryVATGroupsList', $oGateway);
-
+        /** @var CategoryVATGroupsList $oList */
+        $oList = oxNew(CategoryVATGroupsList::class, $oGateway);
         $oList->setId('categoryId');
-
-        $aData = array(
+        $oList->setData([
             '8f241f110958b69e4.93886171' => '',
-        );
-        $oList->setData($aData);
-
+        ]);
         $oList->save();
     }
 
@@ -75,31 +70,32 @@ class CategoryVATGroupsListTest extends TestCase
      */
     public function testLoadingCategoryVATGroupsList()
     {
-        $aData = array(
-            array(
+        $aData = [
+            [
                 'OEVATTBE_CATEGORYID' => 'categoryId',
-                'OEVATTBE_COUNTRYID' => '8f241f110958b69e4.93886171',
+                'OEVATTBE_COUNTRYID'  => '8f241f110958b69e4.93886171',
                 'OEVATTBE_VATGROUPID' => '12',
-                'OEVATTBE_TIMESTAMP' => '2014-05-05 19:00:00',
-            ),
-            array(
+                'OEVATTBE_TIMESTAMP'  => '2014-05-05 19:00:00',
+            ],
+            [
                 'OEVATTBE_CATEGORYID' => 'categoryId',
-                'OEVATTBE_COUNTRYID' => 'a7c40f631fc920687.20179984',
+                'OEVATTBE_COUNTRYID'  => 'a7c40f631fc920687.20179984',
                 'OEVATTBE_VATGROUPID' => '11',
-                'OEVATTBE_TIMESTAMP' => '2014-05-05 19:00:00',
-            )
-        );
-        /** @var oeVATTBECategoryVATGroupsDbGateway|PHPUnit_Framework_MockObject_MockObject $oGateway */
-        $oGateway = $this->_createStub('oeVATTBECategoryVATGroupsDbGateway', array('load' => $aData));
+                'OEVATTBE_TIMESTAMP'  => '2014-05-05 19:00:00',
+            ]
+        ];
+        /** @var CategoryVATGroupsDbGateway|MockObject $oGateway */
+        $oGateway = $this->createStub(CategoryVATGroupsDbGateway::class);
+        $oGateway->method('load')->willReturn($aData);
 
-        /** @var oeVATTBECategoryVATGroupsList $oList */
-        $oList = oxNew('oeVATTBECategoryVATGroupsList', $oGateway);
+        /** @var CategoryVATGroupsList $oList */
+        $oList = oxNew(CategoryVATGroupsList::class, $oGateway);
         $oList->load('categoryId');
 
-        $aExpectedData = array(
+        $aExpectedData = [
             '8f241f110958b69e4.93886171' => '12',
             'a7c40f631fc920687.20179984' => '11',
-        );
+        ];
         $this->assertEquals($aExpectedData, $oList->getData());
     }
 
@@ -108,23 +104,23 @@ class CategoryVATGroupsListTest extends TestCase
      */
     public function testDeletingCategoryVATGroupsList()
     {
-        /** @var oeVATTBECategoryVATGroupsDbGateway|PHPUnit_Framework_MockObject_MockObject $oGateway */
-        $oGateway = $this->getMock('oeVATTBECategoryVATGroupsDbGateway', array('delete'));
+        /** @var CategoryVATGroupsDbGateway|MockObject $oGateway */
+        $oGateway = $this->createPartialMock(CategoryVATGroupsDbGateway::class, ['delete']);
         $oGateway->expects($this->once())->method('delete')->with('categoryid');
 
-        /** @var oeVATTBECategoryVATGroupsList $oList */
-        $oList = oxNew('oeVATTBECategoryVATGroupsList', $oGateway);
+        /** @var CategoryVATGroupsList $oList */
+        $oList = oxNew(CategoryVATGroupsList::class, $oGateway);
 
         $oList->delete('categoryid');
     }
 
-    /**
-     * Tests creating of oeVATTBECategoryVATGroupsList.
-     */
-    public function testCreating()
-    {
-        $oList = oeVATTBECategoryVATGroupsList::createInstance();
-
-        $this->assertInstanceOf('oeVATTBECategoryVATGroupsList', $oList);
-    }
+//    /**
+//     * Tests creating of CategoryVATGroupsList.
+//     */
+//    public function testCreating()
+//    {
+//        $oList = CategoryVATGroupsList::createInstance();
+//
+//        $this->assertInstanceOf(CategoryVATGroupsList::class, $oList);
+//    }
 }

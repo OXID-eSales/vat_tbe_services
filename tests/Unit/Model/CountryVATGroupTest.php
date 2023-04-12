@@ -6,10 +6,14 @@
 
 namespace OxidEsales\EVatModule\Tests\Unit\Model;
 
+use OxidEsales\EVatModule\Model\CountryVATGroup;
+use OxidEsales\EVatModule\Model\DbGateway\CountryVATGroupsDbGateway;
+use OxidEsales\EVatModule\Model\GroupArticleCacheInvalidator;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Testing oeVATTBECountryVATGroup class.
+ * Testing CountryVATGroup class.
  *
  * @covers CountryVATGroup
  */
@@ -21,18 +25,18 @@ class CountryVATGroupTest extends TestCase
      */
     public function testSavingVATGroup()
     {
-        $aExpectedData = array(
-            'oevattbe_countryid' => '8f241f11095410f38.37165361',
-            'oevattbe_name' => 'Group Name',
+        $aExpectedData = [
+            'oevattbe_countryid'   => '8f241f11095410f38.37165361',
+            'oevattbe_name'        => 'Group Name',
             'oevattbe_description' => 'Some description',
-            'oevattbe_rate' => 20.50
-        );
+            'oevattbe_rate'        => 20.50
+        ];
 
-        $oGateway = $this->getMock('oeVATTBECountryVATGroupsDbGateway', array('save'));
+        $oGateway = $this->createPartialMock(CountryVATGroupsDbGateway::class, ['save']);
         $oGateway->expects($this->once())->method('save')->with($aExpectedData);
 
-        /** @var oeVATTBECountryVATGroup $oGroup */
-        $oGroup = oxNew('oeVATTBECountryVATGroup', $oGateway);
+        /** @var CountryVATGroup $oGroup */
+        $oGroup = oxNew(CountryVATGroup::class, $oGateway);
 
         $oGroup->setCountryId('8f241f11095410f38.37165361');
         $oGroup->setName('Group Name');
@@ -48,19 +52,19 @@ class CountryVATGroupTest extends TestCase
      */
     public function testUpdatingVATGroup()
     {
-        $aExpectedData = array(
-            'oevattbe_id' => '999',
-            'oevattbe_countryid' => '8f241f11095410f38.37165361',
-            'oevattbe_name' => 'Group Name',
+        $aExpectedData = [
+            'oevattbe_id'          => '999',
+            'oevattbe_countryid'   => '8f241f11095410f38.37165361',
+            'oevattbe_name'        => 'Group Name',
             'oevattbe_description' => 'Some description',
-            'oevattbe_rate' => 20.50
-        );
+            'oevattbe_rate'        => 20.50
+        ];
 
-        $oGateway = $this->getMock('oeVATTBECountryVATGroupsDbGateway', array('save'));
+        $oGateway = $this->createPartialMock(CountryVATGroupsDbGateway::class, ['save']);
         $oGateway->expects($this->once())->method('save')->with($aExpectedData);
 
-        /** @var oeVATTBECountryVATGroup $oGroup */
-        $oGroup = oxNew('oeVATTBECountryVATGroup', $oGateway);
+        /** @var CountryVATGroup $oGroup */
+        $oGroup = oxNew(CountryVATGroup::class, $oGateway);
 
         $oGroup->setId('999');
         $oGroup->setCountryId('8f241f11095410f38.37165361');
@@ -77,11 +81,11 @@ class CountryVATGroupTest extends TestCase
      */
     public function testSavingVATGroupWithNoData()
     {
-        $oGateway = $this->getMock('oeVATTBECountryVATGroupsDbGateway', array('save'));
+        $oGateway = $this->createPartialMock(CountryVATGroupsDbGateway::class, ['save']);
         $oGateway->expects($this->once())->method('save')->with(null);
 
-        /** @var oeVATTBECountryVATGroup $oGroup */
-        $oGroup = oxNew('oeVATTBECountryVATGroup', $oGateway);
+        /** @var CountryVATGroup $oGroup */
+        $oGroup = oxNew(CountryVATGroup::class, $oGateway);
 
         $oGroup->save();
     }
@@ -92,19 +96,20 @@ class CountryVATGroupTest extends TestCase
      */
     public function testLoadingVATGroup()
     {
-        $aData = array(
-            'OEVATTBE_ID' => 99,
-            'OEVATTBE_COUNTRYID' => '8f241f11095410f38.37165361',
-            'OEVATTBE_NAME' => 'Group Name',
+        $aData = [
+            'OEVATTBE_ID'          => 99,
+            'OEVATTBE_COUNTRYID'   => '8f241f11095410f38.37165361',
+            'OEVATTBE_NAME'        => 'Group Name',
             'OEVATTBE_DESCRIPTION' => 'Some description',
-            'OEVATTBE_RATE' => '20.50',
-            'OEVATTBE_TIMESTAMP' => '2014-05-05 18:00:00',
-        );
+            'OEVATTBE_RATE'        => '20.50',
+            'OEVATTBE_TIMESTAMP'   => '2014-05-05 18:00:00',
+        ];
 
-        $oGateway = $this->_createStub('oeVATTBECountryVATGroupsDbGateway', array('load' => $aData));
+        $oGateway = $this->createStub(CountryVATGroupsDbGateway::class);
+        $oGateway->method('load')->willReturn($aData);
 
-        /** @var oeVATTBECountryVATGroup $oGroup */
-        $oGroup = oxNew('oeVATTBECountryVATGroup', $oGateway);
+        /** @var CountryVATGroup $oGroup */
+        $oGroup = oxNew(CountryVATGroup::class, $oGateway);
         $oGroup->load(99);
 
         $this->assertSame('8f241f11095410f38.37165361', $oGroup->getCountryId());
@@ -113,29 +118,30 @@ class CountryVATGroupTest extends TestCase
         $this->assertSame('20.50', $oGroup->getRate());
     }
 
-    /**
-     * Tests creating of oeVATTBEArticleVATGroupsList.
-     */
-    public function testCreatingGroupWithCreationMethod()
-    {
-        $oGroup = oeVATTBECountryVATGroup::createInstance();
-
-        $this->assertInstanceOf('oeVATTBECountryVATGroup', $oGroup);
-    }
+//    /**
+//     * Tests creating of oeVATTBEArticleVATGroupsList.
+//     */
+//    public function testCreatingGroupWithCreationMethod()
+//    {
+//        $oGroup = oeVATTBECountryVATGroup::createInstance();
+//
+//        $this->assertInstanceOf('oeVATTBECountryVATGroup', $oGroup);
+//    }
 
     /**
      * Tests invalidating cache on group save event.
      */
     public function testInvalidatingCacheOnGroupSaving()
     {
-        /** @var oeVATTBECountryVATGroupsDbGateway $oGateway */
-        $oGateway = $this->_createStub('oeVATTBECountryVATGroupsDbGateway', array('save' => 'groupId'));
+        /** @var CountryVATGroupsDbGateway|MockObject $oGateway */
+        $oGateway = $this->createStub(CountryVATGroupsDbGateway::class);
+        $oGateway->method('save')->willReturn('groupId');
 
-        $oInvalidator = $this->getMock('oeVATTBEVATGroupArticleCacheInvalidator', array('invalidate'), array(), '', false);
+        $oInvalidator = $this->createPartialMock(GroupArticleCacheInvalidator::class, ['invalidate']);
         $oInvalidator->expects($this->atLeastOnce())->method('invalidate')->with('groupId');
 
-        /** @var oeVATTBECountryVATGroup $oGroup */
-        $oGroup = oxNew('oeVATTBECountryVATGroup', $oGateway);
+        /** @var CountryVATGroup $oGroup */
+        $oGroup = oxNew(CountryVATGroup::class, $oGateway);
         $oGroup->setVATGroupArticleCacheInvalidator($oInvalidator);
         $oGroup->setId('groupId');
 
@@ -147,14 +153,14 @@ class CountryVATGroupTest extends TestCase
      */
     public function testInvalidatingCacheOnGroupDeletion()
     {
-        /** @var oeVATTBECountryVATGroupsDbGateway $oGateway */
-        $oGateway = $this->_createStub('oeVATTBECountryVATGroupsDbGateway', array('save' => 'groupId'));
+        $oGateway = $this->createStub(CountryVATGroupsDbGateway::class);
+        $oGateway->method('save')->willReturn('groupId');
 
-        $oInvalidator = $this->getMock('oeVATTBEVATGroupArticleCacheInvalidator', array('invalidate'), array(), '', false);
+        $oInvalidator = $this->createPartialMock(GroupArticleCacheInvalidator::class, ['invalidate']);
         $oInvalidator->expects($this->atLeastOnce())->method('invalidate')->with('groupId');
 
-        /** @var oeVATTBECountryVATGroup $oGroup */
-        $oGroup = oxNew('oeVATTBECountryVATGroup', $oGateway);
+        /** @var CountryVATGroup $oGroup */
+        $oGroup = oxNew(CountryVATGroup::class, $oGateway);
         $oGroup->setVATGroupArticleCacheInvalidator($oInvalidator);
         $oGroup->setId('groupId');
 

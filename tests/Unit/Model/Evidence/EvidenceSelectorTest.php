@@ -7,34 +7,35 @@
 namespace OxidEsales\EVatModule\Tests\Unit\Model\Evidence;
 
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EVatModule\Model\Evidence\EvidenceList;
+use OxidEsales\EVatModule\Model\Evidence\EvidenceSelector;
+use OxidEsales\EVatModule\Model\Evidence\Item\Evidence;
+use OxidEsales\EVatModule\Service\ModuleSettings;
 use PHPUnit\Framework\TestCase;
 
-//require_once  __DIR__ . '/../../../../../models/evidences/items/oevattbeevidence.php';
-//require_once  __DIR__ . '/../../../../../models/evidences/oevattbeevidencelist.php';
-
 /**
- * Test class for oeVATTBEEvidenceCalculator.
+ * Test class for EvidenceCalculator.
  *
  * @covers EvidenceSelector
-*/
+ */
 class EvidenceSelectorTest extends TestCase
 {
-    public function providerGetCountryWhenBothEvidenceDoNotMatch()
+    public function providerGetCountryWhenBothEvidenceDoNotMatch(): array
     {
         $oBillingEvidence = $this->_createEvidence('billing_address', 'Germany');
         $oGeoLocationEvidence = $this->_createEvidence('geo_location', 'Lithuania');
-        $oEvidenceList = new oeVATTBEEvidenceList(array($oBillingEvidence, $oGeoLocationEvidence));
+        $oEvidenceList = new EvidenceList([$oBillingEvidence, $oGeoLocationEvidence]);
 
-        return array(
-            array($oEvidenceList, 'billing_address', $oBillingEvidence),
-            array($oEvidenceList, 'geo_location', $oGeoLocationEvidence)
-        );
+        return [
+            [$oEvidenceList, 'billing_address', $oBillingEvidence],
+            [$oEvidenceList, 'geo_location', $oGeoLocationEvidence]
+        ];
     }
 
     /**
-     * @param oeVATTBEEvidenceList $oEvidenceList
-     * @param string               $sDefaultEvidence
-     * @param oeVATTBEEvidence     $sExpectedEvidence
+     * @param EvidenceList $oEvidenceList
+     * @param string       $sDefaultEvidence
+     * @param Evidence     $sExpectedEvidence
      *
      * @dataProvider providerGetCountryWhenBothEvidenceDoNotMatch
      */
@@ -43,7 +44,11 @@ class EvidenceSelectorTest extends TestCase
         $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', $sDefaultEvidence);
 
-        $oCalculator = new oeVATTBEEvidenceSelector($oEvidenceList, $oConfig);
+//        $oCalculator = new EvidenceSelector($oEvidenceList, $oConfig);
+
+        //TODO: pass module setting and EvidenceCollect
+        $moduleSettingsMock = $this->createMock(ModuleSettings::class);
+        $oCalculator = new EvidenceSelector($moduleSettingsMock, $oEvidenceList);
 
         $this->assertSame($sExpectedEvidence, $oCalculator->getEvidence());
     }
@@ -56,9 +61,12 @@ class EvidenceSelectorTest extends TestCase
         $oBillingEvidence = $this->_createEvidence('billing_address', 'Germany');
         $oGeoLocationEvidence = $this->_createEvidence('geo_location', 'Lithuania');
         $oDefaultEvidence = $this->_createEvidence('default_evidence', '');
-        $oEvidenceList = new oeVATTBEEvidenceList(array($oBillingEvidence, $oGeoLocationEvidence, $oDefaultEvidence));
+        $oEvidenceList = new EvidenceList([$oBillingEvidence, $oGeoLocationEvidence, $oDefaultEvidence]);
 
-        $oCalculator = new oeVATTBEEvidenceSelector($oEvidenceList, $oConfig);
+//        $oCalculator = new EvidenceSelector($oEvidenceList, $oConfig);
+
+        $moduleSettingsMock = $this->createMock(ModuleSettings::class);
+        $oCalculator = new EvidenceSelector($moduleSettingsMock, $oEvidenceList);
 
         $this->assertSame($oBillingEvidence, $oCalculator->getEvidence());
     }
@@ -71,9 +79,12 @@ class EvidenceSelectorTest extends TestCase
         $oBillingEvidence = $this->_createEvidence('billing_address', '');
         $oGeoLocationEvidence = $this->_createEvidence('geo_location', 'Lithuania');
         $oDefaultEvidence = $this->_createEvidence('default_evidence', '');
-        $oEvidenceList = new oeVATTBEEvidenceList(array($oBillingEvidence, $oGeoLocationEvidence, $oDefaultEvidence));
+        $oEvidenceList = new EvidenceList([$oBillingEvidence, $oGeoLocationEvidence, $oDefaultEvidence]);
 
-        $oCalculator = new oeVATTBEEvidenceSelector($oEvidenceList, $oConfig);
+//        $oCalculator = new EvidenceSelector($oEvidenceList, $oConfig);
+
+        $moduleSettingsMock = $this->createMock(ModuleSettings::class);
+        $oCalculator = new EvidenceSelector($moduleSettingsMock, $oEvidenceList);
 
         $this->assertSame($oGeoLocationEvidence, $oCalculator->getEvidence());
     }
@@ -81,8 +92,11 @@ class EvidenceSelectorTest extends TestCase
     public function testGetCountryWithEmptyList()
     {
         $oConfig = Registry::getConfig();
-        $oEvidenceList = new oeVATTBEEvidenceList();
-        $oCalculator = new oeVATTBEEvidenceSelector($oEvidenceList, $oConfig);
+        $oEvidenceList = new EvidenceList();
+//        $oCalculator = new EvidenceSelector($oEvidenceList, $oConfig);
+
+        $moduleSettingsMock = $this->createMock(ModuleSettings::class);
+        $oCalculator = new EvidenceSelector($moduleSettingsMock, $oEvidenceList);
 
         $this->assertSame(null, $oCalculator->getEvidence());
     }
@@ -91,9 +105,12 @@ class EvidenceSelectorTest extends TestCase
     {
         $oBillingEvidence = $this->_createEvidence('billing_address', 'Germany');
         $oGeoLocationEvidence = $this->_createEvidence('geo_location', 'Germany');
-        $oEvidenceList = new oeVATTBEEvidenceList(array($oBillingEvidence, $oGeoLocationEvidence));
+        $oEvidenceList = new EvidenceList([$oBillingEvidence, $oGeoLocationEvidence]);
 
-        $oCalculator = new oeVATTBEEvidenceSelector($oEvidenceList, Registry::getConfig());
+//        $oCalculator = new EvidenceSelector($oEvidenceList, Registry::getConfig());
+
+        $moduleSettingsMock = $this->createMock(ModuleSettings::class);
+        $oCalculator = new EvidenceSelector($moduleSettingsMock, $oEvidenceList);
 
         $this->assertSame(false, $oCalculator->isEvidencesContradicting());
     }
@@ -102,9 +119,12 @@ class EvidenceSelectorTest extends TestCase
     {
         $oBillingEvidence = $this->_createEvidence('billing_address', 'Germany');
         $oGeoLocationEvidence = $this->_createEvidence('geo_location', 'Lithuania');
-        $oEvidenceList = new oeVATTBEEvidenceList(array($oBillingEvidence, $oGeoLocationEvidence));
+        $oEvidenceList = new EvidenceList([$oBillingEvidence, $oGeoLocationEvidence]);
 
-        $oCalculator = new oeVATTBEEvidenceSelector($oEvidenceList, Registry::getConfig());
+//        $oCalculator = new EvidenceSelector($oEvidenceList, Registry::getConfig());
+
+        $moduleSettingsMock = $this->createMock(ModuleSettings::class);
+        $oCalculator = new EvidenceSelector($moduleSettingsMock, $oEvidenceList);
 
         $this->assertSame(true, $oCalculator->isEvidencesContradicting());
     }
@@ -115,11 +135,11 @@ class EvidenceSelectorTest extends TestCase
      * @param string $sName
      * @param string $sCountry
      *
-     * @return oeVATTBEEvidence
+     * @return Evidence
      */
     protected function _createEvidence($sName, $sCountry)
     {
-        $oEvidence = $this->createMock(oeVATTBEEvidence::class);
+        $oEvidence = $this->createMock(Evidence::class);
         $oEvidence->expects($this->any())->method('getId')->will($this->returnValue($sName));
         $oEvidence->expects($this->any())->method('getCountryId')->will($this->returnValue($sCountry));
 

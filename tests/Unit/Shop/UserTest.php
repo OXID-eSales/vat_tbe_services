@@ -8,6 +8,8 @@ namespace OxidEsales\EVatModule\Tests\Unit\Shop;
 
 use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\Eshop\Core\UtilsDate;
+use OxidEsales\EVatModule\Shop\User;
 use PHPUnit\Framework\TestCase;
 use oxDb;
 
@@ -22,11 +24,11 @@ class UserTest extends TestCase
     public function testTBECountryIdSelecting()
     {
         $oConfig = Registry::getConfig();
-        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence'));
-        $oConfig->setConfigParam('aOeVATTBECountryEvidences', array('billing_country' => 1));
+        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', ['oeVATTBEBillingCountryEvidence']);
+        $oConfig->setConfigParam('aOeVATTBECountryEvidences', ['billing_country' => 1]);
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
 
-        $oUser = oxNew('oxUser');
+        $oUser = oxNew(User::class);
         $oUser->oxuser__oxcountryid = new Field('GermanyId');
 
         $this->assertEquals('GermanyId', $oUser->getOeVATTBETbeCountryId());
@@ -37,7 +39,7 @@ class UserTest extends TestCase
      */
     public function testGetOeVATTBEVatIn()
     {
-        $oUser = oxNew('oxUser');
+        $oUser = oxNew(User::class);
         $oUser->oxuser__oxustid = new Field('IdNumber');
 
         $this->assertSame('IdNumber', $oUser->getOeVATTBEVatIn());
@@ -48,7 +50,7 @@ class UserTest extends TestCase
      */
     public function testGetOeVATTBEVatInStoreDate()
     {
-        $oUser = oxNew('oxUser');
+        $oUser = oxNew(User::class);
         $oUser->oxuser__oevattbe_vatinenterdate = new Field('2014-12-12 12:12:12');
 
         $this->assertSame('2014-12-12 12:12:12', $oUser->getOeVATTBEVatInStoreDate());
@@ -60,18 +62,18 @@ class UserTest extends TestCase
      */
     public function testSaveVatInStoreDateOnNewUserCreation()
     {
-        $oUtilsDate = $this->getMock("oxUtilsDate", array("getTime"));
+        $oUtilsDate = $this->createPartialMock(UtilsDate::class, ["getTime"]);
         $oUtilsDate->expects($this->any())->method("getTime")->will($this->returnValue(1388664732));
 
-        oxRegistry::set('oxUtilsDate', $oUtilsDate);
+        Registry::set(UtilsDate::class, $oUtilsDate);
 
-        $oUser = oxNew('oxUser');
+        $oUser = oxNew(User::class);
         $oUser->delete('userId');
         $oUser->setId('userId');
         $oUser->oxuser__oxustid = new Field('IdNumber');
         $oUser->save();
 
-        $oUser = oxNew('oxUser');
+        $oUser = oxNew(User::class);
         $oUser->load('userId');
 
         $this->assertSame('2014-01-02 13:12:12', $oUser->getOeVATTBEVatInStoreDate());
@@ -83,12 +85,12 @@ class UserTest extends TestCase
      */
     public function testSaveVatInDoNotStoreDateVatIdNotSet()
     {
-        $oUser = oxNew('oxUser');
+        $oUser = oxNew(User::class);
         $oUser->delete('userId');
         $oUser->setId('userId');
         $oUser->save();
 
-        $oUser = oxNew('oxUser');
+        $oUser = oxNew(User::class);
         $oUser->load('userId');
 
         $this->assertSame('0000-00-00 00:00:00', $oUser->getOeVATTBEVatInStoreDate());
@@ -100,22 +102,22 @@ class UserTest extends TestCase
      */
     public function testSaveVatInStoreDateA()
     {
-        $oUtilsDate = $this->getMock("oxUtilsDate", array("getTime"));
+        $oUtilsDate = $this->createPartialMock(UtilsDate::class, ["getTime"]);
         $oUtilsDate->expects($this->any())->method("getTime")->will($this->returnValue(1388664732));
 
-        oxRegistry::set('oxUtilsDate', $oUtilsDate);
+        Registry::set(UtilsDate::class, $oUtilsDate);
 
-        $oUser = oxNew('oxUser');
+        $oUser = oxNew(User::class);
         $oUser->delete('userId');
         $oUser->setId('userId');
         $oUser->save();
 
-        $oUser = oxNew('oxUser');
+        $oUser = oxNew(User::class);
         $oUser->load('userId');
         $oUser->oxuser__oxustid = new Field('IdNumber');
         $oUser->save();
 
-        $oUser = oxNew('oxUser');
+        $oUser = oxNew(User::class);
         $oUser->load('userId');
 
         $this->assertSame('2014-01-02 13:12:12', $oUser->getOeVATTBEVatInStoreDate());
@@ -127,21 +129,21 @@ class UserTest extends TestCase
      */
     public function testSaveVatInStoreDateB()
     {
-        $oUtilsDate = $this->getMock("oxUtilsDate", array("getTime"));
+        $oUtilsDate = $this->createPartialMock(UtilsDate::class, ["getTime"]);
         $oUtilsDate->expects($this->any())->method("getTime")->will($this->returnValue(1388664732));
 
-        oxRegistry::set('oxUtilsDate', $oUtilsDate);
+        Registry::set(UtilsDate::class, $oUtilsDate);
 
-        $oUser = oxNew('oxUser');
+        $oUser = oxNew(User::class);
         $oUser->delete('userId');
         $oUser->setId('userId');
         $oUser->save();
 
-        $oUser = oxNew('oxUser');
+        $oUser = oxNew(User::class);
         $oUser->load('userId');
         $oUser->save();
 
-        $oUser = oxNew('oxUser');
+        $oUser = oxNew(User::class);
         $oUser->load('userId');
 
         $this->assertSame('0000-00-00 00:00:00', $oUser->getOeVATTBEVatInStoreDate());
@@ -153,24 +155,24 @@ class UserTest extends TestCase
      */
     public function testSaveVatInStoreDateC()
     {
-        $oUtilsDate = $this->getMock("oxUtilsDate", array("getTime"));
+        $oUtilsDate = $this->createPartialMock(UtilsDate::class, ["getTime"]);
         $oUtilsDate->expects($this->any())->method("getTime")->will($this->returnValue(1388664732));
 
-        oxRegistry::set('oxUtilsDate', $oUtilsDate);
+        Registry::set(UtilsDate::class, $oUtilsDate);
 
-        $oUser = oxNew('oxUser');
+        $oUser = oxNew(User::class);
         $oUser->delete('userId');
         $oUser->setId('userId');
         $oUser->oxuser__oxustid = new Field('IdNumber');
         $oUser->oxuser__oevattbe_vatinenterdate = new Field('0000-00-00 00:00:00');
         $oUser->save();
 
-        $oUser = oxNew('oxUser');
+        $oUser = oxNew(User::class);
         $oUser->load('userId');
         $oUser->oxuser__oxustid = new Field('IdNumber2');
         $oUser->save();
 
-        $oUser = oxNew('oxUser');
+        $oUser = oxNew(User::class);
         $oUser->load('userId');
 
         $this->assertSame('2014-01-02 13:12:12', $oUser->getOeVATTBEVatInStoreDate());
@@ -182,7 +184,7 @@ class UserTest extends TestCase
      */
     public function testSaveVatInStoreD()
     {
-        $oUser = oxNew('oxUser');
+        $oUser = oxNew(User::class);
         $oUser->delete('userId');
 
         $oUser->setId('userId');
@@ -192,12 +194,12 @@ class UserTest extends TestCase
         //removing set date
         oxDb::getDb()->execute("UPDATE `oxuser` SET `oevattbe_vatinenterdate` = '0000-00-00 00:00:00' WHERE `oxid` = 'userId'");
 
-        $oUser = oxNew('oxUser');
+        $oUser = oxNew(User::class);
         $oUser->load('userId');
         $oUser->oxuser__oxustid = new Field('');
         $oUser->save();
 
-        $oUser = oxNew('oxUser');
+        $oUser = oxNew(User::class);
         $oUser->load('userId');
 
         $this->assertSame('0000-00-00 00:00:00', $oUser->getOeVATTBEVatInStoreDate());
@@ -209,19 +211,19 @@ class UserTest extends TestCase
      */
     public function testSaveVatInStoreDateE()
     {
-        $oUser = oxNew('oxUser');
+        $oUser = oxNew(User::class);
         $oUser->delete('userId');
         $oUser->setId('userId');
         $oUser->oxuser__oxustid = new Field('IdNumber');
         $oUser->oxuser__oevattbe_vatinenterdate = new Field('2014-12-12 12:12:12');
         $oUser->save();
 
-        $oUser = oxNew('oxUser');
+        $oUser = oxNew(User::class);
         $oUser->load('userId');
         $oUser->oxuser__oxustid = new Field('');
         $oUser->save();
 
-        $oUser = oxNew('oxUser');
+        $oUser = oxNew(User::class);
         $oUser->load('userId');
         $this->assertSame('2014-12-12 12:12:12', $oUser->getOeVATTBEVatInStoreDate());
     }
@@ -232,19 +234,19 @@ class UserTest extends TestCase
      */
     public function testSaveVatInStoreDateF()
     {
-        $oUser = oxNew('oxUser');
+        $oUser = oxNew(User::class);
         $oUser->delete('userId');
         $oUser->setId('userId');
         $oUser->oxuser__oxustid = new Field('IdNumber');
         $oUser->oxuser__oevattbe_vatinenterdate = new Field('2014-12-12 12:12:12');
         $oUser->save();
 
-        $oUser = oxNew('oxUser');
+        $oUser = oxNew(User::class);
         $oUser->load('userId');
         $oUser->oxuser__oxustid = new Field('IdNumber2');
         $oUser->save();
 
-        $oUser = oxNew('oxUser');
+        $oUser = oxNew(User::class);
         $oUser->load('userId');
 
         $this->assertSame('2014-12-12 12:12:12', $oUser->getOeVATTBEVatInStoreDate());

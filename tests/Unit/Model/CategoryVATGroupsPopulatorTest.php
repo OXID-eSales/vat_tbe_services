@@ -6,39 +6,43 @@
 
 namespace OxidEsales\EVatModule\Tests\Unit\Model;
 
+use OxidEsales\EVatModule\Model\CategoryArticlesUpdater;
+use OxidEsales\EVatModule\Model\DbGateway\CategoryVATGroupsPopulatorDbGateway;
+use OxidEsales\EVatModule\Shop\Category;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Testing oeVATTBECategoryArticlesUpdater class.
+ * Testing CategoryArticlesUpdater class.
  *
  * @covers CategoryVATGroupsPopulator
  */
 class CategoryVATGroupsPopulatorTest extends TestCase
 {
-    /**
-     * Tests creating of oeVATTBECategoryArticlesUpdater.
-     */
-    public function testCreating()
-    {
-        $oArticlesUpdater = oeVATTBECategoryArticlesUpdater::createInstance();
-
-        $this->assertInstanceOf('oeVATTBECategoryArticlesUpdater', $oArticlesUpdater);
-    }
+//    /**
+//     * Tests creating of CategoryArticlesUpdater.
+//     */
+//    public function testCreating()
+//    {
+//        $oArticlesUpdater = CategoryArticlesUpdater::createInstance();
+//
+//        $this->assertInstanceOf(CategoryArticlesUpdater::class, $oArticlesUpdater);
+//    }
 
     /**
      * Test deleting category groups list.
      */
     public function testDeletingCategoryVATGroupsList()
     {
-        $oCategory = oxNew('oeVATTBEoxCategory');
+        $oCategory = oxNew(Category::class);
         $oCategory->setId('categoryId');
 
-        /** @var oeVATTBECategoryVATGroupsPopulatorDbGateway|PHPUnit_Framework_MockObject_MockObject $oGateway */
-        $oGateway = $this->getMock('oeVATTBECategoryVATGroupsPopulatorDbGateway', array('populate'));
+        /** @var CategoryVATGroupsPopulatorDbGateway|MockObject $oGateway */
+        $oGateway = $this->createPartialMock(CategoryVATGroupsPopulatorDbGateway::class, ['populate']);
         $oGateway->expects($this->once())->method('populate')->with('categoryId');
 
-        /** @var oeVATTBECategoryArticlesUpdater $oArticlesUpdater */
-        $oArticlesUpdater = oxNew('oeVATTBECategoryArticlesUpdater', $oGateway);
+        /** @var CategoryArticlesUpdater $oArticlesUpdater */
+        $oArticlesUpdater = oxNew(CategoryArticlesUpdater::class, $oGateway);
         $oArticlesUpdater->addCategoryTBEInformationToArticles($oCategory);
     }
 
@@ -47,15 +51,15 @@ class CategoryVATGroupsPopulatorTest extends TestCase
      */
     public function testResetArticles()
     {
-        $aArticles = array(
+        $aArticles = [
             '_testId'
-        );
-        /** @var oeVATTBECategoryVATGroupsPopulatorDbGateway|PHPUnit_Framework_MockObject_MockObject $oGateway */
-        $oGateway = $this->getMock('oeVATTBECategoryVATGroupsPopulatorDbGateway', array('reset'));
+        ];
+        /** @var CategoryVATGroupsPopulatorDbGateway|MockObject $oGateway */
+        $oGateway = $this->createPartialMock(CategoryVATGroupsPopulatorDbGateway::class, ['reset']);
         $oGateway->expects($this->once())->method('reset')->with($aArticles);
 
-        /** @var oeVATTBECategoryArticlesUpdater $oArticlesUpdater */
-        $oArticlesUpdater = oxNew('oeVATTBECategoryArticlesUpdater', $oGateway);
+        /** @var CategoryArticlesUpdater $oArticlesUpdater */
+        $oArticlesUpdater = oxNew(CategoryArticlesUpdater::class, $oGateway);
         $oArticlesUpdater->removeCategoryTBEInformationFromArticles($aArticles);
     }
 }

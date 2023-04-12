@@ -6,6 +6,7 @@
 
 namespace OxidEsales\EVatModule\Tests\Unit\Core;
 
+use OxidEsales\EVatModule\Core\Events;
 use PHPUnit\Framework\TestCase;
 use oxDb;
 
@@ -26,7 +27,7 @@ class EventsTest extends TestCase
         oxDb::getDb()->execute('DROP TABLE IF EXISTS `oevattbe_countryvatgroups`');
         oxDb::getDb()->execute('DROP TABLE IF EXISTS `oevattbe_orderevidences`');
 
-        oeVATTBEEvents::onActivate();
+        Events::onActivate();
 
         parent::tearDown();
     }
@@ -41,7 +42,7 @@ class EventsTest extends TestCase
         oxDb::getDb()->execute('DROP TABLE IF EXISTS `oevattbe_countryvatgroups`');
         oxDb::getDb()->execute('DROP TABLE IF EXISTS `oevattbe_orderevidences`');
 
-        oeVATTBEEvents::onActivate();
+        Events::onActivate();
 
         $oDbMetaDataHandler = oxNew('oxDbMetaDataHandler');
 

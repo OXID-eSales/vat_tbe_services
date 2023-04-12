@@ -7,6 +7,7 @@
 namespace OxidEsales\EVatModule\Tests\Unit\Shop;
 
 use OxidEsales\Eshop\Core\Field;
+use OxidEsales\EVatModule\Shop\Country;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -21,7 +22,7 @@ class CountryTest extends TestCase
      */
     public function testAppliesOeTBEVATTbeVat()
     {
-        $oCountry = oxNew('oxCountry');
+        $oCountry = oxNew(Country::class);
         $oCountry->oxcountry__oevattbe_appliestbevat = new Field(1);
         $this->assertTrue($oCountry->appliesOeTBEVATTbeVat());
 
@@ -34,7 +35,7 @@ class CountryTest extends TestCase
      */
     public function testIsOEVATTBEAtLeastOneGroupConfigured()
     {
-        $oCountry = oxNew('oxCountry');
+        $oCountry = oxNew(Country::class);
         $oCountry->oxcountry__oevattbe_istbevatconfigured = new Field(1);
         $this->assertTrue($oCountry->isOEVATTBEAtLeastOneGroupConfigured());
 
@@ -47,7 +48,7 @@ class CountryTest extends TestCase
      */
     public function testGetOeVATTBEName()
     {
-        $oCountry = oxNew('oxCountry');
+        $oCountry = oxNew(Country::class);
         $oCountry->oxcountry__oxtitle = new Field('LT');
         $this->assertSame('LT', $oCountry->getOeVATTBEName());
     }

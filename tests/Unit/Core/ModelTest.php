@@ -6,10 +6,11 @@
 
 namespace OxidEsales\EVatModule\Tests\Unit\Core;
 
+use OxidEsales\EVatModule\Core\Model;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Testing oeVATTBEModel class.
+ * Testing Model class.
  *
  * @covers Model
  */
@@ -21,8 +22,8 @@ class ModelTest extends TestCase
     public function testLoadWhenIdIsSetToModel()
     {
         $sId = 'RecordIdToLoad';
-        $aData = array('testkey' => 'testValue');
-        $oGateway = $this->_createStub('TestGateway', array('load' => $aData));
+        $aData = ['testkey' => 'testValue'];
+        $oGateway = $this->_createStub('TestGateway', ['load' => $aData]);
 
         $oModel = $this->_getModel($oGateway, $sId);
 
@@ -36,8 +37,8 @@ class ModelTest extends TestCase
     public function testLoadWhenIdPassedIdViaParameter()
     {
         $sId = 'RecordIdToLoad';
-        $aData = array('testkey' => 'testValue');
-        $oGateway = $this->_createStub('TestGateway', array('load' => $aData));
+        $aData = ['testkey' => 'testValue'];
+        $oGateway = $this->_createStub('TestGateway', ['load' => $aData]);
 
         $oModel = $this->_getModel($oGateway);
 
@@ -50,7 +51,7 @@ class ModelTest extends TestCase
      */
     public function testIsLoadedWhenDatabaseRecordNotFound()
     {
-        $oGateway = $this->_createStub('TestGateway', array('load' => null));
+        $oGateway = $this->_createStub('TestGateway', ['load' => null]);
 
         $oModel = $this->_getModel($oGateway);
         $oModel->load();
@@ -63,7 +64,7 @@ class ModelTest extends TestCase
      */
     public function testIsLoadedWhenDatabaseRecordFound()
     {
-        $oGateway = $this->_createStub('TestGateway', array('load' => array('oeTBEVATId' => 'testId')));
+        $oGateway = $this->_createStub('TestGateway', ['load' => ['oeTBEVATId' => 'testId']]);
 
         $oModel = $this->_getModel($oGateway);
         $oModel->load();
@@ -76,26 +77,26 @@ class ModelTest extends TestCase
      */
     public function testClearingDataAfterDeletion()
     {
-        $oGateway = $this->_createStub('TestGateway', array('delete' => true));
+        $oGateway = $this->_createStub('TestGateway', ['delete' => true]);
 
         $oModel = $this->_getModel($oGateway);
-        $oModel->setData(array('some_field' => 'some_entry'));
+        $oModel->setData(['some_field' => 'some_entry']);
         $oModel->delete();
 
-        $this->assertEquals(array(), $oModel->getData());
+        $this->assertEquals([], $oModel->getData());
     }
 
     /**
-     * Creates oeVATTBEModel with mocked abstract methods
+     * Creates Model with mocked abstract methods
      *
      * @param object $oGateway
      * @param string $sId
      *
-     * @return oeVATTBEModel
+     * @return Model
      */
     protected function _getModel($oGateway, $sId = null)
     {
-        $oModel = oxNew('oeVATTBEModel', $oGateway);
+        $oModel = oxNew(Model::class, $oGateway);
         if ($sId) {
             $oModel->setId($sId);
         }
@@ -112,11 +113,11 @@ class ModelTest extends TestCase
      *
      * @return mixed
      */
-    protected function _createStub($sClass, $aMethods, $aTestMethods = array())
+    protected function _createStub($sClass, $aMethods, $aTestMethods = [])
     {
         $aMockedMethods = array_unique(array_merge(array_keys($aMethods), $aTestMethods));
 
-        $oObject = $this->getMock($sClass, $aMockedMethods, array(), '', false);
+        $oObject = $this->createPartialMock($sClass, $aMockedMethods);
 
         foreach ($aMethods as $sMethod => $sValue) {
             if (!in_array($sMethod, $aTestMethods)) {

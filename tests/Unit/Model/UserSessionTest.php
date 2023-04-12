@@ -8,6 +8,8 @@ namespace OxidEsales\EVatModule\Tests\Unit\Model;
 
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\Field;
+use OxidEsales\EVatModule\Shop\User;
+use OxidEsales\Eshop\Application\Model\User as EShopUser;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -17,43 +19,43 @@ use PHPUnit\Framework\TestCase;
  */
 class UserSessionTest extends TestCase
 {
-    protected $backupGlobalsBlacklist = array('_SESSION');
+    protected $backupGlobalsBlacklist = ['_SESSION'];
 
     /**
      * Test evidence list caching. Second time evidence list is returned, it should not be recalculated.
      * Evidences must be stored in session, not in local cache.
      *
-     * @return oeVATTBETBEUser
+     * @return User
      */
     public function testTBEEvidenceListCaching()
     {
         $oConfig = Registry::getConfig();
         $oSession = Registry::getSession();
         $oSession->setVariable('TBECountryId', null);
-        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence'));
-        $oConfig->setConfigParam('aOeVATTBECountryEvidences', array('billing_country' => 1));
+        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', ['oeVATTBEBillingCountryEvidence']);
+        $oConfig->setConfigParam('aOeVATTBECountryEvidences', ['billing_country' => 1]);
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
 
-        $oUser = oxNew('oxUser');
+        $oUser = oxNew(EShopUser::class);
         $oUser->oxuser__oxcountryid = new Field('GermanyId');
 
-        /** @var oeVATTBETBEUser $oTBEUser */
-        $oTBEUser = oxNew('oeVATTBETBEUser', $oUser, $oSession, $oConfig);
+        /** @var User $oTBEUser */
+        $oTBEUser = oxNew(User::class, $oUser, $oSession, $oConfig);
         $oTBEUser->getOeVATTBEEvidenceList();
 
-        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEGeoLocationEvidence'));
+        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', ['oeVATTBEGeoLocationEvidence']);
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'geo_location');
         $oUser->oxuser__oxcountryid = new Field('LithuaniaId');
 
-        $aExpectedList = array(
-            'billing_country' => array(
-                'name' => 'billing_country',
+        $aExpectedList = [
+            'billing_country' => [
+                'name'      => 'billing_country',
                 'countryId' => 'GermanyId'
-            )
-        );
+            ]
+        ];
 
-        /** @var oeVATTBETBEUser $oTBEUser */
-        $oTBEUser = oxNew('oeVATTBETBEUser', $oUser, $oSession, $oConfig);
+        /** @var User $oTBEUser */
+        $oTBEUser = oxNew(User::class, $oUser, $oSession, $oConfig);
         $this->assertEquals($aExpectedList, $oTBEUser->getOeVATTBEEvidenceList());
 
         return $oTBEUser;
@@ -63,15 +65,16 @@ class UserSessionTest extends TestCase
      * Test user country id caching. Second time country id is returned, it should not be recalculated.
      * Country id must be stored in session, not in local cache.
      *
-     * @param oeVATTBETBEUser $oTBEUser
+     * @param User $oTBEUser
      *
      * @depends testTBEEvidenceListCaching
      *
-     * @return oeVATTBETBEUser
+     * @return User
      */
     public function testTBECountryIdCaching($oTBEUser)
     {
         $this->assertEquals('GermanyId', $oTBEUser->getOeVATTBETbeCountryId());
+
         return $oTBEUser;
     }
 
@@ -79,22 +82,23 @@ class UserSessionTest extends TestCase
      * Test used evidence caching. Second time evidence is returned, it should not be recalculated.
      * Evidence must be stored in session, not in local cache.
      *
-     * @param oeVATTBETBEUser $oTBEUser
+     * @param User $oTBEUser
      *
      * @depends testTBECountryIdCaching
      *
-     * @return oeVATTBETBEUser
+     * @return User
      */
     public function testTBEEvidenceUsedCaching($oTBEUser)
     {
         $this->assertEquals('billing_country', $oTBEUser->getOeVATTBETbeEvidenceUsed());
+
         return $oTBEUser;
     }
 
     /**
      * Country id should be recalculated when it is unset from cache.
      *
-     * @param oeVATTBETBEUser $oTBEUser
+     * @param User $oTBEUser
      *
      * @depends testTBEEvidenceUsedCaching
      */

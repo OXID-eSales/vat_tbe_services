@@ -6,6 +6,9 @@
 
 namespace OxidEsales\EVatModule\Tests\Unit\Model\Evidence;
 
+use OxidEsales\EVatModule\Model\Evidence\EvidenceList;
+use OxidEsales\EVatModule\Model\Evidence\Item\Evidence;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -17,23 +20,23 @@ class EvidenceListTest extends TestCase
 {
     public function testAddingToList()
     {
-        /** @var oeVATTBEEvidence|PHPUnit_Framework_MockObject_MockObject $oEvidence */
-        $oEvidence = $this->getMock('oeVATTBEEvidence', array(), array(), '', false);
+        /** @var Evidence|MockObject $oEvidence */
+        $oEvidence = $this->createMock(Evidence::class);
 
-        $oList = new oeVATTBEEvidenceList();
+        $oList = new EvidenceList();
         $oList->add($oEvidence);
 
-        $aElements = array();
+        $aElements = [];
         foreach ($oList as $iItem) {
             $aElements[] = $iItem;
         }
 
-        $this->assertEquals(array($oEvidence), $aElements);
+        $this->assertEquals([$oEvidence], $aElements);
     }
 
     public function testAddingToListWhenNonEvidenceIsAdded()
     {
-        $oList = new oeVATTBEEvidenceList();
+        $oList = new EvidenceList();
 
         $this->expectException('oxException');
 
@@ -45,18 +48,18 @@ class EvidenceListTest extends TestCase
         $oBillingEvidence = $this->_createEvidence('billing_country', 'GermanyId');
         $oGeoEvidence = $this->_createEvidence('geo_location', 'LithuaniaId');
 
-        $oList = new oeVATTBEEvidenceList(array($oBillingEvidence, $oGeoEvidence));
+        $oList = new EvidenceList([$oBillingEvidence, $oGeoEvidence]);
 
-        $aExpectedArray = array(
-            'billing_country' => array(
-                'name' => 'billing_country',
+        $aExpectedArray = [
+            'billing_country' => [
+                'name'      => 'billing_country',
                 'countryId' => 'GermanyId'
-            ),
-            'geo_location' => array(
-                'name' => 'geo_location',
+            ],
+            'geo_location'    => [
+                'name'      => 'geo_location',
                 'countryId' => 'LithuaniaId'
-            ),
-        );
+            ],
+        ];
 
         $this->assertEquals($aExpectedArray, $oList->getArray());
     }
@@ -68,12 +71,12 @@ class EvidenceListTest extends TestCase
      * @param string $sName
      * @param string $sCountry
      *
-     * @return oeVATTBEEvidence
+     * @return Evidence
      */
     protected function _createEvidence($sName, $sCountry)
     {
-        /** @var oeVATTBEEvidence|PHPUnit_Framework_MockObject_MockObject $oUser */
-        $oEvidence = $this->getMock('oeVATTBEEvidence', array('getId', 'getCountryId'), array(), '', false);
+        /** @var Evidence|MockObject $oUser */
+        $oEvidence = $this->createPartialMock(Evidence::class, ['getId', 'getCountryId']);
         $oEvidence->expects($this->any())->method('getId')->will($this->returnValue($sName));
         $oEvidence->expects($this->any())->method('getCountryId')->will($this->returnValue($sCountry));
 
