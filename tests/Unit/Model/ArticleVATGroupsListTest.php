@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -6,6 +7,7 @@
 
 namespace OxidEsales\EVatModule\Tests\Unit\Model;
 
+use OxidEsales\EshopCommunity\Tests\ContainerTrait;
 use OxidEsales\EVatModule\Model\ArticleVATGroupsList;
 use OxidEsales\EVatModule\Model\DbGateway\ArticleVATGroupsDbGateway;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -18,6 +20,8 @@ use PHPUnit\Framework\TestCase;
  */
 class ArticleVATGroupsListTest extends TestCase
 {
+    use ContainerTrait;
+
     /**
      * Test saving of article groups list.
      */
@@ -143,13 +147,13 @@ class ArticleVATGroupsListTest extends TestCase
         $oList->delete('articleid');
     }
 
-//    /**
-//     * Tests creating of ArticleVATGroupsList.
-//     */
-//    public function testCreatingListWithCreationMethod()
-//    {
-//        $oList = ArticleVATGroupsList::createInstance();
-//
-//        $this->assertInstanceOf(ArticleVATGroupsList::class, $oList);
-//    }
+    /**
+     * Tests creating of ArticleVATGroupsList.
+     */
+    public function testCreatingListWithCreationMethod()
+    {
+        $oList = $this->get(ArticleVATGroupsList::class);
+
+        $this->assertInstanceOf(ArticleVATGroupsList::class, $oList);
+    }
 }

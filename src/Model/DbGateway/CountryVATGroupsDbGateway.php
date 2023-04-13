@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -7,11 +8,12 @@
 namespace OxidEsales\EVatModule\Model\DbGateway;
 
 use OxidEsales\EVatModule\Core\ModelDbGateway;
+use OxidEsales\EVatModule\Core\ModelDbGatewayInterface;
 
 /**
  * VAT Groups db gateway class.
  */
-class CountryVATGroupsDbGateway extends ModelDbGateway
+class CountryVATGroupsDbGateway extends ModelDbGateway implements ModelDbGatewayInterface
 {
     /**
      * Saves VAT Group data to database.

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -6,6 +7,7 @@
 
 namespace OxidEsales\EVatModule\Tests\Unit\Model;
 
+use OxidEsales\EshopCommunity\Tests\ContainerTrait;
 use OxidEsales\EVatModule\Model\CountryVATGroup;
 use OxidEsales\EVatModule\Model\DbGateway\CountryVATGroupsDbGateway;
 use OxidEsales\EVatModule\Model\GroupArticleCacheInvalidator;
@@ -19,6 +21,8 @@ use PHPUnit\Framework\TestCase;
  */
 class CountryVATGroupTest extends TestCase
 {
+    use ContainerTrait;
+
     /**
      * Information is set to Group entity;
      * Correct information array is passed to gateway for saving.
@@ -118,15 +122,15 @@ class CountryVATGroupTest extends TestCase
         $this->assertSame('20.50', $oGroup->getRate());
     }
 
-//    /**
-//     * Tests creating of oeVATTBEArticleVATGroupsList.
-//     */
-//    public function testCreatingGroupWithCreationMethod()
-//    {
-//        $oGroup = oeVATTBECountryVATGroup::createInstance();
-//
-//        $this->assertInstanceOf('oeVATTBECountryVATGroup', $oGroup);
-//    }
+    /**
+     * Tests creating of oeVATTBEArticleVATGroupsList.
+     */
+    public function testCreatingGroupWithCreationMethod()
+    {
+        $oGroup = $this->get(CountryVATGroup::class);
+
+        $this->assertInstanceOf(CountryVATGroup::class, $oGroup);
+    }
 
     /**
      * Tests invalidating cache on group save event.

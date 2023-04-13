@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -8,6 +9,7 @@ namespace OxidEsales\EVatModule\Tests\Unit\Model;
 
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\Field;
+use OxidEsales\EshopCommunity\Tests\ContainerTrait;
 use OxidEsales\EVatModule\Shop\User;
 use OxidEsales\EVatModule\Model\User as UserModel;
 use OxidEsales\Eshop\Application\Model\User as EShopUser;
@@ -20,6 +22,8 @@ use PHPUnit\Framework\TestCase;
  */
 class UserTest extends TestCase
 {
+    use ContainerTrait;
+
     /**
      * Tests collecting of TBE evidences when evidence collector is billing country and it is set as default.
      *
@@ -257,13 +261,13 @@ class UserTest extends TestCase
         $this->assertSame(false, $oUser->isUserFromDomesticCountry());
     }
 
-//    /**
-//     * Testing creation of instance with creation method.
-//     */
-//    public function testCreateInstance()
-//    {
-//        $oUserCountry = User::createInstance();
-//
-//        $this->assertInstanceOf('oeVATTBETBEUser', $oUserCountry);
-//    }
+    /**
+     * Testing creation of instance with creation method.
+     */
+    public function testCreateInstance()
+    {
+        $oUserCountry = $this->get(User::class);
+
+        $this->assertInstanceOf(User::class, $oUserCountry);
+    }
 }

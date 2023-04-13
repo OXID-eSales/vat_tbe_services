@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -6,6 +7,7 @@
 
 namespace OxidEsales\EVatModule\Tests\Unit\Model;
 
+use OxidEsales\EshopCommunity\Tests\ContainerTrait;
 use OxidEsales\EVatModule\Model\CategoryArticlesUpdater;
 use OxidEsales\EVatModule\Model\DbGateway\CategoryVATGroupsPopulatorDbGateway;
 use OxidEsales\EVatModule\Shop\Category;
@@ -19,15 +21,17 @@ use PHPUnit\Framework\TestCase;
  */
 class CategoryVATGroupsPopulatorTest extends TestCase
 {
-//    /**
-//     * Tests creating of CategoryArticlesUpdater.
-//     */
-//    public function testCreating()
-//    {
-//        $oArticlesUpdater = CategoryArticlesUpdater::createInstance();
-//
-//        $this->assertInstanceOf(CategoryArticlesUpdater::class, $oArticlesUpdater);
-//    }
+    use ContainerTrait;
+
+    /**
+     * Tests creating of CategoryArticlesUpdater.
+     */
+    public function testCreating()
+    {
+        $oArticlesUpdater = $this->get(CategoryArticlesUpdater::class);
+
+        $this->assertInstanceOf(CategoryArticlesUpdater::class, $oArticlesUpdater);
+    }
 
     /**
      * Test deleting category groups list.

@@ -34,9 +34,6 @@ services:
     factory: ['@OxidEsales\Eshop\Core\UtilsObject', 'oxNew']
     arguments: ['OxidEsales\Eshop\Application\Model\Article']
 
-  OxidEsales\EVatModule\Core\ModelDbGateway:
-    abstract: true
-
   OxidEsales\EVatModule\Model\Evidence\Item\Evidence:
     abstract: true
 

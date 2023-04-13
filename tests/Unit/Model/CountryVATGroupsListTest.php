@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -6,6 +7,7 @@
 
 namespace OxidEsales\EVatModule\Tests\Unit\Model;
 
+use OxidEsales\EshopCommunity\Tests\ContainerTrait;
 use OxidEsales\EVatModule\Model\CountryVATGroup;
 use OxidEsales\EVatModule\Model\CountryVATGroupsList;
 use OxidEsales\EVatModule\Model\DbGateway\CountryVATGroupsDbGateway;
@@ -18,6 +20,8 @@ use PHPUnit\Framework\TestCase;
  */
 class CountryVATGroupsListTest extends TestCase
 {
+    use ContainerTrait;
+
     /**
      * Two Country Groups exits;
      * List is successfully loaded and array of groups is returned.
@@ -98,20 +102,20 @@ class CountryVATGroupsListTest extends TestCase
      */
     protected function _createGroupObject($aData)
     {
-        $oGroupsList = CountryVATGroup::createInstance();
+        $oGroupsList = $this->get(CountryVATGroup::class);
         $oGroupsList->setId($aData['OEVATTBE_ID']);
         $oGroupsList->setData($aData);
 
         return $oGroupsList;
     }
 
-//    /**
-//     * Tests creating of oeVATTBEArticleVATGroupsList.
-//     */
-//    public function testCreatingListWithCreationMethod()
-//    {
-//        $oList = CountryVATGroupsList::createInstance();
-//
-//        $this->assertInstanceOf('oeVATTBECountryVATGroupsList', $oList);
-//    }
+    /**
+     * Tests creating of oeVATTBEArticleVATGroupsList.
+     */
+    public function testCreatingListWithCreationMethod()
+    {
+        $oList = $this->get(CountryVATGroupsList::class);
+
+        $this->assertInstanceOf(CountryVATGroupsList::class, $oList);
+    }
 }
