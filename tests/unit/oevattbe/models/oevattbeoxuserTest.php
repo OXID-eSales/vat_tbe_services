@@ -4,10 +4,12 @@
  * See LICENSE file for license details.
  */
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Testing extended oxUser class.
  */
-class Unit_oeVatTbe_models_oeVATTBEOxUserTest extends OxidTestCase
+class Unit_oeVatTbe_models_oeVATTBEOxUserTest extends TestCase
 {
     /**
      * Select Country test

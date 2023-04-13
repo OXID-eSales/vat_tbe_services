@@ -4,10 +4,12 @@
  * See LICENSE file for license details.
  */
 
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
+
 /**
  * Testing message in checkout process for TBE articles with wrong VAT.
  */
-class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends OxidTestCase
+class Integration_oeVatTbe_checkout_oeVATTBEMessageForWrongTBEVatTest extends IntegrationTestCase
 {
     /**
      * Prepare articles data: set articles to be TBE.

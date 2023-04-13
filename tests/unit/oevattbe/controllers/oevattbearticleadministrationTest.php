@@ -4,12 +4,14 @@
  * See LICENSE file for license details.
  */
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Testing VAT TBE administration in article page.
  *
  * @covers oeVATTBEArticleAdministration
  */
-class Unit_oeVATTBE_controllers_oeVATTBEArticleAdministrationTest extends OxidTestCase
+class Unit_oeVATTBE_controllers_oeVATTBEArticleAdministrationTest extends TestCase
 {
     /**
      * Test if render set readonly mode for subshops.

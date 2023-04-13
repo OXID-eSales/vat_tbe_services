@@ -4,12 +4,14 @@
  * See LICENSE file for license details.
  */
 
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
+
 /**
  * Test class for oeVATTBECategoryVATGroupsPopulatorDbGateway.
  *
  * @covers oeVATTBECategoryVATGroupsPopulatorDbGateway
  */
-class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorDbGatewayTest extends OxidTestCase
+class Integration_oeVatTbe_VATGroups_oeVATTBECategoryVATGroupsPopulatorDbGatewayTest extends IntegrationTestCase
 {
     /**
      * Test populate not existing category data.

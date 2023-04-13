@@ -4,10 +4,12 @@
  * See LICENSE file for license details.
  */
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Testing oeVATTBEOrderArticleChecker class.
  */
-class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends OxidTestCase
+class Unit_oeVATTBE_models_oeVATTBEOrderArticleCheckerTest extends TestCase
 {
     /**
      * Provider for test.

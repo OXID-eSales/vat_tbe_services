@@ -4,12 +4,14 @@
  * See LICENSE file for license details.
  */
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Testing oeVATTBEArticleVATGroupsList class.
  *
  * @covers oeVATTBEArticleVATGroupsList
  */
-class Unit_oeVatTbe_Models_oeVATTBEArticleVATGroupsListTest extends OxidTestCase
+class Unit_oeVatTbe_Models_oeVATTBEArticleVATGroupsListTest extends TestCase
 {
     /**
      * Test saving of article groups list.

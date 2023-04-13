@@ -4,12 +4,14 @@
  * See LICENSE file for license details.
  */
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Testing extended oxUser class.
  *
  * @covers oeVATTBEOxVatSelector
  */
-class Unit_oeVatTbe_models_oeVATTBEOxVatSelectorTest extends OxidTestCase
+class Unit_oeVatTbe_models_oeVATTBEOxVatSelectorTest extends TestCase
 {
 
     public function providerArticleUserVatCalculationWhenHasTbeVatAndIsTbeArticle()

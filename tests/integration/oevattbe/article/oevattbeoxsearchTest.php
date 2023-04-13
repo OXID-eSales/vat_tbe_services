@@ -4,15 +4,17 @@
  * See LICENSE file for license details.
  */
 
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
+
 /**
  * Testing extended oxArticle class.
  */
-class Integration_oeVATTBE_article_oeVATTBEOxSearchTest extends OxidTestCase
+class Integration_oeVATTBE_article_oeVATTBEOxSearchTest extends IntegrationTestCase
 {
     /**
      * Initialize the fixture.
      */
-    protected function setUp(): void
+    function setUp(): void
     {
         $this->_prepareData();
         parent::setup();

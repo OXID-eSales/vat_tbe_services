@@ -4,12 +4,14 @@
  * See LICENSE file for license details.
  */
 
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
+
 /**
  * Test class for oeVATTBEOrderEvidenceListDbGateway.
  *
  * @covers oeVATTBEOrderEvidenceListDbGateway
  */
-class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderEvidenceListDbGatewayTest extends OxidTestCase
+class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderEvidenceListDbGatewayTest extends IntegrationTestCase
 {
 
     /**

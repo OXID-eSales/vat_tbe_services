@@ -4,12 +4,14 @@
  * See LICENSE file for license details.
  */
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Testing oeVATTBEBasketVATValidator class.
  *
  * @covers oeVATTBEBasketVATValidator
  */
-class Unit_oeVatTbe_models_oeVATTBEBasketVATValidatorTest extends OxidTestCase
+class Unit_oeVatTbe_models_oeVATTBEBasketVATValidatorTest extends TestCase
 {
 
     /**

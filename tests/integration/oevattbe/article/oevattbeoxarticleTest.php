@@ -4,13 +4,15 @@
  * See LICENSE file for license details.
  */
 
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
+
 /**
  * Testing extended oxArticle class.
  *
  * @covers oeVATTBEOxArticle
  * @covers oeVATTBETBEArticleCacheKey
  */
-class Integration_oeVATTBE_article_oeVATTBEOxArticleTest extends OxidTestCase
+class Integration_oeVATTBE_article_oeVATTBEOxArticleTest extends IntegrationTestCase
 {
     /**
      * Test case for loading article

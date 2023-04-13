@@ -4,12 +4,14 @@
  * See LICENSE file for license details.
  */
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Testing extended oxCountry class.
  *
  * @covers oeVATTBEOxCountry
  */
-class Unit_oeVATTBE_models_oeVATTBEOxCountryTest extends OxidTestCase
+class Unit_oeVATTBE_models_oeVATTBEOxCountryTest extends TestCase
 {
     /**
      * Test for vat tbe getter

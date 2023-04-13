@@ -4,12 +4,14 @@
  * See LICENSE file for license details.
  */
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Testing extended oxArticle class.
  *
  * @covers oeVATTBEOxBasketContentMarkGenerator
  */
-class Unit_oeVATTBE_models_oeVATTBEOxBasketContentMarkGeneratorTest extends OxidTestCase
+class Unit_oeVATTBE_models_oeVATTBEOxBasketContentMarkGeneratorTest extends TestCase
 {
     /**
      * Mark calculation test case: just tbe

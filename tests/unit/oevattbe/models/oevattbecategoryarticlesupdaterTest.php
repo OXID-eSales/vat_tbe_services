@@ -4,12 +4,14 @@
  * See LICENSE file for license details.
  */
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Testing oeVATTBECategoryArticlesUpdater class.
  *
  * @covers oeVATTBECategoryVATGroupsPopulator
  */
-class Unit_oeVatTbe_Models_oeVATTBECategoryArticlesUpdaterTest extends OxidTestCase
+class Unit_oeVatTbe_Models_oeVATTBECategoryArticlesUpdaterTest extends TestCase
 {
     /**
      * Tests creating of oeVATTBECategoryArticlesUpdater.

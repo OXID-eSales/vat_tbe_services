@@ -4,12 +4,14 @@
  * See LICENSE file for license details.
  */
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Testing extended oxViewConfig class.
  *
  * @covers oeVATTBEOxViewConfig
  */
-class Unit_oeVatTbe_models_oeVATTBEOxViewConfigTest extends OxidTestCase
+class Unit_oeVatTbe_models_oeVATTBEOxViewConfigTest extends TestCase
 {
     /**
      * User is not from domestic country;

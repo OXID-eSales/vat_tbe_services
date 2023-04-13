@@ -4,12 +4,14 @@
  * See LICENSE file for license details.
  */
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Testing extended Order controller.
  *
  * @covers oeVATTBEOrder
  */
-class Unit_oeVATTBE_controllers_oeVATTBEOrderTest extends OxidTestCase
+class Unit_oeVATTBE_controllers_oeVATTBEOrderTest extends TestCase
 {
 
     /**

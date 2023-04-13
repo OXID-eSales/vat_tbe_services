@@ -4,10 +4,12 @@
  * See LICENSE file for license details.
  */
 
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
+
 /**
  * Testing TBEUser class.
  */
-class Integration_oeVatTbe_userTBECountry_oeVATTBEUserTBECountryChangeEventsTest extends OxidTestCase
+class Integration_oeVatTbe_userTBECountry_oeVATTBEUserTBECountryChangeEventsTest extends IntegrationTestCase
 {
     protected $backupGlobalsBlacklist = array('_SESSION');
 

@@ -6,16 +6,16 @@
 
 declare(strict_types=1);
 
-use OxidEsales\TestingLibrary\UnitTestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 
 /**
  * Testing oeVATTBEOrderEvidenceList class.
  */
-class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderEvidenceListTest extends UnitTestCase
+class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderEvidenceListTest extends IntegrationTestCase
 {
     private $orderEvidenceList;
 
-    protected function setUp(): void
+    function setUp(): void
     {
         parent::setUp();
 

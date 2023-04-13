@@ -4,12 +4,14 @@
  * See LICENSE file for license details.
  */
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Testing TBEUser class session related functionality.
  *
  * @covers oeVATTBETBEUser
  */
-class Unit_oeVatTbe_models_oeVATTBETBEUserSessionTest extends OxidTestCase
+class Unit_oeVatTbe_models_oeVATTBETBEUserSessionTest extends TestCase
 {
     protected $backupGlobalsBlacklist = array('_SESSION');
 

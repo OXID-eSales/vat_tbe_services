@@ -4,6 +4,8 @@
  * See LICENSE file for license details.
  */
 
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
+
 /**
  * Testing oeVATTBECountryVATGroupsList class.
  *
@@ -11,7 +13,7 @@
  * @covers oeVATTBECountryVATGroup
  * @covers oeVATTBECountryVATGroupsDbGateway
  */
-class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupTest extends OxidTestCase
+class Integration_oeVatTbe_VATGroups_oeVATTBECountryVATGroupTest extends IntegrationTestCase
 {
     /**
      * Tests saving group to database.

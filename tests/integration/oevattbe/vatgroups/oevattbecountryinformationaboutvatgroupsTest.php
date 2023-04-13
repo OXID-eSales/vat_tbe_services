@@ -4,6 +4,8 @@
  * See LICENSE file for license details.
  */
 
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
+
 /**
  * Testing if Country has correct information about groups.
  *
@@ -13,7 +15,7 @@
  * @covers oeVATTBECountryVATGroupsList
  * @covers oeVATTBEOxCountry
  */
-class Integration_oeVatTbe_VATGroups_oeVATTBECountryInformationAboutVatGroupsTest extends OxidTestCase
+class Integration_oeVatTbe_VATGroups_oeVATTBECountryInformationAboutVatGroupsTest extends IntegrationTestCase
 {
     /**
      * Test if country information updated when adding group.

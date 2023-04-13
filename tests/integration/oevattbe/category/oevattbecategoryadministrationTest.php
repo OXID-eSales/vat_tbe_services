@@ -4,12 +4,14 @@
  * See LICENSE file for license details.
  */
 
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
+
 /**
  * Testing VAT TBE administration in category page.
  *
  * @covers oeVATTBECategoryAdministration
  */
-class Integration_oeVATTBE_category_oeVATTBECategoryAdministrationTest extends OxidTestCase
+class Integration_oeVATTBE_category_oeVATTBECategoryAdministrationTest extends IntegrationTestCase
 {
     /**
      * Check if view data is correct.

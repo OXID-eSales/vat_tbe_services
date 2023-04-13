@@ -4,12 +4,14 @@
  * See LICENSE file for license details.
  */
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Test class for oeVATTBEList.
  *
  * @covers oeVATTBEList
  */
-class Unit_oeVATTBE_Models_oeVATTBEListTest extends OxidTestCase
+class Unit_oeVATTBE_Models_oeVATTBEListTest extends TestCase
 {
 
     /**

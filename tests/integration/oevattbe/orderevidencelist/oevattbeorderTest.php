@@ -4,10 +4,12 @@
  * See LICENSE file for license details.
  */
 
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
+
 /**
  * Testing oeVATTBEoxOrder class.
  */
-class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderTest extends OxidTestCase
+class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrderTest extends IntegrationTestCase
 {
 
     /**

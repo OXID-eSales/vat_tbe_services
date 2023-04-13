@@ -4,6 +4,8 @@
  * See LICENSE file for license details.
  */
 
+use PHPUnit\Framework\TestCase;
+
 include_once __DIR__ . '/../../../libs/oxtestcacheconnector.php';
 
 /**
@@ -11,7 +13,7 @@ include_once __DIR__ . '/../../../libs/oxtestcacheconnector.php';
  *
  * @covers oeVATTBEVATGroupArticleCacheInvalidator
  */
-class Unit_oeVATTBE_Models_oeVATTBEVATGroupArticleCacheInvalidatorTest extends OxidTestCase
+class Unit_oeVATTBE_Models_oeVATTBEVATGroupArticleCacheInvalidatorTest extends TestCase
 {
     /**
      * Test if error message is formed correctly.

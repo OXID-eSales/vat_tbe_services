@@ -4,10 +4,12 @@
  * See LICENSE file for license details.
  */
 
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
+
 /**
  * Test class for.
  */
-class Integration_oeVatTbe_VATGroups_oeVATTBECategoryArticlesUpdaterTest extends OxidTestCase
+class Integration_oeVatTbe_VATGroups_oeVATTBECategoryArticlesUpdaterTest extends IntegrationTestCase
 {
     /**
      * test populate not existing category data

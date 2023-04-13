@@ -4,12 +4,14 @@
  * See LICENSE file for license details.
  */
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Test class for oeVATTBEEvidenceCalculator.
  *
  * @covers oeVATTBEEvidenceList
  */
-class Unit_oeVATTBE_Models_Evidences_oeVATTBEEvidenceListTest extends OxidTestCase
+class Unit_oeVATTBE_Models_Evidences_oeVATTBEEvidenceListTest extends TestCase
 {
     public function testAddingToList()
     {

@@ -4,12 +4,14 @@
  * See LICENSE file for license details.
  */
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Testing extended oxShop class.
  *
  * @covers oeVATTBEOxShop
  */
-class Unit_oeVATTBE_models_oeVATTBEOxShopTest extends OxidTestCase
+class Unit_oeVATTBE_models_oeVATTBEOxShopTest extends TestCase
 {
     /**
      * Test country not set

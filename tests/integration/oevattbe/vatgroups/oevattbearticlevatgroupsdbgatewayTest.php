@@ -4,12 +4,14 @@
  * See LICENSE file for license details.
  */
 
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
+
 /**
  * Test class for oeVATTBEArticleVATGroupsDbGateway.
  *
  * @covers oeVATTBEArticleVATGroupsDbGateway
  */
-class Integration_oeVatTbe_VATGroups_oeVATTBEArticleVATGroupsDbGatewayTest extends OxidTestCase
+class Integration_oeVatTbe_VATGroups_oeVATTBEArticleVATGroupsDbGatewayTest extends IntegrationTestCase
 {
     /**
      * Testing VAT Group saving to database.

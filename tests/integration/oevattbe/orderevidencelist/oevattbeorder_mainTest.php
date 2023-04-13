@@ -4,12 +4,14 @@
  * See LICENSE file for license details.
  */
 
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
+
 /**
  * Testing admin controller class.
  *
  * @covers oeVATTBEOrder_Main
  */
-class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrder_MainTest extends OxidTestCase
+class Integration_oeVatTbe_OrderEvidenceList_oeVATTBEOrder_MainTest extends IntegrationTestCase
 {
     /**
      * Creates dummy order and checks country was set.

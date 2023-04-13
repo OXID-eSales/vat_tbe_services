@@ -4,12 +4,14 @@
  * See LICENSE file for license details.
  */
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Test class for oeVATTBEArticleMessageFormatter.
  *
  * @covers oeVATTBEIncorrectVATArticlesMessageFormatter
  */
-class Unit_oeVATTBE_Models_oeVATTBEIncorrectVATArticlesMessageFormatterTest extends OxidTestCase
+class Unit_oeVATTBE_Models_oeVATTBEIncorrectVATArticlesMessageFormatterTest extends TestCase
 {
     /**
      * Test if error message is formed correctly.

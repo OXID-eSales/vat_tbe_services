@@ -4,12 +4,14 @@
  * See LICENSE file for license details.
  */
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Testing TBEUser class.
  *
  * @covers oeVATTBEBasketItemsValidator
  */
-class Unit_oeVatTbe_services_oeVATTBEBasketItemsValidatorTest extends OxidTestCase
+class Unit_oeVatTbe_services_oeVATTBEBasketItemsValidatorTest extends TestCase
 {
     /**
      * Test if no error message set when there are no articles with wrong TBE VAT.

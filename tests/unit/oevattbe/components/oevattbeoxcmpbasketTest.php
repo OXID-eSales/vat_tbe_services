@@ -4,12 +4,14 @@
  * See LICENSE file for license details.
  */
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Testing extended oxUser class.
  *
  * @covers oeVATTBEOxCmp_Basket
  */
-class Unit_oeVatTbe_components_oeVATTBEOxCmpBasketTest extends OxidTestCase
+class Unit_oeVatTbe_components_oeVATTBEOxCmpBasketTest extends TestCase
 {
     /**
      * Render test

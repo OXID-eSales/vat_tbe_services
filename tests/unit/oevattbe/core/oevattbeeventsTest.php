@@ -4,12 +4,14 @@
  * See LICENSE file for license details.
  */
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * This is dummy test.
  *
  * @covers oeVATTBEEvents
  */
-class Unit_oeVATTBE_Core_oeVATTBEEventsTest extends OxidTestCase
+class Unit_oeVATTBE_Core_oeVATTBEEventsTest extends TestCase
 {
     /**
      * Tear down

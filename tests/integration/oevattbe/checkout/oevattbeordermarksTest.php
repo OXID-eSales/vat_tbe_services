@@ -4,13 +4,15 @@
  * See LICENSE file for license details.
  */
 
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
+
 /**
  * Testing oeVATTBEBasket class.
  *
  * @covers oeVATTBEOrder
  * @covers oeVATTBEBasketVATValidator
  */
-class Integration_oeVatTbe_Checkout_oeVATTBEOrderMarksTest extends OxidTestCase
+class Integration_oeVatTbe_Checkout_oeVATTBEOrderMarksTest extends IntegrationTestCase
 {
 
     /**

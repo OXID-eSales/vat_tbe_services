@@ -4,10 +4,12 @@
  * See LICENSE file for license details.
  */
 
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
+
 /**
  * Testing message formatter in oeVATTBEIncorrectVATArticlesMessageFormatter.
  */
-class Integration_oeVatTbe_checkout_oeVATTBEMessageFormatterTest extends OxidTestCase
+class Integration_oeVatTbe_checkout_oeVATTBEMessageFormatterTest extends IntegrationTestCase
 {
 
     /**

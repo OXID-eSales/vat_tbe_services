@@ -4,6 +4,8 @@
  * See LICENSE file for license details.
  */
 
+use PHPUnit\Framework\TestCase;
+
 require_once  __DIR__ . '/../../../../../models/evidences/items/oevattbeevidence.php';
 require_once  __DIR__ . '/../../../../../models/evidences/oevattbeevidencelist.php';
 
@@ -12,7 +14,7 @@ require_once  __DIR__ . '/../../../../../models/evidences/oevattbeevidencelist.p
  *
  * @covers oeVATTBEEvidenceSelector
 */
-class Unit_oeVATTBE_Models_Evidences_oeVATTBEEvidenceSelectorTest extends \OxidEsales\TestingLibrary\UnitTestCase
+class Unit_oeVATTBE_Models_Evidences_oeVATTBEEvidenceSelectorTest extends TestCase
 {
     public function providerGetCountryWhenBothEvidenceDoNotMatch()
     {

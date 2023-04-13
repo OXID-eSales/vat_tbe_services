@@ -4,12 +4,14 @@
  * See LICENSE file for license details.
  */
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Test class for oeVATTBEOrderEvidenceList.
  *
  * @covers oeVATTBEOrderEvidenceList
  */
-class Unit_oeVATTBE_Models_oeVATTBEOrderEvidenceListTest extends OxidTestCase
+class Unit_oeVATTBE_Models_oeVATTBEOrderEvidenceListTest extends TestCase
 {
     /**
      * Saves evidence list.

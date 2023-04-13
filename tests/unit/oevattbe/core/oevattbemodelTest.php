@@ -4,12 +4,14 @@
  * See LICENSE file for license details.
  */
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Testing oeVATTBEModel class.
  *
  * @covers oeVATTBEModel
  */
-class Unit_oeVATTBE_Core_oeVATTBEModelTest extends OxidTestCase
+class Unit_oeVATTBE_Core_oeVATTBEModelTest extends TestCase
 {
     /**
      * Loading of data by id, returned by getId method

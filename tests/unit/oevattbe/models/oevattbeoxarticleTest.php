@@ -4,13 +4,15 @@
  * See LICENSE file for license details.
  */
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Testing extended oxArticle class.
  *
  * @covers oeVATTBEOxArticle
  * @covers oeVATTBETBEArticleCacheKey
  */
-class Unit_oeVATTBE_models_oeVATTBEOxArticleTest extends OxidTestCase
+class Unit_oeVATTBE_models_oeVATTBEOxArticleTest extends TestCase
 {
     /**
      * Test for vat tbe getter

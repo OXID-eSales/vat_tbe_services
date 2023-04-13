@@ -4,12 +4,14 @@
  * See LICENSE file for license details.
  */
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Testing extended oxCategory class.
  *
  * @covers oeVATTBEOxCategory
  */
-class Unit_oeVATTBE_models_oeVATTBEOxCategoryTest extends OxidTestCase
+class Unit_oeVATTBE_models_oeVATTBEOxCategoryTest extends TestCase
 {
     /**
      * Test if getter for data field works correct.

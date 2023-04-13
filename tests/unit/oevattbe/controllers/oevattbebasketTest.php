@@ -4,12 +4,14 @@
  * See LICENSE file for license details.
  */
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Testing extended Basket controller.
  *
  * @covers oeVATTBEBasket
  */
-class Unit_oeVATTBE_controllers_oeVATTBEBasketTest extends OxidTestCase
+class Unit_oeVATTBE_controllers_oeVATTBEBasketTest extends TestCase
 {
 
     /**
