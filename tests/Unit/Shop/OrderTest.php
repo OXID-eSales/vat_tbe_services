@@ -99,6 +99,7 @@ class OrderTest extends TestCase
         $oBasket->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue($sUserCountry));
         $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(true));
         $oBasket->expects($this->any())->method("getBasketArticles")->will($this->returnValue([$oArticle]));
+        Registry::getSession()->setBasket($oBasket);
         Registry::getSession()->setVariable('TBECountryId', $sUserCountry);
 
         /** @var EShopUser|User $oUser */
@@ -183,6 +184,8 @@ class OrderTest extends TestCase
      */
     public function testGetOeVATTBECountryTitle($iLanguageId, $sCountryResult)
     {
+        Registry::getLang()->setBaseLanguage($iLanguageId);
+
         $aEvidenceData = [
             'usedOrderEvidenceId' => ['countryId' => 'a7c40f631fc920687.20179984']
         ];

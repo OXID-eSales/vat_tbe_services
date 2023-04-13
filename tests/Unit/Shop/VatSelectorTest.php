@@ -8,8 +8,10 @@ namespace OxidEsales\EVatModule\Tests\Unit\Shop;
 
 use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EVatModule\Service\ModuleSettings;
 use OxidEsales\EVatModule\Shop\Article;
 use OxidEsales\EVatModule\Shop\VatSelector;
+use OxidEsales\EVatModule\Traits\ServiceContainer;
 use PHPUnit\Framework\TestCase;
 use OxidEsales\Eshop\Application\Model\User;
 
@@ -20,6 +22,8 @@ use OxidEsales\Eshop\Application\Model\User;
  */
 class VatSelectorTest extends TestCase
 {
+    use ServiceContainer;
+
     public function providerArticleUserVatCalculationWhenHasTbeVatAndIsTbeArticle(): array
     {
         return [
@@ -91,6 +95,9 @@ class VatSelectorTest extends TestCase
         $oVatSelector = oxNew(VatSelector::class);
 
         $this->assertSame(false, $oVatSelector->getArticleUserVat($oArticle));
+
+        Registry::getSession()->setAdminMode(false);
+        Registry::getConfig()->setAdminMode(false);
     }
 
     /**
@@ -99,6 +106,7 @@ class VatSelectorTest extends TestCase
     public function testArticleUserVatCalculationWhenUserFromDomesticCountry()
     {
         Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
+        $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('DE');
         Registry::getSession()->setVariable('TBECountryId', 'a7c40f631fc920687.20179984');
         $oArticle = $this->createPartialMock(Article::class, ['getOeVATTBETBEVat', 'isOeVATTBETBEService']);
         $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->will($this->returnValue(15));
@@ -115,6 +123,7 @@ class VatSelectorTest extends TestCase
     public function testArticleUserVatCalculationWhenUserNotFromDomesticCountry()
     {
         Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'LT');
+        $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('LT');
         Registry::getSession()->setVariable('TBECountryId', 'a7c40f631fc920687.20179984');
         $oArticle = $this->createPartialMock(Article::class, ['getOeVATTBETBEVat', 'isOeVATTBETBEService']);
         $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->will($this->returnValue(15));
@@ -136,6 +145,7 @@ class VatSelectorTest extends TestCase
         $oUser->oxuser__oxustid = new Field('0');
 
         Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'LT');
+        $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('LT');
         Registry::getSession()->setVariable('TBECountryId', 'a7c40f631fc920687.20179984');
         $oArticle = $this->createPartialMock(Article::class, ['getOeVATTBETBEVat', 'isOeVATTBETBEService']);
         $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->will($this->returnValue(15));
@@ -159,6 +169,7 @@ class VatSelectorTest extends TestCase
         $oUser->oxuser__oxustid = new Field('1');
 
         Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'LT');
+        $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('LT');
         Registry::getSession()->setVariable('TBECountryId', 'a7c40f631fc920687.20179984');
         $oArticle = $this->createPartialMock(Article::class, ['getOeVATTBETBEVat', 'isOeVATTBETBEService']);
         $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->will($this->returnValue(15));

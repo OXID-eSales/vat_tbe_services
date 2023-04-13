@@ -151,7 +151,7 @@ class Order extends Order_parent
 
         /** @var Country $oCountry */
         $oCountry = oxNew(Country::class);
-        $oCountry->setLanguage($this->getSelectedLang());
+        $oCountry->setLanguage(Registry::getLang()->getBaseLanguage());
         $oCountry->load($sCountryId);
         $sCountryTitle = $oCountry->getFieldData('oxtitle');
 

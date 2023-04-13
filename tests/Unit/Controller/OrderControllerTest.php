@@ -8,8 +8,10 @@ namespace OxidEsales\EVatModule\Tests\Unit\Controller;
 
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Controller\OrderController;
+use OxidEsales\EVatModule\Service\ModuleSettings;
 use OxidEsales\EVatModule\Shop\Basket;
 use OxidEsales\EVatModule\Shop\Country;
+use OxidEsales\EVatModule\Traits\ServiceContainer;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -19,6 +21,8 @@ use PHPUnit\Framework\TestCase;
  */
 class OrderControllerTest extends TestCase
 {
+    use ServiceContainer;
+
     /**
      * Provider for testOeVATTBEShowVATTBEMarkMessage.
      *
@@ -48,6 +52,7 @@ class OrderControllerTest extends TestCase
     {
         $sDomesticCountryAbbr = $blIsDomesticCountry ? 'LT' : 'DE';
         Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', $sDomesticCountryAbbr);
+        $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry($sDomesticCountryAbbr);
         Registry::getSession()->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
 
         $oCountry = $this->createPartialMock(Country::class, ['appliesOeTBEVATTbeVat']);
@@ -73,6 +78,7 @@ class OrderControllerTest extends TestCase
     public function testShowVATTBEMarkMessageWhenMessageShouldBeShown()
     {
         Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
+        $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('DE');
         Registry::getSession()->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
 
         $oCountry = $this->createPartialMock(Country::class, ['appliesOeTBEVATTbeVat']);

@@ -9,11 +9,13 @@ namespace OxidEsales\EVatModule\Tests\Unit\Controller;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Controller\BasketController;
 use OxidEsales\Eshop\Application\Controller\BasketController as EShopBasketController;
+use OxidEsales\EVatModule\Service\ModuleSettings;
 use OxidEsales\EVatModule\Shop\Basket;
 use OxidEsales\EVatModule\Shop\Country;
 use OxidEsales\Eshop\Application\Model\Country as EShopCountry;
 use OxidEsales\EVatModule\Shop\User;
 use OxidEsales\Eshop\Application\Model\User as EShopUser;
+use OxidEsales\EVatModule\Traits\ServiceContainer;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use OxidEsales\Eshop\Application\Model\Basket as EShopBasket;
@@ -25,6 +27,8 @@ use OxidEsales\Eshop\Application\Model\Basket as EShopBasket;
  */
 class BasketControllerTest extends TestCase
 {
+    use ServiceContainer;
+
     /**
      * TBE Articles are in basket;
      * User is not logged in;
@@ -134,6 +138,7 @@ class BasketControllerTest extends TestCase
     {
         $sDomesticCountryAbbr = $blIsDomesticCountry ? 'LT' : 'DE';
         Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', $sDomesticCountryAbbr);
+        $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry($sDomesticCountryAbbr);
         Registry::getSession()->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
 
         $oCountry = $this->createPartialMock(Country::class, ['appliesOeTBEVATTbeVat']);
