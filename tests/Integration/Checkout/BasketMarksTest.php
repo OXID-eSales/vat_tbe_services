@@ -6,7 +6,15 @@
 
 namespace OxidEsales\EVatModule\Tests\Integration\Checkout;
 
-use PHPUnit\Framework\TestCase;
+use OxidEsales\Eshop\Application\Model\BasketItem;
+use OxidEsales\Eshop\Core\Field;
+use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EVatModule\Controller\BasketController;
+use OxidEsales\EVatModule\Shop\Article;
+use OxidEsales\EVatModule\Shop\Basket;
+use OxidEsales\EVatModule\Shop\Country;
+use OxidEsales\EVatModule\Shop\User;
+use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 
 /**
  * Testing oeVATTBEBasket class.
@@ -14,7 +22,7 @@ use PHPUnit\Framework\TestCase;
  * @covers oeVATTBEBasket
  * @covers oeVATTBEBasketVATValidator
  */
-class BasketMarksTest extends TestCase
+class BasketMarksTest extends BaseTestCase
 {
 
     /**
@@ -48,38 +56,38 @@ class BasketMarksTest extends TestCase
      */
     public function testShowVATTBEMark($blIsUserLoggedIn, $blIsArticleTbeService, $blIsCountryConfigured, $blResult)
     {
-        $oConfig = $this->getConfig();
+        $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('sOeVATTBEDomesticCountry', 'AT');
-        $oSession = $this->getSession();
+        $oSession = Registry::getSession();
         $oSession->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
 
-        /** @var oxCountry|oeVATTBEOxCountry $oCountry */
-        $oCountry = oxNew('oxCountry');
+        /** @var Country $oCountry */
+        $oCountry = oxNew(Country::class);
         $oCountry->setId('_testCountry1');
-        $oCountry->oxcountry__oevattbe_appliestbevat = new oxField($blIsCountryConfigured);
+        $oCountry->oxcountry__oevattbe_appliestbevat = new Field($blIsCountryConfigured);
         $oCountry->save();
 
-        /** @var oxArticle $oArticle */
-        $oArticle = oxNew('oxArticle');
+        /** @var Article $oArticle */
+        $oArticle = oxNew(Article::class);
         $oArticle->setId('_testArticle1');
-        $oArticle->oxarticles__oevattbe_istbeservice = new oxField($blIsArticleTbeService);
+        $oArticle->oxarticles__oevattbe_istbeservice = new Field($blIsArticleTbeService);
         $oArticle->save();
 
-        /** @var oxUser|null $oUser */
-        $oUser = ($blIsUserLoggedIn) ? oxNew('oxUser') : null;
+        /** @var User|null $oUser */
+        $oUser = ($blIsUserLoggedIn) ? oxNew(User::class) : null;
         $oSession->setUser($oUser);
 
-        /** @var oxBasket|oeVATTBEOxBasket $oBasket */
-        $oBasket = oxNew('oxBasket');
+        /** @var Basket $oBasket */
+        $oBasket = oxNew(Basket::class);
         $oBasket->setOeVATTBECountryId('_testCountry1');
 
         $oSession->setBasket($oBasket);
 
-        /** @var oeVATTBEBasket $oBasketController */
-        $oBasketController = oxNew('oeVATTBEBasket');
+        /** @var BasketController $oBasketController */
+        $oBasketController = oxNew(BasketController::class);
 
-        /** @var oxBasketItem $oBasketItem */
-        $oBasketItem = oxNew('oxBasketItem');
+        /** @var BasketItem $oBasketItem */
+        $oBasketItem = oxNew(BasketItem::class);
         $oBasketItem->init('_testArticle1', 1);
 
         $this->assertSame($blResult, $oBasketController->oeVATTBEShowVATTBEMark($oBasketItem));
@@ -108,29 +116,29 @@ class BasketMarksTest extends TestCase
      */
     public function testIsTBEArticleValid($blIsArticleValid, $blResult)
     {
-        $oConfig = $this->getConfig();
+        $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('sOeVATTBEDomesticCountry', 'AT');
-        $oSession = $this->getSession();
+        $oSession = Registry::getSession();
         $oSession->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
 
-        /** @var oxCountry|oeVATTBEOxCountry $oCountry */
-        $oCountry = oxNew('oxCountry');
+        /** @var Country $oCountry */
+        $oCountry = oxNew(Country::class);
         $oCountry->setId('_testCountry1');
-        $oCountry->oxcountry__oevattbe_appliestbevat = new oxField(true);
+        $oCountry->oxcountry__oevattbe_appliestbevat = new Field(true);
         $oCountry->save();
 
-        /** @var oxArticle $oArticle */
-        $oArticle = oxNew('oxArticle');
+        /** @var Article $oArticle */
+        $oArticle = oxNew(Article::class);
         $oArticle->setId('_testArticle1');
-        $oArticle->oxarticles__oevattbe_istbeservice = new oxField(true);
+        $oArticle->oxarticles__oevattbe_istbeservice = new Field(true);
         $oArticle->save();
 
-        /** @var oxUser|null $oUser */
-        $oUser = oxNew('oxUser');
+        /** @var User|null $oUser */
+        $oUser = oxNew(User::class);
         $oSession->setUser($oUser);
 
-        /** @var oxBasket|oeVATTBEOxBasket $oBasket */
-        $oBasket = oxNew('oxBasket');
+        /** @var Basket $oBasket */
+        $oBasket = oxNew(Basket::class);
         if (!$blIsArticleValid) {
             $oBasket->addToBasket('_testArticle1', 1);
         }
@@ -138,11 +146,11 @@ class BasketMarksTest extends TestCase
 
         $oSession->setBasket($oBasket);
 
-        /** @var oeVATTBEBasket $oBasketController */
-        $oBasketController = oxNew('oeVATTBEBasket');
+        /** @var BasketController $oBasketController */
+        $oBasketController = oxNew(BasketController::class);
 
-        /** @var oxBasketItem $oBasketItem */
-        $oBasketItem = oxNew('oxBasketItem');
+        /** @var BasketItem $oBasketItem */
+        $oBasketItem = oxNew(BasketItem::class);
         $oBasketItem->init('_testArticle1', 1);
 
         $this->assertSame($blResult, $oBasketController->isOeVATTBETBEArticleValid($oBasketItem));

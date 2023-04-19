@@ -6,27 +6,35 @@
 
 namespace OxidEsales\EVatModule\Tests\Integration\VatGroups;
 
-use PHPUnit\Framework\TestCase;
+use OxidEsales\Eshop\Core\Field;
+use OxidEsales\EVatModule\Controller\Admin\ArticleExtendAjax;
+use OxidEsales\EVatModule\Controller\Admin\ArticleMain;
+use OxidEsales\EVatModule\Controller\Admin\CategoryAdministration;
+use OxidEsales\EVatModule\Controller\Admin\CategoryMainAjax;
+use OxidEsales\EVatModule\Shop\Category;
+use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 
 /**
  * Test class for.
  */
-class CategoryArticlesUpdaterTest extends TestCase
+class CategoryArticlesUpdaterTest extends BaseTestCase
 {
     /**
      * test populate not existing category data
      *
-     * @covers oeVATTBEArticle_Extend_Ajax
+     * @covers ArticleExtendAjax
      */
     public function testPopulateAddingCategoriesToArticle()
     {
         $this->_cleanData();
         $this->_prepareData();
 
-        $this->setRequestParameter('synchoxid', 'article1');
+        $_POST['synchoxid'] = 'article1';
 
-        $oController = $this->getMock('oeVATTBEArticle_Extend_Ajax', array('_getActionIds'));
-        $oController->expects($this->any())->method('_getActionIds')->will($this->returnValue(array('categoryId2')));
+        $oController = $this->getMockBuilder(ArticleExtendAjax::class)
+                ->onlyMethods(array("getActionIds"))
+                ->getMock();
+        $oController->expects($this->any())->method('getActionIds')->will($this->returnValue(array('categoryId2')));
 
         $oController->addCat();
 
@@ -38,18 +46,20 @@ class CategoryArticlesUpdaterTest extends TestCase
     /**
      * test populate not existing category data
      *
-     * @covers oeVATTBEArticle_Extend_Ajax
+     * @covers ArticleExtendAjax
      */
     public function testPopulateAddingCategoriesTBEToArticle()
     {
         $this->_cleanData();
         $this->_prepareData();
 
-        $this->setRequestParameter('synchoxid', 'article1');
+        $_POST['synchoxid'] = 'article1';
 
-        /** @var oeVATTBEArticle_Extend_Ajax|PHPUnit_Framework_MockObject_MockObject $oController */
-        $oController = $this->getMock('oeVATTBEArticle_Extend_Ajax', array('_getActionIds'));
-        $oController->expects($this->any())->method('_getActionIds')->will($this->returnValue(array('categoryId')));
+        /** @var ArticleExtendAjax $oController */
+        $oController = $this->getMockBuilder(ArticleExtendAjax::class)
+                ->onlyMethods(array("getActionIds"))
+                ->getMock();
+        $oController->expects($this->any())->method('getActionIds')->will($this->returnValue(array('categoryId')));
 
         $oController->addCat();
 
@@ -68,10 +78,12 @@ class CategoryArticlesUpdaterTest extends TestCase
         $this->_cleanData();
         $this->_prepareData();
 
-        $this->setRequestParameter('synchoxid', 'categoryId2');
+        $_POST['synchoxid'] = 'categoryId2';
 
-        $oController = $this->getMock('Category_Main_Ajax', array('_getActionIds'));
-        $oController->expects($this->any())->method('_getActionIds')->will($this->returnValue(array('article1')));
+        $oController = $this->getMockBuilder(CategoryMainAjax::class)
+                ->onlyMethods(array("getActionIds"))
+                ->getMock();
+        $oController->expects($this->any())->method('getActionIds')->will($this->returnValue(array('article1')));
 
         $oController->addArticle();
 
@@ -83,17 +95,19 @@ class CategoryArticlesUpdaterTest extends TestCase
     /**
      * test populate not existing category data
      *
-     * @covers oeVATTBECategory_Main_Ajax
+     * @covers CategoryMainAjax
      */
     public function testPopulateAddingArticleToCategoryTBE()
     {
         $this->_cleanData();
         $this->_prepareData();
 
-        $this->setRequestParameter('synchoxid', 'categoryId');
+        $_POST['synchoxid'] = 'categoryId';
 
-        $oController = $this->getMock('oeVATTBECategory_Main_Ajax', array('_getActionIds'));
-        $oController->expects($this->any())->method('_getActionIds')->will($this->returnValue(array('article1')));
+        $oController = $this->getMockBuilder(CategoryMainAjax::class)
+                ->onlyMethods(array("getActionIds"))
+                ->getMock();
+        $oController->expects($this->any())->method('getActionIds')->will($this->returnValue(array('article1')));
         $oController->addArticle();
 
         $this->assertEquals(1, $this->_getAssignedToCategoryProductsCount());
@@ -106,13 +120,15 @@ class CategoryArticlesUpdaterTest extends TestCase
      *
      * @depends testPopulateAddingArticleToCategoryTBE
      *
-     * @covers oeVATTBECategory_Main_Ajax
+     * @covers CategoryMainAjax
      */
     public function testRemoveArticleFromCategoryWhenOneArticleIsRemoved()
     {
-        /** @var oeVATTBECategory_Main_Ajax|PHPUnit_Framework_MockObject_MockObject $oController */
-        $oController = $this->getMock('oeVATTBECategory_Main_Ajax', array('_getActionIds'));
-        $oController->expects($this->any())->method('_getActionIds')->will($this->returnValue(array('article1')));
+        /** @var CategoryMainAjax $oController */
+        $oController = $this->getMockBuilder(CategoryMainAjax::class)
+                ->onlyMethods(array("getActionIds"))
+                ->getMock();
+        $oController->expects($this->any())->method('getActionIds')->will($this->returnValue(array('article1')));
         $oController->removeArticle();
 
         $this->assertEquals(0, $this->_getAssignedVATGroupsToArticles());
@@ -122,20 +138,22 @@ class CategoryArticlesUpdaterTest extends TestCase
     /**
      * When all articles are unassigned by clicking button "Unassign all".
      *
-     * @covers oeVATTBECategory_Main_Ajax
+     * @covers CategoryMainAjax
      */
     public function testRemoveArticlesWhenUnsassignAllIsClicked()
     {
         $this->_cleanData();
         $this->_prepareDataForRemovingArticlesFromCategory();
 
-        $this->setRequestParameter('synchoxid', 'categoryId');
+        $_POST['synchoxid'] = 'categoryId';
 
-        /** @var oeVATTBECategory_Main_Ajax|PHPUnit_Framework_MockObject_MockObject $oController */
-        $oController = $this->getMock('oeVATTBECategory_Main_Ajax', array('_getActionIds', '_getAll', '_addFilter'));
-        $oController->expects($this->atLeastOnce())->method('_getAll')->will($this->returnValue(array('article3', 'article4')));
+        /** @var CategoryMainAjax $oController */
+        $oController = $this->getMockBuilder(CategoryMainAjax::class)
+                ->onlyMethods(array('getActionIds', 'getAll', 'addFilter'))
+                ->getMock();
+        $oController->expects($this->atLeastOnce())->method('getAll')->will($this->returnValue(array('article3', 'article4')));
 
-        $this->setRequestParameter('all', 1);
+        $_POST['all'] = 1;
         $oController->removeArticle();
 
         $this->assertEquals(1, $this->_getAssignedVATGroupsToArticles());
@@ -152,7 +170,7 @@ class CategoryArticlesUpdaterTest extends TestCase
         $this->_cleanData();
         $this->_prepareData();
 
-        $oController = oxNew('oeVATTBEArticle_Main');
+        $oController = oxNew(ArticleMain::class);
         $oController->addToCategory('categoryId2', 'article1');
 
         $this->assertEquals(1, $this->_getAssignedToCategoryProductsCount());
@@ -170,7 +188,7 @@ class CategoryArticlesUpdaterTest extends TestCase
         $this->_cleanData();
         $this->_prepareData();
 
-        $oController = oxNew('oeVATTBEArticle_Main');
+        $oController = oxNew(ArticleMain::class);
         $oController->addToCategory('categoryId', 'article1');
 
         $this->assertEquals(1, $this->_getAssignedToCategoryProductsCount());
@@ -188,15 +206,15 @@ class CategoryArticlesUpdaterTest extends TestCase
         $this->_cleanData();
         $this->_prepareData(true);
 
-        $this->setRequestParameter('oxid', 'categoryId');
-        $this->setRequestParameter('editval', array('oevattbe_istbe' => 1));
+        $_POST['oxid'] = 'categoryId';
+        $_POST['editval'] = array('oevattbe_istbe' => 1);
         $aSelectParams = array(
             'a7c40f631fc920687.20179984' => 10,
             'a7c40f631fc920687.20179985' => 11
         );
-        $this->setRequestParameter('VATGroupsByCountry', $aSelectParams);
+        $_POST['VATGroupsByCountry'] = $aSelectParams;
 
-        $oController = oxNew('oeVATTBECategoryAdministration');
+        $oController = oxNew(CategoryAdministration::class);
         $oController->save();
 
         $this->assertEquals(2, $this->_getAssignedToCategoryProductsCount());
@@ -207,22 +225,22 @@ class CategoryArticlesUpdaterTest extends TestCase
     /**
      * test populate not existing category data
      *
-     * @covers oeVATTBECategoryAdministration
+     * @covers CategoryAdministration
      */
     public function testPopulateOnCategoryConfigurationNotTbe()
     {
         $this->_cleanData();
         $this->_prepareData(true);
 
-        $this->setRequestParameter('oxid', 'categoryId');
-        $this->setRequestParameter('editval', array('oevattbe_istbe' => 0));
+        $_POST['oxid'] = 'categoryId';
+        $_POST['editval'] = array('oevattbe_istbe' => 0);
         $aSelectParams = array(
             'a7c40f631fc920687.20179984' => 10,
             'a7c40f631fc920687.20179985' => 11
         );
-        $this->setRequestParameter('VATGroupsByCountry', $aSelectParams);
+        $_POST['VATGroupsByCountry'] = $aSelectParams;
 
-        $oController = oxNew('oeVATTBECategoryAdministration');
+        $oController = oxNew(CategoryAdministration::class);
         $oController->save();
 
         $this->assertEquals(2, $this->_getAssignedToCategoryProductsCount());
@@ -233,19 +251,19 @@ class CategoryArticlesUpdaterTest extends TestCase
     /**
      * test populate not existing category data
      *
-     * @covers oeVATTBECategoryAdministration
+     * @covers CategoryAdministration
      */
     public function testPopulateOnCategoryConfigurationNoGroups()
     {
         $this->_cleanData();
         $this->_prepareData(true);
 
-        $this->setRequestParameter('oxid', 'categoryId');
-        $this->setRequestParameter('editval', array('oevattbe_istbe' => 1));
+        $_POST['oxid'] = 'categoryId';
+        $_POST['editval'] = array('oevattbe_istbe' => 1);
         $aSelectParams = array();
-        $this->setRequestParameter('VATGroupsByCountry', $aSelectParams);
+        $_POST['VATGroupsByCountry'] = $aSelectParams;
 
-        $oController = oxNew('oeVATTBECategoryAdministration');
+        $oController = oxNew(CategoryAdministration::class);
         $oController->save();
 
         $this->assertEquals(2, $this->_getAssignedToCategoryProductsCount());
@@ -274,7 +292,7 @@ class CategoryArticlesUpdaterTest extends TestCase
         $aSqlQueries[] = "INSERT INTO `oxarticles` SET `oxid` = 'article2', `oevattbe_istbeservice` = '0'";
 
         foreach ($aSqlQueries as $sSql) {
-            oxDb::getDb()->execute($sSql);
+            \oxDb::getDb()->execute($sSql);
         }
     }
 
@@ -291,7 +309,7 @@ class CategoryArticlesUpdaterTest extends TestCase
         $aSqlQueries[] = "INSERT INTO `oevattbe_articlevat` SET `OEVATTBE_ARTICLEID` = 'article5', `OEVATTBE_COUNTRYID` = 'a7c40f631fc920687.20179984', `OEVATTBE_VATGROUPID` = 10";
 
         foreach ($aSqlQueries as $sSql) {
-            oxDb::getDb()->execute($sSql);
+            \oxDb::getDb()->execute($sSql);
         }
     }
 
@@ -300,11 +318,11 @@ class CategoryArticlesUpdaterTest extends TestCase
      */
     protected function _cleanData()
     {
-        oxDb::getDb()->execute('TRUNCATE TABLE `oevattbe_articlevat`');
-        oxDb::getDb()->execute('TRUNCATE TABLE `oevattbe_categoryvat`');
-        oxDb::getDb()->execute('TRUNCATE TABLE `oxobject2category`');
-        oxDb::getDb()->execute('TRUNCATE TABLE `oxcategories`');
-        oxDb::getDb()->execute('TRUNCATE TABLE `oxarticles`');
+        \oxDb::getDb()->execute('TRUNCATE TABLE `oevattbe_articlevat`');
+        \oxDb::getDb()->execute('TRUNCATE TABLE `oevattbe_categoryvat`');
+        \oxDb::getDb()->execute('TRUNCATE TABLE `oxobject2category`');
+        \oxDb::getDb()->execute('TRUNCATE TABLE `oxcategories`');
+        \oxDb::getDb()->execute('TRUNCATE TABLE `oxarticles`');
     }
 
     /**
@@ -314,7 +332,7 @@ class CategoryArticlesUpdaterTest extends TestCase
      */
     protected function _getAssignedToCategoryProductsCount()
     {
-        return oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oxobject2category`");
+        return \oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oxobject2category`");
     }
 
     /**
@@ -324,7 +342,7 @@ class CategoryArticlesUpdaterTest extends TestCase
      */
     protected function _getAssignedVATGroupsToArticles()
     {
-        return oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oevattbe_articlevat`");
+        return \oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oevattbe_articlevat`");
     }
 
     /**
@@ -334,7 +352,7 @@ class CategoryArticlesUpdaterTest extends TestCase
      */
     protected function _getTBEServiceCount()
     {
-        return oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oxarticles` WHERE  `oevattbe_istbeservice` = '1'");
+        return \oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oxarticles` WHERE  `oevattbe_istbeservice` = '1'");
     }
 
     /**
@@ -343,15 +361,15 @@ class CategoryArticlesUpdaterTest extends TestCase
      * @param string $sCategoryId category id which be used to create new category.
      * @param bool   $bIsTbe      bool if new category is TBE.
      *
-     * @return oxCategory
+     * @return Category
      */
     private function _createCategory($sCategoryId, $bIsTbe)
     {
-        /** @var oxCategory $oCategory */
-        $oCategory = oxNew('oxCategory');
+        /** @var Category $oCategory */
+        $oCategory = oxNew(Category::class);
         $oCategory->setId($sCategoryId);
-        $oCategory->oxcategories__oevattbe_istbe = new oxField($bIsTbe);
-        $oCategory->oxcategories__oxparentid = new oxField('oxrootid');
+        $oCategory->oxcategories__oevattbe_istbe = new Field($bIsTbe);
+        $oCategory->oxcategories__oxparentid = new Field('oxrootid');
         $oCategory->save();
         return $oCategory;
     }

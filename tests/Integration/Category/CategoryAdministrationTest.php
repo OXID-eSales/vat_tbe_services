@@ -6,15 +6,23 @@
 
 namespace OxidEsales\EVatModule\Tests\Integration\Category;
 
-use PHPUnit\Framework\TestCase;
+use OxidEsales\Eshop\Core\Field;
+use OxidEsales\EshopCommunity\Tests\ContainerTrait;
+use OxidEsales\EVatModule\Controller\Admin\CategoryAdministration;
+use OxidEsales\EVatModule\Model\CountryVATGroup;
+use OxidEsales\EVatModule\Model\DbGateway\CountryVATGroupsDbGateway;
+use OxidEsales\EVatModule\Shop\Category;
+use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 
 /**
  * Testing VAT TBE administration in category page.
  *
  * @covers oeVATTBECategoryAdministration
  */
-class CategoryAdministrationTest extends TestCase
+class CategoryAdministrationTest extends BaseTestCase
 {
+    use ContainerTrait;
+
     /**
      * Check if view data is correct.
      */
@@ -40,14 +48,14 @@ class CategoryAdministrationTest extends TestCase
         $this->_addData($aData1);
         $this->_addData($aData2);
 
-        /** @var oeVATTBECategoryAdministration $oCategoryAdministration */
-        $oCategoryAdministration = oxNew('oeVATTBECategoryAdministration');
+        /** @var CategoryAdministration $oCategoryAdministration */
+        $oCategoryAdministration = oxNew(CategoryAdministration::class);
 
-        $oCountryVATGroup1 = oeVATTBECountryVATGroup::createInstance();
+        $oCountryVATGroup1 = $this->get(CountryVATGroup::class);
         $oCountryVATGroup1->setId(2);
         $oCountryVATGroup1->setData($aData1);
 
-        $oCountryVATGroup2 = oeVATTBECountryVATGroup::createInstance();
+        $oCountryVATGroup2 = $this->get(CountryVATGroup::class);
         $oCountryVATGroup2->setId(3);
         $oCountryVATGroup2->setData($aData2);
 
@@ -93,15 +101,15 @@ class CategoryAdministrationTest extends TestCase
      */
     public function testViewDataIsTBEService($iIsTBECategory)
     {
-        /** @var oxCategory $oCategory */
-        $oCategory = oxNew('oxCategory');
+        /** @var Category $oCategory */
+        $oCategory = oxNew(Category::class);
         $oCategory->setId('_testCategory');
-        $oCategory->oxcategories__oevattbe_istbe = new oxField($iIsTBECategory);
-        $oCategory->oxcategories__oxparentid = new oxField('oxrootid');
+        $oCategory->oxcategories__oevattbe_istbe = new Field($iIsTBECategory);
+        $oCategory->oxcategories__oxparentid = new Field('oxrootid');
         $oCategory->save();
 
-        /** @var oeVATTBECategoryAdministration $oCategoriesAdministration */
-        $oCategoriesAdministration = oxNew('oeVATTBECategoryAdministration');
+        /** @var CategoryAdministration $oCategoriesAdministration */
+        $oCategoriesAdministration = oxNew(CategoryAdministration::class);
         $oCategoriesAdministration->setEditObjectId('_testCategory');
 
         $this->assertSame($iIsTBECategory, $oCategoriesAdministration->isCategoryTBE());
@@ -110,18 +118,18 @@ class CategoryAdministrationTest extends TestCase
     /**
      * Checks if selected option is saved rate.
      *
-     * @return oeVATTBECategoryAdministration
+     * @return CategoryAdministration
      */
     public function testSelectedRateForCountry()
     {
-        /** @var oeVATTBECategoryAdministration $oCategoryAdministration */
-        $oCategoryAdministration = oxNew('oeVATTBECategoryAdministration');
+        /** @var CategoryAdministration $oCategoryAdministration */
+        $oCategoryAdministration = oxNew(CategoryAdministration::class);
         $aSelectParams = array(
             'a7c40f632e04633c9.47194042' => 2,
             '8f241f110955d3260.55487539' => ''
         );
 
-        $this->setRequestParameter('VATGroupsByCountry', $aSelectParams);
+        $_POST['VATGroupsByCountry'] = $aSelectParams;
         $oCategoryAdministration->setEditObjectId('_testCategory');
         $oCategoryAdministration->save();
 
@@ -133,11 +141,11 @@ class CategoryAdministrationTest extends TestCase
     /**
      * Checks if rate was not selected.
      *
-     * @param oeVATTBECategoryAdministration $oCategoryAdministration controller
+     * @param CategoryAdministration $oCategoryAdministration controller
      *
      * @depends testSelectedRateForCountry
      *
-     * @return oeVATTBECategoryAdministration
+     * @return CategoryAdministration
      */
     public function testNotSelectedRateForCountry($oCategoryAdministration)
     {
@@ -149,7 +157,7 @@ class CategoryAdministrationTest extends TestCase
     /**
      * Checks if method returns correct value for non existing country.
      *
-     * @param oeVATTBECategoryAdministration $oCategoryAdministration controller
+     * @param CategoryAdministration $oCategoryAdministration controller
      *
      * @depends testNotSelectedRateForCountry
      */
@@ -165,8 +173,8 @@ class CategoryAdministrationTest extends TestCase
      */
     private function _addData($aData)
     {
-        /** @var oeVATTBECountryVATGroupsDbGateway $oGateway */
-        $oGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
+        /** @var CountryVATGroupsDbGateway $oGateway */
+        $oGateway = oxNew(CountryVATGroupsDbGateway::class);
 
         $oGateway->save($aData);
     }
@@ -176,8 +184,8 @@ class CategoryAdministrationTest extends TestCase
      */
     private function _cleanData()
     {
-        /** @var oeVATTBECountryVATGroupsDbGateway $oGateway */
-        $oGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
+        /** @var CountryVATGroupsDbGateway $oGateway */
+        $oGateway = oxNew(CountryVATGroupsDbGateway::class);
         foreach ($oGateway->getList() as $aGroupInformation) {
             $oGateway->delete($aGroupInformation['OEVATTBE_ID']);
         }

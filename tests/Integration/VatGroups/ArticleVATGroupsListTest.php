@@ -6,7 +6,9 @@
 
 namespace OxidEsales\EVatModule\Tests\Integration\VatGroups;
 
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\ContainerTrait;
+use OxidEsales\EVatModule\Model\ArticleVATGroupsList;
+use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 
 /**
  * Testing oeVATTBEArticleVATGroupsList class.
@@ -14,8 +16,10 @@ use PHPUnit\Framework\TestCase;
  * @covers ArticleVATGroupsList
  * @covers ArticleVATGroupsDbGateway
  */
-class ArticleVATGroupsListTest extends TestCase
+class ArticleVATGroupsListTest extends BaseTestCase
 {
+    use ContainerTrait;
+
     /**
      * Relations for two countries is passed;
      * Both relations should be added to database for set article.
@@ -29,7 +33,7 @@ class ArticleVATGroupsListTest extends TestCase
             'LithuaniaId' => '13'
         );
 
-        $oGroupsList = oeVATTBEArticleVATGroupsList::createInstance();
+        $oGroupsList = $this->get(ArticleVATGroupsList::class);
         $oGroupsList->setId('articleId');
         $oGroupsList->setData($aData);
         $this->assertEquals('articleId', $oGroupsList->save());
@@ -47,7 +51,7 @@ class ArticleVATGroupsListTest extends TestCase
      */
     public function testLoadingGroupsListWhenGroupsExists($sArticleId)
     {
-        $oGroupsList = oeVATTBEArticleVATGroupsList::createInstance();
+        $oGroupsList = $this->get(ArticleVATGroupsList::class);
 
         $aExpectedData = array(
             'germanyid' => '12',
@@ -64,7 +68,7 @@ class ArticleVATGroupsListTest extends TestCase
      */
     public function testLoadingGroupsListWhenNoGroupsExists()
     {
-        $oGroupsList = oeVATTBEArticleVATGroupsList::createInstance();
+        $oGroupsList = $this->get(ArticleVATGroupsList::class);
         $oGroupsList->load('NonExistingCountryId');
 
         $this->assertEquals(array(), $oGroupsList->getData());

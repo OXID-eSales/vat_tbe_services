@@ -6,14 +6,15 @@
 
 namespace OxidEsales\EVatModule\Tests\Integration\VatGroups;
 
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EVatModule\Model\DbGateway\CategoryVATGroupsPopulatorDbGateway;
+use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 
 /**
  * Test class for CategoryVATGroupsPopulatorDbGateway.
  *
  * @covers CategoryVATGroupsPopulatorDbGateway
  */
-class CategoryVATGroupsPopulatorDbGatewayTest extends TestCase
+class CategoryVATGroupsPopulatorDbGatewayTest extends BaseTestCase
 {
     /**
      * Test populate not existing category data.
@@ -23,32 +24,32 @@ class CategoryVATGroupsPopulatorDbGatewayTest extends TestCase
         $this->_cleanData();
         $this->_prepareData();
 
-        $oDbGateway = oxNew('oeVATTBECategoryVATGroupsPopulatorDbGateway');
+        $oDbGateway = oxNew(CategoryVATGroupsPopulatorDbGateway::class);
         $oDbGateway->populate('categoryIdNotExist');
 
-        $iRecordCount = oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oevattbe_articlevat`");
+        $iRecordCount = \oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oevattbe_articlevat`");
         $this->assertEquals(0, $iRecordCount);
 
-        $iRecordCount = oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oxarticles` WHERE  `oevattbe_istbeservice` = '1'");
+        $iRecordCount = \oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oxarticles` WHERE  `oevattbe_istbeservice` = '1'");
         $this->assertEquals(0, $iRecordCount);
     }
 
     /**
      * Test populate existing category data.
      *
-     * @return oeVATTBECategoryVATGroupsPopulatorDbGateway
+     * @return CategoryVATGroupsPopulatorDbGateway
      */
     public function testPopulateExistingCategory()
     {
         $this->_cleanData();
         $this->_prepareData();
 
-        $oDbGateway = oxNew('oeVATTBECategoryVATGroupsPopulatorDbGateway');
+        $oDbGateway = oxNew(CategoryVATGroupsPopulatorDbGateway::class);
         $oDbGateway->populate('categoryId');
 
-        $iRecordCount = oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oevattbe_articlevat`");
+        $iRecordCount = \oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oevattbe_articlevat`");
         $this->assertEquals(4, $iRecordCount);
-        $iRecordCount = oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oxarticles` WHERE  `oevattbe_istbeservice` = '1'");
+        $iRecordCount = \oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oxarticles` WHERE  `oevattbe_istbeservice` = '1'");
         $this->assertEquals(2, $iRecordCount);
 
         return $oDbGateway;
@@ -57,7 +58,7 @@ class CategoryVATGroupsPopulatorDbGatewayTest extends TestCase
     /**
      * Checks if reset works correctly for articles.
      *
-     * @param oeVATTBECategoryVATGroupsPopulatorDbGateway $oDbGateway
+     * @param CategoryVATGroupsPopulatorDbGateway $oDbGateway
      *
      * @depends testPopulateExistingCategory
      */
@@ -68,9 +69,9 @@ class CategoryVATGroupsPopulatorDbGatewayTest extends TestCase
         );
 
         $this->assertTrue($oDbGateway->reset($aArticles));
-        $iRecordCount = oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oevattbe_articlevat`");
+        $iRecordCount = \oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oevattbe_articlevat`");
         $this->assertEquals(2, $iRecordCount);
-        $iRecordCount = oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oxarticles` WHERE  `oevattbe_istbeservice` = '1'");
+        $iRecordCount = \oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oxarticles` WHERE  `oevattbe_istbeservice` = '1'");
         $this->assertEquals(1, $iRecordCount);
     }
 
@@ -80,8 +81,8 @@ class CategoryVATGroupsPopulatorDbGatewayTest extends TestCase
     public function testResetArticlesWhenGivenEmptyArray()
     {
         $aArticles = array();
-        /** @var oeVATTBECategoryVATGroupsPopulatorDbGateway $oDbGateway */
-        $oDbGateway = oxNew('oeVATTBECategoryVATGroupsPopulatorDbGateway');
+        /** @var CategoryVATGroupsPopulatorDbGateway $oDbGateway */
+        $oDbGateway = oxNew(CategoryVATGroupsPopulatorDbGateway::class);
 
         $this->assertFalse($oDbGateway->reset($aArticles));
     }
@@ -91,11 +92,11 @@ class CategoryVATGroupsPopulatorDbGatewayTest extends TestCase
      */
     private function _cleanData()
     {
-        oxDb::getDb()->execute('TRUNCATE TABLE `oevattbe_articlevat`');
-        oxDb::getDb()->execute('TRUNCATE TABLE `oevattbe_categoryvat`');
-        oxDb::getDb()->execute('TRUNCATE TABLE `oxobject2category`');
-        oxDb::getDb()->execute('TRUNCATE TABLE `oxcategories`');
-        oxDb::getDb()->execute('TRUNCATE TABLE `oxarticles`');
+        \oxDb::getDb()->execute('TRUNCATE TABLE `oevattbe_articlevat`');
+        \oxDb::getDb()->execute('TRUNCATE TABLE `oevattbe_categoryvat`');
+        \oxDb::getDb()->execute('TRUNCATE TABLE `oxobject2category`');
+        \oxDb::getDb()->execute('TRUNCATE TABLE `oxcategories`');
+        \oxDb::getDb()->execute('TRUNCATE TABLE `oxarticles`');
     }
 
     /**
@@ -113,7 +114,7 @@ class CategoryVATGroupsPopulatorDbGatewayTest extends TestCase
         $aSqlQueries[] = "INSERT INTO `oxarticles` SET `oxid` = 'article2', `oevattbe_istbeservice` = '0'";
 
         foreach ($aSqlQueries as $sSql) {
-            oxDb::getDb()->execute($sSql);
+            \oxDb::getDb()->execute($sSql);
         }
     }
 }

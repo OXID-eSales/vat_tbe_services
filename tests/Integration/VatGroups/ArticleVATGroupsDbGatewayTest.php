@@ -6,14 +6,15 @@
 
 namespace OxidEsales\EVatModule\Tests\Integration\VatGroups;
 
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EVatModule\Model\DbGateway\ArticleVATGroupsDbGateway;
+use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 
 /**
- * Test class for oeVATTBEArticleVATGroupsDbGateway.
+ * Test class for ArticleVATGroupsDbGateway.
  *
- * @covers oeVATTBEArticleVATGroupsDbGateway
+ * @covers ArticleVATGroupsDbGateway
  */
-class ArticleVATGroupsDbGatewayTest extends TestCase
+class ArticleVATGroupsDbGatewayTest extends BaseTestCase
 {
     /**
      * Testing VAT Group saving to database.
@@ -22,8 +23,8 @@ class ArticleVATGroupsDbGatewayTest extends TestCase
      */
     public function testSavingVATGroupToDatabase()
     {
-        /** @var oeVATTBEArticleVATGroupsDbGateway $oVatGroupsGateway */
-        $oVatGroupsGateway = oxNew('oeVATTBEArticleVATGroupsDbGateway');
+        /** @var ArticleVATGroupsDbGateway $oVatGroupsGateway */
+        $oVatGroupsGateway = oxNew(ArticleVATGroupsDbGateway::class);
         $aData = array(
             'articleid' => '0962081a5693597654fd2887af7a6095',
             'relations' => array(
@@ -50,8 +51,8 @@ class ArticleVATGroupsDbGatewayTest extends TestCase
      */
     public function testUpdatingVATGroupToDatabase($sArticleId)
     {
-        /** @var oeVATTBEArticleVATGroupsDbGateway $oVatGroupsGateway */
-        $oVatGroupsGateway = oxNew('oeVATTBEArticleVATGroupsDbGateway');
+        /** @var ArticleVATGroupsDbGateway $oVatGroupsGateway */
+        $oVatGroupsGateway = oxNew(ArticleVATGroupsDbGateway::class);
         $aData = array(
             'articleid' => '0962081a5693597654fd2887af7a6095',
             'relations' => array(
@@ -83,7 +84,7 @@ class ArticleVATGroupsDbGatewayTest extends TestCase
      */
     public function testVATGroupLoading($sArticleId)
     {
-        $oVatGroupsGateway = oxNew('oeVATTBEArticleVATGroupsDbGateway');
+        $oVatGroupsGateway = oxNew(ArticleVATGroupsDbGateway::class);
         $aData = $oVatGroupsGateway->load($sArticleId);
 
         $aExpectedData = array(
@@ -117,8 +118,8 @@ class ArticleVATGroupsDbGatewayTest extends TestCase
      */
     public function testVATGroupLoadingByGroupId($sArticleId)
     {
-        /** @var oeVATTBEArticleVATGroupsDbGateway $oVatGroupsGateway */
-        $oVatGroupsGateway = oxNew('oeVATTBEArticleVATGroupsDbGateway');
+        /** @var ArticleVATGroupsDbGateway $oVatGroupsGateway */
+        $oVatGroupsGateway = oxNew(ArticleVATGroupsDbGateway::class);
         $aData = $oVatGroupsGateway->loadByGroupId('12');
 
         $aExpectedData = array(
@@ -144,7 +145,7 @@ class ArticleVATGroupsDbGatewayTest extends TestCase
      */
     public function testDeletingVATGroupList($sArticleId)
     {
-        $oVatGroupsGateway = oxNew('oeVATTBEArticleVATGroupsDbGateway');
+        $oVatGroupsGateway = oxNew(ArticleVATGroupsDbGateway::class);
         $oVatGroupsGateway->delete($sArticleId);
 
         $this->assertSame(array(), $oVatGroupsGateway->load($sArticleId));
@@ -155,7 +156,7 @@ class ArticleVATGroupsDbGatewayTest extends TestCase
      */
     public function testLoadingEmptyVATGroup()
     {
-        $oVatGroupsGateway = oxNew('oeVATTBEArticleVATGroupsDbGateway');
+        $oVatGroupsGateway = oxNew(ArticleVATGroupsDbGateway::class);
         $this->assertSame(array(), $oVatGroupsGateway->load('non_existing_group'));
     }
 
@@ -164,7 +165,7 @@ class ArticleVATGroupsDbGatewayTest extends TestCase
      */
     public function testDeletingEmptyVATGroup()
     {
-        $oVatGroupsGateway = oxNew('oeVATTBEArticleVATGroupsDbGateway');
+        $oVatGroupsGateway = oxNew(ArticleVATGroupsDbGateway::class);
         $this->assertNotSame(false, $oVatGroupsGateway->delete('non_existing_group'));
     }
 }

@@ -6,24 +6,25 @@
 
 namespace OxidEsales\EVatModule\Tests\Integration\Order;
 
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EVatModule\Model\DbGateway\OrderEvidenceListDbGateway;
+use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 
 /**
- * Test class for oeVATTBEOrderEvidenceListDbGateway.
+ * Test class for OrderEvidenceListDbGateway.
  *
- * @covers oeVATTBEOrderEvidenceListDbGateway
+ * @covers OrderEvidenceListDbGateway
  */
-class OrderEvidenceListDbGatewayTest extends TestCase
+class OrderEvidenceListDbGatewayTest extends BaseTestCase
 {
 
     /**
      * Testing Order list saving to database. Test works with database so can be slow.
      *
-     * @return oeVATTBEOrderEvidenceListDbGateway
+     * @return OrderEvidenceListDbGateway
      */
     public function testOrderListSavingToDatabase()
     {
-        $oOrderArticleList = oxNew('oeVATTBEOrderEvidenceListDbGateway');
+        $oOrderArticleList = oxNew(OrderEvidenceListDbGateway::class);
         $aData = array(
             'orderId' => 'order_id',
             'evidenceList' => array(
@@ -45,11 +46,11 @@ class OrderEvidenceListDbGatewayTest extends TestCase
     /**
      * Testing Order list loading from database. Test works with database so can be slow.
      *
-     * @param oeVATTBEOrderEvidenceListDbGateway $oOrderArticleList
+     * @param OrderEvidenceListDbGateway $oOrderArticleList
      *
      * @depends testOrderListSavingToDatabase
      *
-     * @return oeVATTBEOrderEvidenceListDbGateway
+     * @return OrderEvidenceListDbGateway
      */
     public function testOrderListLoading($oOrderArticleList)
     {
@@ -76,7 +77,7 @@ class OrderEvidenceListDbGatewayTest extends TestCase
     /**
      * Testing deletion of Order list from database. Test works with database so can be slow.
      *
-     * @param oeVATTBEOrderEvidenceListDbGateway $oOrderArticleList
+     * @param OrderEvidenceListDbGateway $oOrderArticleList
      *
      * @depends testOrderListLoading
      */
@@ -92,7 +93,7 @@ class OrderEvidenceListDbGatewayTest extends TestCase
      */
     public function testSavingEmptyList()
     {
-        $oOrderArticleList = oxNew('oeVATTBEOrderEvidenceListDbGateway');
+        $oOrderArticleList = oxNew(OrderEvidenceListDbGateway::class);
         $aData = array(
             'orderId' => 'order_id',
             'evidenceList' => array()
@@ -106,7 +107,7 @@ class OrderEvidenceListDbGatewayTest extends TestCase
      */
     public function testLoadingEmptyOrderList()
     {
-        $oOrderArticleList = oxNew('oeVATTBEOrderEvidenceListDbGateway');
+        $oOrderArticleList = oxNew(OrderEvidenceListDbGateway::class);
         $this->assertSame(array(), $oOrderArticleList->load('non_existing_order'));
     }
 
@@ -115,7 +116,7 @@ class OrderEvidenceListDbGatewayTest extends TestCase
      */
     public function testDeletingEmptyOrderList()
     {
-        $oOrderArticleList = oxNew('oeVATTBEOrderEvidenceListDbGateway');
+        $oOrderArticleList = oxNew(OrderEvidenceListDbGateway::class);
         $this->assertNotSame(false, $oOrderArticleList->delete('non_existing_order'));
     }
 }

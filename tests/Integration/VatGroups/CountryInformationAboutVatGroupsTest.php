@@ -6,7 +6,12 @@
 
 namespace OxidEsales\EVatModule\Tests\Integration\VatGroups;
 
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\ContainerTrait;
+use OxidEsales\EVatModule\Controller\Admin\CountryVatGroups;
+use OxidEsales\EVatModule\Model\CategoryVATGroupsList;
+use OxidEsales\EVatModule\Model\CountryVATGroup;
+use OxidEsales\EVatModule\Shop\Country;
+use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 
 /**
  * Testing if Country has correct information about groups.
@@ -17,23 +22,23 @@ use PHPUnit\Framework\TestCase;
  * @covers CountryVATGroupsList
  * @covers Country
  */
-class CountryInformationAboutVatGroupsTest extends TestCase
+class CountryInformationAboutVatGroupsTest extends BaseTestCase
 {
+    use ContainerTrait;
+
     /**
      * Test if country information updated when adding group.
      */
     public function testAddCountryVatGroup()
     {
-        $this->setTablesForCleanup('oevattbe_countryvatgroups');
-
         $sCountryId = '8f241f11095410f38.37165361';
 
-        /** @var oxCountry|oeVATTBEOxCountry $oCountry */
-        $oCountry = oxNew('oxCountry');
+        /** @var Country $oCountry */
+        $oCountry = oxNew(Country::class);
         $oCountry->load($sCountryId);
         $this->assertFalse($oCountry->isOEVATTBEAtLeastOneGroupConfigured(), 'Country should not be marked as configured before test.');
 
-        $oGroup = oeVATTBECountryVATGroup::createInstance();
+        $oGroup = $this->get(CountryVATGroup::class);
 
         $oGroup->setCountryId($sCountryId);
         $oGroup->setName('Group Name');
@@ -50,25 +55,23 @@ class CountryInformationAboutVatGroupsTest extends TestCase
      */
     public function testDeleteCountryVatGroup()
     {
-        $this->setTablesForCleanup('oevattbe_countryvatgroups');
-
         $sCountryId = 'a7c40f632a0804ab5.18804076';
 
-        /** @var oxCountry|oeVATTBEOxCountry $oCountry */
-        $oCountry = oxNew('oxCountry');
+        /** @var Country $oCountry */
+        $oCountry = oxNew(Country::class);
         $oCountry->load($sCountryId);
         $this->assertTrue($oCountry->isOEVATTBEAtLeastOneGroupConfigured(), 'Country should be marked as configured before test.');
 
-        /** @var oeVATTBECountryVatGroups $oVATTBECountryVatGroups */
-        $oVATTBECountryVatGroups = oxNew('oeVATTBECountryVatGroups');
+        /** @var CountryVatGroups $oVATTBECountryVatGroups */
+        $oVATTBECountryVatGroups = oxNew(CountryVatGroups::class);
         $oVATTBECountryVatGroups->setEditObjectId($sCountryId);
 
-        $this->setRequestParameter('countryVATGroupId', '79');
+        $_POST['countryVATGroupId'] = '79';
         $oVATTBECountryVatGroups->deleteCountryVatGroup();
         $oCountry->load($sCountryId);
         $this->assertTrue($oCountry->isOEVATTBEAtLeastOneGroupConfigured(), 'Country should be still marked as configured as one more group left.');
 
-        $this->setRequestParameter('countryVATGroupId', '80');
+        $_POST['countryVATGroupId'] = '80';
         $oVATTBECountryVatGroups->deleteCountryVatGroup();
         $oCountry->load($sCountryId);
         $this->assertFalse($oCountry->isOEVATTBEAtLeastOneGroupConfigured(), 'Country should be marked as not configured as no more groups left.');

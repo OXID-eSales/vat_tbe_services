@@ -6,16 +6,18 @@
 
 namespace OxidEsales\EVatModule\Tests\Integration\Order;
 
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EVatModule\Model\DbGateway\OrderEvidenceListDbGateway;
+use OxidEsales\EVatModule\Model\OrderEvidenceList;
+use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 
 /**
  * Testing oeVATTBEOrderEvidenceList class.
  */
-class OrderEvidenceListTest extends TestCase
+class OrderEvidenceListTest extends BaseTestCase
 {
     private $orderEvidenceList;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -30,8 +32,8 @@ class OrderEvidenceListTest extends TestCase
             ],
         ];
 
-        $oGateway = oxNew('oeVATTBEOrderEvidenceListDbGateway');
-        $this->orderEvidenceList = oxNew('oeVATTBEOrderEvidenceList', $oGateway);
+        $oGateway = oxNew(OrderEvidenceListDbGateway::class);
+        $this->orderEvidenceList = oxNew(OrderEvidenceList::class, $oGateway);
         $this->orderEvidenceList->setId('order_id');
         $this->orderEvidenceList->setData($aData);
         $this->orderEvidenceList->save();
@@ -42,10 +44,10 @@ class OrderEvidenceListTest extends TestCase
      */
     public function testLoadingEvidenceList()
     {
-        $oGateway = oxNew('oeVATTBEOrderEvidenceListDbGateway');
+        $oGateway = oxNew(OrderEvidenceListDbGateway::class);
 
-        /** @var oeVATTBEOrderEvidenceList $oList */
-        $oList = oxNew('oeVATTBEOrderEvidenceList', $oGateway);
+        /** @var OrderEvidenceList $oList */
+        $oList = oxNew(OrderEvidenceList::class, $oGateway);
         $oList->load('order_id');
 
         $aData = $oList->getData();
@@ -71,10 +73,10 @@ class OrderEvidenceListTest extends TestCase
      */
     public function testLoadWithCountryNamesEvidenceList()
     {
-        $oGateway = oxNew('oeVATTBEOrderEvidenceListDbGateway');
+        $oGateway = oxNew(OrderEvidenceListDbGateway::class);
 
-        /** @var oeVATTBEOrderEvidenceList $oList */
-        $oList = oxNew('oeVATTBEOrderEvidenceList', $oGateway);
+        /** @var OrderEvidenceList $oList */
+        $oList = oxNew(OrderEvidenceList::class, $oGateway);
         $oList->loadWithCountryNames('order_id');
 
         $aData = $oList->getData();

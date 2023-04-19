@@ -6,27 +6,28 @@
 
 namespace OxidEsales\EVatModule\Tests\Integration\Article;
 
+use OxidEsales\Eshop\Application\Controller\Admin\ArticleList as ArticleListController;
 use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Model\BaseModel;
 use OxidEsales\Eshop\Core\Registry;
-use OxidEsales\EVatModule\Model\User;
-use OxidEsales\EVatModule\Shop\Article;
 use OxidEsales\EVatModule\Shop\ArticleList;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EVatModule\Shop\User;
+use OxidEsales\EVatModule\Shop\Article;
+use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 
 /**
  * Testing extended Article class.
  */
-class ArticleListTest extends TestCase
+class ArticleListTest extends BaseTestCase
 {
-    /**
-     * Initialize the fixture.
-     */
-    protected function setUp(): void
-    {
-        parent::setup();
-        $this->_prepareData();
-    }
+//    /**
+//     * Initialize the fixture.
+//     */
+//    public function setUp(): void
+//    {
+//        parent::setup();
+////        $this->_prepareData();
+//    }
 
     /**
      * data provider
@@ -54,12 +55,13 @@ class ArticleListTest extends TestCase
     public function testCategoryList($sUserStatus, $sVat)
     {
         $oArticleList = $this->_getArticleList($sUserStatus);
-        $oArticleList->loadCategoryArticles('30e44ab8593023055.23928895', null);
+        $sessionFilter = Registry::getSession()->getVariable('session_attrfilter');
+        $oArticleList->loadCategoryArticles('30e44ab8593023055.23928895', $sessionFilter, null);
 
         /** @var Article $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertInstanceOf('Article', $oArticle);
+        $this->assertInstanceOf(Article::class, $oArticle);
         $this->assertSame($sVat, $oArticle->getOeVATTBETBEVat());
     }
 
@@ -73,18 +75,13 @@ class ArticleListTest extends TestCase
      */
     public function testManufacturerList($sUserStatus, $sVat)
     {
-        $oArticle = oxNew(Article::class);
-        $oArticle->setId('1126');
-        $oArticle->oxarticles__oxmanufacturerid = new Field('manufacturerId');
-        $oArticle->save();
-
         $oArticleList = $this->_getArticleList($sUserStatus);
         $oArticleList->loadManufacturerArticles('manufacturerId');
 
         /** @var Article $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertInstanceOf('Article', $oArticle);
+        $this->assertInstanceOf(Article::class, $oArticle);
         $this->assertSame($sVat, $oArticle->getOeVATTBETBEVat());
     }
 
@@ -98,18 +95,13 @@ class ArticleListTest extends TestCase
      */
     public function testVendorList($sUserStatus, $sVat)
     {
-        $oArticle = oxNew(Article::class);
-        $oArticle->setId('1126');
-        $oArticle->oxarticles__oxvendorid = new Field('vendorId');
-        $oArticle->save();
-
         $oArticleList = $this->_getArticleList($sUserStatus);
         $oArticleList->loadVendorArticles('vendorId');
 
         /** @var Article $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertInstanceOf('Article', $oArticle);
+        $this->assertInstanceOf(Article::class, $oArticle);
         $this->assertSame($sVat, $oArticle->getOeVATTBETBEVat());
     }
 
@@ -129,7 +121,7 @@ class ArticleListTest extends TestCase
         /** @var Article $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertInstanceOf('Article', $oArticle);
+        $this->assertInstanceOf(Article::class, $oArticle);
         $this->assertSame($sVat, $oArticle->getOeVATTBETBEVat());
     }
 
@@ -155,7 +147,7 @@ class ArticleListTest extends TestCase
         /** @var Article $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertInstanceOf('Article', $oArticle);
+        $this->assertInstanceOf(Article::class, $oArticle);
         $this->assertSame($sVat, $oArticle->getOeVATTBETBEVat());
     }
 
@@ -174,7 +166,7 @@ class ArticleListTest extends TestCase
 
         $oArticle = oxNew(Article::class);
         $oArticle->setId('1126');
-        $oArticle->oxarticles__oxtimestamp = new Field(date('Y-m-d H:i:s', oxRegistry::get("oxUtilsDate")->getTime()));
+        $oArticle->oxarticles__oxtimestamp = new Field(date('Y-m-d H:i:s', Registry::getUtilsDate()->getTime()));
         $oArticle->save();
 
         $oArticleList = $this->_getArticleList($sUserStatus);
@@ -183,7 +175,7 @@ class ArticleListTest extends TestCase
         /** @var Article $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertInstanceOf('Article', $oArticle);
+        $this->assertInstanceOf(Article::class, $oArticle);
         $this->assertSame($sVat, $oArticle->getOeVATTBETBEVat());
     }
 
@@ -210,7 +202,7 @@ class ArticleListTest extends TestCase
         /** @var Article $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertInstanceOf('Article', $oArticle);
+        $this->assertInstanceOf(Article::class, $oArticle);
         $this->assertSame($sVat, $oArticle->getOeVATTBETBEVat());
     }
 
@@ -230,7 +222,7 @@ class ArticleListTest extends TestCase
         /** @var Article $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertInstanceOf('Article', $oArticle);
+        $this->assertInstanceOf(Article::class, $oArticle);
         $this->assertSame($sVat, $oArticle->getOeVATTBETBEVat());
     }
 
@@ -256,7 +248,7 @@ class ArticleListTest extends TestCase
         /** @var Article $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertInstanceOf('Article', $oArticle);
+        $this->assertInstanceOf(Article::class, $oArticle);
         $this->assertSame($sVat, $oArticle->getOeVATTBETBEVat());
     }
 
@@ -282,7 +274,7 @@ class ArticleListTest extends TestCase
         /** @var Article $oArticle */
         $oArticle = $oArticleList['1126'];
 
-        $this->assertInstanceOf('Article', $oArticle);
+        $this->assertInstanceOf(Article::class, $oArticle);
         $this->assertSame($sVat, $oArticle->getOeVATTBETBEVat());
     }
 
@@ -293,31 +285,31 @@ class ArticleListTest extends TestCase
     {
         Registry::getSession()->setVariable('TBECountryId', 'a7c40f631fc920687.20179984');
         Registry::getConfig()->setConfigParam('art_category', 'cat@@30e44ab8593023055.23928895');
-        $oArticleList = oxNew(ArticleList::class);
+        $oArticleList = oxNew(ArticleListController::class);
         $oArticleList->setAdminMode(true);
         $aListItems = $oArticleList->getItemList();
 
         $this->assertSame(9, count($aListItems));
     }
 
-    /**
-     * prepare data
-     *
-     */
-    protected function _prepareData()
-    {
-        $oDb = \oxDb::getDb();
-        $oDb->execute("TRUNCATE TABLE oevattbe_countryvatgroups");
-        $oDb->execute("TRUNCATE TABLE oevattbe_articlevat");
-        $oDb->execute("DELETE FROM  `oxobject2category` WHERE `OXID`='c3944abfcb65b13a3.66180278'");
-        $sql = "INSERT INTO oevattbe_countryvatgroups SET OEVATTBE_ID = 1, OEVATTBE_COUNTRYID = 'a7c40f631fc920687.20179984', OEVATTBE_NAME='name', OEVATTBE_RATE='8'";
-        $oDb->execute($sql);
-        $sql = "INSERT INTO oevattbe_articlevat SET OEVATTBE_ARTICLEID = '1126', OEVATTBE_COUNTRYID = 'a7c40f631fc920687.20179984', OEVATTBE_VATGROUPID = '1'";
-        $oDb->execute($sql);
-        $sql = "INSERT INTO `oxobject2category` (`OXID`, `OXOBJECTID`, `OXCATNID`, `OXPOS`, `OXTIME`) VALUES
-        ('c3944abfcb65b13a3.66180278', '1126', '30e44ab8593023055.23928895', 0, 1152122038)";
-        $oDb->execute($sql);
-    }
+//    /**
+//     * prepare data
+//     *
+//     */
+//    protected function _prepareData()
+//    {
+//        $oDb = \oxDb::getDb();
+//        $oDb->execute("TRUNCATE TABLE oevattbe_countryvatgroups");
+//        $oDb->execute("TRUNCATE TABLE oevattbe_articlevat");
+//        $oDb->execute("DELETE FROM  `oxobject2category` WHERE `OXID`='c3944abfcb65b13a3.66180278'");
+//        $sql = "INSERT INTO oevattbe_countryvatgroups SET OEVATTBE_ID = 1, OEVATTBE_COUNTRYID = 'a7c40f631fc920687.20179984', OEVATTBE_NAME='name', OEVATTBE_RATE='8'";
+//        $oDb->execute($sql);
+//        $sql = "INSERT INTO oevattbe_articlevat SET OEVATTBE_ARTICLEID = '1126', OEVATTBE_COUNTRYID = 'a7c40f631fc920687.20179984', OEVATTBE_VATGROUPID = '1'";
+//        $oDb->execute($sql);
+//        $sql = "INSERT INTO `oxobject2category` (`OXID`, `OXOBJECTID`, `OXCATNID`, `OXPOS`, `OXTIME`) VALUES
+//        ('c3944abfcb65b13a3.66180278', '1126', '30e44ab8593023055.23928895', 0, 1152122038)";
+//        $oDb->execute($sql);
+//    }
 
     /**
      * Prepare article list object for testing
@@ -332,7 +324,9 @@ class ArticleListTest extends TestCase
         $oArticle = $oArticleList->getBaseObject();
 
         if ($sUserStatus != 'notLoggedIn') {
-            $oUser = $this->getMockBuilder(User::class)->disableOriginalConstructor()->onlyMethods(array("getOeVATTBETbeCountryId"))->getMock();
+            $oUser = $this->getMockBuilder(User::class)
+                ->onlyMethods(array("getOeVATTBETbeCountryId"))
+                ->getMock();
             $sCountryId = ($sUserStatus == 'loggedInWithoutCountry') ? null : 'a7c40f631fc920687.20179984';
             $oUser->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue($sCountryId));
             $oArticle->setUser($oUser);

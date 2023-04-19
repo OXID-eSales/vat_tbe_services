@@ -6,7 +6,10 @@
 
 namespace OxidEsales\EVatModule\Tests\Integration\VatGroups;
 
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EVatModule\Controller\Admin\CountryVatGroups;
+use OxidEsales\EVatModule\Model\CountryVATGroup;
+use OxidEsales\EVatModule\Model\DbGateway\CountryVATGroupsDbGateway;
+use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 
 /**
  * Testing CountryVatGroups class.
@@ -16,7 +19,7 @@ use PHPUnit\Framework\TestCase;
  * @covers CountryVATGroup
  * @covers CountryVATGroupsList
  */
-class CountryVATGroupsEditingTest extends TestCase
+class CountryVATGroupsEditingTest extends BaseTestCase
 {
     /**
      * Gives test cases to get country groups
@@ -48,12 +51,12 @@ class CountryVATGroupsEditingTest extends TestCase
      */
     public function testGetVatGroupsForCountry($sCountryId, $aExpectedGroups)
     {
-        /** @var oeVATTBECountryVatGroups $oVATTBECountryVatGroups */
-        $oVATTBECountryVatGroups = oxNew('oeVATTBECountryVatGroups');
+        /** @var CountryVatGroups $oVATTBECountryVatGroups */
+        $oVATTBECountryVatGroups = oxNew(CountryVatGroups::class);
         $oVATTBECountryVatGroups->setEditObjectId($sCountryId);
         $aCountryVatGroups = $oVATTBECountryVatGroups->getVatGroups();
 
-        /** @var oeVATTBECountryVATGroup $aCountryVatGroup */
+        /** @var CountryVATGroup $aCountryVatGroup */
         foreach ($aCountryVatGroups as $aCountryVatGroup) {
             $aResultGroups[$aCountryVatGroup->getId()] = '';
         }
@@ -67,8 +70,8 @@ class CountryVATGroupsEditingTest extends TestCase
     public function testGetVatGroupsForCountryWithoutGroups()
     {
         $sCountryId = 'a7c40f6321c6f6109.43859248';
-        /** @var oeVATTBECountryVatGroups $oVATTBECountryVatGroups */
-        $oVATTBECountryVatGroups = oxNew('oeVATTBECountryVatGroups');
+        /** @var CountryVatGroups $oVATTBECountryVatGroups */
+        $oVATTBECountryVatGroups = oxNew(CountryVatGroups::class);
         $oVATTBECountryVatGroups->setEditObjectId($sCountryId);
         $aCountryVatGroups = $oVATTBECountryVatGroups->getVatGroups();
 
@@ -80,8 +83,6 @@ class CountryVATGroupsEditingTest extends TestCase
      */
     public function testChangeCountryVATGroups()
     {
-        $this->setTablesForCleanup('oevattbe_countryvatgroups');
-
         $fVATRate = 55.5;
         $sExpectedVATRate = '55.50';
 
@@ -97,18 +98,18 @@ class CountryVATGroupsEditingTest extends TestCase
         $aRequestParameters[$iGroupId]['oevattbe_rate'] = $fVATRate;
         $aRequestParameters[$iGroupId]['oevattbe_description'] = 'some other description';
 
-        $this->setRequestParameter('updateval', $aRequestParameters);
+        $_POST['updateval'] = $aRequestParameters;
 
         $sAustriaId = 'a7c40f6320aeb2ec2.72885259';
-        /** @var oeVATTBECountryVatGroups $oVATTBECountryVatGroups */
-        $oVATTBECountryVatGroups = oxNew('oeVATTBECountryVatGroups');
+        /** @var CountryVatGroups $oVATTBECountryVatGroups */
+        $oVATTBECountryVatGroups = oxNew(CountryVatGroups::class);
         $oVATTBECountryVatGroups->setEditObjectId($sAustriaId);
         $oVATTBECountryVatGroups->changeCountryVATGroups();
 
-        /** @var oeVATTBECountryVATGroupsDbGateway $oGateway */
-        $oGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
-        /** @var oeVATTBECountryVatGroup $oVATTBECountryVatGroup */
-        $oVATTBECountryVatGroup = oxNew('oeVATTBECountryVatGroup', $oGateway);
+        /** @var CountryVATGroupsDbGateway $oGateway */
+        $oGateway = oxNew(CountryVATGroupsDbGateway::class);
+        /** @var CountryVatGroup $oVATTBECountryVatGroup */
+        $oVATTBECountryVatGroup = oxNew(CountryVatGroup::class, $oGateway);
 
         foreach ($aRequestParameters as $iExpectedGroupId => $aExpectedCountryVatGroup) {
             $oVATTBECountryVatGroup->load($iExpectedGroupId);
@@ -122,8 +123,6 @@ class CountryVATGroupsEditingTest extends TestCase
      */
     public function testChangeCountryVATGroupsWhenOneGroupMissName()
     {
-        $this->setTablesForCleanup('oevattbe_countryvatgroups');
-
         $iGroupId = 56;
         $aRequestParameters[$iGroupId]['oevattbe_id'] = $iGroupId;
         $aRequestParameters[$iGroupId]['oevattbe_name'] = '';
@@ -136,18 +135,18 @@ class CountryVATGroupsEditingTest extends TestCase
         $aRequestParameters[$iGroupId]['oevattbe_rate'] = 55.5;
         $aRequestParameters[$iGroupId]['oevattbe_description'] = 'some other description';
 
-        $this->setRequestParameter('updateval', $aRequestParameters);
+        $_POST['updateval'] = $aRequestParameters;
 
         $sAustriaId = 'a7c40f6320aeb2ec2.72885259';
-        /** @var oeVATTBECountryVatGroups $oVATTBECountryVatGroups */
-        $oVATTBECountryVatGroups = oxNew('oeVATTBECountryVatGroups');
+        /** @var CountryVatGroups $oVATTBECountryVatGroups */
+        $oVATTBECountryVatGroups = oxNew(CountryVatGroups::class);
         $oVATTBECountryVatGroups->setEditObjectId($sAustriaId);
         $oVATTBECountryVatGroups->changeCountryVATGroups();
 
-        /** @var oeVATTBECountryVATGroupsDbGateway $oGateway */
-        $oGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
-        /** @var oeVATTBECountryVatGroup $oVATTBECountryVatGroup */
-        $oVATTBECountryVatGroup = oxNew('oeVATTBECountryVatGroup', $oGateway);
+        /** @var CountryVATGroupsDbGateway $oGateway */
+        $oGateway = oxNew(CountryVATGroupsDbGateway::class);
+        /** @var CountryVatGroup $oVATTBECountryVatGroup */
+        $oVATTBECountryVatGroup = oxNew(CountryVatGroup::class, $oGateway);
 
         $oVATTBECountryVatGroup->load(57);
         $this->assertSame('some other name', $oVATTBECountryVatGroup->getName());
@@ -165,23 +164,21 @@ class CountryVATGroupsEditingTest extends TestCase
      */
     public function testDeleteCountryVatGroup()
     {
-        $this->setTablesForCleanup('oevattbe_countryvatgroups');
-
         $sCountryId = 'a7c40f632a0804ab5.18804076';
-        /** @var oeVATTBECountryVatGroups $oVATTBECountryVatGroups */
-        $oVATTBECountryVatGroups = oxNew('oeVATTBECountryVatGroups');
+        /** @var CountryVatGroups $oVATTBECountryVatGroups */
+        $oVATTBECountryVatGroups = oxNew(CountryVatGroups::class);
         $oVATTBECountryVatGroups->setEditObjectId($sCountryId);
         $aCountryVatGroups = $oVATTBECountryVatGroups->getVatGroups();
 
         $this->assertSame(2, count($aCountryVatGroups));
 
-        $this->setRequestParameter('countryVATGroupId', '79');
+        $_POST['countryVATGroupId'] = '79';
         $oVATTBECountryVatGroups->deleteCountryVatGroup();
 
         $aCountryVatGroups = $oVATTBECountryVatGroups->getVatGroups();
         $this->assertSame(1, count($aCountryVatGroups));
 
-        $this->setRequestParameter('countryVATGroupId', '80');
+        $_POST['countryVATGroupId'] = '80';
         $oVATTBECountryVatGroups->deleteCountryVatGroup();
 
         $aCountryVatGroups = $oVATTBECountryVatGroups->getVatGroups();

@@ -6,7 +6,11 @@
 
 namespace OxidEsales\EVatModule\Tests\Integration\VatGroups;
 
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\ContainerTrait;
+use OxidEsales\EVatModule\Model\CountryVATGroup;
+use OxidEsales\EVatModule\Model\CountryVATGroupsList;
+use OxidEsales\EVatModule\Model\DbGateway\CountryVATGroupsDbGateway;
+use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 
 /**
  * Testing CountryVATGroupsList class.
@@ -15,8 +19,10 @@ use PHPUnit\Framework\TestCase;
  * @covers CountryVATGroup
  * @covers CountryVATGroupsDbGateway
  */
-class CountryVATGroupsListTest extends TestCase
+class CountryVATGroupsListTest extends BaseTestCase
 {
+    use ContainerTrait;
+
     /**
      * Two Country Groups exits;
      * List is successfully loaded and array of groups is returned.
@@ -31,14 +37,14 @@ class CountryVATGroupsListTest extends TestCase
             'OEVATTBE_TIMESTAMP' => '2014-10-22 11:19:20',
         );
 
-        /** @var oeVATTBECountryVATGroupsDbGateway $oGateway */
-        $oGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
+        /** @var CountryVATGroupsDbGateway $oGateway */
+        $oGateway = oxNew(CountryVATGroupsDbGateway::class);
 
         $oGroup1 = $this->_createGroupObject($aGroupData);
         $oGroup2 = $this->_createGroupObject($aGroupData);
 
-        /** @var oeVATTBECountryVATGroupsList $oGroupsList */
-        $oGroupsList = oxNew('oeVATTBECountryVATGroupsList', $oGateway);
+        /** @var CountryVATGroupsList $oGroupsList */
+        $oGroupsList = oxNew(CountryVATGroupsList::class, $oGateway);
 
         $this->assertEquals(array($oGroup1, $oGroup2), $oGroupsList->load('8f241f11095410f38.37165361'));
     }
@@ -49,11 +55,11 @@ class CountryVATGroupsListTest extends TestCase
      */
     public function testLoadingGroupsListWhenNoGroupsExists()
     {
-        /** @var oeVATTBECountryVATGroupsDbGateway $oGateway */
-        $oGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
+        /** @var CountryVATGroupsDbGateway $oGateway */
+        $oGateway = oxNew(CountryVATGroupsDbGateway::class);
 
-        /** @var oeVATTBECountryVATGroupsList $oGroupsList */
-        $oGroupsList = oxNew('oeVATTBECountryVATGroupsList', $oGateway);
+        /** @var CountryVATGroupsList $oGroupsList */
+        $oGroupsList = oxNew(CountryVATGroupsList::class, $oGateway);
 
         $this->assertEquals(array(), $oGroupsList->load('NonExistingCountryId'));
     }
@@ -63,11 +69,11 @@ class CountryVATGroupsListTest extends TestCase
      *
      * @param array $aData
      *
-     * @return oeVATTBECountryVATGroup
+     * @return CountryVATGroup
      */
     protected function _createGroupObject($aData)
     {
-        $oGroup = oeVATTBECountryVATGroup::createInstance();
+        $oGroup = $this->get(CountryVATGroup::class);
         $oGroup->setId($aData['OEVATTBE_ID']);
         $oGroup->setData($aData);
         $aData['OEVATTBE_ID'] = $oGroup->save();

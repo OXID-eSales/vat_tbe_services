@@ -6,12 +6,19 @@
 
 namespace OxidEsales\EVatModule\Tests\Integration\Order;
 
-use PHPUnit\Framework\TestCase;
+use OxidEsales\Eshop\Core\Field;
+use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EVatModule\Model\DbGateway\OrderEvidenceListDbGateway;
+use OxidEsales\EVatModule\Model\OrderEvidenceList;
+use OxidEsales\EVatModule\Shop\Basket;
+use OxidEsales\EVatModule\Shop\Order;
+use OxidEsales\EVatModule\Shop\User;
+use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 
 /**
- * Testing oeVATTBEoxOrder class.
+ * Testing oeVATTBEOrder class.
  */
-class OrderTest extends TestCase
+class OrderTest extends BaseTestCase
 {
 
     /**
@@ -22,8 +29,8 @@ class OrderTest extends TestCase
     public function providerSavingEvidenceList()
     {
         return array(
-            array(oxOrder::ORDER_STATE_OK),
-            array(oxOrder::ORDER_STATE_MAILINGERROR)
+            array(Order::ORDER_STATE_OK),
+            array(Order::ORDER_STATE_MAILINGERROR)
         );
     }
 
@@ -37,26 +44,30 @@ class OrderTest extends TestCase
      */
     public function testSavingEvidenceList($iOrderState)
     {
-        $oConfig = $this->getConfig();
+        $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence'));
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
 
-        /** @var oeVATTBEOxBasket|oxBasket|PHPUnit_Framework_MockObject_MockObject $oBasket */
-        $oBasket = $this->getMock('oeVATTBEOxBasket', array('hasOeTBEVATArticles'));
+        /** @var Basket $oBasket */
+        $oBasket = $this->getMockBuilder(Basket::class)
+                ->onlyMethods(array("hasOeTBEVATArticles"))
+                ->getMock();
         $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue(true));
-        /** @var oeVATTBEOxUser|oxUser $oUser */
-        $oUser = oxNew('oxUser');
+        /** @var User $oUser */
+        $oUser = oxNew(User::class);
 
-        /** @var oeVATTBEOxOrder|oxOrder|PHPUnit_Framework_MockObject_MockObject $oOrder */
-        $oOrder = $this->getMock("oeVATTBEOxOrder", array("_getFinalizeOrderParent"));
-        $oOrder->expects($this->any())->method("_getFinalizeOrderParent")->will($this->returnValue($iOrderState));
+        /** @var Order $oOrder */
+        $oOrder = $this->getMockBuilder(Order::class)
+                ->onlyMethods(array("getFinalizeOrderParent"))
+                ->getMock();
+        $oOrder->expects($this->any())->method("getFinalizeOrderParent")->will($this->returnValue($iOrderState));
 
         $oOrder->setId('order_id');
         $oOrder->finalizeOrder($oBasket, $oUser, false);
 
-        $oGateway = oxNew('oeVATTBEOrderEvidenceListDbGateway');
-        /** @var oeVATTBEOrderEvidenceList $oList */
-        $oList = oxNew('oeVATTBEOrderEvidenceList', $oGateway);
+        $oGateway = oxNew(OrderEvidenceListDbGateway::class);
+        /** @var OrderEvidenceList $oList */
+        $oList = oxNew(OrderEvidenceList::class, $oGateway);
         $oList->load('order_id');
 
         $aData = $oList->getData();
@@ -79,16 +90,20 @@ class OrderTest extends TestCase
      */
     public function testSavingEvidenceUsedSavedOnFinalizeOrder()
     {
-        /** @var oxBasket| $oBasket */
-        $oBasket = oxNew('oxBasket');
+        /** @var Basket| $oBasket */
+        $oBasket = oxNew(Basket::class);
 
-        /** @var oxUser|PHPUnit_Framework_MockObject_MockObject $oUser */
-        $oUser = $this->getMock('oeVATTBEOxUser', array('getOeVATTBETbeEvidenceUsed'));
+        /** @var User $oUser */
+        $oUser = $this->getMockBuilder(User::class)
+                ->onlyMethods(array("getOeVATTBETbeEvidenceUsed"))
+                ->getMock();
         $oUser->expects($this->any())->method('getOeVATTBETbeEvidenceUsed')->will($this->returnValue('billing_country'));
 
-        /** @var oeVATTBEOxOrder|oxOrder|PHPUnit_Framework_MockObject_MockObject $oOrder */
-        $oOrder = $this->getMock("oeVATTBEOxOrder", array("_getFinalizeOrderParent"));
-        $oOrder->expects($this->any())->method("_getFinalizeOrderParent")->will($this->returnValue(oxOrder::ORDER_STATE_PAYMENTERROR));
+        /** @var Order$oOrder */
+        $oOrder = $this->getMockBuilder(Order::class)
+                ->onlyMethods(array("getFinalizeOrderParent"))
+                ->getMock();
+        $oOrder->expects($this->any())->method("getFinalizeOrderParent")->will($this->returnValue(Order::ORDER_STATE_PAYMENTERROR));
 
         $oOrder->setId('order_id');
         $oOrder->finalizeOrder($oBasket, $oUser, false);
@@ -103,17 +118,21 @@ class OrderTest extends TestCase
      */
     public function testEvidenceUsedNotChangedOnOrderRecalculation()
     {
-        /** @var oxBasket| $oBasket */
-        $oBasket = oxNew('oxBasket');
+        /** @var Basket| $oBasket */
+        $oBasket = oxNew(Basket::class);
 
-        /** @var oxUser|PHPUnit_Framework_MockObject_MockObject $oUser */
-        $oUser = $this->getMock('oeVATTBEOxUser', array('getOeVATTBETbeEvidenceUsed'));
+        /** @var User $oUser */
+        $oUser = $this->getMockBuilder(User::class)
+                ->onlyMethods(array("getOeVATTBETbeEvidenceUsed"))
+                ->getMock();
         $oUser->expects($this->any())->method('getOeVATTBETbeEvidenceUsed')->will($this->returnValue('geo_location'));
 
-        /** @var oeVATTBEOxOrder|oxOrder|PHPUnit_Framework_MockObject_MockObject $oOrder */
-        $oOrder = $this->getMock("oeVATTBEOxOrder", array("_getFinalizeOrderParent"));
-        $oOrder->expects($this->any())->method("_getFinalizeOrderParent")->will($this->returnValue(oxOrder::ORDER_STATE_PAYMENTERROR));
-        $oOrder->oxorder__oevattbe_evidenceused = new oxField('billing_country');
+        /** @var Order $oOrder */
+        $oOrder = $this->getMockBuilder(Order::class)
+                ->onlyMethods(array("getFinalizeOrderParent"))
+                ->getMock();
+        $oOrder->expects($this->any())->method("getFinalizeOrderParent")->will($this->returnValue(Order::ORDER_STATE_PAYMENTERROR));
+        $oOrder->Order__oevattbe_evidenceused = new Field('billing_country');
 
         $oOrder->setId('order_id');
         $oOrder->finalizeOrder($oBasket, $oUser, true);
@@ -126,19 +145,23 @@ class OrderTest extends TestCase
      */
     public function testDeletingEvidenceList()
     {
-        $oConfig = $this->getConfig();
+        $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence'));
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
 
-        /** @var oeVATTBEOxBasket|oxBasket|PHPUnit_Framework_MockObject_MockObject $oBasket */
-        $oBasket = $this->getMock('oeVATTBEOxBasket', array('hasOeTBEVATArticles'));
+        /** @var Basket $oBasket */
+        $oBasket = $this->getMockBuilder(Basket::class)
+                ->onlyMethods(array("hasOeTBEVATArticles"))
+                ->getMock();
         $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue(true));
-        /** @var oeVATTBEOxUser|oxUser $oUser */
-        $oUser = oxNew('oxUser');
+        /** @var User $oUser */
+        $oUser = oxNew(User::class);
 
-        /** @var oeVATTBEOxOrder|oxOrder|PHPUnit_Framework_MockObject_MockObject $oOrder */
-        $oOrder = $this->getMock("oeVATTBEOxOrder", array("_getFinalizeOrderParent"));
-        $oOrder->expects($this->any())->method("_getFinalizeOrderParent")->will($this->returnValue(oxOrder::ORDER_STATE_OK));
+        /** @var Order $oOrder */
+        $oOrder = $this->getMockBuilder(Order::class)
+                ->onlyMethods(array("getFinalizeOrderParent"))
+                ->getMock();
+        $oOrder->expects($this->any())->method("getFinalizeOrderParent")->will($this->returnValue(Order::ORDER_STATE_OK));
 
         $oOrder->setId('order_id');
         $oOrder->save();
@@ -146,9 +169,9 @@ class OrderTest extends TestCase
 
         $oOrder->delete('order_id');
 
-        $oGateway = oxNew('oeVATTBEOrderEvidenceListDbGateway');
-        /** @var oeVATTBEOrderEvidenceList $oList */
-        $oList = oxNew('oeVATTBEOrderEvidenceList', $oGateway);
+        $oGateway = oxNew(OrderEvidenceListDbGateway::class);
+        /** @var OrderEvidenceList $oList */
+        $oList = oxNew(OrderEvidenceList::class, $oGateway);
         $oList->load('order_id');
 
         $this->assertEquals(array(), $oList->getData());
@@ -162,14 +185,14 @@ class OrderTest extends TestCase
     public function providerNotSavingEvidenceListOnFailedOrder()
     {
         return array(
-            array(oxOrder::ORDER_STATE_OK, false),
-            array(oxOrder::ORDER_STATE_MAILINGERROR, false),
-            array(oxOrder::ORDER_STATE_PAYMENTERROR, true),
-            array(oxOrder::ORDER_STATE_ORDEREXISTS, true),
-            array(oxOrder::ORDER_STATE_INVALIDDELIVERY, true),
-            array(oxOrder::ORDER_STATE_INVALIDPAYMENT, true),
-            array(oxOrder::ORDER_STATE_INVALIDDElADDRESSCHANGED, true),
-            array(oxOrder::ORDER_STATE_BELOWMINPRICE, true),
+            array(Order::ORDER_STATE_OK, false),
+            array(Order::ORDER_STATE_MAILINGERROR, false),
+            array(Order::ORDER_STATE_PAYMENTERROR, true),
+            array(Order::ORDER_STATE_ORDEREXISTS, true),
+            array(Order::ORDER_STATE_INVALIDDELIVERY, true),
+            array(Order::ORDER_STATE_INVALIDPAYMENT, true),
+            array(Order::ORDER_STATE_INVALIDDELADDRESSCHANGED, true),
+            array(Order::ORDER_STATE_BELOWMINPRICE, true),
         );
     }
 
@@ -184,26 +207,30 @@ class OrderTest extends TestCase
      */
     public function testNotSavingEvidenceListOnFailedOrder($iOrderState, $blHasTBEArticles)
     {
-        $oConfig = $this->getConfig();
+        $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence'));
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
 
-        /** @var oeVATTBEOxBasket|oxBasket|PHPUnit_Framework_MockObject_MockObject $oBasket */
-        $oBasket = $this->getMock('oeVATTBEOxBasket', array('hasOeTBEVATArticles'));
+        /** @var Basket $oBasket */
+        $oBasket = $this->getMockBuilder(Basket::class)
+                ->onlyMethods(array("hasOeTBEVATArticles"))
+                ->getMock();
         $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue($blHasTBEArticles));
-        /** @var oeVATTBEOxUser|oxUser $oUser */
-        $oUser = oxNew('oxUser');
+        /** @var User $oUser */
+        $oUser = oxNew(User::class);
 
-        /** @var oeVATTBEOxOrder|oxOrder|PHPUnit_Framework_MockObject_MockObject $oOrder */
-        $oOrder = $this->getMock("oeVATTBEOxOrder", array("_getFinalizeOrderParent"));
-        $oOrder->expects($this->any())->method("_getFinalizeOrderParent")->will($this->returnValue($iOrderState));
+        /** @var Order $oOrder */
+        $oOrder = $this->getMockBuilder(Order::class)
+                ->onlyMethods(array("getFinalizeOrderParent"))
+                ->getMock();
+        $oOrder->expects($this->any())->method("getFinalizeOrderParent")->will($this->returnValue($iOrderState));
 
         $oOrder->setId('order_id');
         $oOrder->finalizeOrder($oBasket, $oUser, false);
 
-        $oGateway = oxNew('oeVATTBEOrderEvidenceListDbGateway');
-        /** @var oeVATTBEOrderEvidenceList $oList */
-        $oList = oxNew('oeVATTBEOrderEvidenceList', $oGateway);
+        $oGateway = oxNew(OrderEvidenceListDbGateway::class);
+        /** @var OrderEvidenceList $oList */
+        $oList = oxNew(OrderEvidenceList::class, $oGateway);
         $oList->load('order_id');
 
         $aData = $oList->getData();

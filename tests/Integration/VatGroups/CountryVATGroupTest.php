@@ -6,7 +6,9 @@
 
 namespace OxidEsales\EVatModule\Tests\Integration\VatGroups;
 
+use OxidEsales\EshopCommunity\Tests\ContainerTrait;
 use OxidEsales\EVatModule\Model\CountryVATGroup;
+use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -16,8 +18,10 @@ use PHPUnit\Framework\TestCase;
  * @covers CountryVATGroup
  * @covers CountryVATGroupsDbGateway
  */
-class CountryVATGroupTest extends TestCase
+class CountryVATGroupTest extends BaseTestCase
 {
+    use ContainerTrait;
+
     /**
      * Tests saving group to database.
      *
@@ -25,7 +29,7 @@ class CountryVATGroupTest extends TestCase
      */
     public function testSavingGroup()
     {
-        $oGroup = oeVATTBECountryVATGroup::createInstance();
+        $oGroup = $this->get(CountryVATGroup::class);
 
         $oGroup->setCountryId('8f241f11095410f38.37165361');
         $oGroup->setName('Group Name');
@@ -34,7 +38,7 @@ class CountryVATGroupTest extends TestCase
 
         $sGroupId = $oGroup->save();
 
-        $oExpectedGroup = oeVATTBECountryVATGroup::createInstance();
+        $oExpectedGroup = $this->get(CountryVATGroup::class);
         $oExpectedGroup->load($sGroupId);
 
         $this->assertEquals($oGroup->getCountryId(), $oExpectedGroup->getCountryId());
@@ -54,7 +58,7 @@ class CountryVATGroupTest extends TestCase
      */
     public function testUpdatingGroupWithoutLoadingIt($sGroupId)
     {
-        $oGroup = oeVATTBECountryVATGroup::createInstance();
+        $oGroup = $this->get(CountryVATGroup::class);
 
         $oGroup->setId($sGroupId);
         $oGroup->setCountryId('8f241f11095410f38.37165361');
@@ -64,7 +68,7 @@ class CountryVATGroupTest extends TestCase
 
         $oGroup->save();
 
-        $oExpectedGroup = oeVATTBECountryVATGroup::createInstance();
+        $oExpectedGroup = $this->get(CountryVATGroup::class);
         $oExpectedGroup->load($sGroupId);
 
         $this->assertEquals($oGroup->getCountryId(), $oExpectedGroup->getCountryId());

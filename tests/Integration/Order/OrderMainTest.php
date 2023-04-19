@@ -6,14 +6,20 @@
 
 namespace OxidEsales\EVatModule\Tests\Integration\Order;
 
+use OxidEsales\Eshop\Core\Field;
+use OxidEsales\EVatModule\Controller\Admin\OrderMain;
+use OxidEsales\EVatModule\Shop\Basket;
+use OxidEsales\EVatModule\Shop\Order;
+use OxidEsales\EVatModule\Shop\User;
+use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Testing admin controller class.
  *
- * @covers oeVATTBEOrder_Main
+ * @covers OrderMain
  */
-class OrderMainTest extends TestCase
+class OrderMainTest extends BaseTestCase
 {
     /**
      * Creates dummy order and checks country was set.
@@ -24,8 +30,8 @@ class OrderMainTest extends TestCase
     {
         $this->_createOrder();
 
-        /** @var oeVATTBEOrder_Main|Order_Main $oOrderMain */
-        $oOrderMain = oxNew('Order_Main');
+        /** @var OrderMain $oOrderMain */
+        $oOrderMain = oxNew(OrderMain::class);
         $oOrderMain->setEditObjectId('order_id');
 
         $oOrderMain->render();
@@ -68,22 +74,26 @@ class OrderMainTest extends TestCase
      */
     private function _createOrder()
     {
-        /** @var oeVATTBEOxBasket|oxBasket|PHPUnit_Framework_MockObject_MockObject $oBasket */
-        $oBasket = $this->getMock('oeVATTBEOxBasket', array('hasOeTBEVATArticles'));
+        /** @var Basket $oBasket */
+        $oBasket = $this->getMockBuilder(Basket::class)
+            ->onlyMethods(array("hasOeTBEVATArticles"))
+            ->getMock();
         $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue(true));
-        /** @var oeVATTBEOxUser|oxUser $oUser */
-        $oUser = oxNew('oxUser');
-        $oUser->oxuser__oxcountryid = new oxField('a7c40f631fc920687.20179984');
+        /** @var User $oUser */
+        $oUser = oxNew(User::class);
+        $oUser->oxuser__oxcountryid = new Field('a7c40f631fc920687.20179984');
         $oUser->save();
 
-        /** @var oeVATTBEOxOrder|oxOrder|PHPUnit_Framework_MockObject_MockObject $oOrder */
-        $oOrder = $this->getMock("oeVATTBEOxOrder", array("_getFinalizeOrderParent"));
-        $oOrder->expects($this->any())->method("_getFinalizeOrderParent")->will($this->returnValue(oxOrder::ORDER_STATE_OK));
+        /** @var Order $oOrder */
+        $oOrder = $this->getMockBuilder(Order::class)
+            ->onlyMethods(array("getFinalizeOrderParent"))
+            ->getMock();
+        $oOrder->expects($this->any())->method("getFinalizeOrderParent")->will($this->returnValue(Order::ORDER_STATE_OK));
 
         $oOrder->setId('order_id');
         $oOrder->finalizeOrder($oBasket, $oUser, false);
-        $oOrder->oxorder__oevattbe_evidenceused = new oxField('billing_country');
-        $oOrder->oxorder__oevattbe_countryid = new oxField('a7c40f631fc920687.20179984');
+        $oOrder->oxorder__oevattbe_evidenceused = new Field('billing_country');
+        $oOrder->oxorder__oevattbe_countryid = new Field('a7c40f631fc920687.20179984');
         $oOrder->save();
     }
 }

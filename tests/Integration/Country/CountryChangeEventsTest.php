@@ -6,12 +6,14 @@
 
 namespace OxidEsales\EVatModule\Tests\Integration\Country;
 
-use PHPUnit\Framework\TestCase;
+use OxidEsales\Eshop\Core\Field;
+use OxidEsales\EVatModule\Shop\User;
+use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 
 /**
  * Testing TBEUser class.
  */
-class CountryChangeEventsTest extends TestCase
+class CountryChangeEventsTest extends BaseTestCase
 {
     protected $backupGlobalsBlacklist = array('_SESSION');
 
@@ -19,7 +21,7 @@ class CountryChangeEventsTest extends TestCase
      * User created with billing country set as germany;
      * His TBE Country should also be germany.
      *
-     * @return oxUser|oeVATTBEOxUser
+     * @return User
      */
     public function testGetOeVATTBECountryAfterUserCreated()
     {
@@ -35,16 +37,16 @@ class CountryChangeEventsTest extends TestCase
      * User changes country;
      * User TBE Country should be recalculated.
      *
-     * @param oxUser|oeVATTBEOxUser $oUser
+     * @param User $oUser
      *
      * @depends testGetOeVATTBECountryAfterUserCreated
      *
-     * @return oxUser|oeVATTBEOxUser
+     * @return User
      */
     public function testGetOeVATTBECountryAfterUserChangeEvent($oUser)
     {
         $sAustriaId = $this->_sAustriaId;
-        $oUser->oxuser__oxcountryid = new oxField($sAustriaId, oxField::T_RAW);
+        $oUser->User__oxcountryid = new Field($sAustriaId, Field::T_RAW);
 
         $this->assertNotSame($sAustriaId, $oUser->getOeVATTBETbeCountryId());
         $oUser->save();
@@ -58,16 +60,16 @@ class CountryChangeEventsTest extends TestCase
      * User logs out;
      * User TBE Country should be recalculated.
      *
-     * @param oxUser|oeVATTBEOxUser $oUser
+     * @param User $oUser
      *
      * @depends testGetOeVATTBECountryAfterUserChangeEvent
      *
-     * @return oxUser|oeVATTBEOxUser
+     * @return User
      */
     public function testGetOeVATTBECountryAfterLogout($oUser)
     {
         $sUnitedKingdom = $this->_sUnitedKingdom;
-        $oUser->oxuser__oxcountryid = new oxField($sUnitedKingdom, oxField::T_RAW);
+        $oUser->User__oxcountryid = new Field($sUnitedKingdom, Field::T_RAW);
 
         $this->assertNotSame($sUnitedKingdom, $oUser->getOeVATTBETbeCountryId());
         $oUser->logout();
@@ -81,11 +83,11 @@ class CountryChangeEventsTest extends TestCase
      * User fails to log in (wrong password);
      * User TBE Country should not be recalculated.
      *
-     * @param oxUser|oeVATTBEOxUser $oUser
+     * @param User $oUser
      *
      * @depends testGetOeVATTBECountryAfterLogout
      *
-     * @return oxUser|oeVATTBEOxUser
+     * @return User
      */
     public function testGetOeVATTBECountryAfterUserFailsLogIn($oUser)
     {
@@ -112,7 +114,7 @@ class CountryChangeEventsTest extends TestCase
      * User logs in;
      * User TBE Country should be recalculated.
      *
-     * @param oxUser|oeVATTBEOxUser $oUser
+     * @param User $oUser
      *
      * @depends testGetOeVATTBECountryAfterUserFailsLogIn
      */
@@ -131,7 +133,7 @@ class CountryChangeEventsTest extends TestCase
     /**
      * Creates used object for use in tests.
      *
-     * @return oxUser|oeVATTBEOxUser
+     * @return User
      */
     private function _createUser()
     {
@@ -140,11 +142,11 @@ class CountryChangeEventsTest extends TestCase
         $sSalt = $this->_sNewSalt;
         $sGermanyId = $this->_sGermanyId;
 
-        $oUser = oxNew('oxUser');
-        $oUser->oxuser__oxusername = new oxField($sUserName, oxField::T_RAW);
-        $oUser->oxuser__oxpassword = new oxField($sEncodedPassword, oxField::T_RAW);
-        $oUser->oxuser__oxpasssalt = new oxField($sSalt, oxField::T_RAW);
-        $oUser->oxuser__oxcountryid = new oxField($sGermanyId, oxField::T_RAW);
+        $oUser = oxNew(User::class);
+        $oUser->User__Username = new Field($sUserName, Field::T_RAW);
+        $oUser->User__oxpassword = new Field($sEncodedPassword, Field::T_RAW);
+        $oUser->User__oxpasssalt = new Field($sSalt, Field::T_RAW);
+        $oUser->User__oxcountryid = new Field($sGermanyId, Field::T_RAW);
         $oUser->save();
 
         return $oUser;

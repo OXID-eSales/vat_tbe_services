@@ -6,12 +6,16 @@
 
 namespace OxidEsales\EVatModule\Tests\Integration\Checkout;
 
-use PHPUnit\Framework\TestCase;
+use OxidEsales\Eshop\Core\Field;
+use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EVatModule\Model\IncorrectVATArticlesMessageFormatter;
+use OxidEsales\EVatModule\Shop\Article;
+use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 
 /**
- * Testing message formatter in oeVATTBEIncorrectVATArticlesMessageFormatter.
+ * Testing message formatter in IncorrectVATArticlesMessageFormatter.
  */
-class MessageFormatterTest extends TestCase
+class MessageFormatterTest extends BaseTestCase
 {
 
     /**
@@ -21,16 +25,16 @@ class MessageFormatterTest extends TestCase
      */
     public function providerGetMessage()
     {
-        $oArticle1 = oxNew('oxArticle');
-        $oArticle1->oxarticles__oxtitle = new oxField('some article name', oxField::T_RAW);
+        $oArticle1 = oxNew(Article::class);
+        $oArticle1->oxarticles__oxtitle = new Field('some article name', Field::T_RAW);
 
-        $oArticle2 = oxNew('oxArticle');
-        $oArticle2->oxarticles__oxtitle = new oxField('some other name', oxField::T_RAW);
+        $oArticle2 = oxNew(Article::class);
+        $oArticle2->oxarticles__oxtitle = new Field('some other name', Field::T_RAW);
 
         $oInvalidArticles1 = array($oArticle1);
         $oInvalidArticles2 = array($oArticle1, $oArticle2);
 
-        $oLang = oxRegistry::getLang();
+        $oLang = Registry::getLang();
 
         return array(
             array($oInvalidArticles1, sprintf($oLang->translateString('OEVATTBE_ERROR_MESSAGE_TBE_ARTICLE_VAT_PROBLEMS'), 'some article name')),
@@ -48,8 +52,8 @@ class MessageFormatterTest extends TestCase
      */
     public function testGetMessage($oInvalidArticles, $sExpectedMessage)
     {
-        /** @var oeVATTBEIncorrectVATArticlesMessageFormatter $oVATTBEArticleMessageFormer */
-        $oVATTBEArticleMessageFormer = oxNew('oeVATTBEIncorrectVATArticlesMessageFormatter');
+        /** @var IncorrectVATArticlesMessageFormatter $oVATTBEArticleMessageFormer */
+        $oVATTBEArticleMessageFormer = oxNew(IncorrectVATArticlesMessageFormatter::class);
         $sErrorMessage = $oVATTBEArticleMessageFormer->getMessage($oInvalidArticles);
 
         $this->assertSame($sExpectedMessage, $sErrorMessage->getOxMessage());

@@ -6,17 +6,24 @@
 
 namespace OxidEsales\EVatModule\Tests\Integration\VatGroups;
 
+use OxidEsales\Eshop\Core\DisplayError;
+use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EVatModule\Controller\Admin\CountryVatGroups;
+use OxidEsales\EVatModule\Model\CountryVATGroup;
+use OxidEsales\EVatModule\Model\CountryVATGroupsList;
+use OxidEsales\EVatModule\Model\DbGateway\CountryVATGroupsDbGateway;
+use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Testing oeVATTBECountryVatGroups class.
+ * Testing CountryVatGroups class.
  *
  * @covers CountryVatGroups
  * @covers CountryVATGroupsDbGateway
  * @covers CountryVATGroup
  * @covers CountryVATGroupsList
  */
-class CountryVATGroupCreationTest extends TestCase
+class CountryVATGroupCreationTest extends BaseTestCase
 {
     /**
      * Return different variants of country VAT group data to save.
@@ -49,8 +56,6 @@ class CountryVATGroupCreationTest extends TestCase
      */
     public function testCreateNewGroupWithSameData($sGroupName, $fVATRate, $sGroupDescription, $sExpectedVatRate)
     {
-        $this->setTablesForCleanup('oevattbe_countryvatgroups');
-
         $sCountryId = 'some_country_id';
         $aParameters['oxcountry__oxid'] = $sCountryId;
         $aParameters['oevattbe_name'] = $sGroupName;
@@ -59,23 +64,23 @@ class CountryVATGroupCreationTest extends TestCase
             $aParameters['oevattbe_description'] = $sGroupDescription;
         }
 
-        $this->setRequestParameter('editval', $aParameters);
+        $_POST['editval'] = $aParameters;
 
-        /** @var oeVATTBECountryVatGroups $oVATTBECountryVatGroups */
-        $oVATTBECountryVatGroups = oxNew('oeVATTBECountryVatGroups');
+        /** @var CountryVatGroups $oVATTBECountryVatGroups */
+        $oVATTBECountryVatGroups = oxNew(CountryVatGroups::class);
         $oVATTBECountryVatGroups->addCountryVATGroup();
         $oVATTBECountryVatGroups->addCountryVATGroup();
 
-        /** @var oeVATTBECountryVATGroupsDbGateway $oGateway */
-        $oGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
-        /** @var oeVATTBECountryVATGroupsList $oeVATTBECountryVATGroupsList */
-        $oVATTBECountryVATGroupsList = oxNew('oeVATTBECountryVATGroupsList', $oGateway);
+        /** @var CountryVATGroupsDbGateway $oGateway */
+        $oGateway = oxNew(CountryVATGroupsDbGateway::class);
+        /** @var CountryVATGroupsList $oeVATTBECountryVATGroupsList */
+        $oVATTBECountryVATGroupsList = oxNew(CountryVATGroupsList::class, $oGateway);
         $aVATTBECountryVATGroupsList = $oVATTBECountryVATGroupsList->load('some_country_id');
 
         $this->assertTrue(isset($aVATTBECountryVATGroupsList[0]), 'Newly created group must be in 0 position.');
         $this->assertTrue(isset($aVATTBECountryVATGroupsList[1]), 'Newly created group must be in 1 position.');
 
-        /** @var oeVATTBECountryVATGroup $oNewlyCreatedCountryVATGroup */
+        /** @var CountryVATGroup $oNewlyCreatedCountryVATGroup */
         $oNewlyCreatedCountryVATGroup = $aVATTBECountryVATGroupsList[0];
 
         $this->assertSame($sCountryId, $oNewlyCreatedCountryVATGroup->getCountryId());
@@ -83,7 +88,7 @@ class CountryVATGroupCreationTest extends TestCase
         $this->assertSame($sExpectedVatRate, $oNewlyCreatedCountryVATGroup->getRate());
         $this->assertSame($sGroupDescription, $oNewlyCreatedCountryVATGroup->getDescription());
 
-        /** @var oeVATTBECountryVATGroup $oNewlyCreatedCountryVATGroup */
+        /** @var CountryVATGroup $oNewlyCreatedCountryVATGroup */
         $oNewlyCreatedCountryVATGroup = $aVATTBECountryVATGroupsList[1];
 
         $this->assertSame($sCountryId, $oNewlyCreatedCountryVATGroup->getCountryId());
@@ -116,8 +121,6 @@ class CountryVATGroupCreationTest extends TestCase
      */
     public function testCreateNewGroupFailWithErrorMessageWhenMissingRequiredData($sGroupName, $fVATRate, $sGroupDescription)
     {
-        $this->setTablesForCleanup('oevattbe_countryvatgroups');
-
         $sCountryId = 'some_country_id';
         $aParameters['oxcountry__oxid'] = $sCountryId;
         if ($sGroupName) {
@@ -128,17 +131,17 @@ class CountryVATGroupCreationTest extends TestCase
         }
         $aParameters['oevattbe_description'] = $sGroupDescription;
 
-        $this->setRequestParameter('editval', $aParameters);
+        $_POST['editval'] = $aParameters;
 
-        /** @var oeVATTBECountryVatGroups $oVATTBECountryVatGroups */
-        $oVATTBECountryVatGroups = oxNew('oeVATTBECountryVatGroups');
+        /** @var CountryVatGroups $oVATTBECountryVatGroups */
+        $oVATTBECountryVatGroups = oxNew(CountryVatGroups::class);
         $oVATTBECountryVatGroups->addCountryVATGroup();
         $oVATTBECountryVatGroups->addCountryVATGroup();
 
-        /** @var oeVATTBECountryVATGroupsDbGateway $oGateway */
-        $oGateway = oxNew('oeVATTBECountryVATGroupsDbGateway');
-        /** @var oeVATTBECountryVATGroupsList $oeVATTBECountryVATGroupsList */
-        $oVATTBECountryVATGroupsList = oxNew('oeVATTBECountryVATGroupsList', $oGateway);
+        /** @var CountryVATGroupsDbGateway $oGateway */
+        $oGateway = oxNew(CountryVATGroupsDbGateway::class);
+        /** @var CountryVATGroupsList $oeVATTBECountryVATGroupsList */
+        $oVATTBECountryVATGroupsList = oxNew(CountryVATGroupsList::class, $oGateway);
         $aVATTBECountryVATGroupsList = $oVATTBECountryVATGroupsList->load('some_country_id');
 
         $this->assertTrue(
@@ -146,13 +149,13 @@ class CountryVATGroupCreationTest extends TestCase
             'Some data missing so no new entry should be created. However got this: '. serialize($aVATTBECountryVATGroupsList[0])
         );
 
-        $aEx = oxRegistry::getSession()->getVariable('Errors');
+        $aEx = Registry::getSession()->getVariable('Errors');
         $this->assertTrue(isset($aEx['default'][0]), 'Error message must be set as some parameters missing.');
 
-        /** @var oxDisplayError $oError */
+        /** @var DisplayError $oError */
         $oError = unserialize($aEx['default'][0]);
 
-        $oLang = oxRegistry::getLang();
+        $oLang = Registry::getLang();
         $sErrorMessage = $oLang->translateString('OEVATTBE_NEW_COUNTRY_VAT_GROUP_PARAMETER_MISSING');
 
         $this->assertSame($sErrorMessage, $oError->getOxMessage());
