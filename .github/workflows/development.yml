@@ -219,6 +219,7 @@ jobs:
               --coverage-php=/var/www/unit.cov \
               --coverage-clover=/var/www/coverage.xml \
               --coverage-text
+              /var/www/vendor/oxid-esales/evat-module/tests/unit/testtest/
 
       - name: Upload log artifact
         if: always()
@@ -276,6 +277,7 @@ jobs:
               --coverage-php=/var/www/integration.cov \
               --coverage-clover=/var/www/coverage.xml \
               --coverage-text
+              /var/www/vendor/oxid-esales/evat-module/tests/integration/testtest
 
       - name: Upload log artifact
         if: always()
