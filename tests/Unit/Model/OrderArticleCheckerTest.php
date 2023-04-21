@@ -14,6 +14,7 @@ use OxidEsales\EVatModule\Shop\Country;
 use OxidEsales\EVatModule\Shop\User;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use OxidEsales\EVatModule\Model\User as UserModel;
 
 /**
  * Testing OrderArticleChecker class.
@@ -57,7 +58,7 @@ class OrderArticleCheckerTest extends TestCase
      */
     public function testCheckingArticlesWhenCorrectArticlesExistsButCountryNot()
     {
-        $oUser = $this->createPartialMock(User::class, ['getCountry']);
+        $oUser = $this->createPartialMock(UserModel::class, ['getCountry']);
         $oUser->expects($this->any())->method('getCountry')->will($this->returnValue(null));
 
         $oChecker = $this->get(OrderArticleChecker::class);
@@ -76,7 +77,7 @@ class OrderArticleCheckerTest extends TestCase
         $oCountry->expects($this->any())->method('isInEU')->will($this->returnValue(true));
         $oCountry->expects($this->any())->method('appliesOeTBEVATTbeVat')->will($this->returnValue(true));
 
-        $oUser = $this->createPartialMock(User::class, ['getCountry']);
+        $oUser = $this->createPartialMock(UserModel::class, ['getCountry']);
         $oUser->expects($this->any())->method('getCountry')->will($this->returnValue($oCountry));
 
         $oChecker = $this->get(OrderArticleChecker::class);
@@ -98,7 +99,7 @@ class OrderArticleCheckerTest extends TestCase
         $oCountry->expects($this->any())->method('isInEU')->will($this->returnValue(true));
         $oCountry->expects($this->any())->method('appliesOeTBEVATTbeVat')->will($this->returnValue(true));
 
-        $oUser = $this->createPartialMock(User::class, ['getCountry']);
+        $oUser = $this->createPartialMock(UserModel::class, ['getCountry']);
         $oUser->expects($this->any())->method('getCountry')->will($this->returnValue($oCountry));
 
         $oChecker = $this->get(OrderArticleChecker::class);

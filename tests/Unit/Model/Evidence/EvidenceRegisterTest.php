@@ -9,6 +9,8 @@ namespace OxidEsales\EVatModule\Tests\Unit\Model\Evidence;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Model\Evidence\EvidenceRegister;
 use OxidEsales\EVatModule\Model\Evidence\Item\BillingCountryEvidence;
+use OxidEsales\EVatModule\Service\ModuleSettings;
+use OxidEsales\EVatModule\Traits\ServiceContainer;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -16,8 +18,12 @@ use PHPUnit\Framework\TestCase;
  *
  * @covers EvidenceRegister
  */
+
+//TODO: move to integration tests
 class EvidenceRegisterTest extends TestCase
 {
+    use ServiceContainer;
+
     /**
      * No evidences are registered;
      * New evidence is passed for registration;
@@ -27,15 +33,19 @@ class EvidenceRegisterTest extends TestCase
      */
     public function testRegisteringEvidenceWhenNoEvidencesRegistered()
     {
-        $oConfig = Registry::getConfig();
-        $oConfig->setConfigParam('aOeVATTBECountryEvidences', []);
-        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', []);
+//        $oConfig = Registry::getConfig();
+//        $oConfig->setConfigParam('aOeVATTBECountryEvidences', []);
+//        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', []);
+
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings->saveCountryEvidences([]);
+        $moduleSettings->saveEvidenceClasses([]);
 
         /** @var EvidenceRegister $oCollector */
-        $oRegister = oxNew(EvidenceRegister::class, $oConfig);
-        $oRegister->registerEvidence('oeVATTBEBillingCountryEvidence');
+        $oRegister = oxNew(EvidenceRegister::class);
+        $oRegister->registerEvidence(BillingCountryEvidence::class);
 
-        $this->assertEquals(['oeVATTBEBillingCountryEvidence'], $oRegister->getRegisteredEvidences());
+        $this->assertEquals([BillingCountryEvidence::class], $moduleSettings->getEvidenceClasses());
 
         return $oRegister;
     }
@@ -45,13 +55,11 @@ class EvidenceRegisterTest extends TestCase
      * New evidence is passed for registration with default activation value;
      * Evidence should be added to active evidences list, but be inactive.
      *
-     * @param EvidenceRegister $oRegister
-     *
      * @depends testRegisteringEvidenceWhenNoEvidencesRegistered
      */
-    public function testActivatingEvidenceAfterSuccessfulRegistration($oRegister)
+    public function testActivatingEvidenceAfterSuccessfulRegistration()
     {
-        $this->assertEquals(['billing_country' => 0], $oRegister->getActiveEvidences());
+        $this->assertEquals(['billing_country' => 0], $this->getServiceFromContainer(ModuleSettings::class)->getCountryEvidences());
     }
 
     /**
@@ -61,16 +69,20 @@ class EvidenceRegisterTest extends TestCase
      */
     public function testRegisteringEvidenceWhenDefaultEvidencesRegistered()
     {
-        $oConfig = Registry::getConfig();
-        $oConfig->setConfigParam('aOeVATTBECountryEvidences', []);
-        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', ['oeDefaultEvidence1', 'oeDefaultEvidence2']);
+//        $oConfig = Registry::getConfig();
+//        $oConfig->setConfigParam('aOeVATTBECountryEvidences', []);
+//        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', ['oeDefaultEvidence1', 'oeDefaultEvidence2']);
+
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings->saveCountryEvidences([]);
+        $moduleSettings->saveEvidenceClasses(['oeDefaultEvidence1', 'oeDefaultEvidence2']);
 
         /** @var EvidenceRegister $oCollector */
-        $oRegister = oxNew(EvidenceRegister::class, $oConfig);
-        $oRegister->registerEvidence('oeVATTBEBillingCountryEvidence');
+        $oRegister = oxNew(EvidenceRegister::class);
+        $oRegister->registerEvidence(BillingCountryEvidence::class);
 
-        $aExpectedEvidences = ['oeDefaultEvidence1', 'oeDefaultEvidence2', 'oeVATTBEBillingCountryEvidence'];
-        $this->assertEquals($aExpectedEvidences, $oRegister->getRegisteredEvidences());
+        $aExpectedEvidences = ['oeDefaultEvidence1', 'oeDefaultEvidence2', BillingCountryEvidence::class];
+        $this->assertEquals($aExpectedEvidences, $moduleSettings->getEvidenceClasses());
     }
 
     /**
@@ -82,15 +94,19 @@ class EvidenceRegisterTest extends TestCase
      */
     public function testUnregisteringEvidenceWhenItIsRegistered()
     {
-        $oConfig = Registry::getConfig();
-        $oConfig->setConfigParam('aOeVATTBECountryEvidences', ['billing_country' => 1]);
-        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', ['oeVATTBEBillingCountryEvidence']);
+//        $oConfig = Registry::getConfig();
+//        $oConfig->setConfigParam('aOeVATTBECountryEvidences', ['billing_country' => 1]);
+//        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', ['oeVATTBEBillingCountryEvidence']);
+
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings->saveCountryEvidences(['billing_country' => 1]);
+        $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class]);
 
         /** @var EvidenceRegister $oCollector */
-        $oRegister = oxNew(EvidenceRegister::class, $oConfig);
-        $oRegister->unregisterEvidence('oeVATTBEBillingCountryEvidence');
+        $oRegister = oxNew(EvidenceRegister::class);
+        $oRegister->unregisterEvidence(BillingCountryEvidence::class);
 
-        $this->assertEquals([], $oRegister->getRegisteredEvidences());
+        $this->assertEquals([], $moduleSettings->getEvidenceClasses());
 
         return $oRegister;
     }
@@ -100,13 +116,11 @@ class EvidenceRegisterTest extends TestCase
      * Evidence class is passed for unregistering;
      * Evidence should be removed from active evidences list.
      *
-     * @param EvidenceRegister $oRegister
-     *
      * @depends testUnregisteringEvidenceWhenItIsRegistered
      */
-    public function testRemovingEvidenceAfterItIsUnregistered($oRegister)
+    public function testRemovingEvidenceAfterItIsUnregistered()
     {
-        $this->assertEquals([], $oRegister->getActiveEvidences());
+        $this->assertEquals([], $this->getServiceFromContainer(ModuleSettings::class)->getCountryEvidences());
     }
 
     /**
@@ -119,15 +133,19 @@ class EvidenceRegisterTest extends TestCase
      */
     public function testUnregisteringEvidenceWhenItIsRegisteredAndMoreEvidencesExist()
     {
-        $oConfig = Registry::getConfig();
-        $oConfig->setConfigParam('aOeVATTBECountryEvidences', ['billing_country' => 1, 'geo_location' => 1]);
-        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', ['oeVATTBEBillingCountryEvidence', 'GeoClass']);
+//        $oConfig = Registry::getConfig();
+//        $oConfig->setConfigParam('aOeVATTBECountryEvidences', ['billing_country' => 1, 'geo_location' => 1]);
+//        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', ['oeVATTBEBillingCountryEvidence', 'GeoClass']);
+
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings->saveCountryEvidences(['billing_country' => 1, 'geo_location' => 1]);
+        $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class, 'GeoClass']);
 
         /** @var EvidenceRegister $oCollector */
-        $oRegister = oxNew(EvidenceRegister::class, $oConfig);
-        $oRegister->unregisterEvidence('oeVATTBEBillingCountryEvidence');
+        $oRegister = oxNew(EvidenceRegister::class);
+        $oRegister->unregisterEvidence(BillingCountryEvidence::class);
 
-        $this->assertEquals([1 => 'GeoClass'], $oRegister->getRegisteredEvidences());
+        $this->assertEquals([1 => 'GeoClass'], $moduleSettings->getEvidenceClasses());
 
         return $oRegister;
     }
@@ -138,13 +156,11 @@ class EvidenceRegisterTest extends TestCase
      * Evidence class is passed for unregistering;
      * Evidence should be removed from the list but other evidences should still exist.
      *
-     * @param EvidenceRegister $oRegister
-     *
      * @depends testUnregisteringEvidenceWhenItIsRegisteredAndMoreEvidencesExist
      */
-    public function testRemovingEvidenceAfterItIsUnregisteredAndMoreEvidencesExist($oRegister)
+    public function testRemovingEvidenceAfterItIsUnregisteredAndMoreEvidencesExist()
     {
-        $this->assertEquals(['geo_location' => 1], $oRegister->getActiveEvidences());
+        $this->assertEquals(['geo_location' => 1], $this->getServiceFromContainer(ModuleSettings::class)->getCountryEvidences());
     }
 
     /**
@@ -156,15 +172,19 @@ class EvidenceRegisterTest extends TestCase
      */
     public function testUnregisteringEvidenceWhenEvidenceIsNotRegistered()
     {
-        $oConfig = Registry::getConfig();
-        $oConfig->setConfigParam('aOeVATTBECountryEvidences', ['billing_country' => 1]);
-        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', ['oeVATTBEBillingCountryEvidence']);
+//        $oConfig = Registry::getConfig();
+//        $oConfig->setConfigParam('aOeVATTBECountryEvidences', ['billing_country' => 1]);
+//        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', ['oeVATTBEBillingCountryEvidence']);
+
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings->saveCountryEvidences(['billing_country' => 1]);
+        $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class]);
 
         /** @var EvidenceRegister $oCollector */
-        $oRegister = oxNew(EvidenceRegister::class, $oConfig);
+        $oRegister = oxNew(EvidenceRegister::class);
         $oRegister->unregisterEvidence('SomeNonExistingEvidenceClass');
 
-        $this->assertEquals(['oeVATTBEBillingCountryEvidence'], $oRegister->getRegisteredEvidences());
+        $this->assertEquals([BillingCountryEvidence::class], $moduleSettings->getEvidenceClasses());
 
         return $oRegister;
     }
@@ -175,13 +195,11 @@ class EvidenceRegisterTest extends TestCase
      * Evidence class is passed for unregistering;
      * Evidence should be removed from the list but other evidences should still exist.
      *
-     * @param EvidenceRegister $oRegister
-     *
      * @depends testUnregisteringEvidenceWhenEvidenceIsNotRegistered
      */
-    public function testRemovingEvidenceWhenEvidenceIsNotRegistered($oRegister)
+    public function testRemovingEvidenceWhenEvidenceIsNotRegistered()
     {
-        $this->assertEquals(['billing_country' => 1], $oRegister->getActiveEvidences());
+        $this->assertEquals(['billing_country' => 1], $this->getServiceFromContainer(ModuleSettings::class)->getCountryEvidences());
     }
 
     /**
@@ -193,15 +211,19 @@ class EvidenceRegisterTest extends TestCase
      */
     public function testUnregisteringEvidenceWhenItIsNotRegistered()
     {
-        $oConfig = Registry::getConfig();
-        $oConfig->setConfigParam('aOeVATTBECountryEvidences', ['billing_country' => 1, 'geo_location' => 1]);
-        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', ['oeVATTBEBillingCountryEvidence', 'GeoClass']);
+//        $oConfig = Registry::getConfig();
+//        $oConfig->setConfigParam('aOeVATTBECountryEvidences', ['billing_country' => 1, 'geo_location' => 1]);
+//        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', ['oeVATTBEBillingCountryEvidence', 'GeoClass']);
+
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings->saveCountryEvidences(['billing_country' => 1, 'geo_location' => 1]);
+        $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class, 'GeoClass']);
 
         /** @var EvidenceRegister $oCollector */
-        $oRegister = oxNew(EvidenceRegister::class, $oConfig);
+        $oRegister = oxNew(EvidenceRegister::class);
         $oRegister->unregisterEvidence(BillingCountryEvidence::class);
 
-        $this->assertEquals([1 => 'GeoClass'], $oRegister->getRegisteredEvidences());
+        $this->assertEquals([1 => 'GeoClass'], $moduleSettings->getEvidenceClasses());
 
         return $oRegister;
     }
@@ -213,14 +235,17 @@ class EvidenceRegisterTest extends TestCase
      */
     public function testActivatingEvidenceWhenItIsRegistered()
     {
-        $oConfig = Registry::getConfig();
-        $oConfig->setConfigParam('aOeVATTBECountryEvidences', ['InactiveEvidenceId' => 0]);
+//        $oConfig = Registry::getConfig();
+//        $oConfig->setConfigParam('aOeVATTBECountryEvidences', ['InactiveEvidenceId' => 0]);
+
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings->saveCountryEvidences(['InactiveEvidenceId' => 0]);
 
         /** @var EvidenceRegister $oCollector */
-        $oRegister = oxNew(EvidenceRegister::class, $oConfig);
+        $oRegister = oxNew(EvidenceRegister::class);
         $oRegister->activateEvidence('InactiveEvidenceId');
 
-        $this->assertEquals(['InactiveEvidenceId' => 1], $oRegister->getActiveEvidences());
+        $this->assertEquals(['InactiveEvidenceId' => 1], $moduleSettings->getCountryEvidences());
     }
 
     /**
@@ -230,14 +255,17 @@ class EvidenceRegisterTest extends TestCase
      */
     public function testDeactivatingEvidenceWhenItIsRegistered()
     {
-        $oConfig = Registry::getConfig();
-        $oConfig->setConfigParam('aOeVATTBECountryEvidences', ['InactiveEvidenceId' => 1]);
+//        $oConfig = Registry::getConfig();
+//        $oConfig->setConfigParam('aOeVATTBECountryEvidences', ['InactiveEvidenceId' => 1]);
+
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings->saveCountryEvidences(['InactiveEvidenceId' => 1]);
 
         /** @var EvidenceRegister $oCollector */
-        $oRegister = oxNew(EvidenceRegister::class, $oConfig);
+        $oRegister = oxNew(EvidenceRegister::class);
         $oRegister->deactivateEvidence('InactiveEvidenceId');
 
-        $this->assertEquals(['InactiveEvidenceId' => 0], $oRegister->getActiveEvidences());
+        $this->assertEquals(['InactiveEvidenceId' => 0], $moduleSettings->getCountryEvidences());
     }
 
     /**
@@ -247,13 +275,16 @@ class EvidenceRegisterTest extends TestCase
      */
     public function testDeactivatingEvidenceWhenItIsNotRegistered()
     {
-        $oConfig = Registry::getConfig();
-        $oConfig->setConfigParam('aOeVATTBECountryEvidences', []);
+//        $oConfig = Registry::getConfig();
+//        $oConfig->setConfigParam('aOeVATTBECountryEvidences', []);
+
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings->saveCountryEvidences([]);
 
         /** @var EvidenceRegister $oCollector */
-        $oRegister = oxNew(EvidenceRegister::class, $oConfig);
+        $oRegister = oxNew(EvidenceRegister::class);
         $oRegister->activateEvidence('NonExistingEvidenceId');
 
-        $this->assertEquals([], $oRegister->getActiveEvidences());
+        $this->assertEquals([], $moduleSettings->getCountryEvidences());
     }
 }
