@@ -9,6 +9,6 @@ class NewTest extends \OxidEsales\EshopCommunity\Tests\Integration\IntegrationTe
      */
     public function testCreateDeliveryAddressWithMissingFields(): void
     {
-        $this->assertTrue(true);
+        $this->assertTrue(false);
     }
 }
