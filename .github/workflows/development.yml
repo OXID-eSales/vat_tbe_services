@@ -219,7 +219,6 @@ jobs:
               --coverage-php=/var/www/unit.cov \
               --coverage-clover=/var/www/coverage.xml \
               --coverage-text
-              --group=foobar
 
       - name: Upload log artifact
         if: always()
@@ -277,7 +276,6 @@ jobs:
               --coverage-php=/var/www/integration.cov \
               --coverage-clover=/var/www/coverage.xml \
               --coverage-text
-              --group=foobar
 
       - name: Upload log artifact
         if: always()

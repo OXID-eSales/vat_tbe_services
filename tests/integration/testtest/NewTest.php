@@ -6,7 +6,6 @@ class NewTest extends \OxidEsales\EshopCommunity\Tests\Integration\IntegrationTe
 {
     /**
      * @return void
-     * @group foobar
      */
     public function testCreateDeliveryAddressWithMissingFields(): void
     {
