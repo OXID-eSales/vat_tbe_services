@@ -14,10 +14,10 @@
          verbose="false">
     <testsuites>
         <testsuite name="UnitTests">
-            <directory>unit</directory>
+            <directory>unit/testtest</directory>
         </testsuite>
         <testsuite name="IntegrationTests">
-            <directory>integration</directory>
+            <directory>integration/testtest</directory>
         </testsuite>
     </testsuites>
 </phpunit>
