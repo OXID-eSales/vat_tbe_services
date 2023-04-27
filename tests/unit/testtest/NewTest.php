@@ -12,6 +12,6 @@ class NewTest extends TestCase
      */
     public function testCreateDeliveryAddressWithMissingFields(): void
     {
-        $this->assertTrue(true);
+        $this->assertTrue(false);
     }
 }
