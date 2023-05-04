@@ -7,10 +7,12 @@
 namespace OxidEsales\EVatModule\Tests\Unit\Model\Evidence;
 
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EVatModule\Model\Evidence\EvidenceCollector;
 use OxidEsales\EVatModule\Model\Evidence\EvidenceList;
 use OxidEsales\EVatModule\Model\Evidence\EvidenceSelector;
 use OxidEsales\EVatModule\Model\Evidence\Item\Evidence;
 use OxidEsales\EVatModule\Service\ModuleSettings;
+use OxidEsales\EVatModule\Traits\ServiceContainer;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -20,6 +22,8 @@ use PHPUnit\Framework\TestCase;
  */
 class EvidenceSelectorTest extends TestCase
 {
+    use ServiceContainer;
+
     public function providerGetCountryWhenBothEvidenceDoNotMatch(): array
     {
         $oBillingEvidence = $this->_createEvidence('billing_address', 'Germany');
@@ -43,90 +47,138 @@ class EvidenceSelectorTest extends TestCase
     {
         $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', $sDefaultEvidence);
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings->saveDefaultEvidence($sDefaultEvidence);
 
-//        $oCalculator = new EvidenceSelector($oEvidenceList, $oConfig);
+        $evidenceCollector = oxNew(EvidenceCollector::class, $oConfig, $moduleSettings);
 
-        //TODO: pass module setting and EvidenceCollect
-        $moduleSettingsMock = $this->createMock(ModuleSettings::class);
-        $oCalculator = new EvidenceSelector($moduleSettingsMock, $oEvidenceList);
+        $evidenceSelector = $this->getMockBuilder(EvidenceSelector::class)
+            ->setConstructorArgs([
+                $moduleSettings,
+                $evidenceCollector
+            ])
+            ->onlyMethods(['getEvidenceList'])
+            ->getMock();
+        $evidenceSelector->method('getEvidenceList')->willReturn($oEvidenceList);
 
-        $this->assertSame($sExpectedEvidence, $oCalculator->getEvidence());
+        $this->assertSame($sExpectedEvidence, $evidenceSelector->getEvidence());
     }
 
     public function testGetCountryWhenDefaultEvidenceEmpty()
     {
         $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'default_evidence');
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings->saveDefaultEvidence('default_evidence');
 
         $oBillingEvidence = $this->_createEvidence('billing_address', 'Germany');
         $oGeoLocationEvidence = $this->_createEvidence('geo_location', 'Lithuania');
         $oDefaultEvidence = $this->_createEvidence('default_evidence', '');
         $oEvidenceList = new EvidenceList([$oBillingEvidence, $oGeoLocationEvidence, $oDefaultEvidence]);
 
-//        $oCalculator = new EvidenceSelector($oEvidenceList, $oConfig);
+        $evidenceCollector = oxNew(EvidenceCollector::class, $oConfig, $moduleSettings);
 
-        $moduleSettingsMock = $this->createMock(ModuleSettings::class);
-        $oCalculator = new EvidenceSelector($moduleSettingsMock, $oEvidenceList);
+        $evidenceSelector = $this->getMockBuilder(EvidenceSelector::class)
+            ->setConstructorArgs([
+                $moduleSettings,
+                $evidenceCollector
+            ])
+            ->onlyMethods(['getEvidenceList'])
+            ->getMock();
+        $evidenceSelector->method('getEvidenceList')->willReturn($oEvidenceList);
 
-        $this->assertSame($oBillingEvidence, $oCalculator->getEvidence());
+        $this->assertSame($oBillingEvidence, $evidenceSelector->getEvidence());
     }
 
     public function testGetCountryWhenDefaultAndFirstEvidenceEmpty()
     {
         $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'default_evidence');
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings->saveDefaultEvidence('default_evidence');
 
         $oBillingEvidence = $this->_createEvidence('billing_address', '');
         $oGeoLocationEvidence = $this->_createEvidence('geo_location', 'Lithuania');
         $oDefaultEvidence = $this->_createEvidence('default_evidence', '');
         $oEvidenceList = new EvidenceList([$oBillingEvidence, $oGeoLocationEvidence, $oDefaultEvidence]);
 
-//        $oCalculator = new EvidenceSelector($oEvidenceList, $oConfig);
+        $evidenceCollector = oxNew(EvidenceCollector::class, $oConfig, $moduleSettings);
 
-        $moduleSettingsMock = $this->createMock(ModuleSettings::class);
-        $oCalculator = new EvidenceSelector($moduleSettingsMock, $oEvidenceList);
+        $evidenceSelector = $this->getMockBuilder(EvidenceSelector::class)
+            ->setConstructorArgs([
+                $moduleSettings,
+                $evidenceCollector
+            ])
+            ->onlyMethods(['getEvidenceList'])
+            ->getMock();
+        $evidenceSelector->method('getEvidenceList')->willReturn($oEvidenceList);
 
-        $this->assertSame($oGeoLocationEvidence, $oCalculator->getEvidence());
+        $this->assertSame($oGeoLocationEvidence, $evidenceSelector->getEvidence());
     }
 
     public function testGetCountryWithEmptyList()
     {
         $oConfig = Registry::getConfig();
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+
         $oEvidenceList = new EvidenceList();
-//        $oCalculator = new EvidenceSelector($oEvidenceList, $oConfig);
 
-        $moduleSettingsMock = $this->createMock(ModuleSettings::class);
-        $oCalculator = new EvidenceSelector($moduleSettingsMock, $oEvidenceList);
+        $evidenceCollector = oxNew(EvidenceCollector::class, $oConfig, $moduleSettings);
 
-        $this->assertSame(null, $oCalculator->getEvidence());
+        $evidenceSelector = $this->getMockBuilder(EvidenceSelector::class)
+            ->setConstructorArgs([
+                $moduleSettings,
+                $evidenceCollector
+            ])
+            ->onlyMethods(['getEvidenceList'])
+            ->getMock();
+        $evidenceSelector->method('getEvidenceList')->willReturn($oEvidenceList);
+
+        $this->assertSame(null, $evidenceSelector->getEvidence());
     }
 
     public function testIsEvidencesContradictingWhenEvidencesDoNotMatch()
     {
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+
         $oBillingEvidence = $this->_createEvidence('billing_address', 'Germany');
         $oGeoLocationEvidence = $this->_createEvidence('geo_location', 'Germany');
         $oEvidenceList = new EvidenceList([$oBillingEvidence, $oGeoLocationEvidence]);
 
-//        $oCalculator = new EvidenceSelector($oEvidenceList, Registry::getConfig());
+        $evidenceCollector = oxNew(EvidenceCollector::class, Registry::getConfig(), $moduleSettings);
 
-        $moduleSettingsMock = $this->createMock(ModuleSettings::class);
-        $oCalculator = new EvidenceSelector($moduleSettingsMock, $oEvidenceList);
+        $evidenceSelector = $this->getMockBuilder(EvidenceSelector::class)
+            ->setConstructorArgs([
+                $moduleSettings,
+                $evidenceCollector
+            ])
+            ->onlyMethods(['getEvidenceList'])
+            ->getMock();
+        $evidenceSelector->method('getEvidenceList')->willReturn($oEvidenceList);
 
-        $this->assertSame(false, $oCalculator->isEvidencesContradicting());
+        $this->assertSame(false, $evidenceSelector->isEvidencesContradicting());
     }
-
+//
     public function testIsEvidencesContradictingWhenEvidencesMatch()
     {
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+
         $oBillingEvidence = $this->_createEvidence('billing_address', 'Germany');
         $oGeoLocationEvidence = $this->_createEvidence('geo_location', 'Lithuania');
         $oEvidenceList = new EvidenceList([$oBillingEvidence, $oGeoLocationEvidence]);
 
-//        $oCalculator = new EvidenceSelector($oEvidenceList, Registry::getConfig());
+        $evidenceCollector = oxNew(EvidenceCollector::class, Registry::getConfig(), $moduleSettings);
 
-        $moduleSettingsMock = $this->createMock(ModuleSettings::class);
-        $oCalculator = new EvidenceSelector($moduleSettingsMock, $oEvidenceList);
+        $evidenceSelector = $this->getMockBuilder(EvidenceSelector::class)
+            ->setConstructorArgs([
+                $moduleSettings,
+                $evidenceCollector
+            ])
+            ->onlyMethods(['getEvidenceList'])
+            ->getMock();
+        $evidenceSelector->method('getEvidenceList')->willReturn($oEvidenceList);
 
-        $this->assertSame(true, $oCalculator->isEvidencesContradicting());
+        $this->assertSame(true, $evidenceSelector->isEvidencesContradicting());
     }
 
     /**
