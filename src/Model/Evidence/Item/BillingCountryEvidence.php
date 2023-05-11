@@ -37,7 +37,7 @@ class BillingCountryEvidence extends Evidence
     public function getCountryId(): string
     {
         if (!$this->countryId && $this->getUser()) {
-            $this->countryId = $this->getUser()->getFieldData('oxcountryid');
+            $this->countryId = (string) $this->getUser()->getFieldData('oxcountryid');
         }
 
         return $this->countryId;

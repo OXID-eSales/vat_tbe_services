@@ -6,6 +6,7 @@
 
 namespace OxidEsales\EVatModule\Tests\Unit\Core;
 
+use OxidEsales\EshopCommunity\Core\DbMetaDataHandler;
 use OxidEsales\EVatModule\Core\Events;
 use PHPUnit\Framework\TestCase;
 use oxDb;
@@ -41,10 +42,11 @@ class EventsTest extends TestCase
         oxDb::getDb()->execute('DROP TABLE IF EXISTS `oevattbe_categoryvat`');
         oxDb::getDb()->execute('DROP TABLE IF EXISTS `oevattbe_countryvatgroups`');
         oxDb::getDb()->execute('DROP TABLE IF EXISTS `oevattbe_orderevidences`');
+        oxDb::getDb()->execute('TRUNCATE TABLE `oxmigrations_evat`');
 
         Events::onActivate();
 
-        $oDbMetaDataHandler = oxNew('oxDbMetaDataHandler');
+        $oDbMetaDataHandler = oxNew(DbMetaDataHandler::class);
 
         $this->assertTrue($oDbMetaDataHandler->tableExists('oevattbe_articlevat'));
         $this->assertTrue($oDbMetaDataHandler->tableExists('oevattbe_categoryvat'));
@@ -67,6 +69,7 @@ class EventsTest extends TestCase
 
         $blHasVATGroups = (bool) oxDb::getDb()->getOne("SELECT COUNT(*) FROM oevattbe_countryvatgroups");
         $this->assertTrue($blHasVATGroups);
+
         $blCountriesMarkedAsConfigured = (bool) oxDb::getDb()->getOne("SELECT COUNT(*) FROM oxcountry WHERE oevattbe_appliestbevat = 1 and oevattbe_istbevatconfigured = 1");
         $this->assertTrue($blCountriesMarkedAsConfigured);
     }
