@@ -9,9 +9,12 @@ namespace OxidEsales\EVatModule\Tests\Unit\Model;
 
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\Field;
-use OxidEsales\EVatModule\Shop\User;
+use OxidEsales\EVatModule\Model\Evidence\Item\BillingCountryEvidence;
+use OxidEsales\EVatModule\Service\ModuleSettings;
 use OxidEsales\EVatModule\Model\User as UserModel;
+use OxidEsales\EVatModule\Shop\User;
 use OxidEsales\Eshop\Application\Model\User as EShopUser;
+use OxidEsales\EVatModule\Traits\ServiceContainer;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -21,10 +24,12 @@ use PHPUnit\Framework\TestCase;
  */
 class UserTest extends TestCase
 {
+    use ServiceContainer;
+
     /**
      * Tests collecting of TBE evidences when evidence collector is billing country and it is set as default.
      *
-     * @return User
+     * @return UserModel
      */
     public function testCollectingTBEEvidenceList()
     {
@@ -33,16 +38,22 @@ class UserTest extends TestCase
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', ['oeVATTBEBillingCountryEvidence']);
         $oConfig->setConfigParam('aOeVATTBECountryEvidences', ['billing_country' => 1]);
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class]);
+        $moduleSettings->saveCountryEvidences(['billing_country' => 1]);
+        $moduleSettings->saveDefaultEvidence('billing_country');
 
         $oUser = oxNew(EShopUser::class);
         $oUser->oxuser__oxcountryid = new Field('GermanyId');
+        Registry::getSession()->setUser($oUser);
 
-        /** @var User $oTBEUser */
-        $oTBEUser = oxNew(User::class, $oUser, $oSession, $oConfig);
+        /** @var UserModel $oTBEUser */
+        $oTBEUser = oxNew(UserModel::class, $oSession, $oConfig);
 
         $aExpected = [
             'billing_country' => [
-                'name' => 'billing_country', 'countryId' => 'GermanyId'
+                'name'      => 'billing_country',
+                'countryId' => 'GermanyId'
             ],
         ];
         $this->assertEquals($aExpected, $oTBEUser->getOeVATTBEEvidenceList());

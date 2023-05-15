@@ -102,7 +102,7 @@ class CountryVATGroupsListTest extends TestCase
      */
     protected function _createGroupObject($aData)
     {
-        $oGroupsList = $this->get(CountryVATGroup::class);
+        $oGroupsList = clone $this->get(CountryVATGroup::class);
         $oGroupsList->setId($aData['OEVATTBE_ID']);
         $oGroupsList->setData($aData);
 

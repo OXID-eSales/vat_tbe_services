@@ -9,7 +9,11 @@ namespace OxidEsales\EVatModule\Tests\Unit\Shop;
 use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\UtilsDate;
+use OxidEsales\EshopCommunity\Core\Session;
+use OxidEsales\EVatModule\Model\Evidence\Item\BillingCountryEvidence;
+use OxidEsales\EVatModule\Service\ModuleSettings;
 use OxidEsales\EVatModule\Shop\User;
+use OxidEsales\EVatModule\Traits\ServiceContainer;
 use PHPUnit\Framework\TestCase;
 use oxDb;
 
@@ -18,6 +22,8 @@ use oxDb;
  */
 class UserTest extends TestCase
 {
+    use ServiceContainer;
+
     /**
      * Select Country test
      */
@@ -27,9 +33,14 @@ class UserTest extends TestCase
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', ['oeVATTBEBillingCountryEvidence']);
         $oConfig->setConfigParam('aOeVATTBECountryEvidences', ['billing_country' => 1]);
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class]);
+        $moduleSettings->saveCountryEvidences(['billing_country' => 1]);
+        $moduleSettings->saveDefaultEvidence('billing_country');
 
         $oUser = oxNew(User::class);
         $oUser->oxuser__oxcountryid = new Field('GermanyId');
+        Registry::getSession()->setUser($oUser);
 
         $this->assertEquals('GermanyId', $oUser->getOeVATTBETbeCountryId());
     }

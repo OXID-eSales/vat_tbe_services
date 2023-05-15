@@ -7,12 +7,12 @@
 namespace OxidEsales\EVatModule\Tests\Unit\Model\Evidence;
 
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EshopCommunity\Core\Session;
 use OxidEsales\EVatModule\Model\Evidence\EvidenceCollector;
 use OxidEsales\EVatModule\Model\Evidence\EvidenceList;
 use OxidEsales\EVatModule\Model\Evidence\Item\BillingCountryEvidence;
 use OxidEsales\EVatModule\Service\ModuleSettings;
-use OxidEsales\EVatModule\Shop\User;
-use PHPUnit\Framework\MockObject\MockObject;
+use OxidEsales\EVatModule\Traits\ServiceContainer;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -22,6 +22,8 @@ use PHPUnit\Framework\TestCase;
  */
 class EvidenceCollectorTest extends TestCase
 {
+    use ServiceContainer;
+
     /**
      * Evidence is registered;
      * Evidence is set to be active;
@@ -32,20 +34,16 @@ class EvidenceCollectorTest extends TestCase
         $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('aOeVATTBECountryEvidences', ['billing_country' => 1]);
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', ['oeVATTBEBillingCountryEvidence']);
-
-        /** @var User|MockObject $oUser */
-        $oUser = $this->createMock(User::class);
-
-        //TODO: set user in session if necessary
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings->saveCountryEvidences(['billing_country' => 1]);
+        $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class]);
 
         $oExpectedEvidence = oxNew(BillingCountryEvidence::class, Registry::getSession());
         $oEvidenceList = oxNew(EvidenceList::class);
         $oEvidenceList->add($oExpectedEvidence);
 
-//        $oCollector = oxNew(EvidenceCollector::class, $oUser, $oConfig);
-        $moduleSettingsMock = $this->createMock(ModuleSettings::class);
+        $oCollector = oxNew(EvidenceCollector::class, $oConfig, $moduleSettings);
 
-        $oCollector = oxNew(EvidenceCollector::class, $oConfig, $moduleSettingsMock);
         $this->assertEquals($oEvidenceList, $oCollector->getEvidenceList());
     }
 
@@ -59,16 +57,13 @@ class EvidenceCollectorTest extends TestCase
         $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('aOeVATTBECountryEvidences', ['billing_country' => 0]);
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', ['oeVATTBEBillingCountryEvidence']);
-
-        /** @var User|MockObject $oUser */
-        $oUser = $this->createMock(User::class);
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings->saveCountryEvidences(['billing_country' => 0]);
+        $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class]);
 
         $oEvidenceList = oxNew(EvidenceList::class);
 
-//        $oCollector = oxNew(EvidenceCollector::class, $oUser, $oConfig);
-
-        $moduleSettingsMock = $this->createMock(ModuleSettings::class);
-        $oCollector = oxNew(EvidenceCollector::class, $oConfig, $moduleSettingsMock);
+        $oCollector = oxNew(EvidenceCollector::class, $oConfig, $moduleSettings);
         $this->assertEquals($oEvidenceList, $oCollector->getEvidenceList());
     }
 
@@ -82,16 +77,14 @@ class EvidenceCollectorTest extends TestCase
         $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('aOeVATTBECountryEvidences', []);
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', ['oeVATTBEBillingCountryEvidence']);
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings->saveCountryEvidences([]);
+        $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class]);
 
-        /** @var User|MockObject $oUser */
-        $oUser = $this->createMock(User::class);
-//        $oCollector = oxNew(EvidenceCollector::class, $oUser, $oConfig);
-
-        $moduleSettingsMock = $this->createMock(ModuleSettings::class);
-        $oCollector = oxNew(EvidenceCollector::class, $oConfig, $moduleSettingsMock);
+        $oCollector = oxNew(EvidenceCollector::class, $oConfig, $moduleSettings);
         $oCollector->getEvidenceList();
 
-        $this->assertEquals(['billing_country' => 0], $oConfig->getConfigParam('aOeVATTBECountryEvidences'));
+        $this->assertEquals(['billing_country' => 0], $moduleSettings->getCountryEvidences());
     }
 
     /**
@@ -104,16 +97,13 @@ class EvidenceCollectorTest extends TestCase
         $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('aOeVATTBECountryEvidences', []);
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', []);
-
-        /** @var User|MockObject $oUser */
-        $oUser = $this->createMock(User::class);
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings->saveCountryEvidences([]);
+        $moduleSettings->saveEvidenceClasses([]);
 
         $oEvidenceList = oxNew(EvidenceList::class);
 
-//        $oCollector = oxNew(EvidenceCollector::class, $oUser, $oConfig);
-
-        $moduleSettingsMock = $this->createMock(ModuleSettings::class);
-        $oCollector = oxNew(EvidenceCollector::class, $oConfig, $moduleSettingsMock);
+        $oCollector = oxNew(EvidenceCollector::class, $oConfig, $moduleSettings);
         $this->assertEquals($oEvidenceList, $oCollector->getEvidenceList());
     }
 
@@ -127,16 +117,14 @@ class EvidenceCollectorTest extends TestCase
         $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('aOeVATTBECountryEvidences', ['non_existing_id' => 1]);
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', []);
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings->saveCountryEvidences(['non_existing_id' => 1]);
+        $moduleSettings->saveEvidenceClasses([]);
 
-        /** @var User|MockObject $oUser */
-        $oUser = $this->createMock(User::class);
-//        $oCollector = oxNew(EvidenceCollector::class, $oUser, $oConfig);
-
-        $moduleSettingsMock = $this->createMock(ModuleSettings::class);
-        $oCollector = oxNew(EvidenceCollector::class, $oConfig, $moduleSettingsMock);
+        $oCollector = oxNew(EvidenceCollector::class, $oConfig, $moduleSettings);
         $oCollector->getEvidenceList();
 
-        $this->assertEquals([], $oConfig->getConfigParam('aOeVATTBECountryEvidences'));
+        $this->assertEquals([], $moduleSettings->getCountryEvidences());
     }
 
     /**
@@ -149,16 +137,13 @@ class EvidenceCollectorTest extends TestCase
         $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('aOeVATTBECountryEvidences', ['non_existing_id' => 1]);
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', ['NonExistingEvidenceClass']);
-
-        /** @var User|MockObject $oUser */
-        $oUser = $this->createMock(User::class);
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings->saveCountryEvidences(['non_existing_id' => 1]);
+        $moduleSettings->saveEvidenceClasses(['NonExistingEvidenceClass']);
 
         $oEvidenceList = oxNew(EvidenceList::class);
 
-//        $oCollector = oxNew(EvidenceCollector::class, $oUser, $oConfig);
-
-        $moduleSettingsMock = $this->createMock(ModuleSettings::class);
-        $oCollector = oxNew(EvidenceCollector::class, $oConfig, $moduleSettingsMock);
+        $oCollector = oxNew(EvidenceCollector::class, $oConfig, $moduleSettings);
         $this->assertEquals($oEvidenceList, $oCollector->getEvidenceList());
     }
 }

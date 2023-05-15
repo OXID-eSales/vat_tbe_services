@@ -37,6 +37,7 @@ class BasketControllerTest extends TestCase
     public function testGetOeVATTBEMarkMessageWhenUserIsNotLoggedIn()
     {
         Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
+        $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('DE');
 
         $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles']);
         $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(true));
@@ -60,6 +61,7 @@ class BasketControllerTest extends TestCase
     public function testGetOeVATTBEMarkMessageWhenUserIsLoggedIn()
     {
         Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
+        $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('DE');
 
         /** @var Country|EShopCountry|MockObject $oCountry */
         $oCountry = $this->createPartialMock(Country::class, ['getOeVATTBEName']);
@@ -91,6 +93,7 @@ class BasketControllerTest extends TestCase
     public function testGetOeVATTBEMarkMessageWhenUserIsLoggedInAndUserCountryNotFound()
     {
         Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
+        $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('DE');
 
         /** @var Basket|EShopBasket|MockObject $oBasket */
         $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'getOeVATTBECountry']);
@@ -164,6 +167,7 @@ class BasketControllerTest extends TestCase
     public function testShowVATTBEMarkMessageWhenMessageShouldBeShown()
     {
         Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
+        $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('DE');
         Registry::getSession()->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
 
         $oCountry = $this->createPartialMock(Country::class, ['appliesOeTBEVATTbeVat']);

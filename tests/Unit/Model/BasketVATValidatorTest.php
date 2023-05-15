@@ -58,16 +58,17 @@ class BasketVATValidatorTest extends TestCase
      */
     public function testShowVATTBEMark($blIsUserLoggedIn, $blIsArticleTbeService, $blIsCountryConfigured, $blResult)
     {
-        /** @var Country|EShopCountry|MockObject $oBasketItem */
+        /** @var Country|EShopCountry|MockObject $oCountry */
         $oCountry = $this->createPartialMock(Country::class, ['appliesOeTBEVATTbeVat']);
         $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->will($this->returnValue($blIsCountryConfigured));
 
-        /** @var Basket|EShopBasket|MockObject $oBasketItem */
+        /** @var Basket|EShopBasket|MockObject $oBasket */
         $oBasket = $this->createPartialMock(Basket::class, ['getOeVATTBECountry', 'isOeVATTBEValid']);
         $oBasket->expects($this->any())->method("getOeVATTBECountry")->will($this->returnValue($oCountry));
         $oBasket->expects($this->any())->method("isOeVATTBEValid")->will($this->returnValue(true));
+        Registry::getSession()->setBasket($oBasket);
 
-        /** @var Country|MockObject $oBasketItem */
+        /** @var Country|MockObject $oTBEUserCountry */
         $oTBEUserCountry = $this->createPartialMock(UserModel::class, ['isUserFromDomesticCountry']);
         $oTBEUserCountry->expects($this->any())->method("isUserFromDomesticCountry")->will($this->returnValue(false));
 
@@ -75,7 +76,7 @@ class BasketVATValidatorTest extends TestCase
         $oUser = ($blIsUserLoggedIn) ? oxNew(User::class) : null;
         Registry::getSession()->setUser($oUser);
 
-        /** @var Article|EShopArticle|MockObject $oBasketItem */
+        /** @var Article|EShopArticle|MockObject $oArticle */
         $oArticle = $this->createPartialMock(Article::class, ['isOeVATTBETBEService']);
         $oArticle->expects($this->any())->method("isOeVATTBETBEService")->will($this->returnValue($blIsArticleTbeService));
 
@@ -113,6 +114,9 @@ class BasketVATValidatorTest extends TestCase
      */
     public function testIsTBEArticleValid($blIsArticleValid, $sExpectValue)
     {
+        $user = oxNew(User::class);
+        Registry::getSession()->setUser($user);
+
         $oCountry = $this->createPartialMock(Country::class, ['appliesOeTBEVATTbeVat']);
         $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->will($this->returnValue(true));
 
@@ -130,8 +134,9 @@ class BasketVATValidatorTest extends TestCase
         $oBasket->expects($this->any())->method("isOeVATTBEValid")->will($this->returnValue(false));
         $aInValidArticles = ['id1' => 'article1', 'id2' => 'article2'];
         $oBasket->expects($this->any())->method("getOeVATTBEInValidArticles")->will($this->returnValue($aInValidArticles));
+        Registry::getSession()->setBasket($oBasket);
 
-        /** @var UserModel|MockObject $oBasketItem */
+        /** @var UserModel|MockObject $oTBEUserCountry */
         $oTBEUserCountry = $this->createPartialMock(UserModel::class, ['isUserFromDomesticCountry']);
         $oTBEUserCountry->expects($this->any())->method("isUserFromDomesticCountry")->will($this->returnValue(false));
 

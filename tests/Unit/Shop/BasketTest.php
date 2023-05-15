@@ -119,7 +119,7 @@ class BasketTest extends TestCase
 
         /** @var Country $oCountry */
         $oCountry = oxNew(Country::class);
-        $oCountry->setId($sLithuaniaId);
+        $oCountry->load($sLithuaniaId);
         $oCountry->oxcountry__oevattbe_appliestbevat = new Field(true);
         $oCountry->save();
 

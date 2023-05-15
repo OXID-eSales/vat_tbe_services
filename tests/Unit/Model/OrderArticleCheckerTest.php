@@ -7,6 +7,9 @@
 
 namespace OxidEsales\EVatModule\Tests\Unit\Model;
 
+use OxidEsales\Eshop\Application\Model\Basket;
+use OxidEsales\Eshop\Core\Session;
+use OxidEsales\EshopCommunity\Core\Registry;
 use OxidEsales\EshopCommunity\Tests\ContainerTrait;
 use OxidEsales\EVatModule\Model\OrderArticleChecker;
 use OxidEsales\EVatModule\Shop\Article;
@@ -94,6 +97,14 @@ class OrderArticleCheckerTest extends TestCase
     {
         $oTBEArticleWithoutVAT1 = $this->_createArticle(true, null, 'id1');
         $oTBEArticleWithoutVAT2 = $this->_createArticle(true, null, 'id2');
+
+        $basketMock = $this->createPartialMock(Basket::class, ['getBasketArticles']);
+        $basketMock->method('getBasketArticles')->willReturn([$oTBEArticleWithoutVAT1, $oTBEArticleWithoutVAT2]);
+
+        $sessionBasketMock = $this->createPartialMock(Session::class, ['getBasket']);
+        $sessionBasketMock->method('getBasket')->willReturn($basketMock);
+
+        Registry::set(Session::class, $sessionBasketMock);
 
         $oCountry = $this->createPartialMock(Country::class, ['isInEU', 'appliesOeTBEVATTbeVat']);
         $oCountry->expects($this->any())->method('isInEU')->will($this->returnValue(true));
