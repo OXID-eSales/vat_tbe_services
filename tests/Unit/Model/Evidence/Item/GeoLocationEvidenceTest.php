@@ -21,13 +21,11 @@ class GeoLocationEvidenceTest extends TestCase
 {
     public function testGetId()
     {
-        $session = Registry::getSession();
-
         /** @var User|MockObject $oUser */
         $oUser = $this->createMock(User::class);
-        $session->setUser($oUser);
 
-        //TODO: check if set user in session is necessary
+        $session = Registry::getSession();
+        $session->setUser($oUser);
 
         $oEvidence = new GeoLocationEvidence($session);
 
@@ -36,10 +34,10 @@ class GeoLocationEvidenceTest extends TestCase
 
     public function testGetCountryId()
     {
-        $session = Registry::getSession();
-
         /** @var User|MockObject $oUser */
         $oUser = $this->createMock(User::class);
+
+        $session = Registry::getSession();
         $session->setUser($oUser);
 
         $oEvidence = new GeoLocationEvidence($session);

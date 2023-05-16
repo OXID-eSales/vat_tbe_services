@@ -22,10 +22,11 @@ class BillingCountryEvidenceTest extends TestCase
     public function testGetId()
     {
         $oUser = oxNew(User::class);
-//        $oEvidence = new BillingCountryEvidence($oUser);
 
-        //TODO: Set user in session if necessary
-        $oEvidence = new BillingCountryEvidence(Registry::getSession());
+        $session = Registry::getSession();
+        $session->setUser($oUser);
+
+        $oEvidence = new BillingCountryEvidence($session);
 
         $this->assertEquals('billing_country', $oEvidence->getId());
     }
@@ -35,9 +36,10 @@ class BillingCountryEvidenceTest extends TestCase
         $oUser = oxNew(User::class);
         $oUser->oxuser__oxcountryid = new Field('a7c40f631fc920687.20179984');
 
-//        $oEvidence = new BillingCountryEvidence($oUser);
+        $session = Registry::getSession();
+        $session->setUser($oUser);
 
-        $oEvidence = new BillingCountryEvidence(Registry::getSession());
+        $oEvidence = new BillingCountryEvidence($session);
 
         $this->assertEquals('a7c40f631fc920687.20179984', $oEvidence->getCountryId());
     }
@@ -45,9 +47,11 @@ class BillingCountryEvidenceTest extends TestCase
     public function testGetCountryIdWhenNoCountrySet()
     {
         $oUser = oxNew(User::class);
-//        $oEvidence = new BillingCountryEvidence($oUser);
 
-        $oEvidence = new BillingCountryEvidence(Registry::getSession());
+        $session = Registry::getSession();
+        $session->setUser($oUser);
+
+        $oEvidence = new BillingCountryEvidence($session);
 
         $this->assertEquals(null, $oEvidence->getCountryId());
     }
