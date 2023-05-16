@@ -38,6 +38,7 @@ class UserTest extends TestCase
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', ['oeVATTBEBillingCountryEvidence']);
         $oConfig->setConfigParam('aOeVATTBECountryEvidences', ['billing_country' => 1]);
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
+
         $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
         $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class]);
         $moduleSettings->saveCountryEvidences(['billing_country' => 1]);
@@ -101,6 +102,10 @@ class UserTest extends TestCase
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', []);
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', '');
 
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings->saveEvidenceClasses([]);
+        $moduleSettings->saveDefaultEvidence('');
+
         $oUser = oxNew(EShopUser::class);
 
         /** @var User $oTBEUser */
@@ -149,6 +154,10 @@ class UserTest extends TestCase
         $oSession->setVariable('TBECountryId', null);
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', ['oeVATTBEBillingCountryEvidence']);
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
+
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class]);
+        $moduleSettings->saveDefaultEvidence('billing_country');
 
         $oUser = oxNew(EShopUser::class);
         $oUser->oxuser__oxcountryid = new Field('');
@@ -220,6 +229,9 @@ class UserTest extends TestCase
         $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('sOeVATTBEDomesticCountry', 'LT');
 
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings->saveDomesticCountry('LT');
+
         $sLithuaniaId = '8f241f11095d6ffa8.86593236';
         $oSession = Registry::getSession();
         $oSession->setVariable('TBECountryId', $sLithuaniaId);
@@ -259,6 +271,9 @@ class UserTest extends TestCase
     {
         $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('sOeVATTBEDomesticCountry', $sDomesticCountryAbbr);
+
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings->saveDomesticCountry($sDomesticCountryAbbr);
 
         $oSession = Registry::getSession();
         $oSession->setVariable('TBECountryId', $sUserCountryId);

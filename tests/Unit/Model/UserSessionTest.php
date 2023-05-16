@@ -8,8 +8,12 @@ namespace OxidEsales\EVatModule\Tests\Unit\Model;
 
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\Field;
+use OxidEsales\EVatModule\Model\Evidence\Item\BillingCountryEvidence;
+use OxidEsales\EVatModule\Model\Evidence\Item\GeoLocationEvidence;
+use OxidEsales\EVatModule\Service\ModuleSettings;
 use OxidEsales\EVatModule\Shop\User;
 use OxidEsales\Eshop\Application\Model\User as EShopUser;
+use OxidEsales\EVatModule\Traits\ServiceContainer;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -19,7 +23,7 @@ use PHPUnit\Framework\TestCase;
  */
 class UserSessionTest extends TestCase
 {
-    protected $backupGlobalsBlacklist = ['_SESSION'];
+    use ServiceContainer;
 
     /**
      * Test evidence list caching. Second time evidence list is returned, it should not be recalculated.
@@ -36,6 +40,11 @@ class UserSessionTest extends TestCase
         $oConfig->setConfigParam('aOeVATTBECountryEvidences', ['billing_country' => 1]);
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
 
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class]);
+        $moduleSettings->saveCountryEvidences(['billing_country' => 1]);
+        $moduleSettings->saveDefaultEvidence('billing_country');
+
         $oUser = oxNew(EShopUser::class);
         $oUser->oxuser__oxcountryid = new Field('GermanyId');
 
@@ -45,6 +54,10 @@ class UserSessionTest extends TestCase
 
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', ['oeVATTBEGeoLocationEvidence']);
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'geo_location');
+
+        $moduleSettings->saveEvidenceClasses([GeoLocationEvidence::class]);
+        $moduleSettings->saveDefaultEvidence('geo_location');
+
         $oUser->oxuser__oxcountryid = new Field('LithuaniaId');
 
         $aExpectedList = [
