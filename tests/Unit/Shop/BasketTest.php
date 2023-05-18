@@ -11,8 +11,10 @@ use OxidEsales\Eshop\Application\Model\Country;
 use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Model\OrderArticleChecker;
+use OxidEsales\EVatModule\Service\ModuleSettings;
 use OxidEsales\EVatModule\Shop\Basket;
 use OxidEsales\Eshop\Application\Model\Basket as EShopBasket;
+use OxidEsales\EVatModule\Traits\ServiceContainer;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -22,6 +24,8 @@ use PHPUnit\Framework\TestCase;
  */
 class BasketTest extends TestCase
 {
+    use ServiceContainer;
+
     /**
      * Test for tbe country id setter and getter
      */
@@ -71,6 +75,9 @@ class BasketTest extends TestCase
         Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', $sDomesticCountry);
         Registry::getSession()->setVariable('TBECountryId', $sLithuaniaId);
 
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings->saveDomesticCountry($sDomesticCountry);
+
         /** @var Country $oCountry */
         $oCountry = oxNew(Country::class);
         $oCountry->load($sLithuaniaId);
@@ -114,6 +121,10 @@ class BasketTest extends TestCase
     public function testSetCountryIdOnChangeEventWhenMessageShouldBeShown($bAddToBasket)
     {
         Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
+
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings->saveDomesticCountry('DE');
+
         $sLithuaniaId = '8f241f11095d6ffa8.86593236';
         Registry::getSession()->setVariable('TBECountryId', $sLithuaniaId); // LT
 

@@ -24,6 +24,11 @@ class VatSelectorTest extends TestCase
 {
     use ServiceContainer;
 
+    public function setUp(): void
+    {
+        Registry::getSession()->setUser(null);
+    }
+
     public function providerArticleUserVatCalculationWhenHasTbeVatAndIsTbeArticle(): array
     {
         return [

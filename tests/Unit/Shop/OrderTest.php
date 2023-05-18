@@ -6,14 +6,18 @@
 
 namespace OxidEsales\EVatModule\Tests\Unit\Shop;
 
+use OxidEsales\Eshop\Application\Model\Country as EShopCountry;
 use OxidEsales\Eshop\Application\Model\Order as EShopOrder;
 use OxidEsales\Eshop\Application\Model\User as EShopUser;
+use OxidEsales\EVatModule\Model\User as UserModel;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EVatModule\Model\OrderArticleChecker;
 use OxidEsales\EVatModule\Model\OrderEvidenceList;
 use OxidEsales\EVatModule\Shop\Article;
 use OxidEsales\Eshop\Application\Model\Article as EShopArticle;
 use OxidEsales\EVatModule\Shop\Basket;
 use OxidEsales\Eshop\Application\Model\Basket as EShopBasket;
+use OxidEsales\EVatModule\Shop\Country;
 use OxidEsales\EVatModule\Shop\User;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -69,25 +73,23 @@ class OrderTest extends TestCase
      */
     public function providerValidateOrderWithInvalidArticles(): array
     {
-        // Non domestic country.
-        $sAustriaId = 'a7c40f6320aeb2ec2.72885259';
-
         return [
-            [$sAustriaId, false],
-            ['NonExistingCountry', true],
-            ['', true],
+            ['a7c40f6320aeb2ec2.72885259', false, true],
+            ['NonExistingCountry', true, false],
+            ['', true, false],
         ];
     }
 
     /**
      * Test order validation when order should be invalid because of invalid articles.
      *
-     * @param string $sUserCountry    User country.
+     * @param string $sUserCountryId    User country id.
      * @param bool   $blValidArticles Whether basket articles are valid.
+     * @param bool   $validCountry Whether user country is valid.
      *
      * @dataProvider providerValidateOrderWithInvalidArticles
      */
-    public function testValidateOrderWithInvalidArticles($sUserCountry, $blValidArticles)
+    public function testValidateOrderWithInvalidArticles($sUserCountryId, $blValidArticles, $validCountry)
     {
         /** @var Article|EShopArticle|MockObject $oArticle */
         $oArticle = $this->createPartialMock(Article::class, ["getOeVATTBETBEVat", "isOeVATTBETBEService"]);
@@ -96,19 +98,28 @@ class OrderTest extends TestCase
 
         /** @var Basket|EShopBasket|MockObject $oArticle */
         $oBasket = $this->createPartialMock(Basket::class, ["getOeVATTBETbeCountryId", "hasOeTBEVATArticles", "getBasketArticles"]);
-        $oBasket->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue($sUserCountry));
+        $oBasket->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue($sUserCountryId));
         $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(true));
         $oBasket->expects($this->any())->method("getBasketArticles")->will($this->returnValue([$oArticle]));
         Registry::getSession()->setBasket($oBasket);
-        Registry::getSession()->setVariable('TBECountryId', $sUserCountry);
+        Registry::getSession()->setVariable('TBECountryId', $sUserCountryId);
 
-        /** @var EShopUser|User $oUser */
-        $oUser = oxNew(EShopUser::class);
+        $country = null;
+        if ($validCountry) {
+            $country = $this->createPartialMock(Country::class, ['isInEU', 'appliesOeTBEVATTbeVat']);
+            $country->method('isInEU')->willReturn(true);
+            $country->method('appliesOeTBEVATTbeVat')->willReturn(true);
+        }
 
-        $oOrder = $this->createPartialMock(Order::class, ["getValidateOrderParent"]);
+        $userModel = $this->createPartialMock(UserModel::class, ['getCountry']);
+        $userModel->method('getCountry')->willReturn($country);
+        $articleChecker = oxNew(OrderArticleChecker::class, $userModel);
+
+        $oOrder = $this->createPartialMock(Order::class, ["getValidateOrderParent", "getOeVATTBEOrderArticleChecker"]);
         $oOrder->expects($this->any())->method("getValidateOrderParent")->will($this->returnValue(0));
+        $oOrder->method('getOeVATTBEOrderArticleChecker')->willReturn($articleChecker);
 
-        $this->assertSame(Order::ORDER_STATE_TBE_NOT_CONFIGURED, $oOrder->validateOrder($oBasket, $oUser));
+        $this->assertSame(Order::ORDER_STATE_TBE_NOT_CONFIGURED, $oOrder->validateOrder($oBasket, $userModel));
     }
 
     /**
