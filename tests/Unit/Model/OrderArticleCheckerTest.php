@@ -26,6 +26,11 @@ class OrderArticleCheckerTest extends TestCase
 {
     use ContainerTrait;
 
+    public function tearDown(): void
+    {
+        Registry::set(Session::class, oxNew(Session::class));
+    }
+
     /**
      * Provider for test.
      *
@@ -136,14 +141,6 @@ class OrderArticleCheckerTest extends TestCase
         $oTBEArticleWithoutVAT1 = $this->_createArticle(true, null, 'id1');
         $oTBEArticleWithoutVAT2 = $this->_createArticle(true, null, 'id2');
         $this->mockSessionBasket([$oArticleWithoutVAT, $oTBEArticleWithoutVAT1, $oTBEArticleWithoutVAT2]);
-
-        $basketMock = $this->createPartialMock(Basket::class, ['getBasketArticles']);
-        $basketMock->method('getBasketArticles')->willReturn([$oTBEArticleWithoutVAT1, $oTBEArticleWithoutVAT2]);
-
-        $sessionBasketMock = $this->createPartialMock(Session::class, ['getBasket']);
-        $sessionBasketMock->method('getBasket')->willReturn($basketMock);
-
-        Registry::set(Session::class, $sessionBasketMock);
 
         $oCountry = $this->createPartialMock(Country::class, ['isInEU', 'appliesOeTBEVATTbeVat']);
         $oCountry->expects($this->any())->method('isInEU')->will($this->returnValue(true));

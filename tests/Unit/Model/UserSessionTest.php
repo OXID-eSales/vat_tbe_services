@@ -8,6 +8,7 @@ namespace OxidEsales\EVatModule\Tests\Unit\Model;
 
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\Field;
+use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EVatModule\Model\Evidence\Item\BillingCountryEvidence;
 use OxidEsales\EVatModule\Model\Evidence\Item\GeoLocationEvidence;
 use OxidEsales\EVatModule\Service\ModuleSettings;
@@ -24,6 +25,13 @@ use PHPUnit\Framework\TestCase;
 class UserSessionTest extends TestCase
 {
     use ServiceContainer;
+
+    protected $backupGlobalsExcludeList = ['_SESSION'];
+
+    public function setUp(): void
+    {
+        ContainerFactory::resetContainer();
+    }
 
     /**
      * Test evidence list caching. Second time evidence list is returned, it should not be recalculated.
@@ -47,6 +55,7 @@ class UserSessionTest extends TestCase
 
         $oUser = oxNew(EShopUser::class);
         $oUser->oxuser__oxcountryid = new Field('GermanyId');
+        Registry::getSession()->setUser($oUser);
 
         /** @var User $oTBEUser */
         $oTBEUser = oxNew(User::class, $oUser, $oSession, $oConfig);
@@ -69,7 +78,7 @@ class UserSessionTest extends TestCase
 
         /** @var User $oTBEUser */
         $oTBEUser = oxNew(User::class, $oUser, $oSession, $oConfig);
-        $this->assertEquals($aExpectedList, $oTBEUser->getOeVATTBEEvidenceList());
+        $this->assertEquals($aExpectedList, $oTBEUser->getOeVATTBEEvidenceList(true));
 
         return $oTBEUser;
     }

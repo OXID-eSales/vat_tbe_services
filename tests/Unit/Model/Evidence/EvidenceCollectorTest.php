@@ -8,6 +8,7 @@ namespace OxidEsales\EVatModule\Tests\Unit\Model\Evidence;
 
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Core\Session;
+use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EVatModule\Model\Evidence\EvidenceCollector;
 use OxidEsales\EVatModule\Model\Evidence\EvidenceList;
 use OxidEsales\EVatModule\Model\Evidence\Item\BillingCountryEvidence;
@@ -31,6 +32,9 @@ class EvidenceCollectorTest extends TestCase
      */
     public function testGetEvidencesWhenEvidencesExistAndIsActive()
     {
+        //TODO: tmp solution, fix after moving to integration test
+        ContainerFactory::resetContainer();
+
         $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('aOeVATTBECountryEvidences', ['billing_country' => 1]);
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', ['oeVATTBEBillingCountryEvidence']);

@@ -9,6 +9,7 @@ namespace OxidEsales\EVatModule\Tests\Unit\Model;
 
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\Field;
+use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EVatModule\Model\Evidence\Item\BillingCountryEvidence;
 use OxidEsales\EVatModule\Service\ModuleSettings;
 use OxidEsales\EVatModule\Model\User as UserModel;
@@ -33,6 +34,9 @@ class UserTest extends TestCase
      */
     public function testCollectingTBEEvidenceList()
     {
+        //TODO: tmp solution, fix after moving to integration test
+        ContainerFactory::resetContainer();
+
         $oConfig = Registry::getConfig();
         $oSession = Registry::getSession();
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', ['oeVATTBEBillingCountryEvidence']);
@@ -161,6 +165,7 @@ class UserTest extends TestCase
 
         $oUser = oxNew(EShopUser::class);
         $oUser->oxuser__oxcountryid = new Field('');
+        $oSession->setUser($oUser);
 
         $oTBEUser = oxNew(User::class, $oUser, $oSession, $oConfig);
         $oTBEUser->getOeVATTBETbeCountryId();

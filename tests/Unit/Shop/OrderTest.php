@@ -6,7 +6,6 @@
 
 namespace OxidEsales\EVatModule\Tests\Unit\Shop;
 
-use OxidEsales\Eshop\Application\Model\Country as EShopCountry;
 use OxidEsales\Eshop\Application\Model\Order as EShopOrder;
 use OxidEsales\Eshop\Application\Model\User as EShopUser;
 use OxidEsales\EVatModule\Model\User as UserModel;
