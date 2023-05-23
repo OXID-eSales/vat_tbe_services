@@ -6,15 +6,13 @@
 
 namespace OxidEsales\EVatModule\Tests\Unit\Core;
 
-use OxidEsales\EshopCommunity\Core\DbMetaDataHandler;
+use OxidEsales\Eshop\Core\DbMetaDataHandler;
 use OxidEsales\EVatModule\Core\Events;
 use PHPUnit\Framework\TestCase;
 use oxDb;
 
 /**
  * This is dummy test.
- *
- * @covers Events
  */
 class EventsTest extends TestCase
 {

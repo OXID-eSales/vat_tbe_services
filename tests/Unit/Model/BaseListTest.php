@@ -11,8 +11,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Test class for BaseList.
- *
- * @covers BaseList
  */
 class BaseListTest extends TestCase
 {

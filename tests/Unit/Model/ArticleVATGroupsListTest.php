@@ -15,8 +15,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Testing ArticleVATGroupsList class.
- *
- * @covers ArticleVATGroupsList
  */
 class ArticleVATGroupsListTest extends TestCase
 {

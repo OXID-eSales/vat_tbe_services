@@ -24,8 +24,6 @@ use OxidEsales\EVatModule\Shop\Order;
 
 /**
  * Testing extended oxArticle class.
- *
- * @covers Order
  */
 class OrderTest extends TestCase
 {

@@ -7,7 +7,6 @@
 namespace OxidEsales\EVatModule\Tests\Unit\Model\Evidence;
 
 use OxidEsales\Eshop\Core\Registry;
-use OxidEsales\EshopCommunity\Core\Session;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EVatModule\Model\Evidence\EvidenceCollector;
 use OxidEsales\EVatModule\Model\Evidence\EvidenceList;
@@ -18,8 +17,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Test class for oeVATTBEEvidenceCalculator.
- *
- * @covers EvidenceCollector
  */
 class EvidenceCollectorTest extends TestCase
 {

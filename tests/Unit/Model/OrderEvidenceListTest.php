@@ -12,8 +12,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Test class for oeVATTBEOrderEvidenceList.
- *
- * @covers OrderEvidenceList
  */
 class OrderEvidenceListTest extends TestCase
 {

@@ -14,8 +14,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Testing TBEUser class.
- *
- * @covers BasketItemsValidator
  */
 class BasketItemsValidatorTest extends TestCase
 {

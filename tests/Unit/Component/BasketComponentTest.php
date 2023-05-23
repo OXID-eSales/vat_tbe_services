@@ -6,7 +6,7 @@
 
 namespace OxidEsales\EVatModule\Tests\Unit\Component;
 
-use OxidEsales\EshopCommunity\Core\Registry;
+use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Component\BasketComponent;
 use OxidEsales\EVatModule\Shop\Basket;
 use OxidEsales\EVatModule\Shop\Country;
@@ -15,8 +15,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Testing extended oxUser class.
- *
- * @covers BasketComponent
  */
 class BasketComponentTest extends TestCase
 {

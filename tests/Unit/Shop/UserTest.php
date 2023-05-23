@@ -9,7 +9,6 @@ namespace OxidEsales\EVatModule\Tests\Unit\Shop;
 use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\UtilsDate;
-use OxidEsales\EshopCommunity\Core\Session;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EVatModule\Model\Evidence\Item\BillingCountryEvidence;
 use OxidEsales\EVatModule\Service\ModuleSettings;
@@ -17,7 +16,6 @@ use OxidEsales\EVatModule\Shop\User;
 use OxidEsales\EVatModule\Traits\ServiceContainer;
 use PHPUnit\Framework\TestCase;
 use oxDb;
-use Symfony\Component\DependencyInjection\Container;
 
 /**
  * Testing extended oxUser class.

@@ -9,7 +9,7 @@ namespace OxidEsales\EVatModule\Tests\Unit\Model;
 
 use OxidEsales\Eshop\Application\Model\Basket;
 use OxidEsales\Eshop\Core\Session;
-use OxidEsales\EshopCommunity\Core\Registry;
+use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Tests\ContainerTrait;
 use OxidEsales\EVatModule\Model\OrderArticleChecker;
 use OxidEsales\EVatModule\Shop\Article;

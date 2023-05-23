@@ -19,8 +19,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Testing TBEUser class session related functionality.
- *
- * @covers User
  */
 class UserSessionTest extends TestCase
 {

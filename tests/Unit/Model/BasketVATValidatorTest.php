@@ -22,8 +22,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Testing BasketVATValidator class.
- *
- * @covers BasketVATValidator
  */
 class BasketVATValidatorTest extends TestCase
 {

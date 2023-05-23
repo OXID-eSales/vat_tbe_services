@@ -15,8 +15,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Test class for EvidenceRegister.
- *
- * @covers EvidenceRegister
  */
 
 //TODO: move to integration tests

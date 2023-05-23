@@ -12,8 +12,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Testing extended oxArticle class.
- *
- * @covers BasketContentMarkGenerator
  */
 class BasketContentMarkGeneratorTest extends TestCase
 {

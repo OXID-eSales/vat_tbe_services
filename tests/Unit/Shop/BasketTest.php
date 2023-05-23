@@ -20,8 +20,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Testing extended oxArticle class.
- *
- * @covers Basket
  */
 class BasketTest extends TestCase
 {

@@ -18,8 +18,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Testing extended oxViewConfig class.
- *
- * @covers ViewConfig
  */
 class ViewConfigTest extends TestCase
 {

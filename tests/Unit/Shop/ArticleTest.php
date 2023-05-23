@@ -12,9 +12,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Testing extended oxArticle class.
- *
- * @covers Article
- * @covers ArticleCacheKey
  */
 class ArticleTest extends TestCase
 {

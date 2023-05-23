@@ -12,8 +12,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Testing extended oxCountry class.
- *
- * @covers Country
  */
 class CountryTest extends TestCase
 {

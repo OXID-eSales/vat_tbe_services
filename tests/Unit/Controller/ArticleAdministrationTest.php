@@ -14,8 +14,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Testing VAT TBE administration in article page.
- *
- * @covers ArticleAdministration
  */
 class ArticleAdministrationTest extends TestCase
 {

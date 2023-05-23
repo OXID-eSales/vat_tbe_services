@@ -20,8 +20,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Testing TBEUser class.
- *
- * @covers \OxidEsales\EVatModule\Model\User
  */
 class UserTest extends TestCase
 {

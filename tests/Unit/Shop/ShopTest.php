@@ -15,8 +15,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Testing extended oxShop class.
- *
- * @covers Shop
  */
 class ShopTest extends TestCase
 {

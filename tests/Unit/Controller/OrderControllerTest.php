@@ -16,8 +16,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Testing extended Order controller.
- *
- * @covers OrderController
  */
 class OrderControllerTest extends TestCase
 {

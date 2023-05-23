@@ -13,8 +13,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Test class for oeVATTBEEvidenceCalculator.
- *
- * @covers EvidenceList
  */
 class EvidenceListTest extends TestCase
 {

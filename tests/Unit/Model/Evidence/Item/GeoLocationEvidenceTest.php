@@ -6,7 +6,7 @@
 
 namespace OxidEsales\EVatModule\Tests\Unit\Model\Evidence\Item;
 
-use OxidEsales\EshopCommunity\Core\Registry;
+use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Model\Evidence\Item\GeoLocationEvidence;
 use OxidEsales\EVatModule\Shop\User;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -14,8 +14,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Test class for oeVATTBEEvidenceCalculator.
- *
- * @covers GeoLocationEvidence
  */
 class GeoLocationEvidenceTest extends TestCase
 {

@@ -22,8 +22,6 @@ use OxidEsales\Eshop\Application\Model\Basket as EShopBasket;
 
 /**
  * Testing extended Basket controller.
- *
- * @covers BasketController
  */
 class BasketControllerTest extends TestCase
 {

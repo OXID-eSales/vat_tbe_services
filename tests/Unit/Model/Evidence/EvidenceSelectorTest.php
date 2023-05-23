@@ -17,8 +17,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Test class for EvidenceCalculator.
- *
- * @covers EvidenceSelector
  */
 class EvidenceSelectorTest extends TestCase
 {

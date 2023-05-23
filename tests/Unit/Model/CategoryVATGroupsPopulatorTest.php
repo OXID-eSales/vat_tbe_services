@@ -16,8 +16,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Testing CategoryArticlesUpdater class.
- *
- * @covers CategoryVATGroupsPopulator
  */
 class CategoryVATGroupsPopulatorTest extends TestCase
 {

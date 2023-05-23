@@ -12,8 +12,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Testing extended oxCategory class.
- *
- * @covers Category
  */
 class CategoryTest extends TestCase
 {

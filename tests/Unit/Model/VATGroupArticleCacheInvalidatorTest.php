@@ -17,8 +17,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Test class for oeVATTBEVATGroupArticleCacheInvalidator.
- *
- * @covers VATGroupArticleCacheInvalidator
  */
 class VATGroupArticleCacheInvalidatorTest extends TestCase
 {

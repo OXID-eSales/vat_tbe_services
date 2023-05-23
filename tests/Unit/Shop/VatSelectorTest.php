@@ -17,8 +17,6 @@ use OxidEsales\Eshop\Application\Model\User;
 
 /**
  * Testing extended oxUser class.
- *
- * @covers VatSelector
  */
 class VatSelectorTest extends TestCase
 {

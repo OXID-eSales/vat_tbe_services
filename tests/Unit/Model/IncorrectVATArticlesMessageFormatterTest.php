@@ -13,8 +13,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Test class for oeVATTBEArticleMessageFormatter.
- *
- * @covers IncorrectVATArticlesMessageFormatter
  */
 class IncorrectVATArticlesMessageFormatterTest extends TestCase
 {

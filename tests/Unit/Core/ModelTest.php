@@ -16,8 +16,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Testing Model class.
- *
- * @covers Model
  */
 class ModelTest extends TestCase
 {
