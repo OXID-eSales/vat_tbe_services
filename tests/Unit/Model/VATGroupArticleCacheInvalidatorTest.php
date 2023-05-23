@@ -6,11 +6,12 @@
 
 namespace OxidEsales\EVatModule\Tests\Unit\Model;
 
+use OxidEsales\Eshop\Application\Model\User;
 use OxidEsales\Eshop\Core\Cache\Generic\Cache;
-use OxidEsales\Eshop\Core\Cache\Generic\Connector\FileCacheConnector;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Model\ArticleVATGroupsList;
 use OxidEsales\EVatModule\Model\GroupArticleCacheInvalidator;
+use OxidEsales\EVatModule\Tests\Libs\TestCacheConnector;
 use OxidEsales\Facts\Facts;
 use PHPUnit\Framework\TestCase;
 
@@ -36,7 +37,9 @@ class VATGroupArticleCacheInvalidatorTest extends TestCase
             ->method('getArticlesAssignedToGroup')
             ->willReturn(['article1', 'article2']);
 
-        $oConnector = new FileCacheConnector();
+        Registry::getSession()->setUser(oxNew(User::class));
+
+        $oConnector = new TestCacheConnector();
         $oConnector->set('oxArticle_article1_1_en', 1);
         $oConnector->set('oxArticle_article2_1_en', 1);
         $oConnector->set('oxArticle_article3_1_en', 1);

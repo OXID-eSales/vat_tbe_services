@@ -19,21 +19,6 @@ use oxDb;
 class EventsTest extends TestCase
 {
     /**
-     * Tear down
-     */
-    public function tearDown(): void
-    {
-        oxDb::getDb()->execute('DROP TABLE IF EXISTS `oevattbe_articlevat`');
-        oxDb::getDb()->execute('DROP TABLE IF EXISTS `oevattbe_categoryvat`');
-        oxDb::getDb()->execute('DROP TABLE IF EXISTS `oevattbe_countryvatgroups`');
-        oxDb::getDb()->execute('DROP TABLE IF EXISTS `oevattbe_orderevidences`');
-
-        Events::onActivate();
-
-        parent::tearDown();
-    }
-
-    /**
      * Test for action on activation
      */
     public function testOnActivate()

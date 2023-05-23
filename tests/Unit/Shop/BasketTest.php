@@ -8,6 +8,7 @@ namespace OxidEsales\EVatModule\Tests\Unit\Shop;
 
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Application\Model\Country;
+use OxidEsales\Eshop\Application\Model\User;
 use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Model\OrderArticleChecker;
@@ -91,7 +92,8 @@ class BasketTest extends TestCase
         $oArticle->save();
 
         /** @var Basket|EShopBasket $oBasket */
-        $oBasket = oxNew(Basket::class);
+        $oBasket = oxNew(EShopBasket::class);
+        $oBasket->setUser(oxNew(User::class));
         $oBasket->addToBasket('_testArticle1', 1);
         $oBasket->setOeVATTBECountryId($sLithuaniaId);
 
@@ -142,6 +144,7 @@ class BasketTest extends TestCase
 
         /** @var EShopBasket|Basket $oBasket */
         $oBasket = oxNew(EShopBasket::class);
+        $oBasket->setUser(oxNew(User::class));
         $oBasket->setOeVATTBECountryId($sLithuaniaId);
         if ($bAddToBasket) {
             $oBasket->addToBasket('_testArticle1', 1);
