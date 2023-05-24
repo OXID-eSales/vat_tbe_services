@@ -88,9 +88,12 @@ class User
 
         $userCountry = $this->getCountry();
 
-        $blResult = $userCountry && $userCountry->getFieldData('oxisoalpha2') == $sDomesticCountryAbbr;
+        if ($userCountry) {
+            $blResult = $userCountry->getFieldData('oxisoalpha2') == $sDomesticCountryAbbr;
+            return $sDomesticCountryAbbr ? $blResult : false;
+        }
 
-        return $sDomesticCountryAbbr ? $blResult : false;
+        return false;
     }
 
     /**
