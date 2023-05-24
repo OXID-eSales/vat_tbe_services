@@ -16,8 +16,6 @@ use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 
 /**
  * Testing VAT TBE administration in category page.
- *
- * @covers oeVATTBECategoryAdministration
  */
 class CategoryAdministrationTest extends BaseTestCase
 {

@@ -13,10 +13,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Testing CountryVATGroupsList class.
- *
- * @covers CountryVATGroupsList
- * @covers CountryVATGroup
- * @covers CountryVATGroupsDbGateway
  */
 class CountryVATGroupTest extends BaseTestCase
 {

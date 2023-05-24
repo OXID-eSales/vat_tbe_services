@@ -15,12 +15,6 @@ use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 
 /**
  * Testing if Country has correct information about groups.
- *
- * @covers CountryVatGroups
- * @covers CountryVATGroupsDbGateway
- * @covers CountryVATGroup
- * @covers CountryVATGroupsList
- * @covers Country
  */
 class CountryInformationAboutVatGroupsTest extends BaseTestCase
 {

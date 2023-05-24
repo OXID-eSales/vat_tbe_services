@@ -13,11 +13,6 @@ use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 
 /**
  * Testing CountryVatGroups class.
- *
- * @covers CountryVatGroups
- * @covers CountryVATGroupsDbGateway
- * @covers CountryVATGroup
- * @covers CountryVATGroupsList
  */
 class CountryVATGroupsEditingTest extends BaseTestCase
 {

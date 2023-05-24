@@ -17,11 +17,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Testing CountryVatGroups class.
- *
- * @covers CountryVatGroups
- * @covers CountryVATGroupsDbGateway
- * @covers CountryVATGroup
- * @covers CountryVATGroupsList
  */
 class CountryVATGroupCreationTest extends BaseTestCase
 {

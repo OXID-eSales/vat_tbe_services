@@ -18,9 +18,6 @@ use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 
 /**
  * Testing oeVATTBEBasket class.
- *
- * @covers oeVATTBEBasket
- * @covers oeVATTBEBasketVATValidator
  */
 class BasketMarksTest extends BaseTestCase
 {

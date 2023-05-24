@@ -11,8 +11,6 @@ use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 
 /**
  * Test class for CategoryVATGroupsPopulatorDbGateway.
- *
- * @covers CategoryVATGroupsPopulatorDbGateway
  */
 class CategoryVATGroupsPopulatorDbGatewayTest extends BaseTestCase
 {

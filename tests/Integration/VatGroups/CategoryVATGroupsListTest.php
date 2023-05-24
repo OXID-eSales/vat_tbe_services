@@ -12,9 +12,6 @@ use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 
 /**
  * Testing CategoryVATGroupsList class.
- *
- * @covers CategoryVATGroupsList
- * @covers CategoryVATGroupsDbGateway
  */
 class CategoryVATGroupsListTest extends BaseTestCase
 {

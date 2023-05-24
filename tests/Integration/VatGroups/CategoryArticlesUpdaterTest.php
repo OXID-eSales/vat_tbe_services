@@ -21,8 +21,6 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
 {
     /**
      * test populate not existing category data
-     *
-     * @covers ArticleExtendAjax
      */
     public function testPopulateAddingCategoriesToArticle()
     {
@@ -45,8 +43,6 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
 
     /**
      * test populate not existing category data
-     *
-     * @covers ArticleExtendAjax
      */
     public function testPopulateAddingCategoriesTBEToArticle()
     {
@@ -70,8 +66,6 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
 
     /**
      * test populate not existing category data
-     *
-     * @covers oeVATTBECategory_Main_Ajax
      */
     public function testPopulateAddingArticleToCategory()
     {
@@ -94,8 +88,6 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
 
     /**
      * test populate not existing category data
-     *
-     * @covers CategoryMainAjax
      */
     public function testPopulateAddingArticleToCategoryTBE()
     {
@@ -119,8 +111,6 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
      * Test check when 1 article is unassigned from category.
      *
      * @depends testPopulateAddingArticleToCategoryTBE
-     *
-     * @covers CategoryMainAjax
      */
     public function testRemoveArticleFromCategoryWhenOneArticleIsRemoved()
     {
@@ -137,8 +127,6 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
 
     /**
      * When all articles are unassigned by clicking button "Unassign all".
-     *
-     * @covers CategoryMainAjax
      */
     public function testRemoveArticlesWhenUnsassignAllIsClicked()
     {
@@ -162,8 +150,6 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
 
     /**
      * test populate not existing category data
-     *
-     * @covers oeVATTBEArticle_Main
      */
     public function testPopulateAddingArticleToCategoryOnCreate()
     {
@@ -180,8 +166,6 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
 
     /**
      * test populate not existing category data
-     *
-     * @covers oeVATTBEArticle_Main
      */
     public function testPopulateAddingArticleToCategoryOnCreateTBECAtegory()
     {
@@ -198,8 +182,6 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
 
     /**
      * test populate not existing category data
-     *
-     * @covers oeVATTBECategoryAdministration
      */
     public function testPopulateOnCategoryConfiguration()
     {
@@ -224,8 +206,6 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
 
     /**
      * test populate not existing category data
-     *
-     * @covers CategoryAdministration
      */
     public function testPopulateOnCategoryConfigurationNotTbe()
     {
@@ -250,8 +230,6 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
 
     /**
      * test populate not existing category data
-     *
-     * @covers CategoryAdministration
      */
     public function testPopulateOnCategoryConfigurationNoGroups()
     {

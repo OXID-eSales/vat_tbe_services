@@ -16,8 +16,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Testing admin controller class.
- *
- * @covers OrderMain
  */
 class OrderMainTest extends BaseTestCase
 {

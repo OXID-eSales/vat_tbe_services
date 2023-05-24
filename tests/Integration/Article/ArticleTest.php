@@ -15,9 +15,6 @@ use OxidEsales\Facts\Facts;
 
 /**
  * Testing extended oxArticle class.
- *
- * @covers oeVATTBEOxArticle
- * @covers oeVATTBETBEArticleCacheKey
  */
 class ArticleTest extends BaseTestCase
 {

@@ -11,8 +11,6 @@ use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 
 /**
  * Test class for OrderEvidenceListDbGateway.
- *
- * @covers OrderEvidenceListDbGateway
  */
 class OrderEvidenceListDbGatewayTest extends BaseTestCase
 {

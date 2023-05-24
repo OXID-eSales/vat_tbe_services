@@ -19,9 +19,6 @@ use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 
 /**
  * Testing BasketController class.
- *
- * @covers OrderController
- * @covers BasketVATValidator
  */
 class OrderMarksTest extends BaseTestCase
 {
