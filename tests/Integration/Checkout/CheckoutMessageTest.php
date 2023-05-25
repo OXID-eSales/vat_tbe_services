@@ -10,6 +10,8 @@ use OxidEsales\Eshop\Core\Email;
 use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Model\BaseModel;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\Eshop\Core\Session;
+use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EVatModule\Controller\BasketController;
 use OxidEsales\EVatModule\Controller\OrderController;
 use OxidEsales\EVatModule\Service\ModuleSettings;
@@ -24,14 +26,24 @@ use OxidEsales\EVatModule\Traits\ServiceContainer;
 class CheckoutMessageTest extends BaseTestCase
 {
     use ServiceContainer;
-//    /**
-//     * Prepare articles data: set articles to be TBE.
-//     */
-//    public function setUp(): void
-//    {
-//        parent::setup();
+    /**
+     * Prepare articles data: set articles to be TBE.
+     */
+    public function setUp(): void
+    {
+        parent::setup();
+
+        //todo: move to demodata
+        \oxDb::getDb()->execute("UPDATE `oxcountry` SET oevattbe_appliestbevat = 1 WHERE OXID = 'a7c40f6320aeb2ec2.72885259'");
+        $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('DE');
+
 //        $this->_prepareArticlesData();
-//    }
+    }
+
+    public function tearDown(): void
+    {
+        ContainerFactory::resetContainer();
+    }
 
     /**
      * Provides with articles to check if error message is formed.
@@ -134,8 +146,8 @@ class CheckoutMessageTest extends BaseTestCase
         $sTbeArticleWithoutVatGroup = '1127';
         $sNotTbeArticle = '1131';
 
-        $sErrorMessage2 = '/.*: Blinkende Eisw.*/';
-        $sErrorMessage3 = '/.*: Blinkende Eisw.*/';
+        $sErrorMessage2 = '/.*: ABSINTH.*/';
+        $sErrorMessage3 = '/.*: ABSINTH.*/';
         return array(
             array(array($sTbeArticleWithoutVatGroup), $sErrorMessage2),
             array(array($sIdTbeArticleWithVatGroup, $sTbeArticleWithoutVatGroup), $sErrorMessage3),
@@ -271,6 +283,7 @@ class CheckoutMessageTest extends BaseTestCase
 
         $oSession = Registry::getSession();
         $oSession->setVariable('sess_stoken', 'stoken');
+        $oSession->setVariable('TBECountryId', 'a7c40f6320aeb2ec2.72885259');
 
         /** @var Basket $oBasket */
         $oBasket = oxNew(Basket::class);
@@ -303,7 +316,8 @@ class CheckoutMessageTest extends BaseTestCase
     {
         $_POST['stoken'] = 'stoken';
         $_POST['sDeliveryAddressMD5'] = 'b4ebffc0f1940d9a54599ec7e21d2f2c';
-        Registry::getConfig()->setConfigParam('sTheme', 'flow');
+        Registry::getConfig()->setConfigParam('sTheme', 'apex');
+        $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('AT');
 
         /** @var Email $mailer */
         $mailer = $this->getMockBuilder(Email::class)
@@ -314,6 +328,7 @@ class CheckoutMessageTest extends BaseTestCase
 
         $oSession = Registry::getSession();
         $oSession->setVariable('sess_stoken', 'stoken');
+        $oSession->setVariable('TBECountryId', 'a7c40f6320aeb2ec2.72885259');
 
         /** @var Basket $oBasket */
         $oBasket = oxNew(Basket::class);
@@ -347,7 +362,8 @@ class CheckoutMessageTest extends BaseTestCase
     {
         $_POST['stoken'] = 'stoken';
         $_POST['sDeliveryAddressMD5'] = 'b4ebffc0f1940d9a54599ec7e21d2f2c';
-        Registry::getConfig()->setConfigParam('sTheme', 'flow');
+        Registry::getConfig()->setConfigParam('sTheme', 'apex');
+        $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('AT');
 
         /** @var Email $mailer */
         $mailer = $this->getMockBuilder(Email::class)
@@ -358,6 +374,7 @@ class CheckoutMessageTest extends BaseTestCase
 
         $oSession = Registry::getSession();
         $oSession->setVariable('sess_stoken', 'stoken');
+        $oSession->setVariable('TBECountryId', 'a7c40f6320aeb2ec2.72885259');
 
         /** @var Basket $oBasket */
         $oBasket = oxNew(Basket::class);

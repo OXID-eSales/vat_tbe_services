@@ -4,10 +4,14 @@
  * See LICENSE file for license details.
  */
 
+namespace OxidEsales\EVatModule\Tests\Libs;
+
+use OxidEsales\Eshop\Core\Email;
+
 /**
  * Class used to stub email sending.
  */
-class oeVATTBENullMailer extends oxEmail
+class NullMailer extends Email
 {
     /**
      * Overrides send mail functionality.
