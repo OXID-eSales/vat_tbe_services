@@ -8,6 +8,7 @@
 namespace OxidEsales\EVatModule\Model;
 
 use OxidEsales\EVatModule\Core\Model;
+use OxidEsales\EVatModule\Model\DbGateway\CategoryVATGroupsDbGateway;
 
 /**
  * VAT Groups handling class
@@ -16,6 +17,12 @@ class CategoryVATGroupsList extends Model
 {
     /** @var array Model data. */
     protected $_aData = array();
+
+    public function __construct(
+        protected CategoryVATGroupsDbGateway $dbGateway
+    )
+    {
+    }
 
     /**
      * Method for model saving (insert and update data).

@@ -8,6 +8,7 @@
 namespace OxidEsales\EVatModule\Model;
 
 use OxidEsales\EVatModule\Core\Model;
+use OxidEsales\EVatModule\Model\DbGateway\CountryVATGroupsDbGateway;
 
 /**
  * VAT Group handling class
@@ -15,6 +16,12 @@ use OxidEsales\EVatModule\Core\Model;
 class CountryVATGroup extends Model
 {
     private $_oVATGroupArticleCacheInvalidator = null;
+
+    public function __construct(
+        protected CountryVATGroupsDbGateway $dbGateway
+    )
+    {
+    }
 
     /**
      * Sets VAT group articles cache invalidator.

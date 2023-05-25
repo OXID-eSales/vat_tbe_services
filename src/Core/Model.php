@@ -21,10 +21,10 @@ class Model
     /** @var bool Was object information found in database. */
     protected $_blIsLoaded = false;
 
-    public function __construct(
-        protected ModelDbGateway $dbGateway
-    ) {
-    }
+//    public function __construct(
+//        protected ModelDbGateway $dbGateway
+//    ) {
+//    }
 
     /**
      * Sets model id.

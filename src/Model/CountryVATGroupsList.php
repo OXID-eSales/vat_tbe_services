@@ -8,6 +8,7 @@
 namespace OxidEsales\EVatModule\Model;
 
 use OxidEsales\EVatModule\Core\Model;
+use OxidEsales\EVatModule\Model\DbGateway\CountryVATGroupsDbGateway;
 use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
@@ -16,6 +17,12 @@ use OxidEsales\EVatModule\Traits\ServiceContainer;
 class CountryVATGroupsList extends Model
 {
     use ServiceContainer;
+
+    public function __construct(
+        protected CountryVATGroupsDbGateway $dbGateway
+    )
+    {
+    }
 
     /**
      * Selects and loads order payment history.

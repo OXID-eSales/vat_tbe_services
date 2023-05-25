@@ -12,15 +12,18 @@ use OxidEsales\Eshop\Core\Model\BaseModel;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Controller\BasketController;
 use OxidEsales\EVatModule\Controller\OrderController;
+use OxidEsales\EVatModule\Service\ModuleSettings;
 use OxidEsales\EVatModule\Shop\Basket;
 use OxidEsales\EVatModule\Shop\User;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
+use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
  * Testing message in checkout process for TBE articles with wrong VAT.
  */
 class CheckoutMessageTest extends BaseTestCase
 {
+    use ServiceContainer;
 //    /**
 //     * Prepare articles data: set articles to be TBE.
 //     */
@@ -191,6 +194,7 @@ class CheckoutMessageTest extends BaseTestCase
 
         $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('sOeVATTBEDomesticCountry', 'AT');
+        $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('AT');
 
         $oUser = $this->_createUser();
         $blLogin = $oUser->login($this->_sDefaultUserName, $this->_sDefaultUserPassword);

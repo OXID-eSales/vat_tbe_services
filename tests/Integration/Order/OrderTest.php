@@ -9,17 +9,21 @@ namespace OxidEsales\EVatModule\Tests\Integration\Order;
 use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Model\DbGateway\OrderEvidenceListDbGateway;
+use OxidEsales\EVatModule\Model\Evidence\Item\BillingCountryEvidence;
 use OxidEsales\EVatModule\Model\OrderEvidenceList;
+use OxidEsales\EVatModule\Service\ModuleSettings;
 use OxidEsales\EVatModule\Shop\Basket;
 use OxidEsales\EVatModule\Shop\Order;
 use OxidEsales\EVatModule\Shop\User;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
+use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
  * Testing oeVATTBEOrder class.
  */
 class OrderTest extends BaseTestCase
 {
+    use ServiceContainer;
 
     /**
      * Data provider for SavingEvidenceList test.
@@ -47,6 +51,10 @@ class OrderTest extends BaseTestCase
         $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence'));
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
+
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class]);
+        $moduleSettings->saveDefaultEvidence('billing_country');
 
         /** @var Basket $oBasket */
         $oBasket = $this->getMockBuilder(Basket::class)
@@ -149,6 +157,10 @@ class OrderTest extends BaseTestCase
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence'));
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
 
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class]);
+        $moduleSettings->saveDefaultEvidence('billing_country');
+
         /** @var Basket $oBasket */
         $oBasket = $this->getMockBuilder(Basket::class)
                 ->onlyMethods(array("hasOeTBEVATArticles"))
@@ -210,6 +222,10 @@ class OrderTest extends BaseTestCase
         $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence'));
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
+
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class]);
+        $moduleSettings->saveDefaultEvidence('billing_country');
 
         /** @var Basket $oBasket */
         $oBasket = $this->getMockBuilder(Basket::class)

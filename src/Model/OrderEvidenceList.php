@@ -9,6 +9,7 @@ namespace OxidEsales\EVatModule\Model;
 
 use OxidEsales\Eshop\Application\Model\Country;
 use OxidEsales\EVatModule\Core\Model;
+use OxidEsales\EVatModule\Model\DbGateway\OrderEvidenceListDbGateway;
 
 /**
  * Order Evidence list class.
@@ -17,6 +18,12 @@ class OrderEvidenceList extends Model
 {
     /** @var array Model data. */
     protected $_aData = array();
+
+    public function __construct(
+        protected OrderEvidenceListDbGateway $dbGateway
+    )
+    {
+    }
 
     /**
      * Method for model saving (insert and update data).

@@ -10,17 +10,20 @@ use OxidEsales\Eshop\Application\Model\BasketItem;
 use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Controller\BasketController;
+use OxidEsales\EVatModule\Service\ModuleSettings;
 use OxidEsales\EVatModule\Shop\Article;
 use OxidEsales\EVatModule\Shop\Basket;
 use OxidEsales\EVatModule\Shop\Country;
 use OxidEsales\EVatModule\Shop\User;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
+use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
  * Testing oeVATTBEBasket class.
  */
 class BasketMarksTest extends BaseTestCase
 {
+    use ServiceContainer;
 
     /**
      * data provider for test testShowVATTBEMark
@@ -55,6 +58,8 @@ class BasketMarksTest extends BaseTestCase
     {
         $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('sOeVATTBEDomesticCountry', 'AT');
+        $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('AT');
+
         $oSession = Registry::getSession();
         $oSession->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
 
@@ -115,6 +120,8 @@ class BasketMarksTest extends BaseTestCase
     {
         $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('sOeVATTBEDomesticCountry', 'AT');
+        $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('AT');
+
         $oSession = Registry::getSession();
         $oSession->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
 

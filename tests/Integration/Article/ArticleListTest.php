@@ -7,6 +7,7 @@
 namespace OxidEsales\EVatModule\Tests\Integration\Article;
 
 use OxidEsales\Eshop\Application\Controller\Admin\ArticleList as ArticleListController;
+use OxidEsales\Eshop\Application\Model\Country;
 use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Model\BaseModel;
 use OxidEsales\Eshop\Core\Registry;
@@ -20,14 +21,14 @@ use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
  */
 class ArticleListTest extends BaseTestCase
 {
-//    /**
-//     * Initialize the fixture.
-//     */
-//    public function setUp(): void
-//    {
-//        parent::setup();
-////        $this->_prepareData();
-//    }
+    /**
+     * Initialize the fixture.
+     */
+    public function setUp(): void
+    {
+        parent::setup();
+        $this->_prepareData();
+    }
 
     /**
      * data provider
@@ -292,12 +293,12 @@ class ArticleListTest extends BaseTestCase
         $this->assertSame(9, count($aListItems));
     }
 
-//    /**
-//     * prepare data
-//     *
-//     */
-//    protected function _prepareData()
-//    {
+    /**
+     * prepare data
+     *
+     */
+    protected function _prepareData()
+    {
 //        $oDb = \oxDb::getDb();
 //        $oDb->execute("TRUNCATE TABLE oevattbe_countryvatgroups");
 //        $oDb->execute("TRUNCATE TABLE oevattbe_articlevat");
@@ -309,7 +310,9 @@ class ArticleListTest extends BaseTestCase
 //        $sql = "INSERT INTO `oxobject2category` (`OXID`, `OXOBJECTID`, `OXCATNID`, `OXPOS`, `OXTIME`) VALUES
 //        ('c3944abfcb65b13a3.66180278', '1126', '30e44ab8593023055.23928895', 0, 1152122038)";
 //        $oDb->execute($sql);
-//    }
+
+        \oxDb::getDb()->execute("UPDATE `oxcountry` SET oevattbe_appliestbevat = 1 WHERE OXID = 'a7c40f631fc920687.20179984'");
+    }
 
     /**
      * Prepare article list object for testing
