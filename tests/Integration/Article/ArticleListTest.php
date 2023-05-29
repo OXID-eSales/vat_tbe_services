@@ -310,9 +310,6 @@ class ArticleListTest extends BaseTestCase
 //        $sql = "INSERT INTO `oxobject2category` (`OXID`, `OXOBJECTID`, `OXCATNID`, `OXPOS`, `OXTIME`) VALUES
 //        ('c3944abfcb65b13a3.66180278', '1126', '30e44ab8593023055.23928895', 0, 1152122038)";
 //        $oDb->execute($sql);
-
-        //todo: move to demodata
-        \oxDb::getDb()->execute("UPDATE `oxcountry` SET oevattbe_appliestbevat = 1 WHERE OXID = 'a7c40f631fc920687.20179984'");
     }
 
     /**
