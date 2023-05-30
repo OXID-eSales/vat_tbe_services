@@ -7,6 +7,8 @@
 namespace OxidEsales\EVatModule\Tests\Integration\Country;
 
 use OxidEsales\Eshop\Core\Field;
+use OxidEsales\EshopCommunity\Core\Registry;
+use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EVatModule\Shop\User;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 
@@ -15,7 +17,7 @@ use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
  */
 class CountryChangeEventsTest extends BaseTestCase
 {
-    protected $backupGlobalsBlacklist = array('_SESSION');
+    protected $backupGlobalsExcludeList = array('_SESSION');
 
     /**
      * User created with billing country set as germany;
@@ -27,6 +29,7 @@ class CountryChangeEventsTest extends BaseTestCase
     {
         $sGermanyId = $this->_sGermanyId;
         $oUser = $this->_createUser();
+        Registry::getSession()->setUser($oUser);
         $this->assertSame($sGermanyId, $oUser->getOeVATTBETbeCountryId(), 'User created in Germany, so TBE country must be Germany.');
 
         return $oUser;
@@ -47,9 +50,13 @@ class CountryChangeEventsTest extends BaseTestCase
     {
         $sAustriaId = $this->_sAustriaId;
         $oUser->User__oxcountryid = new Field($sAustriaId, Field::T_RAW);
+        $oUser->assign([
+            'oxcountryid' => $sAustriaId
+        ]);
 
         $this->assertNotSame($sAustriaId, $oUser->getOeVATTBETbeCountryId());
         $oUser->save();
+        ContainerFactory::resetContainer();//Todo: Clear cached services
         $this->assertSame($sAustriaId, $oUser->getOeVATTBETbeCountryId());
 
         return $oUser;
@@ -143,6 +150,12 @@ class CountryChangeEventsTest extends BaseTestCase
         $sGermanyId = $this->_sGermanyId;
 
         $oUser = oxNew(User::class);
+        $oUser->assign([
+            'oxusername' => $sUserName,
+            'oxpassword' => $sEncodedPassword,
+            'oxpasssalt' => $sSalt,
+            'oxcountryid' => $sGermanyId,
+        ]);
         $oUser->User__Username = new Field($sUserName, Field::T_RAW);
         $oUser->User__oxpassword = new Field($sEncodedPassword, Field::T_RAW);
         $oUser->User__oxpasssalt = new Field($sSalt, Field::T_RAW);

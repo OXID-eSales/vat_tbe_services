@@ -10,6 +10,7 @@ use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Model\DbGateway\OrderEvidenceListDbGateway;
 use OxidEsales\EVatModule\Model\Evidence\Item\BillingCountryEvidence;
+use OxidEsales\EVatModule\Model\Evidence\Item\GeoLocationEvidence;
 use OxidEsales\EVatModule\Model\OrderEvidenceList;
 use OxidEsales\EVatModule\Service\ModuleSettings;
 use OxidEsales\EVatModule\Shop\Basket;
@@ -54,6 +55,7 @@ class OrderTest extends BaseTestCase
 
         $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
         $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class]);
+        $moduleSettings->saveCountryEvidences(['billing_country' => 1]);
         $moduleSettings->saveDefaultEvidence('billing_country');
 
         /** @var Basket $oBasket */
@@ -140,7 +142,9 @@ class OrderTest extends BaseTestCase
                 ->onlyMethods(array("getFinalizeOrderParent"))
                 ->getMock();
         $oOrder->expects($this->any())->method("getFinalizeOrderParent")->will($this->returnValue(Order::ORDER_STATE_PAYMENTERROR));
-        $oOrder->Order__oevattbe_evidenceused = new Field('billing_country');
+        $oOrder->assign([
+            'oevattbe_evidenceused' => 'billing_country'
+        ]);
 
         $oOrder->setId('order_id');
         $oOrder->finalizeOrder($oBasket, $oUser, true);
