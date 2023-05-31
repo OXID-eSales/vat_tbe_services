@@ -8,11 +8,13 @@ namespace OxidEsales\EVatModule\Tests\Integration\VatGroups;
 
 use OxidEsales\Eshop\Core\DisplayError;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EVatModule\Controller\Admin\CountryVatGroups;
 use OxidEsales\EVatModule\Model\CountryVATGroup;
 use OxidEsales\EVatModule\Model\CountryVATGroupsList;
 use OxidEsales\EVatModule\Model\DbGateway\CountryVATGroupsDbGateway;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
+use OxidEsales\Facts\Facts;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -20,6 +22,12 @@ use PHPUnit\Framework\TestCase;
  */
 class CountryVATGroupCreationTest extends BaseTestCase
 {
+    public function setUp(): void
+    {
+        //TODO: proper cleanup of piled up data
+        \oxDb::getDb()->execute("DELETE FROM `oevattbe_countryvatgroups` WHERE OEVATTBE_COUNTRYID = 'some_country_id'");
+    }
+
     /**
      * Return different variants of country VAT group data to save.
      *
@@ -49,7 +57,7 @@ class CountryVATGroupCreationTest extends BaseTestCase
      *
      * @dataProvider providerCreateNewGroup
      */
-    public function testCreateNewGroupWithSameData($sGroupName, $fVATRate, $sGroupDescription, $sExpectedVatRate)
+    public function testCreateNewGroup($sGroupName, $fVATRate, $sGroupDescription, $sExpectedVatRate)
     {
         $sCountryId = 'some_country_id';
         $aParameters['oxcountry__oxid'] = $sCountryId;
@@ -73,18 +81,10 @@ class CountryVATGroupCreationTest extends BaseTestCase
         $aVATTBECountryVATGroupsList = $oVATTBECountryVATGroupsList->load('some_country_id');
 
         $this->assertTrue(isset($aVATTBECountryVATGroupsList[0]), 'Newly created group must be in 0 position.');
-        $this->assertTrue(isset($aVATTBECountryVATGroupsList[1]), 'Newly created group must be in 1 position.');
+        $this->assertFalse(isset($aVATTBECountryVATGroupsList[1]), 'Newly created should not have duplication.');
 
         /** @var CountryVATGroup $oNewlyCreatedCountryVATGroup */
         $oNewlyCreatedCountryVATGroup = $aVATTBECountryVATGroupsList[0];
-
-        $this->assertSame($sCountryId, $oNewlyCreatedCountryVATGroup->getCountryId());
-        $this->assertSame($sGroupName, $oNewlyCreatedCountryVATGroup->getName());
-        $this->assertSame($sExpectedVatRate, $oNewlyCreatedCountryVATGroup->getRate());
-        $this->assertSame($sGroupDescription, $oNewlyCreatedCountryVATGroup->getDescription());
-
-        /** @var CountryVATGroup $oNewlyCreatedCountryVATGroup */
-        $oNewlyCreatedCountryVATGroup = $aVATTBECountryVATGroupsList[1];
 
         $this->assertSame($sCountryId, $oNewlyCreatedCountryVATGroup->getCountryId());
         $this->assertSame($sGroupName, $oNewlyCreatedCountryVATGroup->getName());

@@ -46,7 +46,7 @@ class ArticleTest extends BaseTestCase
 
         $oArticle->load('1126');
 
-        $this->assertSame('8.00', $oArticle->getOeVATTBETBEVat());
+        $this->assertSame('6.00', $oArticle->getOeVATTBETBEVat());
     }
 
     /**

@@ -26,6 +26,7 @@ class CountryInformationAboutVatGroupsTest extends BaseTestCase
     public function testAddCountryVatGroup()
     {
         $sCountryId = '8f241f11095410f38.37165361';
+        \oxDb::getDb()->execute("UPDATE `oxcountry` SET OEVATTBE_ISTBEVATCONFIGURED=0 WHERE OXID = '$sCountryId'");
 
         /** @var Country $oCountry */
         $oCountry = oxNew(Country::class);
@@ -50,6 +51,9 @@ class CountryInformationAboutVatGroupsTest extends BaseTestCase
     public function testDeleteCountryVatGroup()
     {
         $sCountryId = 'a7c40f632a0804ab5.18804076';
+
+        //TODO: settings came from module activation
+        \oxDb::getDb()->execute("UPDATE `oxcountry` SET OEVATTBE_ISTBEVATCONFIGURED=1 WHERE OXID = '$sCountryId'");
 
         /** @var Country $oCountry */
         $oCountry = oxNew(Country::class);

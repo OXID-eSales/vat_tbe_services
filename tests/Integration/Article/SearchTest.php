@@ -45,7 +45,7 @@ class SearchTest extends TestCase
         $oArticle = $oArticleList['1126'];
 
         $this->assertInstanceOf(Article::class, $oArticle);
-        $this->assertSame('8.00', $oArticle->getOeVATTBETBEVat());
+        $this->assertSame('6.00', $oArticle->getOeVATTBETBEVat());
     }
 
     /**

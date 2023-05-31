@@ -114,6 +114,9 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
      */
     public function testRemoveArticleFromCategoryWhenOneArticleIsRemoved()
     {
+        //TODO: remove this and use only fixtures
+        $this->_cleanFixtures();
+
         /** @var CategoryMainAjax $oController */
         $oController = $this->getMockBuilder(CategoryMainAjax::class)
                 ->onlyMethods(array("getActionIds"))
@@ -289,6 +292,12 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
         foreach ($aSqlQueries as $sSql) {
             \oxDb::getDb()->execute($sSql);
         }
+    }
+
+    protected function _cleanFixtures()
+    {
+        \oxDb::getDb()->execute("DELETE FROM `oevattbe_articlevat` WHERE OEVATTBE_ARTICLEID = '1126'");
+        \oxDb::getDb()->execute("DELETE FROM `oxarticles` WHERE OXID IN ('1126', '1127', '1131', '_testArticle')");
     }
 
     /**

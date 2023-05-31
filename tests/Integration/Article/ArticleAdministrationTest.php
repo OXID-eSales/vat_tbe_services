@@ -49,11 +49,13 @@ class ArticleAdministrationTest extends BaseTestCase
         /** @var ArticleAdministration $oArticleAdministration */
         $oArticleAdministration = oxNew(ArticleAdministration::class);
 
-        $oCountryVATGroup1 = $this->get(CountryVATGroup::class);
+        /** @var CountryVATGroupsDbGateway $oGateway */
+        $oGateway = oxNew(CountryVATGroupsDbGateway::class);
+        $oCountryVATGroup1 = oxNew(CountryVATGroup::class, $oGateway);
         $oCountryVATGroup1->setId(2);
         $oCountryVATGroup1->setData($aData1);
 
-        $oCountryVATGroup2 = $this->get(CountryVATGroup::class);
+        $oCountryVATGroup2 = oxNew(CountryVATGroup::class, $oGateway);
         $oCountryVATGroup2->setId(3);
         $oCountryVATGroup2->setData($aData2);
 

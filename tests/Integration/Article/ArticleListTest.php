@@ -15,21 +15,13 @@ use OxidEsales\EVatModule\Shop\ArticleList;
 use OxidEsales\EVatModule\Shop\User;
 use OxidEsales\EVatModule\Shop\Article;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
+use OxidEsales\EVatModule\Tests\Integration\DemoData;
 
 /**
  * Testing extended Article class.
  */
 class ArticleListTest extends BaseTestCase
 {
-    /**
-     * Initialize the fixture.
-     */
-    public function setUp(): void
-    {
-        parent::setup();
-        $this->_prepareData();
-    }
-
     /**
      * data provider
      *
@@ -40,7 +32,7 @@ class ArticleListTest extends BaseTestCase
         return array(
             //array( 'local', null ),
             array( 'notLoggedIn', null ),
-            array( 'loggedIn', '8.00' ),
+            array( 'loggedIn', '6.00' ),
             array( 'loggedInWithoutCountry', null )
         );
     }
@@ -291,25 +283,6 @@ class ArticleListTest extends BaseTestCase
         $aListItems = $oArticleList->getItemList();
 
         $this->assertSame(9, count($aListItems));
-    }
-
-    /**
-     * prepare data
-     *
-     */
-    protected function _prepareData()
-    {
-//        $oDb = \oxDb::getDb();
-//        $oDb->execute("TRUNCATE TABLE oevattbe_countryvatgroups");
-//        $oDb->execute("TRUNCATE TABLE oevattbe_articlevat");
-//        $oDb->execute("DELETE FROM  `oxobject2category` WHERE `OXID`='c3944abfcb65b13a3.66180278'");
-//        $sql = "INSERT INTO oevattbe_countryvatgroups SET OEVATTBE_ID = 1, OEVATTBE_COUNTRYID = 'a7c40f631fc920687.20179984', OEVATTBE_NAME='name', OEVATTBE_RATE='8'";
-//        $oDb->execute($sql);
-//        $sql = "INSERT INTO oevattbe_articlevat SET OEVATTBE_ARTICLEID = '1126', OEVATTBE_COUNTRYID = 'a7c40f631fc920687.20179984', OEVATTBE_VATGROUPID = '1'";
-//        $oDb->execute($sql);
-//        $sql = "INSERT INTO `oxobject2category` (`OXID`, `OXOBJECTID`, `OXCATNID`, `OXPOS`, `OXTIME`) VALUES
-//        ('c3944abfcb65b13a3.66180278', '1126', '30e44ab8593023055.23928895', 0, 1152122038)";
-//        $oDb->execute($sql);
     }
 
     /**
