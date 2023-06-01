@@ -10,7 +10,6 @@ use OxidEsales\Eshop\Core\Email;
 use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Model\BaseModel;
 use OxidEsales\Eshop\Core\Registry;
-use OxidEsales\Eshop\Core\Session;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EVatModule\Controller\BasketController;
 use OxidEsales\EVatModule\Controller\OrderController;
@@ -26,6 +25,7 @@ use OxidEsales\EVatModule\Traits\ServiceContainer;
 class CheckoutMessageTest extends BaseTestCase
 {
     use ServiceContainer;
+
     /**
      * Prepare articles data: set articles to be TBE.
      */
@@ -33,16 +33,9 @@ class CheckoutMessageTest extends BaseTestCase
     {
         parent::setup();
 
-        //todo: move to demodata
-        \oxDb::getDb()->execute("UPDATE `oxcountry` SET oevattbe_appliestbevat = 1 WHERE OXID = 'a7c40f6320aeb2ec2.72885259'");
-        $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('DE');
+        ContainerFactory::resetContainer();
 
 //        $this->_prepareArticlesData();
-    }
-
-    public function tearDown(): void
-    {
-        ContainerFactory::resetContainer();
     }
 
     /**
@@ -78,6 +71,8 @@ class CheckoutMessageTest extends BaseTestCase
      */
     public function testMessageSetInBasketForAllArticlesWhenUserIsNotLoggedIn($aArticles, $sErrorMessage)
     {
+        $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('DE');
+
         /** @var Basket $oBasket */
         $oBasket = oxNew(Basket::class);
         foreach ($aArticles as $sArticleId) {
@@ -86,6 +81,7 @@ class CheckoutMessageTest extends BaseTestCase
 
         $oSession = Registry::getSession();
         $oSession->setBasket($oBasket);
+        $oSession->setUser(null);
 
         /** @var BasketController $oBasket */
         $oBasket = oxNew(BasketController::class);

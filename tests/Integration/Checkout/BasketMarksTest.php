@@ -9,6 +9,7 @@ namespace OxidEsales\EVatModule\Tests\Integration\Checkout;
 use OxidEsales\Eshop\Application\Model\BasketItem;
 use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EVatModule\Controller\BasketController;
 use OxidEsales\EVatModule\Service\ModuleSettings;
 use OxidEsales\EVatModule\Shop\Article;
@@ -24,6 +25,13 @@ use OxidEsales\EVatModule\Traits\ServiceContainer;
 class BasketMarksTest extends BaseTestCase
 {
     use ServiceContainer;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        ContainerFactory::resetContainer();
+    }
 
     /**
      * data provider for test testShowVATTBEMark
@@ -67,12 +75,18 @@ class BasketMarksTest extends BaseTestCase
         $oCountry = oxNew(Country::class);
         $oCountry->setId('_testCountry1');
         $oCountry->oxcountry__oevattbe_appliestbevat = new Field($blIsCountryConfigured);
+        $oCountry->assign([
+            'oevattbe_appliestbevat' => $blIsCountryConfigured
+        ]);
         $oCountry->save();
 
         /** @var Article $oArticle */
         $oArticle = oxNew(Article::class);
         $oArticle->setId('_testArticle1');
         $oArticle->oxarticles__oevattbe_istbeservice = new Field($blIsArticleTbeService);
+        $oArticle->assign([
+            'oevattbe_istbeservice' => $blIsArticleTbeService
+        ]);
         $oArticle->save();
 
         /** @var User|null $oUser */
@@ -129,12 +143,18 @@ class BasketMarksTest extends BaseTestCase
         $oCountry = oxNew(Country::class);
         $oCountry->setId('_testCountry1');
         $oCountry->oxcountry__oevattbe_appliestbevat = new Field(true);
+        $oCountry->assign([
+            'oevattbe_appliestbevat' => true
+        ]);
         $oCountry->save();
 
         /** @var Article $oArticle */
         $oArticle = oxNew(Article::class);
         $oArticle->setId('_testArticle1');
         $oArticle->oxarticles__oevattbe_istbeservice = new Field(true);
+        $oArticle->assign([
+            'oevattbe_istbeservice' => true
+        ]);
         $oArticle->save();
 
         /** @var User|null $oUser */

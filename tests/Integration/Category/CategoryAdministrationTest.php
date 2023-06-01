@@ -7,6 +7,7 @@
 namespace OxidEsales\EVatModule\Tests\Integration\Category;
 
 use OxidEsales\Eshop\Core\Field;
+use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Tests\ContainerTrait;
 use OxidEsales\EVatModule\Controller\Admin\CategoryAdministration;
 use OxidEsales\EVatModule\Model\CountryVATGroup;
@@ -20,6 +21,12 @@ use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 class CategoryAdministrationTest extends BaseTestCase
 {
     use ContainerTrait;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        ContainerFactory::resetContainer();
+    }
 
     /**
      * Check if view data is correct.

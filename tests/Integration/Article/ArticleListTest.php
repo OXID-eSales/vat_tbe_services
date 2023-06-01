@@ -7,7 +7,6 @@
 namespace OxidEsales\EVatModule\Tests\Integration\Article;
 
 use OxidEsales\Eshop\Application\Controller\Admin\ArticleList as ArticleListController;
-use OxidEsales\Eshop\Application\Model\Country;
 use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Model\BaseModel;
 use OxidEsales\Eshop\Core\Registry;
@@ -15,7 +14,6 @@ use OxidEsales\EVatModule\Shop\ArticleList;
 use OxidEsales\EVatModule\Shop\User;
 use OxidEsales\EVatModule\Shop\Article;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
-use OxidEsales\EVatModule\Tests\Integration\DemoData;
 
 /**
  * Testing extended Article class.
