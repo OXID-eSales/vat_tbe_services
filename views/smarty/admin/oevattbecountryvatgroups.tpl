@@ -30,7 +30,7 @@
                 [{$oViewConf->getHiddenSid()}]
                 <input type="hidden" name="oxid" value="[{$oxid}]">
                 <input type="hidden" name="oxidCopy" value="[{$oxid}]">
-                <input type="hidden" name="cl" value="oeVATTBECountryVatGroups">
+                <input type="hidden" name="cl" value="oevattbecountryvatgroups">
                 <input type="hidden" name="fnc" value="changeCountryVATGroups">
                 <input type="hidden" name="language" value="[{$actlang}]">
                 <table cellspacing="0" cellpadding="1" border="0" width="98%">
@@ -67,7 +67,7 @@
                             </td>
                             <td class=listitem[{$oddclass}]>
                                 <input type="hidden" name="updateval[[{$oVatGroup->getId()}]][oevattbe_id]" value="[{$oVatGroup->getId()}]">
-                                <a [{$readonly}] href="[{ $oViewConf->getSelfLink() }]&cl=oeVATTBECountryVatGroups&countryVATGroupId=[{$oVatGroup->getId()}]&fnc=deleteCountryVatGroup&oxid=[{$oxid}]" onClick='return confirm("[{ oxmultilang ident="GENERAL_YOUWANTTODELETE" }]")' [{if $readonly }]onclick="JavaScript:return false;"[{/if}] class="delete"></a>
+                                <a [{$readonly}] href="[{ $oViewConf->getSelfLink() }]&cl=oevattbecountryvatgroups&countryVATGroupId=[{$oVatGroup->getId()}]&fnc=deleteCountryVatGroup&oxid=[{$oxid}]" onClick='return confirm("[{ oxmultilang ident="GENERAL_YOUWANTTODELETE" }]")' [{if $readonly }]onclick="JavaScript:return false;"[{/if}] class="delete"></a>
                             </td>
                         </tr>
                     [{/foreach}]
@@ -92,7 +92,7 @@
                 [{$oViewConf->getHiddenSid()}]
                 <input type="hidden" name="oxid" value="[{$oxid}]">
                 <input type="hidden" name="oxidCopy" value="[{$oxid}]">
-                <input type="hidden" name="cl" value="oeVATTBECountryVatGroups">
+                <input type="hidden" name="cl" value="oevattbecountryvatgroups">
                 <input type="hidden" name="fnc" value="addCountryVATGroup">
                 <input type="hidden" name="language" value="[{$actlang}]">
                 <input type="hidden" name="editval[oxcountry__oxid]" value="[{$oxid}]">
