@@ -35,6 +35,7 @@ class CheckoutMessageTest extends BaseTestCase
 
         ContainerFactory::resetContainer();
 
+        $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('DE');
 //        $this->_prepareArticlesData();
     }
 
