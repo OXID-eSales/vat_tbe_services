@@ -6,11 +6,9 @@
 
 namespace OxidEsales\EVatModule\Tests\Integration\Order;
 
-use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Model\DbGateway\OrderEvidenceListDbGateway;
 use OxidEsales\EVatModule\Model\Evidence\Item\BillingCountryEvidence;
-use OxidEsales\EVatModule\Model\Evidence\Item\GeoLocationEvidence;
 use OxidEsales\EVatModule\Model\OrderEvidenceList;
 use OxidEsales\EVatModule\Service\ModuleSettings;
 use OxidEsales\EVatModule\Shop\Basket;
@@ -65,6 +63,7 @@ class OrderTest extends BaseTestCase
         $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue(true));
         /** @var User $oUser */
         $oUser = oxNew(User::class);
+        Registry::getSession()->setUser($oUser);
 
         /** @var Order $oOrder */
         $oOrder = $this->getMockBuilder(Order::class)
@@ -72,13 +71,13 @@ class OrderTest extends BaseTestCase
                 ->getMock();
         $oOrder->expects($this->any())->method("getFinalizeOrderParent")->will($this->returnValue($iOrderState));
 
-        $oOrder->setId('order_id');
+        $oOrder->setId('new_order_id');
         $oOrder->finalizeOrder($oBasket, $oUser, false);
 
         $oGateway = oxNew(OrderEvidenceListDbGateway::class);
         /** @var OrderEvidenceList $oList */
         $oList = oxNew(OrderEvidenceList::class, $oGateway);
-        $oList->load('order_id');
+        $oList->load('new_order_id');
 
         $aData = $oList->getData();
 
@@ -115,7 +114,7 @@ class OrderTest extends BaseTestCase
                 ->getMock();
         $oOrder->expects($this->any())->method("getFinalizeOrderParent")->will($this->returnValue(Order::ORDER_STATE_PAYMENTERROR));
 
-        $oOrder->setId('order_id');
+        $oOrder->setId('new_order_id');
         $oOrder->finalizeOrder($oBasket, $oUser, false);
 
         $this->assertEquals('billing_country', $oOrder->getFieldData('oevattbe_evidenceused'));
@@ -146,7 +145,7 @@ class OrderTest extends BaseTestCase
             'oevattbe_evidenceused' => 'billing_country'
         ]);
 
-        $oOrder->setId('order_id');
+        $oOrder->setId('new_order_id');
         $oOrder->finalizeOrder($oBasket, $oUser, true);
 
         $this->assertEquals('billing_country', $oOrder->getFieldData('oevattbe_evidenceused'));
@@ -179,16 +178,16 @@ class OrderTest extends BaseTestCase
                 ->getMock();
         $oOrder->expects($this->any())->method("getFinalizeOrderParent")->will($this->returnValue(Order::ORDER_STATE_OK));
 
-        $oOrder->setId('order_id');
+        $oOrder->setId('new_order_id');
         $oOrder->save();
         $oOrder->finalizeOrder($oBasket, $oUser, false);
 
-        $oOrder->delete('order_id');
+        $oOrder->delete('new_order_id');
 
         $oGateway = oxNew(OrderEvidenceListDbGateway::class);
         /** @var OrderEvidenceList $oList */
         $oList = oxNew(OrderEvidenceList::class, $oGateway);
-        $oList->load('order_id');
+        $oList->load('new_order_id');
 
         $this->assertEquals(array(), $oList->getData());
     }
@@ -245,13 +244,13 @@ class OrderTest extends BaseTestCase
                 ->getMock();
         $oOrder->expects($this->any())->method("getFinalizeOrderParent")->will($this->returnValue($iOrderState));
 
-        $oOrder->setId('order_id');
+        $oOrder->setId('new_order_id');
         $oOrder->finalizeOrder($oBasket, $oUser, false);
 
         $oGateway = oxNew(OrderEvidenceListDbGateway::class);
         /** @var OrderEvidenceList $oList */
         $oList = oxNew(OrderEvidenceList::class, $oGateway);
-        $oList->load('order_id');
+        $oList->load('new_order_id');
 
         $aData = $oList->getData();
 

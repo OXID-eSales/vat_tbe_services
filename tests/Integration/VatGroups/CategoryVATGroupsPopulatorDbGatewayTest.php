@@ -93,7 +93,7 @@ class CategoryVATGroupsPopulatorDbGatewayTest extends BaseTestCase
 
     protected function _cleanFixtures()
     {
-        \oxDb::getDb()->execute("DELETE FROM `oevattbe_articlevat` WHERE OEVATTBE_ARTICLEID = '1126'");
+        \oxDb::getDb()->execute("DELETE FROM `oevattbe_articlevat` WHERE OEVATTBE_ARTICLEID IN ('1126', '1127', '1131')");
         \oxDb::getDb()->execute("DELETE FROM `oxarticles` WHERE OXID IN ('1126', '1127', '1131', '_testArticle')");
     }
 

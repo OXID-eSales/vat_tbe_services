@@ -7,6 +7,8 @@
 namespace OxidEsales\EVatModule\Tests\Integration\Category;
 
 use OxidEsales\Eshop\Core\Field;
+use OxidEsales\EshopCommunity\Core\Registry;
+use OxidEsales\EshopCommunity\Core\Session;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Tests\ContainerTrait;
 use OxidEsales\EVatModule\Controller\Admin\CategoryAdministration;
@@ -26,6 +28,11 @@ class CategoryAdministrationTest extends BaseTestCase
     {
         parent::setUp();
         ContainerFactory::resetContainer();
+    }
+
+    public function tearDown(): void
+    {
+        Registry::getSession()->setAdminMode(false);
     }
 
     /**
@@ -60,6 +67,7 @@ class CategoryAdministrationTest extends BaseTestCase
         $oCountryVATGroup1->setId(2);
         $oCountryVATGroup1->setData($aData1);
 
+        //TODO: cache issue
         $oCountryVATGroup2 = $this->get(CountryVATGroup::class);
         $oCountryVATGroup2->setId(3);
         $oCountryVATGroup2->setData($aData2);

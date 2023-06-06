@@ -79,6 +79,11 @@ class CountryVATGroupsDbGatewayTest extends BaseTestCase
         $oVatGroupsGateway->delete($sGroupId);
 
         $this->assertSame(array(), $oVatGroupsGateway->load($sGroupId));
+
+        //No VAT Groups exists for specific country, empty groups list should be returned.
+        $aGroupsList = $oVatGroupsGateway->getList('8f241f11095410f38.37165361');
+
+        $this->assertEquals(array(), $aGroupsList);
     }
 
     /**
@@ -156,17 +161,5 @@ class CountryVATGroupsDbGatewayTest extends BaseTestCase
         $aGroupsList = $oVatGroupsGateway->getList();
 
         $this->assertNotEmpty($aGroupsList);
-    }
-
-    /**
-     * No VAT Groups exists for specific country;
-     * Empty groups list should be returned.
-     */
-    public function testLoadingGroupsListWhenNoGroupsExist()
-    {
-        $oVatGroupsGateway = oxNew(CountryVATGroupsDbGateway::class);
-        $aGroupsList = $oVatGroupsGateway->getList('8f241f11095410f38.37165361');
-
-        $this->assertEquals(array(), $aGroupsList);
     }
 }

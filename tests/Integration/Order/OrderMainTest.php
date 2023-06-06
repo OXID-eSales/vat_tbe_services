@@ -26,14 +26,6 @@ class OrderMainTest extends BaseTestCase
 {
     use  ServiceContainer;
 
-    public function setUp(): void
-    {
-        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
-        $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class, GeoLocationEvidence::class]);
-        $moduleSettings->saveCountryEvidences(['billing_country' => 1, 'geo_location' => 1]);
-        $moduleSettings->saveDefaultEvidence('billing_country');
-    }
-
     /**
      * Creates dummy order and checks country was set.
      *
@@ -41,6 +33,11 @@ class OrderMainTest extends BaseTestCase
      */
     public function testTBECountryTitle()
     {
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class, GeoLocationEvidence::class]);
+        $moduleSettings->saveCountryEvidences(['billing_country' => 1, 'geo_location' => 1]);
+        $moduleSettings->saveDefaultEvidence('billing_country');
+
         $this->_createOrder();
 
         /** @var OrderMain $oOrderMain */

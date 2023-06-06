@@ -7,6 +7,7 @@
 namespace OxidEsales\EVatModule\Model\Evidence;
 
 use OxidEsales\Eshop\Core\Config;
+use OxidEsales\EshopCommunity\Core\Registry;
 use OxidEsales\EVatModule\Model\Evidence\Item\Evidence;
 use OxidEsales\EVatModule\Service\ModuleSettings;
 use OxidEsales\EVatModule\Traits\ServiceContainer;
@@ -68,7 +69,7 @@ class EvidenceCollector
         foreach ($aEvidenceClasses as $sEvidenceClass) {
             if (class_exists($sEvidenceClass)) {
                 /** @var Evidence $oEvidence */
-                $oEvidence = $this->getServiceFromContainer($sEvidenceClass);
+                $oEvidence = oxNew($sEvidenceClass, Registry::getSession());
                 $sName = $oEvidence->getId();
                 if (isset($aEvidences[$sName]) && $aEvidences[$sName] == 1) {
                     $oList->add($oEvidence);

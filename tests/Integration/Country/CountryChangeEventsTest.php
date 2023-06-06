@@ -30,6 +30,7 @@ class CountryChangeEventsTest extends BaseTestCase
         $sGermanyId = $this->_sGermanyId;
         $oUser = $this->_createUser();
         Registry::getSession()->setUser($oUser);
+
         $this->assertSame($sGermanyId, $oUser->getOeVATTBETbeCountryId(), 'User created in Germany, so TBE country must be Germany.');
 
         return $oUser;
@@ -56,7 +57,7 @@ class CountryChangeEventsTest extends BaseTestCase
 
         $this->assertNotSame($sAustriaId, $oUser->getOeVATTBETbeCountryId());
         $oUser->save();
-        ContainerFactory::resetContainer();//Todo: Clear cached services
+
         $this->assertSame($sAustriaId, $oUser->getOeVATTBETbeCountryId());
 
         return $oUser;
@@ -178,7 +179,7 @@ class CountryChangeEventsTest extends BaseTestCase
     private $_sNewSalt = '56784f8ffc657fff84915b93e12a626e';
 
     /** @var string Germany ID. */
-    private $_sGermanyId = '56784f8ffc657fff84915b93e12a626e';
+    private $_sGermanyId = 'a7c40f631fc920687.20179984';
 
     /** @var string Austria ID. */
     private $_sAustriaId = 'a7c40f6320aeb2ec2.72885259';
