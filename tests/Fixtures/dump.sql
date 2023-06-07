@@ -36,6 +36,16 @@ UPDATE `oxcountry` SET oevattbe_appliestbevat = 1 WHERE OXID = 'a7c40f631fc92068
 UPDATE `oxcountry` SET oevattbe_appliestbevat = 1 WHERE OXID = '8f241f11095d6ffa8.86593236';
 UPDATE `oxcountry` SET oevattbe_appliestbevat = 1 WHERE OXID = 'a7c40f6320aeb2ec2.72885259';
 
+REPLACE INTO `oxobject2payment` (`OXID`, `OXPAYMENTID`, `OXOBJECTID`, `OXTYPE`, `OXTIMESTAMP`)
+VALUES ('1dcaae15ebaac836e97e3746cb462f79',	'oxidpayadvance',	'a7c40f6320aeb2ec2.72885259',	'oxcountry',	'2023-06-07 12:24:52');
+
+REPLACE INTO `oxobject2payment` (`OXID`, `OXPAYMENTID`, `OXOBJECTID`, `OXTYPE`, `OXTIMESTAMP`) VALUES ('88ff2281eb20a52592c73a93ff43de4b',	'oxidpayadvance',	'oxidstandard',	'oxdelset',	'2023-06-07 13:33:47');
+
+REPLACE INTO `oxdelivery` (`OXID`, `OXMAPID`, `OXSHOPID`, `OXACTIVE`, `OXACTIVEFROM`, `OXACTIVETO`, `OXTITLE`, `OXTITLE_1`, `OXTITLE_2`, `OXTITLE_3`, `OXADDSUMTYPE`, `OXADDSUM`, `OXDELTYPE`, `OXPARAM`, `OXPARAMEND`, `OXFIXED`, `OXSORT`, `OXFINALIZE`, `OXTIMESTAMP`)
+VALUES ('1b842e73470578914.54719298',902,1,1,'0000-00-00 00:00:00','0000-00-00 00:00:00','Versandkosten für Standard: 3,90 Euro innerhalb Deutschland','Shipping costs for Standard: $3.90 for domestic shipping','','','abs',3.9,'p',0,79.99,0,2000,1,'2016-07-19 14:38:26');
+
+REPLACE INTO `oxdelivery2shop` (`OXSHOPID`, `OXMAPOBJECTID`, `OXTIMESTAMP`) VALUES (1,902,'2016-07-19 14:38:26');
+
 TRUNCATE TABLE `oevattbe_countryvatgroups`;
 REPLACE INTO `oevattbe_countryvatgroups` (`OEVATTBE_ID`, `OEVATTBE_COUNTRYID`, `OEVATTBE_NAME`, `OEVATTBE_DESCRIPTION`, `OEVATTBE_RATE`, `OEVATTBE_TIMESTAMP`) VALUES
 (1,	'a7c40f632e04633c9.47194042',	'Reduce rate 1',	'',	6.00,	'2023-05-31 11:41:54'),
