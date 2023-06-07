@@ -128,12 +128,12 @@ class ArticleListTest extends BaseTestCase
     {
         $oArticle2Action = oxNew(BaseModel::class);
         $oArticle2Action->init('oxactions2article');
-        $oArticle2Action->oxactions2article__oxactionid = new Field('oxstart');
+        $oArticle2Action->oxactions2article__oxactionid = new Field('oxevatdemo');
         $oArticle2Action->oxactions2article__oxartid = new Field('1126');
         $oArticle2Action->save();
 
         $oArticleList = $this->_getArticleList($sUserStatus);
-        $oArticleList->loadActionArticles('oxstart');
+        $oArticleList->loadActionArticles('oxevatdemo');
 
         /** @var Article $oArticle */
         $oArticle = $oArticleList['1126'];
@@ -280,7 +280,7 @@ class ArticleListTest extends BaseTestCase
         $oArticleList->setAdminMode(true);
         $aListItems = $oArticleList->getItemList();
 
-        $this->assertSame(9, count($aListItems));
+        $this->assertSame(4, count($aListItems));
     }
 
     /**
