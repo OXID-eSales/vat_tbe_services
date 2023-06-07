@@ -8,8 +8,7 @@ namespace OxidEsales\EVatModule\Tests\Integration\Country;
 
 use OxidEsales\Eshop\Core\Field;
 use OxidEsales\EshopCommunity\Core\Registry;
-use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
-use OxidEsales\EVatModule\Shop\User;
+use OxidEsales\Eshop\Application\Model\User;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 
 /**
@@ -50,7 +49,7 @@ class CountryChangeEventsTest extends BaseTestCase
     public function testGetOeVATTBECountryAfterUserChangeEvent($oUser)
     {
         $sAustriaId = $this->_sAustriaId;
-        $oUser->User__oxcountryid = new Field($sAustriaId, Field::T_RAW);
+        $oUser->user__oxcountryid = new Field($sAustriaId, Field::T_RAW);
         $oUser->assign([
             'oxcountryid' => $sAustriaId
         ]);
@@ -77,10 +76,14 @@ class CountryChangeEventsTest extends BaseTestCase
     public function testGetOeVATTBECountryAfterLogout($oUser)
     {
         $sUnitedKingdom = $this->_sUnitedKingdom;
-        $oUser->User__oxcountryid = new Field($sUnitedKingdom, Field::T_RAW);
+        $oUser->user__oxcountryid = new Field($sUnitedKingdom, Field::T_RAW);
+        $oUser->assign([
+            'oxcountryid' => $sUnitedKingdom
+        ]);
 
         $this->assertNotSame($sUnitedKingdom, $oUser->getOeVATTBETbeCountryId());
         $oUser->logout();
+        Registry::getSession()->setUser($oUser);
         $this->assertSame($sUnitedKingdom, $oUser->getOeVATTBETbeCountryId());
 
         return $oUser;

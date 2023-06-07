@@ -47,6 +47,8 @@ class OrderTest extends BaseTestCase
      */
     public function testSavingEvidenceList($iOrderState)
     {
+        Registry::getSession()->destroy();
+
         $oConfig = Registry::getConfig();
         $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence'));
         $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');

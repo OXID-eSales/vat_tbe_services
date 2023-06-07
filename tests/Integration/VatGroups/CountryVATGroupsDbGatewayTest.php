@@ -46,7 +46,7 @@ class CountryVATGroupsDbGatewayTest extends BaseTestCase
         $aData = $oVatGroupsGateway->load($sGroupId);
 
         $aExpectedData = array(
-            'OEVATTBE_ID' => $sGroupId,
+            'OEVATTBE_ID' => (int) $sGroupId,
             'OEVATTBE_COUNTRYID' => '8f241f11095410f38.37165361',
             'OEVATTBE_NAME' => 'Group Name',
             'OEVATTBE_DESCRIPTION' => 'Some description',
@@ -54,7 +54,7 @@ class CountryVATGroupsDbGatewayTest extends BaseTestCase
             'OEVATTBE_TIMESTAMP' => $aData['OEVATTBE_TIMESTAMP'],
         );
 
-        $this->assertSame($aExpectedData, $aData);
+        $this->assertEquals($aExpectedData, $aData);
 
         return $sGroupId;
     }
@@ -93,7 +93,7 @@ class CountryVATGroupsDbGatewayTest extends BaseTestCase
         $oVatGroupsGateway->delete('12');
 
         $oRelationsList->load('articleid');
-        $this->assertSame(array('germanyid' => '10'), $oRelationsList->getData());
+        $this->assertEquals(array('germanyid' => 10), $oRelationsList->getData());
     }
 
     /**

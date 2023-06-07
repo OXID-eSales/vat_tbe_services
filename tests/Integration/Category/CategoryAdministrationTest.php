@@ -8,7 +8,6 @@ namespace OxidEsales\EVatModule\Tests\Integration\Category;
 
 use OxidEsales\Eshop\Core\Field;
 use OxidEsales\EshopCommunity\Core\Registry;
-use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Tests\ContainerTrait;
 use OxidEsales\EVatModule\Controller\Admin\CategoryAdministration;
 use OxidEsales\EVatModule\Model\CountryVATGroup;
@@ -146,7 +145,7 @@ class CategoryAdministrationTest extends BaseTestCase
         $oCategoryAdministration->setEditObjectId('_testCategory');
         $oCategoryAdministration->save();
 
-        $this->assertSame(true, $oCategoryAdministration->isSelected('a7c40f632e04633c9.47194042', '2'));
+        $this->assertSame(true, $oCategoryAdministration->isSelected('a7c40f632e04633c9.47194042', 2));
 
         return $oCategoryAdministration;
     }
@@ -176,7 +175,7 @@ class CategoryAdministrationTest extends BaseTestCase
      */
     public function testSelectionForNonExistingCountry($oCategoryAdministration)
     {
-        $this->assertSame(false, $oCategoryAdministration->isSelected('NoneExistingId', '2'));
+        $this->assertSame(false, $oCategoryAdministration->isSelected('NoneExistingId', 2));
     }
 
     /**

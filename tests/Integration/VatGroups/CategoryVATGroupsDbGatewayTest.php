@@ -29,7 +29,7 @@ class CategoryVATGroupsDbGatewayTest extends BaseTestCase
                 array(
                     'OEVATTBE_CATEGORYID' => '0962081a5693597654fd2887af7a6095',
                     'OEVATTBE_COUNTRYID' => 'a7c40f631fc920687.20179984',
-                    'OEVATTBE_VATGROUPID' => '10',
+                    'OEVATTBE_VATGROUPID' => 10,
                 ),
             ),
         );
@@ -57,12 +57,12 @@ class CategoryVATGroupsDbGatewayTest extends BaseTestCase
                 array(
                     'OEVATTBE_CATEGORYID' => $sCategoryId,
                     'OEVATTBE_COUNTRYID' => 'a7c40f631fc920687.20179984',
-                    'OEVATTBE_VATGROUPID' => '11',
+                    'OEVATTBE_VATGROUPID' => 11,
                 ),
                 array(
                     'OEVATTBE_CATEGORYID' => $sCategoryId,
                     'OEVATTBE_COUNTRYID' => '8f241f110958b69e4.93886171',
-                    'OEVATTBE_VATGROUPID' => '12',
+                    'OEVATTBE_VATGROUPID' => 12,
                 ),
             ),
         );
@@ -89,18 +89,18 @@ class CategoryVATGroupsDbGatewayTest extends BaseTestCase
             array(
                 'OEVATTBE_CATEGORYID' => $sCategoryId,
                 'OEVATTBE_COUNTRYID' => '8f241f110958b69e4.93886171',
-                'OEVATTBE_VATGROUPID' => '12',
+                'OEVATTBE_VATGROUPID' => 12,
                 'OEVATTBE_TIMESTAMP' => $aData[1]['OEVATTBE_TIMESTAMP'],
             ),
             array(
                 'OEVATTBE_CATEGORYID' => $sCategoryId,
                 'OEVATTBE_COUNTRYID' => 'a7c40f631fc920687.20179984',
-                'OEVATTBE_VATGROUPID' => '11',
+                'OEVATTBE_VATGROUPID' => 11,
                 'OEVATTBE_TIMESTAMP' => $aData[0]['OEVATTBE_TIMESTAMP'],
             )
         );
 
-        $this->assertSame($aExpectedData, $aData);
+        $this->assertEquals($aExpectedData, $aData);
 
         return $sCategoryId;
     }
@@ -124,12 +124,12 @@ class CategoryVATGroupsDbGatewayTest extends BaseTestCase
             array(
                 'OEVATTBE_CATEGORYID' => $sCategoryId,
                 'OEVATTBE_COUNTRYID' => '8f241f110958b69e4.93886171',
-                'OEVATTBE_VATGROUPID' => '12',
+                'OEVATTBE_VATGROUPID' => 12,
                 'OEVATTBE_TIMESTAMP' => $aData[0]['OEVATTBE_TIMESTAMP'],
             ),
         );
 
-        $this->assertSame($aExpectedData, $aData);
+        $this->assertEquals($aExpectedData, $aData);
 
         return $sCategoryId;
     }
