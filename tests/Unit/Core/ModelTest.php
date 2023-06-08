@@ -8,6 +8,10 @@
 namespace OxidEsales\EVatModule\Tests\Unit\Core;
 
 use OxidEsales\EVatModule\Core\Model;
+use OxidEsales\EVatModule\Model\ArticleVATGroupsList;
+use OxidEsales\EVatModule\Model\CategoryVATGroupsList;
+use OxidEsales\EVatModule\Model\CountryVATGroupsList;
+use OxidEsales\EVatModule\Model\OrderEvidenceList;
 use OxidEsales\EVatModule\Model\DbGateway\ArticleVATGroupsDbGateway;
 use OxidEsales\EVatModule\Model\DbGateway\CategoryVATGroupsDbGateway;
 use OxidEsales\EVatModule\Model\DbGateway\CountryVATGroupsDbGateway;
@@ -22,10 +26,43 @@ class ModelTest extends TestCase
     public function gatewayProvider()
     {
         return [
-            [ArticleVATGroupsDbGateway::class],
-            [CategoryVATGroupsDbGateway::class],
-            [CountryVATGroupsDbGateway::class],
-            [OrderEvidenceListDbGateway::class],
+            [
+                'model' => ArticleVATGroupsList::class,
+                'gateway' => ArticleVATGroupsDbGateway::class,
+                'data' => [
+                    [
+                        'OEVATTBE_COUNTRYID' => 'testkey',
+                        'OEVATTBE_VATGROUPID' => 'testValue',
+                    ]
+                ],
+            ],
+            [
+                'model' => CategoryVATGroupsList::class,
+                'gateway' => CategoryVATGroupsDbGateway::class,
+                'data' => [
+                    [
+                        'OEVATTBE_COUNTRYID' => 'testkey',
+                        'OEVATTBE_VATGROUPID' => 'testValue',
+                    ]
+                ],
+            ],
+            [
+                'model' => CountryVATGroupsList::class,
+                'gateway' => CountryVATGroupsDbGateway::class,
+                'data' => [
+                    [
+                        'OEVATTBE_COUNTRYID' => 'testkey',
+                        'OEVATTBE_VATGROUPID' => 'testValue',
+                    ]
+                ],
+            ],
+            [
+                'model' => OrderEvidenceList::class,
+                'gateway' => OrderEvidenceListDbGateway::class,
+                'data' => [
+                    'testkey' => 'testValue'
+                ],
+            ],
         ];
     }
 
@@ -34,15 +71,29 @@ class ModelTest extends TestCase
      *
      * @dataProvider gatewayProvider
      */
-    public function testLoadWhenIdIsSetToModel(string $gateway): void
+    public function testLoadWhenIdIsSetToModel(string $model, string $gateway, array $data): void
     {
-        $data = ['testkey' => 'testValue'];
-        $gatewayMock = $this->createPartialMock($gateway, ['load']);
-        $gatewayMock->expects($this->any())->method('load')->will($this->returnValue($data));
-        $actualModel = $this->_getModel($gatewayMock, 'id-to-load');
+        $expected = ['testkey' => 'testValue'];
 
-        $this->assertTrue($actualModel->load());
-        $this->assertEquals($data, $actualModel->getData());
+        $gatewayMock = $this->createPartialMock($gateway, ['load']);
+        $gatewayMock
+            ->expects($this->any())
+            ->method('load')
+            ->will($this->returnValue($data));
+
+        if ($model == CountryVATGroupsList::class) {
+            $gatewayMock->method('getList')->will($this->returnValue('data'));
+        }
+
+        $actualModel = $this->_getModel($model, $gatewayMock, 'id-to-load');
+
+        if ($model == CountryVATGroupsList::class) {
+            $this->assertIsArray($actualModel->load());
+        } else {
+            $this->assertTrue($actualModel->load());
+        }
+
+        $this->assertEquals($expected, $actualModel->getData());
     }
 
     /**
@@ -50,15 +101,24 @@ class ModelTest extends TestCase
      *
      * @dataProvider gatewayProvider
      */
-    public function testLoadWhenIdPassedIdViaParameter(string $gateway): void
+    public function testLoadWhenIdPassedIdViaParameter(string $model, string $gateway, array $data): void
     {
-        $data = ['testkey' => 'testValue'];
-        $gatewayMock = $this->createPartialMock($gateway, ['load']);
-        $gatewayMock->expects($this->any())->method('load')->will($this->returnValue($data));
-        $actualModel = $this->_getModel($gatewayMock);
+        $expected = ['testkey' => 'testValue'];
 
-        $this->assertTrue($actualModel->load('id-to-load'));
-        $this->assertEquals($data, $actualModel->getData());
+        $gatewayMock = $this->createPartialMock($gateway, ['load']);
+        $gatewayMock
+            ->expects($this->any())
+            ->method('load')
+            ->will($this->returnValue($data));
+        $actualModel = $this->_getModel($model, $gatewayMock);
+
+        if ($model == CountryVATGroupsList::class) {
+            $this->assertIsArray($actualModel->load('id-to-load'));
+        } else {
+            $this->assertTrue($actualModel->load('id-to-load'));
+        }
+
+        $this->assertEquals($expected, $actualModel->getData());
     }
 
     /**
@@ -66,36 +126,52 @@ class ModelTest extends TestCase
      *
      * @dataProvider gatewayProvider
      */
-    public function testIsLoadedWhenDatabaseRecordNotFound(string $gateway): void
+    public function testIsLoadedWhenDatabaseRecordNotFound(string $model, string $gateway): void
     {
         $gatewayMock = $this->createPartialMock($gateway, ['load']);
-        $gatewayMock->expects($this->any())->method('load')->will($this->returnValue(null));
-        $actualModel = $this->_getModel($gatewayMock);
+        $gatewayMock
+            ->expects($this->any())
+            ->method('load')
+            ->will($this->returnValue(null));
+        $actualModel = $this->_getModel($model, $gatewayMock);
 
-        $this->assertFalse($actualModel->load());
+        if ($model == CountryVATGroupsList::class) {
+            $this->assertIsArray($actualModel->load());
+        } else {
+            $this->assertFalse($actualModel->load());
+        }
     }
 
     /**
      * @dataProvider gatewayProvider
      */
-    public function testIsLoadedWhenDatabaseRecordFound(string $gateway): void
+    public function testIsLoadedWhenDatabaseRecordFound(string $model, string $gateway, $data): void
     {
-        $data = ['oeTBEVATId' => 'testId'];
         $gatewayMock = $this->createPartialMock($gateway, ['load']);
-        $gatewayMock->expects($this->any())->method('load')->will($this->returnValue($data));
-        $actualModel = $this->_getModel($gatewayMock);
+        $gatewayMock
+            ->expects($this->any())
+            ->method('load')
+            ->will($this->returnValue($data));
+        $actualModel = $this->_getModel($model, $gatewayMock);
 
-        $this->assertTrue($actualModel->load());
+        if ($model == CountryVATGroupsList::class) {
+            $this->assertIsArray($actualModel->load());
+        } else {
+            $this->assertTrue($actualModel->load());
+        }
     }
 
     /**
      * @dataProvider gatewayProvider
      */
-    public function testClearingDataAfterDeletion(string $gateway)
+    public function testClearingDataAfterDeletion(string $model, string $gateway)
     {
         $gatewayMock = $this->createPartialMock($gateway, ['delete']);
-        $gatewayMock->expects($this->any())->method('delete')->will($this->returnValue(true));
-        $actualModel = $this->_getModel($gatewayMock);
+        $gatewayMock
+            ->expects($this->any())
+            ->method('delete')
+            ->will($this->returnValue(true));
+        $actualModel = $this->_getModel($model, $gatewayMock);
         $actualModel->setData(['some_field' => 'some_entry']);
         $actualModel->delete();
 
@@ -105,13 +181,15 @@ class ModelTest extends TestCase
     /**
      * Creates Model with mocked abstract methods
      *
+     * @param $modelClass
      * @param $gateway
      * @param ?string $id
      * @return Model
      */
-    protected function _getModel($gateway, string $id = null): Model
+    protected function _getModel($modelClass, $gateway, string $id = null): Model
     {
-        $model = oxNew(Model::class, $gateway);
+        $model = oxNew($modelClass, $gateway);
+
         if ($id) {
             $model->setId($id);
         }
