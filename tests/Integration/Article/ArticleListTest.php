@@ -7,7 +7,6 @@
 namespace OxidEsales\EVatModule\Tests\Integration\Article;
 
 use OxidEsales\Eshop\Application\Controller\Admin\ArticleList as ArticleListController;
-use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Model\BaseModel;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Shop\ArticleList;
@@ -27,12 +26,11 @@ class ArticleListTest extends BaseTestCase
      */
     public function userConfiguration()
     {
-        return array(
-            //array( 'local', null ),
-            array( 'notLoggedIn', null ),
-            array( 'loggedIn', '6.00' ),
-            array( 'loggedInWithoutCountry', null )
-        );
+        return [
+            ['notLoggedIn', null],
+            ['loggedIn', '6.00'],
+            ['loggedInWithoutCountry', null]
+        ];
     }
 
     /**
@@ -128,8 +126,10 @@ class ArticleListTest extends BaseTestCase
     {
         $oArticle2Action = oxNew(BaseModel::class);
         $oArticle2Action->init('oxactions2article');
-        $oArticle2Action->oxactions2article__oxactionid = new Field('oxevatdemo');
-        $oArticle2Action->oxactions2article__oxartid = new Field('1126');
+        $oArticle2Action->assign([
+            'oxactionid' => 'oxevatdemo',
+            'oxartid'    => '1126',
+        ]);
         $oArticle2Action->save();
 
         $oArticleList = $this->_getArticleList($sUserStatus);
@@ -157,7 +157,9 @@ class ArticleListTest extends BaseTestCase
 
         $oArticle = oxNew(Article::class);
         $oArticle->setId('1126');
-        $oArticle->oxarticles__oxtimestamp = new Field(date('Y-m-d H:i:s', Registry::getUtilsDate()->getTime()));
+        $oArticle->assign([
+            'oxtimestamp' => date('Y-m-d H:i:s', Registry::getUtilsDate()->getTime())
+        ]);
         $oArticle->save();
 
         $oArticleList = $this->_getArticleList($sUserStatus);
@@ -184,7 +186,9 @@ class ArticleListTest extends BaseTestCase
 
         $oArticle = oxNew(Article::class);
         $oArticle->setId('1126');
-        $oArticle->oxarticles__oxsoldamount = new Field(9999);
+        $oArticle->assign([
+            'oxsoldamount' => 9999
+        ]);
         $oArticle->save();
 
         $oArticleList = $this->_getArticleList($sUserStatus);
@@ -229,8 +233,10 @@ class ArticleListTest extends BaseTestCase
     {
         $oAccessoire2article = oxNew(BaseModel::class);
         $oAccessoire2article->init("oxaccessoire2article");
-        $oAccessoire2article->oxaccessoire2article__oxobjectid = new Field('1126');
-        $oAccessoire2article->oxaccessoire2article__oxarticlenid = new Field('1964');
+        $oAccessoire2article->assign([
+            'oxobjectid'   => '1126',
+            'oxarticlenid' => '1964',
+        ]);
         $oAccessoire2article->save();
 
         $oArticleList = $this->_getArticleList($sUserStatus);
@@ -255,8 +261,10 @@ class ArticleListTest extends BaseTestCase
     {
         $oObject2list = oxNew(BaseModel::class);
         $oObject2list->init("oxobject2list");
-        $oObject2list->oxobject2list__oxobjectid = new Field('1126');
-        $oObject2list->oxobject2list__oxlistid = new Field('list');
+        $oObject2list->assign([
+            'oxobjectid' => '1126',
+            'oxlistid'   => 'list',
+        ]);
         $oObject2list->save();
 
         $oArticleList = $this->_getArticleList($sUserStatus);
@@ -276,6 +284,7 @@ class ArticleListTest extends BaseTestCase
     {
         Registry::getSession()->setVariable('TBECountryId', 'a7c40f631fc920687.20179984');
         Registry::getConfig()->setConfigParam('art_category', 'cat@@30e44ab8593023055.23928895');
+
         $oArticleList = oxNew(ArticleListController::class);
         $oArticleList->setAdminMode(true);
         $aListItems = $oArticleList->getItemList();

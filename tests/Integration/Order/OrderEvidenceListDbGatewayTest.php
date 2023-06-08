@@ -14,7 +14,6 @@ use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
  */
 class OrderEvidenceListDbGatewayTest extends BaseTestCase
 {
-
     /**
      * Testing Order list saving to database. Test works with database so can be slow.
      *

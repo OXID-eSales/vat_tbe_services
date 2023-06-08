@@ -6,9 +6,7 @@
 
 namespace OxidEsales\EVatModule\Tests\Integration\Category;
 
-use OxidEsales\Eshop\Core\Field;
 use OxidEsales\EshopCommunity\Core\Registry;
-use OxidEsales\EshopCommunity\Tests\ContainerTrait;
 use OxidEsales\EVatModule\Controller\Admin\CategoryAdministration;
 use OxidEsales\EVatModule\Model\CountryVATGroup;
 use OxidEsales\EVatModule\Model\DbGateway\CountryVATGroupsDbGateway;
@@ -20,8 +18,6 @@ use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
  */
 class CategoryAdministrationTest extends BaseTestCase
 {
-    use ContainerTrait;
-
     public function setUp(): void
     {
         parent::setUp();
@@ -116,8 +112,10 @@ class CategoryAdministrationTest extends BaseTestCase
         /** @var Category $oCategory */
         $oCategory = oxNew(Category::class);
         $oCategory->setId('_testCategory');
-        $oCategory->oxcategories__oevattbe_istbe = new Field($iIsTBECategory);
-        $oCategory->oxcategories__oxparentid = new Field('oxrootid');
+        $oCategory->assign([
+            'oevattbe_istbe' => $iIsTBECategory,
+            'oxparentid'     => 'oxrootid',
+        ]);
         $oCategory->save();
 
         /** @var CategoryAdministration $oCategoriesAdministration */

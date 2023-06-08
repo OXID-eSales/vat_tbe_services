@@ -6,7 +6,6 @@
 
 namespace OxidEsales\EVatModule\Tests\Integration\Country;
 
-use OxidEsales\Eshop\Core\Field;
 use OxidEsales\EshopCommunity\Core\Registry;
 use OxidEsales\Eshop\Application\Model\User;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
@@ -49,7 +48,6 @@ class CountryChangeEventsTest extends BaseTestCase
     public function testGetOeVATTBECountryAfterUserChangeEvent($oUser)
     {
         $sAustriaId = $this->_sAustriaId;
-        $oUser->user__oxcountryid = new Field($sAustriaId, Field::T_RAW);
         $oUser->assign([
             'oxcountryid' => $sAustriaId
         ]);
@@ -76,7 +74,6 @@ class CountryChangeEventsTest extends BaseTestCase
     public function testGetOeVATTBECountryAfterLogout($oUser)
     {
         $sUnitedKingdom = $this->_sUnitedKingdom;
-        $oUser->user__oxcountryid = new Field($sUnitedKingdom, Field::T_RAW);
         $oUser->assign([
             'oxcountryid' => $sUnitedKingdom
         ]);
@@ -148,22 +145,13 @@ class CountryChangeEventsTest extends BaseTestCase
      */
     private function _createUser()
     {
-        $sUserName = $this->_sDefaultUserName;
-        $sEncodedPassword = $this->_sNewEncodedPassword;
-        $sSalt = $this->_sNewSalt;
-        $sGermanyId = $this->_sGermanyId;
-
         $oUser = oxNew(User::class);
         $oUser->assign([
-            'oxusername' => $sUserName,
-            'oxpassword' => $sEncodedPassword,
-            'oxpasssalt' => $sSalt,
-            'oxcountryid' => $sGermanyId,
+            'oxusername'  => $this->_sDefaultUserName,
+            'oxpassword'  => $this->_sNewEncodedPassword,
+            'oxpasssalt'  => $this->_sNewSalt,
+            'oxcountryid' => $this->_sGermanyId,
         ]);
-        $oUser->User__Username = new Field($sUserName, Field::T_RAW);
-        $oUser->User__oxpassword = new Field($sEncodedPassword, Field::T_RAW);
-        $oUser->User__oxpasssalt = new Field($sSalt, Field::T_RAW);
-        $oUser->User__oxcountryid = new Field($sGermanyId, Field::T_RAW);
         $oUser->save();
 
         return $oUser;

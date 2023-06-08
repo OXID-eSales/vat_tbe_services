@@ -49,10 +49,6 @@ class OrderTest extends BaseTestCase
     {
         Registry::getSession()->destroy();
 
-        $oConfig = Registry::getConfig();
-        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence'));
-        $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
-
         $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
         $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class]);
         $moduleSettings->saveCountryEvidences(['billing_country' => 1]);
@@ -63,6 +59,7 @@ class OrderTest extends BaseTestCase
                 ->onlyMethods(array("hasOeTBEVATArticles"))
                 ->getMock();
         $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue(true));
+
         /** @var User $oUser */
         $oUser = oxNew(User::class);
         Registry::getSession()->setUser($oUser);
@@ -158,10 +155,6 @@ class OrderTest extends BaseTestCase
      */
     public function testDeletingEvidenceList()
     {
-        $oConfig = Registry::getConfig();
-        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence'));
-        $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
-
         $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
         $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class]);
         $moduleSettings->saveDefaultEvidence('billing_country');
@@ -171,6 +164,7 @@ class OrderTest extends BaseTestCase
                 ->onlyMethods(array("hasOeTBEVATArticles"))
                 ->getMock();
         $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue(true));
+
         /** @var User $oUser */
         $oUser = oxNew(User::class);
 
@@ -224,10 +218,6 @@ class OrderTest extends BaseTestCase
      */
     public function testNotSavingEvidenceListOnFailedOrder($iOrderState, $blHasTBEArticles)
     {
-        $oConfig = Registry::getConfig();
-        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', array('oeVATTBEBillingCountryEvidence'));
-        $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
-
         $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
         $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class]);
         $moduleSettings->saveDefaultEvidence('billing_country');
@@ -237,6 +227,7 @@ class OrderTest extends BaseTestCase
                 ->onlyMethods(array("hasOeTBEVATArticles"))
                 ->getMock();
         $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue($blHasTBEArticles));
+
         /** @var User $oUser */
         $oUser = oxNew(User::class);
 

@@ -6,8 +6,6 @@
 
 namespace OxidEsales\EVatModule\Tests\Integration\Article;
 
-use OxidEsales\Eshop\Core\Field;
-use OxidEsales\EshopCommunity\Tests\ContainerTrait;
 use OxidEsales\EVatModule\Controller\Admin\ArticleAdministration;
 use OxidEsales\EVatModule\Model\CountryVATGroup;
 use OxidEsales\EVatModule\Model\DbGateway\CountryVATGroupsDbGateway;
@@ -19,8 +17,6 @@ use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
  */
 class ArticleAdministrationTest extends BaseTestCase
 {
-    use ContainerTrait;
-
     /**
      * Check if view data is correct.
      */
@@ -51,6 +47,7 @@ class ArticleAdministrationTest extends BaseTestCase
 
         /** @var CountryVATGroupsDbGateway $oGateway */
         $oGateway = oxNew(CountryVATGroupsDbGateway::class);
+
         $oCountryVATGroup1 = oxNew(CountryVATGroup::class, $oGateway);
         $oCountryVATGroup1->setId(2);
         $oCountryVATGroup1->setData($aData1);
@@ -104,7 +101,9 @@ class ArticleAdministrationTest extends BaseTestCase
         /** @var Article $oArticle */
         $oArticle = oxNew(Article::class);
         $oArticle->load('_testArticle');
-        $oArticle->oxarticles__oevattbe_istbeservice = new Field($iIsTBEArticle);
+        $oArticle->assign([
+            'oevattbe_istbeservice' => $iIsTBEArticle
+        ]);
         $oArticle->save();
 
         /** @var ArticleAdministration $oArticleAdministration */

@@ -6,9 +6,7 @@
 
 namespace OxidEsales\EVatModule\Tests\Integration\Order;
 
-use OxidEsales\Eshop\Core\Field;
 use OxidEsales\EshopCommunity\Core\Registry;
-use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EVatModule\Controller\Admin\OrderMain;
 use OxidEsales\EVatModule\Model\Evidence\Item\BillingCountryEvidence;
 use OxidEsales\EVatModule\Model\Evidence\Item\GeoLocationEvidence;
@@ -91,7 +89,9 @@ class OrderMainTest extends BaseTestCase
         $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue(true));
         /** @var User $oUser */
         $oUser = oxNew(User::class);
-        $oUser->oxuser__oxcountryid = new Field('a7c40f631fc920687.20179984');
+        $oUser->assign([
+            'oxcountryid' => 'a7c40f631fc920687.20179984'
+        ]);
         $oUser->save();
         Registry::getSession()->setUser($oUser);
 
@@ -103,8 +103,10 @@ class OrderMainTest extends BaseTestCase
 
         $oOrder->setId('order_id');
         $oOrder->finalizeOrder($oBasket, $oUser, false);
-        $oOrder->oxorder__oevattbe_evidenceused = new Field('billing_country');
-        $oOrder->oxorder__oevattbe_countryid = new Field('a7c40f631fc920687.20179984');
+        $oOrder->assign([
+            'oevattbe_evidenceused' => 'billing_country',
+            'oevattbe_countryid'    => 'a7c40f631fc920687.20179984',
+        ]);
         $oOrder->save();
     }
 }

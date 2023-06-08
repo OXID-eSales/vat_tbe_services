@@ -6,7 +6,6 @@
 
 namespace OxidEsales\EVatModule\Tests\Integration\Article;
 
-use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Shop\User;
 use OxidEsales\EVatModule\Shop\Article;
@@ -18,22 +17,11 @@ use OxidEsales\Facts\Facts;
  */
 class ArticleTest extends BaseTestCase
 {
-//    /**
-//     * Initialize the fixture.
-//     */
-//    public function setUp(): void
-//    {
-//        parent::setup();
-////        $this->_prepareData();
-//    }
-
     /**
      * Test case for loading article
      */
     public function testLoadArticle()
     {
-//        $this->_prepareData();
-
         Registry::getSession()->setVariable('TBECountryId', 'a7c40f631fc920687.20179984');
         $oUser = $this->getMockBuilder(User::class)
             ->onlyMethods(array("getOeVATTBETbeCountryId"))
@@ -54,8 +42,6 @@ class ArticleTest extends BaseTestCase
      */
     public function testLoadArticleUserIsFromLocalCountry()
     {
-//        $this->_prepareData();
-
         $oUser = $this->getMockBuilder(User::class)
             ->onlyMethods(array("getOeVATTBETbeCountryId"))
             ->getMock();
@@ -74,8 +60,6 @@ class ArticleTest extends BaseTestCase
      */
     public function testLoadArticleUserNotLoggedIn()
     {
-//        $this->_prepareData();
-
         $oArticle = oxNew(Article::class);
         $oArticle->load('1126');
 
@@ -122,7 +106,7 @@ class ArticleTest extends BaseTestCase
         $aCacheKeys = $oArticle->getCacheKeys();
 
         $sShopId = Registry::getConfig()->getShopId();
-        $this->assertSame(array('oxArticle__'.$sShopId.'_de', 'oxArticle__'.$sShopId.'_en'), $aCacheKeys);
+        $this->assertSame(['oxArticle__' . $sShopId . '_de', 'oxArticle__' . $sShopId . '_en'], $aCacheKeys);
     }
 
     /**
@@ -144,29 +128,12 @@ class ArticleTest extends BaseTestCase
         /** @var Article $oArticle */
         $oArticle = oxNew(Article::class);
         $oArticle->setUser($oUser);
-        $oArticle->oxarticles__oevattbe_istbeservice = new Field(true, Field::T_RAW);
+        $oArticle->assign([
+            'oevattbe_istbeservice' => true
+        ]);
         $aCacheKeys = $oArticle->getCacheKeys();
 
         $sShopId = Registry::getConfig()->getShopId();
-        $this->assertSame(array('oxArticle__'.$sShopId.'_de_'. $sAustriaId, 'oxArticle__'.$sShopId.'_en_'. $sAustriaId), $aCacheKeys);
+        $this->assertSame(['oxArticle__' . $sShopId . '_de_' . $sAustriaId, 'oxArticle__' . $sShopId . '_en_' . $sAustriaId], $aCacheKeys);
     }
-
-//    /**
-//     * prepare data
-//     */
-//    protected function _prepareData()
-//    {
-//        $oDb = \oxDb::getDb();
-//
-//        $oDb->execute("TRUNCATE TABLE oevattbe_countryvatgroups");
-//        $oDb->execute("TRUNCATE TABLE oevattbe_articlevat");
-//
-//        $sql = "INSERT INTO oevattbe_countryvatgroups SET OEVATTBE_ID = 1, OEVATTBE_COUNTRYID = 'a7c40f631fc920687.20179984', OEVATTBE_NAME='name', OEVATTBE_RATE='8'";
-//
-//        $oDb->execute($sql);
-//
-//        $sql = "INSERT INTO oevattbe_articlevat SET OEVATTBE_ARTICLEID = '1126', OEVATTBE_COUNTRYID = 'a7c40f631fc920687.20179984', OEVATTBE_VATGROUPID = '1'";
-//
-//        $oDb->execute($sql);
-//    }
 }

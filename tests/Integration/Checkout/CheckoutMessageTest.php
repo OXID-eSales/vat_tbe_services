@@ -7,7 +7,6 @@
 namespace OxidEsales\EVatModule\Tests\Integration\Checkout;
 
 use OxidEsales\Eshop\Core\Email;
-use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Model\BaseModel;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
@@ -36,7 +35,6 @@ class CheckoutMessageTest extends BaseTestCase
         ContainerFactory::resetContainer();
 
         $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('DE');
-//        $this->_prepareArticlesData();
     }
 
     /**
@@ -182,7 +180,7 @@ class CheckoutMessageTest extends BaseTestCase
         $oBasketController = oxNew(BasketController::class);
         $oBasketController->render();
 
-        $aEx = Registry::getSession()->getVariable('Errors');
+        $aEx = $oSession->getVariable('Errors');
         $this->assertTrue(isset($aEx['default'][0]));
         $this->assertMatchesRegularExpression($sErrorMessage, $aEx['default'][0], 'Error message: '. $aEx['default'][0]);
     }
@@ -201,8 +199,6 @@ class CheckoutMessageTest extends BaseTestCase
         /** @var Basket $oBasket */
         $oBasket = oxNew(Basket::class);
 
-        $oConfig = Registry::getConfig();
-        $oConfig->setConfigParam('sOeVATTBEDomesticCountry', 'AT');
         $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('AT');
 
         $oUser = $this->_createUser();
@@ -217,7 +213,7 @@ class CheckoutMessageTest extends BaseTestCase
         $oBasketController = oxNew(BasketController::class);
         $oBasketController->render();
 
-        $aEx = Registry::getSession()->getVariable('Errors');
+        $aEx = $oSession->getVariable('Errors');
         $this->assertFalse(isset($aEx['default'][0]));
     }
 
@@ -266,7 +262,7 @@ class CheckoutMessageTest extends BaseTestCase
         $oBasketController = oxNew(BasketController::class);
         $oBasketController->render();
 
-        $aEx = Registry::getSession()->getVariable('Errors');
+        $aEx = $oSession->getVariable('Errors');
         $this->assertFalse(isset($aEx['default'][0]));
     }
 
@@ -397,34 +393,6 @@ class CheckoutMessageTest extends BaseTestCase
         $this->assertSame('thankyou', $oOrder->execute());
     }
 
-
-//    /**
-//     * Prepare articles data.
-//     */
-//    protected function _prepareArticlesData()
-//    {
-//        $oDb = \oxDb::getDb();
-//
-//        $oDb->execute("TRUNCATE TABLE oevattbe_countryvatgroups");
-//        $oDb->execute("TRUNCATE TABLE oevattbe_articlevat");
-//
-//        if (Registry::getConfig()->getEdition() != 'EE') {
-//            $oDb->execute("UPDATE `oxarticles` SET `OXVARSTOCK`='0', `OXVARCOUNT` =  '0' WHERE `oxarticles`.`OXID`='1127'");
-//        }
-//
-//        $sql = "INSERT INTO oevattbe_countryvatgroups SET OEVATTBE_ID = 1, OEVATTBE_COUNTRYID = '{$this->_sAustriaId}', OEVATTBE_NAME='name', OEVATTBE_RATE='8'";
-//
-//        $oDb->execute($sql);
-//
-//        $sql = "INSERT INTO oevattbe_articlevat SET OEVATTBE_ARTICLEID = '1126', OEVATTBE_COUNTRYID = '{$this->_sAustriaId}', OEVATTBE_VATGROUPID = '1'";
-//
-//        $oDb->execute($sql);
-//
-//        $sql = "UPDATE oxarticles SET oevattbe_istbeservice = '1' WHERE oxid in ('1126', '1127')";
-//
-//        $oDb->execute($sql);
-//    }
-
     /**
      * Create demo user to test TBE articles for logged in user.
      *
@@ -442,28 +410,32 @@ class CheckoutMessageTest extends BaseTestCase
 
             /** @var User $oUser */
             $oUser = oxNew(User::class);
-            $oUser->oxuser__oxusername = new Field($sUserName);
-            $oUser->oxuser__oxpassword = new Field($sEncodedPassword);
-            $oUser->oxuser__oxpasssalt = new Field($sSalt);
-            $oUser->oxuser__oxcountryid = new Field($sGermanyId);
-            $oUser->oxuser__oxrights = new Field('user');
-            $oUser->oxuser__active = new Field('1');
-            $oUser->oxuser__oxcompany = new Field('Your Company Name');
-            $oUser->oxuser__oxfname = new Field('John');
-            $oUser->oxuser__oxlname = new Field('Doe');
-            $oUser->oxuser__oxstreet = new Field('Maple Street');
-            $oUser->oxuser__oxstreetnr = new Field('10');
-            $oUser->oxuser__oxcity = new Field('Any City');
-            $oUser->oxuser__oxzip = new Field('9041');
-            $oUser->oxuser__oxfon = new Field('217-8918712');
-            $oUser->oxuser__oxfax = new Field('217-8918713');
-            $oUser->oxuser__oxsal = new Field('MR');
+            $oUser->assign([
+                'oxusername'  => $sUserName,
+                'oxpassword'  => $sEncodedPassword,
+                'oxpasssalt'  => $sSalt,
+                'oxcountryid' => $sGermanyId,
+                'oxrights'    => 'user',
+                'active'      => true,
+                'oxcompany'   => 'Your Company Name',
+                'oxfname'     => 'John',
+                'oxlname'     => 'Doe',
+                'oxstreet'    => 'Maple Street',
+                'oxstreetnr'  => '10',
+                'oxcity'      => 'Any City',
+                'oxzip'       => '9041',
+                'oxfon'       => '217-8918712',
+                'oxfax'       => '217-8918713',
+                'oxsal'       => 'MR',
+            ]);
             $oUser->save();
 
             $oObj = new BaseModel();
             $oObj->init('oxobject2group');
-            $oObj->oxobject2group__oxobjectid = new Field($oUser->getId());
-            $oObj->oxobject2group__oxgroupsid = new Field('oxidadmin');
+            $oObj->assign([
+               'oxobjectid' => $oUser->getId(),
+               'oxgroupsid' => 'oxidadmin',
+            ]);
             $oObj->save();
         } else {
             $oUser = oxNew(User::class);

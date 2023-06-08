@@ -22,12 +22,6 @@ use PHPUnit\Framework\TestCase;
  */
 class CountryVATGroupCreationTest extends BaseTestCase
 {
-    public function setUp(): void
-    {
-        //TODO: proper cleanup of piled up data
-        \oxDb::getDb()->execute("DELETE FROM `oevattbe_countryvatgroups` WHERE OEVATTBE_COUNTRYID = 'some_country_id'");
-    }
-
     /**
      * Return different variants of country VAT group data to save.
      *

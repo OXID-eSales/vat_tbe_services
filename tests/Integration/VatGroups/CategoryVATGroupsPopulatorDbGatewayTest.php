@@ -42,9 +42,6 @@ class CategoryVATGroupsPopulatorDbGatewayTest extends BaseTestCase
         $this->_cleanData();
         $this->_prepareData();
 
-        //TODO: remove this and use only fixtures
-        $this->_cleanFixtures();
-
         $oDbGateway = oxNew(CategoryVATGroupsPopulatorDbGateway::class);
         $oDbGateway->populate('categoryId');
 
@@ -65,8 +62,7 @@ class CategoryVATGroupsPopulatorDbGatewayTest extends BaseTestCase
      */
     public function testResetArticles($oDbGateway)
     {
-        //TODO: remove this and use only fixtures
-        $this->_cleanFixtures();
+        $this->_cleanFixturesData();
 
         $aArticles = array(
             'article2'
@@ -91,7 +87,7 @@ class CategoryVATGroupsPopulatorDbGatewayTest extends BaseTestCase
         $this->assertFalse($oDbGateway->reset($aArticles));
     }
 
-    protected function _cleanFixtures()
+    private function _cleanFixturesData()
     {
         \oxDb::getDb()->execute("DELETE FROM `oevattbe_articlevat` WHERE OEVATTBE_ARTICLEID IN ('1126', '1127', '1131')");
         \oxDb::getDb()->execute("DELETE FROM `oxarticles` WHERE OXID IN ('1126', '1127', '1131', '_testArticle')");

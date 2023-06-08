@@ -9,7 +9,6 @@ namespace OxidEsales\EVatModule\Tests\Integration\VatGroups;
 use OxidEsales\EshopCommunity\Tests\ContainerTrait;
 use OxidEsales\EVatModule\Model\CountryVATGroup;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
-use PHPUnit\Framework\TestCase;
 
 /**
  * Testing CountryVATGroupsList class.

@@ -6,7 +6,6 @@
 
 namespace OxidEsales\EVatModule\Tests\Integration\VatGroups;
 
-use OxidEsales\Eshop\Core\Field;
 use OxidEsales\EVatModule\Controller\Admin\ArticleExtendAjax;
 use OxidEsales\EVatModule\Controller\Admin\ArticleMain;
 use OxidEsales\EVatModule\Controller\Admin\CategoryAdministration;
@@ -354,8 +353,10 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
         /** @var Category $oCategory */
         $oCategory = oxNew(Category::class);
         $oCategory->setId($sCategoryId);
-        $oCategory->oxcategories__oevattbe_istbe = new Field($bIsTbe);
-        $oCategory->oxcategories__oxparentid = new Field('oxrootid');
+        $oCategory->assign([
+            'oevattbe_istbe' => $bIsTbe,
+            'oxparentid'     => 'oxrootid',
+        ]);
         $oCategory->save();
         return $oCategory;
     }

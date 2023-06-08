@@ -7,7 +7,6 @@
 namespace OxidEsales\EVatModule\Tests\Integration\Checkout;
 
 use OxidEsales\Eshop\Application\Model\BasketItem;
-use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EVatModule\Controller\BasketController;
@@ -64,8 +63,6 @@ class BasketMarksTest extends BaseTestCase
      */
     public function testShowVATTBEMark($blIsUserLoggedIn, $blIsArticleTbeService, $blIsCountryConfigured, $blResult)
     {
-        $oConfig = Registry::getConfig();
-        $oConfig->setConfigParam('sOeVATTBEDomesticCountry', 'AT');
         $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('AT');
 
         $oSession = Registry::getSession();
@@ -74,7 +71,6 @@ class BasketMarksTest extends BaseTestCase
         /** @var Country $oCountry */
         $oCountry = oxNew(Country::class);
         $oCountry->setId('_testCountry1');
-        $oCountry->oxcountry__oevattbe_appliestbevat = new Field($blIsCountryConfigured);
         $oCountry->assign([
             'oevattbe_appliestbevat' => $blIsCountryConfigured
         ]);
@@ -83,7 +79,6 @@ class BasketMarksTest extends BaseTestCase
         /** @var Article $oArticle */
         $oArticle = oxNew(Article::class);
         $oArticle->setId('_testArticle1');
-        $oArticle->oxarticles__oevattbe_istbeservice = new Field($blIsArticleTbeService);
         $oArticle->assign([
             'oevattbe_istbeservice' => $blIsArticleTbeService
         ]);
@@ -132,8 +127,6 @@ class BasketMarksTest extends BaseTestCase
      */
     public function testIsTBEArticleValid($blIsArticleValid, $blResult)
     {
-        $oConfig = Registry::getConfig();
-        $oConfig->setConfigParam('sOeVATTBEDomesticCountry', 'AT');
         $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('AT');
 
         $oSession = Registry::getSession();
@@ -142,7 +135,6 @@ class BasketMarksTest extends BaseTestCase
         /** @var Country $oCountry */
         $oCountry = oxNew(Country::class);
         $oCountry->setId('_testCountry1');
-        $oCountry->oxcountry__oevattbe_appliestbevat = new Field(true);
         $oCountry->assign([
             'oevattbe_appliestbevat' => true
         ]);
@@ -151,7 +143,6 @@ class BasketMarksTest extends BaseTestCase
         /** @var Article $oArticle */
         $oArticle = oxNew(Article::class);
         $oArticle->setId('_testArticle1');
-        $oArticle->oxarticles__oevattbe_istbeservice = new Field(true);
         $oArticle->assign([
             'oevattbe_istbeservice' => true
         ]);

@@ -46,12 +46,12 @@ class CountryVATGroupsDbGatewayTest extends BaseTestCase
         $aData = $oVatGroupsGateway->load($sGroupId);
 
         $aExpectedData = array(
-            'OEVATTBE_ID' => (int) $sGroupId,
-            'OEVATTBE_COUNTRYID' => '8f241f11095410f38.37165361',
-            'OEVATTBE_NAME' => 'Group Name',
+            'OEVATTBE_ID'          => (int)$sGroupId,
+            'OEVATTBE_COUNTRYID'   => '8f241f11095410f38.37165361',
+            'OEVATTBE_NAME'        => 'Group Name',
             'OEVATTBE_DESCRIPTION' => 'Some description',
-            'OEVATTBE_RATE' => '20.50',
-            'OEVATTBE_TIMESTAMP' => $aData['OEVATTBE_TIMESTAMP'],
+            'OEVATTBE_RATE'        => '20.50',
+            'OEVATTBE_TIMESTAMP'   => $aData['OEVATTBE_TIMESTAMP'],
         );
 
         $this->assertEquals($aExpectedData, $aData);
@@ -122,10 +122,10 @@ class CountryVATGroupsDbGatewayTest extends BaseTestCase
     {
         $oVatGroupsGateway = oxNew(CountryVATGroupsDbGateway::class);
         $aData = array(
-            'OEVATTBE_COUNTRYID' => '8f241f11095410f38.37165361',
-            'OEVATTBE_NAME' => 'Group Name',
+            'OEVATTBE_COUNTRYID'   => '8f241f11095410f38.37165361',
+            'OEVATTBE_NAME'        => 'Group Name',
             'OEVATTBE_DESCRIPTION' => 'Some description',
-            'OEVATTBE_RATE' => 20.50
+            'OEVATTBE_RATE'        => 20.50
         );
         $sGroupId1 = $oVatGroupsGateway->save($aData);
         $sGroupId2 = $oVatGroupsGateway->save($aData);
@@ -160,10 +160,10 @@ class CountryVATGroupsDbGatewayTest extends BaseTestCase
     {
         $oVatGroupsGateway = oxNew(CountryVATGroupsDbGateway::class);
         $aData = array(
-            'oevattbe_countryid' => '8f241f11095410f38.37165361',
-            'oevattbe_name' => 'Group Name',
-            'oevattbe_description' => 'Some description',
-            'oevattbe_rate' => 20.50
+            'OEVATTBE_COUNTRYID'   => '8f241f11095410f38.37165361',
+            'OEVATTBE_NAME'        => 'Group Name',
+            'OEVATTBE_DESCRIPTION' => 'Some description',
+            'OEVATTBE_RATE'        => 20.50
         );
 
         return $oVatGroupsGateway->save($aData);

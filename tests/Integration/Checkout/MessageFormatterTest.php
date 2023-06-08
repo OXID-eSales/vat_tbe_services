@@ -6,7 +6,6 @@
 
 namespace OxidEsales\EVatModule\Tests\Integration\Checkout;
 
-use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Model\IncorrectVATArticlesMessageFormatter;
 use OxidEsales\EVatModule\Shop\Article;
@@ -26,10 +25,14 @@ class MessageFormatterTest extends BaseTestCase
     public function providerGetMessage()
     {
         $oArticle1 = oxNew(Article::class);
-        $oArticle1->oxarticles__oxtitle = new Field('some article name', Field::T_RAW);
+        $oArticle1->assign([
+            'oxtitle' => 'some article name'
+        ]);
 
         $oArticle2 = oxNew(Article::class);
-        $oArticle2->oxarticles__oxtitle = new Field('some other name', Field::T_RAW);
+        $oArticle2->assign([
+            'oxtitle' => 'some other name'
+        ]);
 
         $oInvalidArticles1 = array($oArticle1);
         $oInvalidArticles2 = array($oArticle1, $oArticle2);
