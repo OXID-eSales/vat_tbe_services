@@ -75,7 +75,7 @@ class CountryVATGroupCreationTest extends BaseTestCase
         $aVATTBECountryVATGroupsList = $oVATTBECountryVATGroupsList->load('some_country_id');
 
         $this->assertTrue(isset($aVATTBECountryVATGroupsList[0]), 'Newly created group must be in 0 position.');
-        $this->assertFalse(isset($aVATTBECountryVATGroupsList[1]), 'Newly created should not have duplication.');
+        $this->assertFalse(isset($aVATTBECountryVATGroupsList[1]), 'Newly created group must not have duplication.');
 
         /** @var CountryVATGroup $oNewlyCreatedCountryVATGroup */
         $oNewlyCreatedCountryVATGroup = $aVATTBECountryVATGroupsList[0];

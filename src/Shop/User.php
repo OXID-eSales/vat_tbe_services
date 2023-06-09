@@ -8,7 +8,6 @@ namespace OxidEsales\EVatModule\Shop;
 
 use OxidEsales\Eshop\Core\Exception\CookieException;
 use OxidEsales\Eshop\Core\Exception\UserException;
-use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Model\User as EVatUser;
 use OxidEsales\EVatModule\Traits\ServiceContainer;
@@ -62,7 +61,9 @@ class User extends User_parent
     public function save()
     {
         if ($this->getOeVATTBEVatIn() && $this->isOeVATTBEINStoredDateEmpty()) {
-            $this->oxuser__oevattbe_vatinenterdate = new Field(date('Y-m-d H:i:s', Registry::get("oxUtilsDate")->getTime()));
+            $this->assign([
+                'oevattbe_vatinenterdate' => date('Y-m-d H:i:s', Registry::getUtilsDate()->getTime())
+            ]);
         }
         $this->unsetOeVATTBETbeCountryFromCaching();
 

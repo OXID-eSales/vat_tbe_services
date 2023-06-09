@@ -4,45 +4,47 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\EVatModule\Tests\Unit\Shop;
+namespace OxidEsales\EVatModule\Tests\Integration\Shop;
 
-use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\UtilsDate;
-use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EVatModule\Model\Evidence\Item\BillingCountryEvidence;
 use OxidEsales\EVatModule\Service\ModuleSettings;
-use OxidEsales\EVatModule\Shop\User;
+use OxidEsales\Eshop\Application\Model\User;
+use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 use OxidEsales\EVatModule\Traits\ServiceContainer;
-use PHPUnit\Framework\TestCase;
 use oxDb;
 
 /**
  * Testing extended oxUser class.
  */
-class UserTest extends TestCase
+class UserTest extends BaseTestCase
 {
     use ServiceContainer;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        \oxDb::getDb()->execute("TRUNCATE TABLE `oxuser`;");
+    }
 
     /**
      * Select Country test
      */
     public function testTBECountryIdSelecting()
     {
-        //TODO: tmp solution, fix after moving to integration test
-        ContainerFactory::resetContainer();
+        Registry::getSession()->setVariable('TBECountryId', null);
 
-        $oConfig = Registry::getConfig();
-        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', ['oeVATTBEBillingCountryEvidence']);
-        $oConfig->setConfigParam('aOeVATTBECountryEvidences', ['billing_country' => 1]);
-        $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
         $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
         $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class]);
         $moduleSettings->saveCountryEvidences(['billing_country' => 1]);
         $moduleSettings->saveDefaultEvidence('billing_country');
 
         $oUser = oxNew(User::class);
-        $oUser->oxuser__oxcountryid = new Field('GermanyId');
+        $oUser->assign([
+           'oxcountryid' => 'GermanyId'
+        ]);
         Registry::getSession()->setUser($oUser);
 
         $this->assertEquals('GermanyId', $oUser->getOeVATTBETbeCountryId());
@@ -54,7 +56,9 @@ class UserTest extends TestCase
     public function testGetOeVATTBEVatIn()
     {
         $oUser = oxNew(User::class);
-        $oUser->oxuser__oxustid = new Field('IdNumber');
+        $oUser->assign([
+            'oxustid' => 'IdNumber'
+        ]);
 
         $this->assertSame('IdNumber', $oUser->getOeVATTBEVatIn());
     }
@@ -65,7 +69,9 @@ class UserTest extends TestCase
     public function testGetOeVATTBEVatInStoreDate()
     {
         $oUser = oxNew(User::class);
-        $oUser->oxuser__oevattbe_vatinenterdate = new Field('2014-12-12 12:12:12');
+        $oUser->assign([
+            'oevattbe_vatinenterdate' => '2014-12-12 12:12:12'
+        ]);
 
         $this->assertSame('2014-12-12 12:12:12', $oUser->getOeVATTBEVatInStoreDate());
     }
@@ -84,7 +90,9 @@ class UserTest extends TestCase
         $oUser = oxNew(User::class);
         $oUser->delete('userId');
         $oUser->setId('userId');
-        $oUser->oxuser__oxustid = new Field('IdNumber');
+        $oUser->assign([
+            'oxustid' => 'IdNumber',
+        ]);
         $oUser->save();
 
         $oUser = oxNew(User::class);
@@ -128,7 +136,9 @@ class UserTest extends TestCase
 
         $oUser = oxNew(User::class);
         $oUser->load('userId');
-        $oUser->oxuser__oxustid = new Field('IdNumber');
+        $oUser->assign([
+            'oxustid' => 'IdNumber'
+        ]);
         $oUser->save();
 
         $oUser = oxNew(User::class);
@@ -177,13 +187,17 @@ class UserTest extends TestCase
         $oUser = oxNew(User::class);
         $oUser->delete('userId');
         $oUser->setId('userId');
-        $oUser->oxuser__oxustid = new Field('IdNumber');
-        $oUser->oxuser__oevattbe_vatinenterdate = new Field('0000-00-00 00:00:00');
+        $oUser->assign([
+            'oxustid' => 'IdNumber',
+            'oevattbe_vatinenterdate' => '0000-00-00 00:00:00',
+        ]);
         $oUser->save();
 
         $oUser = oxNew(User::class);
         $oUser->load('userId');
-        $oUser->oxuser__oxustid = new Field('IdNumber2');
+        $oUser->assign([
+            'oxustid' => 'IdNumber2'
+        ]);
         $oUser->save();
 
         $oUser = oxNew(User::class);
@@ -202,7 +216,9 @@ class UserTest extends TestCase
         $oUser->delete('userId');
 
         $oUser->setId('userId');
-        $oUser->oxuser__oxustid = new Field('IdNumber');
+        $oUser->assign([
+            'oxustid' => 'IdNumber'
+        ]);
         $oUser->save();
 
         //removing set date
@@ -210,7 +226,9 @@ class UserTest extends TestCase
 
         $oUser = oxNew(User::class);
         $oUser->load('userId');
-        $oUser->oxuser__oxustid = new Field('');
+        $oUser->assign([
+            'oxustid' => ''
+        ]);
         $oUser->save();
 
         $oUser = oxNew(User::class);
@@ -228,13 +246,17 @@ class UserTest extends TestCase
         $oUser = oxNew(User::class);
         $oUser->delete('userId');
         $oUser->setId('userId');
-        $oUser->oxuser__oxustid = new Field('IdNumber');
-        $oUser->oxuser__oevattbe_vatinenterdate = new Field('2014-12-12 12:12:12');
+        $oUser->assign([
+            'oxustid' => 'IdNumber',
+            'oevattbe_vatinenterdate' => '2014-12-12 12:12:12',
+        ]);
         $oUser->save();
 
         $oUser = oxNew(User::class);
         $oUser->load('userId');
-        $oUser->oxuser__oxustid = new Field('');
+        $oUser->assign([
+            'oxustid' => ''
+        ]);
         $oUser->save();
 
         $oUser = oxNew(User::class);
@@ -251,13 +273,17 @@ class UserTest extends TestCase
         $oUser = oxNew(User::class);
         $oUser->delete('userId');
         $oUser->setId('userId');
-        $oUser->oxuser__oxustid = new Field('IdNumber');
-        $oUser->oxuser__oevattbe_vatinenterdate = new Field('2014-12-12 12:12:12');
+        $oUser->assign([
+            'oxustid'                 => 'IdNumber',
+            'oevattbe_vatinenterdate' => '2014-12-12 12:12:12',
+        ]);
         $oUser->save();
 
         $oUser = oxNew(User::class);
         $oUser->load('userId');
-        $oUser->oxuser__oxustid = new Field('IdNumber2');
+        $oUser->assign([
+            'oxustid' => 'IdNumber2'
+        ]);
         $oUser->save();
 
         $oUser = oxNew(User::class);
