@@ -10,6 +10,7 @@ namespace OxidEsales\EVatModule\Tests\Integration\Core;
 use OxidEsales\EVatModule\Core\Model;
 use OxidEsales\EVatModule\Model\ArticleVATGroupsList;
 use OxidEsales\EVatModule\Model\CategoryVATGroupsList;
+use OxidEsales\EVatModule\Model\CountryVATGroup;
 use OxidEsales\EVatModule\Model\CountryVATGroupsList;
 use OxidEsales\EVatModule\Model\OrderEvidenceList;
 use OxidEsales\EVatModule\Model\DbGateway\ArticleVATGroupsDbGateway;
@@ -75,25 +76,36 @@ class ModelTest extends TestCase
     {
         $expected = ['testkey' => 'testValue'];
 
-        $gatewayMock = $this->createPartialMock($gateway, ['load']);
-        $gatewayMock
-            ->expects($this->any())
-            ->method('load')
-            ->will($this->returnValue($data));
+        $mockBuilder = $this->getMockBuilder($gateway);
 
+        //CountryVATGroupsList set data differently
         if ($model == CountryVATGroupsList::class) {
-            $gatewayMock->method('getList')->will($this->returnValue('data'));
+            $gatewayMock = $mockBuilder
+                ->onlyMethods(['load', 'getList'])
+                ->getMock();
+
+            $gatewayMock->expects($this->any())->method('load')->will($this->returnValue($data));
+            $gatewayMock->expects($this->any())->method('getList')->will($this->returnValue($data));
+        } else {
+            $gatewayMock = $mockBuilder
+                ->onlyMethods(['load'])
+                ->getMock();
+
+            $gatewayMock->expects($this->any())->method('load')->will($this->returnValue($data));
         }
 
         $actualModel = $this->_getModel($model, $gatewayMock, 'id-to-load');
 
         if ($model == CountryVATGroupsList::class) {
             $this->assertIsArray($actualModel->load());
+
+            $modelData = $actualModel->getData();
+            $this->assertInstanceOf(CountryVATGroup::class, $modelData[0]);
+            $this->assertSame(array_change_key_case($data[0], CASE_LOWER), $modelData[0]->getData());
         } else {
             $this->assertTrue($actualModel->load());
+            $this->assertEquals($expected, $actualModel->getData());
         }
-
-        $this->assertEquals($expected, $actualModel->getData());
     }
 
     /**
@@ -105,20 +117,37 @@ class ModelTest extends TestCase
     {
         $expected = ['testkey' => 'testValue'];
 
-        $gatewayMock = $this->createPartialMock($gateway, ['load']);
-        $gatewayMock
-            ->expects($this->any())
-            ->method('load')
-            ->will($this->returnValue($data));
+        $mockBuilder = $this->getMockBuilder($gateway);
+
+        //CountryVATGroupsList set data differently
+        if ($model == CountryVATGroupsList::class) {
+            $gatewayMock = $mockBuilder
+                ->onlyMethods(['load', 'getList'])
+                ->getMock();
+
+            $gatewayMock->expects($this->any())->method('load')->will($this->returnValue($data));
+            $gatewayMock->expects($this->any())->method('getList')->will($this->returnValue($data));
+        } else {
+            $gatewayMock = $mockBuilder
+                ->onlyMethods(['load'])
+                ->getMock();
+
+            $gatewayMock->expects($this->any())->method('load')->will($this->returnValue($data));
+        }
+
         $actualModel = $this->_getModel($model, $gatewayMock);
 
         if ($model == CountryVATGroupsList::class) {
             $this->assertIsArray($actualModel->load('id-to-load'));
+
+            $modelData = $actualModel->getData();
+            $this->assertInstanceOf(CountryVATGroup::class, $modelData[0]);
+            $this->assertSame(array_change_key_case($data[0], CASE_LOWER), $modelData[0]->getData());
         } else {
             $this->assertTrue($actualModel->load('id-to-load'));
-        }
 
-        $this->assertEquals($expected, $actualModel->getData());
+            $this->assertEquals($expected, $actualModel->getData());
+        }
     }
 
     /**

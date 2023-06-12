@@ -43,7 +43,7 @@ class CountryVATGroupsList extends Model
         if (is_array($aGroupsData) && count($aGroupsData)) {
             foreach ($aGroupsData as $aData) {
                 /** @var CountryVATGroup $oGroup */
-                $oGroup = clone $this->getServiceFromContainer(CountryVATGroup::class);
+                $oGroup = oxNew(CountryVATGroup::class, $oGateway);
                 $oGroup->setId($aData['OEVATTBE_ID']);
                 $oGroup->setData($aData);
                 $aGroups[] = $oGroup;
@@ -67,7 +67,7 @@ class CountryVATGroupsList extends Model
         if (is_array($aGroupsData) && count($aGroupsData)) {
             foreach ($aGroupsData as $aData) {
                 /** @var CountryVATGroup $oGroup */
-                $oGroup = clone $this->getServiceFromContainer(CountryVATGroup::class);
+                $oGroup = oxNew(CountryVATGroup::class, $oGateway);
                 $oGroup->setId($aData['OEVATTBE_ID']);
                 $oGroup->setData($aData);
                 $aGroups[$aData['OEVATTBE_COUNTRYID']][] = $oGroup;

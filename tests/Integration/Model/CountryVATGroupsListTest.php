@@ -41,8 +41,8 @@ class CountryVATGroupsListTest extends TestCase
         $oGateway = $this->createStub(CountryVATGroupsDbGateway::class);
         $oGateway->method('getList')->willReturn($aData);
 
-        $oGroup1 = $this->_createGroupObject($aGroup1Data);
-        $oGroup2 = $this->_createGroupObject($aGroup2Data);
+        $oGroup1 = $this->_createGroupObject($aGroup1Data, $oGateway);
+        $oGroup2 = $this->_createGroupObject($aGroup2Data, $oGateway);
 
         /** @var CountryVATGroupsList $oGroupsList */
         $oGroupsList = oxNew(CountryVATGroupsList::class, $oGateway);
@@ -98,9 +98,9 @@ class CountryVATGroupsListTest extends TestCase
      *
      * @return CountryVATGroup
      */
-    protected function _createGroupObject($aData)
+    protected function _createGroupObject($aData, $oGateway)
     {
-        $oGroupsList = clone $this->get(CountryVATGroup::class);
+        $oGroupsList = oxNew(CountryVATGroup::class, $oGateway);
         $oGroupsList->setId($aData['OEVATTBE_ID']);
         $oGroupsList->setData($aData);
 

@@ -216,7 +216,6 @@ jobs:
             php php vendor/bin/phpunit \
               -c /var/www/vendor/${{ env.PACKAGE_NAME }}/tests/phpunit.xml \
               --testsuite=UnitTests \
-              --bootstrap=/var/www/source/bootstrap.php \
               --coverage-php=/var/www/unit.cov \
               --coverage-clover=/var/www/coverage.xml \
               --coverage-text

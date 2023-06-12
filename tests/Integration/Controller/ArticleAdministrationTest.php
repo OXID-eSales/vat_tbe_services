@@ -4,7 +4,7 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\EVatModule\Tests\Unit\Controller;
+namespace OxidEsales\EVatModule\Tests\Integration\Controller;
 
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\EVatModule\Controller\Admin\ArticleAdministration;
