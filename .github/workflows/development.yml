@@ -217,7 +217,7 @@ jobs:
               -c /var/www/vendor/${{ env.PACKAGE_NAME }}/tests/phpunit.xml \
               --testsuite=UnitTests \
               --coverage-php=/var/www/unit.cov \
-              --coverage-clover=/var/www/coverage.xml \
+              --coverage-clover=/var/www/source/coverage.xml \
               --coverage-text
 
       - name: Upload log artifact
@@ -270,7 +270,7 @@ jobs:
           docker-compose exec -T \
             -e XDEBUG_MODE=coverage \
             php php vendor/bin/phpunit \
-              -c /var/www/vendor/${{ env.PACKAGE_NAME }}/tests/phpunit.xml \
+              -c /var/www/vendor/${{ env.PACKAGE_NAME }}/tests/phpintegration.xml \
               --testsuite=IntegrationTests \
               --bootstrap=/var/www/source/bootstrap.php \
               --coverage-php=/var/www/integration.cov \

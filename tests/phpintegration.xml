@@ -2,6 +2,8 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          backupGlobals="true"
          backupStaticAttributes="false"
+         bootstrap="../../../../bootstrap.php"
+         colors="true"
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
@@ -14,14 +16,14 @@
          beStrictAboutTestsThatDoNotTestAnything="false"
          verbose="false"
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
-    <coverage includeUncoveredFiles="true" processUncoveredFiles="false">
+    <coverage includeUncoveredFiles="true" processUncoveredFiles="true">
         <include>
             <directory suffix=".php">../src</directory>
         </include>
     </coverage>
     <testsuites>
-        <testsuite name="UnitTests">
-            <directory>Unit/</directory>
+        <testsuite name="IntegrationTests">
+            <directory>Integration</directory>
         </testsuite>
     </testsuites>
 </phpunit>
