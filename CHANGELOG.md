@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.0.0] - Unreleased
+
+### Added
+- Compatibility with OXID eShop 7.0.x
+- Namespaces added
+- Module works on smarty engine (Smarty related extensions in views/smarty resp. views/admin_smarty directory)
+- Module works on twig engine (Twig related extensions in views/twig resp. views/admin_twig directory)
+- Support for PHP 8.1
+- Support for MySQL 8
+- Service OxidEsales\EVatModule\Service\ModuleSettings
+- Trait OxidEsales\EVatModule\Traits\ServiceContainer
+
+### Changed
+- All module core functionality moved to `src` directory
+- Shop extensions moved to `Shop` directory
+- Classes have been moved to appropriate namespaces, `oevattbe` and `ox` prefixes have been dropped.
+- Adapted tests to work with OXID eShop 7.0.x and without testing library
 
 ## [2.1.0] - 2022-08-02
 
