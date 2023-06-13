@@ -49,7 +49,6 @@ class OrderControllerTest extends TestCase
     public function testShowVATTBEMarkMessageWhenMessageShouldBeHidden($blIsDomesticCountry, $blHasTBEArticles, $blValidArticles, $blCountryAppliesTBEVAT)
     {
         $sDomesticCountryAbbr = $blIsDomesticCountry ? 'LT' : 'DE';
-        Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', $sDomesticCountryAbbr);
         $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry($sDomesticCountryAbbr);
         Registry::getSession()->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
 
@@ -75,7 +74,6 @@ class OrderControllerTest extends TestCase
      */
     public function testShowVATTBEMarkMessageWhenMessageShouldBeShown()
     {
-        Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
         $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('DE');
         Registry::getSession()->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
 

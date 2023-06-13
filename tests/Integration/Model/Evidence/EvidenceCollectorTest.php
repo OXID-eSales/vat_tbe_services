@@ -29,12 +29,9 @@ class EvidenceCollectorTest extends TestCase
      */
     public function testGetEvidencesWhenEvidencesExistAndIsActive()
     {
-        //TODO: tmp solution, fix after moving to integration test
         ContainerFactory::resetContainer();
 
         $oConfig = Registry::getConfig();
-        $oConfig->setConfigParam('aOeVATTBECountryEvidences', ['billing_country' => 1]);
-        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', ['oeVATTBEBillingCountryEvidence']);
         $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
         $moduleSettings->saveCountryEvidences(['billing_country' => 1]);
         $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class]);
@@ -56,8 +53,6 @@ class EvidenceCollectorTest extends TestCase
     public function testGetEvidencesWhenEvidenceExistsButIsNotActive()
     {
         $oConfig = Registry::getConfig();
-        $oConfig->setConfigParam('aOeVATTBECountryEvidences', ['billing_country' => 0]);
-        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', ['oeVATTBEBillingCountryEvidence']);
         $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
         $moduleSettings->saveCountryEvidences(['billing_country' => 0]);
         $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class]);
@@ -76,8 +71,6 @@ class EvidenceCollectorTest extends TestCase
     public function testGetEvidencesWhenEvidenceIsRegisteredButActiveEvidencesListIsEmpty()
     {
         $oConfig = Registry::getConfig();
-        $oConfig->setConfigParam('aOeVATTBECountryEvidences', []);
-        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', ['oeVATTBEBillingCountryEvidence']);
         $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
         $moduleSettings->saveCountryEvidences([]);
         $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class]);
@@ -96,8 +89,6 @@ class EvidenceCollectorTest extends TestCase
     public function testGetEvidencesWhenNoEvidencesAreSet()
     {
         $oConfig = Registry::getConfig();
-        $oConfig->setConfigParam('aOeVATTBECountryEvidences', []);
-        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', []);
         $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
         $moduleSettings->saveCountryEvidences([]);
         $moduleSettings->saveEvidenceClasses([]);
@@ -116,8 +107,6 @@ class EvidenceCollectorTest extends TestCase
     public function testGetEvidencesWhenNoEvidenceIsRegisteredButActiveEvidenceListIsNotEmpty()
     {
         $oConfig = Registry::getConfig();
-        $oConfig->setConfigParam('aOeVATTBECountryEvidences', ['non_existing_id' => 1]);
-        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', []);
         $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
         $moduleSettings->saveCountryEvidences(['non_existing_id' => 1]);
         $moduleSettings->saveEvidenceClasses([]);
@@ -136,8 +125,6 @@ class EvidenceCollectorTest extends TestCase
     public function testGetEvidencesWhenEvidencesDoesNotExists()
     {
         $oConfig = Registry::getConfig();
-        $oConfig->setConfigParam('aOeVATTBECountryEvidences', ['non_existing_id' => 1]);
-        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', ['NonExistingEvidenceClass']);
         $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
         $moduleSettings->saveCountryEvidences(['non_existing_id' => 1]);
         $moduleSettings->saveEvidenceClasses(['NonExistingEvidenceClass']);

@@ -30,7 +30,6 @@ class ViewConfigTest extends TestCase
      */
     public function testShowTBEArticlePriceNoticeWhenUserIsNotFromDomesticCountry()
     {
-        Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
         $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('DE');
         Registry::getSession()->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
 
@@ -51,7 +50,6 @@ class ViewConfigTest extends TestCase
      */
     public function testShowTBEArticlePriceNoticeWhenUserIsFromDomesticCountry()
     {
-        Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
         Registry::getSession()->setVariable('TBECountryId', 'a7c40f631fc920687.20179984'); // DE
         $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('DE');
 
@@ -72,7 +70,6 @@ class ViewConfigTest extends TestCase
      */
     public function testShowTBEArticlePriceNoticeWhenArticleIsNotTBE()
     {
-        Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
         Registry::getSession()->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
         $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('DE');
 

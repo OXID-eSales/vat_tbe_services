@@ -71,7 +71,6 @@ class BasketTest extends TestCase
     {
         $sDomesticCountry = $blDomesticCountry ? 'LT' : 'DE';
         $sLithuaniaId = '8f241f11095d6ffa8.86593236';
-        Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', $sDomesticCountry);
         Registry::getSession()->setVariable('TBECountryId', $sLithuaniaId);
 
         $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
@@ -120,8 +119,6 @@ class BasketTest extends TestCase
      */
     public function testSetCountryIdOnChangeEventWhenMessageShouldBeShown($bAddToBasket)
     {
-        Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
-
         $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
         $moduleSettings->saveDomesticCountry('DE');
 

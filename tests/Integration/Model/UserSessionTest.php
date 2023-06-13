@@ -42,9 +42,6 @@ class UserSessionTest extends TestCase
         $oConfig = Registry::getConfig();
         $oSession = Registry::getSession();
         $oSession->setVariable('TBECountryId', null);
-        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', ['oeVATTBEBillingCountryEvidence']);
-        $oConfig->setConfigParam('aOeVATTBECountryEvidences', ['billing_country' => 1]);
-        $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'billing_country');
 
         $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
         $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class]);
@@ -58,9 +55,6 @@ class UserSessionTest extends TestCase
         /** @var User $oTBEUser */
         $oTBEUser = oxNew(User::class, $oUser, $oSession, $oConfig);
         $oTBEUser->getOeVATTBEEvidenceList();
-
-        $oConfig->setConfigParam('aOeVATTBECountryEvidenceClasses', ['oeVATTBEGeoLocationEvidence']);
-        $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'geo_location');
 
         $moduleSettings->saveEvidenceClasses([GeoLocationEvidence::class]);
         $moduleSettings->saveDefaultEvidence('geo_location');
@@ -76,7 +70,7 @@ class UserSessionTest extends TestCase
 
         /** @var User $oTBEUser */
         $oTBEUser = oxNew(User::class, $oUser, $oSession, $oConfig);
-        $this->assertEquals($aExpectedList, $oTBEUser->getOeVATTBEEvidenceList(true));
+        $this->assertEquals($aExpectedList, $oTBEUser->getOeVATTBEEvidenceList());
 
         return $oTBEUser;
     }

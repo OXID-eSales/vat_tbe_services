@@ -44,7 +44,6 @@ class EvidenceSelectorTest extends TestCase
     public function testGetCountryWhenBothEvidenceDoNotMatchDefaultTaken($oEvidenceList, $sDefaultEvidence, $sExpectedEvidence)
     {
         $oConfig = Registry::getConfig();
-        $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', $sDefaultEvidence);
         $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
         $moduleSettings->saveDefaultEvidence($sDefaultEvidence);
 
@@ -65,7 +64,6 @@ class EvidenceSelectorTest extends TestCase
     public function testGetCountryWhenDefaultEvidenceEmpty()
     {
         $oConfig = Registry::getConfig();
-        $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'default_evidence');
         $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
         $moduleSettings->saveDefaultEvidence('default_evidence');
 
@@ -91,7 +89,6 @@ class EvidenceSelectorTest extends TestCase
     public function testGetCountryWhenDefaultAndFirstEvidenceEmpty()
     {
         $oConfig = Registry::getConfig();
-        $oConfig->setConfigParam('sOeVATTBEDefaultEvidence', 'default_evidence');
         $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
         $moduleSettings->saveDefaultEvidence('default_evidence');
 
@@ -156,7 +153,7 @@ class EvidenceSelectorTest extends TestCase
 
         $this->assertSame(false, $evidenceSelector->isEvidencesContradicting());
     }
-//
+
     public function testIsEvidencesContradictingWhenEvidencesMatch()
     {
         $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);

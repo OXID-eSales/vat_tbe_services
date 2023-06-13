@@ -25,7 +25,6 @@ class ShopTest extends TestCase
      */
     public function testGetDomesticCountryNotSet()
     {
-        Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', null);
         $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('');
 
         /** @var Shop $oShop */
@@ -38,7 +37,6 @@ class ShopTest extends TestCase
      */
     public function testGetDomesticCountryWrong()
     {
-        Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'blabla');
         $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('blabla');
 
         /** @var Shop $oShop */
@@ -51,7 +49,6 @@ class ShopTest extends TestCase
      */
     public function testGetDomesticCountry()
     {
-        Registry::getConfig()->setConfigParam('sOeVATTBEDomesticCountry', 'DE');
         $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('DE');
 
         /** @var Shop $oShop */

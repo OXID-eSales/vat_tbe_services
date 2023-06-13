@@ -8,14 +8,11 @@ namespace OxidEsales\EVatModule\Tests\Integration\VatGroups;
 
 use OxidEsales\Eshop\Core\DisplayError;
 use OxidEsales\Eshop\Core\Registry;
-use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EVatModule\Controller\Admin\CountryVatGroups;
 use OxidEsales\EVatModule\Model\CountryVATGroup;
 use OxidEsales\EVatModule\Model\CountryVATGroupsList;
 use OxidEsales\EVatModule\Model\DbGateway\CountryVATGroupsDbGateway;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
-use OxidEsales\Facts\Facts;
-use PHPUnit\Framework\TestCase;
 
 /**
  * Testing CountryVatGroups class.
