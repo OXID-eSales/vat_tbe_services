@@ -40,6 +40,12 @@ on:
         options:
           - '5.7.37'
           - '8.0'
+      report_sonarcloud:
+        description: 'Trigger sonarcloud analize?'
+        required: true
+        default: true
+        type: boolean
+
 env:
   PACKAGE_NAME: 'oxid-esales/evat-module'
   MODULE_PATH: 'oe/oevattbe'
@@ -199,6 +205,7 @@ jobs:
           key: installation-${{ github.sha }}-${{ join(inputs.*, '-') }}-${{ github.run_number }}-${{ github.run_attempt }}
           restore-keys: |
             installation-${{ github.sha }}-${{ join(inputs.*, '-') }}-${{ github.run_number }}-${{ github.run_attempt }}
+            installation-${{ github.sha }}-${{ join(inputs.*, '-') }}-${{ github.run_number }}
 
       - name: Start containers
         run: |
@@ -224,7 +231,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v3
         with:
-          name: UnitTestsLog-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ github.sha }}
+          name: ModuleUnitTestsLog-${{ inputs.php }}-${{ inputs.mysql }}-${{ inputs.template_engine }}
           path: |
             source/unit.cov
             source/source/log/oxideshop.log
@@ -233,7 +240,7 @@ jobs:
       - name: Stop containers
         if: always()
         run: |
-          docker-compose down
+          make down
           sleep 2
 
       - name: Cleanup Docker
@@ -255,6 +262,7 @@ jobs:
           key: installation-${{ github.sha }}-${{ join(inputs.*, '-') }}-${{ github.run_number }}-${{ github.run_attempt }}
           restore-keys: |
             installation-${{ github.sha }}-${{ join(inputs.*, '-') }}-${{ github.run_number }}-${{ github.run_attempt }}
+            installation-${{ github.sha }}-${{ join(inputs.*, '-') }}-${{ github.run_number }}
 
       - name: Start containers
         run: |
@@ -270,7 +278,7 @@ jobs:
           docker-compose exec -T \
             -e XDEBUG_MODE=coverage \
             php php vendor/bin/phpunit \
-              -c /var/www/vendor/${{ env.PACKAGE_NAME }}/tests/phpunit.xml \
+              -c /var/www/vendor/${{ env.PACKAGE_NAME }}/tests/phpintegration.xml \
               --testsuite=IntegrationTests \
               --bootstrap=/var/www/source/bootstrap.php \
               --coverage-php=/var/www/integration.cov \
@@ -281,7 +289,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v3
         with:
-          name: IntegrationTestsLog-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ github.sha }}
+          name: ModuleIntegrationTestsLog-${{ inputs.php }}-${{ inputs.mysql }}-${{ inputs.template_engine }}
           path: |
             source/integration.cov
             source/source/log/oxideshop.log
@@ -298,6 +306,91 @@ jobs:
         run: |
           c=$(docker ps -q) && [[ $c ]] && docker kill $c
           docker system prune --force
+
+  prepare_coverage_results:
+    needs: [ unit_tests, integration_tests ]
+    if: ${{ always() && inputs.report_sonarcloud }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Load current installation from cache
+        uses: actions/cache@v3
+        with:
+          fail-on-cache-miss: true
+          path: |
+            ./*
+          key: installation-${{ github.sha }}-${{ join(inputs.*, '-') }}-${{ github.run_number }}-${{ github.run_attempt }}
+          restore-keys: |
+            installation-${{ github.sha }}-${{ join(inputs.*, '-') }}-${{ github.run_number }}-${{ github.run_attempt }}
+            installation-${{ github.sha }}-${{ join(inputs.*, '-') }}-${{ github.run_number }}
+
+      - name: Download unit artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: ModuleUnitTestsLog-${{ inputs.php }}-${{ inputs.mysql }}-${{ inputs.template_engine }}
+          path: ./source/coverage/
+
+      - name: Download integration artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: ModuleIntegrationTestsLog-${{ inputs.php }}-${{ inputs.mysql }}-${{ inputs.template_engine }}
+          path: ./source/coverage/
+
+      - name: Start containers
+        run: |
+          make up
+          sleep 2
+
+      - name: Collect and merge coverage reports
+        continue-on-error: true
+        run: |
+          ls -alh source/coverage
+          wget https://phar.phpunit.de/phpcov-8.2.1.phar
+          mv phpcov-8.2.1.phar source/phpcov.phar
+          docker-compose exec -T php php phpcov.phar merge --clover coverage.xml ./coverage
+          perl -pi -e 's#/var/www/test-module/#./#g;' source/coverage.xml
+
+      - name: Upload log artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: TestsLog-${{ inputs.php }}-${{ inputs.mysql }}
+          path: source/coverage.xml
+
+      - name: Stop containers
+        if: always()
+        run: |
+          make down
+          sleep 2
+
+  sonarcloud:
+    needs: [ prepare_coverage_results ]
+    if: ${{ always() && inputs.report_sonarcloud }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current module
+        uses: actions/checkout@v3
+
+      - name: Download TestsLog artifacts
+        continue-on-error: true
+        uses: actions/download-artifact@v3
+        with:
+          name: TestsLog-${{ inputs.php }}-${{ inputs.mysql }}
+          path: ./tests/
+
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          args: >
+            -Dsonar.organization=${{ env.SONARCLOUD_ORGANIZATION }}
+            -Dsonar.projectKey=${{ env.SONARCLOUD_PROJECT_KEY }}
+            -Dsonar.sources=src
+            -Dsonar.tests=tests
+            -Dsonar.sourceEncoding=UTF-8
+            -Dsonar.php.coverage.reportPaths=tests/coverage.xml
+            -Dsonar.cpd.php.minimumTokens=25
+            -Dsonar.cpd.php.minimumLines=5
 
   notify_slack:
     needs: [ unit_tests, integration_tests ]
