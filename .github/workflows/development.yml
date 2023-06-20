@@ -51,7 +51,7 @@ env:
   MODULE_PATH: 'oe/oevattbe'
   MODULE_ID: 'oevattbe'
   SONARCLOUD_ORGANIZATION: 'oxid-esales'
-  SONARCLOUD_PROJECT_KEY: 'OXID-eSales_module-vat-t-be'
+  SONARCLOUD_PROJECT_KEY: 'OXID-eSales_vat_tbe_services'
 
 jobs:
   install_shop_with_module:
