@@ -21,10 +21,12 @@ class CategoryTest extends TestCase
     public function testIsOEVATTBETBE()
     {
         $oCategory = oxNew(Category::class);
-        $oCategory->oxcategories__oevattbe_istbe = new Field(1);
+        $oCategory->assign(['oevattbe_istbe' => 1]);
+        $oCategory->save();
         $this->assertTrue($oCategory->isOeVATTBETBE());
 
-        $oCategory->oxcategories__oevattbe_istbe = new Field(0);
+        $oCategory->assign(['oevattbe_istbe' => 0]);
+        $oCategory->save();
         $this->assertFalse($oCategory->isOeVATTBETBE());
     }
 }

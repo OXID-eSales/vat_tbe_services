@@ -21,10 +21,12 @@ class CountryTest extends TestCase
     public function testAppliesOeTBEVATTbeVat()
     {
         $oCountry = oxNew(Country::class);
-        $oCountry->oxcountry__oevattbe_appliestbevat = new Field(1);
+        $oCountry->assign(['oevattbe_appliestbevat' => 1]);
+        $oCountry->save();
         $this->assertTrue($oCountry->appliesOeTBEVATTbeVat());
 
-        $oCountry->oxcountry__oevattbe_appliestbevat = new Field(0);
+        $oCountry->assign(['oevattbe_appliestbevat' => 0]);
+        $oCountry->save();
         $this->assertFalse($oCountry->appliesOeTBEVATTbeVat());
     }
 
@@ -34,10 +36,12 @@ class CountryTest extends TestCase
     public function testIsOEVATTBEAtLeastOneGroupConfigured()
     {
         $oCountry = oxNew(Country::class);
-        $oCountry->oxcountry__oevattbe_istbevatconfigured = new Field(1);
+        $oCountry->assign(['oevattbe_istbevatconfigured' => 1]);
+        $oCountry->save();
         $this->assertTrue($oCountry->isOEVATTBEAtLeastOneGroupConfigured());
 
-        $oCountry->oxcountry__oevattbe_istbevatconfigured = new Field(0);
+        $oCountry->assign(['oevattbe_istbevatconfigured' => 0]);
+        $oCountry->save();
         $this->assertFalse($oCountry->isOEVATTBEAtLeastOneGroupConfigured());
     }
 
@@ -47,7 +51,8 @@ class CountryTest extends TestCase
     public function testGetOeVATTBEName()
     {
         $oCountry = oxNew(Country::class);
-        $oCountry->oxcountry__oxtitle = new Field('LT');
+        $oCountry->assign(['oxtitle' => 'LT']);
+        $oCountry->save();
         $this->assertSame('LT', $oCountry->getOeVATTBEName());
     }
 }

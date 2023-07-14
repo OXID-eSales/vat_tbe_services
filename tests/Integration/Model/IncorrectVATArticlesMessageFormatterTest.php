@@ -22,7 +22,8 @@ class IncorrectVATArticlesMessageFormatterTest extends TestCase
     public function testGetMessage()
     {
         $oArticle = oxNew(Article::class);
-        $oArticle->oxarticles__oxtitle = new Field('some other name', Field::T_RAW);
+        $oArticle->assign(['oxtitle' => 'some other name']);
+        $oArticle->save();
 
         /** @var IncorrectVATArticlesMessageFormatter $oVATTBEArticleMessageFormer */
         $oVATTBEArticleMessageFormer = oxNew(IncorrectVATArticlesMessageFormatter::class);

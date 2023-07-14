@@ -128,13 +128,13 @@ class BasketTest extends TestCase
         /** @var Country $oCountry */
         $oCountry = oxNew(Country::class);
         $oCountry->load($sLithuaniaId);
-        $oCountry->oxcountry__oevattbe_appliestbevat = new Field(true);
+        $oCountry->assign(['oevattbe_appliestbevat' => true]);
         $oCountry->save();
 
         /** @var Article $oArticle */
         $oArticle = oxNew(Article::class);
         $oArticle->setId('_testArticle1');
-        $oArticle->oxarticles__oevattbe_istbeservice = new Field(true);
+        $oCountry->assign(['oevattbe_istbeservice' => true]);
         $oArticle->save();
 
         /** @var EShopBasket|Basket $oBasket */

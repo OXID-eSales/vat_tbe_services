@@ -7,7 +7,6 @@
 namespace OxidEsales\EVatModule\Tests\Integration\Model;
 
 use OxidEsales\Eshop\Core\Registry;
-use OxidEsales\Eshop\Core\Field;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EVatModule\Model\Evidence\Item\BillingCountryEvidence;
 use OxidEsales\EVatModule\Model\Evidence\Item\GeoLocationEvidence;
@@ -49,7 +48,8 @@ class UserSessionTest extends TestCase
         $moduleSettings->saveDefaultEvidence('billing_country');
 
         $oUser = oxNew(EShopUser::class);
-        $oUser->oxuser__oxcountryid = new Field('GermanyId');
+        $oUser->assign(['oxcountryid' => 'GermanyId']);
+        $oUser->save();
         Registry::getSession()->setUser($oUser);
 
         /** @var User $oTBEUser */
@@ -59,7 +59,8 @@ class UserSessionTest extends TestCase
         $moduleSettings->saveEvidenceClasses([GeoLocationEvidence::class]);
         $moduleSettings->saveDefaultEvidence('geo_location');
 
-        $oUser->oxuser__oxcountryid = new Field('LithuaniaId');
+        $oUser->assign(['oxcountryid' => 'LithuaniaId']);
+        $oUser->save();
 
         $aExpectedList = [
             'billing_country' => [
