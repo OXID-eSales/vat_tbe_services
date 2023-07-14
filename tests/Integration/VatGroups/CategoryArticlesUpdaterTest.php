@@ -23,8 +23,8 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
      */
     public function testPopulateAddingCategoriesToArticle()
     {
-        $this->_cleanData();
-        $this->_prepareData();
+        $this->cleanData();
+        $this->prepareData();
 
         $_POST['synchoxid'] = 'article1';
 
@@ -35,9 +35,9 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
 
         $oController->addCat();
 
-        $this->assertEquals(1, $this->_getAssignedToCategoryProductsCount());
-        $this->assertEquals(0, $this->_getAssignedVATGroupsToArticles());
-        $this->assertEquals(0, $this->_getTBEServiceCount());
+        $this->assertEquals(1, $this->getAssignedToCategoryProductsCount());
+        $this->assertEquals(0, $this->getAssignedVATGroupsToArticles());
+        $this->assertEquals(0, $this->getTBEServiceCount());
     }
 
     /**
@@ -45,8 +45,8 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
      */
     public function testPopulateAddingCategoriesTBEToArticle()
     {
-        $this->_cleanData();
-        $this->_prepareData();
+        $this->cleanData();
+        $this->prepareData();
 
         $_POST['synchoxid'] = 'article1';
 
@@ -58,9 +58,9 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
 
         $oController->addCat();
 
-        $this->assertEquals(1, $this->_getAssignedToCategoryProductsCount());
-        $this->assertEquals(2, $this->_getAssignedVATGroupsToArticles());
-        $this->assertEquals(1, $this->_getTBEServiceCount());
+        $this->assertEquals(1, $this->getAssignedToCategoryProductsCount());
+        $this->assertEquals(2, $this->getAssignedVATGroupsToArticles());
+        $this->assertEquals(1, $this->getTBEServiceCount());
     }
 
     /**
@@ -68,8 +68,8 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
      */
     public function testPopulateAddingArticleToCategory()
     {
-        $this->_cleanData();
-        $this->_prepareData();
+        $this->cleanData();
+        $this->prepareData();
 
         $_POST['synchoxid'] = 'categoryId2';
 
@@ -80,9 +80,9 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
 
         $oController->addArticle();
 
-        $this->assertEquals(1, $this->_getAssignedToCategoryProductsCount());
-        $this->assertEquals(0, $this->_getAssignedVATGroupsToArticles());
-        $this->assertEquals(0, $this->_getTBEServiceCount());
+        $this->assertEquals(1, $this->getAssignedToCategoryProductsCount());
+        $this->assertEquals(0, $this->getAssignedVATGroupsToArticles());
+        $this->assertEquals(0, $this->getTBEServiceCount());
     }
 
     /**
@@ -90,8 +90,8 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
      */
     public function testPopulateAddingArticleToCategoryTBE()
     {
-        $this->_cleanData();
-        $this->_prepareData();
+        $this->cleanData();
+        $this->prepareData();
 
         $_POST['synchoxid'] = 'categoryId';
 
@@ -101,9 +101,9 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
         $oController->expects($this->any())->method('getActionIds')->will($this->returnValue(array('article1')));
         $oController->addArticle();
 
-        $this->assertEquals(1, $this->_getAssignedToCategoryProductsCount());
-        $this->assertEquals(2, $this->_getAssignedVATGroupsToArticles());
-        $this->assertEquals(1, $this->_getTBEServiceCount());
+        $this->assertEquals(1, $this->getAssignedToCategoryProductsCount());
+        $this->assertEquals(2, $this->getAssignedVATGroupsToArticles());
+        $this->assertEquals(1, $this->getTBEServiceCount());
     }
 
     /**
@@ -113,7 +113,7 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
      */
     public function testRemoveArticleFromCategoryWhenOneArticleIsRemoved()
     {
-        $this->_cleanFixtures();
+        $this->cleanFixtures();
 
         /** @var CategoryMainAjax $oController */
         $oController = $this->getMockBuilder(CategoryMainAjax::class)
@@ -122,8 +122,8 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
         $oController->expects($this->any())->method('getActionIds')->will($this->returnValue(array('article1')));
         $oController->removeArticle();
 
-        $this->assertEquals(0, $this->_getAssignedVATGroupsToArticles());
-        $this->assertEquals(0, $this->_getTBEServiceCount());
+        $this->assertEquals(0, $this->getAssignedVATGroupsToArticles());
+        $this->assertEquals(0, $this->getTBEServiceCount());
     }
 
     /**
@@ -131,8 +131,8 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
      */
     public function testRemoveArticlesWhenUnsassignAllIsClicked()
     {
-        $this->_cleanData();
-        $this->_prepareDataForRemovingArticlesFromCategory();
+        $this->cleanData();
+        $this->prepareDataForRemovingArticlesFromCategory();
 
         $_POST['synchoxid'] = 'categoryId';
 
@@ -145,8 +145,8 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
         $_POST['all'] = 1;
         $oController->removeArticle();
 
-        $this->assertEquals(1, $this->_getAssignedVATGroupsToArticles());
-        $this->assertEquals(1, $this->_getTBEServiceCount());
+        $this->assertEquals(1, $this->getAssignedVATGroupsToArticles());
+        $this->assertEquals(1, $this->getTBEServiceCount());
     }
 
     /**
@@ -154,15 +154,15 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
      */
     public function testPopulateAddingArticleToCategoryOnCreate()
     {
-        $this->_cleanData();
-        $this->_prepareData();
+        $this->cleanData();
+        $this->prepareData();
 
         $oController = oxNew(ArticleMain::class);
         $oController->addToCategory('categoryId2', 'article1');
 
-        $this->assertEquals(1, $this->_getAssignedToCategoryProductsCount());
-        $this->assertEquals(0, $this->_getAssignedVATGroupsToArticles());
-        $this->assertEquals(0, $this->_getTBEServiceCount());
+        $this->assertEquals(1, $this->getAssignedToCategoryProductsCount());
+        $this->assertEquals(0, $this->getAssignedVATGroupsToArticles());
+        $this->assertEquals(0, $this->getTBEServiceCount());
     }
 
     /**
@@ -170,15 +170,15 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
      */
     public function testPopulateAddingArticleToCategoryOnCreateTBECAtegory()
     {
-        $this->_cleanData();
-        $this->_prepareData();
+        $this->cleanData();
+        $this->prepareData();
 
         $oController = oxNew(ArticleMain::class);
         $oController->addToCategory('categoryId', 'article1');
 
-        $this->assertEquals(1, $this->_getAssignedToCategoryProductsCount());
-        $this->assertEquals(2, $this->_getAssignedVATGroupsToArticles());
-        $this->assertEquals(1, $this->_getTBEServiceCount());
+        $this->assertEquals(1, $this->getAssignedToCategoryProductsCount());
+        $this->assertEquals(2, $this->getAssignedVATGroupsToArticles());
+        $this->assertEquals(1, $this->getTBEServiceCount());
     }
 
     /**
@@ -186,8 +186,8 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
      */
     public function testPopulateOnCategoryConfiguration()
     {
-        $this->_cleanData();
-        $this->_prepareData(true);
+        $this->cleanData();
+        $this->prepareData(true);
 
         $_POST['oxid'] = 'categoryId';
         $_POST['editval'] = array('oevattbe_istbe' => 1);
@@ -200,9 +200,9 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
         $oController = oxNew(CategoryAdministration::class);
         $oController->save();
 
-        $this->assertEquals(2, $this->_getAssignedToCategoryProductsCount());
-        $this->assertEquals(4, $this->_getAssignedVATGroupsToArticles());
-        $this->assertEquals(2, $this->_getTBEServiceCount());
+        $this->assertEquals(2, $this->getAssignedToCategoryProductsCount());
+        $this->assertEquals(4, $this->getAssignedVATGroupsToArticles());
+        $this->assertEquals(2, $this->getTBEServiceCount());
     }
 
     /**
@@ -210,8 +210,8 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
      */
     public function testPopulateOnCategoryConfigurationNotTbe()
     {
-        $this->_cleanData();
-        $this->_prepareData(true);
+        $this->cleanData();
+        $this->prepareData(true);
 
         $_POST['oxid'] = 'categoryId';
         $_POST['editval'] = array('oevattbe_istbe' => 0);
@@ -224,9 +224,9 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
         $oController = oxNew(CategoryAdministration::class);
         $oController->save();
 
-        $this->assertEquals(2, $this->_getAssignedToCategoryProductsCount());
-        $this->assertEquals(4, $this->_getAssignedVATGroupsToArticles());
-        $this->assertEquals(0, $this->_getTBEServiceCount());
+        $this->assertEquals(2, $this->getAssignedToCategoryProductsCount());
+        $this->assertEquals(4, $this->getAssignedVATGroupsToArticles());
+        $this->assertEquals(0, $this->getTBEServiceCount());
     }
 
     /**
@@ -234,8 +234,8 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
      */
     public function testPopulateOnCategoryConfigurationNoGroups()
     {
-        $this->_cleanData();
-        $this->_prepareData(true);
+        $this->cleanData();
+        $this->prepareData(true);
 
         $_POST['oxid'] = 'categoryId';
         $_POST['editval'] = array('oevattbe_istbe' => 1);
@@ -245,9 +245,9 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
         $oController = oxNew(CategoryAdministration::class);
         $oController->save();
 
-        $this->assertEquals(2, $this->_getAssignedToCategoryProductsCount());
-        $this->assertEquals(0, $this->_getAssignedVATGroupsToArticles());
-        $this->assertEquals(2, $this->_getTBEServiceCount());
+        $this->assertEquals(2, $this->getAssignedToCategoryProductsCount());
+        $this->assertEquals(0, $this->getAssignedVATGroupsToArticles());
+        $this->assertEquals(2, $this->getTBEServiceCount());
     }
 
     /**
@@ -255,7 +255,7 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
      *
      * @param bool $blAssign assign products to category or not
      */
-    protected function _prepareData($blAssign = false)
+    protected function prepareData($blAssign = false)
     {
         $aSqlQueries = array();
         $aSqlQueries[] = "INSERT INTO `oevattbe_categoryvat` SET `OEVATTBE_CATEGORYID` = 'categoryId', `OEVATTBE_COUNTRYID` = 'a7c40f631fc920687.20179984', `OEVATTBE_VATGROUPID` = '10'";
@@ -265,8 +265,8 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
             $aSqlQueries[] = "INSERT INTO `oxobject2category` SET `oxcatnid` = 'categoryId', `oxobjectid` = 'article2', `oxid` = 2";
         }
 
-        $this->_createCategory('categoryId', true);
-        $this->_createCategory('categoryId2', false);
+        $this->createCategory('categoryId', true);
+        $this->createCategory('categoryId2', false);
         $aSqlQueries[] = "INSERT INTO `oxarticles` SET `oxid` = 'article1', `oevattbe_istbeservice` = '0'";
         $aSqlQueries[] = "INSERT INTO `oxarticles` SET `oxid` = 'article2', `oevattbe_istbeservice` = '0'";
 
@@ -278,7 +278,7 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
     /**
      * Adds some records to DB for testing.
      */
-    protected function _prepareDataForRemovingArticlesFromCategory()
+    protected function prepareDataForRemovingArticlesFromCategory()
     {
         $aSqlQueries[] = "INSERT INTO `oxarticles` SET `oxid` = 'article3', `oevattbe_istbeservice` = '1'";
         $aSqlQueries[] = "INSERT INTO `oxarticles` SET `oxid` = 'article4', `oevattbe_istbeservice` = '1'";
@@ -292,7 +292,7 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
         }
     }
 
-    protected function _cleanFixtures()
+    protected function cleanFixtures()
     {
         \oxDb::getDb()->execute("DELETE FROM `oevattbe_articlevat` WHERE OEVATTBE_ARTICLEID IN('1126', '1127', '1128', '1131')");
         \oxDb::getDb()->execute("DELETE FROM `oxarticles` WHERE OXID IN ('1126', '1127', '1131', '_testArticle')");
@@ -301,7 +301,7 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
     /**
      * Truncates tables.
      */
-    protected function _cleanData()
+    protected function cleanData()
     {
         \oxDb::getDb()->execute('TRUNCATE TABLE `oevattbe_articlevat`');
         \oxDb::getDb()->execute('TRUNCATE TABLE `oevattbe_categoryvat`');
@@ -315,7 +315,7 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
      *
      * @return int
      */
-    protected function _getAssignedToCategoryProductsCount()
+    protected function getAssignedToCategoryProductsCount()
     {
         return \oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oxobject2category`");
     }
@@ -325,7 +325,7 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
      *
      * @return int
      */
-    protected function _getAssignedVATGroupsToArticles()
+    protected function getAssignedVATGroupsToArticles()
     {
         return \oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oevattbe_articlevat`");
     }
@@ -335,7 +335,7 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
      *
      * @return int
      */
-    protected function _getTBEServiceCount()
+    protected function getTBEServiceCount()
     {
         return \oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oxarticles` WHERE  `oevattbe_istbeservice` = '1'");
     }
@@ -348,7 +348,7 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
      *
      * @return Category
      */
-    private function _createCategory($sCategoryId, $bIsTbe)
+    private function createCategory($sCategoryId, $bIsTbe)
     {
         /** @var Category $oCategory */
         $oCategory = oxNew(Category::class);

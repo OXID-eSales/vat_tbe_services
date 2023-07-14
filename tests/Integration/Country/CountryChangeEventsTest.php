@@ -17,6 +17,27 @@ class CountryChangeEventsTest extends BaseTestCase
 {
     protected $backupGlobalsExcludeList = array('_SESSION');
 
+    /** @var string */
+    protected $_sDefaultUserName = '_testUserName@oxid-esales.com';
+
+    /** @var string */
+    protected $_sDefaultUserPassword = '_testPassword';
+
+    /** @var string encoded default password */
+    private $_sNewEncodedPassword = 'b016e37ac8ec71449b475e84a941e3c39a27fb8f0710d4b47d6116ad6a6afcaa0c17006a4c01ffc67f3db95772fe001584cb4ce7e5bacd74198c24d1851841d5';
+
+    /** @var string Salt generated with new algorithm. */
+    private $_sNewSalt = '56784f8ffc657fff84915b93e12a626e';
+
+    /** @var string Germany ID. */
+    private $_sGermanyId = 'a7c40f631fc920687.20179984';
+
+    /** @var string Austria ID. */
+    private $_sAustriaId = 'a7c40f6320aeb2ec2.72885259';
+
+    /** @var string United Kingdom ID. */
+    private $_sUnitedKingdom = 'a7c40f632a0804ab5.18804076';
+
     /**
      * User created with billing country set as germany;
      * His TBE Country should also be germany.
@@ -156,25 +177,4 @@ class CountryChangeEventsTest extends BaseTestCase
 
         return $oUser;
     }
-
-    /** @var string */
-    protected $_sDefaultUserName = '_testUserName@oxid-esales.com';
-
-    /** @var string */
-    protected $_sDefaultUserPassword = '_testPassword';
-
-    /** @var string encoded default password */
-    private $_sNewEncodedPassword = 'b016e37ac8ec71449b475e84a941e3c39a27fb8f0710d4b47d6116ad6a6afcaa0c17006a4c01ffc67f3db95772fe001584cb4ce7e5bacd74198c24d1851841d5';
-
-    /** @var string Salt generated with new algorithm. */
-    private $_sNewSalt = '56784f8ffc657fff84915b93e12a626e';
-
-    /** @var string Germany ID. */
-    private $_sGermanyId = 'a7c40f631fc920687.20179984';
-
-    /** @var string Austria ID. */
-    private $_sAustriaId = 'a7c40f6320aeb2ec2.72885259';
-
-    /** @var string United Kingdom ID. */
-    private $_sUnitedKingdom = 'a7c40f632a0804ab5.18804076';
 }

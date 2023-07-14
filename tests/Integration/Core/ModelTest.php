@@ -94,7 +94,7 @@ class ModelTest extends TestCase
             $gatewayMock->expects($this->any())->method('load')->will($this->returnValue($data));
         }
 
-        $actualModel = $this->_getModel($model, $gatewayMock, 'id-to-load');
+        $actualModel = $this->getModel($model, $gatewayMock, 'id-to-load');
 
         if ($model == CountryVATGroupsList::class) {
             $this->assertIsArray($actualModel->load());
@@ -135,7 +135,7 @@ class ModelTest extends TestCase
             $gatewayMock->expects($this->any())->method('load')->will($this->returnValue($data));
         }
 
-        $actualModel = $this->_getModel($model, $gatewayMock);
+        $actualModel = $this->getModel($model, $gatewayMock);
 
         if ($model == CountryVATGroupsList::class) {
             $this->assertIsArray($actualModel->load('id-to-load'));
@@ -162,7 +162,7 @@ class ModelTest extends TestCase
             ->expects($this->any())
             ->method('load')
             ->will($this->returnValue(null));
-        $actualModel = $this->_getModel($model, $gatewayMock);
+        $actualModel = $this->getModel($model, $gatewayMock);
 
         if ($model == CountryVATGroupsList::class) {
             $this->assertIsArray($actualModel->load());
@@ -181,7 +181,7 @@ class ModelTest extends TestCase
             ->expects($this->any())
             ->method('load')
             ->will($this->returnValue($data));
-        $actualModel = $this->_getModel($model, $gatewayMock);
+        $actualModel = $this->getModel($model, $gatewayMock);
 
         if ($model == CountryVATGroupsList::class) {
             $this->assertIsArray($actualModel->load());
@@ -200,7 +200,7 @@ class ModelTest extends TestCase
             ->expects($this->any())
             ->method('delete')
             ->will($this->returnValue(true));
-        $actualModel = $this->_getModel($model, $gatewayMock);
+        $actualModel = $this->getModel($model, $gatewayMock);
         $actualModel->setData(['some_field' => 'some_entry']);
         $actualModel->delete();
 
@@ -215,7 +215,7 @@ class ModelTest extends TestCase
      * @param ?string $id
      * @return Model
      */
-    protected function _getModel($modelClass, $gateway, string $id = null): Model
+    protected function getModel($modelClass, $gateway, string $id = null): Model
     {
         $model = oxNew($modelClass, $gateway);
 

@@ -32,7 +32,7 @@ class CategoryVATGroupsPopulatorTest extends TestCase
     }
 
     /**
-     * Test deleting category groups list.
+     * Test populating category groups.
      */
     public function testDeletingCategoryVATGroupsList()
     {

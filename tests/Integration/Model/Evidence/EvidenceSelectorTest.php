@@ -24,8 +24,8 @@ class EvidenceSelectorTest extends TestCase
 
     public function providerGetCountryWhenBothEvidenceDoNotMatch(): array
     {
-        $oBillingEvidence = $this->_createEvidence('billing_address', 'Germany');
-        $oGeoLocationEvidence = $this->_createEvidence('geo_location', 'Lithuania');
+        $oBillingEvidence = $this->createEvidence('billing_address', 'Germany');
+        $oGeoLocationEvidence = $this->createEvidence('geo_location', 'Lithuania');
         $oEvidenceList = new EvidenceList([$oBillingEvidence, $oGeoLocationEvidence]);
 
         return [
@@ -67,9 +67,9 @@ class EvidenceSelectorTest extends TestCase
         $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
         $moduleSettings->saveDefaultEvidence('default_evidence');
 
-        $oBillingEvidence = $this->_createEvidence('billing_address', 'Germany');
-        $oGeoLocationEvidence = $this->_createEvidence('geo_location', 'Lithuania');
-        $oDefaultEvidence = $this->_createEvidence('default_evidence', '');
+        $oBillingEvidence = $this->createEvidence('billing_address', 'Germany');
+        $oGeoLocationEvidence = $this->createEvidence('geo_location', 'Lithuania');
+        $oDefaultEvidence = $this->createEvidence('default_evidence', '');
         $oEvidenceList = new EvidenceList([$oBillingEvidence, $oGeoLocationEvidence, $oDefaultEvidence]);
 
         $evidenceCollector = oxNew(EvidenceCollector::class, $oConfig, $moduleSettings);
@@ -92,9 +92,9 @@ class EvidenceSelectorTest extends TestCase
         $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
         $moduleSettings->saveDefaultEvidence('default_evidence');
 
-        $oBillingEvidence = $this->_createEvidence('billing_address', '');
-        $oGeoLocationEvidence = $this->_createEvidence('geo_location', 'Lithuania');
-        $oDefaultEvidence = $this->_createEvidence('default_evidence', '');
+        $oBillingEvidence = $this->createEvidence('billing_address', '');
+        $oGeoLocationEvidence = $this->createEvidence('geo_location', 'Lithuania');
+        $oDefaultEvidence = $this->createEvidence('default_evidence', '');
         $oEvidenceList = new EvidenceList([$oBillingEvidence, $oGeoLocationEvidence, $oDefaultEvidence]);
 
         $evidenceCollector = oxNew(EvidenceCollector::class, $oConfig, $moduleSettings);
@@ -136,8 +136,8 @@ class EvidenceSelectorTest extends TestCase
     {
         $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
 
-        $oBillingEvidence = $this->_createEvidence('billing_address', 'Germany');
-        $oGeoLocationEvidence = $this->_createEvidence('geo_location', 'Germany');
+        $oBillingEvidence = $this->createEvidence('billing_address', 'Germany');
+        $oGeoLocationEvidence = $this->createEvidence('geo_location', 'Germany');
         $oEvidenceList = new EvidenceList([$oBillingEvidence, $oGeoLocationEvidence]);
 
         $evidenceCollector = oxNew(EvidenceCollector::class, Registry::getConfig(), $moduleSettings);
@@ -158,8 +158,8 @@ class EvidenceSelectorTest extends TestCase
     {
         $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
 
-        $oBillingEvidence = $this->_createEvidence('billing_address', 'Germany');
-        $oGeoLocationEvidence = $this->_createEvidence('geo_location', 'Lithuania');
+        $oBillingEvidence = $this->createEvidence('billing_address', 'Germany');
+        $oGeoLocationEvidence = $this->createEvidence('geo_location', 'Lithuania');
         $oEvidenceList = new EvidenceList([$oBillingEvidence, $oGeoLocationEvidence]);
 
         $evidenceCollector = oxNew(EvidenceCollector::class, Registry::getConfig(), $moduleSettings);
@@ -178,13 +178,8 @@ class EvidenceSelectorTest extends TestCase
 
     /**
      * Creates evidence object with given name and country.
-     *
-     * @param string $sName
-     * @param string $sCountry
-     *
-     * @return Evidence
      */
-    protected function _createEvidence($sName, $sCountry)
+    protected function createEvidence($sName, $sCountry)
     {
         $oEvidence = $this->createMock(Evidence::class);
         $oEvidence->expects($this->any())->method('getId')->will($this->returnValue($sName));

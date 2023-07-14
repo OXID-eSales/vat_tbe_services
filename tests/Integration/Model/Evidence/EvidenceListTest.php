@@ -43,8 +43,8 @@ class EvidenceListTest extends TestCase
 
     public function testFormationOfArray()
     {
-        $oBillingEvidence = $this->_createEvidence('billing_country', 'GermanyId');
-        $oGeoEvidence = $this->_createEvidence('geo_location', 'LithuaniaId');
+        $oBillingEvidence = $this->createEvidence('billing_country', 'GermanyId');
+        $oGeoEvidence = $this->createEvidence('geo_location', 'LithuaniaId');
 
         $oList = new EvidenceList([$oBillingEvidence, $oGeoEvidence]);
 
@@ -65,13 +65,8 @@ class EvidenceListTest extends TestCase
 
     /**
      * Creates evidence object with given name and country.
-     *
-     * @param string $sName
-     * @param string $sCountry
-     *
-     * @return Evidence
      */
-    protected function _createEvidence($sName, $sCountry)
+    protected function createEvidence($sName, $sCountry)
     {
         /** @var Evidence|MockObject $oUser */
         $oEvidence = $this->createPartialMock(Evidence::class, ['getId', 'getCountryId']);

@@ -39,7 +39,7 @@ class OrderEvidenceListTest extends TestCase
     public function testLoadingEvidenceList()
     {
         $aData = ['evidence' => 'evidenceData'];
-        $oGateway = $this->_createStub(['load' => $aData]);
+        $oGateway = $this->createOrderEvidenceListGatewayStub(['load' => $aData]);
 
         /** @var OrderEvidenceList $oList */
         $oList = oxNew(OrderEvidenceList::class, $oGateway);
@@ -73,7 +73,7 @@ class OrderEvidenceListTest extends TestCase
      *
      * @return mixed
      */
-    protected function _createStub($aMethods, $aTestMethods = [])
+    protected function createOrderEvidenceListGatewayStub($aMethods, $aTestMethods = [])
     {
         $aMockedMethods = array_unique(array_merge(array_keys($aMethods), $aTestMethods));
 

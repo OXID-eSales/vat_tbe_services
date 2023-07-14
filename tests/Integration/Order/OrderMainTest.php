@@ -36,7 +36,7 @@ class OrderMainTest extends BaseTestCase
         $moduleSettings->saveCountryEvidences(['billing_country' => 1, 'geo_location' => 1]);
         $moduleSettings->saveDefaultEvidence('billing_country');
 
-        $this->_createOrder();
+        $this->createOrder();
 
         /** @var OrderMain $oOrderMain */
         $oOrderMain = oxNew(OrderMain::class);
@@ -80,7 +80,7 @@ class OrderMainTest extends BaseTestCase
     /**
      * Creates dummy order.
      */
-    private function _createOrder()
+    private function createOrder()
     {
         /** @var Basket $oBasket */
         $oBasket = $this->getMockBuilder(Basket::class)

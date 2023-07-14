@@ -72,10 +72,10 @@ class OrderArticleCheckerTest extends TestCase
      */
     public function testCheckingArticlesWhenCorrectArticlesExists()
     {
-        $oArticleWithoutVAT = $this->_createArticle(false, null);
-        $oArticleWithVAT = $this->_createArticle(false, 15);
-        $oTBEArticleWithVAT = $this->_createArticle(true, 15);
-        $oTBEArticleWithZeroVAT = $this->_createArticle(true, 0);
+        $oArticleWithoutVAT = $this->createArticle(false, null);
+        $oArticleWithVAT = $this->createArticle(false, 15);
+        $oTBEArticleWithVAT = $this->createArticle(true, 15);
+        $oTBEArticleWithZeroVAT = $this->createArticle(true, 0);
         $this->mockSessionBasket([$oArticleWithoutVAT, $oArticleWithVAT, $oTBEArticleWithVAT, $oTBEArticleWithZeroVAT]);
 
         $oCountry = $this->createPartialMock(Country::class, ['isInEU', 'appliesOeTBEVATTbeVat']);
@@ -95,10 +95,10 @@ class OrderArticleCheckerTest extends TestCase
      */
     public function testCheckingArticlesWhenCorrectArticlesExistsButCountryNot()
     {
-        $oArticleWithoutVAT = $this->_createArticle(false, null);
-        $oArticleWithVAT = $this->_createArticle(false, 15);
-        $oTBEArticleWithVAT = $this->_createArticle(true, 15);
-        $oTBEArticleWithZeroVAT = $this->_createArticle(true, 0);
+        $oArticleWithoutVAT = $this->createArticle(false, null);
+        $oArticleWithVAT = $this->createArticle(false, 15);
+        $oTBEArticleWithVAT = $this->createArticle(true, 15);
+        $oTBEArticleWithZeroVAT = $this->createArticle(true, 0);
         $this->mockSessionBasket([$oArticleWithoutVAT, $oArticleWithVAT, $oTBEArticleWithVAT, $oTBEArticleWithZeroVAT]);
 
         $oUser = $this->createPartialMock(UserModel::class, ['getCountry']);
@@ -116,8 +116,8 @@ class OrderArticleCheckerTest extends TestCase
      */
     public function testCheckingArticlesWhenIncorrectArticlesExists()
     {
-        $oArticleWithoutVAT = $this->_createArticle(false, null);
-        $oTBEArticleWithoutVAT = $this->_createArticle(true, null);
+        $oArticleWithoutVAT = $this->createArticle(false, null);
+        $oTBEArticleWithoutVAT = $this->createArticle(true, null);
         $this->mockSessionBasket([$oArticleWithoutVAT, $oTBEArticleWithoutVAT]);
 
         $oCountry = $this->createPartialMock(Country::class, ['isInEU', 'appliesOeTBEVATTbeVat']);
@@ -137,9 +137,9 @@ class OrderArticleCheckerTest extends TestCase
      */
     public function testReturningInvalidArticlesWhenIncorrectArticlesExists()
     {
-        $oArticleWithoutVAT = $this->_createArticle(false, null, 'id');
-        $oTBEArticleWithoutVAT1 = $this->_createArticle(true, null, 'id1');
-        $oTBEArticleWithoutVAT2 = $this->_createArticle(true, null, 'id2');
+        $oArticleWithoutVAT = $this->createArticle(false, null, 'id');
+        $oTBEArticleWithoutVAT1 = $this->createArticle(true, null, 'id1');
+        $oTBEArticleWithoutVAT2 = $this->createArticle(true, null, 'id2');
         $this->mockSessionBasket([$oArticleWithoutVAT, $oTBEArticleWithoutVAT1, $oTBEArticleWithoutVAT2]);
 
         $oCountry = $this->createPartialMock(Country::class, ['isInEU', 'appliesOeTBEVATTbeVat']);
@@ -158,13 +158,11 @@ class OrderArticleCheckerTest extends TestCase
 
     /**
      * Checks articles if valid.
-     *
-     * @return OrderArticleChecker
      */
     public function testCheckingArticlesWhenIncorrectArticlesExistsButCountryIsNotEu()
     {
-        $oArticleWithoutVAT = $this->_createArticle(false, null);
-        $oTBEArticleWithoutVAT = $this->_createArticle(true, null);
+        $oArticleWithoutVAT = $this->createArticle(false, null);
+        $oTBEArticleWithoutVAT = $this->createArticle(true, null);
         $this->mockSessionBasket([$oArticleWithoutVAT, $oTBEArticleWithoutVAT]);
 
         $oCountry = $this->createPartialMock(Country::class, ['isInEU', 'appliesOeTBEVATTbeVat']);
@@ -181,13 +179,11 @@ class OrderArticleCheckerTest extends TestCase
 
     /**
      * Checks articles if valid.
-     *
-     * @return OrderArticleChecker
      */
     public function testCheckingArticlesWhenIncorrectArticlesExistsButCountryIsEuButNotTBE()
     {
-        $oArticleWithoutVAT = $this->_createArticle(false, null);
-        $oTBEArticleWithoutVAT = $this->_createArticle(true, null);
+        $oArticleWithoutVAT = $this->createArticle(false, null);
+        $oTBEArticleWithoutVAT = $this->createArticle(true, null);
         $this->mockSessionBasket([$oArticleWithoutVAT, $oTBEArticleWithoutVAT]);
 
         $oCountry = $this->createPartialMock(Country::class, ['isInEU', 'appliesOeTBEVATTbeVat']);
@@ -211,7 +207,7 @@ class OrderArticleCheckerTest extends TestCase
      *
      * @return Article|MockObject
      */
-    protected function _createArticle($blTBEService, $iVat, $sId = null)
+    protected function createArticle($blTBEService, $iVat, $sId = null)
     {
         $oArticle = $this->createPartialMock(Article::class, ['isOeVATTBETBEService', 'getOeVATTBETBEVat', 'getId']);
         $oArticle->expects($this->any())->method('isOeVATTBETBEService')->will($this->returnValue($blTBEService));
