@@ -223,6 +223,7 @@ jobs:
             php php vendor/bin/phpunit \
               -c /var/www/vendor/${{ env.PACKAGE_NAME }}/tests/phpunit.xml \
               --testsuite=UnitTests \
+              --testdoc \
               --coverage-php=/var/www/unit.cov \
               --coverage-clover=/var/www/source/coverage.xml \
               --coverage-text
@@ -280,6 +281,7 @@ jobs:
             php php vendor/bin/phpunit \
               -c /var/www/vendor/${{ env.PACKAGE_NAME }}/tests/phpintegration.xml \
               --testsuite=IntegrationTests \
+              --testdoc \
               --bootstrap=/var/www/source/bootstrap.php \
               --coverage-php=/var/www/integration.cov \
               --coverage-clover=/var/www/coverage.xml \
