@@ -157,7 +157,11 @@ class ModelTest extends TestCase
      */
     public function testIsLoadedWhenDatabaseRecordNotFound(string $model, string $gateway): void
     {
-        $gatewayMock = $this->createPartialMock($gateway, ['load']);
+        $mockedMethods = ['load'];
+        if ($model == CountryVATGroupsList::class) {
+            $mockedMethods[] = 'getList';
+        }
+        $gatewayMock = $this->createPartialMock($gateway, $mockedMethods);
         $gatewayMock
             ->expects($this->any())
             ->method('load')
@@ -165,7 +169,12 @@ class ModelTest extends TestCase
         $actualModel = $this->getModel($model, $gatewayMock);
 
         if ($model == CountryVATGroupsList::class) {
+            $gatewayMock
+                ->expects($this->any())
+                ->method('getList')
+                ->will($this->returnValue([]));
             $this->assertIsArray($actualModel->load());
+            $this->assertEquals([], $actualModel->getData());
         } else {
             $this->assertFalse($actualModel->load());
         }
@@ -176,7 +185,11 @@ class ModelTest extends TestCase
      */
     public function testIsLoadedWhenDatabaseRecordFound(string $model, string $gateway, $data): void
     {
-        $gatewayMock = $this->createPartialMock($gateway, ['load']);
+        $mockedMethods = ['load'];
+        if ($model == CountryVATGroupsList::class) {
+            $mockedMethods[] = 'getList';
+        }
+        $gatewayMock = $this->createPartialMock($gateway, $mockedMethods);
         $gatewayMock
             ->expects($this->any())
             ->method('load')
@@ -184,7 +197,14 @@ class ModelTest extends TestCase
         $actualModel = $this->getModel($model, $gatewayMock);
 
         if ($model == CountryVATGroupsList::class) {
+            $gatewayMock
+                ->expects($this->any())
+                ->method('getList')
+                ->will($this->returnValue($data));
             $this->assertIsArray($actualModel->load());
+            $data = $actualModel->getData();
+            $this->assertCount(1, $data);
+            $this->assertInstanceOf(CountryVATGroup::class, $data[0]);
         } else {
             $this->assertTrue($actualModel->load());
         }
