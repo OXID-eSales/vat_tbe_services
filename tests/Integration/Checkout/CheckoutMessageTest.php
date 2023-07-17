@@ -70,8 +70,6 @@ class CheckoutMessageTest extends BaseTestCase
      */
     public function testMessageSetInBasketForAllArticlesWhenUserIsNotLoggedIn($aArticles, $sErrorMessage)
     {
-        $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('DE');
-
         /** @var Basket $oBasket */
         $oBasket = oxNew(Basket::class);
         foreach ($aArticles as $sArticleId) {
