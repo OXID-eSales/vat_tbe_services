@@ -9,12 +9,12 @@ namespace OxidEsales\EVatModule\Tests\Integration\Article;
 use OxidEsales\EVatModule\Shop\Article;
 use OxidEsales\EVatModule\Shop\Search;
 use OxidEsales\EVatModule\Shop\User;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 
 /**
  * Testing extended Article class.
  */
-class SearchTest extends TestCase
+class SearchTest extends BaseTestCase
 {
     /**
      * Search article list test
