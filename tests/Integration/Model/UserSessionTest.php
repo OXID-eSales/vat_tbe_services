@@ -49,7 +49,6 @@ class UserSessionTest extends TestCase
 
         $oUser = oxNew(EShopUser::class);
         $oUser->assign(['oxcountryid' => 'GermanyId']);
-        $oUser->save();
         Registry::getSession()->setUser($oUser);
 
         /** @var User $oTBEUser */
@@ -60,7 +59,6 @@ class UserSessionTest extends TestCase
         $moduleSettings->saveDefaultEvidence('geo_location');
 
         $oUser->assign(['oxcountryid' => 'LithuaniaId']);
-        $oUser->save();
 
         $aExpectedList = [
             'billing_country' => [
