@@ -54,7 +54,6 @@ on:
 
 env:
   PACKAGE_NAME: 'oxid-esales/evat-module'
-  MODULE_PATH: 'oe/oevattbe'
   MODULE_ID: 'oevattbe'
   SONARCLOUD_ORGANIZATION: 'oxid-esales'
   SONARCLOUD_PROJECT_KEY: 'OXID-eSales_vat_tbe_services'
@@ -134,7 +133,7 @@ jobs:
           docker-compose exec -T php composer update --no-interaction
           docker-compose exec -T php bin/oe-console oe:database:reset \
             --db-host=mysql --db-port=3306 --db-name=example --db-user=root --db-password=root --force
-          docker-compose exec -T php bin/oe-console oe:module:activate oe_moduletemplate
+          docker-compose exec -T php bin/oe-console oe:module:activate ${{ env.MODULE_ID }}
 
       - name: Install module dependencies
         run: |
@@ -235,19 +234,10 @@ jobs:
         run: |
           docker-compose exec -T \
             -e XDEBUG_MODE=coverage \
-            php php vendor/bin/phpunit \
-              -c /var/www/vendor/${{ env.PACKAGE_NAME }}/tests/phpunit.xml \
-              --testsuite=Unit \
-              --coverage-text \
-              --coverage-php=/var/www/unit.cov
-          
-          docker-compose exec -T \
-            -e XDEBUG_MODE=coverage \
             --workdir=/var/www/test-module \
             php php vendor/bin/phpunit \
               -c tests/phpunit.xml \
               --testsuite=Unit \
-              --bootstrap=/var/www/source/bootstrap.php \
               --coverage-text \
               --coverage-php=/var/www/unit.cov
 
