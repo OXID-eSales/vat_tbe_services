@@ -11,6 +11,9 @@
   "require": {
     "php": "^8.0 | ^8.1"
   },
+  "require-dev": {
+    "phpunit/phpunit": "^9.6"
+  },
   "minimum-stability": "dev",
   "conflict": {
     "oxid-esales/oxideshop-ce": "<7.0"
@@ -20,5 +23,10 @@
       "OxidEsales\\EVatModule\\": "./src",
       "OxidEsales\\EVatModule\\Tests\\": "./tests"
     }
+  },
+  "scripts": {
+    "tests-unit": "XDEBUG_MODE=coverage vendor/bin/phpunit --config=tests/ --testsuite=Unit",
+    "tests-integration": "XDEBUG_MODE=coverage vendor/bin/phpunit --bootstrap=/var/www/source/bootstrap.php --config=tests/ --testsuite=Integration",
+    "tests-coverage": "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-text --bootstrap=/var/www/source/bootstrap.php --config=tests/ --coverage-html=tests/Result/CoverageHtml"
   }
 }
