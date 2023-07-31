@@ -3,32 +3,22 @@ services:
   _defaults:
     public: false
     autowire: true
+    bind:
+      OxidEsales\Eshop\Core\Config: '@=service("OxidEsales\\EVatModule\\Core\\Registry").getConfig()'
+      OxidEsales\Eshop\Core\Session: '@=service("OxidEsales\\EVatModule\\Core\\Registry").getSession()'
+      OxidEsales\Eshop\Core\UtilsObject: '@=service("OxidEsales\\EVatModule\\Core\\Registry").getUtilsObject()'
+      OxidEsales\Eshop\Core\UtilsView: '@=service("OxidEsales\\EVatModule\\Core\\Registry").getUtilsView()'
+      OxidEsales\Eshop\Application\Model\Basket: '@=service("OxidEsales\\EVatModule\\Core\\UtilsObject").oxNew("OxidEsales\\Eshop\\Application\\Model\\Basket")'
+      OxidEsales\Eshop\Application\Model\User: '@=service("OxidEsales\\EVatModule\\Core\\UtilsObject").oxNew("OxidEsales\\Eshop\\Application\\Model\\User")'
+      OxidEsales\Eshop\Application\Model\Article: '@=service("OxidEsales\\EVatModule\\Core\\UtilsObject").oxNew("OxidEsales\\Eshop\\Application\\Model\\Article")'
 
-  OxidEsales\Eshop\Core\Config:
-    factory: [ 'OxidEsales\Eshop\Core\Registry', 'getConfig' ]
-
-  OxidEsales\Eshop\Core\Session:
-    factory: [ 'OxidEsales\Eshop\Core\Registry', 'getSession' ]
-
-  OxidEsales\Eshop\Core\UtilsObject:
+  OxidEsales\EVatModule\Core\Registry:
+    class: OxidEsales\Eshop\Core\Registry
     public: true
-    factory: ['OxidEsales\Eshop\Core\UtilsObject', 'getInstance']
 
-  OxidEsales\Eshop\Core\UtilsView:
-    factory: ['@OxidEsales\Eshop\Core\UtilsObject', 'oxNew']
-    arguments: ['OxidEsales\Eshop\Core\UtilsView']
-
-  OxidEsales\Eshop\Application\Model\Basket:
-    factory: ['@OxidEsales\Eshop\Core\UtilsObject', 'oxNew']
-    arguments: ['OxidEsales\Eshop\Application\Model\Basket']
-
-  OxidEsales\Eshop\Application\Model\User:
-    factory: ['@OxidEsales\Eshop\Core\UtilsObject', 'oxNew']
-    arguments: ['OxidEsales\Eshop\Application\Model\User']
-
-  OxidEsales\Eshop\Application\Model\Article:
-    factory: ['@OxidEsales\Eshop\Core\UtilsObject', 'oxNew']
-    arguments: ['OxidEsales\Eshop\Application\Model\Article']
+  OxidEsales\EVatModule\Core\UtilsObject:
+    public: true
+    factory: ['@OxidEsales\EVatModule\Core\Registry', 'getUtilsObject']
 
   OxidEsales\EVatModule\Model\Evidence\Item\Evidence:
     abstract: true
