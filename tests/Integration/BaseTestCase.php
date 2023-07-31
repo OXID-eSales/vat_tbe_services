@@ -10,6 +10,7 @@ namespace OxidEsales\EVatModule\Tests\Integration;
 
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
+use OxidEsales\Facts\Facts;
 use PHPUnit\Framework\TestCase;
 
 abstract class BaseTestCase extends TestCase
@@ -24,9 +25,12 @@ abstract class BaseTestCase extends TestCase
             ->create()
             ->getConnection();
 
+        $facts = new Facts();
+        $edition = $facts->getEdition();
+
         $connection->executeStatement(
             file_get_contents(
-                __DIR__ . '/../Fixtures/dump.sql'
+                __DIR__ . '/../Fixtures/dump_' . strtolower($edition) . '.sql'
             )
         );
     }

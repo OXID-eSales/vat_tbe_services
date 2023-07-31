@@ -14,10 +14,6 @@ services:
     public: true
     factory: ['OxidEsales\Eshop\Core\UtilsObject', 'getInstance']
 
-  OxidEsales\EshopEnterprise\Core\Cache\Generic\Cache:
-    factory: ['@OxidEsales\Eshop\Core\UtilsObject', 'oxNew']
-    arguments: ['OxidEsales\EshopEnterprise\Core\Cache\Generic\Cache']
-
   OxidEsales\Eshop\Core\UtilsView:
     factory: ['@OxidEsales\Eshop\Core\UtilsObject', 'oxNew']
     arguments: ['OxidEsales\Eshop\Core\UtilsView']
@@ -39,4 +35,13 @@ services:
 
   OxidEsales\EVatModule\:
     resource: 'src/{Service,Core,Model}'
+    public: true
+
+  OxidEsales\EVatModule\Core\Cache\Generic\Cache:
+    class: '\OxidEsales\Eshop\Core\Cache\Generic\Cache'
+    factory: ['@OxidEsales\EVatModule\Service\CacheFactory', 'getCacheIfAvailable']
+
+  OxidEsales\EVatModule\Model\GroupArticleCacheInvalidator:
+    arguments:
+      $oCacheBackend: '@?OxidEsales\EVatModule\Core\Cache\Generic\Cache'
     public: true

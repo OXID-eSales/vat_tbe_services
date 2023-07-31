@@ -8,7 +8,7 @@
 namespace OxidEsales\EVatModule\Model;
 
 use OxidEsales\Eshop\Application\Model\Article;
-use OxidEsales\EshopEnterprise\Core\Cache\Generic\Cache;
+use OxidEsales\Eshop\Core\Cache\Generic\Cache;
 
 /**
  * VAT Groups handling class
@@ -25,9 +25,9 @@ class GroupArticleCacheInvalidator
      * Handles class dependencies.
      *
      * @param ArticleVATGroupsList $oArticleVATGroupsList Used to get articles assigned to specific group.
-     * @param Cache               $oCacheBackend         Cache backend
+     * @param Cache $oCacheBackend Cache backend
      */
-    public function __construct(ArticleVATGroupsList $oArticleVATGroupsList, Cache $oCacheBackend)
+    public function __construct(ArticleVATGroupsList $oArticleVATGroupsList, ?Cache $oCacheBackend = null)
     {
         $this->_oArticleVATGroupsList = $oArticleVATGroupsList;
         $this->_oCacheBackend = $oCacheBackend;
@@ -40,13 +40,17 @@ class GroupArticleCacheInvalidator
      */
     public function invalidate($sGroupId)
     {
+        /** @var Cache $oCacheBackend */
+        $oCacheBackend = $this->getCacheBackend();
+        if (!$oCacheBackend) {
+            return;
+        }
+
         $oArticleVATGroupsList = $this->getArticleVATGroupsList();
         $aArticleIds = $oArticleVATGroupsList->getArticlesAssignedToGroup($sGroupId);
 
         /** @var Article $oArticle */
         $oArticle = oxNew(Article::class);
-        /** @var Cache $oCacheBackend */
-        $oCacheBackend = $this->getCacheBackend();
         foreach ($aArticleIds as $sArticleId) {
             $oArticle->setId($sArticleId);
 
