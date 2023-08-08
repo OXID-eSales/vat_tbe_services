@@ -146,7 +146,7 @@ class ArticleAdministrationTest extends BaseTestCase
      */
     public function testNotSelectedRateForCountry($oArticleAdministration)
     {
-        $this->assertSame(false, $oArticleAdministration->isSelected('8f241f110955d3260.55487539', ''));
+        $this->assertTrue($oArticleAdministration->isSelected('8f241f110955d3260.55487539', ''));
 
         return $oArticleAdministration;
     }

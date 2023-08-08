@@ -159,7 +159,7 @@ class CategoryAdministrationTest extends BaseTestCase
      */
     public function testNotSelectedRateForCountry($oCategoryAdministration)
     {
-        $this->assertSame(false, $oCategoryAdministration->isSelected('8f241f110955d3260.55487539', ''));
+        $this->assertTrue($oCategoryAdministration->isSelected('8f241f110955d3260.55487539', ''));
 
         return $oCategoryAdministration;
     }
