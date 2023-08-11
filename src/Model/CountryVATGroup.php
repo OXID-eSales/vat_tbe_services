@@ -15,10 +15,9 @@ use OxidEsales\EVatModule\Model\DbGateway\CountryVATGroupsDbGateway;
  */
 class CountryVATGroup extends Model
 {
-    private $_oVATGroupArticleCacheInvalidator = null;
-
     public function __construct(
-        protected CountryVATGroupsDbGateway $dbGateway
+        protected CountryVATGroupsDbGateway $dbGateway,
+        protected ?GroupArticleCacheInvalidator $groupArticleCacheInvalidator = null
     )
     {
     }
@@ -27,11 +26,11 @@ class CountryVATGroup extends Model
      * Sets VAT group articles cache invalidator.
      * If this invalidator is not set, cache will not be cleared on save and delete events.
      *
-     * @param null $oVATGroupArticleCacheInvalidator Cache invalidator object.
+     * @param null GroupArticleCacheInvalidator Cache invalidator object.
      */
-    public function setVATGroupArticleCacheInvalidator($oVATGroupArticleCacheInvalidator)
+    public function setVATGroupArticleCacheInvalidator($groupArticleCacheInvalidator)
     {
-        $this->_oVATGroupArticleCacheInvalidator = $oVATGroupArticleCacheInvalidator;
+        $this->groupArticleCacheInvalidator = $groupArticleCacheInvalidator;
     }
 
     /**
@@ -160,7 +159,7 @@ class CountryVATGroup extends Model
      */
     protected function getVATGroupArticleCacheInvalidator()
     {
-        return $this->_oVATGroupArticleCacheInvalidator;
+        return $this->groupArticleCacheInvalidator;
     }
 
     /**

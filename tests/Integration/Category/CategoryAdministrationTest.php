@@ -7,9 +7,12 @@
 namespace OxidEsales\EVatModule\Tests\Integration\Category;
 
 use OxidEsales\EshopCommunity\Core\Registry;
+use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
+use OxidEsales\EshopCommunity\Tests\ContainerTrait;
 use OxidEsales\EVatModule\Controller\Admin\CategoryAdministration;
 use OxidEsales\EVatModule\Model\CountryVATGroup;
 use OxidEsales\EVatModule\Model\DbGateway\CountryVATGroupsDbGateway;
+use OxidEsales\EVatModule\Model\GroupArticleCacheInvalidator;
 use OxidEsales\EVatModule\Shop\Category;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 
@@ -18,9 +21,13 @@ use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
  */
 class CategoryAdministrationTest extends BaseTestCase
 {
+    use ContainerTrait;
+
     public function setUp(): void
     {
         parent::setUp();
+
+        ContainerFactory::resetContainer();
     }
 
     public function tearDown(): void
@@ -59,11 +66,14 @@ class CategoryAdministrationTest extends BaseTestCase
         /** @var CountryVATGroupsDbGateway $oGateway */
         $oGateway = oxNew(CountryVATGroupsDbGateway::class);
 
-        $oCountryVATGroup1 = oxNew(CountryVATGroup::class, $oGateway);
+        /** @var GroupArticleCacheInvalidator $groupArticleCacheInvalidator */
+        $groupArticleCacheInvalidator = $this->get(GroupArticleCacheInvalidator::class);
+
+        $oCountryVATGroup1 = oxNew(CountryVATGroup::class, $oGateway, $groupArticleCacheInvalidator);
         $oCountryVATGroup1->setId(2);
         $oCountryVATGroup1->setData($aData1);
 
-        $oCountryVATGroup2 = oxNew(CountryVATGroup::class, $oGateway);
+        $oCountryVATGroup2 = oxNew(CountryVATGroup::class, $oGateway, $groupArticleCacheInvalidator);
         $oCountryVATGroup2->setId(3);
         $oCountryVATGroup2->setData($aData2);
 

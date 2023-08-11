@@ -37,13 +37,15 @@ class CountryVATGroupsList extends Model
             $this->setId($sId);
         }
 
+        $groupArticleCacheInvalidator = $this->getServiceFromContainer(GroupArticleCacheInvalidator::class);
+
         $aGroups = array();
         $oGateway = $this->getDbGateway();
         $aGroupsData = $oGateway->getList($this->getId());
         if (is_array($aGroupsData) && count($aGroupsData)) {
             foreach ($aGroupsData as $aData) {
                 /** @var CountryVATGroup $oGroup */
-                $oGroup = oxNew(CountryVATGroup::class, $oGateway);
+                $oGroup = oxNew(CountryVATGroup::class, $oGateway, $groupArticleCacheInvalidator);
                 $oGroup->setId($aData['OEVATTBE_ID']);
                 $oGroup->setData($aData);
                 $aGroups[] = $oGroup;
@@ -61,13 +63,15 @@ class CountryVATGroupsList extends Model
      */
     public function getList()
     {
+        $groupArticleCacheInvalidator = $this->getServiceFromContainer(GroupArticleCacheInvalidator::class);
+
         $aGroups = array();
         $oGateway = $this->getDbGateway();
         $aGroupsData = $oGateway->getList();
         if (is_array($aGroupsData) && count($aGroupsData)) {
             foreach ($aGroupsData as $aData) {
                 /** @var CountryVATGroup $oGroup */
-                $oGroup = oxNew(CountryVATGroup::class, $oGateway);
+                $oGroup = oxNew(CountryVATGroup::class, $oGateway, $groupArticleCacheInvalidator);
                 $oGroup->setId($aData['OEVATTBE_ID']);
                 $oGroup->setData($aData);
                 $aGroups[$aData['OEVATTBE_COUNTRYID']][] = $oGroup;

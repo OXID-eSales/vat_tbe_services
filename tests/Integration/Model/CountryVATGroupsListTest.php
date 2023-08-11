@@ -11,6 +11,7 @@ use OxidEsales\EshopCommunity\Tests\ContainerTrait;
 use OxidEsales\EVatModule\Model\CountryVATGroup;
 use OxidEsales\EVatModule\Model\CountryVATGroupsList;
 use OxidEsales\EVatModule\Model\DbGateway\CountryVATGroupsDbGateway;
+use OxidEsales\EVatModule\Model\GroupArticleCacheInvalidator;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -96,7 +97,10 @@ class CountryVATGroupsListTest extends TestCase
      */
     protected function createGroupObject($aData, $oGateway)
     {
-        $oGroupsList = oxNew(CountryVATGroup::class, $oGateway);
+        /** @var GroupArticleCacheInvalidator $groupArticleCacheInvalidator */
+        $groupArticleCacheInvalidator = $this->get(GroupArticleCacheInvalidator::class);
+
+        $oGroupsList = oxNew(CountryVATGroup::class, $oGateway, $groupArticleCacheInvalidator);
         $oGroupsList->setId($aData['OEVATTBE_ID']);
         $oGroupsList->setData($aData);
 

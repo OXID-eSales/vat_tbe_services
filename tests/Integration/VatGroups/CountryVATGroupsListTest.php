@@ -6,10 +6,12 @@
 
 namespace OxidEsales\EVatModule\Tests\Integration\VatGroups;
 
+use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Tests\ContainerTrait;
 use OxidEsales\EVatModule\Model\CountryVATGroup;
 use OxidEsales\EVatModule\Model\CountryVATGroupsList;
 use OxidEsales\EVatModule\Model\DbGateway\CountryVATGroupsDbGateway;
+use OxidEsales\EVatModule\Model\GroupArticleCacheInvalidator;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 
 /**
@@ -18,6 +20,13 @@ use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 class CountryVATGroupsListTest extends BaseTestCase
 {
     use ContainerTrait;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        ContainerFactory::resetContainer();
+    }
 
     /**
      * Two Country Groups exits;
@@ -69,7 +78,10 @@ class CountryVATGroupsListTest extends BaseTestCase
      */
     protected function createGroupObject($aData, $oGateway)
     {
-        $oGroup = oxNew(CountryVATGroup::class, $oGateway);
+        /** @var GroupArticleCacheInvalidator $groupArticleCacheInvalidator */
+        $groupArticleCacheInvalidator = $this->get(GroupArticleCacheInvalidator::class);
+
+        $oGroup = oxNew(CountryVATGroup::class, $oGateway, $groupArticleCacheInvalidator);
         $oGroup->setId($aData['OEVATTBE_ID']);
         $oGroup->setData($aData);
         $aData['OEVATTBE_ID'] = $oGroup->save();
