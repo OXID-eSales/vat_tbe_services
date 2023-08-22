@@ -1,0 +1,62 @@
+{% extends 'order_main.html.twig' %}
+
+{% block admin_order_main_form %}
+    {{ parent() }}
+
+    {% if sTBECountry %}
+        <style>
+            .vattbeEvidences {
+                border: solid 1px #A9A9A9;
+                padding: 5px;
+                width: 600px;
+                margin-top: 14px;
+            }
+            .vattbeEvidencesInfo {
+                border-collapse:collapse;
+                width: 100%
+            }
+        </style>
+        <tr>
+            <td class="edittext" colspan="2">
+                <table class="vattbeEvidences">
+                    <thead>
+                        <tr>
+                            <td class="edittext" colspan="2">
+                                {{ translate({ ident: "OEVATTBE_TITLE_EVIDENCES_FOR_TBE" }) }}
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="edittext" colspan="2">{{ translate({ ident: "OEVATTBE_EVIDENCE_FOR_ARTICLES_USED", args: sTBECountry }) }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <table border="1" class="vattbeEvidencesInfo" cellpadding="2">
+                                    <tr>
+                                        <th class="edittext">{{ translate({ ident: "OEVATTBE_EVIDENCE_ID" }) }}</th>
+                                        <th class="edittext">{{ translate({ ident: "OEVATTBE_EVIDENCE_COUNTRY" }) }}</th>
+                                    </tr>
+                                    {% for evidence in aEvidencesData %}
+                                    <tr>
+                                        <td class="edittext">
+                                            {% if aEvidenceUsed == evidence['name'] %}<b>{% endif %}
+                                                {{ evidence['name'] }}
+                                            {% if aEvidenceUsed == evidence['id'] %}<\b>{% endif %}
+                                        </td>
+                                        <td class="edittext">
+                                            {% if aEvidenceUsed == evidence['name'] %}<b>{% endif %}
+                                                {{ evidence['countryTitle'] }}
+                                            {% if aEvidenceUsed == evidence['id'] %}<\b>{% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    {% endif %}
+{% endblock %}

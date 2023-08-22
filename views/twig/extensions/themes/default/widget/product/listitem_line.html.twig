@@ -1,0 +1,10 @@
+{% extends 'widget/product/listitem_line.html.twig' %}
+
+{% block widget_product_listitem_line_price_value %}
+    {{ parent() }}
+    {% if oViewConf.oeVATTBEShowTBEArticlePriceNotice(product) and oView.isVatIncluded() %}
+        {% if not (product.hasMdVariants() or (oViewConf.showSelectListsInList() and product.getSelections(1)) or product.getVariants()) %}
+            <label class="price lead text-nowrap tbePrice">**</label>
+        {% endif %}
+    {% endif %}
+{% endblock %}

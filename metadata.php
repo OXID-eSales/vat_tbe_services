@@ -1,23 +1,12 @@
 <?php
+
 /**
- * This file is part of OXID eSales eVAT module.
- *
- * OXID eSales eVAT module is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * OXID eSales eVAT module is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with OXID eSales eVAT module.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @link      http://www.oxid-esales.com
- * @copyright (C) OXID eSales AG 2003-2014
+ * Copyright © OXID eSales AG. All rights reserved.
+ * See LICENSE file for license details.
  */
+
+use OxidEsales\EVatModule\Core\Module;
+use OxidEsales\EVatModule\Service\ModuleSettings;
 
 /**
  * Metadata version
@@ -28,7 +17,7 @@ $sMetadataVersion = '2.0';
  * Module information
  */
 $aModule = array(
-    'id'           => 'oevattbe',
+    'id'           => Module::MODULE_ID,
     'title'        => 'OXID eShop eVAT',
     'description'  => array(
         'de' => 'Das Modul eVAT erm&ouml;glicht es,
@@ -45,98 +34,72 @@ Telecommunication, Broadcasting or Electronic (TBE) service according to
     'author'       => 'OXID eSales AG',
     'url'          => 'http://www.oxid-esales.com',
     'email'        => 'info@oxid-esales.com',
-    'extend'       => array(
-        'oxcmp_basket'                 => 'oe/oevattbe/components/oevattbeoxcmp_basket',
-        'order_main'                   => 'oe/oevattbe/controllers/admin/oevattbeorder_main',
-        'category_main_ajax'           => 'oe/oevattbe/controllers/admin/oevattbecategory_main_ajax',
-        'article_extend_ajax'          => 'oe/oevattbe/controllers/admin/oevattbearticle_extend_ajax',
-        'article_main'                 => 'oe/oevattbe/controllers/admin/oevattbearticle_main',
-        'basket'                       => 'oe/oevattbe/controllers/oevattbebasket',
-        'order'                        => 'oe/oevattbe/controllers/oevattbeorder',
-        'oxviewconfig'                 => 'oe/oevattbe/core/oevattbeoxviewconfig',
-        'oxarticle'                    => 'oe/oevattbe/models/oevattbeoxarticle',
-        'oxarticlelist'                => 'oe/oevattbe/models/oevattbeoxarticlelist',
-        'oxuser'                       => 'oe/oevattbe/models/oevattbeoxuser',
-        'oxsearch'                     => 'oe/oevattbe/models/oevattbeoxsearch',
-        'oxvatselector'                => 'oe/oevattbe/models/oevattbeoxvatselector',
-        'oxbasket'                     => 'oe/oevattbe/models/oevattbeoxbasket',
-        'oxorder'                      => 'oe/oevattbe/models/oevattbeoxorder',
-        'oxbasketcontentmarkgenerator' => 'oe/oevattbe/models/oevattbeoxbasketcontentmarkgenerator',
-        'oxcountry'                    => 'oe/oevattbe/models/oevattbeoxcountry',
-        'oxcategory'                   => 'oe/oevattbe/models/oevattbeoxcategory',
-        'oxshop'                       => 'oe/oevattbe/models/oevattbeoxshop',
-    ),
+    'controllers' => [
+        'oevattbecountryvatgroups'                     => \OxidEsales\EVatModule\Controller\Admin\CountryVatGroups::class,
+        'oevattbearticleadministration'                => \OxidEsales\EVatModule\Controller\Admin\ArticleAdministration::class,
+        'oevattbecategoryadministration'               => \OxidEsales\EVatModule\Controller\Admin\CategoryAdministration::class,
+    ],
+    'extend'       => [
+        //Components
+        \OxidEsales\Eshop\Application\Component\BasketComponent::class => \OxidEsales\EVatModule\Component\BasketComponent::class,
 
-//TODO: use services.yaml
-//    'files' => array(
-//        'oeVATTBEModel'                                => 'oe/oevattbe/core/oevattbemodel.php',
-//        'oeVATTBEModelDbGateway'                       => 'oe/oevattbe/core/oevattbemodeldbgateway.php',
-//        'oeVatTbeEvents'                               => 'oe/oevattbe/core/oevattbeevents.php',
-//        'oeVATTBEList'                                 => 'oe/oevattbe/models/oevattbelist.php',
-//        'oeVATTBEEvidence'                             => 'oe/oevattbe/models/evidences/items/oevattbeevidence.php',
-//        'oeVATTBEBillingCountryEvidence'               => 'oe/oevattbe/models/evidences/items/oevattbebillingcountryevidence.php',
-//        'oeVATTBEGeoLocationEvidence'                  => 'oe/oevattbe/models/evidences/items/oevattbegeolocationevidence.php',
-//        'oeVATTBEEvidenceList'                         => 'oe/oevattbe/models/evidences/oevattbeevidencelist.php',
-//        'oeVATTBEEvidenceRegister'                     => 'oe/oevattbe/models/evidences/oevattbeevidenceregister.php',
-//        'oeVATTBEEvidenceCollector'                    => 'oe/oevattbe/models/evidences/oevattbeevidencecollector.php',
-//        'oeVATTBEEvidenceSelector'                     => 'oe/oevattbe/models/evidences/oevattbeevidenceselector.php',
-//        'oeVATTBETBEUser'                              => 'oe/oevattbe/models/oevattbetbeuser.php',
-//        'oeVATTBEOrderArticleChecker'                  => 'oe/oevattbe/models/oevattbeorderarticlechecker.php',
-//        'oeVATTBEBasketItemsValidator'                 => 'oe/oevattbe/services/oevattbebasketitemsvalidator.php',
-//        'oeVATTBEIncorrectVATArticlesMessageFormatter' => 'oe/oevattbe/models/oevattbeincorrectvaatrticlesmessageformatter.php',
-//        'oeVATTBETBEArticleCacheKey'                   => 'oe/oevattbe/models/oevattbetbearticlecachekey.php',
-//        'oeVATTBEOrderEvidenceList'                    => 'oe/oevattbe/models/oevattbeorderevidencelist.php',
-//        'oeVATTBEOrderEvidenceListDbGateway'           => 'oe/oevattbe/models/dbgateways/oevattbeorderevidencelistdbgateway.php',
-//        'oeVATTBECountryVATGroupsDbGateway'            => 'oe/oevattbe/models/dbgateways/oevattbecountryvatgroupsdbgateway.php',
-//        'oeVATTBECountryVATGroup'                      => 'oe/oevattbe/models/oevattbecountryvatgroup.php',
-//        'oeVATTBECountryVATGroupsList'                 => 'oe/oevattbe/models/oevattbecountryvatgroupslist.php',
-//        'oeVATTBEArticleSQLBuilder'                    => 'oe/oevattbe/models/oevattbearticlesqlbuilder.php',
-//        'oeVATTBECountryVatGroups'                     => 'oe/oevattbe/controllers/admin/oevattbecountryvatgroups.php',
-//        'oeVATTBEArticleVATGroupsDbGateway'            => 'oe/oevattbe/models/dbgateways/oevattbearticlevatgroupsdbgateway.php',
-//        'oeVATTBECategoryVATGroupsDbGateway'           => 'oe/oevattbe/models/dbgateways/oevattbecategoryvatgroupsdbgateway.php',
-//        'oeVATTBECategoryVATGroupsPopulatorDbGateway'  => 'oe/oevattbe/models/dbgateways/oevattbecategoryvatgroupspopulatordbgateway.php',
-//        'oeVATTBEArticleVATGroupsList'                 => 'oe/oevattbe/models/oevattbearticlevatgroupslist.php',
-//        'oeVATTBECategoryVATGroupsList'                => 'oe/oevattbe/models/oevattbecategoryvatgroupslist.php',
-//        'oeVATTBECategoryArticlesUpdater'              => 'oe/oevattbe/models/oevattbecategoryarticlesupdater.php',
-//        'oeVATTBEVATGroupArticleCacheInvalidator'      => 'oe/oevattbe/models/oevattbevatgrouparticlescacheinvalidator.php',
-//        'oeVATTBEArticleAdministration'                => 'oe/oevattbe/controllers/admin/oevattbearticleadministration.php',
-//        'oeVATTBECategoryAdministration'               => 'oe/oevattbe/controllers/admin/oevattbecategoryadministration.php',
-//        'oeVATTBEBasketVATValidator'                   => 'oe/oevattbe/models/oevattbebasketvatvalidator.php',
-//    ),
+        //Controllers
+        \OxidEsales\Eshop\Application\Controller\BasketController::class  => \OxidEsales\EVatModule\Controller\BasketController::class,
+        \OxidEsales\Eshop\Application\Controller\OrderController::class  => \OxidEsales\EVatModule\Controller\OrderController::class,
+
+        \OxidEsales\Eshop\Application\Controller\Admin\OrderMain::class => \OxidEsales\EVatModule\Controller\Admin\OrderMain::class,
+        \OxidEsales\Eshop\Application\Controller\Admin\CategoryMainAjax::class => \OxidEsales\EVatModule\Controller\Admin\CategoryMainAjax::class,
+        \OxidEsales\Eshop\Application\Controller\Admin\ArticleExtendAjax::class => \OxidEsales\EVatModule\Controller\Admin\ArticleExtendAjax::class,
+        \OxidEsales\Eshop\Application\Controller\Admin\ArticleMain::class => \OxidEsales\EVatModule\Controller\Admin\ArticleMain::class,
+
+        //Models
+        \OxidEsales\Eshop\Application\Model\Article::class => \OxidEsales\EVatModule\Shop\Article::class,
+        \OxidEsales\Eshop\Application\Model\ArticleList::class => \OxidEsales\EVatModule\Shop\ArticleList::class,
+        \OxidEsales\Eshop\Application\Model\User::class => \OxidEsales\EVatModule\Shop\User::class,
+        \OxidEsales\Eshop\Application\Model\Search::class => \OxidEsales\EVatModule\Shop\Search::class,
+        \OxidEsales\Eshop\Application\Model\VatSelector::class => \OxidEsales\EVatModule\Shop\VatSelector::class,
+        \OxidEsales\Eshop\Application\Model\Basket::class => \OxidEsales\EVatModule\Shop\Basket::class,
+        \OxidEsales\Eshop\Application\Model\Order::class => \OxidEsales\EVatModule\Shop\Order::class,
+        \OxidEsales\Eshop\Application\Model\BasketContentMarkGenerator::class => \OxidEsales\EVatModule\Shop\BasketContentMarkGenerator::class,
+        \OxidEsales\Eshop\Application\Model\Country::class => \OxidEsales\EVatModule\Shop\Country::class,
+        \OxidEsales\Eshop\Application\Model\Category::class => \OxidEsales\EVatModule\Shop\Category::class,
+        \OxidEsales\Eshop\Application\Model\Shop::class => \OxidEsales\EVatModule\Shop\Shop::class,
+
+        //Core
+        \OxidEsales\Eshop\Core\ViewConfig::class => \OxidEsales\EVatModule\Shop\ViewConfig::class,
+    ],
     'events'    => array(
         'onActivate'   => '\OxidEsales\EVatModule\Core\Events::onActivate',
         'onDeactivate' => '\OxidEsales\EVatModule\Core\Events::onDeactivate'
     ),
-    'templates' => array(
-        'oevattbecountryvatgroups.tpl'       => 'views/admin/tpl/oevattbecountryvatgroups.tpl',
-        'oevattbearticleadministration.tpl'  => 'views/admin/tpl/oevattbearticleadministration.tpl',
-        'oevattbecategoryadministration.tpl' => 'views/admin/tpl/oevattbecategoryadministration.tpl',
-    ),
-    'blocks'    => array(
-        array('template' => 'layout/base.tpl', 'block' => 'base_style', 'file' => 'views/blocks/layout/base.tpl'),
-        array('template' => 'page/details/inc/productmain.tpl', 'block' => 'details_productmain_price_value', 'file' => 'views/blocks/page/details/inc/productmain.tpl'),
-        array('template' => 'widget/product/listitem_grid.tpl', 'block' => 'widget_product_listitem_grid_price_value', 'file' => 'views/blocks/widget/product/listitem_grid.tpl'),
-        array('template' => 'widget/product/listitem_infogrid.tpl', 'block' => 'widget_product_listitem_infogrid_price_value', 'file' => 'views/blocks/widget/product/listitem_infogrid.tpl'),
-        array('template' => 'widget/product/listitem_line.tpl', 'block' => 'widget_product_listitem_line_price_value', 'file' => 'views/blocks/widget/product/listitem_line.tpl'),
-        array('template' => 'widget/product/boxproduct.tpl', 'block' => 'widget_product_boxproduct_price_value', 'file' => 'views/blocks/widget/product/boxproduct.tpl'),
-        array('template' => 'widget/product/bargainitem.tpl', 'block' => 'widget_product_bargainitem_price_value', 'file' => 'views/blocks/widget/product/bargainitem.tpl'),
-        array('template' => 'widget/product/compareitem.tpl', 'block' => 'widget_product_compareitem_price_value', 'file' => 'views/blocks/widget/product/compareitem.tpl'),
-        array('template' => 'user_main.tpl', 'block' => 'admin_user_main_form', 'file' => 'views/blocks/admin/user_main.tpl'),
-        array('template' => 'page/checkout/inc/basketcontents.tpl', 'block' => 'checkout_basketcontents_basketitem_vat', 'file' => 'views/blocks/page/checkout/inc/basketitem_vat.tpl'),
-        array('template' => 'page/checkout/inc/basketcontents_table.tpl', 'block' => 'checkout_basketcontents_basketitem_vat', 'file' => 'views/blocks/page/checkout/inc/basketitem_vat_in_table.tpl'),
-        array('template' => 'page/checkout/basket.tpl', 'block' => 'checkout_basket_next_step_bottom', 'file' => 'views/blocks/page/checkout/basket_nextstep.tpl'),
-        array('template' => 'page/checkout/order.tpl', 'block' => 'checkout_order_next_step_bottom', 'file' => 'views/blocks/page/checkout/order_nextstep.tpl'),
-        array('template' => 'order_main.tpl', 'block' => 'admin_order_main_form', 'file' => 'views/admin/tpl/oevattbeorder_main.tpl'),
-        array('template' => 'layout/page.tpl', 'block' => 'content_main', 'file' => 'views/blocks/layout/page.tpl'),
-        array('template' => 'country_list.tpl', 'block' => 'admin_country_list_colgroup', 'file' => 'views/blocks/admin/country_list_colgroup.tpl'),
-        array('template' => 'country_list.tpl', 'block' => 'admin_country_list_filter', 'file' => 'views/blocks/admin/country_list_filter.tpl'),
-        array('template' => 'country_list.tpl', 'block' => 'admin_country_list_sorting', 'file' => 'views/blocks/admin/country_list_sorting.tpl'),
-        array('template' => 'country_list.tpl', 'block' => 'admin_country_list_item', 'file' => 'views/blocks/admin/country_list_item.tpl'),
-        array('template' => 'country_main.tpl', 'block' => 'admin_country_main_form', 'file' => 'views/blocks/admin/country_main.tpl'),
-    ),
+    'templates' => [
+        '@oevattbe/admin/oevattbecountryvatgroups.tpl'       => 'views/admin_smarty/oevattbecountryvatgroups.tpl',
+        '@oevattbe/admin/oevattbearticleadministration.tpl'  => 'views/admin_smarty/oevattbearticleadministration.tpl',
+        '@oevattbe/admin/oevattbecategoryadministration.tpl' => 'views/admin_smarty/oevattbecategoryadministration.tpl',
+    ],
+    'blocks'    => [
+        ['template' => 'layout/base.tpl', 'block' => 'base_style', 'file' => 'views/smarty/blocks/layout/base.tpl'],
+        ['template' => 'page/details/inc/productmain.tpl', 'block' => 'details_productmain_price_value', 'file' => 'views/smarty/blocks/page/details/inc/productmain.tpl'],
+        ['template' => 'widget/product/listitem_grid.tpl', 'block' => 'widget_product_listitem_grid_price_value', 'file' => 'views/smarty/blocks/widget/product/listitem_grid.tpl'],
+        ['template' => 'widget/product/listitem_infogrid.tpl', 'block' => 'widget_product_listitem_infogrid_price_value', 'file' => 'views/smarty/blocks/widget/product/listitem_infogrid.tpl'],
+        ['template' => 'widget/product/listitem_line.tpl', 'block' => 'widget_product_listitem_line_price_value', 'file' => 'views/smarty/blocks/widget/product/listitem_line.tpl'],
+        ['template' => 'user_main.tpl', 'block' => 'admin_user_main_form', 'file' => 'views/smarty/blocks/admin/user_main.tpl'],
+        ['template' => 'page/checkout/inc/basketcontents_list.tpl', 'block' => 'checkout_basketcontents_basketitem_vat', 'file' => 'views/smarty/blocks/page/checkout/inc/basketitem_vat.tpl'],
+        ['template' => 'page/checkout/inc/basketcontents_table.tpl', 'block' => 'checkout_basketcontents_basketitem_vat', 'file' => 'views/smarty/blocks/page/checkout/inc/basketitem_vat_in_table.tpl'],
+        ['template' => 'page/checkout/basket.tpl', 'block' => 'checkout_basket_next_step_bottom', 'file' => 'views/smarty/blocks/page/checkout/basket_nextstep.tpl'],
+        ['template' => 'page/checkout/order.tpl', 'block' => 'checkout_order_next_step_bottom', 'file' => 'views/smarty/blocks/page/checkout/order_nextstep.tpl'],
+        ['template' => 'order_main.tpl', 'block' => 'admin_order_main_form', 'file' => 'views/smarty/blocks/admin/order_main.tpl'],
+        ['template' => 'layout/page.tpl', 'block' => 'content_main', 'file' => 'views/smarty/blocks/layout/page.tpl'],
+        ['template' => 'country_list.tpl', 'block' => 'admin_country_list_colgroup', 'file' => 'views/smarty/blocks/admin/country_list_colgroup.tpl'],
+        ['template' => 'country_list.tpl', 'block' => 'admin_country_list_filter', 'file' => 'views/smarty/blocks/admin/country_list_filter.tpl'],
+        ['template' => 'country_list.tpl', 'block' => 'admin_country_list_sorting', 'file' => 'views/smarty/blocks/admin/country_list_sorting.tpl'],
+        ['template' => 'country_list.tpl', 'block' => 'admin_country_list_item', 'file' => 'views/smarty/blocks/admin/country_list_item.tpl'],
+        ['template' => 'country_main.tpl', 'block' => 'admin_country_main_form', 'file' => 'views/smarty/blocks/admin/country_main.tpl'],
+    ],
     'settings'  => array(
-        array('group' => 'oevattbe', 'name' => 'aOeVATTBECountryEvidences', 'type' => 'aarr', 'value' => array('billing_country' => 1, 'geo_location' => 1)),
-        array('group' => 'oevattbe', 'name' => 'sOeVATTBEDefaultEvidence', 'type' => 'str', 'value' => 'billing_country'),
-        array('group' => 'oevattbe', 'name' => 'sOeVATTBEDomesticCountry', 'type' => 'str', 'value' => 'DE'),
+        ['group' => 'oevattbe', 'name' => ModuleSettings::COUNTRY_EVIDENCES, 'type' => 'aarr', 'value' => ['billing_country' => 1, 'geo_location' => 1]],
+        ['group' => 'oevattbe', 'name' => ModuleSettings::DEFAULT_EVIDENCE, 'type' => 'str', 'value' => 'billing_country'],
+        ['group' => 'oevattbe', 'name' => ModuleSettings::DOMESTIC_COUNTRY, 'type' => 'str', 'value' => 'DE'],
+        ['name' => ModuleSettings::EVIDENCE_CLASSES, 'type' => 'arr', 'value' => []],
     )
 );

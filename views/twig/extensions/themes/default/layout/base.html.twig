@@ -1,0 +1,6 @@
+{% extends 'layout/base.html.twig' %}
+
+{% block base_style %}
+    {{ parent() }}
+    {{ style({ include: oViewConf.getModuleUrl('oevattbe', 'out/src/css/vattbe.css') }) }}
+{% endblock %}

@@ -1,0 +1,37 @@
+services:
+
+  _defaults:
+    public: false
+    autowire: true
+    bind:
+      OxidEsales\Eshop\Core\Config: '@=service("OxidEsales\\EVatModule\\Core\\Registry").getConfig()'
+      OxidEsales\Eshop\Core\Session: '@=service("OxidEsales\\EVatModule\\Core\\Registry").getSession()'
+      OxidEsales\Eshop\Core\UtilsObject: '@=service("OxidEsales\\EVatModule\\Core\\Registry").getUtilsObject()'
+      OxidEsales\Eshop\Core\UtilsView: '@=service("OxidEsales\\EVatModule\\Core\\Registry").getUtilsView()'
+      OxidEsales\Eshop\Application\Model\Basket: '@=service("OxidEsales\\EVatModule\\Core\\UtilsObject").oxNew("OxidEsales\\Eshop\\Application\\Model\\Basket")'
+      OxidEsales\Eshop\Application\Model\User: '@=service("OxidEsales\\EVatModule\\Core\\UtilsObject").oxNew("OxidEsales\\Eshop\\Application\\Model\\User")'
+      OxidEsales\Eshop\Application\Model\Article: '@=service("OxidEsales\\EVatModule\\Core\\UtilsObject").oxNew("OxidEsales\\Eshop\\Application\\Model\\Article")'
+
+  OxidEsales\EVatModule\Core\Registry:
+    class: OxidEsales\Eshop\Core\Registry
+    public: true
+
+  OxidEsales\EVatModule\Core\UtilsObject:
+    public: true
+    factory: ['@OxidEsales\EVatModule\Core\Registry', 'getUtilsObject']
+
+  OxidEsales\EVatModule\Model\Evidence\Item\Evidence:
+    abstract: true
+
+  OxidEsales\EVatModule\:
+    resource: 'src/{Service,Core,Model}'
+    public: true
+
+  OxidEsales\EVatModule\Core\Cache\Generic\Cache:
+    class: '\OxidEsales\Eshop\Core\Cache\Generic\Cache'
+    factory: ['@OxidEsales\EVatModule\Service\CacheFactory', 'getCacheIfAvailable']
+
+  OxidEsales\EVatModule\Model\GroupArticleCacheInvalidator:
+    arguments:
+      $oCacheBackend: '@?OxidEsales\EVatModule\Core\Cache\Generic\Cache'
+    public: true

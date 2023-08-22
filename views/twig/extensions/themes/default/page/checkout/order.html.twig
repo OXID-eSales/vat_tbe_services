@@ -1,0 +1,8 @@
+{% extends 'page/checkout/order.html.twig' %}
+
+{% block checkout_order_next_step_bottom %}
+    {% if oView.oeVATTBEShowVATTBEMarkMessage() %}
+        <div class="well well-sm clear">{{ oView.getOeVATTBEMarkMessage() }}</div>
+    {% endif %}
+    {{ parent() }}
+{% endblock %}

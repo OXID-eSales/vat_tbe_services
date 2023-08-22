@@ -1,7 +1,7 @@
-<phpunit backupGlobals="true"
+<?xml version="1.0"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         backupGlobals="true"
          backupStaticAttributes="false"
-         cacheTokens="true"
-         colors="true"
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
@@ -11,13 +11,20 @@
          stopOnFailure="false"
          stopOnIncomplete="false"
          stopOnSkipped="false"
-         verbose="false">
+         beStrictAboutTestsThatDoNotTestAnything="false"
+         verbose="false"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+    <coverage includeUncoveredFiles="true" processUncoveredFiles="false">
+        <include>
+            <directory suffix=".php">../src</directory>
+        </include>
+    </coverage>
     <testsuites>
-        <testsuite name="UnitTests">
-            <directory>unit</directory>
+        <testsuite name="Unit">
+            <directory>Unit/</directory>
         </testsuite>
-        <testsuite name="IntegrationTests">
-            <directory>integration</directory>
+        <testsuite name="Integration">
+            <directory>Integration/</directory>
         </testsuite>
     </testsuites>
 </phpunit>
