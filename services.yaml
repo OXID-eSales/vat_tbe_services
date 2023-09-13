@@ -4,27 +4,47 @@ services:
     public: false
     autowire: true
     bind:
-      OxidEsales\Eshop\Core\Config: '@=service("OxidEsales\\EVatModule\\Core\\Registry").getConfig()'
       OxidEsales\Eshop\Core\Session: '@=service("OxidEsales\\EVatModule\\Core\\Registry").getSession()'
       OxidEsales\Eshop\Core\UtilsObject: '@=service("OxidEsales\\EVatModule\\Core\\Registry").getUtilsObject()'
       OxidEsales\Eshop\Core\UtilsView: '@=service("OxidEsales\\EVatModule\\Core\\Registry").getUtilsView()'
-      OxidEsales\Eshop\Application\Model\Basket: '@=service("OxidEsales\\EVatModule\\Core\\UtilsObject").oxNew("OxidEsales\\Eshop\\Application\\Model\\Basket")'
-      OxidEsales\Eshop\Application\Model\User: '@=service("OxidEsales\\EVatModule\\Core\\UtilsObject").oxNew("OxidEsales\\Eshop\\Application\\Model\\User")'
-      OxidEsales\Eshop\Application\Model\Article: '@=service("OxidEsales\\EVatModule\\Core\\UtilsObject").oxNew("OxidEsales\\Eshop\\Application\\Model\\Article")'
 
   OxidEsales\EVatModule\Core\Registry:
     class: OxidEsales\Eshop\Core\Registry
     public: true
 
-  OxidEsales\EVatModule\Core\UtilsObject:
-    public: true
-    factory: ['@OxidEsales\EVatModule\Core\Registry', 'getUtilsObject']
-
   OxidEsales\EVatModule\Model\Evidence\Item\Evidence:
     abstract: true
+  OxidEsales\EVatModule\Model\Evidence\:
+    resource: 'src/Model/Evidence'
+    public: true
+  OxidEsales\EVatModule\Model\DbGateway\:
+    resource: 'src/Model/DbGateway'
+    public: true
 
-  OxidEsales\EVatModule\:
-    resource: 'src/{Service,Core,Model}'
+  OxidEsales\EVatModule\Service\:
+    resource: 'src/Service'
+    public: true
+
+#todo: Move to Services?
+  OxidEsales\EVatModule\Model\ArticleVATGroupsList:
+    public: true
+  OxidEsales\EVatModule\Model\IncorrectVATArticlesMessageFormatter:
+    public: true
+  OxidEsales\EVatModule\Model\CategoryArticlesUpdater:
+    public: true
+  OxidEsales\EVatModule\Model\CategoryVATGroupsList:
+    public: true
+  OxidEsales\EVatModule\Model\CountryVATGroup:
+    public: true
+  OxidEsales\EVatModule\Model\CountryVATGroupsList:
+    public: true
+  OxidEsales\EVatModule\Model\BasketVATValidator:
+    public: true
+  OxidEsales\EVatModule\Model\OrderEvidenceList:
+    public: true
+  OxidEsales\EVatModule\Model\OrderArticleChecker:
+    public: true
+  OxidEsales\EVatModule\Model\User:
     public: true
 
   OxidEsales\EVatModule\Core\Cache\Generic\Cache:
