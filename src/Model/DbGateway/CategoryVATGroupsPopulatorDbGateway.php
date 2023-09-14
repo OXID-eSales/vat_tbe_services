@@ -78,7 +78,7 @@ class CategoryVATGroupsPopulatorDbGateway
         $oDb = $this->getDb();
 
         $sSql = 'INSERT INTO `oevattbe_articlevat` (`oevattbe_articleid`, `oevattbe_countryid`, `oevattbe_vatgroupid`)
-              SELECT `oxobject2category`.`oxobjectid`, `oevattbe_categoryvat`.`oevattbe_countryid`, `oevattbe_categoryvat`.`oevattbe_vatgroupid`
+              SELECT DISTINCT `oxobject2category`.`oxobjectid`, `oevattbe_categoryvat`.`oevattbe_countryid`, `oevattbe_categoryvat`.`oevattbe_vatgroupid`
               FROM `oxobject2category`
               LEFT JOIN `oevattbe_categoryvat` ON `oxobject2category`.`oxcatnid` = `oevattbe_categoryvat`.`oevattbe_categoryid`
               WHERE `oevattbe_categoryvat`.`oevattbe_categoryid` = '. $oDb->quote($sCategoryId);
