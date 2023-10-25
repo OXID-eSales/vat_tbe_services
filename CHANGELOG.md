@@ -7,7 +7,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [3.0.0] - Unreleased
 
 ### Added
-- Compatibility with OXID eShop 7.0.x
 - Namespaces added
 - Module works on smarty engine (Smarty related extensions in views/smarty resp. views/admin_smarty directory)
 - Module works on twig engine (Twig related extensions in views/twig resp. views/admin_twig directory)
@@ -17,8 +16,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Trait OxidEsales\EVatModule\Traits\ServiceContainer
 
 ### Changed
+- Compatibility with OXID eShop 7.0.x
 - All module core functionality moved to `src` directory
 - Shop extensions moved to `Shop` directory
+- All assets moved to `assets` folder to be available after module installation
 - Classes have been moved to appropriate namespaces, `oevattbe` and `ox` prefixes have been dropped.
 - Adapted tests to work with OXID eShop 7.0.x and without testing library
 - License updated - now using OXID Module and Component License
