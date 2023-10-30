@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [3.0.0] - Unreleased
+## [3.0.0] - 2023-10-30
 
 ### Added
 - Namespaces added
@@ -50,7 +50,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [1.0.0] - 2015-03-24
 
-[3.0.0]: https://github.com/OXID-eSales/vat_tbe_services/compare/v2.1.0...b-7.0.x
+[3.0.0]: https://github.com/OXID-eSales/vat_tbe_services/compare/v2.1.0...v3.0.0
 [2.1.0]: https://github.com/OXID-eSales/vat_tbe_services/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/OXID-eSales/vat_tbe_services/compare/v1.0.0...v2.0.0
 [1.0.0]: https://github.com/OXID-eSales/vat_tbe_services/commits/v1.0.0
