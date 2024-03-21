@@ -73,28 +73,8 @@ Telecommunication, Broadcasting or Electronic (TBE) service according to
         'onDeactivate' => '\OxidEsales\EVatModule\Core\Events::onDeactivate'
     ),
     'templates' => [
-        '@oevattbe/admin/oevattbecountryvatgroups.tpl'       => 'views/admin_smarty/oevattbecountryvatgroups.tpl',
-        '@oevattbe/admin/oevattbearticleadministration.tpl'  => 'views/admin_smarty/oevattbearticleadministration.tpl',
-        '@oevattbe/admin/oevattbecategoryadministration.tpl' => 'views/admin_smarty/oevattbecategoryadministration.tpl',
     ],
     'blocks'    => [
-        ['template' => 'layout/base.tpl', 'block' => 'base_style', 'file' => 'views/smarty/blocks/layout/base.tpl'],
-        ['template' => 'page/details/inc/productmain.tpl', 'block' => 'details_productmain_price_value', 'file' => 'views/smarty/blocks/page/details/inc/productmain.tpl'],
-        ['template' => 'widget/product/listitem_grid.tpl', 'block' => 'widget_product_listitem_grid_price_value', 'file' => 'views/smarty/blocks/widget/product/listitem_grid.tpl'],
-        ['template' => 'widget/product/listitem_infogrid.tpl', 'block' => 'widget_product_listitem_infogrid_price_value', 'file' => 'views/smarty/blocks/widget/product/listitem_infogrid.tpl'],
-        ['template' => 'widget/product/listitem_line.tpl', 'block' => 'widget_product_listitem_line_price_value', 'file' => 'views/smarty/blocks/widget/product/listitem_line.tpl'],
-        ['template' => 'user_main.tpl', 'block' => 'admin_user_main_form', 'file' => 'views/smarty/blocks/admin/user_main.tpl'],
-        ['template' => 'page/checkout/inc/basketcontents_list.tpl', 'block' => 'checkout_basketcontents_basketitem_vat', 'file' => 'views/smarty/blocks/page/checkout/inc/basketitem_vat.tpl'],
-        ['template' => 'page/checkout/inc/basketcontents_table.tpl', 'block' => 'checkout_basketcontents_basketitem_vat', 'file' => 'views/smarty/blocks/page/checkout/inc/basketitem_vat_in_table.tpl'],
-        ['template' => 'page/checkout/basket.tpl', 'block' => 'checkout_basket_next_step_bottom', 'file' => 'views/smarty/blocks/page/checkout/basket_nextstep.tpl'],
-        ['template' => 'page/checkout/order.tpl', 'block' => 'checkout_order_next_step_bottom', 'file' => 'views/smarty/blocks/page/checkout/order_nextstep.tpl'],
-        ['template' => 'order_main.tpl', 'block' => 'admin_order_main_form', 'file' => 'views/smarty/blocks/admin/order_main.tpl'],
-        ['template' => 'layout/page.tpl', 'block' => 'content_main', 'file' => 'views/smarty/blocks/layout/page.tpl'],
-        ['template' => 'country_list.tpl', 'block' => 'admin_country_list_colgroup', 'file' => 'views/smarty/blocks/admin/country_list_colgroup.tpl'],
-        ['template' => 'country_list.tpl', 'block' => 'admin_country_list_filter', 'file' => 'views/smarty/blocks/admin/country_list_filter.tpl'],
-        ['template' => 'country_list.tpl', 'block' => 'admin_country_list_sorting', 'file' => 'views/smarty/blocks/admin/country_list_sorting.tpl'],
-        ['template' => 'country_list.tpl', 'block' => 'admin_country_list_item', 'file' => 'views/smarty/blocks/admin/country_list_item.tpl'],
-        ['template' => 'country_main.tpl', 'block' => 'admin_country_main_form', 'file' => 'views/smarty/blocks/admin/country_main.tpl'],
     ],
     'settings'  => array(
         ['group' => 'oevattbe', 'name' => ModuleSettings::COUNTRY_EVIDENCES, 'type' => 'aarr', 'value' => ['billing_country' => 1, 'geo_location' => 1]],
