@@ -14,7 +14,6 @@ use OxidEsales\EshopCommunity\Tests\ContainerTrait;
 use OxidEsales\EVatModule\Model\OrderArticleChecker;
 use OxidEsales\EVatModule\Shop\Article;
 use OxidEsales\EVatModule\Shop\Country;
-use OxidEsales\Eshop\Application\Model\Country as EShopCountry;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use OxidEsales\EVatModule\Model\User as UserModel;
@@ -38,7 +37,7 @@ class OrderArticleCheckerTest extends TestCase
      */
     public function providerCheckingArticlesWithEmptyList()
     {
-        $oCountry = $this->createPartialMock(EShopCountry::class, ['isInEU', 'appliesOeTBEVATTbeVat']);
+        $oCountry = $this->createPartialMock(Country::class, ['isInEU', 'appliesOeTBEVATTbeVat']);
         $oCountry->expects($this->any())->method('isInEU')->will($this->returnValue(true));
         $oCountry->expects($this->any())->method('appliesOeTBEVATTbeVat')->will($this->returnValue(true));
 
