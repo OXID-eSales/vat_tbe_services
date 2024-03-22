@@ -24,7 +24,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ModelTest extends TestCase
 {
-    public static function gatewayProvider()
+    public static function gatewayProvider(): array
     {
         return [
             [
@@ -158,7 +158,7 @@ class ModelTest extends TestCase
      *
      * @dataProvider gatewayProvider
      */
-    public function testIsLoadedWhenDatabaseRecordNotFound(string $model, string $gateway): void
+    public function testIsLoadedWhenDatabaseRecordNotFound(string $model, string $gateway, array $data): void
     {
         $mockedMethods = ['load'];
         if ($model == CountryVATGroupsList::class) {
@@ -186,7 +186,7 @@ class ModelTest extends TestCase
     /**
      * @dataProvider gatewayProvider
      */
-    public function testIsLoadedWhenDatabaseRecordFound(string $model, string $gateway, $data): void
+    public function testIsLoadedWhenDatabaseRecordFound(string $model, string $gateway, array $data): void
     {
         $mockedMethods = ['load'];
         if ($model == CountryVATGroupsList::class) {
@@ -216,7 +216,7 @@ class ModelTest extends TestCase
     /**
      * @dataProvider gatewayProvider
      */
-    public function testClearingDataAfterDeletion(string $model, string $gateway)
+    public function testClearingDataAfterDeletion(string $model, string $gateway, array $data): void
     {
         $gatewayMock = $this->createPartialMock($gateway, ['delete']);
         $gatewayMock
