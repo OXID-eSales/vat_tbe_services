@@ -39,7 +39,7 @@ class EvidenceList extends BaseList
      *
      * @return array
      */
-    public function getArray()
+    public function getArray(): array
     {
         $aItems = parent::getArray();
 

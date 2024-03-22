@@ -24,7 +24,7 @@ class ArticleListTest extends BaseTestCase
      *
      * @return array
      */
-    public function userConfiguration()
+    public static function userConfiguration(): array
     {
         return [
             ['notLoggedIn', null],
@@ -41,7 +41,7 @@ class ArticleListTest extends BaseTestCase
      *
      * @dataProvider userConfiguration
      */
-    public function testCategoryList($sUserStatus, $sVat)
+    public function testCategoryList($sUserStatus, $sVat): void
     {
         $oArticleList = $this->_getArticleList($sUserStatus);
         $sessionFilter = Registry::getSession()->getVariable('session_attrfilter');
