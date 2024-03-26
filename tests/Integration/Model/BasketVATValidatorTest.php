@@ -30,7 +30,7 @@ class BasketVATValidatorTest extends TestCase
      *
      * @return array
      */
-    public function providerShowVATTBEMark(): array
+    public static function providerShowVATTBEMark(): array
     {
         return [
             [true, true, true, true],
@@ -97,7 +97,7 @@ class BasketVATValidatorTest extends TestCase
      *
      * @return array
      */
-    public function providerIsTBEArticleValid(): array
+    public static function providerIsTBEArticleValid(): array
     {
         return [
             [false, false],

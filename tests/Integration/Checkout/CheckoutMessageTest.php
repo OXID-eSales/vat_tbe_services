@@ -42,7 +42,7 @@ class CheckoutMessageTest extends BaseTestCase
      *
      * @return array
      */
-    public function providerMessageSetInBasketForAllArticlesWhenUserIsNotLoggedIn()
+    public static function providerMessageSetInBasketForAllArticlesWhenUserIsNotLoggedIn()
     {
         $sIdTbeArticleWithVatGroup = '1126';
         $sTbeArticleWithoutVatGroup = '1127';
@@ -93,7 +93,7 @@ class CheckoutMessageTest extends BaseTestCase
      *
      * @return array
      */
-    public function providerMessageIsNotSetInBasketWhenUserIsNotLoggedIn()
+    public static function providerMessageIsNotSetInBasketWhenUserIsNotLoggedIn()
     {
         $sNotTbeArticle = '1131';
 
@@ -133,7 +133,7 @@ class CheckoutMessageTest extends BaseTestCase
      *
      * @return array
      */
-    public function providerMessageSetInBasketForWrongVATArticlesWhenUserIsLoggedIn()
+    public static function providerMessageSetInBasketForWrongVATArticlesWhenUserIsLoggedIn()
     {
         $sIdTbeArticleWithVatGroup = '1126';
         $sTbeArticleWithoutVatGroup = '1127';
@@ -220,7 +220,7 @@ class CheckoutMessageTest extends BaseTestCase
      *
      * @return array
      */
-    public function providerMessageIsNotSetInBasketWhenUserIsLoggedIn()
+    public static function providerMessageIsNotSetInBasketWhenUserIsLoggedIn()
     {
         $sIdTbeArticleWithVatGroup = '1126';
         $sNotTbeArticle = '1131';

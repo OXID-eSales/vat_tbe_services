@@ -121,7 +121,7 @@ class UserTest extends BaseTestCase
      *
      * @return array
      */
-    public function providerGetCountry(): array
+    public static function providerGetCountry(): array
     {
         return [
             [''],
@@ -189,7 +189,7 @@ class UserTest extends BaseTestCase
      *
      * @return array
      */
-    public function providerIsUserFromDomesticCountryWhenCountriesDoesNotMatch(): array
+    public static function providerIsUserFromDomesticCountryWhenCountriesDoesNotMatch(): array
     {
         return [
             ['LT', 'a7c40f631fc920687.20179984'],

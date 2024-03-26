@@ -24,7 +24,7 @@ class CountryVATGroupCreationTest extends BaseTestCase
      *
      * @return array
      */
-    public function providerCreateNewGroup()
+    public static function providerCreateNewGroup()
     {
         return array(
             array('small VAT', 5, 'some description', '5.00'),
@@ -54,6 +54,7 @@ class CountryVATGroupCreationTest extends BaseTestCase
         $aParameters['oxcountry__oxid'] = $sCountryId;
         $aParameters['oevattbe_name'] = $sGroupName;
         $aParameters['oevattbe_rate'] = $fVATRate;
+        $aParameters['oevattbe_description'] = '';
         if ($sGroupDescription) {
             $aParameters['oevattbe_description'] = $sGroupDescription;
         }
@@ -88,7 +89,7 @@ class CountryVATGroupCreationTest extends BaseTestCase
      *
      * @return array
      */
-    public function providerCreateNewGroupFailWhenMissingRequiredData()
+    public static function providerCreateNewGroupFailWhenMissingRequiredData()
     {
         return array(
             array('', '5', 'some description'),

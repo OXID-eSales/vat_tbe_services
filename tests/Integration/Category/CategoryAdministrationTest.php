@@ -100,7 +100,7 @@ class CategoryAdministrationTest extends BaseTestCase
      *
      * @return array
      */
-    public function providerViewDataIsTBEService()
+    public static function providerViewDataIsTBEService()
     {
         return array(
             /** TBE Service */

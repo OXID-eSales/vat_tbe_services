@@ -35,20 +35,13 @@ class OrderArticleCheckerTest extends TestCase
      *
      * @return array
      */
-    public function providerCheckingArticlesWithEmptyList()
+    public static function providerCheckingArticlesWithEmptyList()
     {
-        $oCountry = $this->createPartialMock(Country::class, ['isInEU', 'appliesOeTBEVATTbeVat']);
-        $oCountry->expects($this->any())->method('isInEU')->will($this->returnValue(true));
-        $oCountry->expects($this->any())->method('appliesOeTBEVATTbeVat')->will($this->returnValue(true));
-
-        $oUser = $this->createPartialMock(UserModel::class, ['getCountry']);
-        $oUser->expects($this->any())->method('getCountry')->will($this->returnValue($oCountry));
-
         return [
-            [[], $oUser],
-            ['', $oUser],
-            [null, $oUser],
-            [false, $oUser],
+            [],
+            '',
+            null,
+            false,
         ];
     }
 
@@ -57,11 +50,18 @@ class OrderArticleCheckerTest extends TestCase
      *
      * @dataProvider providerCheckingArticlesWithEmptyList
      */
-    public function testCheckingArticlesWithEmptyList($articles, $user)
+    public function testCheckingArticlesWithEmptyList($articles)
     {
         $this->mockSessionBasket($articles);
 
-        $oChecker = oxNew(OrderArticleChecker::class, $user);
+        $oCountry = $this->createPartialMock(Country::class, ['isInEU', 'appliesOeTBEVATTbeVat']);
+        $oCountry->expects($this->any())->method('isInEU')->will($this->returnValue(true));
+        $oCountry->expects($this->any())->method('appliesOeTBEVATTbeVat')->will($this->returnValue(true));
+
+        $oUser = $this->createPartialMock(UserModel::class, ['getCountry']);
+        $oUser->expects($this->any())->method('getCountry')->will($this->returnValue($oCountry));
+
+        $oChecker = oxNew(OrderArticleChecker::class, $oUser);
 
         $this->assertSame(true, $oChecker->isValid());
     }

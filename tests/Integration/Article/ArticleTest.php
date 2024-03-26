@@ -129,7 +129,8 @@ class ArticleTest extends BaseTestCase
         $oArticle = oxNew(Article::class);
         $oArticle->setUser($oUser);
         $oArticle->assign([
-            'oevattbe_istbeservice' => true
+            'oevattbe_istbeservice' => true,
+            'oxarticles__oxstock' => 1
         ]);
         $aCacheKeys = $oArticle->getCacheKeys();
 

@@ -22,7 +22,7 @@ class CountryVATGroupsEditingTest extends BaseTestCase
      *
      * @return array
      */
-    public function providerGetVatGroupsForCountry()
+    public static function providerGetVatGroupsForCountry()
     {
         $sAustriaId = 'a7c40f6320aeb2ec2.72885259';
         $aAustriaGroups = array(56 => '', 57 => '', 58 => '');

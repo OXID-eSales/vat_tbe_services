@@ -68,7 +68,7 @@ class OrderTest extends TestCase
      *
      * @return array
      */
-    public function providerValidateOrderWithInvalidArticles(): array
+    public static function providerValidateOrderWithInvalidArticles(): array
     {
         return [
             ['a7c40f6320aeb2ec2.72885259', false, true],
@@ -124,7 +124,7 @@ class OrderTest extends TestCase
      *
      * @return array
      */
-    public function providerValidateOrderWithValidArticles(): array
+    public static function providerValidateOrderWithValidArticles(): array
     {
         // Domestic country.
         $sGermanyId = 'a7c40f631fc920687.20179984';
@@ -174,7 +174,7 @@ class OrderTest extends TestCase
         $this->assertSame(0, $oOrder->validateOrder($oBasket, $oUser));
     }
 
-    public function providerGetOeVATTBECountryTitle(): array
+    public static function providerGetOeVATTBECountryTitle(): array
     {
         return [
             [0, 'Deutschland'],
@@ -214,7 +214,7 @@ class OrderTest extends TestCase
         $this->assertSame($sCountryResult, $oOrder->getOeVATTBECountryTitle());
     }
 
-    public function providerSetGetOrderTBEServicesInInvoice(): array
+    public static function providerSetGetOrderTBEServicesInInvoice(): array
     {
         return [
             [null, false],

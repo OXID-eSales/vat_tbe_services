@@ -112,7 +112,7 @@ class BasketControllerTest extends TestCase
      *
      * @return array
      */
-    public function providerShowVATTBEMarkMessageWhenMessageShouldBeHidden(): array
+    public static function providerShowVATTBEMarkMessageWhenMessageShouldBeHidden(): array
     {
         return [
             [true, true, true, true],

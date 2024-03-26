@@ -24,7 +24,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ModelTest extends TestCase
 {
-    public function gatewayProvider()
+    public static function gatewayProvider()
     {
         return [
             [

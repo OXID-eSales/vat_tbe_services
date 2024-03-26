@@ -22,7 +22,7 @@ class MessageFormatterTest extends BaseTestCase
      *
      * @return array
      */
-    public function providerGetMessage()
+    public static function providerGetMessage()
     {
         $oArticle1 = oxNew(Article::class);
         $oArticle1->assign([
