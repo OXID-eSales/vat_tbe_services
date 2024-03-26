@@ -81,6 +81,10 @@ class CategoryAdministration extends AdminDetailsController
             $this->_aCategoryVATGroupData = $oCategoryVATGroupsList->getData();
         }
 
+        if (!isset($this->_aCategoryVATGroupData[$sCountryId])) {
+            return false;
+        }
+
         return (int)$this->_aCategoryVATGroupData[$sCountryId] === (int)$sVATGroupId;
     }
 

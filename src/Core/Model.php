@@ -48,7 +48,6 @@ class Model
      */
     public function setData($aData)
     {
-        $aData = array_change_key_case($aData, CASE_LOWER);
         $this->_aData = $aData;
     }
 

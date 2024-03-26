@@ -69,7 +69,7 @@ class CountryVATGroup extends Model
     public function setId($sId)
     {
         parent::setId($sId);
-        $this->setValue('oevattbe_id', $sId);
+        $this->setValue('OEVATTBE_ID', $sId);
     }
 
     /**
@@ -79,7 +79,7 @@ class CountryVATGroup extends Model
      */
     public function getCountryId()
     {
-        return $this->getValue('oevattbe_countryid');
+        return $this->getValue('OEVATTBE_COUNTRYID');
     }
 
     /**
@@ -89,7 +89,7 @@ class CountryVATGroup extends Model
      */
     public function setCountryId($sCountryId)
     {
-        $this->setValue('oevattbe_countryid', $sCountryId);
+        $this->setValue('OEVATTBE_COUNTRYID', $sCountryId);
     }
 
     /**
@@ -99,7 +99,7 @@ class CountryVATGroup extends Model
      */
     public function getName()
     {
-        return $this->getValue('oevattbe_name');
+        return $this->getValue('OEVATTBE_NAME');
     }
 
     /**
@@ -109,7 +109,7 @@ class CountryVATGroup extends Model
      */
     public function setName($sName)
     {
-        $this->setValue('oevattbe_name', $sName);
+        $this->setValue('OEVATTBE_NAME', $sName);
     }
 
     /**
@@ -119,7 +119,7 @@ class CountryVATGroup extends Model
      */
     public function getDescription()
     {
-        return $this->getValue('oevattbe_description');
+        return $this->getValue('OEVATTBE_DESCRIPTION');
     }
 
     /**
@@ -129,7 +129,7 @@ class CountryVATGroup extends Model
      */
     public function setDescription($sDescription)
     {
-        $this->setValue('oevattbe_description', $sDescription);
+        $this->setValue('OEVATTBE_DESCRIPTION', $sDescription);
     }
 
     /**
@@ -139,7 +139,7 @@ class CountryVATGroup extends Model
      */
     public function getRate()
     {
-        return $this->getValue('oevattbe_rate');
+        return $this->getValue('OEVATTBE_RATE');
     }
 
     /**
@@ -149,7 +149,7 @@ class CountryVATGroup extends Model
      */
     public function setRate($dRate)
     {
-        $this->setValue('oevattbe_rate', $dRate);
+        $this->setValue('OEVATTBE_RATE', $dRate);
     }
 
     /**

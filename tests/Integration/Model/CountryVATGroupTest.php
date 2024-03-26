@@ -28,10 +28,10 @@ class CountryVATGroupTest extends TestCase
     public function testSavingVATGroup()
     {
         $aExpectedData = [
-            'oevattbe_countryid'   => '8f241f11095410f38.37165361',
-            'oevattbe_name'        => 'Group Name',
-            'oevattbe_description' => 'Some description',
-            'oevattbe_rate'        => 20.50
+            'OEVATTBE_COUNTRYID'   => '8f241f11095410f38.37165361',
+            'OEVATTBE_NAME'        => 'Group Name',
+            'OEVATTBE_DESCRIPTION' => 'Some description',
+            'OEVATTBE_RATE'        => 20.50
         ];
 
         $oGateway = $this->createPartialMock(CountryVATGroupsDbGateway::class, ['save']);
@@ -55,11 +55,11 @@ class CountryVATGroupTest extends TestCase
     public function testUpdatingVATGroup()
     {
         $aExpectedData = [
-            'oevattbe_id'          => '999',
-            'oevattbe_countryid'   => '8f241f11095410f38.37165361',
-            'oevattbe_name'        => 'Group Name',
-            'oevattbe_description' => 'Some description',
-            'oevattbe_rate'        => 20.50
+            'OEVATTBE_ID'          => '999',
+            'OEVATTBE_COUNTRYID'   => '8f241f11095410f38.37165361',
+            'OEVATTBE_NAME'        => 'Group Name',
+            'OEVATTBE_DESCRIPTION' => 'Some description',
+            'OEVATTBE_RATE'        => 20.50
         ];
 
         $oGateway = $this->createPartialMock(CountryVATGroupsDbGateway::class, ['save']);

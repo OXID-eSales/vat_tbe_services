@@ -32,7 +32,12 @@ class BillingCountryEvidenceTest extends TestCase
     public function testGetCountryId()
     {
         $oUser = oxNew(User::class);
-        $oUser->assign(['oxcountryid' => 'a7c40f631fc920687.20179984']);
+        $oUser->assign([
+            'oxusername'  => '',
+            'oxpassword'  => '',
+            'oxregister'  => '',
+            'oxcountryid' => 'a7c40f631fc920687.20179984'
+        ]);
         $oUser->save();
 
         $session = Registry::getSession();

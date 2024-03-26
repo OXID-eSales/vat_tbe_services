@@ -34,13 +34,14 @@ class CountryVATGroupsListTest extends BaseTestCase
      */
     public function testLoadingGroupsListWhenGroupsExists()
     {
-        $aGroupData = array(
-            'OEVATTBE_COUNTRYID' => '8f241f11095410f38.37165361',
-            'OEVATTBE_NAME' => 'Group Name',
+        $aGroupData = [
+            'OEVATTBE_ID'          => '',
+            'OEVATTBE_COUNTRYID'   => '8f241f11095410f38.37165361',
+            'OEVATTBE_NAME'        => 'Group Name',
             'OEVATTBE_DESCRIPTION' => 'Some description',
-            'OEVATTBE_RATE' => '20.50',
-            'OEVATTBE_TIMESTAMP' => '2014-10-22 11:19:20',
-        );
+            'OEVATTBE_RATE'        => '20.50',
+            'OEVATTBE_TIMESTAMP'   => '2014-10-22 11:19:20',
+        ];
 
         /** @var CountryVATGroupsDbGateway $oGateway */
         $oGateway = oxNew(CountryVATGroupsDbGateway::class);
