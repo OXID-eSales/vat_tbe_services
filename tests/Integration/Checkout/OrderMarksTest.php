@@ -38,7 +38,7 @@ class OrderMarksTest extends BaseTestCase
      *
      * @return array
      */
-    public function providerShowVATTBEMark()
+    public static function providerShowVATTBEMark()
     {
         return array(
             array(true, true, true, true),
@@ -110,7 +110,7 @@ class OrderMarksTest extends BaseTestCase
      *
      * @return array
      */
-    public function providerIsTBEArticleValid()
+    public static function providerIsTBEArticleValid()
     {
         return array(
             array(false, false),

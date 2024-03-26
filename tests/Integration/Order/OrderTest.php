@@ -29,7 +29,7 @@ class OrderTest extends BaseTestCase
      *
      * @return array
      */
-    public function providerSavingEvidenceList()
+    public static function providerSavingEvidenceList()
     {
         return array(
             array(Order::ORDER_STATE_OK),
@@ -193,7 +193,7 @@ class OrderTest extends BaseTestCase
      *
      * @return array
      */
-    public function providerNotSavingEvidenceListOnFailedOrder()
+    public static function providerNotSavingEvidenceListOnFailedOrder()
     {
         return array(
             array(Order::ORDER_STATE_OK, false),

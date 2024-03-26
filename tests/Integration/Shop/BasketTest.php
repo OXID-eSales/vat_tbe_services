@@ -49,7 +49,7 @@ class BasketTest extends TestCase
      *
      * @return array
      */
-    public function providerSetCountryIdOnChangeEvent(): array
+    public static function providerSetCountryIdOnChangeEvent(): array
     {
         return [
             [true, true, true],
@@ -102,7 +102,7 @@ class BasketTest extends TestCase
      *
      * @return array
      */
-    public function providerSetCountryIdOnChangeEventWhenMessageShouldBeShown(): array
+    public static function providerSetCountryIdOnChangeEventWhenMessageShouldBeShown(): array
     {
         return [
             [true],

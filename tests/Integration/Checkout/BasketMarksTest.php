@@ -37,7 +37,7 @@ class BasketMarksTest extends BaseTestCase
      *
      * @return array
      */
-    public function providerShowVATTBEMark()
+    public static function providerShowVATTBEMark()
     {
         return array(
             array(true, true, true, true),
@@ -80,7 +80,8 @@ class BasketMarksTest extends BaseTestCase
         $oArticle = oxNew(Article::class);
         $oArticle->setId('_testArticle1');
         $oArticle->assign([
-            'oevattbe_istbeservice' => $blIsArticleTbeService
+            'oevattbe_istbeservice' => $blIsArticleTbeService,
+            'oxarticles__oxstock' => 1
         ]);
         $oArticle->save();
 
@@ -109,7 +110,7 @@ class BasketMarksTest extends BaseTestCase
      *
      * @return array
      */
-    public function providerIsTBEArticleValid()
+    public static function providerIsTBEArticleValid()
     {
         return array(
             array(false, false),

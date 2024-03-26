@@ -29,7 +29,7 @@ class VatSelectorTest extends TestCase
         Registry::getSession()->setUser(null);
     }
 
-    public function providerArticleUserVatCalculationWhenHasTbeVatAndIsTbeArticle(): array
+    public static function providerArticleUserVatCalculationWhenHasTbeVatAndIsTbeArticle(): array
     {
         return [
             [100],

@@ -22,10 +22,11 @@ class EvidenceSelectorTest extends TestCase
 {
     use ServiceContainer;
 
-    public function providerGetCountryWhenBothEvidenceDoNotMatch(): array
+    public static function providerGetCountryWhenBothEvidenceDoNotMatch(): array
     {
-        $oBillingEvidence = $this->createEvidence('billing_address', 'Germany');
-        $oGeoLocationEvidence = $this->createEvidence('geo_location', 'Lithuania');
+        $evidenceSelector = new self('EvidenceSelectorTest');
+        $oBillingEvidence = $evidenceSelector->createEvidence('billing_address', 'Germany');
+        $oGeoLocationEvidence = $evidenceSelector->createEvidence('geo_location', 'Lithuania');
         $oEvidenceList = new EvidenceList([$oBillingEvidence, $oGeoLocationEvidence]);
 
         return [
