@@ -130,7 +130,7 @@ class ArticleTest extends BaseTestCase
         $oArticle->setUser($oUser);
         $oArticle->assign([
             'oevattbe_istbeservice' => true,
-            'oxarticles__oxstock' => 1,
+            'oxarticles__oxstock'   => 999,
             'oxshopid'              => 1,
             'oxparentid'            => '',
             'oxstockflag'           => 1,
