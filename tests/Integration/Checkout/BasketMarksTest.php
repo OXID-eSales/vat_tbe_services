@@ -81,7 +81,13 @@ class BasketMarksTest extends BaseTestCase
         $oArticle->setId('_testArticle1');
         $oArticle->assign([
             'oevattbe_istbeservice' => $blIsArticleTbeService,
-            'oxarticles__oxstock' => 1
+            'oxarticles__oxstock'   => 1,
+            'oxshopid'              => 1,
+            'oxparentid'            => '',
+            'oxstockflag'           => 1,
+            'oxstock'               => 1,
+            'oxvarstock'            => 1,
+            'oxvarcount'            => 1,
         ]);
         $oArticle->save();
 
