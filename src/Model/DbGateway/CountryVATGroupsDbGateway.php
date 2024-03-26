@@ -36,12 +36,9 @@ class CountryVATGroupsDbGateway extends ModelDbGateway implements ModelDbGateway
         $sSql .= implode(', ', $aSql);
         $oDb->execute($sSql);
 
-        $iGroupId = $aData['oevattbe_id'];
-        if (empty($iGroupId)) {
-            $iGroupId = $oDb->getOne('SELECT LAST_INSERT_ID()');
-        }
+        $iGroupId = $aData['OEVATTBE_ID'] ?? $oDb->getOne('SELECT LAST_INSERT_ID()');
 
-        $oDb->execute('UPDATE `oxcountry` SET `oevattbe_istbevatconfigured` = 1 WHERE `oxid` = "'. $aData['oevattbe_countryid'] .'"');
+        $oDb->execute('UPDATE `oxcountry` SET `oevattbe_istbevatconfigured` = 1 WHERE `oxid` = "'. $aData['OEVATTBE_COUNTRYID'] .'"');
 
         return $iGroupId;
     }
@@ -92,16 +89,19 @@ class CountryVATGroupsDbGateway extends ModelDbGateway implements ModelDbGateway
         $oDb = $this->getDb();
         $oDb->startTransaction();
 
-        $aGroupInformation = $this->load($sGroupId);
-        $sCountryId = $aGroupInformation['OEVATTBE_COUNTRYID'];
-
         $blDeleteResult = $oDb->execute('DELETE FROM `oevattbe_countryvatgroups` WHERE `oevattbe_id` = ' . $oDb->quote($sGroupId));
         $blResult = ($blDeleteResult !== false) ? true : false;
         $blDeleteResult = $oDb->execute('DELETE FROM `oevattbe_articlevat` WHERE `oevattbe_vatgroupid` = ' . $oDb->quote($sGroupId));
         $blResult = ($blDeleteResult !== false) ? $blResult : false;
 
+        $aGroupInformation = $this->load($sGroupId);
+        if (!$aGroupInformation) {
+            return $blResult;
+        }
+
+        $sCountryId = $aGroupInformation['OEVATTBE_COUNTRYID'];
         $bCountryHasGroup = (bool) $oDb->getOne(
-            'SELECT `oevattbe_id`FROM `oevattbe_countryvatgroups` WHERE `oevattbe_countryid` = "'. $sCountryId .'" LIMIT 1'
+            'SELECT `OEVATTBE_ID`FROM `oevattbe_countryvatgroups` WHERE `oevattbe_countryid` = "'. $sCountryId .'" LIMIT 1'
         );
 
         if ($blResult) {

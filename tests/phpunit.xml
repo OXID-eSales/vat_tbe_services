@@ -4,8 +4,8 @@
          beStrictAboutTestsThatDoNotTestAnything="false"
          cacheDirectory=".phpunit.cache"
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
-         displayDetailsOnTestsThatTriggerWarnings="false"
-         displayDetailsOnTestsThatTriggerDeprecations="true"
+         displayDetailsOnTestsThatTriggerWarnings="true"
+         displayDetailsOnTestsThatTriggerDeprecations="false"
 >
     <testsuites>
         <testsuite name="Unit">

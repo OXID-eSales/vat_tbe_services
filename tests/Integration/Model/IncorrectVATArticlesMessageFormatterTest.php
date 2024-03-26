@@ -24,7 +24,12 @@ class IncorrectVATArticlesMessageFormatterTest extends TestCase
         $oArticle = oxNew(Article::class);
         $oArticle->assign([
             'oxtitle' => 'some other name',
-            'oxarticles__oxstock' => 1
+            'oxarticles__oxstock' => 1,
+            'oxshopid'    => 1,
+            'oxstockflag' => 1,
+            'oxstock'     => 999,
+            'oxvarstock'  => 999,
+            'oxvarcount'  => 999,
         ]);
         $oArticle->save();
 

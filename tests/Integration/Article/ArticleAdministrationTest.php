@@ -27,22 +27,22 @@ class ArticleAdministrationTest extends BaseTestCase
      */
     public function testViewData()
     {
-        $aData1 = array(
-            'oevattbe_id'          => '2',
-            'oevattbe_countryid'   => 'a7c40f631fc920687.20179984',
-            'oevattbe_name'        => 'Group Name1',
-            'oevattbe_description' => 'Some description1',
-            'oevattbe_rate'        => '20.50',
+        $aData1 = [
+            'OEVATTBE_ID'          => '2',
+            'OEVATTBE_COUNTRYID'   => 'a7c40f631fc920687.20179984',
+            'OEVATTBE_NAME'        => 'Group Name1',
+            'OEVATTBE_DESCRIPTION' => 'Some description1',
+            'OEVATTBE_RATE'        => '20.50',
             'oevattbe_timestamp'   => '2014-10-24 09:46:11'
-        );
-        $aData2 = array(
-            'oevattbe_id'          => '3',
-            'oevattbe_countryid'   => 'a7c40f6323c4bfb36.59919433',
-            'oevattbe_name'        => 'Group Name2',
-            'oevattbe_description' => 'Some description2',
-            'oevattbe_rate'        => '11.11',
+        ];
+        $aData2 = [
+            'OEVATTBE_ID'          => '3',
+            'OEVATTBE_COUNTRYID'   => 'a7c40f6323c4bfb36.59919433',
+            'OEVATTBE_NAME'        => 'Group Name2',
+            'OEVATTBE_DESCRIPTION' => 'Some description2',
+            'OEVATTBE_RATE'        => '11.11',
             'oevattbe_timestamp'   => '2014-10-24 09:46:11'
-        );
+        ];
         $this->_cleanData();
         $this->_addData($aData1);
         $this->_addData($aData2);
@@ -135,6 +135,7 @@ class ArticleAdministrationTest extends BaseTestCase
             '8f241f110955d3260.55487539' => ''
         );
         $_POST['VATGroupsByCountry'] = $aSelectParams;
+        $_POST['editval'] = ['oevattbe_istbeservice' => true];
         $oArticleAdministration->setEditObjectId('_testArticle');
         $oArticleAdministration->save();
 
@@ -154,7 +155,7 @@ class ArticleAdministrationTest extends BaseTestCase
      */
     public function testNotSelectedRateForCountry($oArticleAdministration)
     {
-        $this->assertTrue($oArticleAdministration->isSelected('8f241f110955d3260.55487539', ''));
+        $this->assertTrue($oArticleAdministration->isSelected('8f241f110955d3260.55487539', '', true));
 
         return $oArticleAdministration;
     }

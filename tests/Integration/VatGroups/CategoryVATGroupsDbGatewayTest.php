@@ -23,16 +23,16 @@ class CategoryVATGroupsDbGatewayTest extends BaseTestCase
     {
         /** @var CategoryVATGroupsDbGateway $oVatGroupsGateway */
         $oVatGroupsGateway = oxNew(CategoryVATGroupsDbGateway::class);
-        $aData = array(
+        $aData = [
             'categoryid' => '0962081a5693597654fd2887af7a6095',
-            'relations' => array(
-                array(
+            'relations'  => [
+                [
                     'OEVATTBE_CATEGORYID' => '0962081a5693597654fd2887af7a6095',
-                    'OEVATTBE_COUNTRYID' => 'a7c40f631fc920687.20179984',
+                    'OEVATTBE_COUNTRYID'  => 'a7c40f631fc920687.20179984',
                     'OEVATTBE_VATGROUPID' => 10,
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
         $this->assertTrue($oVatGroupsGateway->save($aData));
 
         return '0962081a5693597654fd2887af7a6095';
@@ -51,21 +51,21 @@ class CategoryVATGroupsDbGatewayTest extends BaseTestCase
     {
         /** @var CategoryVATGroupsDbGateway $oVatGroupsGateway */
         $oVatGroupsGateway = oxNew(CategoryVATGroupsDbGateway::class);
-        $aData = array(
+        $aData = [
             'categoryid' => '0962081a5693597654fd2887af7a6095',
-            'relations' => array(
-                array(
+            'relations'  => [
+                [
                     'OEVATTBE_CATEGORYID' => $sCategoryId,
-                    'OEVATTBE_COUNTRYID' => 'a7c40f631fc920687.20179984',
+                    'OEVATTBE_COUNTRYID'  => 'a7c40f631fc920687.20179984',
                     'OEVATTBE_VATGROUPID' => 11,
-                ),
-                array(
+                ],
+                [
                     'OEVATTBE_CATEGORYID' => $sCategoryId,
-                    'OEVATTBE_COUNTRYID' => '8f241f110958b69e4.93886171',
+                    'OEVATTBE_COUNTRYID'  => '8f241f110958b69e4.93886171',
                     'OEVATTBE_VATGROUPID' => 12,
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
         $this->assertTrue($oVatGroupsGateway->save($aData));
 
         return $sCategoryId;
@@ -85,20 +85,20 @@ class CategoryVATGroupsDbGatewayTest extends BaseTestCase
         $oVatGroupsGateway = oxNew(CategoryVATGroupsDbGateway::class);
         $aData = $oVatGroupsGateway->load($sCategoryId);
 
-        $aExpectedData = array(
-            array(
+        $aExpectedData = [
+            [
                 'OEVATTBE_CATEGORYID' => $sCategoryId,
-                'OEVATTBE_COUNTRYID' => '8f241f110958b69e4.93886171',
+                'OEVATTBE_COUNTRYID'  => '8f241f110958b69e4.93886171',
                 'OEVATTBE_VATGROUPID' => 12,
-                'OEVATTBE_TIMESTAMP' => $aData[1]['OEVATTBE_TIMESTAMP'],
-            ),
-            array(
+                'OEVATTBE_TIMESTAMP'  => $aData[1]['OEVATTBE_TIMESTAMP'],
+            ],
+            [
                 'OEVATTBE_CATEGORYID' => $sCategoryId,
-                'OEVATTBE_COUNTRYID' => 'a7c40f631fc920687.20179984',
+                'OEVATTBE_COUNTRYID'  => 'a7c40f631fc920687.20179984',
                 'OEVATTBE_VATGROUPID' => 11,
-                'OEVATTBE_TIMESTAMP' => $aData[0]['OEVATTBE_TIMESTAMP'],
-            )
-        );
+                'OEVATTBE_TIMESTAMP'  => $aData[0]['OEVATTBE_TIMESTAMP'],
+            ]
+        ];
 
         $this->assertEquals($aExpectedData, $aData);
 
@@ -120,14 +120,14 @@ class CategoryVATGroupsDbGatewayTest extends BaseTestCase
         $oVatGroupsGateway = oxNew(CategoryVATGroupsDbGateway::class);
         $aData = $oVatGroupsGateway->loadByGroupId('12');
 
-        $aExpectedData = array(
-            array(
+        $aExpectedData = [
+            [
                 'OEVATTBE_CATEGORYID' => $sCategoryId,
-                'OEVATTBE_COUNTRYID' => '8f241f110958b69e4.93886171',
+                'OEVATTBE_COUNTRYID'  => '8f241f110958b69e4.93886171',
                 'OEVATTBE_VATGROUPID' => 12,
-                'OEVATTBE_TIMESTAMP' => $aData[0]['OEVATTBE_TIMESTAMP'],
-            ),
-        );
+                'OEVATTBE_TIMESTAMP'  => $aData[0]['OEVATTBE_TIMESTAMP'],
+            ],
+        ];
 
         $this->assertEquals($aExpectedData, $aData);
 

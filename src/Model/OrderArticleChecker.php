@@ -59,6 +59,9 @@ class OrderArticleChecker
         if (is_null($this->_aInvalidArticles)) {
             $basket = Registry::getSession()->getBasket();
             $basketArticles = $basket->getBasketArticles();
+            if (!$basketArticles) {
+                return $this->_aInvalidArticles;
+            }
 
             $this->_aInvalidArticles = array();
             foreach ($basketArticles as $basketArticle) {

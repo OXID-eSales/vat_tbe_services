@@ -80,8 +80,9 @@ class Basket extends Basket_parent
      */
     public function getOeVATTBECountry()
     {
+        $oCountry = oxNew(EShopCountry::class);
+
         if (!is_null($this->getOeVATTBETbeCountryId())) {
-            $oCountry = oxNew(EShopCountry::class);
             $oCountry->load($this->getOeVATTBETbeCountryId());
         }
 

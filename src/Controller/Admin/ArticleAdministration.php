@@ -81,6 +81,10 @@ class ArticleAdministration extends AdminDetailsController
             $this->_aArticleVATGroupData = $articleVATGroupsList->getData();
         }
 
+        if (!isset($this->_aArticleVATGroupData[$sCountryId])) {
+            return false;
+        }
+
         return (int)$this->_aArticleVATGroupData[$sCountryId] === (int)$sVATGroupId;
     }
 

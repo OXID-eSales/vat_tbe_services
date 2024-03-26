@@ -51,15 +51,13 @@ class CountryVATGroupCreationTest extends BaseTestCase
     public function testCreateNewGroup($sGroupName, $fVATRate, $sGroupDescription, $sExpectedVatRate)
     {
         $sCountryId = 'some_country_id';
-        $aParameters['oxcountry__oxid'] = $sCountryId;
-        $aParameters['oevattbe_name'] = $sGroupName;
-        $aParameters['oevattbe_rate'] = $fVATRate;
-        $aParameters['oevattbe_description'] = '';
-        if ($sGroupDescription) {
-            $aParameters['oevattbe_description'] = $sGroupDescription;
-        }
 
-        $_POST['editval'] = $aParameters;
+        $_POST['editval'] = [
+            'oxcountry__oxid'      => $sCountryId,
+            'oevattbe_name'        => $sGroupName,
+            'oevattbe_rate'        => $fVATRate,
+            'oevattbe_description' => $sGroupDescription
+        ];
 
         /** @var CountryVatGroups $oVATTBECountryVatGroups */
         $oVATTBECountryVatGroups = oxNew(CountryVatGroups::class);
@@ -108,17 +106,12 @@ class CountryVATGroupCreationTest extends BaseTestCase
      */
     public function testCreateNewGroupFailWithErrorMessageWhenMissingRequiredData($sGroupName, $fVATRate, $sGroupDescription)
     {
-        $sCountryId = 'some_country_id';
-        $aParameters['oxcountry__oxid'] = $sCountryId;
-        if ($sGroupName) {
-            $aParameters['oevattbe_name'] = $sGroupName;
-        }
-        if ($fVATRate) {
-            $aParameters['oevattbe_rate'] = $fVATRate;
-        }
-        $aParameters['oevattbe_description'] = $sGroupDescription;
-
-        $_POST['editval'] = $aParameters;
+        $_POST['editval'] = [
+            'oxcountry__oxid'      => 'some_country_id',
+            'oevattbe_name'        => '',
+            'oevattbe_rate'        => $fVATRate,
+            'oevattbe_description' => $sGroupDescription
+        ];
 
         /** @var CountryVatGroups $oVATTBECountryVatGroups */
         $oVATTBECountryVatGroups = oxNew(CountryVatGroups::class);

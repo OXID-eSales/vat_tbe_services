@@ -32,6 +32,7 @@ class ModelTest extends TestCase
                 'gateway' => ArticleVATGroupsDbGateway::class,
                 'data' => [
                     [
+                        'OEVATTBE_ID' => '',
                         'OEVATTBE_COUNTRYID' => 'testkey',
                         'OEVATTBE_VATGROUPID' => 'testValue',
                     ]
@@ -42,6 +43,7 @@ class ModelTest extends TestCase
                 'gateway' => CategoryVATGroupsDbGateway::class,
                 'data' => [
                     [
+                        'OEVATTBE_ID' => '',
                         'OEVATTBE_COUNTRYID' => 'testkey',
                         'OEVATTBE_VATGROUPID' => 'testValue',
                     ]
@@ -52,6 +54,7 @@ class ModelTest extends TestCase
                 'gateway' => CountryVATGroupsDbGateway::class,
                 'data' => [
                     [
+                        'OEVATTBE_ID' => '',
                         'OEVATTBE_COUNTRYID' => 'testkey',
                         'OEVATTBE_VATGROUPID' => 'testValue',
                     ]
