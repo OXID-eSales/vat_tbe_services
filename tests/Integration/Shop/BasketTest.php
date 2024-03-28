@@ -30,7 +30,13 @@ class BasketTest extends TestCase
      */
     public function testSetgetOeVATTBETbeCountryId()
     {
+        $oUser = oxNew(\OxidEsales\EVatModule\Shop\User::class);
+        $oUser->assign([
+            'oxcountryid' => ''
+        ]);
+
         $oBasket = oxNew(Basket::class);
+        $oBasket->setBasketUser($oUser);
         $oBasket->setOeVATTBECountryId('de');
         $this->assertSame('de', $oBasket->getOeVATTBETbeCountryId());
     }
@@ -137,9 +143,14 @@ class BasketTest extends TestCase
         $oCountry->assign(['oevattbe_istbeservice' => true]);
         $oArticle->save();
 
+        $user = oxNew(User::class);
+        $user->assign([
+            'oxcountryid' => $sLithuaniaId
+        ]);
+
         /** @var EShopBasket|Basket $oBasket */
         $oBasket = oxNew(EShopBasket::class);
-        $oBasket->setUser(oxNew(User::class));
+        $oBasket->setUser($user);
         $oBasket->setOeVATTBECountryId($sLithuaniaId);
         if ($bAddToBasket) {
             $oBasket->addToBasket('_testArticle1', 1);

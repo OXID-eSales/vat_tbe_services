@@ -66,7 +66,8 @@ class BasketMarksTest extends BaseTestCase
         $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('AT');
 
         $oSession = Registry::getSession();
-        $oSession->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
+        $countryId = '8f241f11095d6ffa8.86593236';
+        $oSession->setVariable('TBECountryId', $countryId); // LT
 
         /** @var Country $oCountry */
         $oCountry = oxNew(Country::class);
@@ -91,8 +92,14 @@ class BasketMarksTest extends BaseTestCase
         ]);
         $oArticle->save();
 
-        /** @var User|null $oUser */
-        $oUser = ($blIsUserLoggedIn) ? oxNew(User::class) : null;
+        if($blIsUserLoggedIn) {
+            $oUser = oxNew(User::class);
+            $oUser->assign([
+                'oxcountryid' => $countryId
+            ]);
+        } else {
+            $oUser = null;
+        }
         $oSession->setUser($oUser);
 
         /** @var Basket $oBasket */
@@ -137,7 +144,8 @@ class BasketMarksTest extends BaseTestCase
         $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('AT');
 
         $oSession = Registry::getSession();
-        $oSession->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
+        $countryId = '8f241f11095d6ffa8.86593236';
+        $oSession->setVariable('TBECountryId', $countryId); // LT
 
         /** @var Country $oCountry */
         $oCountry = oxNew(Country::class);
@@ -157,6 +165,9 @@ class BasketMarksTest extends BaseTestCase
 
         /** @var User|null $oUser */
         $oUser = oxNew(User::class);
+        $oUser->assign([
+            'oxcountryid' => $countryId
+        ]);
         $oSession->setUser($oUser);
 
         /** @var Basket $oBasket */
