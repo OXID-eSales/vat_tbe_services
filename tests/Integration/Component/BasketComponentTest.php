@@ -29,9 +29,10 @@ class BasketComponentTest extends TestCase
         $oUser = $this->createPartialMock(User::class, ['getOeVATTBETbeCountryId']);
         $oUser->expects($this->any())->method('getOeVATTBETbeCountryId')->will($this->returnValue('DE'));
 
-        $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'getOeVATTBECountry']);
+        $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'getOeVATTBECountry', 'findDelivCountry']);
         $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue(true));
         $oBasket->expects($this->any())->method('getOeVATTBECountry')->will($this->returnValue($oCountry));
+        $oBasket->expects($this->any())->method('findDelivCountry')->willReturn('DE');
 
         Registry::getSession()->setBasket($oBasket);
 
@@ -55,9 +56,10 @@ class BasketComponentTest extends TestCase
         $oUser = $this->createPartialMock(User::class, ['getOeVATTBETbeCountryId']);
         $oUser->expects($this->any())->method('getOeVATTBETbeCountryId')->will($this->returnValue('DE'));
 
-        $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'getOeVATTBECountry']);
+        $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'getOeVATTBECountry', 'findDelivCountry']);
         $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue(true));
         $oBasket->expects($this->any())->method('getOeVATTBECountry')->will($this->returnValue($oCountry));
+        $oBasket->expects($this->any())->method('findDelivCountry')->willReturn('LT');
         $oBasket->setOeVATTBECountryId('LT');
 
         Registry::getSession()->setBasket($oBasket);
@@ -82,9 +84,10 @@ class BasketComponentTest extends TestCase
         $oUser = $this->createPartialMock(User::class, ['getOeVATTBETbeCountryId']);
         $oUser->expects($this->any())->method('getOeVATTBETbeCountryId')->will($this->returnValue('DE'));
 
-        $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'getOeVATTBECountry']);
+        $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'getOeVATTBECountry', 'findDelivCountry']);
         $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue(true));
         $oBasket->expects($this->any())->method('getOeVATTBECountry')->will($this->returnValue($oCountry));
+        $oBasket->expects($this->any())->method('findDelivCountry')->willReturn('LT');
         $oBasket->setOeVATTBECountryId('LT');
 
         Registry::getSession()->setBasket($oBasket);
@@ -106,8 +109,9 @@ class BasketComponentTest extends TestCase
         $oUser = $this->createPartialMock(User::class, ['getOeVATTBETbeCountryId']);
         $oUser->expects($this->any())->method('getOeVATTBETbeCountryId')->will($this->returnValue('DE'));
 
-        $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles']);
+        $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'findDelivCountry']);
         $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue(false));
+        $oBasket->expects($this->any())->method('findDelivCountry')->willReturn('LT');
         $oBasket->setOeVATTBECountryId('LT');
 
         Registry::getSession()->setBasket($oBasket);
@@ -129,8 +133,9 @@ class BasketComponentTest extends TestCase
         $oUser = $this->createPartialMock(User::class, ['getOeVATTBETbeCountryId']);
         $oUser->expects($this->any())->method('getOeVATTBETbeCountryId')->will($this->returnValue('DE'));
 
-        $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles']);
+        $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'findDelivCountry']);
         $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue(true));
+        $oBasket->expects($this->any())->method('findDelivCountry')->willReturn('DE');
         $oBasket->setOeVATTBECountryId('DE');
 
         Registry::getSession()->setBasket($oBasket);

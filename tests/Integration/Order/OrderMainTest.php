@@ -90,10 +90,11 @@ class OrderMainTest extends BaseTestCase
         /** @var User $oUser */
         $oUser = oxNew(User::class);
         $oUser->assign([
-            'oxusername' => '',
-            'oxpassword' => '',
-            'oxregister' => '',
-            'oxcountryid' => 'a7c40f631fc920687.20179984'
+            'oxusername'  => '',
+            'oxpassword'  => '',
+            'oxregister'  => '',
+            'oxcountryid' => 'a7c40f631fc920687.20179984',
+            'oxboni'      => ''
         ]);
         $oUser->save();
         Registry::getSession()->setUser($oUser);
@@ -107,8 +108,9 @@ class OrderMainTest extends BaseTestCase
         $oOrder->setId('order_id');
         $oOrder->finalizeOrder($oBasket, $oUser, false);
         $oOrder->assign([
-            'oxorderdate' => '',
-            'oxsenddate' => '',
+            'oxcurrency'            => 'EUR',
+            'oxorderdate'           => '',
+            'oxsenddate'            => '',
             'oevattbe_evidenceused' => 'billing_country',
             'OEVATTBE_COUNTRYID'    => 'a7c40f631fc920687.20179984',
         ]);
