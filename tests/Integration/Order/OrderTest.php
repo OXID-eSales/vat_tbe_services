@@ -47,8 +47,6 @@ class OrderTest extends BaseTestCase
      */
     public function testSavingEvidenceList($iOrderState)
     {
-        Registry::getSession()->destroy();
-
         $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
         $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class]);
         $moduleSettings->saveCountryEvidences(['billing_country' => 1]);
