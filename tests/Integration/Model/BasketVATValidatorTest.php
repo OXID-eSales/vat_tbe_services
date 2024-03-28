@@ -70,9 +70,6 @@ class BasketVATValidatorTest extends TestCase
         $oTBEUserCountry = $this->createPartialMock(UserModel::class, ['isUserFromDomesticCountry']);
         $oTBEUserCountry->expects($this->any())->method("isUserFromDomesticCountry")->will($this->returnValue(false));
 
-        //User still exists in session
-        Registry::getSession()->destroy();
-
         /** @var User|null $oUser */
         $oUser = ($blIsUserLoggedIn) ? oxNew(User::class) : null;
         Registry::getSession()->setUser($oUser);

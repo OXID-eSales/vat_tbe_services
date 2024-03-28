@@ -124,10 +124,12 @@ class CountryVATGroupCreationTest extends BaseTestCase
         $oVATTBECountryVATGroupsList = oxNew(CountryVATGroupsList::class, $oGateway);
         $aVATTBECountryVATGroupsList = $oVATTBECountryVATGroupsList->load('some_country_id');
 
-        $this->assertTrue(
-            !isset($aVATTBECountryVATGroupsList[0]),
-            'Some data missing so no new entry should be created. However got this: '. serialize($aVATTBECountryVATGroupsList[0])
-        );
+        if (isset($aVATTBECountryVATGroupsList[0])) {
+            $this->assertTrue(
+                !isset($aVATTBECountryVATGroupsList[0]),
+                'Some data missing so no new entry should be created. However got this: ' . serialize($aVATTBECountryVATGroupsList[0])
+            );
+        }
 
         $aEx = Registry::getSession()->getVariable('Errors');
         $this->assertTrue(isset($aEx['default'][0]), 'Error message must be set as some parameters missing.');
