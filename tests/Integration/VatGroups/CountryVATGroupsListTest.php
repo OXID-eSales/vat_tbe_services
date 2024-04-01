@@ -35,7 +35,6 @@ class CountryVATGroupsListTest extends BaseTestCase
     public function testLoadingGroupsListWhenGroupsExists()
     {
         $aGroupData = [
-            'OEVATTBE_ID'          => '',
             'OEVATTBE_COUNTRYID'   => '8f241f11095410f38.37165361',
             'OEVATTBE_NAME'        => 'Group Name',
             'OEVATTBE_DESCRIPTION' => 'Some description',
@@ -46,8 +45,8 @@ class CountryVATGroupsListTest extends BaseTestCase
         /** @var CountryVATGroupsDbGateway $oGateway */
         $oGateway = oxNew(CountryVATGroupsDbGateway::class);
 
-        $oGroup1 = $this->createGroupObject($aGroupData, $oGateway);
-        $oGroup2 = $this->createGroupObject($aGroupData, $oGateway);
+        $oGroup1 = $this->createGroupObject($aGroupData, $oGateway, 1111);
+        $oGroup2 = $this->createGroupObject($aGroupData, $oGateway, 2222);
 
         /** @var CountryVATGroupsList $oGroupsList */
         $oGroupsList = oxNew(CountryVATGroupsList::class, $oGateway);
@@ -77,13 +76,13 @@ class CountryVATGroupsListTest extends BaseTestCase
      *
      * @return CountryVATGroup
      */
-    protected function createGroupObject($aData, $oGateway)
+    protected function createGroupObject($aData, $oGateway, $id)
     {
         /** @var GroupArticleCacheInvalidator $groupArticleCacheInvalidator */
         $groupArticleCacheInvalidator = $this->get(GroupArticleCacheInvalidator::class);
 
         $oGroup = oxNew(CountryVATGroup::class, $oGateway, $groupArticleCacheInvalidator);
-        $oGroup->setId($aData['OEVATTBE_ID']);
+        $oGroup->setId($id);
         $oGroup->setData($aData);
         $aData['OEVATTBE_ID'] = $oGroup->save();
         $oGroup->setData($aData);

@@ -139,7 +139,7 @@ class ArticleAdministrationTest extends BaseTestCase
         $oArticleAdministration->setEditObjectId('_testArticle');
         $oArticleAdministration->save();
 
-        $this->assertSame(true, $oArticleAdministration->isSelected('a7c40f632e04633c9.47194042', 2));
+        $this->assertTrue($oArticleAdministration->isSelected('a7c40f632e04633c9.47194042', 2));
 
         return $oArticleAdministration;
     }
@@ -155,7 +155,7 @@ class ArticleAdministrationTest extends BaseTestCase
      */
     public function testNotSelectedRateForCountry($oArticleAdministration)
     {
-        $this->assertTrue($oArticleAdministration->isSelected('8f241f110955d3260.55487539', '', true));
+        $this->assertFalse($oArticleAdministration->isSelected('8f241f110955d3260.55487539', ''));
 
         return $oArticleAdministration;
     }
