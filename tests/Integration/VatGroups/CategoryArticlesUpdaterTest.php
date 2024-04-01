@@ -120,6 +120,8 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
                 ->onlyMethods(array("getActionIds"))
                 ->getMock();
         $oController->expects($this->any())->method('getActionIds')->will($this->returnValue(array('article1')));
+
+        $_POST['oxid'] = '';
         $oController->removeArticle();
 
         $this->assertEquals(0, $this->getAssignedVATGroupsToArticles());
@@ -143,6 +145,7 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
         $oController->expects($this->atLeastOnce())->method('getAll')->will($this->returnValue(array('article3', 'article4')));
 
         $_POST['all'] = 1;
+        $_POST['oxid'] = '';
         $oController->removeArticle();
 
         $this->assertEquals(1, $this->getAssignedVATGroupsToArticles());

@@ -111,7 +111,7 @@ class CountryVATGroupsDbGatewayTest extends BaseTestCase
     public function testDeletingEmptyVATGroup()
     {
         $oVatGroupsGateway = oxNew(CountryVATGroupsDbGateway::class);
-        $this->assertNotSame(false, $oVatGroupsGateway->delete('non_existing_group'));
+        $this->assertTrue($oVatGroupsGateway->delete('non_existing_group'));
     }
 
     /**

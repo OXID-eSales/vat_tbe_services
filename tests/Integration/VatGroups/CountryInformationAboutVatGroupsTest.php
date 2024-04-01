@@ -9,6 +9,7 @@ namespace OxidEsales\EVatModule\Tests\Integration\VatGroups;
 use OxidEsales\EshopCommunity\Tests\ContainerTrait;
 use OxidEsales\EVatModule\Controller\Admin\CountryVatGroups;
 use OxidEsales\EVatModule\Model\CountryVATGroup;
+use OxidEsales\EVatModule\Model\DbGateway\CountryVATGroupsDbGateway;
 use OxidEsales\EVatModule\Shop\Country;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 
@@ -24,7 +25,7 @@ class CountryInformationAboutVatGroupsTest extends BaseTestCase
      */
     public function testAddCountryVatGroup()
     {
-        $sCountryId = '8f241f11095410f38.37165361';
+        $sCountryId = 'a7c40f6321c6f6109.43859248';
 
         /** @var Country $oCountry */
         $oCountry = oxNew(Country::class);
@@ -37,10 +38,11 @@ class CountryInformationAboutVatGroupsTest extends BaseTestCase
         $oGroup->setName('Group Name');
         $oGroup->setDescription('Some description');
         $oGroup->setRate('20.50');
-        $oGroup->save();
+        $groupId = $oGroup->save();
 
         $oCountry->load($sCountryId);
         $this->assertTrue($oCountry->isOEVATTBEAtLeastOneGroupConfigured(), 'Country should be configured as new group was created.');
+        $oGroup->delete($groupId);
     }
 
     /**

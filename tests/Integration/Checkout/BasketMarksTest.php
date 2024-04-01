@@ -86,9 +86,8 @@ class BasketMarksTest extends BaseTestCase
             'oxshopid'              => 1,
             'oxparentid'            => '',
             'oxstockflag'           => 1,
-            'oxstock'               => 1,
-            'oxvarstock'            => 1,
-            'oxvarcount'            => 1,
+            'oxvarstock'            => 0,
+            'oxvarcount'            => 0,
         ]);
         $oArticle->save();
 
@@ -113,6 +112,7 @@ class BasketMarksTest extends BaseTestCase
 
         /** @var BasketItem $oBasketItem */
         $oBasketItem = oxNew(BasketItem::class);
+//        sleep(360);
         $oBasketItem->init('_testArticle1', 1);
 
         $this->assertSame($blResult, $oBasketController->oeVATTBEShowVATTBEMark($oBasketItem));

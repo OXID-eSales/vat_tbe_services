@@ -38,10 +38,10 @@ class OrderArticleCheckerTest extends TestCase
     public static function providerCheckingArticlesWithEmptyList()
     {
         return [
-            [],
-            '',
-            null,
-            false,
+            [[]],
+            [''],
+            [null],
+            [false],
         ];
     }
 

@@ -51,8 +51,8 @@ class CategoryVATGroupsListTest extends BaseTestCase
         $oGroupsList = $this->get(CategoryVATGroupsList::class);
 
         $aExpectedData = array(
-            'germanyid' => '12',
-            'lithuaniaid' => '13'
+            'GermanyId' => '12',
+            'LithuaniaId' => '13'
         );
         $oGroupsList->load($sCategoryId);
 

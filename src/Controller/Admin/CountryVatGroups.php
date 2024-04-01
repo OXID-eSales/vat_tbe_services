@@ -64,7 +64,7 @@ class CountryVatGroups extends AdminDetailsController
         $sCountryId = $aParams['oxcountry__oxid'];
         $sGroupName = $aParams['oevattbe_name'];
         $fVATRate = $aParams['oevattbe_rate'];
-        $sGroupDescription = trim($aParams['oevattbe_description']);
+        $sGroupDescription = $aParams['oevattbe_description'] ? trim($aParams['oevattbe_description']) : '';
 
         if (!$sCountryId || !$sGroupName) {
             $this->setMissingParameterMessage();

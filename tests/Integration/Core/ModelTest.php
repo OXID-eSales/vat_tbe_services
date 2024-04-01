@@ -104,7 +104,7 @@ class ModelTest extends TestCase
 
             $modelData = $actualModel->getData();
             $this->assertInstanceOf(CountryVATGroup::class, $modelData[0]);
-            $this->assertSame(array_change_key_case($data[0], CASE_LOWER), $modelData[0]->getData());
+            $this->assertSame($data[0], $modelData[0]->getData());
         } else {
             $this->assertTrue($actualModel->load());
             $this->assertEquals($expected, $actualModel->getData());
@@ -145,7 +145,7 @@ class ModelTest extends TestCase
 
             $modelData = $actualModel->getData();
             $this->assertInstanceOf(CountryVATGroup::class, $modelData[0]);
-            $this->assertSame(array_change_key_case($data[0], CASE_LOWER), $modelData[0]->getData());
+            $this->assertSame($data[0], $modelData[0]->getData());
         } else {
             $this->assertTrue($actualModel->load('id-to-load'));
 

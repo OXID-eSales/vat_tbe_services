@@ -41,20 +41,20 @@ class CategoryAdministrationTest extends BaseTestCase
     public function testViewData()
     {
         $aData1 = array(
-            'OEVATTBE_ID'          => '2',
+            'OEVATTBE_ID'          => 2,
             'OEVATTBE_COUNTRYID'   => 'a7c40f631fc920687.20179984',
             'OEVATTBE_NAME'        => 'Group Name1',
             'OEVATTBE_DESCRIPTION' => 'Some description1',
             'OEVATTBE_RATE'        => '20.50',
-            'oevattbe_timestamp'   => '2014-10-24 09:46:11'
+            'OEVATTBE_TIMESTAMP'   => '2014-10-24 09:46:11'
         );
         $aData2 = array(
-            'OEVATTBE_ID'          => '3',
+            'OEVATTBE_ID'          => 3,
             'OEVATTBE_COUNTRYID'   => 'a7c40f6323c4bfb36.59919433',
             'OEVATTBE_NAME'        => 'Group Name2',
             'OEVATTBE_DESCRIPTION' => 'Some description2',
             'OEVATTBE_RATE'        => '11.11',
-            'oevattbe_timestamp'   => '2014-10-24 09:46:11'
+            'OEVATTBE_TIMESTAMP'   => '2014-10-24 09:46:11'
         );
         $this->_cleanData();
         $this->_addData($aData1);
