@@ -89,7 +89,9 @@ class OrderMarksTest extends BaseTestCase
         if($blIsUserLoggedIn) {
             $oUser = oxNew(User::class);
             $oUser->assign([
-                'oxcountryid' => $countryId
+                'oxcountryid' => $countryId,
+                'oxboni'      => '',
+                'oxustid'     => 1
             ]);
         } else {
             $oUser = null;
@@ -161,7 +163,9 @@ class OrderMarksTest extends BaseTestCase
         /** @var User|null $oUser */
         $oUser = oxNew(User::class);
         $oUser->assign([
-            'oxcountryid' => $countryId
+            'oxcountryid' => $countryId,
+            'oxboni'      => '',
+            'oxustid'     => 1
         ]);
         $oSession->setUser($oUser);
 
