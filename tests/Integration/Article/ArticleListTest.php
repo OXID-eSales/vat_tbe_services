@@ -284,6 +284,7 @@ class ArticleListTest extends BaseTestCase
     {
         Registry::getSession()->setVariable('TBECountryId', 'a7c40f631fc920687.20179984');
         Registry::getConfig()->setConfigParam('art_category', 'cat@@30e44ab8593023055.23928895');
+        Registry::getSession()->setUser(null);
 
         $oArticleList = oxNew(ArticleListController::class);
         $oArticleList->setAdminMode(true);

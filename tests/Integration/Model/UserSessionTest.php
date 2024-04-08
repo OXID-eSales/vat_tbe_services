@@ -14,6 +14,7 @@ use OxidEsales\EVatModule\Service\ModuleSettings;
 use OxidEsales\EVatModule\Shop\User;
 use OxidEsales\Eshop\Application\Model\User as EShopUser;
 use OxidEsales\EVatModule\Traits\ServiceContainer;
+use PHPUnit\Framework\Attributes\ExcludeGlobalVariableFromBackup;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -22,8 +23,6 @@ use PHPUnit\Framework\TestCase;
 class UserSessionTest extends TestCase
 {
     use ServiceContainer;
-
-    protected $backupGlobalsExcludeList = ['_SESSION'];
 
     public function setUp(): void
     {
@@ -36,6 +35,7 @@ class UserSessionTest extends TestCase
      *
      * @return User
      */
+    #[ExcludeGlobalVariableFromBackup("_SESSION")]
     public function testTBEEvidenceListCaching()
     {
         $oConfig = Registry::getConfig();

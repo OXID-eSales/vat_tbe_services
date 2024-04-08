@@ -55,6 +55,10 @@ class CategoryVATGroupsPopulatorDbGateway
      */
     protected function deleteArticlesGroups($sCategoryId)
     {
+        if (!isset($sCategoryId)) {
+            return false;
+        }
+
         $oDb = $this->getDb();
 
         $sSql = '
@@ -75,6 +79,10 @@ class CategoryVATGroupsPopulatorDbGateway
      */
     protected function setArticlesGroups($sCategoryId)
     {
+        if (!isset($sCategoryId)) {
+            return false;
+        }
+
         $oDb = $this->getDb();
 
         $sSql = 'INSERT INTO `oevattbe_articlevat` (`oevattbe_articleid`, `oevattbe_countryid`, `oevattbe_vatgroupid`)
@@ -95,6 +103,10 @@ class CategoryVATGroupsPopulatorDbGateway
      */
     protected function setArticlesAsTBEServices($sCategoryId)
     {
+        if (!isset($sCategoryId)) {
+            return false;
+        }
+
         $oDb = $this->getDb();
 
         $sSql = 'UPDATE `oxarticles`

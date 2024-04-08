@@ -9,14 +9,13 @@ namespace OxidEsales\EVatModule\Tests\Integration\Country;
 use OxidEsales\EshopCommunity\Core\Registry;
 use OxidEsales\Eshop\Application\Model\User;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
+use PHPUnit\Framework\Attributes\ExcludeGlobalVariableFromBackup;
 
 /**
  * Testing TBEUser class.
  */
 class CountryChangeEventsTest extends BaseTestCase
 {
-    protected $backupGlobalsExcludeList = array('_SESSION');
-
     /** @var string */
     protected $_sDefaultUserName = '_testUserName@oxid-esales.com';
 
@@ -44,6 +43,7 @@ class CountryChangeEventsTest extends BaseTestCase
      *
      * @return User
      */
+    #[ExcludeGlobalVariableFromBackup("_SESSION")]
     public function testGetOeVATTBECountryAfterUserCreated()
     {
         $sGermanyId = $this->_sGermanyId;

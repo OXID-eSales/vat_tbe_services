@@ -28,10 +28,7 @@ class CategoryAdministrationTest extends BaseTestCase
         parent::setUp();
 
         ContainerFactory::resetContainer();
-    }
-
-    public function tearDown(): void
-    {
+        Registry::getSession()->setUser(null);
         Registry::getSession()->setAdminMode(false);
     }
 

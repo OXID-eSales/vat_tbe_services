@@ -18,6 +18,13 @@ use PHPUnit\Framework\TestCase;
  */
 class BasketComponentTest extends TestCase
 {
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        Registry::getSession()->setUser(null);
+    }
+
     /**
      * Render test
      */
@@ -26,7 +33,9 @@ class BasketComponentTest extends TestCase
         $oCountry = $this->createPartialMock(Country::class, ["appliesOeTBEVATTbeVat"]);
         $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->will($this->returnValue(true));
 
-        $oUser = $this->createPartialMock(User::class, ['getOeVATTBETbeCountryId']);
+        $oUser = $this->getMockBuilder(User::class)
+            ->onlyMethods(array("getOeVATTBETbeCountryId"))
+            ->getMock();
         $oUser->expects($this->any())->method('getOeVATTBETbeCountryId')->will($this->returnValue('DE'));
 
         $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'getOeVATTBECountry', 'findDelivCountry']);

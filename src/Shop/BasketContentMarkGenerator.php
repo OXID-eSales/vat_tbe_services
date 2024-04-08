@@ -34,10 +34,10 @@ class BasketContentMarkGenerator extends BasketContentMarkGenerator_parent
      */
     public function getMark($sMarkIdentification)
     {
-        if ($this->_oTBEBasket->hasOeTBEVATArticles()) {
+        if ($this->_oTBEBasket->hasOeTBEVATArticles() || $sMarkIdentification === 'tbeService') {
             $sCurrentMark = self::DEFAULT_EXPLANATION_MARK;
             $aMarks = $this->formMarks($sCurrentMark);
-            $sMark = $aMarks[$sMarkIdentification];
+            $sMark = $aMarks[$sMarkIdentification] ?? null;
         } else {
             $sMark = parent::getMark($sMarkIdentification);
         }
