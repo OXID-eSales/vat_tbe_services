@@ -26,50 +26,51 @@ class BasketComponentTest extends TestCase
     }
 
     /**
-     * Render test
+     * data provider
+     *
+     * @return array
      */
-    public function testRenderBasketWithoutTbeCountry()
+    public static function basketCountryConfiguration(): array
+    {
+        return [
+            [true, '', 'assertTrue'],
+            [true, 'LT', 'assertTrue'],
+            [false, 'LT', 'assertFalse']
+        ];
+    }
+
+    /**
+     * Render test
+     *
+     * @param $isVatApplied
+     * @param $vatCountry
+     * @param $assertMethod
+     *
+     * @dataProvider basketCountryConfiguration
+     */
+    public function testRenderBasketCountry($isVatApplied, $vatCountry, $assertMethod)
     {
         $oCountry = $this->createPartialMock(Country::class, ["appliesOeTBEVATTbeVat"]);
-        $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->will($this->returnValue(true));
+        $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->will($this->returnValue($isVatApplied));
 
         $oUser = $this->getMockBuilder(User::class)
             ->onlyMethods(array("getOeVATTBETbeCountryId"))
             ->getMock();
         $oUser->expects($this->any())->method('getOeVATTBETbeCountryId')->will($this->returnValue('DE'));
 
+        //added to suppress warning from shop model
+        $oUser->assign([
+            'oxboni'      => '',
+        ]);
+
         $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'getOeVATTBECountry', 'findDelivCountry']);
         $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue(true));
         $oBasket->expects($this->any())->method('getOeVATTBECountry')->will($this->returnValue($oCountry));
         $oBasket->expects($this->any())->method('findDelivCountry')->willReturn('DE');
 
-        Registry::getSession()->setBasket($oBasket);
-
-        $oCmp_Basket = oxNew(BasketComponent::class);
-        $oCmp_Basket->setUser($oUser);
-
-        $oBasket = $oCmp_Basket->render();
-
-        $this->assertSame('DE', $oBasket->getOeVATTBETbeCountryId());
-        $this->assertTrue($oBasket->showOeVATTBECountryChangedError());
-    }
-
-    /**
-     * Render test
-     */
-    public function testRenderBasketWithTbeCountry()
-    {
-        $oCountry = $this->createPartialMock(Country::class, ["appliesOeTBEVATTbeVat"]);
-        $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->will($this->returnValue(true));
-
-        $oUser = $this->createPartialMock(User::class, ['getOeVATTBETbeCountryId']);
-        $oUser->expects($this->any())->method('getOeVATTBETbeCountryId')->will($this->returnValue('DE'));
-
-        $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'getOeVATTBECountry', 'findDelivCountry']);
-        $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue(true));
-        $oBasket->expects($this->any())->method('getOeVATTBECountry')->will($this->returnValue($oCountry));
-        $oBasket->expects($this->any())->method('findDelivCountry')->willReturn('LT');
-        $oBasket->setOeVATTBECountryId('LT');
+        if ($vatCountry) {
+            $oBasket->setOeVATTBECountryId('LT');
+        }
 
         Registry::getSession()->setBasket($oBasket);
 
@@ -79,35 +80,7 @@ class BasketComponentTest extends TestCase
         $oBasket = $oCmp_Basket->render();
 
         $this->assertSame('DE', $oBasket->getOeVATTBETbeCountryId());
-        $this->assertTrue($oBasket->showOeVATTBECountryChangedError());
-    }
-
-    /**
-     * Render test
-     */
-    public function testRenderBasketWithNotTbeCountry()
-    {
-        $oCountry = $this->createPartialMock(Country::class, ["appliesOeTBEVATTbeVat"]);
-        $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->will($this->returnValue(false));
-
-        $oUser = $this->createPartialMock(User::class, ['getOeVATTBETbeCountryId']);
-        $oUser->expects($this->any())->method('getOeVATTBETbeCountryId')->will($this->returnValue('DE'));
-
-        $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'getOeVATTBECountry', 'findDelivCountry']);
-        $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue(true));
-        $oBasket->expects($this->any())->method('getOeVATTBECountry')->will($this->returnValue($oCountry));
-        $oBasket->expects($this->any())->method('findDelivCountry')->willReturn('LT');
-        $oBasket->setOeVATTBECountryId('LT');
-
-        Registry::getSession()->setBasket($oBasket);
-
-        $oCmp_Basket = oxNew(BasketComponent::class);
-        $oCmp_Basket->setUser($oUser);
-
-        $oBasket = $oCmp_Basket->render();
-
-        $this->assertSame('DE', $oBasket->getOeVATTBETbeCountryId());
-        $this->assertFalse($oBasket->showOeVATTBECountryChangedError());
+        $this->$assertMethod($oBasket->showOeVATTBECountryChangedError());
     }
 
     /**
@@ -115,8 +88,15 @@ class BasketComponentTest extends TestCase
      */
     public function testRenderBasketWithTbeCountryNoTBEArticles()
     {
-        $oUser = $this->createPartialMock(User::class, ['getOeVATTBETbeCountryId']);
+        $oUser = $this->getMockBuilder(User::class)
+            ->onlyMethods(array("getOeVATTBETbeCountryId"))
+            ->getMock();
         $oUser->expects($this->any())->method('getOeVATTBETbeCountryId')->will($this->returnValue('DE'));
+
+        //added to suppress warning from shop model
+        $oUser->assign([
+            'oxboni'      => '',
+        ]);
 
         $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'findDelivCountry']);
         $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue(false));
@@ -139,7 +119,9 @@ class BasketComponentTest extends TestCase
      */
     public function testRenderBasketWithTbeSameCountry()
     {
-        $oUser = $this->createPartialMock(User::class, ['getOeVATTBETbeCountryId']);
+        $oUser = $this->getMockBuilder(User::class)
+            ->onlyMethods(array("getOeVATTBETbeCountryId"))
+            ->getMock();
         $oUser->expects($this->any())->method('getOeVATTBETbeCountryId')->will($this->returnValue('DE'));
 
         $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'findDelivCountry']);

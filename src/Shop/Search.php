@@ -24,6 +24,9 @@ class Search extends Search_parent
     /** @var ArticleSQLBuilder */
     private $_oVATTBEArticleSQLBuilder = null;
 
+    //added to suppress warning from shop model
+    protected $iActPage = 0;
+
     /**
      * Returns the appropriate SQL select for a search according to search parameters
      *

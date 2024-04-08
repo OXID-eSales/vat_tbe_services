@@ -39,7 +39,7 @@ class BaseList implements \Iterator, \Countable
      *
      * @return array
      */
-    public function getArray(): array
+    public function getArray()
     {
         return $this->_aItems;
     }
@@ -49,7 +49,7 @@ class BaseList implements \Iterator, \Countable
      *
      * @return mixed Can return any type.
      */
-    public function current(): mixed
+    public function current()
     {
         return current($this->_aItems);
     }
@@ -57,7 +57,7 @@ class BaseList implements \Iterator, \Countable
     /**
      * Move forward to next element
      */
-    public function next(): void
+    public function next()
     {
         next($this->_aItems);
     }
@@ -67,7 +67,7 @@ class BaseList implements \Iterator, \Countable
      *
      * @return mixed scalar on success, or null on failure.
      */
-    public function key(): mixed
+    public function key()
     {
         return key($this->_aItems);
     }
@@ -78,7 +78,7 @@ class BaseList implements \Iterator, \Countable
      * @return boolean The return value will be casted to boolean and then evaluated.
      * Returns true on success or false on failure.
      */
-    public function valid(): bool
+    public function valid()
     {
         return key($this->_aItems) !== null;
     }
@@ -86,7 +86,7 @@ class BaseList implements \Iterator, \Countable
     /**
      * Rewind the Iterator to the first element
      */
-    public function rewind(): void
+    public function rewind()
     {
         reset($this->_aItems);
     }
@@ -97,7 +97,7 @@ class BaseList implements \Iterator, \Countable
      * @return int The custom count as an integer.
      * The return value is cast to an integer.
      */
-    public function count(): int
+    public function count()
     {
         return count($this->_aItems);
     }

@@ -13,6 +13,9 @@ use OxidEsales\Eshop\Application\Model\Basket;
  */
 class BasketContentMarkGenerator extends BasketContentMarkGenerator_parent
 {
+    //added to suppress warning from shop model
+    protected $_oTBEBasket = null;
+
     /**
      * Sets basket that is used to get article type(downloadable, intangible etc..).
      *

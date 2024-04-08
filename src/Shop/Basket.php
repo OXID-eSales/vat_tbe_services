@@ -26,9 +26,11 @@ class Basket extends Basket_parent
      */
     private $_sTBECountryId = null;
 
-
     /** @var bool store info about tbe country changes */
     private $_isTBECountryChanged = false;
+
+    /** @var array Basket discounts information */
+    protected $aDiscounts = [];
 
     /**
      * Return tbe country id

@@ -25,6 +25,13 @@ class BasketTest extends TestCase
 {
     use ServiceContainer;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        Registry::getSession()->setUser(null);
+    }
+
     /**
      * Test for tbe country id setter and getter
      */
