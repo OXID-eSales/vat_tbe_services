@@ -12,14 +12,14 @@ namespace OxidEsales\EVatModule\Model;
 class BaseList implements \Iterator, \Countable
 {
     /** @var array Array of items to work with. */
-    private $_aItems = array();
+    private $_aItems = [];
 
     /**
      * Sets items to work with.
      *
      * @param array $aItems Array of items.
      */
-    public function __construct($aItems = array())
+    public function __construct(array $aItems = [])
     {
         $this->_aItems = $aItems;
     }
@@ -39,7 +39,7 @@ class BaseList implements \Iterator, \Countable
      *
      * @return array
      */
-    public function getArray()
+    public function getArray(): array
     {
         return $this->_aItems;
     }
@@ -49,7 +49,7 @@ class BaseList implements \Iterator, \Countable
      *
      * @return mixed Can return any type.
      */
-    public function current()
+    public function current(): mixed
     {
         return current($this->_aItems);
     }
@@ -57,7 +57,7 @@ class BaseList implements \Iterator, \Countable
     /**
      * Move forward to next element
      */
-    public function next()
+    public function next(): void
     {
         next($this->_aItems);
     }
@@ -67,7 +67,7 @@ class BaseList implements \Iterator, \Countable
      *
      * @return mixed scalar on success, or null on failure.
      */
-    public function key()
+    public function key(): mixed
     {
         return key($this->_aItems);
     }
@@ -78,7 +78,7 @@ class BaseList implements \Iterator, \Countable
      * @return boolean The return value will be casted to boolean and then evaluated.
      * Returns true on success or false on failure.
      */
-    public function valid()
+    public function valid(): bool
     {
         return key($this->_aItems) !== null;
     }
@@ -86,7 +86,7 @@ class BaseList implements \Iterator, \Countable
     /**
      * Rewind the Iterator to the first element
      */
-    public function rewind()
+    public function rewind(): void
     {
         reset($this->_aItems);
     }
@@ -97,7 +97,7 @@ class BaseList implements \Iterator, \Countable
      * @return int The custom count as an integer.
      * The return value is cast to an integer.
      */
-    public function count()
+    public function count(): int
     {
         return count($this->_aItems);
     }
