@@ -82,7 +82,8 @@ class OrderMarksTest extends BaseTestCase
         $oArticle = oxNew(Article::class);
         $oArticle->setId('_testArticle1');
         $oArticle->assign([
-            'oevattbe_istbeservice' => $blIsArticleTbeService
+            'oevattbe_istbeservice' => $blIsArticleTbeService,
+            'oxstock' => 10
         ]);
         $oArticle->save();
 
@@ -156,7 +157,8 @@ class OrderMarksTest extends BaseTestCase
         $oArticle = oxNew(Article::class);
         $oArticle->setId('_testArticle1');
         $oArticle->assign([
-            'oevattbe_istbeservice' => true
+            'oevattbe_istbeservice' => true,
+            'oxstock' => 10
         ]);
         $oArticle->save();
 
