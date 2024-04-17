@@ -33,5 +33,5 @@ jobs:
           github_user: ${{ secrets.CI_USER }}
           github_token: ${{ secrets.GH_CI_JENKINS_TOKEN }}
           workflow_file_name: evat_workflow.yml
-          ref: '{{ .Github.RefName }}'
+          ref: "b-7.1.x"
           client_payload: "{\"php\": \"8.2\", \"mysql\": \"8.0\", \"edition\": \"ee\", \"ref\": \"${{ github.ref_name }}\"}"
