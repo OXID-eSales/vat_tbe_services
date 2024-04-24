@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Undecided] - Unreleased
 
+### Added
+- Support for PHP 8.2
+- Support for Symfony 6.3 components
+- Missing argument and return type declarations
+
+### Changed
+- Upgraded PHPUnit version to 10  
+
 ### Removed
 - Drop smarty support
 
