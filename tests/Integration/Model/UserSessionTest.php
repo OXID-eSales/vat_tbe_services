@@ -7,13 +7,13 @@
 namespace OxidEsales\EVatModule\Tests\Integration\Model;
 
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EVatModule\Model\Evidence\Item\BillingCountryEvidence;
 use OxidEsales\EVatModule\Model\Evidence\Item\GeoLocationEvidence;
 use OxidEsales\EVatModule\Service\ModuleSettings;
 use OxidEsales\EVatModule\Shop\User;
 use OxidEsales\Eshop\Application\Model\User as EShopUser;
-use OxidEsales\EVatModule\Traits\ServiceContainer;
 use PHPUnit\Framework\Attributes\ExcludeGlobalVariableFromBackup;
 use PHPUnit\Framework\TestCase;
 
@@ -22,8 +22,6 @@ use PHPUnit\Framework\TestCase;
  */
 class UserSessionTest extends TestCase
 {
-    use ServiceContainer;
-
     public function setUp(): void
     {
         ContainerFactory::resetContainer();
@@ -42,7 +40,7 @@ class UserSessionTest extends TestCase
         $oSession = Registry::getSession();
         $oSession->setVariable('TBECountryId', null);
 
-        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings = ContainerFacade::get(ModuleSettings::class);
         $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class]);
         $moduleSettings->saveCountryEvidences(['billing_country' => 1]);
         $moduleSettings->saveDefaultEvidence('billing_country');

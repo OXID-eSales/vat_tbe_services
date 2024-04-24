@@ -8,21 +8,19 @@
 namespace OxidEsales\EVatModule\Tests\Integration\Model;
 
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\EVatModule\Model\Evidence\Item\BillingCountryEvidence;
 use OxidEsales\EVatModule\Service\ModuleSettings;
 use OxidEsales\EVatModule\Model\User as UserModel;
 use OxidEsales\EVatModule\Shop\User;
 use OxidEsales\Eshop\Application\Model\User as EShopUser;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
-use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
  * Testing TBEUser class.
  */
 class UserTest extends BaseTestCase
 {
-    use ServiceContainer;
-
     /**
      * Tests collecting of TBE evidences when evidence collector is billing country and it is set as default.
      *
@@ -34,7 +32,7 @@ class UserTest extends BaseTestCase
         $oSession = Registry::getSession();
         $oSession->setVariable('TBECountryId', null);
 
-        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings = ContainerFacade::get(ModuleSettings::class);
         $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class]);
         $moduleSettings->saveCountryEvidences(['billing_country' => 1]);
         $moduleSettings->saveDefaultEvidence('billing_country');
@@ -72,7 +70,7 @@ class UserTest extends BaseTestCase
         $oSession = Registry::getSession();
         $oSession->setVariable('TBECountryId', null);
 
-        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings = ContainerFacade::get(ModuleSettings::class);
         $moduleSettings->saveEvidenceClasses([]);
         $moduleSettings->saveDefaultEvidence('');
 
@@ -97,7 +95,7 @@ class UserTest extends BaseTestCase
         $oSession = Registry::getSession();
         $oSession->setVariable('TBECountryId', null);
 
-        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings = ContainerFacade::get(ModuleSettings::class);
         $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class]);
         $moduleSettings->saveDefaultEvidence('billing_country');
 
@@ -172,7 +170,7 @@ class UserTest extends BaseTestCase
     {
         $oConfig = Registry::getConfig();
 
-        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings = ContainerFacade::get(ModuleSettings::class);
         $moduleSettings->saveDomesticCountry('LT');
 
         $sLithuaniaId = '8f241f11095d6ffa8.86593236';
@@ -212,7 +210,7 @@ class UserTest extends BaseTestCase
     {
         $oConfig = Registry::getConfig();
 
-        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings = ContainerFacade::get(ModuleSettings::class);
         $moduleSettings->saveDomesticCountry($sDomesticCountryAbbr);
 
         $oSession = Registry::getSession();

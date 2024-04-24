@@ -8,17 +8,15 @@ namespace OxidEsales\EVatModule\Controller\Admin;
 
 use OxidEsales\Eshop\Application\Model\Category as EShopCategory;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\EVatModule\Model\CategoryArticlesUpdater;
 use OxidEsales\EVatModule\Shop\Category;
-use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
  * Adds additional functionality needed for oeVATTBE module when managing articles.
  */
 class CategoryMainAjax extends CategoryMainAjax_parent
 {
-    use ServiceContainer;
-
     /**
      * Adds article to category.
      * Creates new list.
@@ -40,8 +38,7 @@ class CategoryMainAjax extends CategoryMainAjax_parent
             $aArticles = $this->getAll($this->addFilter("select $sArticleTable.oxid " . $this->getQuery()));
         }
 
-        $this
-            ->getServiceFromContainer(CategoryArticlesUpdater::class)
+        ContainerFacade::get(CategoryArticlesUpdater::class)
             ->removeCategoryTBEInformationFromArticles($aArticles);
 
         parent::removeArticle();
@@ -57,8 +54,7 @@ class CategoryMainAjax extends CategoryMainAjax_parent
         $oCategory = oxNew(EShopCategory::class);
         $oCategory->load($sCategoryId);
         if ($oCategory->isOeVATTBETBE()) {
-            $this
-                ->getServiceFromContainer(CategoryArticlesUpdater::class)
+            ContainerFacade::get(CategoryArticlesUpdater::class)
                 ->addCategoryTBEInformationToArticles($oCategory);
         }
     }

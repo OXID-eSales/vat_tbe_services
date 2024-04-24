@@ -9,16 +9,14 @@ namespace OxidEsales\EVatModule\Shop;
 use OxidEsales\Eshop\Core\Exception\CookieException;
 use OxidEsales\Eshop\Core\Exception\UserException;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\EVatModule\Model\User as EVatUser;
-use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
  * VAT TBE oxUser class
  */
 class User extends User_parent
 {
-    use ServiceContainer;
-
     /** @var EVatUser */
     private $_oTBEUser = null;
 
@@ -141,7 +139,7 @@ class User extends User_parent
     protected function getOeVATTBETBEUser()
     {
         if (!$this->_oTBEUser) {
-            $this->_oTBEUser = $this->getServiceFromContainer(EVatUser::class);
+            $this->_oTBEUser = ContainerFacade::get(EVatUser::class);
         }
 
         return $this->_oTBEUser;

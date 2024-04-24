@@ -7,16 +7,14 @@
 namespace OxidEsales\EVatModule\Controller\Admin;
 
 use OxidEsales\Eshop\Application\Model\Order;
+use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\EVatModule\Model\OrderEvidenceList;
-use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
  * Adds additional functionality needed for oeVATTBE module when managing orders.
  */
 class OrderMain extends OrderMain_parent
 {
-    use ServiceContainer;
-
     /**
      * Returns template name from parent and sets values for template.
      *
@@ -30,7 +28,7 @@ class OrderMain extends OrderMain_parent
         $order = oxNew(Order::class);
         $sOrderEvidenceId = $this->getOeVATTBECurrentOrderEvidenceId($order, $sOrderId);
 
-        $oEvidenceList = $this->getServiceFromContainer(OrderEvidenceList::class);
+        $oEvidenceList = ContainerFacade::get(OrderEvidenceList::class);
         $oEvidenceList->loadWithCountryNames($sOrderId);
         $aEvidencesData = $oEvidenceList->getData();
 

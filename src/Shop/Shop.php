@@ -7,16 +7,14 @@
 namespace OxidEsales\EVatModule\Shop;
 
 use OxidEsales\Eshop\Application\Model\Country as EShopCountry;
+use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\EVatModule\Service\ModuleSettings;
-use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
  * VAT TBE oxShop class
  */
 class Shop extends Shop_parent
 {
-    use ServiceContainer;
-
     /**
      * Returns country where shop is
      *
@@ -26,7 +24,7 @@ class Shop extends Shop_parent
     {
         $oCountry = null;
 
-        $sCountryISO2 = $this->getServiceFromContainer(ModuleSettings::class)->getDomesticCountry();;
+        $sCountryISO2 = ContainerFacade::get(ModuleSettings::class)->getDomesticCountry();;
 
         if ($sCountryISO2) {
             /** @var EShopCountry|Country $oCountry */

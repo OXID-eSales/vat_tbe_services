@@ -8,11 +8,11 @@ namespace OxidEsales\EVatModule\Tests\Integration\Shop;
 
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\UtilsDate;
+use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\EVatModule\Model\Evidence\Item\BillingCountryEvidence;
 use OxidEsales\EVatModule\Service\ModuleSettings;
 use OxidEsales\Eshop\Application\Model\User;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
-use OxidEsales\EVatModule\Traits\ServiceContainer;
 use oxDb;
 
 /**
@@ -20,8 +20,6 @@ use oxDb;
  */
 class UserTest extends BaseTestCase
 {
-    use ServiceContainer;
-
     public function setUp(): void
     {
         parent::setUp();
@@ -36,7 +34,7 @@ class UserTest extends BaseTestCase
     {
         Registry::getSession()->setVariable('TBECountryId', null);
 
-        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings = ContainerFacade::get(ModuleSettings::class);
         $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class]);
         $moduleSettings->saveCountryEvidences(['billing_country' => 1]);
         $moduleSettings->saveDefaultEvidence('billing_country');

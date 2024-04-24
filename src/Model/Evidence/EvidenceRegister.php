@@ -6,8 +6,8 @@
 
 namespace OxidEsales\EVatModule\Model\Evidence;
 
+use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\EVatModule\Service\ModuleSettings;
-use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
  * Class for registering evidences.
@@ -15,8 +15,6 @@ use OxidEsales\EVatModule\Traits\ServiceContainer;
  */
 class EvidenceRegister
 {
-    use ServiceContainer;
-
     /**
      * Registers evidence to config.
      * This evidence will be used when calculating user country.
@@ -32,11 +30,11 @@ class EvidenceRegister
             return;
         }
 
-        $evidenceClasses = $this->getServiceFromContainer(ModuleSettings::class)->getEvidenceClasses();
+        $evidenceClasses = ContainerFacade::get(ModuleSettings::class)->getEvidenceClasses();
 
         if (!in_array($evidenceClass, $evidenceClasses)) {
             $evidenceClasses[] = $evidenceClass;
-            $this->getServiceFromContainer(ModuleSettings::class)->saveEvidenceClasses($evidenceClasses);
+            ContainerFacade::get(ModuleSettings::class)->saveEvidenceClasses($evidenceClasses);
         }
 
         $this->addEvidenceToEvidenceList($evidenceClass, $isActive);
@@ -56,12 +54,12 @@ class EvidenceRegister
             return;
         }
 
-        $evidenceClasses = $this->getServiceFromContainer(ModuleSettings::class)->getEvidenceClasses();
+        $evidenceClasses = ContainerFacade::get(ModuleSettings::class)->getEvidenceClasses();
 
         // Check whether this class was registered in first place
         if (($key = array_search($evidenceClass, $evidenceClasses)) !== false) {
             unset($evidenceClasses[$key]);
-            $this->getServiceFromContainer(ModuleSettings::class)->saveEvidenceClasses($evidenceClasses);
+            ContainerFacade::get(ModuleSettings::class)->saveEvidenceClasses($evidenceClasses);
         }
 
         $this->removeEvidenceToEvidenceList($evidenceClass);
@@ -74,11 +72,11 @@ class EvidenceRegister
      */
     public function activateEvidence(string $evidenceId): void
     {
-        $countryEvidences = $this->getServiceFromContainer(ModuleSettings::class)->getCountryEvidences();
+        $countryEvidences = ContainerFacade::get(ModuleSettings::class)->getCountryEvidences();
 
         if (isset($countryEvidences[$evidenceId]) && $countryEvidences[$evidenceId] !== 1) {
             $countryEvidences[$evidenceId] = 1;
-            $this->getServiceFromContainer(ModuleSettings::class)->saveCountryEvidences($countryEvidences);
+            ContainerFacade::get(ModuleSettings::class)->saveCountryEvidences($countryEvidences);
         }
     }
 
@@ -89,11 +87,11 @@ class EvidenceRegister
      */
     public function deactivateEvidence(string $evidenceId): void
     {
-        $countryEvidences = $this->getServiceFromContainer(ModuleSettings::class)->getCountryEvidences();
+        $countryEvidences = ContainerFacade::get(ModuleSettings::class)->getCountryEvidences();
 
         if (isset($countryEvidences[$evidenceId]) && $countryEvidences[$evidenceId] !== 0) {
             $countryEvidences[$evidenceId] = 0;
-            $this->getServiceFromContainer(ModuleSettings::class)->saveCountryEvidences($countryEvidences);
+            ContainerFacade::get(ModuleSettings::class)->saveCountryEvidences($countryEvidences);
         }
     }
 
@@ -106,12 +104,12 @@ class EvidenceRegister
      */
     private function addEvidenceToEvidenceList(string $evidenceClass, bool $isActive): void
     {
-        $evidences  = $this->getServiceFromContainer(ModuleSettings::class)->getCountryEvidences();
-        $evidenceId = $this->getServiceFromContainer($evidenceClass)->getId();
+        $evidences  = ContainerFacade::get(ModuleSettings::class)->getCountryEvidences();
+        $evidenceId = ContainerFacade::get($evidenceClass)->getId();
 
         if (!isset($evidences[$evidenceId])) {
             $evidences[$evidenceId] = (int) $isActive;
-            $this->getServiceFromContainer(ModuleSettings::class)->saveCountryEvidences($evidences);
+            ContainerFacade::get(ModuleSettings::class)->saveCountryEvidences($evidences);
         }
     }
 
@@ -123,12 +121,12 @@ class EvidenceRegister
      */
     private function removeEvidenceToEvidenceList(string $evidenceClass): void
     {
-        $evidences  = $this->getServiceFromContainer(ModuleSettings::class)->getCountryEvidences();
-        $evidenceId = $this->getServiceFromContainer($evidenceClass)->getId();
+        $evidences  = ContainerFacade::get(ModuleSettings::class)->getCountryEvidences();
+        $evidenceId = ContainerFacade::get($evidenceClass)->getId();
 
         if (isset($evidences[$evidenceId])) {
             unset($evidences[$evidenceId]);
-            $this->getServiceFromContainer(ModuleSettings::class)->saveCountryEvidences($evidences);
+            ContainerFacade::get(ModuleSettings::class)->saveCountryEvidences($evidences);
         }
     }
 }

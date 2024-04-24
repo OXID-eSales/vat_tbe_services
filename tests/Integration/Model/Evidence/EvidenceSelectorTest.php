@@ -7,12 +7,12 @@
 namespace OxidEsales\EVatModule\Tests\Integration\Model\Evidence;
 
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\EVatModule\Model\Evidence\EvidenceCollector;
 use OxidEsales\EVatModule\Model\Evidence\EvidenceList;
 use OxidEsales\EVatModule\Model\Evidence\EvidenceSelector;
 use OxidEsales\EVatModule\Model\Evidence\Item\Evidence;
 use OxidEsales\EVatModule\Service\ModuleSettings;
-use OxidEsales\EVatModule\Traits\ServiceContainer;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -20,8 +20,6 @@ use PHPUnit\Framework\TestCase;
  */
 class EvidenceSelectorTest extends TestCase
 {
-    use ServiceContainer;
-
     public static function providerGetCountryWhenBothEvidenceDoNotMatch(): array
     {
         $evidenceSelector = new self('EvidenceSelectorTest');
@@ -45,7 +43,7 @@ class EvidenceSelectorTest extends TestCase
     public function testGetCountryWhenBothEvidenceDoNotMatchDefaultTaken($oEvidenceList, $sDefaultEvidence, $sExpectedEvidence)
     {
         $oConfig = Registry::getConfig();
-        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings = ContainerFacade::get(ModuleSettings::class);
         $moduleSettings->saveDefaultEvidence($sDefaultEvidence);
 
         $evidenceCollector = oxNew(EvidenceCollector::class, $oConfig, $moduleSettings);
@@ -65,7 +63,7 @@ class EvidenceSelectorTest extends TestCase
     public function testGetCountryWhenDefaultEvidenceEmpty()
     {
         $oConfig = Registry::getConfig();
-        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings = ContainerFacade::get(ModuleSettings::class);
         $moduleSettings->saveDefaultEvidence('default_evidence');
 
         $oBillingEvidence = $this->createEvidence('billing_address', 'Germany');
@@ -90,7 +88,7 @@ class EvidenceSelectorTest extends TestCase
     public function testGetCountryWhenDefaultAndFirstEvidenceEmpty()
     {
         $oConfig = Registry::getConfig();
-        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings = ContainerFacade::get(ModuleSettings::class);
         $moduleSettings->saveDefaultEvidence('default_evidence');
 
         $oBillingEvidence = $this->createEvidence('billing_address', '');
@@ -115,7 +113,7 @@ class EvidenceSelectorTest extends TestCase
     public function testGetCountryWithEmptyList()
     {
         $oConfig = Registry::getConfig();
-        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings = ContainerFacade::get(ModuleSettings::class);
 
         $oEvidenceList = new EvidenceList();
 
@@ -135,7 +133,7 @@ class EvidenceSelectorTest extends TestCase
 
     public function testIsEvidencesContradictingWhenEvidencesDoNotMatch()
     {
-        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings = ContainerFacade::get(ModuleSettings::class);
 
         $oBillingEvidence = $this->createEvidence('billing_address', 'Germany');
         $oGeoLocationEvidence = $this->createEvidence('geo_location', 'Germany');
@@ -157,7 +155,7 @@ class EvidenceSelectorTest extends TestCase
 
     public function testIsEvidencesContradictingWhenEvidencesMatch()
     {
-        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings = ContainerFacade::get(ModuleSettings::class);
 
         $oBillingEvidence = $this->createEvidence('billing_address', 'Germany');
         $oGeoLocationEvidence = $this->createEvidence('geo_location', 'Lithuania');

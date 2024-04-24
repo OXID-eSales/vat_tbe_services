@@ -7,17 +7,15 @@
 
 namespace OxidEsales\EVatModule\Model;
 
+use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\EVatModule\Core\Model;
 use OxidEsales\EVatModule\Model\DbGateway\CountryVATGroupsDbGateway;
-use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
  * VAT Groups handling class
  */
 class CountryVATGroupsList extends Model
 {
-    use ServiceContainer;
-
     public function __construct(
         protected CountryVATGroupsDbGateway $dbGateway
     )
@@ -37,7 +35,7 @@ class CountryVATGroupsList extends Model
             $this->setId($sId);
         }
 
-        $groupArticleCacheInvalidator = $this->getServiceFromContainer(GroupArticleCacheInvalidator::class);
+        $groupArticleCacheInvalidator = ContainerFacade::get(GroupArticleCacheInvalidator::class);
 
         $aGroups = array();
         $oGateway = $this->getDbGateway();
@@ -63,7 +61,7 @@ class CountryVATGroupsList extends Model
      */
     public function getList()
     {
-        $groupArticleCacheInvalidator = $this->getServiceFromContainer(GroupArticleCacheInvalidator::class);
+        $groupArticleCacheInvalidator = ContainerFacade::get(GroupArticleCacheInvalidator::class);
 
         $aGroups = array();
         $oGateway = $this->getDbGateway();

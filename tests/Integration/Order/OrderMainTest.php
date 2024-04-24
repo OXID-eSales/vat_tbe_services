@@ -6,6 +6,7 @@
 
 namespace OxidEsales\EVatModule\Tests\Integration\Order;
 
+use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\EshopCommunity\Core\Registry;
 use OxidEsales\EVatModule\Controller\Admin\OrderMain;
 use OxidEsales\EVatModule\Model\Evidence\Item\BillingCountryEvidence;
@@ -15,15 +16,12 @@ use OxidEsales\EVatModule\Shop\Basket;
 use OxidEsales\EVatModule\Shop\Order;
 use OxidEsales\EVatModule\Shop\User;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
-use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
  * Testing admin controller class.
  */
 class OrderMainTest extends BaseTestCase
 {
-    use  ServiceContainer;
-
     /**
      * Creates dummy order and checks country was set.
      *
@@ -31,7 +29,7 @@ class OrderMainTest extends BaseTestCase
      */
     public function testTBECountryTitle()
     {
-        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings = ContainerFacade::get(ModuleSettings::class);
         $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class, GeoLocationEvidence::class]);
         $moduleSettings->saveCountryEvidences(['billing_country' => 1, 'geo_location' => 1]);
         $moduleSettings->saveDefaultEvidence('billing_country');

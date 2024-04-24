@@ -9,15 +9,12 @@ namespace OxidEsales\EVatModule\Service;
 use OxidEsales\Eshop\Core\UtilsView;
 use OxidEsales\EVatModule\Model\IncorrectVATArticlesMessageFormatter;
 use OxidEsales\EVatModule\Model\OrderArticleChecker;
-use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
  * Store logic how to find articles with wrong TBE VAT.
  */
 class BasketItemsValidator
 {
-    use ServiceContainer;
-
     /**
      * Sets dependencies.
      *

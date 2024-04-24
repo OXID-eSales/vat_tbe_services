@@ -6,10 +6,10 @@
 
 namespace OxidEsales\EVatModule\Tests\Integration\Model\Evidence;
 
+use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\EVatModule\Model\Evidence\EvidenceRegister;
 use OxidEsales\EVatModule\Model\Evidence\Item\BillingCountryEvidence;
 use OxidEsales\EVatModule\Service\ModuleSettings;
-use OxidEsales\EVatModule\Traits\ServiceContainer;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -17,8 +17,6 @@ use PHPUnit\Framework\TestCase;
  */
 class EvidenceRegisterTest extends TestCase
 {
-    use ServiceContainer;
-
     /**
      * No evidences are registered;
      * New evidence is passed for registration;
@@ -28,7 +26,7 @@ class EvidenceRegisterTest extends TestCase
      */
     public function testRegisteringEvidenceWhenNoEvidencesRegistered()
     {
-        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings = ContainerFacade::get(ModuleSettings::class);
         $moduleSettings->saveCountryEvidences([]);
         $moduleSettings->saveEvidenceClasses([]);
 
@@ -50,7 +48,7 @@ class EvidenceRegisterTest extends TestCase
      */
     public function testActivatingEvidenceAfterSuccessfulRegistration()
     {
-        $this->assertEquals(['billing_country' => 0], $this->getServiceFromContainer(ModuleSettings::class)->getCountryEvidences());
+        $this->assertEquals(['billing_country' => 0], ContainerFacade::get(ModuleSettings::class)->getCountryEvidences());
     }
 
     /**
@@ -60,7 +58,7 @@ class EvidenceRegisterTest extends TestCase
      */
     public function testRegisteringEvidenceWhenDefaultEvidencesRegistered()
     {
-        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings = ContainerFacade::get(ModuleSettings::class);
         $moduleSettings->saveCountryEvidences([]);
         $moduleSettings->saveEvidenceClasses(['oeDefaultEvidence1', 'oeDefaultEvidence2']);
 
@@ -81,7 +79,7 @@ class EvidenceRegisterTest extends TestCase
      */
     public function testUnregisteringEvidenceWhenItIsRegistered()
     {
-        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings = ContainerFacade::get(ModuleSettings::class);
         $moduleSettings->saveCountryEvidences(['billing_country' => 1]);
         $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class]);
 
@@ -103,7 +101,7 @@ class EvidenceRegisterTest extends TestCase
      */
     public function testRemovingEvidenceAfterItIsUnregistered()
     {
-        $this->assertEquals([], $this->getServiceFromContainer(ModuleSettings::class)->getCountryEvidences());
+        $this->assertEquals([], ContainerFacade::get(ModuleSettings::class)->getCountryEvidences());
     }
 
     /**
@@ -116,7 +114,7 @@ class EvidenceRegisterTest extends TestCase
      */
     public function testUnregisteringEvidenceWhenItIsRegisteredAndMoreEvidencesExist()
     {
-        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings = ContainerFacade::get(ModuleSettings::class);
         $moduleSettings->saveCountryEvidences(['billing_country' => 1, 'geo_location' => 1]);
         $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class, 'GeoClass']);
 
@@ -139,7 +137,7 @@ class EvidenceRegisterTest extends TestCase
      */
     public function testRemovingEvidenceAfterItIsUnregisteredAndMoreEvidencesExist()
     {
-        $this->assertEquals(['geo_location' => 1], $this->getServiceFromContainer(ModuleSettings::class)->getCountryEvidences());
+        $this->assertEquals(['geo_location' => 1], ContainerFacade::get(ModuleSettings::class)->getCountryEvidences());
     }
 
     /**
@@ -151,7 +149,7 @@ class EvidenceRegisterTest extends TestCase
      */
     public function testUnregisteringEvidenceWhenEvidenceIsNotRegistered()
     {
-        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings = ContainerFacade::get(ModuleSettings::class);
         $moduleSettings->saveCountryEvidences(['billing_country' => 1]);
         $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class]);
 
@@ -174,7 +172,7 @@ class EvidenceRegisterTest extends TestCase
      */
     public function testRemovingEvidenceWhenEvidenceIsNotRegistered()
     {
-        $this->assertEquals(['billing_country' => 1], $this->getServiceFromContainer(ModuleSettings::class)->getCountryEvidences());
+        $this->assertEquals(['billing_country' => 1], ContainerFacade::get(ModuleSettings::class)->getCountryEvidences());
     }
 
     /**
@@ -186,7 +184,7 @@ class EvidenceRegisterTest extends TestCase
      */
     public function testUnregisteringEvidenceWhenItIsNotRegistered()
     {
-        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings = ContainerFacade::get(ModuleSettings::class);
         $moduleSettings->saveCountryEvidences(['billing_country' => 1, 'geo_location' => 1]);
         $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class, 'GeoClass']);
 
@@ -206,7 +204,7 @@ class EvidenceRegisterTest extends TestCase
      */
     public function testActivatingEvidenceWhenItIsRegistered()
     {
-        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings = ContainerFacade::get(ModuleSettings::class);
         $moduleSettings->saveCountryEvidences(['InactiveEvidenceId' => 0]);
 
         /** @var EvidenceRegister $oCollector */
@@ -223,7 +221,7 @@ class EvidenceRegisterTest extends TestCase
      */
     public function testDeactivatingEvidenceWhenItIsRegistered()
     {
-        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings = ContainerFacade::get(ModuleSettings::class);
         $moduleSettings->saveCountryEvidences(['InactiveEvidenceId' => 1]);
 
         /** @var EvidenceRegister $oCollector */
@@ -240,7 +238,7 @@ class EvidenceRegisterTest extends TestCase
      */
     public function testDeactivatingEvidenceWhenItIsNotRegistered()
     {
-        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings = ContainerFacade::get(ModuleSettings::class);
         $moduleSettings->saveCountryEvidences([]);
 
         /** @var EvidenceRegister $oCollector */

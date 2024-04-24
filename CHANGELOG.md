@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Removed
 - Drop smarty support
+- Trait OxidEsales\EVatModule\Traits\ServiceContainer
 
 ## [3.0.0] - 2023-10-30
 

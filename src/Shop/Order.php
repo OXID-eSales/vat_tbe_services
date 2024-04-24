@@ -12,18 +12,16 @@ use OxidEsales\Eshop\Application\Model\Order as EShopOrder;
 use OxidEsales\Eshop\Application\Model\User as EShopUser;
 use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\EVatModule\Model\OrderArticleChecker;
 use OxidEsales\EVatModule\Model\OrderEvidenceList;
 use OxidEsales\EVatModule\Model\User;
-use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
  * VAT TBE User class
  */
 class Order extends Order_parent
 {
-    use ServiceContainer;
-
     /**
      * Protection parameters used for some data in order are invalid
      *
@@ -66,7 +64,7 @@ class Order extends Order_parent
     public function validateOrder($oBasket, $oUser)
     {
         $iValidState = $this->getValidateOrderParent($oBasket, $oUser);
-        $oUserCountry = $this->getServiceFromContainer(User::class);
+        $oUserCountry = ContainerFacade::get(User::class);
 
         $blUserCountryChanged = $oBasket->getOeVATTBETbeCountryId() != $oUserCountry->getOeVATTBETbeCountryId();
         if (!$iValidState && $blUserCountryChanged) {
@@ -99,8 +97,8 @@ class Order extends Order_parent
         $blSuccess = parent::delete($sOxId);
 
         if ($blSuccess) {
-            $oOrderEvidenceList = $this->getServiceFromContainer(OrderEvidenceList::class);
-            $oOrderEvidenceList->delete($sOxId ? $sOxId : $this->getId());
+            $oOrderEvidenceList = ContainerFacade::get(OrderEvidenceList::class);
+            $oOrderEvidenceList->delete($sOxId ?: $this->getId());
         }
 
         return $blSuccess;
@@ -124,7 +122,7 @@ class Order extends Order_parent
         $iRet = $this->getFinalizeOrderParent($oBasket, $oUser, $blRecalculatingOrder);
 
         if ($this->shouldOeVATTBEStoreEvidences($iRet, $oBasket, $blRecalculatingOrder)) {
-            $oOrderEvidenceList = $this->getServiceFromContainer(OrderEvidenceList::class);
+            $oOrderEvidenceList = ContainerFacade::get(OrderEvidenceList::class);
 
             $oOrderEvidenceList->setId($this->getId());
             $aEvidenceList = $oUser->getOeVATTBEEvidenceList();
@@ -251,7 +249,7 @@ class Order extends Order_parent
      */
     protected function factoryOeVATTBEOrderEvidenceList()
     {
-        $oOrderEvidenceList = $this->getServiceFromContainer(OrderEvidenceList::class);
+        $oOrderEvidenceList = ContainerFacade::get(OrderEvidenceList::class);
         return $oOrderEvidenceList;
     }
 
@@ -264,7 +262,7 @@ class Order extends Order_parent
      */
     protected function getOeVATTBEOrderArticleChecker($oBasket)
     {
-        return $this->getServiceFromContainer(OrderArticleChecker::class);
+        return ContainerFacade::get(OrderArticleChecker::class);
     }
 
     /**

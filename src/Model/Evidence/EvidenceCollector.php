@@ -10,15 +10,12 @@ use OxidEsales\Eshop\Core\Config;
 use OxidEsales\EshopCommunity\Core\Registry;
 use OxidEsales\EVatModule\Model\Evidence\Item\Evidence;
 use OxidEsales\EVatModule\Service\ModuleSettings;
-use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
  * Class creates list of evidences.
  */
 class EvidenceCollector
 {
-    use ServiceContainer;
-
     /**
      * Handles required dependencies.
      *

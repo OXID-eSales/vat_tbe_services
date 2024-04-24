@@ -7,6 +7,7 @@
 namespace OxidEsales\EVatModule\Tests\Integration\Controller;
 
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\EVatModule\Controller\BasketController;
 use OxidEsales\Eshop\Application\Controller\BasketController as EShopBasketController;
 use OxidEsales\EVatModule\Service\ModuleSettings;
@@ -15,7 +16,6 @@ use OxidEsales\EVatModule\Shop\Country;
 use OxidEsales\Eshop\Application\Model\Country as EShopCountry;
 use OxidEsales\EVatModule\Shop\User;
 use OxidEsales\Eshop\Application\Model\User as EShopUser;
-use OxidEsales\EVatModule\Traits\ServiceContainer;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use OxidEsales\Eshop\Application\Model\Basket as EShopBasket;
@@ -25,8 +25,6 @@ use OxidEsales\Eshop\Application\Model\Basket as EShopBasket;
  */
 class BasketControllerTest extends TestCase
 {
-    use ServiceContainer;
-
     /**
      * TBE Articles are in basket;
      * User is not logged in;
@@ -34,7 +32,7 @@ class BasketControllerTest extends TestCase
      */
     public function testGetOeVATTBEMarkMessageWhenUserIsNotLoggedIn()
     {
-        $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('DE');
+        ContainerFacade::get(ModuleSettings::class)->saveDomesticCountry('DE');
 
         $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles']);
         $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(true));
@@ -57,7 +55,7 @@ class BasketControllerTest extends TestCase
      */
     public function testGetOeVATTBEMarkMessageWhenUserIsLoggedIn()
     {
-        $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('DE');
+        ContainerFacade::get(ModuleSettings::class)->saveDomesticCountry('DE');
 
         /** @var Country|EShopCountry|MockObject $oCountry */
         $oCountry = $this->createPartialMock(Country::class, ['getOeVATTBEName']);
@@ -88,7 +86,7 @@ class BasketControllerTest extends TestCase
      */
     public function testGetOeVATTBEMarkMessageWhenUserIsLoggedInAndUserCountryNotFound()
     {
-        $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('DE');
+        ContainerFacade::get(ModuleSettings::class)->saveDomesticCountry('DE');
 
         /** @var Basket|EShopBasket|MockObject $oBasket */
         $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'getOeVATTBECountry']);
@@ -135,7 +133,7 @@ class BasketControllerTest extends TestCase
     public function testShowVATTBEMarkMessageWhenMessageShouldBeHidden($blIsDomesticCountry, $blHasTBEArticles, $blValidArticles, $blCountryAppliesTBEVAT)
     {
         $sDomesticCountryAbbr = $blIsDomesticCountry ? 'LT' : 'DE';
-        $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry($sDomesticCountryAbbr);
+        ContainerFacade::get(ModuleSettings::class)->saveDomesticCountry($sDomesticCountryAbbr);
         Registry::getSession()->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
 
         $oCountry = $this->createPartialMock(Country::class, ['appliesOeTBEVATTbeVat']);
@@ -160,7 +158,7 @@ class BasketControllerTest extends TestCase
      */
     public function testShowVATTBEMarkMessageWhenMessageShouldBeShown()
     {
-        $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('DE');
+        ContainerFacade::get(ModuleSettings::class)->saveDomesticCountry('DE');
         Registry::getSession()->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
 
         $oCountry = $this->createPartialMock(Country::class, ['appliesOeTBEVATTbeVat']);

@@ -7,12 +7,12 @@
 namespace OxidEsales\EVatModule\Tests\Integration\Model\Evidence;
 
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EVatModule\Model\Evidence\EvidenceCollector;
 use OxidEsales\EVatModule\Model\Evidence\EvidenceList;
 use OxidEsales\EVatModule\Model\Evidence\Item\BillingCountryEvidence;
 use OxidEsales\EVatModule\Service\ModuleSettings;
-use OxidEsales\EVatModule\Traits\ServiceContainer;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -20,8 +20,6 @@ use PHPUnit\Framework\TestCase;
  */
 class EvidenceCollectorTest extends TestCase
 {
-    use ServiceContainer;
-
     /**
      * Evidence is registered;
      * Evidence is set to be active;
@@ -32,7 +30,7 @@ class EvidenceCollectorTest extends TestCase
         ContainerFactory::resetContainer();
 
         $oConfig = Registry::getConfig();
-        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings = ContainerFacade::get(ModuleSettings::class);
         $moduleSettings->saveCountryEvidences(['billing_country' => 1]);
         $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class]);
 
@@ -53,7 +51,7 @@ class EvidenceCollectorTest extends TestCase
     public function testGetEvidencesWhenEvidenceExistsButIsNotActive()
     {
         $oConfig = Registry::getConfig();
-        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings = ContainerFacade::get(ModuleSettings::class);
         $moduleSettings->saveCountryEvidences(['billing_country' => 0]);
         $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class]);
 
@@ -71,7 +69,7 @@ class EvidenceCollectorTest extends TestCase
     public function testGetEvidencesWhenEvidenceIsRegisteredButActiveEvidencesListIsEmpty()
     {
         $oConfig = Registry::getConfig();
-        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings = ContainerFacade::get(ModuleSettings::class);
         $moduleSettings->saveCountryEvidences([]);
         $moduleSettings->saveEvidenceClasses([BillingCountryEvidence::class]);
 
@@ -89,7 +87,7 @@ class EvidenceCollectorTest extends TestCase
     public function testGetEvidencesWhenNoEvidencesAreSet()
     {
         $oConfig = Registry::getConfig();
-        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings = ContainerFacade::get(ModuleSettings::class);
         $moduleSettings->saveCountryEvidences([]);
         $moduleSettings->saveEvidenceClasses([]);
 
@@ -107,7 +105,7 @@ class EvidenceCollectorTest extends TestCase
     public function testGetEvidencesWhenNoEvidenceIsRegisteredButActiveEvidenceListIsNotEmpty()
     {
         $oConfig = Registry::getConfig();
-        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings = ContainerFacade::get(ModuleSettings::class);
         $moduleSettings->saveCountryEvidences(['non_existing_id' => 1]);
         $moduleSettings->saveEvidenceClasses([]);
 
@@ -125,7 +123,7 @@ class EvidenceCollectorTest extends TestCase
     public function testGetEvidencesWhenEvidencesDoesNotExists()
     {
         $oConfig = Registry::getConfig();
-        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings = ContainerFacade::get(ModuleSettings::class);
         $moduleSettings->saveCountryEvidences(['non_existing_id' => 1]);
         $moduleSettings->saveEvidenceClasses(['NonExistingEvidenceClass']);
 

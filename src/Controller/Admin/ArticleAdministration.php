@@ -11,11 +11,11 @@ use OxidEsales\Eshop\Application\Model\Article as EShopArticle;
 use OxidEsales\Eshop\Application\Model\Country as EShopCountry;
 use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\EVatModule\Model\ArticleVATGroupsList;
 use OxidEsales\EVatModule\Model\CountryVATGroupsList;
 use OxidEsales\EVatModule\Shop\Article;
 use OxidEsales\EVatModule\Shop\Country;
-use OxidEsales\EVatModule\Traits\ServiceContainer;
 use OxidEsales\Facts\Facts;
 
 /**
@@ -23,8 +23,6 @@ use OxidEsales\Facts\Facts;
  */
 class ArticleAdministration extends AdminDetailsController
 {
-    use ServiceContainer;
-
     /** @var array Used to cache VAT Groups data. */
     private $_aArticleVATGroupData = null;
 
@@ -55,7 +53,7 @@ class ArticleAdministration extends AdminDetailsController
         $request = Registry::getRequest();
         $aParams = $request->getRequestParameter('editval');
         $aVATGroupsParams = $request->getRequestParameter('VATGroupsByCountry');
-        $articleVATGroupsList = $this->getServiceFromContainer(ArticleVATGroupsList::class);
+        $articleVATGroupsList = ContainerFacade::get(ArticleVATGroupsList::class);
         $articleVATGroupsList->setId($sCurrentArticleId);
         $articleVATGroupsList->setData($aVATGroupsParams);
         $articleVATGroupsList->save();
@@ -75,7 +73,7 @@ class ArticleAdministration extends AdminDetailsController
      */
     public function isSelected($sCountryId, $sVATGroupId)
     {
-        $articleVATGroupsList = $this->getServiceFromContainer(ArticleVATGroupsList::class);
+        $articleVATGroupsList = ContainerFacade::get(ArticleVATGroupsList::class);
         $articleVATGroupsList->load($this->getEditObjectId());
         if (is_null($this->_aArticleVATGroupData)) {
             $this->_aArticleVATGroupData = $articleVATGroupsList->getData();
@@ -98,7 +96,7 @@ class ArticleAdministration extends AdminDetailsController
         /** @var EShopCountry|Country $oCountry */
         $oCountry = oxNew(EShopCountry::class);
         $aViewData = array();
-        $oCountryVATGroupsList = $this->getServiceFromContainer(CountryVATGroupsList::class);
+        $oCountryVATGroupsList = ContainerFacade::get(CountryVATGroupsList::class);
         $aVATGroupList = $oCountryVATGroupsList->getList();
         foreach ($aVATGroupList as $sCountryId => $aGroupsList) {
             $oCountry->load($sCountryId);

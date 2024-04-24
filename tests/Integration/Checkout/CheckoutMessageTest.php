@@ -9,6 +9,7 @@ namespace OxidEsales\EVatModule\Tests\Integration\Checkout;
 use OxidEsales\Eshop\Core\Email;
 use OxidEsales\Eshop\Core\Model\BaseModel;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EVatModule\Controller\BasketController;
 use OxidEsales\EVatModule\Controller\OrderController;
@@ -16,15 +17,12 @@ use OxidEsales\EVatModule\Service\ModuleSettings;
 use OxidEsales\EVatModule\Shop\Basket;
 use OxidEsales\EVatModule\Shop\User;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
-use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
  * Testing message in checkout process for TBE articles with wrong VAT.
  */
 class CheckoutMessageTest extends BaseTestCase
 {
-    use ServiceContainer;
-
     /**
      * Prepare articles data: set articles to be TBE.
      */
@@ -34,7 +32,7 @@ class CheckoutMessageTest extends BaseTestCase
 
         ContainerFactory::resetContainer();
 
-        $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('DE');
+        ContainerFacade::get(ModuleSettings::class)->saveDomesticCountry('DE');
     }
 
     /**
@@ -197,7 +195,7 @@ class CheckoutMessageTest extends BaseTestCase
         /** @var Basket $oBasket */
         $oBasket = oxNew(Basket::class);
 
-        $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('AT');
+        ContainerFacade::get(ModuleSettings::class)->saveDomesticCountry('AT');
 
         $oUser = $this->_createUser();
         $blLogin = $oUser->login($this->_sDefaultUserName, $this->_sDefaultUserPassword);
@@ -308,7 +306,7 @@ class CheckoutMessageTest extends BaseTestCase
         $_POST['stoken'] = 'stoken';
         $_POST['sDeliveryAddressMD5'] = 'b4ebffc0f1940d9a54599ec7e21d2f2c';
         Registry::getConfig()->setConfigParam('sTheme', 'apex');
-        $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('AT');
+        ContainerFacade::get(ModuleSettings::class)->saveDomesticCountry('AT');
 
         /** @var Email $mailer */
         $mailer = $this->getMockBuilder(Email::class)
@@ -354,7 +352,7 @@ class CheckoutMessageTest extends BaseTestCase
         $_POST['stoken'] = 'stoken';
         $_POST['sDeliveryAddressMD5'] = 'b4ebffc0f1940d9a54599ec7e21d2f2c';
         Registry::getConfig()->setConfigParam('sTheme', 'apex');
-        $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('AT');
+        ContainerFacade::get(ModuleSettings::class)->saveDomesticCountry('AT');
 
         /** @var Email $mailer */
         $mailer = $this->getMockBuilder(Email::class)

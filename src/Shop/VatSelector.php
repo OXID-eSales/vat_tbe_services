@@ -7,16 +7,14 @@
 namespace OxidEsales\EVatModule\Shop;
 
 use OxidEsales\Eshop\Application\Model\Article as EShopArticle;
+use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\EVatModule\Model\User;
-use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
  * VAT TBE oxUser class
  */
 class VatSelector extends VatSelector_parent
 {
-    use ServiceContainer;
-
     /**
      * get article user vat
      *
@@ -46,7 +44,7 @@ class VatSelector extends VatSelector_parent
      */
     private function oeVATTBEUseTBEVAT($oArticle)
     {
-        $oUserCountry = $this->getServiceFromContainer(User::class);
+        $oUserCountry = ContainerFacade::get(User::class);
 
         $blIsTBEArticle = $oArticle->isOeVATTBETBEService() && $oArticle->getOeVATTBETBEVat() !== null;
 

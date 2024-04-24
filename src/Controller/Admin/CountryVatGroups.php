@@ -11,17 +11,15 @@ use OxidEsales\Eshop\Core\DisplayError;
 use OxidEsales\Eshop\Core\Language;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\UtilsView;
+use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\EVatModule\Model\CountryVATGroup;
 use OxidEsales\EVatModule\Model\CountryVATGroupsList;
-use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
  * Display VAT groups for particular country.
  */
 class CountryVatGroups extends AdminDetailsController
 {
-    use ServiceContainer;
-
     /**
      * To set only one error message in session.
      *
@@ -48,8 +46,7 @@ class CountryVatGroups extends AdminDetailsController
      */
     public function getVatGroups()
     {
-        return $this
-            ->getServiceFromContainer(CountryVATGroupsList::class)
+        return ContainerFacade::get(CountryVATGroupsList::class)
             ->load($this->getEditObjectId());
     }
 
@@ -71,7 +68,7 @@ class CountryVatGroups extends AdminDetailsController
             return null;
         }
 
-        $oGroup = $this->getServiceFromContainer(CountryVATGroup::class);
+        $oGroup = ContainerFacade::get(CountryVATGroup::class);
         $oGroup->setCountryId($sCountryId);
         $oGroup->setName($sGroupName);
         $oGroup->setRate($fVATRate);
@@ -88,7 +85,7 @@ class CountryVatGroups extends AdminDetailsController
     {
         $aVatGroups = Registry::getRequest()->getRequestParameter('updateval');
 
-        $oVatGroup = $this->getServiceFromContainer(CountryVATGroup::class);
+        $oVatGroup = ContainerFacade::get(CountryVATGroup::class);
         foreach ($aVatGroups as $aVatGroup) {
             if (!$aVatGroup['oevattbe_id'] || !$aVatGroup['oevattbe_name']) {
                 if (!$this->_blMissingParameterErrorSet) {
@@ -112,7 +109,7 @@ class CountryVatGroups extends AdminDetailsController
     {
         $iVATGroupId = Registry::getRequest()->getRequestParameter('countryVATGroupId');
 
-        $oVATGroup = $this->getServiceFromContainer(CountryVATGroup::class);
+        $oVATGroup = ContainerFacade::get(CountryVATGroup::class);
         $oVATGroup->setId($iVATGroupId);
         $oVATGroup->delete();
 

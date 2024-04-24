@@ -8,6 +8,7 @@ namespace OxidEsales\EVatModule\Tests\Integration\Checkout;
 
 use OxidEsales\Eshop\Application\Model\BasketItem;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EVatModule\Controller\BasketController;
 use OxidEsales\EVatModule\Service\ModuleSettings;
@@ -16,15 +17,12 @@ use OxidEsales\EVatModule\Shop\Basket;
 use OxidEsales\EVatModule\Shop\Country;
 use OxidEsales\EVatModule\Shop\User;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
-use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
  * Testing oeVATTBEBasket class.
  */
 class BasketMarksTest extends BaseTestCase
 {
-    use ServiceContainer;
-
     public function setUp(): void
     {
         parent::setUp();
@@ -63,7 +61,7 @@ class BasketMarksTest extends BaseTestCase
      */
     public function testShowVATTBEMark($blIsUserLoggedIn, $blIsArticleTbeService, $blIsCountryConfigured, $blResult)
     {
-        $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('AT');
+        ContainerFacade::get(ModuleSettings::class)->saveDomesticCountry('AT');
 
         $oSession = Registry::getSession();
         $countryId = '8f241f11095d6ffa8.86593236';
@@ -114,7 +112,6 @@ class BasketMarksTest extends BaseTestCase
 
         /** @var BasketItem $oBasketItem */
         $oBasketItem = oxNew(BasketItem::class);
-//        sleep(360);
         $oBasketItem->init('_testArticle1', 1);
 
         $this->assertSame($blResult, $oBasketController->oeVATTBEShowVATTBEMark($oBasketItem));
@@ -143,7 +140,7 @@ class BasketMarksTest extends BaseTestCase
      */
     public function testIsTBEArticleValid($blIsArticleValid, $blResult)
     {
-        $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('AT');
+        ContainerFacade::get(ModuleSettings::class)->saveDomesticCountry('AT');
 
         $oSession = Registry::getSession();
         $countryId = '8f241f11095d6ffa8.86593236';

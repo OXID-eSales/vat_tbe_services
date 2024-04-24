@@ -9,17 +9,15 @@ namespace OxidEsales\EVatModule\Model;
 use OxidEsales\Eshop\Application\Model\Country as EShopCountry;
 use OxidEsales\Eshop\Core\Config;
 use OxidEsales\Eshop\Core\Session;
+use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\EVatModule\Model\Evidence\EvidenceSelector;
 use OxidEsales\EVatModule\Service\ModuleSettings;
-use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
  * VAT TBE User class
  */
 class User
 {
-    use ServiceContainer;
-
     public function __construct(
         private Session $session,
         private Config $config,
@@ -84,7 +82,7 @@ class User
      */
     public function isUserFromDomesticCountry()
     {
-        $sDomesticCountryAbbr = $this->getServiceFromContainer(ModuleSettings::class)->getDomesticCountry();
+        $sDomesticCountryAbbr = ContainerFacade::get(ModuleSettings::class)->getDomesticCountry();
 
         $userCountry = $this->getCountry();
 
@@ -103,7 +101,7 @@ class User
     {
         if (is_null($this->session->getVariable('TBECountryId'))) {
             /** @var EvidenceSelector $evidenceSelector */
-            $evidenceSelector = $this->getServiceFromContainer(EvidenceSelector::class);
+            $evidenceSelector = ContainerFacade::get(EvidenceSelector::class);
             $this->session->setVariable('TBEEvidenceList', $evidenceSelector->getEvidenceList()->getArray());
 
             $oEvidence = $evidenceSelector->getEvidence();

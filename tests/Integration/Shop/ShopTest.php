@@ -6,11 +6,10 @@
 
 namespace OxidEsales\EVatModule\Tests\Integration\Shop;
 
-use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\EVatModule\Service\ModuleSettings;
 use OxidEsales\EVatModule\Shop\Country;
 use OxidEsales\EVatModule\Shop\Shop;
-use OxidEsales\EVatModule\Traits\ServiceContainer;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -18,14 +17,12 @@ use PHPUnit\Framework\TestCase;
  */
 class ShopTest extends TestCase
 {
-    use ServiceContainer;
-
     /**
      * Test country not set
      */
     public function testGetDomesticCountryNotSet()
     {
-        $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('');
+        ContainerFacade::get(ModuleSettings::class)->saveDomesticCountry('');
 
         /** @var Shop $oShop */
         $oShop = oxNew(Shop::class);
@@ -37,7 +34,7 @@ class ShopTest extends TestCase
      */
     public function testGetDomesticCountryWrong()
     {
-        $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('blabla');
+        ContainerFacade::get(ModuleSettings::class)->saveDomesticCountry('blabla');
 
         /** @var Shop $oShop */
         $oShop = oxNew(Shop::class);
@@ -49,7 +46,7 @@ class ShopTest extends TestCase
      */
     public function testGetDomesticCountry()
     {
-        $this->getServiceFromContainer(ModuleSettings::class)->saveDomesticCountry('DE');
+        ContainerFacade::get(ModuleSettings::class)->saveDomesticCountry('DE');
 
         /** @var Shop $oShop */
         $oShop = oxNew(Shop::class);

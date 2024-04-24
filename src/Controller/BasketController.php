@@ -10,20 +10,18 @@ use OxidEsales\Eshop\Application\Model\Basket as EShopBasket;
 use OxidEsales\Eshop\Application\Model\BasketItem;
 use OxidEsales\Eshop\Application\Model\Shop as EShopShop;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\EVatModule\Model\BasketVATValidator;
 use OxidEsales\EVatModule\Model\User;
 use OxidEsales\EVatModule\Service\BasketItemsValidator;
 use OxidEsales\EVatModule\Shop\Basket;
 use OxidEsales\EVatModule\Shop\Shop;
-use OxidEsales\EVatModule\Traits\ServiceContainer;
 
 /**
  * Hooks to basket class to get events.
  */
 class BasketController extends BasketController_parent
 {
-    use ServiceContainer;
-
     /**
      * Executes parent::render(), creates list with basket articles
      * Returns name of template file basket::_sThisTemplate (for Search
@@ -33,12 +31,11 @@ class BasketController extends BasketController_parent
      */
     public function render()
     {
-        $oUserCountry = $this->getServiceFromContainer(User::class);
+        $oUserCountry = ContainerFacade::get(User::class);
         $oBasket = Registry::getSession()->getBasket();
         if ($this->getUser() && !$oUserCountry->isUserFromDomesticCountry() && $oBasket) {
             /** @var BasketItemsValidator $oVATTBEBasketItemsValidator */
-            $this
-                ->getServiceFromContainer(BasketItemsValidator::class)
+            ContainerFacade::get(BasketItemsValidator::class)
                 ->validateTbeArticlesAndShowMessageIfNeeded('basket');
         }
 
@@ -74,7 +71,7 @@ class BasketController extends BasketController_parent
         /** @var EShopBasket|Basket $oBasket */
         $oBasket = Registry::getSession()->getBasket();
         $oCountry = $oBasket->getOeVATTBECountry();
-        $oTBEUserCountry = $this->getServiceFromContainer(User::class);
+        $oTBEUserCountry = ContainerFacade::get(User::class);
 
         $blBasketValid = $oBasket->hasOeTBEVATArticles();
         $blCountryAppliesTBEVAT = !$oCountry || $oCountry->appliesOeTBEVATTbeVat();
@@ -91,8 +88,7 @@ class BasketController extends BasketController_parent
      */
     public function isOeVATTBETBEArticleValid($oBasketItem)
     {
-        return $this
-            ->getServiceFromContainer(BasketVATValidator::class)
+        return ContainerFacade::get(BasketVATValidator::class)
             ->isArticleValid($oBasketItem);
     }
 
@@ -105,8 +101,7 @@ class BasketController extends BasketController_parent
      */
     public function oeVATTBEShowVATTBEMark($oBasketItem)
     {
-        return $this
-            ->getServiceFromContainer(BasketVATValidator::class)
+        return ContainerFacade::get(BasketVATValidator::class)
             ->showVATTBEMark($oBasketItem);
     }
 
