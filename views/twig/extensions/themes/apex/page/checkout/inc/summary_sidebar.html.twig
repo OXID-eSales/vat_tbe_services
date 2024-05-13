@@ -1,0 +1,19 @@
+{% extends 'page/checkout/inc/summary_sidebar.html.twig' %}
+
+{% block checkout_basketcontents_nodiscountproductvats %}
+    {% for key, VATitem in oxcmp_basket.getProductVats(false) %}
+        <div class="list-group-item d-flex justify-content-between align-items-center">
+            {{ translate({ ident: "VAT_PLUS_PERCENT_AMOUNT", args: [key] }) }}
+            <span>{{ format_price(VATitem, { currency: currency }) }}</span>
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block checkout_basketcontents_productvats %}
+    {% for key, VATitem in oxcmp_basket.getProductVats(false) %}
+        <div class="list-group-item d-flex justify-content-between align-items-center">
+            {{ translate({ ident: "VAT_PLUS_PERCENT_AMOUNT", args: [key] }) }}
+            <span>{{ format_price(VATitem, { currency: currency }) }}</span>
+        </div>
+    {% endfor %}
+{% endblock %}

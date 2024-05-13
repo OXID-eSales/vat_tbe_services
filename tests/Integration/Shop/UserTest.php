@@ -245,13 +245,14 @@ class UserTest extends BaseTestCase
         $oUser->delete('userId');
         $oUser->setId('userId');
         $oUser->assign([
-            'oxustid' => 'IdNumber',
-            'oevattbe_vatinenterdate' => '2014-12-12 12:12:12',
+            'oxustid' => 'IdNumber'
         ]);
         $oUser->save();
 
         $oUser = oxNew(User::class);
         $oUser->load('userId');
+        $vatInDate = $oUser->getOeVATTBEVatInStoreDate();
+
         $oUser->assign([
             'oxustid' => ''
         ]);
@@ -259,12 +260,12 @@ class UserTest extends BaseTestCase
 
         $oUser = oxNew(User::class);
         $oUser->load('userId');
-        $this->assertSame('2014-12-12 12:12:12', $oUser->getOeVATTBEVatInStoreDate());
+        $this->assertSame($vatInDate, $oUser->getOeVATTBEVatInStoreDate());
     }
 
     /**
      * On User info change:
-     * f) old data VAT IN is set, date set  - after VAT IN updated - date not changed
+     * f) old data VAT IN is set, date set  - after VAT IN updated - date is changed
      */
     public function testSaveVatInStoreDateF()
     {
@@ -272,13 +273,15 @@ class UserTest extends BaseTestCase
         $oUser->delete('userId');
         $oUser->setId('userId');
         $oUser->assign([
-            'oxustid'                 => 'IdNumber',
-            'oevattbe_vatinenterdate' => '2014-12-12 12:12:12',
+            'oxustid' => 'IdNumber'
         ]);
         $oUser->save();
 
         $oUser = oxNew(User::class);
         $oUser->load('userId');
+        $vatInDate = $oUser->getOeVATTBEVatInStoreDate();
+        sleep(1);
+
         $oUser->assign([
             'oxustid' => 'IdNumber2'
         ]);
@@ -287,6 +290,6 @@ class UserTest extends BaseTestCase
         $oUser = oxNew(User::class);
         $oUser->load('userId');
 
-        $this->assertSame('2014-12-12 12:12:12', $oUser->getOeVATTBEVatInStoreDate());
+        $this->assertNotSame($vatInDate, $oUser->getOeVATTBEVatInStoreDate());
     }
 }
