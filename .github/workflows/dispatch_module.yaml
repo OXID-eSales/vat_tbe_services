@@ -25,7 +25,7 @@ on:
         type: string
         required: true
         description: 'URL/PATH of the testplan to run'
-        default: '~/defaults/7.1.x.yml,~/module-evat.yml'
+        default: '~/defaults/7.1.x.yaml,~/module-evat.yaml'
 
 jobs:
   build_testplan:
@@ -40,10 +40,10 @@ jobs:
           # shellcheck disable=SC2088 # Tilde expansion happens in the workflow and not by bash
           case '${{inputs.limit}}' in
             "no") LIMIT='';;
-            "PHP8.1/MySQL5.7") LIMIT='~/defaults/php8.1_mysql5.7_only.yml,' ;;
-            "PHP8.1/MySQL8.0") LIMIT='~/defaults/php8.1_mysql8.0_only.yml,' ;;
-            "PHP8.2/MySQL5.7") LIMIT='~/defaults/php8.2_mysql5.7_only.yml,' ;;
-            "PHP8.2/MySQL8.0") LIMIT='~/defaults/php8.2_mysql8.0_only.yml,' ;;
+            "PHP8.1/MySQL5.7") LIMIT='~/defaults/php8.1_mysql5.7_only.yaml,' ;;
+            "PHP8.1/MySQL8.0") LIMIT='~/defaults/php8.1_mysql8.0_only.yaml,' ;;
+            "PHP8.2/MySQL5.7") LIMIT='~/defaults/php8.2_mysql5.7_only.yaml,' ;;
+            "PHP8.2/MySQL8.0") LIMIT='~/defaults/php8.2_mysql8.0_only.yaml,' ;;
             *) echo "Illegal choice, fix the workflow"
                exit 1
                ;;
@@ -51,7 +51,7 @@ jobs:
           case '${{ inputs.scenario}}' in
             "7.1.x")
               # shellcheck disable=SC2088 # Tilde expansion happens in the workflow and not by bash
-              TESTPLAN="~/defaults/7.1.x.yml,${LIMIT}~/module-evat.yml"
+              TESTPLAN="~/defaults/7.1.x.yaml,${LIMIT}~/module-evat.yaml"
               ;;
             "use custom testplan")
               # shellcheck disable=SC2088 # Tilde expansion happens in the workflow and not by bash
@@ -66,7 +66,7 @@ jobs:
 
   dispatch_stable:
     needs: build_testplan
-    uses: oxid-eSales/github-actions/.github/workflows/call-universal_test_workflow.yml@v4
+    uses: oxid-eSales/github-actions/.github/workflows/call-universal_test_workflow.yaml@v4
     with:
       testplan: ${{ needs.build_testplan.outputs.testplan }}
       runs_on: "ubuntu-latest"

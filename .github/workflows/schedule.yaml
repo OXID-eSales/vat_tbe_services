@@ -1,15 +1,14 @@
-name: Auto trigger on Push to 7.1.x*
+name: schedule
 
 on:
-  push:
-    branches:
-      - 'b-7.1.x**'
+  schedule:
+    - cron: '47 4 */7 * *'
 
 jobs:
-  push_module:
-    uses: oxid-eSales/github-actions/.github/workflows/call-universal_test_workflow.yml@v4
+  call_matrix:
+    uses: oxid-eSales/github-actions/.github/workflows/call-universal_test_workflow.yaml@v4
     with:
-      testplan: '~/defaults/7.1.x.yml,~/module-evat.yml'
+      testplan: '~/defaults/7.1.x.yaml,~/module-evat.yaml'
       runs_on: '"ubuntu-latest"'
       defaults: 'v4'
       plan_folder: '.github/oxid-esales'
@@ -33,6 +32,6 @@ jobs:
           repo: module-workflows
           github_user: ${{ secrets.CI_USER }}
           github_token: ${{ secrets.GH_CI_JENKINS_TOKEN }}
-          workflow_file_name: evat_workflow.yml
+          workflow_file_name: evat_workflow.yaml
           ref: "b-7.1.x"
           client_payload: "{\"php\": \"8.2\", \"mysql\": \"8.0\", \"edition\": \"ee\", \"ref\": \"${{ github.ref_name }}\"}"
