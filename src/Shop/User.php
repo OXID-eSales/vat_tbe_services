@@ -21,6 +21,13 @@ class User extends User_parent
     private $_oTBEUser = null;
 
     /**
+     * VAT number when user is initially loaded.
+     *
+     * @var int
+     */
+    protected $_oeVATTBEVatOnLoad = null;
+
+    /**
      * Performs user login by username and password. Fetches user data from DB.
      * Registers in session. Returns true on success, FALSE otherwise.
      *
@@ -58,14 +65,27 @@ class User extends User_parent
      */
     public function save()
     {
-        if ($this->getOeVATTBEVatIn() && $this->isOeVATTBEINStoredDateEmpty()) {
-            $this->assign([
-                'oevattbe_vatinenterdate' => date('Y-m-d H:i:s', Registry::getUtilsDate()->getTime())
-            ]);
+        if ($this->getOeVATTBEVatIn()) {
+            if ($this->isOeVATTBEINStoredDateEmpty() || $this->getOeVATTBEVatIn() !== $this->_oeVATTBEVatOnLoad) {
+                $this->assign([
+                    'oevattbe_vatinenterdate' => date('Y-m-d H:i:s', Registry::getUtilsDate()->getTime())
+                ]);
+            }
         }
         $this->unsetOeVATTBETbeCountryFromCaching();
 
         return parent::save();
+    }
+
+    public function load($sOXID)
+    {
+        $isLoaded = parent::load($sOXID);
+
+        if ($isLoaded) {
+            $this->_oeVATTBEVatOnLoad = $this->getFieldData('oxustid');
+        }
+
+        return $isLoaded;
     }
 
     /**
