@@ -107,7 +107,7 @@
             {% include "inputhelp.html.twig" with {'sHelpId': help_id("HELP_GENERAL_USTID"), 'sHelpText': help_text("HELP_GENERAL_USTID")} %}
         </td>
     </tr>
-    {% if edit.oxuser__oevattbe_vatinenterdate.value and edit.oxuser__oevattbe_vatinenterdate.value != '0000-00-00 00:00:00' %}
+    {% if edit.oxuser__oevattbe_vatinenterdate.value and edit.oxuser__oevattbe_vatinenterdate.value != '0000-00-00 00:00:00' and edit.oxuser__oxustid.value %}
         <tr>
             <td class="edittext">
                 {{ translate({ ident: "OEVATTBE_VAT_IN_STORE_DATE" }) }}
