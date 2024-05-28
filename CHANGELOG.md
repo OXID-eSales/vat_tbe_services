@@ -13,10 +13,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - Upgraded PHPUnit version to 10  
+- Default value of `geo_location` setting is changed to 0
 
 ### Removed
 - Drop smarty support
 - Trait OxidEsales\EVatModule\Traits\ServiceContainer
+
+### Fixed
+- The date and time of VatId change now reflect the latest change
 
 ## [3.0.0] - 2023-10-30
 
