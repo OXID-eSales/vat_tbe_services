@@ -29,7 +29,7 @@ on:
 
 jobs:
   build_testplan:
-    runs-on: "ubuntu-latest"
+    runs-on: '"ubuntu-latest"'
     outputs:
       testplan: '${{ steps.build.outputs.testplan }}'
     steps:
