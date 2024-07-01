@@ -9,7 +9,7 @@ jobs:
   push_module:
     uses: oxid-eSales/github-actions/.github/workflows/call-universal_test_workflow.yaml@v4
     with:
-      testplan: '~/defaults/7.1.x.yaml,~/defaults/php8.2_mysql8.0_only.yaml,~/module-evat.yaml'
+      testplan: '~/defaults/7.1.x.yaml,~/defaults/php8.1_mysql5.7_only.yaml,~/module-evat.yaml'
       runs_on: '"ubuntu-latest"'
       defaults: 'v4'
       plan_folder: '.github/oxid-esales'
