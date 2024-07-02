@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [4.0.0] - 2024-07-01
+## [4.0.0] - 2024-07-02
 This is stable release for v4.0.0. No changes have been made since v3.1.0-rc.1.
 
 ## [3.1.0-rc.1] - 2024-05-30
