@@ -21,7 +21,7 @@ on:
           - 'PHP8.3/MySQL5.7'
           - 'PHP8.3/MySQL8.0'
           - 'PHP8.3/MariaDb11'
-        default: 'PHP8.1/MySQL5.7'
+        default: 'PHP8.2/MySQL5.7'
         description: 'Limit to one PHP/MySQL combination'
       custom_testplan:
         type: string
