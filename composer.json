@@ -26,6 +26,7 @@
   },
   "scripts": {
     "phpunit": "vendor/bin/phpunit --bootstrap=/var/www/source/bootstrap.php --config=tests/",
-    "phpunit-coverage": "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-text --bootstrap=/var/www/source/bootstrap.php --config=tests/ --coverage-html=tests/reports/coverage"
+    "phpunit-coverage": "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-text --bootstrap=/var/www/source/bootstrap.php --config=tests/ --coverage-html=tests/reports/coverage",
+    "phpintegration": "XDEBUG_MODE=coverage vendor/bin/phpunit --bootstrap=/var/www/source/bootstrap.php --config=tests/ --testsuite=Integration --coverage-clover=tests/Reports/coverage_integration_evat-module.xml"
   }
 }
