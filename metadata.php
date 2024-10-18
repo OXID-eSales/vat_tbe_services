@@ -30,7 +30,7 @@ Telecommunication, Broadcasting or Electronic (TBE) service according to
 <a href="https://ec.europa.eu/taxation_customs/news/vat-updated-version-moss-report-has-just-been-published-2016-05-12_en" target="_blank">European tax directive as of 2015</a>',
     ),
     'thumbnail'    => 'logo.png',
-    'version'      => '4.0.0',
+    'version'      => '4.1.0-rc.1',
     'author'       => 'OXID eSales AG',
     'url'          => 'http://www.oxid-esales.com',
     'email'        => 'info@oxid-esales.com',

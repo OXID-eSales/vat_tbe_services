@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [4.1.0] - Unreleased
+## [4.1.0-rc.1] - 2024-10-18
 
 ### Added
 - PHP 8.3
@@ -80,6 +80,7 @@ This is stable release for v4.0.0. No changes have been made since v3.1.0-rc.1.
 
 ## [1.0.0] - 2015-03-24
 
+[4.1.0-rc.1]: https://github.com/OXID-eSales/vat_tbe_services/compare/v4.0.0...v4.1.0-rc.1
 [4.0.0]: https://github.com/OXID-eSales/vat_tbe_services/compare/v3.0.0...v4.0.0
 [3.0.0]: https://github.com/OXID-eSales/vat_tbe_services/compare/v2.1.0...v3.0.0
 [2.1.0]: https://github.com/OXID-eSales/vat_tbe_services/compare/v2.0.0...v2.1.0
