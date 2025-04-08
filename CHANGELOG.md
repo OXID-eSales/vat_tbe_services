@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [undecided] - unreleased
+
+### Added
+- Support of PHP 8.4
+- Upgraded to work with OXID eShop 7.3.x
+
 ## [4.1.0] - 2024-11-27
 This is stable release for v4.1.0. No changes have been made since v4.1.0-rc.1.
 

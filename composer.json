@@ -17,7 +17,7 @@
   },
   "minimum-stability": "dev",
   "conflict": {
-    "oxid-esales/oxideshop-ce": "<7.2"
+    "oxid-esales/oxideshop-ce": "<7.3"
   },
   "autoload": {
     "psr-4": {

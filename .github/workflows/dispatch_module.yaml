@@ -7,27 +7,27 @@ on:
       scenario:
         type: choice
         options:
-          - 7.2.x
+          - 7.3.x
           - use custom testplan
-        default: '7.2.x'
+        default: '7.3.x'
         description: 'Choose test scenario'
       limit:
         type: choice
         options:
           - 'no'
-          - 'PHP8.2/MySQL5.7'
           - 'PHP8.2/MySQL8.0'
           - 'PHP8.2/MariaDb11'
-          - 'PHP8.3/MySQL5.7'
           - 'PHP8.3/MySQL8.0'
           - 'PHP8.3/MariaDb11'
+          - 'PHP8.4/MySQL8.0'
+          - 'PHP8.4/MariaDb11'
         default: 'PHP8.2/MySQL5.7'
         description: 'Limit to one PHP/MySQL combination'
       custom_testplan:
         type: string
         required: true
         description: 'URL/PATH of the testplan to run'
-        default: '~/defaults/7.2.x.yaml,~/module-evat.yaml'
+        default: '~/defaults/7.3.x.yaml,~/module-evat.yaml'
 
 jobs:
   build_testplan:
@@ -53,9 +53,9 @@ jobs:
                ;;
           esac
           case '${{ inputs.scenario}}' in
-            "7.2.x")
+            "7.3.x")
               # shellcheck disable=SC2088 # Tilde expansion happens in the workflow and not by bash
-              TESTPLAN="~/defaults/7.2.x.yaml,${LIMIT}~/module-evat.yaml"
+              TESTPLAN="~/defaults/7.3.x.yaml,${LIMIT}~/module-evat.yaml"
               ;;
             "use custom testplan")
               # shellcheck disable=SC2088 # Tilde expansion happens in the workflow and not by bash
