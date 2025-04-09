@@ -1,6 +1,7 @@
 name: Auto trigger on Push to 7.3.x*
 
 on:
+  pull_request: {}
   push:
     branches:
       - 'b-7.3.x**'
@@ -9,7 +10,7 @@ jobs:
   push_module:
     uses: oxid-eSales/github-actions/.github/workflows/call-universal_test_workflow.yaml@v4
     with:
-      testplan: '~/defaults/7.3.x.yaml,~/module-evat.yaml'
+      testplan: '~/defaults/7.3.x.yaml,~/defaults/php8.3_mysql8.0_only.yaml,~/module-evat.yaml'
       runs_on: '"ubuntu-latest"'
       defaults: 'v4'
       plan_folder: '.github/oxid-esales'

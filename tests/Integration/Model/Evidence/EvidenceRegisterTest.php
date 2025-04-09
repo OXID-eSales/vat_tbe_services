@@ -10,6 +10,7 @@ use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\EVatModule\Model\Evidence\EvidenceRegister;
 use OxidEsales\EVatModule\Model\Evidence\Item\BillingCountryEvidence;
 use OxidEsales\EVatModule\Service\ModuleSettings;
+use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -43,9 +44,8 @@ class EvidenceRegisterTest extends TestCase
      * No evidences are registered;
      * New evidence is passed for registration with default activation value;
      * Evidence should be added to active evidences list, but be inactive.
-     *
-     * @depends testRegisteringEvidenceWhenNoEvidencesRegistered
      */
+    #[Depends('testRegisteringEvidenceWhenNoEvidencesRegistered')]
     public function testActivatingEvidenceAfterSuccessfulRegistration()
     {
         $this->assertEquals(['billing_country' => 0], ContainerFacade::get(ModuleSettings::class)->getCountryEvidences());
@@ -96,9 +96,8 @@ class EvidenceRegisterTest extends TestCase
      * Registered evidences exists;
      * Evidence class is passed for unregistering;
      * Evidence should be removed from active evidences list.
-     *
-     * @depends testUnregisteringEvidenceWhenItIsRegistered
      */
+    #[Depends('testUnregisteringEvidenceWhenItIsRegistered')]
     public function testRemovingEvidenceAfterItIsUnregistered()
     {
         $this->assertEquals([], ContainerFacade::get(ModuleSettings::class)->getCountryEvidences());
@@ -132,9 +131,8 @@ class EvidenceRegisterTest extends TestCase
      * More evidences exist in the list;
      * Evidence class is passed for unregistering;
      * Evidence should be removed from the list but other evidences should still exist.
-     *
-     * @depends testUnregisteringEvidenceWhenItIsRegisteredAndMoreEvidencesExist
      */
+    #[Depends('testUnregisteringEvidenceWhenItIsRegisteredAndMoreEvidencesExist')]
     public function testRemovingEvidenceAfterItIsUnregisteredAndMoreEvidencesExist()
     {
         $this->assertEquals(['geo_location' => 1], ContainerFacade::get(ModuleSettings::class)->getCountryEvidences());
@@ -167,9 +165,8 @@ class EvidenceRegisterTest extends TestCase
      * More evidences exist in the list;
      * Evidence class is passed for unregistering;
      * Evidence should be removed from the list but other evidences should still exist.
-     *
-     * @depends testUnregisteringEvidenceWhenEvidenceIsNotRegistered
      */
+    #[Depends('testUnregisteringEvidenceWhenEvidenceIsNotRegistered')]
     public function testRemovingEvidenceWhenEvidenceIsNotRegistered()
     {
         $this->assertEquals(['billing_country' => 1], ContainerFacade::get(ModuleSettings::class)->getCountryEvidences());

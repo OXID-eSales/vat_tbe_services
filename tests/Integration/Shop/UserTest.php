@@ -81,7 +81,7 @@ class UserTest extends BaseTestCase
     public function testSaveVatInStoreDateOnNewUserCreation()
     {
         $oUtilsDate = $this->createPartialMock(UtilsDate::class, ["getTime"]);
-        $oUtilsDate->expects($this->any())->method("getTime")->will($this->returnValue(1388664732));
+        $oUtilsDate->expects($this->any())->method("getTime")->willReturn(1388664732);
 
         Registry::set(UtilsDate::class, $oUtilsDate);
 
@@ -123,7 +123,7 @@ class UserTest extends BaseTestCase
     public function testSaveVatInStoreDateA()
     {
         $oUtilsDate = $this->createPartialMock(UtilsDate::class, ["getTime"]);
-        $oUtilsDate->expects($this->any())->method("getTime")->will($this->returnValue(1388664732));
+        $oUtilsDate->expects($this->any())->method("getTime")->willReturn(1388664732);
 
         Registry::set(UtilsDate::class, $oUtilsDate);
 
@@ -152,7 +152,7 @@ class UserTest extends BaseTestCase
     public function testSaveVatInStoreDateB()
     {
         $oUtilsDate = $this->createPartialMock(UtilsDate::class, ["getTime"]);
-        $oUtilsDate->expects($this->any())->method("getTime")->will($this->returnValue(1388664732));
+        $oUtilsDate->expects($this->any())->method("getTime")->willReturn(1388664732);
 
         Registry::set(UtilsDate::class, $oUtilsDate);
 
@@ -178,7 +178,7 @@ class UserTest extends BaseTestCase
     public function testSaveVatInStoreDateC()
     {
         $oUtilsDate = $this->createPartialMock(UtilsDate::class, ["getTime"]);
-        $oUtilsDate->expects($this->any())->method("getTime")->will($this->returnValue(1388664732));
+        $oUtilsDate->expects($this->any())->method("getTime")->willReturn(1388664732);
 
         Registry::set(UtilsDate::class, $oUtilsDate);
 

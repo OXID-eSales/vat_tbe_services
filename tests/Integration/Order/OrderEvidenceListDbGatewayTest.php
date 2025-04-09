@@ -8,6 +8,7 @@ namespace OxidEsales\EVatModule\Tests\Integration\Order;
 
 use OxidEsales\EVatModule\Model\DbGateway\OrderEvidenceListDbGateway;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
+use PHPUnit\Framework\Attributes\Depends;
 
 /**
  * Test class for OrderEvidenceListDbGateway.
@@ -45,10 +46,9 @@ class OrderEvidenceListDbGatewayTest extends BaseTestCase
      *
      * @param OrderEvidenceListDbGateway $oOrderArticleList
      *
-     * @depends testOrderListSavingToDatabase
-     *
      * @return OrderEvidenceListDbGateway
      */
+    #[Depends('testOrderListSavingToDatabase')]
     public function testOrderListLoading($oOrderArticleList)
     {
         $aData = $oOrderArticleList->load('order_id');
@@ -75,9 +75,8 @@ class OrderEvidenceListDbGatewayTest extends BaseTestCase
      * Testing deletion of Order list from database. Test works with database so can be slow.
      *
      * @param OrderEvidenceListDbGateway $oOrderArticleList
-     *
-     * @depends testOrderListLoading
      */
+    #[Depends('testOrderListLoading')]
     public function testDeletingOrderList($oOrderArticleList)
     {
         $oOrderArticleList->delete('order_id');

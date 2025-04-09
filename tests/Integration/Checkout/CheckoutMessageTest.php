@@ -17,6 +17,7 @@ use OxidEsales\EVatModule\Service\ModuleSettings;
 use OxidEsales\EVatModule\Shop\Basket;
 use OxidEsales\EVatModule\Shop\User;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Testing message in checkout process for TBE articles with wrong VAT.
@@ -63,9 +64,8 @@ class CheckoutMessageTest extends BaseTestCase
      *
      * @param array  $aArticles     array of articles to set to basket and check.
      * @param string $sErrorMessage article names which should be displayed in error message.
-     *
-     * @dataProvider providerMessageSetInBasketForAllArticlesWhenUserIsNotLoggedIn
      */
+    #[DataProvider('providerMessageSetInBasketForAllArticlesWhenUserIsNotLoggedIn')]
     public function testMessageSetInBasketForAllArticlesWhenUserIsNotLoggedIn($aArticles, $sErrorMessage)
     {
         /** @var Basket $oBasket */
@@ -104,9 +104,8 @@ class CheckoutMessageTest extends BaseTestCase
      * Check if message is not set in first checkout step when all articles correct and user is not logged in.
      *
      * @param array $aArticles array of articles to set to basket and check.
-     *
-     * @dataProvider providerMessageIsNotSetInBasketWhenUserIsNotLoggedIn
      */
+    #[DataProvider('providerMessageIsNotSetInBasketWhenUserIsNotLoggedIn')]
     public function testMessageIsNotSetInBasketWhenUserIsNotLoggedIn($aArticles)
     {
         /** @var Basket $oBasket */
@@ -151,9 +150,8 @@ class CheckoutMessageTest extends BaseTestCase
      *
      * @param array  $aArticles     array of articles to set to basket and check.
      * @param string $sErrorMessage article names which should be displayed in error message.
-     *
-     * @dataProvider providerMessageSetInBasketForWrongVATArticlesWhenUserIsLoggedIn
      */
+    #[DataProvider('providerMessageSetInBasketForWrongVATArticlesWhenUserIsLoggedIn')]
     public function testMessageSetInBasketForWrongVATArticlesWhenUserIsLoggedIn($aArticles, $sErrorMessage)
     {
         $oSession = Registry::getSession();
@@ -233,9 +231,8 @@ class CheckoutMessageTest extends BaseTestCase
      * Check if message is not set in first checkout step when all articles are correct when user is logged in.
      *
      * @param array $aArticles array of articles to set to basket and check.
-     *
-     * @dataProvider providerMessageIsNotSetInBasketWhenUserIsLoggedIn
      */
+    #[DataProvider('providerMessageIsNotSetInBasketWhenUserIsLoggedIn')]
     public function testMessageIsNotSetInBasketWhenUserIsLoggedIn($aArticles)
     {
         $oSession = Registry::getSession();
@@ -313,7 +310,7 @@ class CheckoutMessageTest extends BaseTestCase
             ->disableOriginalConstructor()
             ->onlyMethods(['send'])
             ->getMock();
-        $mailer->expects($this->any())->method("send")->will($this->returnValue(true));
+        $mailer->expects($this->any())->method("send")->willReturn(true);
 
         $oSession = Registry::getSession();
         $oSession->setVariable('sess_stoken', 'stoken');
@@ -359,7 +356,7 @@ class CheckoutMessageTest extends BaseTestCase
             ->disableOriginalConstructor()
             ->onlyMethods(['send'])
             ->getMock();
-        $mailer->expects($this->any())->method("send")->will($this->returnValue(true));
+        $mailer->expects($this->any())->method("send")->willReturn(true);
 
         $oSession = Registry::getSession();
         $oSession->setVariable('sess_stoken', 'stoken');

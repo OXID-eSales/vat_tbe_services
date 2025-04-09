@@ -16,6 +16,7 @@ use OxidEsales\EVatModule\Shop\Basket;
 use OxidEsales\EVatModule\Shop\Order;
 use OxidEsales\EVatModule\Shop\User;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Testing oeVATTBEOrder class.
@@ -40,9 +41,8 @@ class OrderTest extends BaseTestCase
      * Evidence list should be saved to database.
      *
      * @param int $iOrderState Order state when evidence list should be saved.
-     *
-     * @dataProvider providerSavingEvidenceList
      */
+    #[DataProvider('providerSavingEvidenceList')]
     public function testSavingEvidenceList($iOrderState)
     {
         $oSession = Registry::getSession();
@@ -57,7 +57,7 @@ class OrderTest extends BaseTestCase
         $oBasket = $this->getMockBuilder(Basket::class)
                 ->onlyMethods(array("hasOeTBEVATArticles"))
                 ->getMock();
-        $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue(true));
+        $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->willReturn(true);
 
         /** @var User $oUser */
         $oUser = oxNew(User::class);
@@ -67,7 +67,7 @@ class OrderTest extends BaseTestCase
         $oOrder = $this->getMockBuilder(Order::class)
                 ->onlyMethods(array("getFinalizeOrderParent"))
                 ->getMock();
-        $oOrder->expects($this->any())->method("getFinalizeOrderParent")->will($this->returnValue($iOrderState));
+        $oOrder->expects($this->any())->method("getFinalizeOrderParent")->willReturn($iOrderState);
 
         $oOrder->setId('new_order_id');
         $oOrder->finalizeOrder($oBasket, $oUser, false);
@@ -104,13 +104,13 @@ class OrderTest extends BaseTestCase
         $oUser = $this->getMockBuilder(User::class)
                 ->onlyMethods(array("getOeVATTBETbeEvidenceUsed"))
                 ->getMock();
-        $oUser->expects($this->any())->method('getOeVATTBETbeEvidenceUsed')->will($this->returnValue('billing_country'));
+        $oUser->expects($this->any())->method('getOeVATTBETbeEvidenceUsed')->willReturn('billing_country');
 
         /** @var Order$oOrder */
         $oOrder = $this->getMockBuilder(Order::class)
                 ->onlyMethods(array("getFinalizeOrderParent"))
                 ->getMock();
-        $oOrder->expects($this->any())->method("getFinalizeOrderParent")->will($this->returnValue(Order::ORDER_STATE_PAYMENTERROR));
+        $oOrder->expects($this->any())->method("getFinalizeOrderParent")->willReturn(Order::ORDER_STATE_PAYMENTERROR);
 
         $oOrder->setId('new_order_id');
         $oOrder->finalizeOrder($oBasket, $oUser, false);
@@ -132,13 +132,13 @@ class OrderTest extends BaseTestCase
         $oUser = $this->getMockBuilder(User::class)
                 ->onlyMethods(array("getOeVATTBETbeEvidenceUsed"))
                 ->getMock();
-        $oUser->expects($this->any())->method('getOeVATTBETbeEvidenceUsed')->will($this->returnValue('geo_location'));
+        $oUser->expects($this->any())->method('getOeVATTBETbeEvidenceUsed')->willReturn('geo_location');
 
         /** @var Order $oOrder */
         $oOrder = $this->getMockBuilder(Order::class)
                 ->onlyMethods(array("getFinalizeOrderParent"))
                 ->getMock();
-        $oOrder->expects($this->any())->method("getFinalizeOrderParent")->will($this->returnValue(Order::ORDER_STATE_PAYMENTERROR));
+        $oOrder->expects($this->any())->method("getFinalizeOrderParent")->willReturn(Order::ORDER_STATE_PAYMENTERROR);
         $oOrder->assign([
             'oevattbe_evidenceused' => 'billing_country'
         ]);
@@ -162,7 +162,7 @@ class OrderTest extends BaseTestCase
         $oBasket = $this->getMockBuilder(Basket::class)
                 ->onlyMethods(array("hasOeTBEVATArticles"))
                 ->getMock();
-        $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue(true));
+        $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->willReturn(true);
 
         /** @var User $oUser */
         $oUser = oxNew(User::class);
@@ -171,7 +171,7 @@ class OrderTest extends BaseTestCase
         $oOrder = $this->getMockBuilder(Order::class)
                 ->onlyMethods(array("getFinalizeOrderParent"))
                 ->getMock();
-        $oOrder->expects($this->any())->method("getFinalizeOrderParent")->will($this->returnValue(Order::ORDER_STATE_OK));
+        $oOrder->expects($this->any())->method("getFinalizeOrderParent")->willReturn(Order::ORDER_STATE_OK);
 
         $oOrder->setId('new_order_id');
         $oOrder->save();
@@ -212,9 +212,8 @@ class OrderTest extends BaseTestCase
      *
      * @param int  $iOrderState      Order state when evidence list should not be saved.
      * @param bool $blHasTBEArticles Order state when evidence list should not be saved.
-     *
-     * @dataProvider providerNotSavingEvidenceListOnFailedOrder
      */
+    #[DataProvider('providerNotSavingEvidenceListOnFailedOrder')]
     public function testNotSavingEvidenceListOnFailedOrder($iOrderState, $blHasTBEArticles)
     {
         $moduleSettings = ContainerFacade::get(ModuleSettings::class);
@@ -225,7 +224,7 @@ class OrderTest extends BaseTestCase
         $oBasket = $this->getMockBuilder(Basket::class)
                 ->onlyMethods(array("hasOeTBEVATArticles"))
                 ->getMock();
-        $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue($blHasTBEArticles));
+        $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->willReturn($blHasTBEArticles);
 
         /** @var User $oUser */
         $oUser = oxNew(User::class);
@@ -234,7 +233,7 @@ class OrderTest extends BaseTestCase
         $oOrder = $this->getMockBuilder(Order::class)
                 ->onlyMethods(array("getFinalizeOrderParent"))
                 ->getMock();
-        $oOrder->expects($this->any())->method("getFinalizeOrderParent")->will($this->returnValue($iOrderState));
+        $oOrder->expects($this->any())->method("getFinalizeOrderParent")->willReturn($iOrderState);
 
         $oOrder->setId('new_order_id');
         $oOrder->finalizeOrder($oBasket, $oUser, false);

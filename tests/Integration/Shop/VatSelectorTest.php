@@ -12,6 +12,7 @@ use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\EVatModule\Service\ModuleSettings;
 use OxidEsales\EVatModule\Shop\Article;
 use OxidEsales\EVatModule\Shop\VatSelector;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use OxidEsales\Eshop\Application\Model\User;
 
@@ -39,14 +40,13 @@ class VatSelectorTest extends TestCase
 
     /**
      * @param int $iVat
-     *
-     * @dataProvider providerArticleUserVatCalculationWhenHasTbeVatAndIsTbeArticle
      */
+    #[DataProvider('providerArticleUserVatCalculationWhenHasTbeVatAndIsTbeArticle')]
     public function testArticleUserVatCalculationWhenHasTbeVatAndIsTbeArticle($iVat)
     {
         $oArticle = $this->createPartialMock(Article::class, ['getOeVATTBETBEVat', 'isOeVATTBETBEService']);
-        $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->will($this->returnValue($iVat));
-        $oArticle->expects($this->any())->method('isOeVATTBETBEService')->will($this->returnValue(true));
+        $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->willReturn($iVat);
+        $oArticle->expects($this->any())->method('isOeVATTBETBEService')->willReturn(true);
 
         $oVatSelector = oxNew(VatSelector::class);
 
@@ -60,8 +60,8 @@ class VatSelectorTest extends TestCase
     public function testArticleUserVatCalculationWhenTbeVatNotSetAndIsTbeArticle()
     {
         $oArticle = $this->createPartialMock(Article::class, ['getOeVATTBETBEVat', 'isOeVATTBETBEService']);
-        $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->will($this->returnValue(null));
-        $oArticle->expects($this->any())->method('isOeVATTBETBEService')->will($this->returnValue(true));
+        $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->willReturn(null);
+        $oArticle->expects($this->any())->method('isOeVATTBETBEService')->willReturn(true);
 
         $oVatSelector = oxNew(VatSelector::class);
 
@@ -75,8 +75,8 @@ class VatSelectorTest extends TestCase
     public function testArticleUserVatCalculationWhenTbeVatSetAndIsNotTbeArticle()
     {
         $oArticle = $this->createPartialMock(Article::class, ['getOeVATTBETBEVat', 'isOeVATTBETBEService']);
-        $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->will($this->returnValue(15));
-        $oArticle->expects($this->any())->method('isOeVATTBETBEService')->will($this->returnValue(false));
+        $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->willReturn(15);
+        $oArticle->expects($this->any())->method('isOeVATTBETBEService')->willReturn(false);
 
         $oVatSelector = oxNew(VatSelector::class);
 
@@ -89,8 +89,8 @@ class VatSelectorTest extends TestCase
     public function testArticleUserVatCalculationWhenIsAdmin()
     {
         $oArticle = $this->createPartialMock(Article::class, ['getOeVATTBETBEVat', 'isOeVATTBETBEService']);
-        $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->will($this->returnValue(15));
-        $oArticle->expects($this->any())->method('isOeVATTBETBEService')->will($this->returnValue(true));
+        $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->willReturn(15);
+        $oArticle->expects($this->any())->method('isOeVATTBETBEService')->willReturn(true);
 
         Registry::getSession()->setAdminMode(true);
         Registry::getConfig()->setAdminMode(true);
@@ -111,8 +111,8 @@ class VatSelectorTest extends TestCase
         ContainerFacade::get(ModuleSettings::class)->saveDomesticCountry('DE');
         Registry::getSession()->setVariable('TBECountryId', 'a7c40f631fc920687.20179984');
         $oArticle = $this->createPartialMock(Article::class, ['getOeVATTBETBEVat', 'isOeVATTBETBEService']);
-        $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->will($this->returnValue(15));
-        $oArticle->expects($this->any())->method('isOeVATTBETBEService')->will($this->returnValue(true));
+        $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->willReturn(15);
+        $oArticle->expects($this->any())->method('isOeVATTBETBEService')->willReturn(true);
 
         $oVatSelector = oxNew(VatSelector::class);
 
@@ -127,8 +127,8 @@ class VatSelectorTest extends TestCase
         ContainerFacade::get(ModuleSettings::class)->saveDomesticCountry('LT');
         Registry::getSession()->setVariable('TBECountryId', 'a7c40f631fc920687.20179984');
         $oArticle = $this->createPartialMock(Article::class, ['getOeVATTBETBEVat', 'isOeVATTBETBEService']);
-        $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->will($this->returnValue(15));
-        $oArticle->expects($this->any())->method('isOeVATTBETBEService')->will($this->returnValue(true));
+        $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->willReturn(15);
+        $oArticle->expects($this->any())->method('isOeVATTBETBEService')->willReturn(true);
 
         $oVatSelector = oxNew(VatSelector::class);
 
@@ -148,8 +148,8 @@ class VatSelectorTest extends TestCase
         ContainerFacade::get(ModuleSettings::class)->saveDomesticCountry('LT');
         Registry::getSession()->setVariable('TBECountryId', 'a7c40f631fc920687.20179984');
         $oArticle = $this->createPartialMock(Article::class, ['getOeVATTBETBEVat', 'isOeVATTBETBEService']);
-        $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->will($this->returnValue(15));
-        $oArticle->expects($this->any())->method('isOeVATTBETBEService')->will($this->returnValue(true));
+        $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->willReturn(15);
+        $oArticle->expects($this->any())->method('isOeVATTBETBEService')->willReturn(true);
         $oArticle->setArticleUser($oUser);
 
         /** @var VatSelector $oVatSelector */
@@ -171,8 +171,8 @@ class VatSelectorTest extends TestCase
         ContainerFacade::get(ModuleSettings::class)->saveDomesticCountry('LT');
         Registry::getSession()->setVariable('TBECountryId', 'a7c40f631fc920687.20179984');
         $oArticle = $this->createPartialMock(Article::class, ['getOeVATTBETBEVat', 'isOeVATTBETBEService']);
-        $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->will($this->returnValue(15));
-        $oArticle->expects($this->any())->method('isOeVATTBETBEService')->will($this->returnValue(true));
+        $oArticle->expects($this->any())->method('getOeVATTBETBEVat')->willReturn(15);
+        $oArticle->expects($this->any())->method('isOeVATTBETBEService')->willReturn(true);
         $oArticle->setArticleUser($oUser);
 
         /** @var VatSelector $oVatSelector */

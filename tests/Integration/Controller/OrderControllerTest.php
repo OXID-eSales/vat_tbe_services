@@ -12,6 +12,7 @@ use OxidEsales\EVatModule\Controller\OrderController;
 use OxidEsales\EVatModule\Service\ModuleSettings;
 use OxidEsales\EVatModule\Shop\Basket;
 use OxidEsales\EVatModule\Shop\Country;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -41,9 +42,8 @@ class OrderControllerTest extends TestCase
      * @param bool $blHasTBEArticles       Whether basket has TBE articles.
      * @param bool $blValidArticles        Is all basket articles valid.
      * @param bool $blCountryAppliesTBEVAT Whether country is configured as TBE country.
-     *
-     * @dataProvider providerShowVATTBEMarkMessageWhenMessageShouldBeHidden
      */
+    #[DataProvider('providerShowVATTBEMarkMessageWhenMessageShouldBeHidden')]
     public function testShowVATTBEMarkMessageWhenMessageShouldBeHidden($blIsDomesticCountry, $blHasTBEArticles, $blValidArticles, $blCountryAppliesTBEVAT)
     {
         $sDomesticCountryAbbr = $blIsDomesticCountry ? 'LT' : 'DE';
@@ -51,12 +51,12 @@ class OrderControllerTest extends TestCase
         Registry::getSession()->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
 
         $oCountry = $this->createPartialMock(Country::class, ['appliesOeTBEVATTbeVat']);
-        $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->will($this->returnValue($blCountryAppliesTBEVAT));
+        $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->willReturn($blCountryAppliesTBEVAT);
 
         $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'isOeVATTBEValid', 'getOeVATTBECountry']);
-        $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue($blHasTBEArticles));
-        $oBasket->expects($this->any())->method("isOeVATTBEValid")->will($this->returnValue($blValidArticles));
-        $oBasket->expects($this->any())->method("getOeVATTBECountry")->will($this->returnValue($oCountry));
+        $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->willReturn($blHasTBEArticles);
+        $oBasket->expects($this->any())->method("isOeVATTBEValid")->willReturn($blValidArticles);
+        $oBasket->expects($this->any())->method("getOeVATTBECountry")->willReturn($oCountry);
         Registry::getSession()->setBasket($oBasket);
 
         $oOrderController = oxNew(OrderController::class);
@@ -76,12 +76,12 @@ class OrderControllerTest extends TestCase
         Registry::getSession()->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
 
         $oCountry = $this->createPartialMock(Country::class, ['appliesOeTBEVATTbeVat']);
-        $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->will($this->returnValue(true));
+        $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->willReturn(true);
 
         $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'isOeVATTBEValid', 'getOeVATTBECountry']);
-        $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(true));
-        $oBasket->expects($this->any())->method("isOeVATTBEValid")->will($this->returnValue(true));
-        $oBasket->expects($this->any())->method("getOeVATTBECountry")->will($this->returnValue($oCountry));
+        $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->willReturn(true);
+        $oBasket->expects($this->any())->method("isOeVATTBEValid")->willReturn(true);
+        $oBasket->expects($this->any())->method("getOeVATTBECountry")->willReturn($oCountry);
         Registry::getSession()->setBasket($oBasket);
 
         $oOrderController = oxNew(OrderController::class);
@@ -94,13 +94,13 @@ class OrderControllerTest extends TestCase
     public function testGetMarkMessageHasTBEArticleInBasketValidCountryTBE()
     {
         $oCountry = $this->createPartialMock(Country::class, ["appliesOeTBEVATTbeVat", 'getOeVATTBEName']);
-        $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->will($this->returnValue(true));
-        $oCountry->expects($this->any())->method("getOeVATTBEName")->will($this->returnValue('Deutschland'));
+        $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->willReturn(true);
+        $oCountry->expects($this->any())->method("getOeVATTBEName")->willReturn('Deutschland');
 
         $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'isOeVATTBEValid', 'getOeVATTBECountry']);
-        $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(true));
-        $oBasket->expects($this->any())->method("isOeVATTBEValid")->will($this->returnValue(true));
-        $oBasket->expects($this->any())->method("getOeVATTBECountry")->will($this->returnValue($oCountry));
+        $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->willReturn(true);
+        $oBasket->expects($this->any())->method("isOeVATTBEValid")->willReturn(true);
+        $oBasket->expects($this->any())->method("getOeVATTBECountry")->willReturn($oCountry);
 
         Registry::getSession()->setBasket($oBasket);
 

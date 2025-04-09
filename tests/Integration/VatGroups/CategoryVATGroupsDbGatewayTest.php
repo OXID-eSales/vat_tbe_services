@@ -8,6 +8,7 @@ namespace OxidEsales\EVatModule\Tests\Integration\VatGroups;
 
 use OxidEsales\EVatModule\Model\DbGateway\CategoryVATGroupsDbGateway;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
+use PHPUnit\Framework\Attributes\Depends;
 
 /**
  * Test class for CategoryVATGroupsDbGateway.
@@ -43,10 +44,9 @@ class CategoryVATGroupsDbGatewayTest extends BaseTestCase
      *
      * @param string $sCategoryId Category id, for which group was created.
      *
-     * @depends testSavingVATGroupToDatabase
-     *
      * @return string Category id, for which record was saved.
      */
+    #[Depends('testSavingVATGroupToDatabase')]
     public function testUpdatingVATGroupToDatabase($sCategoryId)
     {
         /** @var CategoryVATGroupsDbGateway $oVatGroupsGateway */
@@ -76,10 +76,9 @@ class CategoryVATGroupsDbGatewayTest extends BaseTestCase
      *
      * @param string $sCategoryId Category id, for which group was created.
      *
-     * @depends testUpdatingVATGroupToDatabase
-     *
      * @return string
      */
+    #[Depends('testUpdatingVATGroupToDatabase')]
     public function testVATGroupLoading($sCategoryId)
     {
         $oVatGroupsGateway = oxNew(CategoryVATGroupsDbGateway::class);
@@ -110,10 +109,9 @@ class CategoryVATGroupsDbGatewayTest extends BaseTestCase
      *
      * @param string $sCategoryId Category id, for which group was created.
      *
-     * @depends testVATGroupLoading
-     *
      * @return string
      */
+    #[Depends('testVATGroupLoading')]
     public function testVATGroupLoadingByGroupId($sCategoryId)
     {
         /** @var CategoryVATGroupsDbGateway $oVatGroupsGateway */
@@ -138,9 +136,8 @@ class CategoryVATGroupsDbGatewayTest extends BaseTestCase
      * Testing deletion of VAT Group from database.
      *
      * @param string $sCategoryId category id
-     *
-     * @depends testVATGroupLoadingByGroupId
      */
+    #[Depends('testVATGroupLoadingByGroupId')]
     public function testDeletingVATGroupList($sCategoryId)
     {
         $oVatGroupsGateway = oxNew(CategoryVATGroupsDbGateway::class);

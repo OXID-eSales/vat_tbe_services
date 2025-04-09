@@ -9,6 +9,7 @@ namespace OxidEsales\EVatModule\Tests\Integration\VatGroups;
 use OxidEsales\EshopCommunity\Tests\ContainerTrait;
 use OxidEsales\EVatModule\Model\CountryVATGroup;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
+use PHPUnit\Framework\Attributes\Depends;
 
 /**
  * Testing CountryVATGroupsList class.
@@ -48,9 +49,8 @@ class CountryVATGroupTest extends BaseTestCase
      * Tests updating group without loading it, but providing its id and all info instead.
      *
      * @param string $sGroupId
-     *
-     * @depends testSavingGroup
      */
+    #[Depends('testSavingGroup')]
     public function testUpdatingGroupWithoutLoadingIt($sGroupId)
     {
         $oGroup = $this->get(CountryVATGroup::class);

@@ -16,6 +16,7 @@ use OxidEsales\EVatModule\Shop\Basket;
 use OxidEsales\EVatModule\Shop\Order;
 use OxidEsales\EVatModule\Shop\User;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
+use PHPUnit\Framework\Attributes\Depends;
 
 /**
  * Testing admin controller class.
@@ -53,8 +54,8 @@ class OrderMainTest extends BaseTestCase
      *
      * @param array $aViewData View data which is given to template.
      *
-     * @depends testTBECountryTitle
      */
+    #[Depends('testTBECountryTitle')]
     public function testTBEEvidenceData($aViewData)
     {
         $aEvidenceData = $aViewData['aEvidencesData'];
@@ -84,7 +85,7 @@ class OrderMainTest extends BaseTestCase
         $oBasket = $this->getMockBuilder(Basket::class)
             ->onlyMethods(array("hasOeTBEVATArticles"))
             ->getMock();
-        $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue(true));
+        $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->willReturn(true);
         /** @var User $oUser */
         $oUser = oxNew(User::class);
         $oUser->assign([
@@ -101,7 +102,7 @@ class OrderMainTest extends BaseTestCase
         $oOrder = $this->getMockBuilder(Order::class)
             ->onlyMethods(array("getFinalizeOrderParent"))
             ->getMock();
-        $oOrder->expects($this->any())->method("getFinalizeOrderParent")->will($this->returnValue(Order::ORDER_STATE_OK));
+        $oOrder->expects($this->any())->method("getFinalizeOrderParent")->willReturn(Order::ORDER_STATE_OK);
 
         $oOrder->setId('order_id');
         $oOrder->finalizeOrder($oBasket, $oUser, false);

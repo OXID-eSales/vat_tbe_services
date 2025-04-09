@@ -70,8 +70,8 @@ class EvidenceListTest extends TestCase
     {
         /** @var Evidence|MockObject $oUser */
         $oEvidence = $this->createPartialMock(Evidence::class, ['getId', 'getCountryId']);
-        $oEvidence->expects($this->any())->method('getId')->will($this->returnValue($sName));
-        $oEvidence->expects($this->any())->method('getCountryId')->will($this->returnValue($sCountry));
+        $oEvidence->expects($this->any())->method('getId')->willReturn($sName);
+        $oEvidence->expects($this->any())->method('getCountryId')->willReturn($sCountry);
 
         return $oEvidence;
     }

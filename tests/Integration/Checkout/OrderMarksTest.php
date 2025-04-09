@@ -18,6 +18,7 @@ use OxidEsales\EVatModule\Shop\Article;
 use OxidEsales\EVatModule\Shop\Basket;
 use OxidEsales\EVatModule\Shop\Country;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Testing BasketController class.
@@ -57,9 +58,8 @@ class OrderMarksTest extends BaseTestCase
      * @param bool $blIsArticleTbeService Article tbe or not
      * @param bool $blIsCountryConfigured Configured country or not
      * @param bool $blResult              Expected result
-     *
-     * @dataProvider providerShowVATTBEMark
      */
+    #[DataProvider('providerShowVATTBEMark')]
     public function testShowVATTBEMark($blIsUserLoggedIn, $blIsArticleTbeService, $blIsCountryConfigured, $blResult)
     {
         ContainerFacade::get(ModuleSettings::class)->saveDomesticCountry('AT');
@@ -132,9 +132,8 @@ class OrderMarksTest extends BaseTestCase
      *
      * @param bool   $blIsArticleValid Article is valid / invalid
      * @param string $blResult         Expected value
-     *
-     * @dataProvider providerIsTBEArticleValid
      */
+    #[DataProvider('providerIsTBEArticleValid')]
     public function testIsTBEArticleValid($blIsArticleValid, $blResult)
     {
         ContainerFacade::get(ModuleSettings::class)->saveDomesticCountry('AT');

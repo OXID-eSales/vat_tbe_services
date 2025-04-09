@@ -12,6 +12,7 @@ use OxidEsales\EVatModule\Controller\Admin\CategoryAdministration;
 use OxidEsales\EVatModule\Controller\Admin\CategoryMainAjax;
 use OxidEsales\EVatModule\Shop\Category;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
+use PHPUnit\Framework\Attributes\Depends;
 
 /**
  * Test class for.
@@ -31,7 +32,7 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
         $oController = $this->getMockBuilder(ArticleExtendAjax::class)
                 ->onlyMethods(array("getActionIds"))
                 ->getMock();
-        $oController->expects($this->any())->method('getActionIds')->will($this->returnValue(array('categoryId2')));
+        $oController->expects($this->any())->method('getActionIds')->willReturn(array('categoryId2'));
 
         $oController->addCat();
 
@@ -54,7 +55,7 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
         $oController = $this->getMockBuilder(ArticleExtendAjax::class)
                 ->onlyMethods(array("getActionIds"))
                 ->getMock();
-        $oController->expects($this->any())->method('getActionIds')->will($this->returnValue(array('categoryId')));
+        $oController->expects($this->any())->method('getActionIds')->willReturn(array('categoryId'));
 
         $oController->addCat();
 
@@ -76,7 +77,7 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
         $oController = $this->getMockBuilder(CategoryMainAjax::class)
                 ->onlyMethods(array("getActionIds"))
                 ->getMock();
-        $oController->expects($this->any())->method('getActionIds')->will($this->returnValue(array('article1')));
+        $oController->expects($this->any())->method('getActionIds')->willReturn(array('article1'));
 
         $oController->addArticle();
 
@@ -98,7 +99,7 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
         $oController = $this->getMockBuilder(CategoryMainAjax::class)
                 ->onlyMethods(array("getActionIds"))
                 ->getMock();
-        $oController->expects($this->any())->method('getActionIds')->will($this->returnValue(array('article1')));
+        $oController->expects($this->any())->method('getActionIds')->willReturn(array('article1'));
         $oController->addArticle();
 
         $this->assertEquals(1, $this->getAssignedToCategoryProductsCount());
@@ -108,9 +109,8 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
 
     /**
      * Test check when 1 article is unassigned from category.
-     *
-     * @depends testPopulateAddingArticleToCategoryTBE
      */
+    #[Depends('testPopulateAddingArticleToCategoryTBE')]
     public function testRemoveArticleFromCategoryWhenOneArticleIsRemoved()
     {
         $this->cleanFixtures();
@@ -119,7 +119,7 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
         $oController = $this->getMockBuilder(CategoryMainAjax::class)
                 ->onlyMethods(array("getActionIds"))
                 ->getMock();
-        $oController->expects($this->any())->method('getActionIds')->will($this->returnValue(array('article1')));
+        $oController->expects($this->any())->method('getActionIds')->willReturn(array('article1'));
 
         $_POST['oxid'] = '';
         $oController->removeArticle();
@@ -142,7 +142,7 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
         $oController = $this->getMockBuilder(CategoryMainAjax::class)
                 ->onlyMethods(array('getActionIds', 'getAll', 'addFilter'))
                 ->getMock();
-        $oController->expects($this->atLeastOnce())->method('getAll')->will($this->returnValue(array('article3', 'article4')));
+        $oController->expects($this->atLeastOnce())->method('getAll')->willReturn(array('article3', 'article4'));
 
         $_POST['all'] = 1;
         $_POST['oxid'] = '';

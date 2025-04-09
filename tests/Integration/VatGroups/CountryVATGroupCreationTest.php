@@ -13,6 +13,7 @@ use OxidEsales\EVatModule\Model\CountryVATGroup;
 use OxidEsales\EVatModule\Model\CountryVATGroupsList;
 use OxidEsales\EVatModule\Model\DbGateway\CountryVATGroupsDbGateway;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Testing CountryVatGroups class.
@@ -45,9 +46,8 @@ class CountryVATGroupCreationTest extends BaseTestCase
      * @param float  $fVATRate          vat rate.
      * @param string $sGroupDescription group description.
      * @param string $sExpectedVatRate  vat rate after database formatting.
-     *
-     * @dataProvider providerCreateNewGroup
      */
+    #[DataProvider('providerCreateNewGroup')]
     public function testCreateNewGroup($sGroupName, $fVATRate, $sGroupDescription, $sExpectedVatRate)
     {
         $sCountryId = 'some_country_id';
@@ -101,9 +101,8 @@ class CountryVATGroupCreationTest extends BaseTestCase
      * @param string $sGroupName        group name.
      * @param float  $fVATRate          vat rate.
      * @param string $sGroupDescription group description.
-     *
-     * @dataProvider providerCreateNewGroupFailWhenMissingRequiredData
      */
+    #[DataProvider('providerCreateNewGroupFailWhenMissingRequiredData')]
     public function testCreateNewGroupFailWithErrorMessageWhenMissingRequiredData($sGroupName, $fVATRate, $sGroupDescription)
     {
         $_POST['editval'] = [

@@ -8,6 +8,7 @@ namespace OxidEsales\EVatModule\Tests\Integration\VatGroups;
 
 use OxidEsales\EVatModule\Model\DbGateway\CategoryVATGroupsPopulatorDbGateway;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
+use PHPUnit\Framework\Attributes\Depends;
 
 /**
  * Test class for CategoryVATGroupsPopulatorDbGateway.
@@ -57,9 +58,8 @@ class CategoryVATGroupsPopulatorDbGatewayTest extends BaseTestCase
      * Checks if reset works correctly for articles.
      *
      * @param CategoryVATGroupsPopulatorDbGateway $oDbGateway
-     *
-     * @depends testPopulateExistingCategory
      */
+    #[Depends('testPopulateExistingCategory')]
     public function testResetArticles($oDbGateway)
     {
         $this->_cleanFixturesData();

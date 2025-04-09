@@ -10,6 +10,7 @@ use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Model\IncorrectVATArticlesMessageFormatter;
 use OxidEsales\EVatModule\Shop\Article;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Testing message formatter in IncorrectVATArticlesMessageFormatter.
@@ -50,9 +51,8 @@ class MessageFormatterTest extends BaseTestCase
      *
      * @param array  $oInvalidArticles fake articles to form error message.
      * @param string $sExpectedMessage expected error message.
-     *
-     * @dataProvider providerGetMessage
      */
+    #[DataProvider('providerGetMessage')]
     public function testGetMessage($oInvalidArticles, $sExpectedMessage)
     {
         /** @var IncorrectVATArticlesMessageFormatter $oVATTBEArticleMessageFormer */

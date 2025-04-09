@@ -10,6 +10,7 @@ use OxidEsales\EshopCommunity\Core\Registry;
 use OxidEsales\Eshop\Application\Model\User;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 use PHPUnit\Framework\Attributes\ExcludeGlobalVariableFromBackup;
+use PHPUnit\Framework\Attributes\Depends;
 
 /**
  * Testing TBEUser class.
@@ -62,10 +63,9 @@ class CountryChangeEventsTest extends BaseTestCase
      *
      * @param User $oUser
      *
-     * @depends testGetOeVATTBECountryAfterUserCreated
-     *
      * @return User
      */
+    #[Depends('testGetOeVATTBECountryAfterUserCreated')]
     public function testGetOeVATTBECountryAfterUserChangeEvent($oUser)
     {
         $sAustriaId = $this->_sAustriaId;
@@ -88,10 +88,9 @@ class CountryChangeEventsTest extends BaseTestCase
      *
      * @param User $oUser
      *
-     * @depends testGetOeVATTBECountryAfterUserChangeEvent
-     *
      * @return User
      */
+    #[Depends('testGetOeVATTBECountryAfterUserChangeEvent')]
     public function testGetOeVATTBECountryAfterLogout($oUser)
     {
         $sUnitedKingdom = $this->_sUnitedKingdom;
@@ -114,10 +113,9 @@ class CountryChangeEventsTest extends BaseTestCase
      *
      * @param User $oUser
      *
-     * @depends testGetOeVATTBECountryAfterLogout
-     *
      * @return User
      */
+    #[Depends('testGetOeVATTBECountryAfterLogout')]
     public function testGetOeVATTBECountryAfterUserFailsLogIn($oUser)
     {
         $sAustriaId = $this->_sAustriaId;
@@ -144,9 +142,8 @@ class CountryChangeEventsTest extends BaseTestCase
      * User TBE Country should be recalculated.
      *
      * @param User $oUser
-     *
-     * @depends testGetOeVATTBECountryAfterUserFailsLogIn
      */
+    #[Depends('testGetOeVATTBECountryAfterUserFailsLogIn')]
     public function testGetOeVATTBECountryAfterUserLogsIn($oUser)
     {
         $sAustriaId = $this->_sAustriaId;

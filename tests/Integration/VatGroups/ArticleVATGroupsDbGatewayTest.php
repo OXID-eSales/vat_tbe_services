@@ -8,6 +8,7 @@ namespace OxidEsales\EVatModule\Tests\Integration\VatGroups;
 
 use OxidEsales\EVatModule\Model\DbGateway\ArticleVATGroupsDbGateway;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
+use PHPUnit\Framework\Attributes\Depends;
 
 /**
  * Test class for ArticleVATGroupsDbGateway.
@@ -43,10 +44,9 @@ class ArticleVATGroupsDbGatewayTest extends BaseTestCase
      *
      * @param string $sArticleId Article id, for which group was created.
      *
-     * @depends testSavingVATGroupToDatabase
-     *
      * @return string Article id, for which record was saved.
      */
+    #[Depends('testSavingVATGroupToDatabase')]
     public function testUpdatingVATGroupToDatabase($sArticleId)
     {
         /** @var ArticleVATGroupsDbGateway $oVatGroupsGateway */
@@ -76,10 +76,9 @@ class ArticleVATGroupsDbGatewayTest extends BaseTestCase
      *
      * @param string $sArticleId Article id, for which group was created.
      *
-     * @depends testUpdatingVATGroupToDatabase
-     *
      * @return string
      */
+    #[Depends('testUpdatingVATGroupToDatabase')]
     public function testVATGroupLoading($sArticleId)
     {
         $oVatGroupsGateway = oxNew(ArticleVATGroupsDbGateway::class);
@@ -110,10 +109,9 @@ class ArticleVATGroupsDbGatewayTest extends BaseTestCase
      *
      * @param string $sArticleId Article id, for which group was created.
      *
-     * @depends testVATGroupLoading
-     *
      * @return string
      */
+    #[Depends('testVATGroupLoading')]
     public function testVATGroupLoadingByGroupId($sArticleId)
     {
         /** @var ArticleVATGroupsDbGateway $oVatGroupsGateway */
@@ -138,9 +136,8 @@ class ArticleVATGroupsDbGatewayTest extends BaseTestCase
      * Testing deletion of VAT Group from database.
      *
      * @param string $sArticleId article id
-     *
-     * @depends testVATGroupLoadingByGroupId
      */
+    #[Depends('testVATGroupLoadingByGroupId')]
     public function testDeletingVATGroupList($sArticleId)
     {
         $oVatGroupsGateway = oxNew(ArticleVATGroupsDbGateway::class);

@@ -16,6 +16,7 @@ use OxidEsales\EVatModule\Shop\Country;
 use OxidEsales\Eshop\Application\Model\Country as EShopCountry;
 use OxidEsales\EVatModule\Shop\User;
 use OxidEsales\Eshop\Application\Model\User as EShopUser;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use OxidEsales\Eshop\Application\Model\Basket as EShopBasket;
@@ -35,7 +36,7 @@ class BasketControllerTest extends TestCase
         ContainerFacade::get(ModuleSettings::class)->saveDomesticCountry('DE');
 
         $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles']);
-        $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(true));
+        $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->willReturn(true);
         Registry::getSession()->setBasket($oBasket);
 
         /** @var BasketController|EShopBasketController $oBasketController */
@@ -59,12 +60,12 @@ class BasketControllerTest extends TestCase
 
         /** @var Country|EShopCountry|MockObject $oCountry */
         $oCountry = $this->createPartialMock(Country::class, ['getOeVATTBEName']);
-        $oCountry->expects($this->any())->method("getOeVATTBEName")->will($this->returnValue('Deutschland'));
+        $oCountry->expects($this->any())->method("getOeVATTBEName")->willReturn('Deutschland');
 
         /** @var Basket|EShopBasket|MockObject $oBasket */
         $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'getOeVATTBECountry']);
-        $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(true));
-        $oBasket->expects($this->any())->method("getOeVATTBECountry")->will($this->returnValue($oCountry));
+        $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->willReturn(true);
+        $oBasket->expects($this->any())->method("getOeVATTBECountry")->willReturn($oCountry);
         Registry::getSession()->setBasket($oBasket);
 
         /** @var User|EShopUser $oUser */
@@ -90,8 +91,8 @@ class BasketControllerTest extends TestCase
 
         /** @var Basket|EShopBasket|MockObject $oBasket */
         $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'getOeVATTBECountry']);
-        $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(true));
-        $oBasket->expects($this->any())->method("getOeVATTBECountry")->will($this->returnValue(null));
+        $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->willReturn(true);
+        $oBasket->expects($this->any())->method("getOeVATTBECountry")->willReturn(null);
         Registry::getSession()->setBasket($oBasket);
 
         /** @var User|EShopUser $oUser */
@@ -127,9 +128,8 @@ class BasketControllerTest extends TestCase
      * @param bool $blHasTBEArticles       Whether basket has TBE articles.
      * @param bool $blValidArticles        Is all basket articles valid.
      * @param bool $blCountryAppliesTBEVAT Whether country is configured as TBE country.
-     *
-     * @dataProvider providerShowVATTBEMarkMessageWhenMessageShouldBeHidden
      */
+    #[DataProvider('providerShowVATTBEMarkMessageWhenMessageShouldBeHidden')]
     public function testShowVATTBEMarkMessageWhenMessageShouldBeHidden($blIsDomesticCountry, $blHasTBEArticles, $blValidArticles, $blCountryAppliesTBEVAT)
     {
         $sDomesticCountryAbbr = $blIsDomesticCountry ? 'LT' : 'DE';
@@ -137,12 +137,12 @@ class BasketControllerTest extends TestCase
         Registry::getSession()->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
 
         $oCountry = $this->createPartialMock(Country::class, ['appliesOeTBEVATTbeVat']);
-        $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->will($this->returnValue($blCountryAppliesTBEVAT));
+        $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->willReturn($blCountryAppliesTBEVAT);
 
         $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'isOeVATTBEValid', 'getOeVATTBECountry']);
-        $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue($blHasTBEArticles));
-        $oBasket->expects($this->any())->method("isOeVATTBEValid")->will($this->returnValue($blValidArticles));
-        $oBasket->expects($this->any())->method("getOeVATTBECountry")->will($this->returnValue($oCountry));
+        $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->willReturn($blHasTBEArticles);
+        $oBasket->expects($this->any())->method("isOeVATTBEValid")->willReturn($blValidArticles);
+        $oBasket->expects($this->any())->method("getOeVATTBECountry")->willReturn($oCountry);
         Registry::getSession()->setBasket($oBasket);
 
         $oBasketController = oxNew(BasketController::class);
@@ -162,12 +162,12 @@ class BasketControllerTest extends TestCase
         Registry::getSession()->setVariable('TBECountryId', '8f241f11095d6ffa8.86593236'); // LT
 
         $oCountry = $this->createPartialMock(Country::class, ['appliesOeTBEVATTbeVat']);
-        $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->will($this->returnValue(true));
+        $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->willReturn(true);
 
         $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'isOeVATTBEValid', 'getOeVATTBECountry']);
-        $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->will($this->returnValue(true));
-        $oBasket->expects($this->any())->method("isOeVATTBEValid")->will($this->returnValue(true));
-        $oBasket->expects($this->any())->method("getOeVATTBECountry")->will($this->returnValue($oCountry));
+        $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->willReturn(true);
+        $oBasket->expects($this->any())->method("isOeVATTBEValid")->willReturn(true);
+        $oBasket->expects($this->any())->method("getOeVATTBECountry")->willReturn($oCountry);
         Registry::getSession()->setBasket($oBasket);
 
         $oBasketController = oxNew(BasketController::class);

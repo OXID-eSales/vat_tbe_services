@@ -11,6 +11,7 @@ use OxidEsales\EVatModule\Component\BasketComponent;
 use OxidEsales\EVatModule\Shop\Basket;
 use OxidEsales\EVatModule\Shop\Country;
 use OxidEsales\EVatModule\Shop\User;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -45,18 +46,17 @@ class BasketComponentTest extends TestCase
      * @param $isVatApplied
      * @param $vatCountry
      * @param $assertMethod
-     *
-     * @dataProvider basketCountryConfiguration
      */
+    #[DataProvider('basketCountryConfiguration')]
     public function testRenderBasketCountry($isVatApplied, $vatCountry, $assertMethod)
     {
         $oCountry = $this->createPartialMock(Country::class, ["appliesOeTBEVATTbeVat"]);
-        $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->will($this->returnValue($isVatApplied));
+        $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->willReturn($isVatApplied);
 
         $oUser = $this->getMockBuilder(User::class)
             ->onlyMethods(array("getOeVATTBETbeCountryId"))
             ->getMock();
-        $oUser->expects($this->any())->method('getOeVATTBETbeCountryId')->will($this->returnValue('DE'));
+        $oUser->expects($this->any())->method('getOeVATTBETbeCountryId')->willReturn('DE');
 
         //added to suppress warning from shop model
         $oUser->assign([
@@ -64,8 +64,8 @@ class BasketComponentTest extends TestCase
         ]);
 
         $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'getOeVATTBECountry', 'findDelivCountry']);
-        $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue(true));
-        $oBasket->expects($this->any())->method('getOeVATTBECountry')->will($this->returnValue($oCountry));
+        $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->willReturn(true);
+        $oBasket->expects($this->any())->method('getOeVATTBECountry')->willReturn($oCountry);
         $oBasket->expects($this->any())->method('findDelivCountry')->willReturn('DE');
 
         if ($vatCountry) {
@@ -91,7 +91,7 @@ class BasketComponentTest extends TestCase
         $oUser = $this->getMockBuilder(User::class)
             ->onlyMethods(array("getOeVATTBETbeCountryId"))
             ->getMock();
-        $oUser->expects($this->any())->method('getOeVATTBETbeCountryId')->will($this->returnValue('DE'));
+        $oUser->expects($this->any())->method('getOeVATTBETbeCountryId')->willReturn('DE');
 
         //added to suppress warning from shop model
         $oUser->assign([
@@ -99,7 +99,7 @@ class BasketComponentTest extends TestCase
         ]);
 
         $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'findDelivCountry']);
-        $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue(false));
+        $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->willReturn(false);
         $oBasket->expects($this->any())->method('findDelivCountry')->willReturn('LT');
         $oBasket->setOeVATTBECountryId('LT');
 
@@ -122,10 +122,10 @@ class BasketComponentTest extends TestCase
         $oUser = $this->getMockBuilder(User::class)
             ->onlyMethods(array("getOeVATTBETbeCountryId"))
             ->getMock();
-        $oUser->expects($this->any())->method('getOeVATTBETbeCountryId')->will($this->returnValue('DE'));
+        $oUser->expects($this->any())->method('getOeVATTBETbeCountryId')->willReturn('DE');
 
         $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'findDelivCountry']);
-        $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue(true));
+        $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->willReturn(true);
         $oBasket->expects($this->any())->method('findDelivCountry')->willReturn('DE');
         $oBasket->setOeVATTBECountryId('DE');
 

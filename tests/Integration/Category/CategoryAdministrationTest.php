@@ -15,6 +15,8 @@ use OxidEsales\EVatModule\Model\DbGateway\CountryVATGroupsDbGateway;
 use OxidEsales\EVatModule\Model\GroupArticleCacheInvalidator;
 use OxidEsales\EVatModule\Shop\Category;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Depends;
 
 /**
  * Testing VAT TBE administration in category page.
@@ -111,9 +113,8 @@ class CategoryAdministrationTest extends BaseTestCase
      * Check view data for correct value which shows if category is TBE.
      *
      * @param int $iIsTBECategory is tbe or not
-     *
-     * @dataProvider providerViewDataIsTBEService
      */
+    #[DataProvider('providerViewDataIsTBEService')]
     public function testViewDataIsTBEService($iIsTBECategory)
     {
         /** @var Category $oCategory */
@@ -165,10 +166,9 @@ class CategoryAdministrationTest extends BaseTestCase
      *
      * @param CategoryAdministration $oCategoryAdministration controller
      *
-     * @depends testSelectedRateForCountry
-     *
      * @return CategoryAdministration
      */
+    #[Depends('testSelectedRateForCountry')]
     public function testNotSelectedRateForCountry($oCategoryAdministration)
     {
         $this->assertFalse($oCategoryAdministration->isSelected('8f241f110955d3260.55487539', ''));
@@ -181,8 +181,8 @@ class CategoryAdministrationTest extends BaseTestCase
      *
      * @param CategoryAdministration $oCategoryAdministration controller
      *
-     * @depends testNotSelectedRateForCountry
      */
+    #[Depends('testNotSelectedRateForCountry')]
     public function testSelectionForNonExistingCountry($oCategoryAdministration)
     {
         $this->assertSame(false, $oCategoryAdministration->isSelected('NoneExistingId', 2));

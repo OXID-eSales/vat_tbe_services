@@ -23,7 +23,7 @@ class BasketItemsValidatorTest extends TestCase
     public function testValidateTbeArticlesWhenAllArticlesCorrect()
     {
         $oVATTBEOrderArticleChecker = $this->createPartialMock(OrderArticleChecker::class, ['isValid']);
-        $oVATTBEOrderArticleChecker->expects($this->any())->method('isValid')->will($this->returnValue(true));
+        $oVATTBEOrderArticleChecker->expects($this->any())->method('isValid')->willReturn(true);
 
         $oVATTBEArticleMessageFormer = $this->createMock(IncorrectVATArticlesMessageFormatter::class);
 
@@ -42,7 +42,7 @@ class BasketItemsValidatorTest extends TestCase
     public function testValidateTbeArticlesWhenIncorrectArticleExist()
     {
         $oVATTBEOrderArticleChecker = $this->createPartialMock(OrderArticleChecker::class, ['isValid']);
-        $oVATTBEOrderArticleChecker->expects($this->any())->method('isValid')->will($this->returnValue(false));
+        $oVATTBEOrderArticleChecker->expects($this->any())->method('isValid')->willReturn(false);
 
         $oVATTBEArticleMessageFormer = $this->createMock(IncorrectVATArticlesMessageFormatter::class);
 

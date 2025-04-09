@@ -10,6 +10,7 @@ use OxidEsales\EVatModule\Controller\Admin\CountryVatGroups;
 use OxidEsales\EVatModule\Model\CountryVATGroup;
 use OxidEsales\EVatModule\Model\DbGateway\CountryVATGroupsDbGateway;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Testing CountryVatGroups class.
@@ -41,9 +42,8 @@ class CountryVATGroupsEditingTest extends BaseTestCase
      *
      * @param string $sCountryId      country id to load groups.
      * @param array  $aExpectedGroups groups which should exist in given country.
-     *
-     * @dataProvider providerGetVatGroupsForCountry
      */
+    #[DataProvider('providerGetVatGroupsForCountry')]
     public function testGetVatGroupsForCountry($sCountryId, $aExpectedGroups)
     {
         /** @var CountryVatGroups $oVATTBECountryVatGroups */

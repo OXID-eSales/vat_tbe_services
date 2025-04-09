@@ -13,6 +13,7 @@ use OxidEsales\EVatModule\Shop\ArticleList;
 use OxidEsales\EVatModule\Shop\User;
 use OxidEsales\EVatModule\Shop\Article;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Testing extended Article class.
@@ -38,9 +39,8 @@ class ArticleListTest extends BaseTestCase
      *
      * @param string $sUserStatus user status
      * @param string $sVat        vat value
-     *
-     * @dataProvider userConfiguration
      */
+    #[DataProvider('userConfiguration')]
     public function testCategoryList($sUserStatus, $sVat): void
     {
         $oArticleList = $this->_getArticleList($sUserStatus);
@@ -59,9 +59,8 @@ class ArticleListTest extends BaseTestCase
      *
      * @param string $sUserStatus user status
      * @param string $sVat        vat value
-     *
-     * @dataProvider userConfiguration
      */
+    #[DataProvider('userConfiguration')]
     public function testManufacturerList($sUserStatus, $sVat)
     {
         $oArticleList = $this->_getArticleList($sUserStatus);
@@ -79,9 +78,8 @@ class ArticleListTest extends BaseTestCase
      *
      * @param string $sUserStatus user status
      * @param string $sVat        vat value
-     *
-     * @dataProvider userConfiguration
      */
+    #[DataProvider('userConfiguration')]
     public function testVendorList($sUserStatus, $sVat)
     {
         $oArticleList = $this->_getArticleList($sUserStatus);
@@ -99,9 +97,8 @@ class ArticleListTest extends BaseTestCase
      *
      * @param string $sUserStatus user status
      * @param string $sVat        vat value
-     *
-     * @dataProvider userConfiguration
      */
+    #[DataProvider('userConfiguration')]
     public function testPriceCategoryList($sUserStatus, $sVat)
     {
         $oArticleList = $this->_getArticleList($sUserStatus);
@@ -119,9 +116,8 @@ class ArticleListTest extends BaseTestCase
      *
      * @param string $sUserStatus user status
      * @param string $sVat        vat value
-     *
-     * @dataProvider userConfiguration
      */
+    #[DataProvider('userConfiguration')]
     public function testActionList($sUserStatus, $sVat)
     {
         $oArticle2Action = oxNew(BaseModel::class);
@@ -147,9 +143,8 @@ class ArticleListTest extends BaseTestCase
      *
      * @param string $sUserStatus user status
      * @param string $sVat        vat value
-     *
-     * @dataProvider userConfiguration
      */
+    #[DataProvider('userConfiguration')]
     public function testNewestList($sUserStatus, $sVat)
     {
         Registry::getConfig()->setConfigParam('iNewestArticlesMode', 2);
@@ -177,9 +172,8 @@ class ArticleListTest extends BaseTestCase
      *
      * @param string $sUserStatus user status
      * @param string $sVat        vat value
-     *
-     * @dataProvider userConfiguration
      */
+    #[DataProvider('userConfiguration')]
     public function testTop5Articles($sUserStatus, $sVat)
     {
         Registry::getConfig()->setConfigParam('iTop5Mode', 2);
@@ -206,9 +200,8 @@ class ArticleListTest extends BaseTestCase
      *
      * @param string $sUserStatus user status
      * @param string $sVat        vat value
-     *
-     * @dataProvider userConfiguration
      */
+    #[DataProvider('userConfiguration')]
     public function testArticleCrossSell($sUserStatus, $sVat)
     {
         $oArticleList = $this->_getArticleList($sUserStatus);
@@ -226,9 +219,8 @@ class ArticleListTest extends BaseTestCase
      *
      * @param string $sUserStatus user status
      * @param string $sVat        vat value
-     *
-     * @dataProvider userConfiguration
      */
+    #[DataProvider('userConfiguration')]
     public function testArticleAccessoires($sUserStatus, $sVat)
     {
         $oAccessoire2article = oxNew(BaseModel::class);
@@ -254,9 +246,8 @@ class ArticleListTest extends BaseTestCase
      *
      * @param string $sUserStatus user status
      * @param string $sVat        vat value
-     *
-     * @dataProvider userConfiguration
      */
+    #[DataProvider('userConfiguration')]
     public function testloadRecommArticles($sUserStatus, $sVat)
     {
         $oObject2list = oxNew(BaseModel::class);
@@ -310,7 +301,7 @@ class ArticleListTest extends BaseTestCase
                 ->onlyMethods(array("getOeVATTBETbeCountryId"))
                 ->getMock();
             $sCountryId = ($sUserStatus == 'loggedInWithoutCountry') ? null : 'a7c40f631fc920687.20179984';
-            $oUser->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue($sCountryId));
+            $oUser->expects($this->any())->method("getOeVATTBETbeCountryId")->willReturn($sCountryId);
             $oArticle->setUser($oUser);
         }
 

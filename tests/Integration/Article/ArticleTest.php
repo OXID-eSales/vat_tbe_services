@@ -26,7 +26,7 @@ class ArticleTest extends BaseTestCase
         $oUser = $this->getMockBuilder(User::class)
             ->onlyMethods(array("getOeVATTBETbeCountryId"))
             ->getMock();
-        $oUser->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue('a7c40f631fc920687.20179984'));
+        $oUser->expects($this->any())->method("getOeVATTBETbeCountryId")->willReturn('a7c40f631fc920687.20179984');
 
         $oArticle = oxNew(Article::class);
         $oArticle->setAdminMode(false);
@@ -45,7 +45,7 @@ class ArticleTest extends BaseTestCase
         $oUser = $this->getMockBuilder(User::class)
             ->onlyMethods(array("getOeVATTBETbeCountryId"))
             ->getMock();
-        $oUser->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue(null));
+        $oUser->expects($this->any())->method("getOeVATTBETbeCountryId")->willReturn(null);
 
         $oArticle = oxNew(Article::class);
         $oArticle->setUser($oUser);
@@ -98,7 +98,7 @@ class ArticleTest extends BaseTestCase
         $oUser = $this->getMockBuilder(User::class)
             ->onlyMethods(array("getOeVATTBETbeCountryId"))
             ->getMock();
-        $oUser->expects($this->any())->method('getOeVATTBETbeCountryId')->will($this->returnValue($sAustriaId));
+        $oUser->expects($this->any())->method('getOeVATTBETbeCountryId')->willReturn($sAustriaId);
 
         /** @var Article $oArticle */
         $oArticle = oxNew(Article::class);
@@ -123,7 +123,7 @@ class ArticleTest extends BaseTestCase
         $oUser = $this->getMockBuilder(User::class)
             ->onlyMethods(array("getOeVATTBETbeCountryId"))
             ->getMock();
-        $oUser->expects($this->any())->method('getOeVATTBETbeCountryId')->will($this->returnValue($sAustriaId));
+        $oUser->expects($this->any())->method('getOeVATTBETbeCountryId')->willReturn($sAustriaId);
 
         /** @var Article $oArticle */
         $oArticle = oxNew(Article::class);

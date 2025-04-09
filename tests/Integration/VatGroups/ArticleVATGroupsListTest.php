@@ -9,6 +9,7 @@ namespace OxidEsales\EVatModule\Tests\Integration\VatGroups;
 use OxidEsales\EshopCommunity\Tests\ContainerTrait;
 use OxidEsales\EVatModule\Model\ArticleVATGroupsList;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
+use PHPUnit\Framework\Attributes\Depends;
 
 /**
  * Testing oeVATTBEArticleVATGroupsList class.
@@ -43,9 +44,8 @@ class ArticleVATGroupsListTest extends BaseTestCase
      * List is successfully loaded and array of groups is returned.
      *
      * @param string $sArticleId article id
-     *
-     * @depends testSavingGroupsList
      */
+    #[Depends('testSavingGroupsList')]
     public function testLoadingGroupsListWhenGroupsExists($sArticleId)
     {
         $oGroupsList = $this->get(ArticleVATGroupsList::class);

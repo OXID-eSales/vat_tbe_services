@@ -14,6 +14,8 @@ use OxidEsales\EVatModule\Model\GroupArticleCacheInvalidator;
 use OxidEsales\EVatModule\Shop\Article;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 use OxidEsales\EVatModule\Traits\ServiceContainer;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Depends;
 
 /**
  * Testing VAT TBE administration in article page.
@@ -101,9 +103,8 @@ class ArticleAdministrationTest extends BaseTestCase
      * Check view data for correct value which shows if article is TBE service.
      *
      * @param int $iIsTBEArticle
-     *
-     * @dataProvider providerViewDataIsTBEService
      */
+    #[DataProvider('providerViewDataIsTBEService')]
     public function testViewDataIsTBEService($iIsTBEArticle)
     {
         /** @var Article $oArticle */
@@ -126,7 +127,7 @@ class ArticleAdministrationTest extends BaseTestCase
      *
      * @return ArticleAdministration
      */
-    public function testSelectedRateForCountry()
+    public function testSelectedRateForCountry(): ArticleAdministration
     {
         /** @var ArticleAdministration $oArticleAdministration */
         $oArticleAdministration = oxNew(ArticleAdministration::class);
@@ -149,11 +150,10 @@ class ArticleAdministrationTest extends BaseTestCase
      *
      * @param ArticleAdministration $oArticleAdministration
      *
-     * @depends testSelectedRateForCountry
-     *
      * @return ArticleAdministration
      */
-    public function testNotSelectedRateForCountry($oArticleAdministration)
+    #[Depends('testSelectedRateForCountry')]
+    public function testNotSelectedRateForCountry(ArticleAdministration $oArticleAdministration)
     {
         $this->assertFalse($oArticleAdministration->isSelected('8f241f110955d3260.55487539', ''));
 
@@ -165,8 +165,8 @@ class ArticleAdministrationTest extends BaseTestCase
      *
      * @param ArticleAdministration $oArticleAdministration
      *
-     * @depends testNotSelectedRateForCountry
      */
+    #[Depends('testNotSelectedRateForCountry')]
     public function testSelectionForNonExistingCountry($oArticleAdministration)
     {
         $this->assertSame(false, $oArticleAdministration->isSelected('NoneExistingId', 2));

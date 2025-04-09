@@ -15,6 +15,7 @@ use OxidEsales\EVatModule\Model\User as UserModel;
 use OxidEsales\EVatModule\Shop\User;
 use OxidEsales\Eshop\Application\Model\User as EShopUser;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Testing TBEUser class.
@@ -131,9 +132,8 @@ class UserTest extends BaseTestCase
      * Testing getting of country when invalid user country id is set.
      *
      * @param string $sCountryId
-     *
-     * @dataProvider providerGetCountry
      */
+    #[DataProvider('providerGetCountry')]
     public function testGetCountryWithInvalidCountryId($sCountryId)
     {
         $oSession = Registry::getSession();
@@ -203,9 +203,8 @@ class UserTest extends BaseTestCase
      *
      * @param string $sDomesticCountryAbbr Domestic country abbreviation.
      * @param string $sUserCountryId       User country id.
-     *
-     * @dataProvider providerIsUserFromDomesticCountryWhenCountriesDoesNotMatch
      */
+    #[DataProvider('providerIsUserFromDomesticCountryWhenCountriesDoesNotMatch')]
     public function testIsUserFromDomesticCountryWhenCountriesDoesNotMatch($sDomesticCountryAbbr, $sUserCountryId)
     {
         $oConfig = Registry::getConfig();

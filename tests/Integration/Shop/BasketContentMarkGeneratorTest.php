@@ -21,7 +21,7 @@ class BasketContentMarkGeneratorTest extends TestCase
     public function testGetMark()
     {
         $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles']);
-        $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue(true));
+        $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->willReturn(true);
 
         $oGenerator = oxNew(BasketContentMarkGenerator::class, $oBasket);
 
@@ -34,8 +34,8 @@ class BasketContentMarkGeneratorTest extends TestCase
     public function testGetMarkHasOtherMarks()
     {
         $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'hasArticlesWithDownloadableAgreement']);
-        $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue(true));
-        $oBasket->expects($this->any())->method('hasArticlesWithDownloadableAgreement')->will($this->returnValue(true));
+        $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->willReturn(true);
+        $oBasket->expects($this->any())->method('hasArticlesWithDownloadableAgreement')->willReturn(true);
 
         $oGenerator = oxNew(BasketContentMarkGenerator::class, $oBasket);
 
@@ -49,8 +49,8 @@ class BasketContentMarkGeneratorTest extends TestCase
     public function testGetMarkHasOtherMarksButNotTBE()
     {
         $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'hasArticlesWithDownloadableAgreement']);
-        $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->will($this->returnValue(false));
-        $oBasket->expects($this->any())->method('hasArticlesWithDownloadableAgreement')->will($this->returnValue(true));
+        $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->willReturn(false);
+        $oBasket->expects($this->any())->method('hasArticlesWithDownloadableAgreement')->willReturn(true);
 
         $oGenerator = oxNew(BasketContentMarkGenerator::class, $oBasket);
 

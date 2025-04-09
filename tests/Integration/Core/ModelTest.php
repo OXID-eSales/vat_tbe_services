@@ -17,6 +17,7 @@ use OxidEsales\EVatModule\Model\DbGateway\ArticleVATGroupsDbGateway;
 use OxidEsales\EVatModule\Model\DbGateway\CategoryVATGroupsDbGateway;
 use OxidEsales\EVatModule\Model\DbGateway\CountryVATGroupsDbGateway;
 use OxidEsales\EVatModule\Model\DbGateway\OrderEvidenceListDbGateway;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -72,9 +73,8 @@ class ModelTest extends TestCase
 
     /**
      * Loading of data by id, returned by getId method
-     *
-     * @dataProvider gatewayProvider
      */
+    #[DataProvider('gatewayProvider')]
     public function testLoadWhenIdIsSetToModel(string $model, string $gateway, array $data): void
     {
         $expected = ['testkey' => 'testValue'];
@@ -87,14 +87,14 @@ class ModelTest extends TestCase
                 ->onlyMethods(['load', 'getList'])
                 ->getMock();
 
-            $gatewayMock->expects($this->any())->method('load')->will($this->returnValue($data));
-            $gatewayMock->expects($this->any())->method('getList')->will($this->returnValue($data));
+            $gatewayMock->expects($this->any())->method('load')->willReturn($data);
+            $gatewayMock->expects($this->any())->method('getList')->willReturn($data);
         } else {
             $gatewayMock = $mockBuilder
                 ->onlyMethods(['load'])
                 ->getMock();
 
-            $gatewayMock->expects($this->any())->method('load')->will($this->returnValue($data));
+            $gatewayMock->expects($this->any())->method('load')->willReturn($data);
         }
 
         $actualModel = $this->getModel($model, $gatewayMock, 'id-to-load');
@@ -113,9 +113,8 @@ class ModelTest extends TestCase
 
     /**
      * Loading of data by passed id
-     *
-     * @dataProvider gatewayProvider
      */
+    #[DataProvider('gatewayProvider')]
     public function testLoadWhenIdPassedIdViaParameter(string $model, string $gateway, array $data): void
     {
         $expected = ['testkey' => 'testValue'];
@@ -128,14 +127,14 @@ class ModelTest extends TestCase
                 ->onlyMethods(['load', 'getList'])
                 ->getMock();
 
-            $gatewayMock->expects($this->any())->method('load')->will($this->returnValue($data));
-            $gatewayMock->expects($this->any())->method('getList')->will($this->returnValue($data));
+            $gatewayMock->expects($this->any())->method('load')->willReturn($data);
+            $gatewayMock->expects($this->any())->method('getList')->willReturn($data);
         } else {
             $gatewayMock = $mockBuilder
                 ->onlyMethods(['load'])
                 ->getMock();
 
-            $gatewayMock->expects($this->any())->method('load')->will($this->returnValue($data));
+            $gatewayMock->expects($this->any())->method('load')->willReturn($data);
         }
 
         $actualModel = $this->getModel($model, $gatewayMock);
@@ -155,9 +154,8 @@ class ModelTest extends TestCase
 
     /**
      * Is loaded method returns false when record does not exists in database
-     *
-     * @dataProvider gatewayProvider
      */
+    #[DataProvider('gatewayProvider')]
     public function testIsLoadedWhenDatabaseRecordNotFound(string $model, string $gateway, array $data): void
     {
         $mockedMethods = ['load'];
@@ -168,14 +166,14 @@ class ModelTest extends TestCase
         $gatewayMock
             ->expects($this->any())
             ->method('load')
-            ->will($this->returnValue(null));
+            ->willReturn(null);
         $actualModel = $this->getModel($model, $gatewayMock);
 
         if ($model == CountryVATGroupsList::class) {
             $gatewayMock
                 ->expects($this->any())
                 ->method('getList')
-                ->will($this->returnValue([]));
+                ->willReturn([]);
             $this->assertIsArray($actualModel->load());
             $this->assertEquals([], $actualModel->getData());
         } else {
@@ -183,9 +181,7 @@ class ModelTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider gatewayProvider
-     */
+    #[DataProvider('gatewayProvider')]
     public function testIsLoadedWhenDatabaseRecordFound(string $model, string $gateway, array $data): void
     {
         $mockedMethods = ['load'];
@@ -196,14 +192,14 @@ class ModelTest extends TestCase
         $gatewayMock
             ->expects($this->any())
             ->method('load')
-            ->will($this->returnValue($data));
+            ->willReturn($data);
         $actualModel = $this->getModel($model, $gatewayMock);
 
         if ($model == CountryVATGroupsList::class) {
             $gatewayMock
                 ->expects($this->any())
                 ->method('getList')
-                ->will($this->returnValue($data));
+                ->willReturn($data);
             $this->assertIsArray($actualModel->load());
             $data = $actualModel->getData();
             $this->assertCount(1, $data);
@@ -213,16 +209,14 @@ class ModelTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider gatewayProvider
-     */
+    #[DataProvider('gatewayProvider')]
     public function testClearingDataAfterDeletion(string $model, string $gateway, array $data): void
     {
         $gatewayMock = $this->createPartialMock($gateway, ['delete']);
         $gatewayMock
             ->expects($this->any())
             ->method('delete')
-            ->will($this->returnValue(true));
+            ->willReturn(true);
         $actualModel = $this->getModel($model, $gatewayMock);
         $actualModel->setData(['some_field' => 'some_entry']);
         $actualModel->delete();

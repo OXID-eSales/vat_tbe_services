@@ -54,7 +54,7 @@ class OrderEvidenceListTest extends TestCase
     public function testDeletingEvidenceList()
     {
         $oGateway = $this->createPartialMock(OrderEvidenceListDbGateway::class, ['load', 'delete']);
-        $oGateway->expects($this->any())->method('load')->will($this->returnValue(['someData']));
+        $oGateway->expects($this->any())->method('load')->willReturn(['someData']);
         $oGateway->expects($this->once())->method('delete')->with('order_id');
 
         /** @var OrderEvidenceList $oList */
@@ -83,7 +83,7 @@ class OrderEvidenceListTest extends TestCase
             if (!in_array($sMethod, $aTestMethods)) {
                 $oObject->expects($this->any())
                     ->method($sMethod)
-                    ->will($this->returnValue($sValue));
+                    ->willReturn($sValue);
             }
         }
 

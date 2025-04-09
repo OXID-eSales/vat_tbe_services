@@ -30,11 +30,11 @@ class ArticleAdministrationTest extends TestCase
 
         /** @var Article|MockObject oxArticle */
         $oDerivedArticle = $this->createPartialMock(Article::class, ['isDerived']);
-        $oDerivedArticle->expects($this->any())->method('isDerived')->will($this->returnValue(true));
+        $oDerivedArticle->expects($this->any())->method('isDerived')->willReturn(true);
 
         /** @var ArticleAdministration|MockObject $oArticleAdministration */
         $oArticleAdministration = $this->createPartialMock(ArticleAdministration::class, ['loadCurrentArticle']);
-        $oArticleAdministration->expects($this->atLeastOnce())->method('loadCurrentArticle')->will($this->returnValue($oDerivedArticle));
+        $oArticleAdministration->expects($this->atLeastOnce())->method('loadCurrentArticle')->willReturn($oDerivedArticle);
         $oArticleAdministration->render();
 
         $aViewData = $oArticleAdministration->getViewData();
@@ -54,11 +54,11 @@ class ArticleAdministrationTest extends TestCase
 
         /** @var Article|MockObject oxArticle */
         $oDerivedArticle = $this->createPartialMock(Article::class, ['isDerived']);
-        $oDerivedArticle->expects($this->any())->method('isDerived')->will($this->returnValue(false));
+        $oDerivedArticle->expects($this->any())->method('isDerived')->willReturn(false);
 
         /** @var ArticleAdministration|MockObject $oArticleAdministration */
         $oArticleAdministration = $this->createPartialMock(ArticleAdministration::class, ['loadCurrentArticle']);
-        $oArticleAdministration->expects($this->atLeastOnce())->method('loadCurrentArticle')->will($this->returnValue($oDerivedArticle));
+        $oArticleAdministration->expects($this->atLeastOnce())->method('loadCurrentArticle')->willReturn($oDerivedArticle);
         $oArticleAdministration->render();
 
         $aViewData = $oArticleAdministration->getViewData();
@@ -78,11 +78,11 @@ class ArticleAdministrationTest extends TestCase
 
         /** @var Article|MockObject oxArticle */
         $oDerivedArticle = $this->createPartialMock(Article::class, ['isDerived']);
-        $oDerivedArticle->expects($this->any())->method('isDerived')->will($this->returnValue(true));
+        $oDerivedArticle->expects($this->any())->method('isDerived')->willReturn(true);
 
         /** @var ArticleAdministration|MockObject $oArticleAdministration */
         $oArticleAdministration = $this->createPartialMock(ArticleAdministration::class, ['loadCurrentArticle']);
-        $oArticleAdministration->expects($this->atLeastOnce())->method('loadCurrentArticle')->will($this->returnValue($oDerivedArticle));
+        $oArticleAdministration->expects($this->atLeastOnce())->method('loadCurrentArticle')->willReturn($oDerivedArticle);
         $oArticleAdministration->render();
 
         $aViewData = $oArticleAdministration->getViewData();

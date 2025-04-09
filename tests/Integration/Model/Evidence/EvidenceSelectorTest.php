@@ -13,6 +13,7 @@ use OxidEsales\EVatModule\Model\Evidence\EvidenceList;
 use OxidEsales\EVatModule\Model\Evidence\EvidenceSelector;
 use OxidEsales\EVatModule\Model\Evidence\Item\Evidence;
 use OxidEsales\EVatModule\Service\ModuleSettings;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -22,30 +23,26 @@ class EvidenceSelectorTest extends TestCase
 {
     public static function providerGetCountryWhenBothEvidenceDoNotMatch(): array
     {
-        $evidenceSelector = new self('EvidenceSelectorTest');
-        $oBillingEvidence = $evidenceSelector->createEvidence('billing_address', 'Germany');
-        $oGeoLocationEvidence = $evidenceSelector->createEvidence('geo_location', 'Lithuania');
-        $oEvidenceList = new EvidenceList([$oBillingEvidence, $oGeoLocationEvidence]);
-
         return [
-            [$oEvidenceList, 'billing_address', $oBillingEvidence],
-            [$oEvidenceList, 'geo_location', $oGeoLocationEvidence]
+            ['billing_address', 0],
+            ['geo_location', 1]
         ];
     }
 
     /**
-     * @param EvidenceList $oEvidenceList
-     * @param string       $sDefaultEvidence
-     * @param Evidence     $sExpectedEvidence
-     *
-     * @dataProvider providerGetCountryWhenBothEvidenceDoNotMatch
+     * @param string  $sDefaultEvidence
+     * @param int     $sExpectedEvidence
      */
-    public function testGetCountryWhenBothEvidenceDoNotMatchDefaultTaken($oEvidenceList, $sDefaultEvidence, $sExpectedEvidence)
+    #[DataProvider('providerGetCountryWhenBothEvidenceDoNotMatch')]
+    public function testGetCountryWhenBothEvidenceDoNotMatchDefaultTaken($sDefaultEvidence, $sExpectedEvidence)
     {
         $oConfig = Registry::getConfig();
         $moduleSettings = ContainerFacade::get(ModuleSettings::class);
         $moduleSettings->saveDefaultEvidence($sDefaultEvidence);
 
+        $oBillingEvidence = $this->createEvidence('billing_address', 'Germany');
+        $oGeoLocationEvidence = $this->createEvidence('geo_location', 'Lithuania');
+        $oEvidenceList = new EvidenceList($sExpectedEvidences = [$oBillingEvidence, $oGeoLocationEvidence]);
         $evidenceCollector = oxNew(EvidenceCollector::class, $oConfig, $moduleSettings);
 
         $evidenceSelector = $this->getMockBuilder(EvidenceSelector::class)
@@ -57,7 +54,7 @@ class EvidenceSelectorTest extends TestCase
             ->getMock();
         $evidenceSelector->method('getEvidenceList')->willReturn($oEvidenceList);
 
-        $this->assertSame($sExpectedEvidence, $evidenceSelector->getEvidence());
+        $this->assertSame($sExpectedEvidences[$sExpectedEvidence], $evidenceSelector->getEvidence());
     }
 
     public function testGetCountryWhenDefaultEvidenceEmpty()
@@ -181,9 +178,29 @@ class EvidenceSelectorTest extends TestCase
     protected function createEvidence($sName, $sCountry)
     {
         $oEvidence = $this->createMock(Evidence::class);
-        $oEvidence->expects($this->any())->method('getId')->will($this->returnValue($sName));
-        $oEvidence->expects($this->any())->method('getCountryId')->will($this->returnValue($sCountry));
+        $oEvidence->expects($this->any())->method('getId')->willReturn($sName);
+        $oEvidence->expects($this->any())->method('getCountryId')->willReturn($sCountry);
 
         return $oEvidence;
+    }
+
+    /**
+     * Creates evidence object with given name and country.
+     */
+    protected static function createEvidence2($sName, $sCountry)
+    {
+        $testCase = new class extends TestCase {
+            public function __construct() {}
+        };
+
+        $mock = $testCase
+            ->getMockBuilder(Evidence::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $mock->method('getId')->willReturn($sName);
+        $mock->method('getCountryId')->willReturn($sCountry);
+
+        return $mock;
     }
 }

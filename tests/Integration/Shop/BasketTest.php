@@ -16,6 +16,7 @@ use OxidEsales\EVatModule\Model\OrderArticleChecker;
 use OxidEsales\EVatModule\Service\ModuleSettings;
 use OxidEsales\EVatModule\Shop\Basket;
 use OxidEsales\Eshop\Application\Model\Basket as EShopBasket;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -75,9 +76,8 @@ class BasketTest extends TestCase
      * @param bool $blDomesticCountry     Is user from shops domestic country.
      * @param bool $blTBECountry          Is user country TBE country.
      * @param bool $blIsArticleTbeService Is basket article TBE service.
-     *
-     * @dataProvider providerSetCountryIdOnChangeEvent
      */
+    #[DataProvider('providerSetCountryIdOnChangeEvent')]
     public function testSetCountryIdOnChangeEvent($blDomesticCountry, $blTBECountry, $blIsArticleTbeService)
     {
         $sDomesticCountry = $blDomesticCountry ? 'LT' : 'DE';
@@ -125,9 +125,8 @@ class BasketTest extends TestCase
      * Test on basket country change event when message should be shown after country change.
      *
      * @param bool $bAddToBasket if some article are in basket.
-     *
-     * @dataProvider providerSetCountryIdOnChangeEventWhenMessageShouldBeShown
      */
+    #[DataProvider('providerSetCountryIdOnChangeEventWhenMessageShouldBeShown')]
     public function testSetCountryIdOnChangeEventWhenMessageShouldBeShown($bAddToBasket)
     {
         $moduleSettings = ContainerFacade::get(ModuleSettings::class);
@@ -200,10 +199,10 @@ class BasketTest extends TestCase
     public function testisOeVATTBEValidValid()
     {
         $oChecker = $this->createPartialMock(OrderArticleChecker::class, ['isValid']);
-        $oChecker->expects($this->any())->method('isValid')->will($this->returnValue(true));
+        $oChecker->expects($this->any())->method('isValid')->willReturn(true);
 
         $oBasket = $this->createPartialMock(Basket::class, ['getOeVATTBEOrderArticleChecker']);
-        $oBasket->expects($this->any())->method('getOeVATTBEOrderArticleChecker')->will($this->returnValue($oChecker));
+        $oBasket->expects($this->any())->method('getOeVATTBEOrderArticleChecker')->willReturn($oChecker);
 
         $this->assertTrue($oBasket->isOeVATTBEValid());
     }
@@ -214,10 +213,10 @@ class BasketTest extends TestCase
     public function testisOeVATTBEValidNotValid()
     {
         $oChecker = $this->createPartialMock(OrderArticleChecker::class, ['isValid']);
-        $oChecker->expects($this->any())->method('isValid')->will($this->returnValue(false));
+        $oChecker->expects($this->any())->method('isValid')->willReturn(false);
 
         $oBasket = $this->createPartialMock(Basket::class, ['getOeVATTBEOrderArticleChecker']);
-        $oBasket->expects($this->any())->method('getOeVATTBEOrderArticleChecker')->will($this->returnValue($oChecker));
+        $oBasket->expects($this->any())->method('getOeVATTBEOrderArticleChecker')->willReturn($oChecker);
 
         $this->assertFalse($oBasket->isOeVATTBEValid());
     }

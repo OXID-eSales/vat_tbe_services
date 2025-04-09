@@ -24,7 +24,7 @@ class SearchTest extends BaseTestCase
         $oUser = $this->getMockBuilder(User::class)
             ->onlyMethods(array("getOeVATTBETbeCountryId"))
             ->getMock();
-        $oUser->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue('a7c40f631fc920687.20179984'));
+        $oUser->expects($this->any())->method("getOeVATTBETbeCountryId")->willReturn('a7c40f631fc920687.20179984');
 
         $oSearch = oxNew(Search::class);
         $oSearch->setUser($oUser);
@@ -46,7 +46,7 @@ class SearchTest extends BaseTestCase
         $oUser = $this->getMockBuilder(User::class)
             ->onlyMethods(array("getOeVATTBETbeCountryId"))
             ->getMock();
-        $oUser->expects($this->any())->method("getOeVATTBETbeCountryId")->will($this->returnValue(null));
+        $oUser->expects($this->any())->method("getOeVATTBETbeCountryId")->willReturn(null);
 
         $oSearch = oxNew(Search::class);
         $oSearch->setUser($oUser);

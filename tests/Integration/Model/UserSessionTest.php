@@ -14,6 +14,7 @@ use OxidEsales\EVatModule\Model\Evidence\Item\GeoLocationEvidence;
 use OxidEsales\EVatModule\Service\ModuleSettings;
 use OxidEsales\EVatModule\Shop\User;
 use OxidEsales\Eshop\Application\Model\User as EShopUser;
+use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\Attributes\ExcludeGlobalVariableFromBackup;
 use PHPUnit\Framework\TestCase;
 
@@ -78,10 +79,9 @@ class UserSessionTest extends TestCase
      *
      * @param User $oTBEUser
      *
-     * @depends testTBEEvidenceListCaching
-     *
      * @return User
      */
+    #[Depends('testTBEEvidenceListCaching')]
     public function testTBECountryIdCaching($oTBEUser)
     {
         $this->assertEquals('GermanyId', $oTBEUser->getOeVATTBETbeCountryId());
@@ -95,10 +95,9 @@ class UserSessionTest extends TestCase
      *
      * @param User $oTBEUser
      *
-     * @depends testTBECountryIdCaching
-     *
      * @return User
      */
+    #[Depends('testTBECountryIdCaching')]
     public function testTBEEvidenceUsedCaching($oTBEUser)
     {
         $this->assertEquals('billing_country', $oTBEUser->getOeVATTBETbeEvidenceUsed());
@@ -110,9 +109,8 @@ class UserSessionTest extends TestCase
      * Country id should be recalculated when it is unset from cache.
      *
      * @param User $oTBEUser
-     *
-     * @depends testTBEEvidenceUsedCaching
      */
+    #[Depends('testTBEEvidenceUsedCaching')]
     public function testUnsetEvidenceListCaching($oTBEUser)
     {
         $oTBEUser->unsetOeVATTBETbeCountryFromCaching();
