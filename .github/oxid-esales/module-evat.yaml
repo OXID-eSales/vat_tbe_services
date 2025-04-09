@@ -3,6 +3,8 @@
 # {{ $name := "evat-module" }}name: {{ print $name }}
 # {{ $order := "01" }}order: {{ print $order }}
 prepare_shop:
+  copy_script_targets: |
+    vendor/oxid-esales/evat-module/tests/scripts
   git:
     shop_ref: '{{ .Data.global.git.default_ref }}'
     custom_ini:
@@ -27,6 +29,27 @@ phpunit:
   matrix:
     testplan: '["~/defaults/module_phpunit_unit.yaml","~/defaults/module_phpunit_integration.yaml"]'
   load_shop: *install_module_prefix
+  custom_script: |
+    cat >source/vendor/oxid-esales/evat-module/tests/scripts/unit_failure_pattern.txt <<EOF
+    fail
+    \\.\\=\\=
+    Warning
+    Notice
+    Fatal
+    error
+    Error
+    DID NOT FINISH
+    Test file ".+" not found
+    Cannot open file
+    No tests executed
+    Could not read
+    Warnings: [1-9][0-9]*
+    Errors: [1-9][0-9]*
+    Failed: [1-9][0-9]*
+    Risky: [1-9][0-9]*
+    EOF
+    
+    cp source/vendor/oxid-esales/evat-module/tests/scripts/unit_failure_pattern.txt source/vendor/oxid-esales/evat-module/tests/scripts/integration_failure_pattern.txt
 
 codeception:
   matrix:
