@@ -8,7 +8,7 @@ on:
 
 jobs:
   push_module:
-    uses: oxid-eSales/github-actions/.github/workflows/call-universal_test_workflow.yaml@v4
+    uses: oxid-eSales/github-actions/.github/workflows/universal_workflow_light.yaml@v4
     with:
       testplan: '~/defaults/7.3.x.yaml,~/defaults/php8.3_mysql8.0_only.yaml,~/module-evat.yaml'
       runs_on: '"ubuntu-latest"'
@@ -24,16 +24,16 @@ jobs:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-  push_module_ee:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Trigger EE workflow and wait for results
-        uses: convictional/trigger-workflow-and-wait@v1.6.5
-        with:
-          owner: oxid-esales
-          repo: module-workflows
-          github_user: ${{ secrets.CI_USER }}
-          github_token: ${{ secrets.GH_CI_JENKINS_TOKEN }}
-          workflow_file_name: evat_workflow.yaml
-          ref: "b-7.3.x"
-          client_payload: "{\"php\": \"8.2\", \"mysql\": \"8.0\", \"edition\": \"ee\", \"ref\": \"${{ github.ref_name }}\"}"
+#  push_module_ee:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Trigger EE workflow and wait for results
+#        uses: convictional/trigger-workflow-and-wait@v1.6.5
+#        with:
+#          owner: oxid-esales
+#          repo: module-workflows
+#          github_user: ${{ secrets.CI_USER }}
+#          github_token: ${{ secrets.GH_CI_JENKINS_TOKEN }}
+#          workflow_file_name: evat_workflow.yaml
+#          ref: "b-7.3.x"
+#          client_payload: "{\"php\": \"8.2\", \"mysql\": \"8.0\", \"edition\": \"ee\", \"ref\": \"${{ github.ref_name }}\"}"
