@@ -38,11 +38,9 @@ class MessageFormatterTest extends BaseTestCase
         $oInvalidArticles1 = array($oArticle1);
         $oInvalidArticles2 = array($oArticle1, $oArticle2);
 
-        $oLang = Registry::getLang();
-
         return array(
-            array($oInvalidArticles1, sprintf($oLang->translateString('OEVATTBE_ERROR_MESSAGE_TBE_ARTICLE_VAT_PROBLEMS'), 'some article name')),
-            array($oInvalidArticles2, sprintf($oLang->translateString('OEVATTBE_ERROR_MESSAGE_TBE_ARTICLE_VAT_PROBLEMS'), 'some article name, some other name')),
+            array($oInvalidArticles1, 'some article name'),
+            array($oInvalidArticles2, 'some article name, some other name'),
         );
     }
 
@@ -53,11 +51,14 @@ class MessageFormatterTest extends BaseTestCase
      * @param string $sExpectedMessage expected error message.
      */
     #[DataProvider('providerGetMessage')]
-    public function testGetMessage($oInvalidArticles, $sExpectedMessage)
+    public function testGetMessage($oInvalidArticles, $articleName)
     {
         /** @var IncorrectVATArticlesMessageFormatter $oVATTBEArticleMessageFormer */
         $oVATTBEArticleMessageFormer = oxNew(IncorrectVATArticlesMessageFormatter::class);
         $sErrorMessage = $oVATTBEArticleMessageFormer->getMessage($oInvalidArticles);
+
+        $oLang = Registry::getLang();
+        $sExpectedMessage = sprintf($oLang->translateString('OEVATTBE_ERROR_MESSAGE_TBE_ARTICLE_VAT_PROBLEMS'), $articleName);
 
         $this->assertSame($sExpectedMessage, $sErrorMessage->getOxMessage());
     }

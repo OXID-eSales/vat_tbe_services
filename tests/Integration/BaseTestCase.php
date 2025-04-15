@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\EVatModule\Tests\Integration;
 
+use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use OxidEsales\Facts\Facts;
@@ -33,5 +34,7 @@ abstract class BaseTestCase extends TestCase
                 __DIR__ . '/../Fixtures/dump_' . strtolower($edition) . '.sql'
             )
         );
+
+        Registry::getLang()->setBaseLanguage(0);
     }
 }

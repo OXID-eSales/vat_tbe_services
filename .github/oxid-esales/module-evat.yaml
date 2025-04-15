@@ -30,8 +30,8 @@ runscript:
   matrix:
     script: |
       [
-        "evat:phpunit-coverage",
-        "evat:phpintegration"
+        "evat:tests-unit",
+        "evat:tests-integration"
       ]
   evat:
     path: 'vendor/oxid-esales/evat-module'
