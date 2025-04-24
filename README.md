@@ -9,8 +9,8 @@ telecommunications, broadcasting and electronic services.
 
 ## Branch compatibility
 
-* b-7.3.x branch is compatible with OXID eShop compilation version 7.3.x
-* b-7.2.x branch and v4.1 is compatible with OXID eShop compilation version 7.2.x
+* b-7.3.x branch and v4.2 are compatible with OXID eShop compilation version 7.3.x
+* b-7.2.x branch and v4.1 are compatible with OXID eShop compilation version 7.2.x
 * b-7.1.x branch is compatible with OXID eShop compilation version 7.1.x
 * b-7.0.x branch is compatible with OXID eShop compilation version 7.0.x
 * b-6.5.x branch is compatible with OXID eShop compilation version 6.5.x
