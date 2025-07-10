@@ -1,16 +1,16 @@
-name: Auto trigger on Push to 7.3.x*
+name: Auto trigger on Push to 7.4.x*
 
 on:
   pull_request: {}
   push:
     branches:
-      - 'b-7.3.x**'
+      - 'b-7.4.x**'
 
 jobs:
   push_module:
     uses: oxid-eSales/github-actions/.github/workflows/universal_workflow_light.yaml@v4
     with:
-      testplan: '~/defaults/7.3.x.yaml,~/defaults/php8.3_mysql8.0_only.yaml,~/module-evat.yaml'
+      testplan: '~/defaults/7.4.x.yaml,~/defaults/php8.3_mysql8.0_only.yaml,~/module-evat.yaml'
       runs_on: '"ubuntu-latest"'
       defaults: 'v4'
       plan_folder: '.github/oxid-esales'
@@ -35,5 +35,5 @@ jobs:
           github_user: ${{ secrets.CI_USER }}
           github_token: ${{ secrets.GH_CI_JENKINS_TOKEN }}
           workflow_file_name: evat_workflow.yaml
-          ref: "b-7.3.x"
-          client_payload: "{\"php\": \"8.2\", \"mysql\": \"8.0\", \"edition\": \"ee\", \"ref\": \"${{ github.ref_name }}\"}"
+          ref: "b-7.4.x"
+          client_payload: "{\"php\": \"8.4\", \"mysql\": \"8.0\", \"edition\": \"ee\", \"ref\": \"${{ github.ref_name }}\"}"

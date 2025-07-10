@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Undecided] - unreleased
+
+### Added
+- Upgraded to work with OXID eShop 7.4.x
+
 ## [4.2.0] - 2025-06-10
 This is stable release for v4.2.0. No changes have been made since v4.2.0-rc.1.
 
