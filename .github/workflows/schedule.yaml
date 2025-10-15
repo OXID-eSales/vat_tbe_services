@@ -36,4 +36,4 @@ jobs:
           github_token: ${{ secrets.GH_CI_JENKINS_TOKEN }}
           workflow_file_name: evat_workflow.yaml
           ref: "b-7.4.x"
-          client_payload: "{\"php\": \"8.3\", \"mysql\": \"8.0\", \"edition\": \"ee\", \"ref\": \"${{ github.ref_name }}\"}"
+          client_payload: "{\"edition\": \"ee\", \"ref\": \"${{ github.ref_name }}\"}"
