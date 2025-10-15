@@ -8,11 +8,11 @@ on:
 
 jobs:
   push_module:
-    uses: oxid-eSales/github-actions/.github/workflows/universal_workflow_light.yaml@v4
+    uses: oxid-eSales/github-actions/.github/workflows/universal_workflow_light.yaml@v5
     with:
       testplan: '~/defaults/7.4.x.yaml,~/defaults/php8.3_mysql8.0_only.yaml,~/module-evat.yaml'
       runs_on: '"ubuntu-latest"'
-      defaults: 'v4'
+      defaults: 'v5'
       plan_folder: '.github/oxid-esales'
     secrets:
       DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
@@ -20,7 +20,6 @@ jobs:
       CACHE_ENDPOINT: ${{ secrets.CACHE_ENDPOINT }}
       CACHE_ACCESS_KEY: ${{ secrets.CACHE_ACCESS_KEY }}
       CACHE_SECRET_KEY: ${{ secrets.CACHE_SECRET_KEY }}
-      enterprise_github_token: ${{ secrets.enterprise_github_token }}
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 

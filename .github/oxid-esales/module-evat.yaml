@@ -4,27 +4,19 @@ install:
   composer:
     transform: |
       {
-        "config": {
-          "allow-plugins": {
-            "oxid-esales/oxideshop-unified-namespace-generator": true,
-            "oxid-esales/oxideshop-composer-plugin": true
-          }
-        },
         "require": {
-          "oxid-esales/oxideshop-ce": "{{ .Data.global.composer.dev_ref }}",
-          "oxid-esales/twig-admin-theme": "{{ .Data.global.composer.dev_ref }}",
-          "oxid-esales/apex-theme": "{{ .Data.global.composer.dev_ref }}",
-          "oxid-esales/twig-component": "{{ .Data.global.composer.dev_ref }}",
-          "oxid-esales/evat-module": "{{ .Data.global.composer.ref_name }}"
-        },
-        "autoload-dev": {
-          "psr-4": {
-            "OxidEsales\\EshopCommunity\\Tests\\": "./vendor/oxid-esales/oxideshop-ce/tests"
-          }
+          "oxid-esales/oxideshop-ce": "{{ .Data.install.composer.dev_ref }}",
+          "oxid-esales/twig-admin-theme": "{{ .Data.install.composer.dev_ref }}",
+          "oxid-esales/apex-theme": "{{ .Data.install.composer.dev_ref }}",
+          "oxid-esales/twig-component": "{{ .Data.install.composer.dev_ref }}",
         }
       }
-  activate_modules: |
-    oevattbe
+  custom_script_container: |
+    vendor/bin/oe-console oe:database:reset --db-host=mysql --db-port=3306 --db-name=example --db-user=root --db-password=root --force
+    vendor/bin/oe-console oe:module:install ./
+    vendor/bin/oe-eshop-doctrine_migration migrations:migrate
+    vendor/bin/oe-console oe:module:activate oevattbe
+    vendor/bin/oe-console oe:theme:activate apex
 
 runscript:
   matrix:
@@ -34,13 +26,15 @@ runscript:
         "evat:tests-integration"
       ]
   evat:
-    path: 'vendor/oxid-esales/evat-module'
+    path: ''
 
 sonarcloud:
-  title: 'evat-module'
+  matrix:
+    testplan: '["-"]'
   project_key: 'OXID-eSales_vat_tbe_services'
   project_name: 'oxid-esales/evat-module'
-  strip_path: '/var/www/vendor/oxid-esales/evat-module/'
+  organization: 'oxid-esales'
+  strip_path: '/var/www/'
   parameters: >
     -Dsonar.language=php
     -Dsonar.scm.provider=git
