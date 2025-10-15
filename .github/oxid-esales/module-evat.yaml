@@ -15,7 +15,7 @@ install:
             "oxid-esales/twig-admin-theme": "{{ .Data.install.composer.dev_ref }}",
             "oxid-esales/twig-component": "{{ .Data.install.composer.dev_ref }}",
             "oxid-esales/apex-theme": "{{ .Data.install.composer.dev_ref }}",
-            "oxid-esales/vat_tbe_services": "{{ .Data.install.composer.ref_name }}"
+            "oxid-esales/evat-module": "{{ .Data.install.composer.ref_name }}"
         },
         "autoload-dev": {
           "psr-4": {
