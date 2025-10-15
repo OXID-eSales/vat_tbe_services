@@ -34,5 +34,5 @@ jobs:
           github_user: ${{ secrets.CI_USER }}
           github_token: ${{ secrets.GH_CI_JENKINS_TOKEN }}
           workflow_file_name: evat_workflow.yaml
-          ref: "b-7.4.x-workflow_v5-OXDEV-8827"
+          ref: "b-7.4.x"
           client_payload: "{\"edition\": \"ee\", \"ref\": \"${{ github.ref_name }}\"}"
