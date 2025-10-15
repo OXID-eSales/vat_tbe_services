@@ -4,17 +4,22 @@ install:
   composer:
     transform: |
       {
-        "require": {
-          "oxid-esales/oxideshop-ce": "{{ .Data.install.composer.dev_ref }}",
-          "oxid-esales/twig-admin-theme": "{{ .Data.install.composer.dev_ref }}",
-          "oxid-esales/apex-theme": "{{ .Data.install.composer.dev_ref }}",
-          "oxid-esales/twig-component": "{{ .Data.install.composer.dev_ref }}",
-          "oxid-esales/evat-module": "{{ .Data.install.composer.ref_name }}"
+        "config": {
+          "allow-plugins": {
+            "oxid-esales/oxideshop-unified-namespace-generator": true,
+            "oxid-esales/oxideshop-composer-plugin": true
+          }
         },
-        "repositories": {
-          "oxid-esales/evat-module": {
-            "type": "git",
-            "url": "https://github.com/OXID-eSales/evat-module.git"
+        "require": {
+            "oxid-esales/oxideshop-ce": "{{ .Data.install.composer.dev_ref }}",
+            "oxid-esales/twig-admin-theme": "{{ .Data.install.composer.dev_ref }}",
+            "oxid-esales/twig-component": "{{ .Data.install.composer.dev_ref }}",
+            "oxid-esales/apex-theme": "{{ .Data.install.composer.dev_ref }}",
+            "oxid-esales/vat_tbe_services": "{{ .Data.install.composer.ref_name }}"
+        },
+        "autoload-dev": {
+          "psr-4": {
+            "OxidEsales\\EshopCommunity\\Tests\\": "./vendor/oxid-esales/oxideshop-ce/tests"
           }
         }
       }
