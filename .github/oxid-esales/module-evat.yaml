@@ -8,25 +8,29 @@ install:
           "oxid-esales/oxideshop-ce": "{{ .Data.install.composer.dev_ref }}",
           "oxid-esales/twig-admin-theme": "{{ .Data.install.composer.dev_ref }}",
           "oxid-esales/apex-theme": "{{ .Data.install.composer.dev_ref }}",
-          "oxid-esales/twig-component": "{{ .Data.install.composer.dev_ref }}"
+          "oxid-esales/twig-component": "{{ .Data.install.composer.dev_ref }}",
+          "oxid-esales/evat-module": "{{ .Data.install.composer.ref_name }}"
+        },
+        "repositories": {
+          "oxid-esales/evat-module": {
+            "type": "git",
+            "url": "https://github.com/OXID-eSales/evat-module.git"
+          }
         }
       }
   custom_script_container: |
-    vendor/bin/oe-console oe:database:reset --db-host=mysql --db-port=3306 --db-name=example --db-user=root --db-password=root --force
-    vendor/bin/oe-console oe:module:install ./
-    vendor/bin/oe-eshop-doctrine_migration migrations:migrate
-    vendor/bin/oe-console oe:module:activate oevattbe
     vendor/bin/oe-console oe:theme:activate apex
+    vendor/bin/oe-console oe:module:activate oevattbe
 
 runscript:
   matrix:
     script: |
       [
         "evat:tests-unit",
-        "evat:tests-integration"
+        "evat:tests-integration",
       ]
   evat:
-    path: ''
+    path: 'vendor/oxid-esales/evat-module'
 
 sonarcloud:
   matrix:
@@ -34,7 +38,7 @@ sonarcloud:
   project_key: 'OXID-eSales_vat_tbe_services'
   project_name: 'oxid-esales/evat-module'
   organization: 'oxid-esales'
-  strip_path: '/var/www/'
+  strip_path: '/var/www/vendor/oxid-esales/evat-module/'
   parameters: >
     -Dsonar.language=php
     -Dsonar.scm.provider=git
