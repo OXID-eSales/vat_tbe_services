@@ -21,6 +21,12 @@ install:
           "psr-4": {
             "OxidEsales\\EshopCommunity\\Tests\\": "./vendor/oxid-esales/oxideshop-ce/tests"
           }
+        },
+        "repositories": {
+          "oxid-esales/evat-module": {
+            "type": "git",
+            "url": "https://github.com/OXID-eSales/vat_tbe_services"
+          }
         }
       }
   custom_script_container: |
