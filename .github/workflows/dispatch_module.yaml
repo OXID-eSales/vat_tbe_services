@@ -6,30 +6,30 @@ on:
       scenario:
         type: choice
         options:
-          - 7.4.x
+          - 7.5.x
           - use custom testplan
-        default: '7.4.x'
+        default: '7.5.x'
         description: 'Choose test scenario'
       limit:
         type: choice
         options:
           - 'no'
-          - 'PHP8.2/MySQL5.7'
-          - 'PHP8.2/MySQL8.0'
-          - 'PHP8.2/MariaDb11'
           - 'PHP8.3/MySQL8.0'
           - 'PHP8.3/MySQL8.4'
-          - 'PHP8.3/MariaDb11'
+          - 'PHP8.3/mariadb11'
           - 'PHP8.4/MySQL8.0'
           - 'PHP8.4/MySQL8.4'
-          - 'PHP8.4/MariaDb11'
+          - 'PHP8.4/mariadb11'
+          - 'PHP8.5/MySQL8.0'
+          - 'PHP8.5/MySQL8.4'
+          - 'PHP8.5/mariadb11'
         default: 'PHP8.3/MySQL8.0'
         description: 'Limit to one PHP/MySQL combination'
       custom_testplan:
         type: string
         required: true
         description: 'URL/PATH of the testplan to run'
-        default: '~/defaults/7.4.x.yaml,~/module-evat.yaml'
+        default: '~/defaults/7.5.x.yaml,~/module-evat.yaml'
 
 jobs:
   build_testplan:
@@ -44,23 +44,23 @@ jobs:
           # shellcheck disable=SC2088 # Tilde expansion happens in the workflow and not by bash
           case '${{inputs.limit}}' in
             "no") LIMIT='';;
-            "PHP8.2/MySQL5.7") LIMIT='~/defaults/php8.2_mysql5.7_only.yaml,' ;;
-            "PHP8.2/MySQL8.0") LIMIT='~/defaults/php8.2_mysql8.0_only.yaml,' ;;
-            "PHP8.2/MariaDb11") LIMIT='~/defaults/php8.2_mariadb11_only.yaml,' ;;
             "PHP8.3/MySQL8.0") LIMIT='~/defaults/php8.3_mysql8.0_only.yaml,' ;;
             "PHP8.3/MySQL8.4") LIMIT='~/defaults/php8.3_mysql8.4_only.yaml,' ;;
-            "PHP8.3/MariaDb11") LIMIT='~/defaults/php8.3_mariadb11_only.yaml,' ;;
+            "PHP8.3/mariadb11") LIMIT='~/defaults/php8.3_mariadb11_only.yaml,' ;;
             "PHP8.4/MySQL8.0") LIMIT='~/defaults/php8.4_mysql8.0_only.yaml,' ;;
             "PHP8.4/MySQL8.4") LIMIT='~/defaults/php8.4_mysql8.4_only.yaml,' ;;
-            "PHP8.4/MariaDb11") LIMIT='~/defaults/php8.4_mariadb11_only.yaml,' ;;
+            "PHP8.4/mariadb11") LIMIT='~/defaults/php8.4_mariadb11_only.yaml,' ;;
+            "PHP8.5/MySQL8.0") LIMIT='~/defaults/php8.5_mysql8.0_only.yaml,' ;;
+            "PHP8.5/MySQL8.4") LIMIT='~/defaults/php8.5_mysql8.4_only.yaml,' ;;
+            "PHP8.5/mariadb11") LIMIT='~/defaults/php8.5_mariadb11_only.yaml,' ;;
             *) echo "Illegal choice, fix the workflow"
                exit 1
                ;;
           esac
           case '${{ inputs.scenario}}' in
-            "7.4.x")
+            "7.5.x")
               # shellcheck disable=SC2088 # Tilde expansion happens in the workflow and not by bash
-              TESTPLAN="~/defaults/7.4.x.yaml,${LIMIT}~/module-evat.yaml"
+              TESTPLAN="~/defaults/7.5.x.yaml,${LIMIT}~/module-evat.yaml"
               ;;
             "use custom testplan")
               # shellcheck disable=SC2088 # Tilde expansion happens in the workflow and not by bash

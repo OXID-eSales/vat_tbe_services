@@ -9,7 +9,7 @@
   ],
   "prefer-stable": true,
   "require": {
-    "php": "^8.2"
+    "php": "^8.3"
   },
   "require-dev": {
     "phpunit/phpunit": "^10.4",
@@ -17,7 +17,7 @@
   },
   "minimum-stability": "dev",
   "conflict": {
-    "oxid-esales/oxideshop-ce": "<7.4"
+    "oxid-esales/oxideshop-ce": "<7.5"
   },
   "autoload": {
     "psr-4": {
