@@ -67,7 +67,7 @@ class OrderArticleChecker
             foreach ($basketArticles as $basketArticle) {
                 /** @var EShopArticle $basketArticle */
                 if ($basketArticle->isOeVATTBETBEService() && is_null($basketArticle->getOeVATTBETBEVat())) {
-                    $this->_aInvalidArticles[$basketArticle->getId()] = $basketArticle;
+                    $this->_aInvalidArticles[(string) $basketArticle->getId()] = $basketArticle;
                 }
             }
         }

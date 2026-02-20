@@ -152,8 +152,8 @@ class ArticleList extends ArticleList_parent
         $sSelect .= " from $sArticleTable ";
         $sSelect .= $this->getOeVATTBEArticleSqlBuilder()->getJoins();
         $sSelect .= " where oxvarminprice >= 0 ";
-        $sSelect .= $dPriceTo ? "and oxvarminprice <= " . (double) $dPriceTo . " " : " ";
-        $sSelect .= $dPriceFrom ? "and oxvarminprice  >= " . (double) $dPriceFrom . " " : " ";
+        $sSelect .= $dPriceTo ? "and oxvarminprice <= " . (float) $dPriceTo . " " : " ";
+        $sSelect .= $dPriceFrom ? "and oxvarminprice  >= " . (float) $dPriceFrom . " " : " ";
 
         $sSelect .= " and " . $oBaseObject->getSqlActiveSnippet() . " and {$sArticleTable}.oxissearch = 1";
 
