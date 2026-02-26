@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [4.4.0] - Unreleased
 
 ### Changed
 - Updated to work with OXID eShop 7.5.x
@@ -103,6 +103,7 @@ This is stable release for v4.0.0. No changes have been made since v3.1.0-rc.1.
 
 ## [1.0.0] - 2015-03-24
 
+[4.4.0]: https://github.com/OXID-eSales/vat_tbe_services/compare/v4.3.0...b-7.5.x
 [4.3.0]: https://github.com/OXID-eSales/vat_tbe_services/compare/v4.2.0...v4.3.0
 [4.2.0]: https://github.com/OXID-eSales/vat_tbe_services/compare/v4.2.0-rc.1...v4.2.0
 [4.2.0-rc.1]: https://github.com/OXID-eSales/vat_tbe_services/compare/v4.1.0...v4.2.0-rc.1
