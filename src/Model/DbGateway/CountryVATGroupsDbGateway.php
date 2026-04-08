@@ -38,7 +38,7 @@ class CountryVATGroupsDbGateway extends ModelDbGateway implements ModelDbGateway
 
         $iGroupId = $aData['OEVATTBE_ID'] ?? $oDb->getOne('SELECT LAST_INSERT_ID()');
 
-        $oDb->execute('UPDATE `oxcountry` SET `oevattbe_istbevatconfigured` = 1 WHERE `oxid` = "'. $aData['OEVATTBE_COUNTRYID'] .'"');
+        $oDb->execute('UPDATE `oxcountry` SET `oevattbe_istbevatconfigured` = 1 WHERE `oxid` = ' . $oDb->quote($aData['OEVATTBE_COUNTRYID']));
 
         return $iGroupId;
     }
@@ -101,12 +101,12 @@ class CountryVATGroupsDbGateway extends ModelDbGateway implements ModelDbGateway
 
         $sCountryId = $aGroupInformation['OEVATTBE_COUNTRYID'];
         $bCountryHasGroup = (bool) $oDb->getOne(
-            'SELECT `OEVATTBE_ID`FROM `oevattbe_countryvatgroups` WHERE `oevattbe_countryid` = "'. $sCountryId .'" LIMIT 1'
+            'SELECT `OEVATTBE_ID` FROM `oevattbe_countryvatgroups` WHERE `oevattbe_countryid` = ' . $oDb->quote($sCountryId) . ' LIMIT 1'
         );
 
         if ($blResult) {
             if (!$bCountryHasGroup) {
-                $oDb->execute('UPDATE `oxcountry`SET `oevattbe_istbevatconfigured` = 0 WHERE `oxid` = "'. $sCountryId .'"');
+                $oDb->execute('UPDATE `oxcountry` SET `oevattbe_istbevatconfigured` = 0 WHERE `oxid` = ' . $oDb->quote($sCountryId));
             }
             $oDb->commitTransaction();
         } else {
