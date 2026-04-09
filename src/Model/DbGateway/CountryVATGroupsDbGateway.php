@@ -55,7 +55,7 @@ class CountryVATGroupsDbGateway extends ModelDbGateway implements ModelDbGateway
         $oDb = $this->getDb();
         $sQuery = 'SELECT * FROM `oevattbe_countryvatgroups`';
         if ($sCountryId) {
-            $sQuery .= 'WHERE `oevattbe_countryid` = ' . $oDb->quote($sCountryId);
+            $sQuery .= ' WHERE `oevattbe_countryid` = ' . $oDb->quote($sCountryId);
         }
         $sQuery .= ' ORDER BY `oevattbe_timestamp` DESC';
 
