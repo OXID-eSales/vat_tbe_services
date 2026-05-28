@@ -6,9 +6,9 @@ on:
       scenario:
         type: choice
         options:
-          - 7.5.x
+          - 7.6.x
           - use custom testplan
-        default: '7.5.x'
+        default: '7.6.x'
         description: 'Choose test scenario'
       limit:
         type: choice
@@ -29,7 +29,7 @@ on:
         type: string
         required: true
         description: 'URL/PATH of the testplan to run'
-        default: '~/defaults/7.5.x.yaml,~/module-evat.yaml'
+        default: '~/defaults/7.6.x.yaml,~/module-evat.yaml'
 
 jobs:
   build_testplan:
@@ -58,9 +58,9 @@ jobs:
                ;;
           esac
           case '${{ inputs.scenario}}' in
-            "7.5.x")
+            "7.6.x")
               # shellcheck disable=SC2088 # Tilde expansion happens in the workflow and not by bash
-              TESTPLAN="~/defaults/7.5.x.yaml,${LIMIT}~/module-evat.yaml"
+              TESTPLAN="~/defaults/7.6.x.yaml,${LIMIT}~/module-evat.yaml"
               ;;
             "use custom testplan")
               # shellcheck disable=SC2088 # Tilde expansion happens in the workflow and not by bash

@@ -8,7 +8,7 @@ jobs:
   call_matrix:
     uses: oxid-eSales/github-actions/.github/workflows/universal_workflow_light.yaml@v5
     with:
-      testplan: '~/defaults/7.5.x.yaml,~/defaults/scheduled.yaml,~/module-evat.yaml'
+      testplan: '~/defaults/7.6.x.yaml,~/defaults/scheduled.yaml,~/module-evat.yaml'
       runs_on: '"ubuntu-latest"'
       defaults: 'v5'
       plan_folder: '.github/oxid-esales'
@@ -32,5 +32,5 @@ jobs:
           github_user: ${{ secrets.CI_USER }}
           github_token: ${{ secrets.GH_CI_JENKINS_TOKEN }}
           workflow_file_name: evat_workflow.yaml
-          ref: "b-7.5.x"
+          ref: "b-7.6.x"
           client_payload: "{\"edition\": \"ee\", \"ref\": \"${{ github.ref_name }}\"}"
