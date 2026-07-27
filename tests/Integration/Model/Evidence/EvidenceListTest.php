@@ -9,12 +9,12 @@ namespace OxidEsales\EVatModule\Tests\Integration\Model\Evidence;
 use OxidEsales\EVatModule\Model\Evidence\EvidenceList;
 use OxidEsales\EVatModule\Model\Evidence\Item\Evidence;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 
 /**
  * Test class for oeVATTBEEvidenceCalculator.
  */
-class EvidenceListTest extends TestCase
+class EvidenceListTest extends IntegrationTestCase
 {
     public function testAddingToList()
     {

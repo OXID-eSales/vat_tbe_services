@@ -10,12 +10,12 @@ use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Model\Evidence\Item\GeoLocationEvidence;
 use OxidEsales\EVatModule\Shop\User;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 
 /**
  * Test class for oeVATTBEEvidenceCalculator.
  */
-class GeoLocationEvidenceTest extends TestCase
+class GeoLocationEvidenceTest extends IntegrationTestCase
 {
     public function testGetId()
     {

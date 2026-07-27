@@ -10,12 +10,12 @@ use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Model\Evidence\Item\BillingCountryEvidence;
 use OxidEsales\EVatModule\Shop\User;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 
 /**
  * Test class for oeVATTBEEvidenceCalculator.
  */
-class BillingCountryEvidenceTest extends TestCase
+class BillingCountryEvidenceTest extends IntegrationTestCase
 {
     public function testGetId()
     {

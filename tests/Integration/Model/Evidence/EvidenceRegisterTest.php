@@ -11,12 +11,12 @@ use OxidEsales\EVatModule\Model\Evidence\EvidenceRegister;
 use OxidEsales\EVatModule\Model\Evidence\Item\BillingCountryEvidence;
 use OxidEsales\EVatModule\Service\ModuleSettings;
 use PHPUnit\Framework\Attributes\Depends;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 
 /**
  * Test class for EvidenceRegister.
  */
-class EvidenceRegisterTest extends TestCase
+class EvidenceRegisterTest extends IntegrationTestCase
 {
     /**
      * No evidences are registered;

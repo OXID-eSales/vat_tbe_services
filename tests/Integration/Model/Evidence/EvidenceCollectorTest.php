@@ -13,12 +13,12 @@ use OxidEsales\EVatModule\Model\Evidence\EvidenceCollector;
 use OxidEsales\EVatModule\Model\Evidence\EvidenceList;
 use OxidEsales\EVatModule\Model\Evidence\Item\BillingCountryEvidence;
 use OxidEsales\EVatModule\Service\ModuleSettings;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 
 /**
  * Test class for oeVATTBEEvidenceCalculator.
  */
-class EvidenceCollectorTest extends TestCase
+class EvidenceCollectorTest extends IntegrationTestCase
 {
     /**
      * Evidence is registered;

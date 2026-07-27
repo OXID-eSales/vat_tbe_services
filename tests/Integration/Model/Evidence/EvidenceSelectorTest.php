@@ -14,12 +14,12 @@ use OxidEsales\EVatModule\Model\Evidence\EvidenceSelector;
 use OxidEsales\EVatModule\Model\Evidence\Item\Evidence;
 use OxidEsales\EVatModule\Service\ModuleSettings;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 
 /**
  * Test class for EvidenceCalculator.
  */
-class EvidenceSelectorTest extends TestCase
+class EvidenceSelectorTest extends IntegrationTestCase
 {
     public static function providerGetCountryWhenBothEvidenceDoNotMatch(): array
     {
@@ -189,7 +189,7 @@ class EvidenceSelectorTest extends TestCase
      */
     protected static function createEvidence2($sName, $sCountry)
     {
-        $testCase = new class extends TestCase {
+        $testCase = new class extends IntegrationTestCase {
             public function __construct() {}
         };
 
