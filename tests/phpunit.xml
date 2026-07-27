@@ -3,7 +3,7 @@
          backupGlobals="true"
          beStrictAboutTestsThatDoNotTestAnything="false"
          cacheDirectory=".phpunit.cache"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/12.5/phpunit.xsd"
          displayDetailsOnTestsThatTriggerWarnings="true"
          displayDetailsOnTestsThatTriggerDeprecations="true"
 >
