@@ -12,13 +12,13 @@ use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Shop\ArticleList;
 use OxidEsales\EVatModule\Shop\User;
 use OxidEsales\EVatModule\Shop\Article;
-use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
+use OxidEsales\EVatModule\Tests\Integration\LegacyBaseTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Testing extended Article class.
  */
-class ArticleListTest extends BaseTestCase
+class ArticleListTest extends LegacyBaseTestCase
 {
     /**
      * data provider

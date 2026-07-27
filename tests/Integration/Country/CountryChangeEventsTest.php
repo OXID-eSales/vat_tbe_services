@@ -8,14 +8,14 @@ namespace OxidEsales\EVatModule\Tests\Integration\Country;
 
 use OxidEsales\EshopCommunity\Core\Registry;
 use OxidEsales\Eshop\Application\Model\User;
-use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
+use OxidEsales\EVatModule\Tests\Integration\LegacyBaseTestCase;
 use PHPUnit\Framework\Attributes\ExcludeGlobalVariableFromBackup;
 use PHPUnit\Framework\Attributes\Depends;
 
 /**
  * Testing TBEUser class.
  */
-class CountryChangeEventsTest extends BaseTestCase
+class CountryChangeEventsTest extends LegacyBaseTestCase
 {
     /** @var string */
     protected $_sDefaultUserName = '_testUserName@oxid-esales.com';

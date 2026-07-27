@@ -8,33 +8,22 @@ declare(strict_types=1);
 
 namespace OxidEsales\EVatModule\Tests\Integration;
 
-use OxidEsales\Eshop\Core\Registry;
-use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
-use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
-use OxidEsales\Facts\Facts;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 
-abstract class BaseTestCase extends TestCase
+/**
+ * Transactional integration base (CE IntegrationTestCase): each test runs inside a rolled-back
+ * DB transaction. Fixture is DML-only so it does not implicitly commit. Use this for tests that
+ * do not run DDL and do not read written data back through OXID list loaders or a second
+ * DB connection; those belong on LegacyBaseTestCase.
+ */
+abstract class BaseTestCase extends IntegrationTestCase
 {
+    use FixtureLoadingTrait;
+
     public function setUp(): void
     {
         parent::setUp();
 
-        $connection = ContainerFactory::getInstance()
-            ->getContainer()
-            ->get(QueryBuilderFactoryInterface::class)
-            ->create()
-            ->getConnection();
-
-        $facts = new Facts();
-        $edition = $facts->getEdition();
-
-        $connection->executeStatement(
-            file_get_contents(
-                __DIR__ . '/../Fixtures/dump_' . strtolower($edition) . '.sql'
-            )
-        );
-
-        Registry::getLang()->setBaseLanguage(0);
+        $this->loadEditionFixture();
     }
 }

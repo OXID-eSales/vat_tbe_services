@@ -24,7 +24,7 @@ class UserTest extends BaseTestCase
     {
         parent::setUp();
 
-        \oxDb::getDb()->execute("TRUNCATE TABLE `oxuser`;");
+        \oxDb::getDb()->execute("DELETE FROM `oxuser`;");
     }
 
     public function tearDown(): void

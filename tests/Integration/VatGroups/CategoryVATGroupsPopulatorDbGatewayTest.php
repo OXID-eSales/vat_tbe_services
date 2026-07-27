@@ -8,7 +8,6 @@ namespace OxidEsales\EVatModule\Tests\Integration\VatGroups;
 
 use OxidEsales\EVatModule\Model\DbGateway\CategoryVATGroupsPopulatorDbGateway;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
-use PHPUnit\Framework\Attributes\Depends;
 
 /**
  * Test class for CategoryVATGroupsPopulatorDbGateway.
@@ -59,9 +58,16 @@ class CategoryVATGroupsPopulatorDbGatewayTest extends BaseTestCase
      *
      * @param CategoryVATGroupsPopulatorDbGateway $oDbGateway
      */
-    #[Depends('testPopulateExistingCategory')]
-    public function testResetArticles($oDbGateway)
+    public function testResetArticles()
     {
+        // Self-contained setup replicating testPopulateExistingCategory (rollback erases the
+        // DB state the @Depends chain used to rely on).
+        $this->_cleanData();
+        $this->_prepareData();
+
+        $oDbGateway = oxNew(CategoryVATGroupsPopulatorDbGateway::class);
+        $oDbGateway->populate('categoryId');
+
         $this->_cleanFixturesData();
 
         $aArticles = array(
@@ -98,11 +104,11 @@ class CategoryVATGroupsPopulatorDbGatewayTest extends BaseTestCase
      */
     private function _cleanData()
     {
-        \oxDb::getDb()->execute('TRUNCATE TABLE `oevattbe_articlevat`');
-        \oxDb::getDb()->execute('TRUNCATE TABLE `oevattbe_categoryvat`');
-        \oxDb::getDb()->execute('TRUNCATE TABLE `oxobject2category`');
-        \oxDb::getDb()->execute('TRUNCATE TABLE `oxcategories`');
-        \oxDb::getDb()->execute('TRUNCATE TABLE `oxarticles`');
+        \oxDb::getDb()->execute('DELETE FROM `oevattbe_articlevat`');
+        \oxDb::getDb()->execute('DELETE FROM `oevattbe_categoryvat`');
+        \oxDb::getDb()->execute('DELETE FROM `oxobject2category`');
+        \oxDb::getDb()->execute('DELETE FROM `oxcategories`');
+        \oxDb::getDb()->execute('DELETE FROM `oxarticles`');
     }
 
     /**

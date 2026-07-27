@@ -36,7 +36,7 @@ REPLACE INTO `oxobject2payment` (`OXID`, `OXPAYMENTID`, `OXOBJECTID`, `OXTYPE`, 
 REPLACE INTO `oxdelivery` (`OXID`, `OXSHOPID`, `OXACTIVE`, `OXACTIVEFROM`, `OXACTIVETO`, `OXTITLE`, `OXTITLE_1`, `OXTITLE_2`, `OXTITLE_3`, `OXADDSUMTYPE`, `OXADDSUM`, `OXDELTYPE`, `OXPARAM`, `OXPARAMEND`, `OXFIXED`, `OXSORT`, `OXFINALIZE`, `OXTIMESTAMP`) VALUES
 ('1b842e73470578914.54719298',1,1,'0000-00-00 00:00:00','0000-00-00 00:00:00','Versandkosten für Standard: 3,90 Euro innerhalb Deutschland','Shipping costs for Standard: $3.90 for domestic shipping','','','abs',3.9,'p',0,79.99,0,2000,1,'2016-07-19 14:38:26');
 
-TRUNCATE TABLE `oevattbe_countryvatgroups`;
+DELETE FROM `oevattbe_countryvatgroups`;
 REPLACE INTO `oevattbe_countryvatgroups` (`OEVATTBE_ID`, `OEVATTBE_COUNTRYID`, `OEVATTBE_NAME`, `OEVATTBE_DESCRIPTION`, `OEVATTBE_RATE`, `OEVATTBE_TIMESTAMP`) VALUES
 (1,	'a7c40f632e04633c9.47194042',	'Reduce rate 1',	'',	6.00,	'2023-05-31 11:41:54'),
 (2,	'a7c40f632e04633c9.47194042',	'Reduce rate 2',	'',	12.00,	'2023-05-31 11:41:54'),

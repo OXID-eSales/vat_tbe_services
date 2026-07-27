@@ -7,13 +7,13 @@
 namespace OxidEsales\EVatModule\Tests\Integration\Order;
 
 use OxidEsales\EVatModule\Model\DbGateway\OrderEvidenceListDbGateway;
-use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
+use OxidEsales\EVatModule\Tests\Integration\LegacyBaseTestCase;
 use PHPUnit\Framework\Attributes\Depends;
 
 /**
  * Test class for OrderEvidenceListDbGateway.
  */
-class OrderEvidenceListDbGatewayTest extends BaseTestCase
+class OrderEvidenceListDbGatewayTest extends LegacyBaseTestCase
 {
     /**
      * Testing Order list saving to database. Test works with database so can be slow.

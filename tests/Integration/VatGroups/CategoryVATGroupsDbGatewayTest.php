@@ -7,13 +7,13 @@
 namespace OxidEsales\EVatModule\Tests\Integration\VatGroups;
 
 use OxidEsales\EVatModule\Model\DbGateway\CategoryVATGroupsDbGateway;
-use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
+use OxidEsales\EVatModule\Tests\Integration\LegacyBaseTestCase;
 use PHPUnit\Framework\Attributes\Depends;
 
 /**
  * Test class for CategoryVATGroupsDbGateway.
  */
-class CategoryVATGroupsDbGatewayTest extends BaseTestCase
+class CategoryVATGroupsDbGatewayTest extends LegacyBaseTestCase
 {
     /**
      * Testing VAT Group saving to database.

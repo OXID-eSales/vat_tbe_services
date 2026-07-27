@@ -8,13 +8,13 @@ namespace OxidEsales\EVatModule\Tests\Integration\VatGroups;
 
 use OxidEsales\EshopCommunity\Tests\ContainerTrait;
 use OxidEsales\EVatModule\Model\ArticleVATGroupsList;
-use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
+use OxidEsales\EVatModule\Tests\Integration\LegacyBaseTestCase;
 use PHPUnit\Framework\Attributes\Depends;
 
 /**
  * Testing oeVATTBEArticleVATGroupsList class.
  */
-class ArticleVATGroupsListTest extends BaseTestCase
+class ArticleVATGroupsListTest extends LegacyBaseTestCase
 {
     use ContainerTrait;
 

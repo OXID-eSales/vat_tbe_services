@@ -12,7 +12,6 @@ use OxidEsales\EVatModule\Controller\Admin\CategoryAdministration;
 use OxidEsales\EVatModule\Controller\Admin\CategoryMainAjax;
 use OxidEsales\EVatModule\Shop\Category;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
-use PHPUnit\Framework\Attributes\Depends;
 
 /**
  * Test class for.
@@ -110,9 +109,20 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
     /**
      * Test check when 1 article is unassigned from category.
      */
-    #[Depends('testPopulateAddingArticleToCategoryTBE')]
     public function testRemoveArticleFromCategoryWhenOneArticleIsRemoved()
     {
+        // Self-contained setup: assign article1 to the TBE category so it has VAT groups to remove
+        // (previously relied on DB state from another test via @Depends, which rollback erases).
+        $this->cleanData();
+        $this->prepareData();
+
+        $_POST['synchoxid'] = 'categoryId';
+        $addController = $this->getMockBuilder(CategoryMainAjax::class)
+                ->onlyMethods(array("getActionIds"))
+                ->getMock();
+        $addController->expects($this->any())->method('getActionIds')->willReturn(array('article1'));
+        $addController->addArticle();
+
         $this->cleanFixtures();
 
         /** @var CategoryMainAjax $oController */
@@ -306,11 +316,11 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
      */
     protected function cleanData()
     {
-        \oxDb::getDb()->execute('TRUNCATE TABLE `oevattbe_articlevat`');
-        \oxDb::getDb()->execute('TRUNCATE TABLE `oevattbe_categoryvat`');
-        \oxDb::getDb()->execute('TRUNCATE TABLE `oxobject2category`');
-        \oxDb::getDb()->execute('TRUNCATE TABLE `oxcategories`');
-        \oxDb::getDb()->execute('TRUNCATE TABLE `oxarticles`');
+        \oxDb::getDb()->execute('DELETE FROM `oevattbe_articlevat`');
+        \oxDb::getDb()->execute('DELETE FROM `oevattbe_categoryvat`');
+        \oxDb::getDb()->execute('DELETE FROM `oxobject2category`');
+        \oxDb::getDb()->execute('DELETE FROM `oxcategories`');
+        \oxDb::getDb()->execute('DELETE FROM `oxarticles`');
     }
 
     /**

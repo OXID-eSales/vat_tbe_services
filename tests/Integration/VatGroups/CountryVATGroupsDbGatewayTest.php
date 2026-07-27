@@ -9,12 +9,12 @@ namespace OxidEsales\EVatModule\Tests\Integration\VatGroups;
 use OxidEsales\EshopCommunity\Tests\ContainerTrait;
 use OxidEsales\EVatModule\Model\ArticleVATGroupsList;
 use OxidEsales\EVatModule\Model\DbGateway\CountryVATGroupsDbGateway;
-use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
+use OxidEsales\EVatModule\Tests\Integration\LegacyBaseTestCase;
 
 /**
  * Test class for CountryVATGroupsDbGateway.
  */
-class CountryVATGroupsDbGatewayTest extends BaseTestCase
+class CountryVATGroupsDbGatewayTest extends LegacyBaseTestCase
 {
     use ContainerTrait;
 
