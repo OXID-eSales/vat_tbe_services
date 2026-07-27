@@ -5,6 +5,7 @@
  */
 
 namespace OxidEsales\EVatModule\Tests\Integration\Controller;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
@@ -18,6 +19,7 @@ use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 /**
  * Testing extended Order controller.
  */
+#[AllowMockObjectsWithoutExpectations]
 class OrderControllerTest extends IntegrationTestCase
 {
     /**

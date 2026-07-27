@@ -5,6 +5,7 @@
  */
 
 namespace OxidEsales\EVatModule\Tests\Integration\Controller;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\EVatModule\Controller\Admin\ArticleAdministration;
@@ -15,6 +16,7 @@ use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 /**
  * Testing VAT TBE administration in article page.
  */
+#[AllowMockObjectsWithoutExpectations]
 class ArticleAdministrationTest extends IntegrationTestCase
 {
     /**

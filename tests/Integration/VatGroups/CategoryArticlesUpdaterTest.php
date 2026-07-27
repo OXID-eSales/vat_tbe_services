@@ -5,6 +5,7 @@
  */
 
 namespace OxidEsales\EVatModule\Tests\Integration\VatGroups;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 use OxidEsales\EVatModule\Controller\Admin\ArticleExtendAjax;
 use OxidEsales\EVatModule\Controller\Admin\ArticleMain;
@@ -16,6 +17,7 @@ use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
 /**
  * Test class for.
  */
+#[AllowMockObjectsWithoutExpectations]
 class CategoryArticlesUpdaterTest extends BaseTestCase
 {
     /**

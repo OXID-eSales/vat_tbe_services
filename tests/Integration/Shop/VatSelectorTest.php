@@ -5,6 +5,7 @@
  */
 
 namespace OxidEsales\EVatModule\Tests\Integration\Shop;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
@@ -19,6 +20,7 @@ use OxidEsales\Eshop\Application\Model\User;
 /**
  * Testing extended oxUser class.
  */
+#[AllowMockObjectsWithoutExpectations]
 class VatSelectorTest extends IntegrationTestCase
 {
     public function setUp(): void

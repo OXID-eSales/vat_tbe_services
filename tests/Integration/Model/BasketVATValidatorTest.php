@@ -5,6 +5,7 @@
  */
 
 namespace OxidEsales\EVatModule\Tests\Integration\Model;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 use OxidEsales\Eshop\Application\Model\BasketItem as EShopBasketItem;
 use OxidEsales\Eshop\Core\Registry;
@@ -24,6 +25,7 @@ use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 /**
  * Testing BasketVATValidator class.
  */
+#[AllowMockObjectsWithoutExpectations]
 class BasketVATValidatorTest extends IntegrationTestCase
 {
     /**

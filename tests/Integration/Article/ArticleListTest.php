@@ -5,6 +5,7 @@
  */
 
 namespace OxidEsales\EVatModule\Tests\Integration\Article;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 use OxidEsales\Eshop\Application\Controller\Admin\ArticleList as ArticleListController;
 use OxidEsales\Eshop\Core\Model\BaseModel;
@@ -18,6 +19,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 /**
  * Testing extended Article class.
  */
+#[AllowMockObjectsWithoutExpectations]
 class ArticleListTest extends LegacyBaseTestCase
 {
     /**

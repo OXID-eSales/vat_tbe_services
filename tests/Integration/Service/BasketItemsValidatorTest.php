@@ -5,6 +5,7 @@
  */
 
 namespace OxidEsales\EVatModule\Tests\Integration\Service;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 use OxidEsales\Eshop\Core\UtilsView;
 use OxidEsales\EVatModule\Model\IncorrectVATArticlesMessageFormatter;
@@ -15,6 +16,7 @@ use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 /**
  * Testing TBEUser class.
  */
+#[AllowMockObjectsWithoutExpectations]
 class BasketItemsValidatorTest extends IntegrationTestCase
 {
     /**

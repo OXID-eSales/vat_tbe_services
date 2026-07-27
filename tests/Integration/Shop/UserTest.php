@@ -5,6 +5,7 @@
  */
 
 namespace OxidEsales\EVatModule\Tests\Integration\Shop;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\UtilsDate;
@@ -18,6 +19,7 @@ use oxDb;
 /**
  * Testing extended oxUser class.
  */
+#[AllowMockObjectsWithoutExpectations]
 class UserTest extends BaseTestCase
 {
     public function setUp(): void

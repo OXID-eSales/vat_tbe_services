@@ -6,6 +6,7 @@
  */
 
 namespace OxidEsales\EVatModule\Tests\Integration\Model;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 use OxidEsales\Eshop\Application\Model\Basket;
 use OxidEsales\Eshop\Core\Session;
@@ -22,6 +23,7 @@ use OxidEsales\EVatModule\Model\User as UserModel;
 /**
  * Testing OrderArticleChecker class.
  */
+#[AllowMockObjectsWithoutExpectations]
 class OrderArticleCheckerTest extends IntegrationTestCase
 {
     use ContainerTrait;

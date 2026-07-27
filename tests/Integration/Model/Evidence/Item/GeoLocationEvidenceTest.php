@@ -5,6 +5,7 @@
  */
 
 namespace OxidEsales\EVatModule\Tests\Integration\Model\Evidence\Item;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Model\Evidence\Item\GeoLocationEvidence;
@@ -15,6 +16,7 @@ use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 /**
  * Test class for oeVATTBEEvidenceCalculator.
  */
+#[AllowMockObjectsWithoutExpectations]
 class GeoLocationEvidenceTest extends IntegrationTestCase
 {
     public function testGetId()

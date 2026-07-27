@@ -6,6 +6,7 @@
  */
 
 namespace OxidEsales\EVatModule\Tests\Integration\Core;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 use OxidEsales\EVatModule\Core\Model;
 use OxidEsales\EVatModule\Model\ArticleVATGroupsList;
@@ -23,6 +24,7 @@ use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 /**
  * Testing Model class.
  */
+#[AllowMockObjectsWithoutExpectations]
 class ModelTest extends IntegrationTestCase
 {
     public static function gatewayProvider(): array

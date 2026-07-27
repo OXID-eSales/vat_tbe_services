@@ -5,6 +5,7 @@
  */
 
 namespace OxidEsales\EVatModule\Tests\Integration\Checkout;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Model\IncorrectVATArticlesMessageFormatter;
@@ -15,6 +16,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 /**
  * Testing message formatter in IncorrectVATArticlesMessageFormatter.
  */
+#[AllowMockObjectsWithoutExpectations]
 class MessageFormatterTest extends BaseTestCase
 {
 

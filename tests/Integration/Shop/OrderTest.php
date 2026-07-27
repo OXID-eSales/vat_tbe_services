@@ -5,6 +5,7 @@
  */
 
 namespace OxidEsales\EVatModule\Tests\Integration\Shop;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 use OxidEsales\Eshop\Application\Model\Order as EShopOrder;
 use OxidEsales\Eshop\Application\Model\User as EShopUser;
@@ -26,6 +27,7 @@ use OxidEsales\EVatModule\Shop\Order;
 /**
  * Testing extended oxArticle class.
  */
+#[AllowMockObjectsWithoutExpectations]
 class OrderTest extends IntegrationTestCase
 {
     /**

@@ -5,6 +5,7 @@
  */
 
 namespace OxidEsales\EVatModule\Tests\Integration\Shop;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Application\Model\Country;
@@ -22,6 +23,7 @@ use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 /**
  * Testing extended oxArticle class.
  */
+#[AllowMockObjectsWithoutExpectations]
 class BasketTest extends IntegrationTestCase
 {
     public function setUp(): void

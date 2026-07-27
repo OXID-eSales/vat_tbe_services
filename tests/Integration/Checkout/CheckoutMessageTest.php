@@ -5,6 +5,7 @@
  */
 
 namespace OxidEsales\EVatModule\Tests\Integration\Checkout;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 use OxidEsales\Eshop\Core\Email;
 use OxidEsales\Eshop\Core\Model\BaseModel;
@@ -22,6 +23,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 /**
  * Testing message in checkout process for TBE articles with wrong VAT.
  */
+#[AllowMockObjectsWithoutExpectations]
 class CheckoutMessageTest extends BaseTestCase
 {
     /**

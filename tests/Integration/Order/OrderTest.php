@@ -5,6 +5,7 @@
  */
 
 namespace OxidEsales\EVatModule\Tests\Integration\Order;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
@@ -21,6 +22,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 /**
  * Testing oeVATTBEOrder class.
  */
+#[AllowMockObjectsWithoutExpectations]
 class OrderTest extends BaseTestCase
 {
     /**

@@ -5,6 +5,7 @@
  */
 
 namespace OxidEsales\EVatModule\Tests\Integration\Order;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\EshopCommunity\Core\Registry;
@@ -21,6 +22,7 @@ use PHPUnit\Framework\Attributes\Depends;
 /**
  * Testing admin controller class.
  */
+#[AllowMockObjectsWithoutExpectations]
 class OrderMainTest extends BaseTestCase
 {
     /**

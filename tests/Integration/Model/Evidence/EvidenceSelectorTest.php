@@ -5,6 +5,7 @@
  */
 
 namespace OxidEsales\EVatModule\Tests\Integration\Model\Evidence;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
@@ -19,6 +20,7 @@ use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 /**
  * Test class for EvidenceCalculator.
  */
+#[AllowMockObjectsWithoutExpectations]
 class EvidenceSelectorTest extends IntegrationTestCase
 {
     public static function providerGetCountryWhenBothEvidenceDoNotMatch(): array
