@@ -281,7 +281,13 @@ class ArticleListTest extends BaseTestCase
         $oArticleList->setAdminMode(true);
         $aListItems = $oArticleList->getItemList();
 
-        $this->assertSame(4, count($aListItems));
+        $loadedArticleIds = array_map('strval', $aListItems->arrayKeys());
+
+        // Assert against the concrete articles the module fixture defines, rather than a magic
+        // total count that silently drifts whenever other rows are present in the shop.
+        foreach (['1126', '1127', '1131', '_testArticle'] as $expectedArticleId) {
+            $this->assertContains($expectedArticleId, $loadedArticleIds);
+        }
     }
 
     /**
