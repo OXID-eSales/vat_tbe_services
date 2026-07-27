@@ -27,6 +27,22 @@ class UserTest extends BaseTestCase
         \oxDb::getDb()->execute("TRUNCATE TABLE `oxuser`;");
     }
 
+    public function tearDown(): void
+    {
+        // Restore the real time source so a frozen UtilsDate mock cannot leak into later tests.
+        Registry::set(UtilsDate::class, null);
+
+        parent::tearDown();
+    }
+
+    private function freezeTime(int $timestamp): void
+    {
+        $oUtilsDate = $this->createPartialMock(UtilsDate::class, ["getTime"]);
+        $oUtilsDate->expects($this->any())->method("getTime")->willReturn($timestamp);
+
+        Registry::set(UtilsDate::class, $oUtilsDate);
+    }
+
     /**
      * Select Country test
      */
@@ -80,10 +96,7 @@ class UserTest extends BaseTestCase
      */
     public function testSaveVatInStoreDateOnNewUserCreation()
     {
-        $oUtilsDate = $this->createPartialMock(UtilsDate::class, ["getTime"]);
-        $oUtilsDate->expects($this->any())->method("getTime")->willReturn(1388664732);
-
-        Registry::set(UtilsDate::class, $oUtilsDate);
+        $this->freezeTime(1388664732);
 
         $oUser = oxNew(User::class);
         $oUser->delete('userId');
@@ -122,10 +135,7 @@ class UserTest extends BaseTestCase
      */
     public function testSaveVatInStoreDateA()
     {
-        $oUtilsDate = $this->createPartialMock(UtilsDate::class, ["getTime"]);
-        $oUtilsDate->expects($this->any())->method("getTime")->willReturn(1388664732);
-
-        Registry::set(UtilsDate::class, $oUtilsDate);
+        $this->freezeTime(1388664732);
 
         $oUser = oxNew(User::class);
         $oUser->delete('userId');
@@ -151,10 +161,7 @@ class UserTest extends BaseTestCase
      */
     public function testSaveVatInStoreDateB()
     {
-        $oUtilsDate = $this->createPartialMock(UtilsDate::class, ["getTime"]);
-        $oUtilsDate->expects($this->any())->method("getTime")->willReturn(1388664732);
-
-        Registry::set(UtilsDate::class, $oUtilsDate);
+        $this->freezeTime(1388664732);
 
         $oUser = oxNew(User::class);
         $oUser->delete('userId');
@@ -177,10 +184,7 @@ class UserTest extends BaseTestCase
      */
     public function testSaveVatInStoreDateC()
     {
-        $oUtilsDate = $this->createPartialMock(UtilsDate::class, ["getTime"]);
-        $oUtilsDate->expects($this->any())->method("getTime")->willReturn(1388664732);
-
-        Registry::set(UtilsDate::class, $oUtilsDate);
+        $this->freezeTime(1388664732);
 
         $oUser = oxNew(User::class);
         $oUser->delete('userId');
@@ -269,6 +273,11 @@ class UserTest extends BaseTestCase
      */
     public function testSaveVatInStoreDateF()
     {
+        $firstStoreTime = 1388664732;                 // 2014-01-02 13:12:12
+        $secondStoreTime = $firstStoreTime + 86400;   // 2014-01-03 13:12:12 (one day later)
+
+        $this->freezeTime($firstStoreTime);
+
         $oUser = oxNew(User::class);
         $oUser->delete('userId');
         $oUser->setId('userId');
@@ -280,7 +289,8 @@ class UserTest extends BaseTestCase
         $oUser = oxNew(User::class);
         $oUser->load('userId');
         $vatInDate = $oUser->getOeVATTBEVatInStoreDate();
-        sleep(1);
+
+        $this->freezeTime($secondStoreTime);
 
         $oUser->assign([
             'oxustid' => 'IdNumber2'
