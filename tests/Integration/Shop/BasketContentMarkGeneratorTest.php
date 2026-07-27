@@ -8,12 +8,12 @@ namespace OxidEsales\EVatModule\Tests\Integration\Shop;
 
 use OxidEsales\Eshop\Application\Model\BasketContentMarkGenerator;
 use OxidEsales\EVatModule\Shop\Basket;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 
 /**
  * Testing extended oxArticle class.
  */
-class BasketContentMarkGeneratorTest extends TestCase
+class BasketContentMarkGeneratorTest extends IntegrationTestCase
 {
     /**
      * Mark calculation test case: just tbe

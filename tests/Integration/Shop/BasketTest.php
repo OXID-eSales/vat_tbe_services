@@ -17,12 +17,12 @@ use OxidEsales\EVatModule\Service\ModuleSettings;
 use OxidEsales\EVatModule\Shop\Basket;
 use OxidEsales\Eshop\Application\Model\Basket as EShopBasket;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 
 /**
  * Testing extended oxArticle class.
  */
-class BasketTest extends TestCase
+class BasketTest extends IntegrationTestCase
 {
     public function setUp(): void
     {

@@ -13,16 +13,17 @@ use OxidEsales\EVatModule\Service\ModuleSettings;
 use OxidEsales\EVatModule\Shop\Article;
 use OxidEsales\EVatModule\Shop\VatSelector;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 use OxidEsales\Eshop\Application\Model\User;
 
 /**
  * Testing extended oxUser class.
  */
-class VatSelectorTest extends TestCase
+class VatSelectorTest extends IntegrationTestCase
 {
     public function setUp(): void
     {
+        parent::setUp();
         Registry::getSession()->setAdminMode(false);
         Registry::getConfig()->setAdminMode(false);
         Registry::getSession()->setUser(null);

@@ -14,12 +14,12 @@ use OxidEsales\Eshop\Application\Model\Article as EShopArticle;
 use OxidEsales\EVatModule\Shop\ViewConfig;
 use OxidEsales\Eshop\Core\ViewConfig as EShopViewConfig;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 
 /**
  * Testing extended oxViewConfig class.
  */
-class ViewConfigTest extends TestCase
+class ViewConfigTest extends IntegrationTestCase
 {
     /**
      * User is not from domestic country;

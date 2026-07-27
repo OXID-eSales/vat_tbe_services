@@ -20,13 +20,13 @@ use OxidEsales\EVatModule\Shop\Country;
 use OxidEsales\EVatModule\Shop\User;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 use OxidEsales\EVatModule\Shop\Order;
 
 /**
  * Testing extended oxArticle class.
  */
-class OrderTest extends TestCase
+class OrderTest extends IntegrationTestCase
 {
     /**
      * When user and basket countries does not match error code should be returned.

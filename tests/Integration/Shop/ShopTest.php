@@ -10,12 +10,12 @@ use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\EVatModule\Service\ModuleSettings;
 use OxidEsales\EVatModule\Shop\Country;
 use OxidEsales\EVatModule\Shop\Shop;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 
 /**
  * Testing extended oxShop class.
  */
-class ShopTest extends TestCase
+class ShopTest extends IntegrationTestCase
 {
     /**
      * Test country not set

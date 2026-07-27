@@ -8,12 +8,12 @@ namespace OxidEsales\EVatModule\Tests\Integration\Shop;
 
 use OxidEsales\Eshop\Core\Field;
 use OxidEsales\EVatModule\Shop\Category;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 
 /**
  * Testing extended oxCategory class.
  */
-class CategoryTest extends TestCase
+class CategoryTest extends IntegrationTestCase
 {
     /**
      * Test if getter for data field works correct.
