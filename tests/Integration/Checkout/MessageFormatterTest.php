@@ -25,34 +25,30 @@ class MessageFormatterTest extends BaseTestCase
      */
     public static function providerGetMessage()
     {
-        $oArticle1 = oxNew(Article::class);
-        $oArticle1->assign([
-            'oxtitle' => 'some article name'
-        ]);
-
-        $oArticle2 = oxNew(Article::class);
-        $oArticle2->assign([
-            'oxtitle' => 'some other name'
-        ]);
-
-        $oInvalidArticles1 = array($oArticle1);
-        $oInvalidArticles2 = array($oArticle1, $oArticle2);
-
+        // Return plain data only. Building models (oxNew) here would open a DB connection
+        // at data-provider collection time, outside the test's setUp/transaction context.
         return array(
-            array($oInvalidArticles1, 'some article name'),
-            array($oInvalidArticles2, 'some article name, some other name'),
+            array(['some article name'], 'some article name'),
+            array(['some article name', 'some other name'], 'some article name, some other name'),
         );
     }
 
     /**
      * Test if error message is formed correctly.
      *
-     * @param array  $oInvalidArticles fake articles to form error message.
-     * @param string $sExpectedMessage expected error message.
+     * @param string[] $articleTitles titles of the fake articles to form the error message from.
+     * @param string   $articleName   expected article name(s) in the error message.
      */
     #[DataProvider('providerGetMessage')]
-    public function testGetMessage($oInvalidArticles, $articleName)
+    public function testGetMessage($articleTitles, $articleName)
     {
+        $oInvalidArticles = [];
+        foreach ($articleTitles as $sTitle) {
+            $oArticle = oxNew(Article::class);
+            $oArticle->assign(['oxtitle' => $sTitle]);
+            $oInvalidArticles[] = $oArticle;
+        }
+
         /** @var IncorrectVATArticlesMessageFormatter $oVATTBEArticleMessageFormer */
         $oVATTBEArticleMessageFormer = oxNew(IncorrectVATArticlesMessageFormatter::class);
         $sErrorMessage = $oVATTBEArticleMessageFormer->getMessage($oInvalidArticles);
