@@ -18,12 +18,12 @@ use OxidEsales\EVatModule\Model\DbGateway\CategoryVATGroupsDbGateway;
 use OxidEsales\EVatModule\Model\DbGateway\CountryVATGroupsDbGateway;
 use OxidEsales\EVatModule\Model\DbGateway\OrderEvidenceListDbGateway;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 
 /**
  * Testing Model class.
  */
-class ModelTest extends TestCase
+class ModelTest extends IntegrationTestCase
 {
     public static function gatewayProvider(): array
     {

@@ -12,12 +12,12 @@ use OxidEsales\EVatModule\Model\CategoryArticlesUpdater;
 use OxidEsales\EVatModule\Model\DbGateway\CategoryVATGroupsPopulatorDbGateway;
 use OxidEsales\EVatModule\Shop\Category;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 
 /**
  * Testing CategoryArticlesUpdater class.
  */
-class CategoryVATGroupsPopulatorTest extends TestCase
+class CategoryVATGroupsPopulatorTest extends IntegrationTestCase
 {
     use ContainerTrait;
 

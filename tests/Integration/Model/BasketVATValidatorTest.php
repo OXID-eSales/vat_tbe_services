@@ -19,12 +19,12 @@ use OxidEsales\EVatModule\Model\User as UserModel;
 use OxidEsales\EVatModule\Shop\User;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 
 /**
  * Testing BasketVATValidator class.
  */
-class BasketVATValidatorTest extends TestCase
+class BasketVATValidatorTest extends IntegrationTestCase
 {
     /**
      * data provider for test testShowVATTBEMark

@@ -8,12 +8,12 @@ namespace OxidEsales\EVatModule\Tests\Integration\Model;
 
 use OxidEsales\EVatModule\Model\DbGateway\OrderEvidenceListDbGateway;
 use OxidEsales\EVatModule\Model\OrderEvidenceList;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 
 /**
  * Test class for oeVATTBEOrderEvidenceList.
  */
-class OrderEvidenceListTest extends TestCase
+class OrderEvidenceListTest extends IntegrationTestCase
 {
     /**
      * Saves evidence list.

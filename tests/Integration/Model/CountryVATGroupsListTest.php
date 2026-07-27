@@ -12,12 +12,12 @@ use OxidEsales\EVatModule\Model\CountryVATGroup;
 use OxidEsales\EVatModule\Model\CountryVATGroupsList;
 use OxidEsales\EVatModule\Model\DbGateway\CountryVATGroupsDbGateway;
 use OxidEsales\EVatModule\Model\GroupArticleCacheInvalidator;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 
 /**
  * Testing oeVATTBECountryVATGroupsList class.
  */
-class CountryVATGroupsListTest extends TestCase
+class CountryVATGroupsListTest extends IntegrationTestCase
 {
     use ContainerTrait;
 

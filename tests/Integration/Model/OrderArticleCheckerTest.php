@@ -16,19 +16,20 @@ use OxidEsales\EVatModule\Shop\Article;
 use OxidEsales\EVatModule\Shop\Country;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 use OxidEsales\EVatModule\Model\User as UserModel;
 
 /**
  * Testing OrderArticleChecker class.
  */
-class OrderArticleCheckerTest extends TestCase
+class OrderArticleCheckerTest extends IntegrationTestCase
 {
     use ContainerTrait;
 
     public function tearDown(): void
     {
         Registry::set(Session::class, oxNew(Session::class));
+        parent::tearDown();
     }
 
     /**

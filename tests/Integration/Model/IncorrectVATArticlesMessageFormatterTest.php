@@ -9,12 +9,12 @@ namespace OxidEsales\EVatModule\Tests\Integration\Model;
 use OxidEsales\Eshop\Core\Field;
 use OxidEsales\EVatModule\Model\IncorrectVATArticlesMessageFormatter;
 use OxidEsales\EVatModule\Shop\Article;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 
 /**
  * Test class for oeVATTBEArticleMessageFormatter.
  */
-class IncorrectVATArticlesMessageFormatterTest extends TestCase
+class IncorrectVATArticlesMessageFormatterTest extends IntegrationTestCase
 {
     /**
      * Test if error message is formed correctly.

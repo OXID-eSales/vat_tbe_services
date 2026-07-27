@@ -11,12 +11,12 @@ use OxidEsales\EshopCommunity\Tests\ContainerTrait;
 use OxidEsales\EVatModule\Model\CategoryVATGroupsList;
 use OxidEsales\EVatModule\Model\DbGateway\CategoryVATGroupsDbGateway;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 
 /**
  * Testing CategoryVATGroupsList class.
  */
-class CategoryVATGroupsListTest extends TestCase
+class CategoryVATGroupsListTest extends IntegrationTestCase
 {
     use ContainerTrait;
 

@@ -16,16 +16,17 @@ use OxidEsales\EVatModule\Shop\User;
 use OxidEsales\Eshop\Application\Model\User as EShopUser;
 use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\Attributes\ExcludeGlobalVariableFromBackup;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 
 /**
  * Testing TBEUser class session related functionality.
  */
-class UserSessionTest extends TestCase
+class UserSessionTest extends IntegrationTestCase
 {
     public function setUp(): void
     {
         ContainerFactory::resetContainer();
+        parent::setUp();
     }
 
     /**

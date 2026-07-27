@@ -13,12 +13,12 @@ use OxidEsales\EVatModule\Model\ArticleVATGroupsList;
 use OxidEsales\EVatModule\Model\GroupArticleCacheInvalidator;
 use OxidEsales\EVatModule\Tests\Libs\TestCacheConnector;
 use OxidEsales\Facts\Facts;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 
 /**
  * Test class for oeVATTBEVATGroupArticleCacheInvalidator.
  */
-class VATGroupArticleCacheInvalidatorTest extends TestCase
+class VATGroupArticleCacheInvalidatorTest extends IntegrationTestCase
 {
     /**
      * Test if error message is formed correctly.

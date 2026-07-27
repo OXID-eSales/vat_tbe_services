@@ -10,12 +10,12 @@ use OxidEsales\Eshop\Core\UtilsView;
 use OxidEsales\EVatModule\Model\IncorrectVATArticlesMessageFormatter;
 use OxidEsales\EVatModule\Model\OrderArticleChecker;
 use OxidEsales\EVatModule\Service\BasketItemsValidator;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 
 /**
  * Testing TBEUser class.
  */
-class BasketItemsValidatorTest extends TestCase
+class BasketItemsValidatorTest extends IntegrationTestCase
 {
     /**
      * Test if no error message set when there are no articles with wrong TBE VAT.
