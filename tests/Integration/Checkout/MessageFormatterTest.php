@@ -5,8 +5,8 @@
  */
 
 namespace OxidEsales\EVatModule\Tests\Integration\Checkout;
-use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
+use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Model\IncorrectVATArticlesMessageFormatter;
 use OxidEsales\EVatModule\Shop\Article;
@@ -16,7 +16,6 @@ use PHPUnit\Framework\Attributes\DataProvider;
 /**
  * Testing message formatter in IncorrectVATArticlesMessageFormatter.
  */
-#[AllowMockObjectsWithoutExpectations]
 class MessageFormatterTest extends BaseTestCase
 {
 
@@ -46,8 +45,12 @@ class MessageFormatterTest extends BaseTestCase
     {
         $oInvalidArticles = [];
         foreach ($articleTitles as $sTitle) {
+            // Set the title field directly rather than via assign(): assign() runs the
+            // article's stock/status processing, which reads unset fields on a bare article
+            // and emits shop-core PHP notices (floor(null) deprecation, "read property on
+            // false" warnings). The formatter only needs oxtitle.
             $oArticle = oxNew(Article::class);
-            $oArticle->assign(['oxtitle' => $sTitle]);
+            $oArticle->oxarticles__oxtitle = new Field($sTitle);
             $oInvalidArticles[] = $oArticle;
         }
 
