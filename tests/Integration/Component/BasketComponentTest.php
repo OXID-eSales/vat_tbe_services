@@ -12,12 +12,12 @@ use OxidEsales\EVatModule\Shop\Basket;
 use OxidEsales\EVatModule\Shop\Country;
 use OxidEsales\EVatModule\Shop\User;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 
 /**
  * Testing extended oxUser class.
  */
-class BasketComponentTest extends TestCase
+class BasketComponentTest extends IntegrationTestCase
 {
     public function setUp(): void
     {

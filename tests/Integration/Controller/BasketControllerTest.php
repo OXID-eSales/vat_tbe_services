@@ -18,13 +18,13 @@ use OxidEsales\EVatModule\Shop\User;
 use OxidEsales\Eshop\Application\Model\User as EShopUser;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 use OxidEsales\Eshop\Application\Model\Basket as EShopBasket;
 
 /**
  * Testing extended Basket controller.
  */
-class BasketControllerTest extends TestCase
+class BasketControllerTest extends IntegrationTestCase
 {
     /**
      * TBE Articles are in basket;

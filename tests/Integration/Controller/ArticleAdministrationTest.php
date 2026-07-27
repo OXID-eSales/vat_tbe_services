@@ -10,12 +10,12 @@ use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\EVatModule\Controller\Admin\ArticleAdministration;
 use OxidEsales\Facts\Facts;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 
 /**
  * Testing VAT TBE administration in article page.
  */
-class ArticleAdministrationTest extends TestCase
+class ArticleAdministrationTest extends IntegrationTestCase
 {
     /**
      * Test if render set readonly mode for subshops.

@@ -13,12 +13,12 @@ use OxidEsales\EVatModule\Service\ModuleSettings;
 use OxidEsales\EVatModule\Shop\Basket;
 use OxidEsales\EVatModule\Shop\Country;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 
 /**
  * Testing extended Order controller.
  */
-class OrderControllerTest extends TestCase
+class OrderControllerTest extends IntegrationTestCase
 {
     /**
      * Provider for testOeVATTBEShowVATTBEMarkMessage.
