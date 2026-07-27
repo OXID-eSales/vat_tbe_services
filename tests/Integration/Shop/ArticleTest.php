@@ -8,12 +8,12 @@ namespace OxidEsales\EVatModule\Tests\Integration\Shop;
 
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Core\Field;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 
 /**
  * Testing extended oxArticle class.
  */
-class ArticleTest extends TestCase
+class ArticleTest extends IntegrationTestCase
 {
     /**
      * Test for vat tbe getter
