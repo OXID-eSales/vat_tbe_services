@@ -6,9 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [4.5.0] - unreleased
 
+### Added
+- PHP_CodeSniffer with the OXID coding standard, executed in CI
+
 ### Changed
 - Update module to work with OXID eShop 7.6
 - Update PHPUnit to 12.5
+- Apply the OXID coding standard to source, tests and migrations
 
 ## [4.4.0] - 2026-04-23
 
