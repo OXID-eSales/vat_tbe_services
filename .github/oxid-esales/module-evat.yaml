@@ -45,6 +45,14 @@ runscript: &runscript
   evat:
     path: 'vendor/oxid-esales/evat-module'
 
+runslim:
+  <<: *runscript
+  matrix:
+    script: |
+      [
+        "evat:phpcs-report",
+      ]
+
 sonarcloud:
   matrix:
     testplan: '["-"]'
