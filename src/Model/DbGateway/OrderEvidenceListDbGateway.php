@@ -26,6 +26,7 @@ class OrderEvidenceListDbGateway extends ModelDbGateway implements ModelDbGatewa
     {
         $oDb = $this->getDb();
 
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $sSql = 'INSERT INTO `oevattbe_orderevidences` (oevattbe_orderid, oevattbe_evidence, oevattbe_countryid) VALUES ';
         $aSqlValues = [];
 

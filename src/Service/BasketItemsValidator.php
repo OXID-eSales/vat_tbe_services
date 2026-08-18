@@ -19,7 +19,9 @@ class BasketItemsValidator
     /**
      * Sets dependencies.
      *
+     * @phpcs:ignore Generic.Files.LineLength.TooLong
      * @param OrderArticleChecker                  $orderArticleChecker  checks if article list has article with wrong TBE VAT.
+     * @phpcs:ignore Generic.Files.LineLength.TooLong
      * @param IncorrectVATArticlesMessageFormatter $incorrectVATArticlesMessageFormatter forms error message if article list has article with wrong TBE VAT.
      * @param UtilsView                            $utilsView                  stores error message.
      */

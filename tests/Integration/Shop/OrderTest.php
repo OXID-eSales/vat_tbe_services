@@ -97,6 +97,7 @@ class OrderTest extends IntegrationTestCase
         $oArticle->expects($this->any())->method("getOeVATTBETBEVat")->willReturn($blValidArticles ? 19 : null);
 
         /** @var Basket|EShopBasket|MockObject $oArticle */
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $oBasket = $this->createPartialMock(Basket::class, ["getOeVATTBETbeCountryId", "hasOeTBEVATArticles", "getBasketArticles"]);
         $oBasket->expects($this->any())->method("getOeVATTBETbeCountryId")->willReturn($sUserCountryId);
         $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->willReturn(true);
@@ -161,6 +162,7 @@ class OrderTest extends IntegrationTestCase
         $oArticle->expects($this->any())->method("getOeVATTBETBEVat")->willReturn($blValidArticles ? 19 : null);
 
         /** @var Basket|EShopBasket|MockObject $oArticle */
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $oBasket = $this->createPartialMock(Basket::class, ["getOeVATTBETbeCountryId", "hasOeTBEVATArticles", "getBasketArticles"]);
         $oBasket->expects($this->any())->method("getOeVATTBETbeCountryId")->willReturn($sUserCountry);
         $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->willReturn(true);

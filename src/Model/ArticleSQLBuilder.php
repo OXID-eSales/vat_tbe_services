@@ -53,10 +53,13 @@ class ArticleSQLBuilder
         $oUser = $oArticle->getUser();
 
         $sSelect = '';
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $sSelect .= " LEFT JOIN `oevattbe_articlevat` ON `" . $oArticle->getViewName() . "`.`oxid` = `oevattbe_articlevat`.`oevattbe_articleid` ";
         if ($oUser) {
+            // phpcs:ignore Generic.Files.LineLength.TooLong
             $sSelect .= " AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($oUser->getOeVATTBETbeCountryId() ?? '');
         }
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $sSelect .= " LEFT JOIN `oevattbe_countryvatgroups` ON `oevattbe_articlevat`.`oevattbe_VATGROUPID` = `oevattbe_countryvatgroups`.`oevattbe_id` ";
 
         return $sSelect;

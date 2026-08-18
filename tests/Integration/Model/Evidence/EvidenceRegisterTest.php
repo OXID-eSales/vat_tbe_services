@@ -49,6 +49,7 @@ class EvidenceRegisterTest extends IntegrationTestCase
     #[Depends('testRegisteringEvidenceWhenNoEvidencesRegistered')]
     public function testActivatingEvidenceAfterSuccessfulRegistration()
     {
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $this->assertEquals(['billing_country' => 0], ContainerFacade::get(ModuleSettings::class)->getCountryEvidences());
     }
 
@@ -170,6 +171,7 @@ class EvidenceRegisterTest extends IntegrationTestCase
     #[Depends('testUnregisteringEvidenceWhenEvidenceIsNotRegistered')]
     public function testRemovingEvidenceWhenEvidenceIsNotRegistered()
     {
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $this->assertEquals(['billing_country' => 1], ContainerFacade::get(ModuleSettings::class)->getCountryEvidences());
     }
 

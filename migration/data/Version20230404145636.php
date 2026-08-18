@@ -80,10 +80,15 @@ final class Version20230404145636 extends AbstractMigration
         ];
 
         $aFieldSql = [
+            // phpcs:ignore Generic.Files.LineLength.TooLong
             'oevattbe_istbeservice'       => "ALTER TABLE `oxarticles` ADD `OEVATTBE_ISTBESERVICE` tinyint(1) NOT NULL default 0",
+            // phpcs:ignore Generic.Files.LineLength.TooLong
             'oevattbe_istbe'              => "ALTER TABLE `oxcategories` ADD `OEVATTBE_ISTBE` tinyint(1) NOT NULL default 0",
+            // phpcs:ignore Generic.Files.LineLength.TooLong
             'oevattbe_appliestbevat'      => "ALTER TABLE `oxcountry` ADD `OEVATTBE_APPLIESTBEVAT` tinyint(1) NOT NULL default 0",
+            // phpcs:ignore Generic.Files.LineLength.TooLong
             'oevattbe_istbevatconfigured' => "ALTER TABLE `oxcountry` ADD `OEVATTBE_ISTBEVATCONFIGURED` tinyint(1) NOT NULL default 0",
+            // phpcs:ignore Generic.Files.LineLength.TooLong
             'oevattbe_evidenceused'       => "ALTER TABLE `oxorder` ADD `OEVATTBE_EVIDENCEUSED` char(32) NOT NULL default 0",
             'oevattbe_vatinenterdate'     => "ALTER TABLE `oxuser` ADD `OEVATTBE_VATINENTERDATE` timestamp NOT NULL",
         ];

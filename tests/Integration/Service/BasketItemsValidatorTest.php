@@ -35,6 +35,7 @@ class BasketItemsValidatorTest extends IntegrationTestCase
         $oUtilsView->expects($this->never())->method('addErrorToDisplay');
 
         /** @var BasketItemsValidator $basketItemsValidator */
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $basketItemsValidator = oxNew(BasketItemsValidator::class, $oVATTBEOrderArticleChecker, $oVATTBEArticleMessageFormer, $oUtilsView);
         $basketItemsValidator->validateTbeArticlesAndShowMessageIfNeeded('basket');
     }
@@ -54,6 +55,7 @@ class BasketItemsValidatorTest extends IntegrationTestCase
         $oUtilsView->expects($this->atLeastOnce())->method('addErrorToDisplay');
 
         /** @var BasketItemsValidator $basketItemsValidator */
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $basketItemsValidator = oxNew(BasketItemsValidator::class, $oVATTBEOrderArticleChecker, $oVATTBEArticleMessageFormer, $oUtilsView);
         $basketItemsValidator->validateTbeArticlesAndShowMessageIfNeeded('basket');
     }

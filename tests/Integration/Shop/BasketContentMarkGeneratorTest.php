@@ -36,6 +36,7 @@ class BasketContentMarkGeneratorTest extends IntegrationTestCase
      */
     public function testGetMarkHasOtherMarks()
     {
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'hasArticlesWithDownloadableAgreement']);
         $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->willReturn(true);
         $oBasket->expects($this->any())->method('hasArticlesWithDownloadableAgreement')->willReturn(true);
@@ -51,6 +52,7 @@ class BasketContentMarkGeneratorTest extends IntegrationTestCase
      */
     public function testGetMarkHasOtherMarksButNotTBE()
     {
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'hasArticlesWithDownloadableAgreement']);
         $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->willReturn(false);
         $oBasket->expects($this->any())->method('hasArticlesWithDownloadableAgreement')->willReturn(true);

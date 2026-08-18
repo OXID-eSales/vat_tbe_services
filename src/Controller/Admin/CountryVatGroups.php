@@ -127,6 +127,7 @@ class CountryVatGroups extends AdminDetailsController
 
         /** @var DisplayError $oEx */
         $oEx = oxNew(DisplayError::class);
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $oEx->setMessage($oLang->translateString('OEVATTBE_NEW_COUNTRY_VAT_GROUP_PARAMETER_MISSING', $oLang->getTplLanguage()));
 
         /** @var UtilsView $oView */

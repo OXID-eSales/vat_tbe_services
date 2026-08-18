@@ -274,10 +274,14 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
     protected function prepareData($blAssign = false)
     {
         $aSqlQueries = [];
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $aSqlQueries[] = "INSERT INTO `oevattbe_categoryvat` SET `OEVATTBE_CATEGORYID` = 'categoryId', `OEVATTBE_COUNTRYID` = 'a7c40f631fc920687.20179984', `OEVATTBE_VATGROUPID` = '10'";
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $aSqlQueries[] = "INSERT INTO `oevattbe_categoryvat` SET `OEVATTBE_CATEGORYID` = 'categoryId', `OEVATTBE_COUNTRYID` = 'a7c40f631fc920687.20179985', `OEVATTBE_VATGROUPID` = '11'";
         if ($blAssign) {
+            // phpcs:ignore Generic.Files.LineLength.TooLong
             $aSqlQueries[] = "INSERT INTO `oxobject2category` SET `oxcatnid` = 'categoryId', `oxobjectid` = 'article1', `oxid` = 1";
+            // phpcs:ignore Generic.Files.LineLength.TooLong
             $aSqlQueries[] = "INSERT INTO `oxobject2category` SET `oxcatnid` = 'categoryId', `oxobjectid` = 'article2', `oxid` = 2";
         }
 
@@ -299,8 +303,11 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
         $aSqlQueries[] = "INSERT INTO `oxarticles` SET `oxid` = 'article3', `oevattbe_istbeservice` = '1'";
         $aSqlQueries[] = "INSERT INTO `oxarticles` SET `oxid` = 'article4', `oevattbe_istbeservice` = '1'";
         $aSqlQueries[] = "INSERT INTO `oxarticles` SET `oxid` = 'article5', `oevattbe_istbeservice` = '1'";
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $aSqlQueries[] = "INSERT INTO `oevattbe_articlevat` SET `OEVATTBE_ARTICLEID` = 'article3', `OEVATTBE_COUNTRYID` = 'a7c40f631fc920687.20179984', `OEVATTBE_VATGROUPID` = 10";
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $aSqlQueries[] = "INSERT INTO `oevattbe_articlevat` SET `OEVATTBE_ARTICLEID` = 'article4', `OEVATTBE_COUNTRYID` = 'a7c40f631fc920687.20179984', `OEVATTBE_VATGROUPID` = 10";
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $aSqlQueries[] = "INSERT INTO `oevattbe_articlevat` SET `OEVATTBE_ARTICLEID` = 'article5', `OEVATTBE_COUNTRYID` = 'a7c40f631fc920687.20179984', `OEVATTBE_VATGROUPID` = 10";
 
         foreach ($aSqlQueries as $sSql) {
@@ -310,6 +317,7 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
 
     protected function cleanFixtures()
     {
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         \oxDb::getDb()->execute("DELETE FROM `oevattbe_articlevat` WHERE OEVATTBE_ARTICLEID IN('1126', '1127', '1128', '1131')");
         \oxDb::getDb()->execute("DELETE FROM `oxarticles` WHERE OXID IN ('1126', '1127', '1131', '_testArticle')");
     }

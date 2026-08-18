@@ -30,6 +30,7 @@ class ArticleVATGroupsDbGateway extends ModelDbGateway implements ModelDbGateway
 
         $this->delete($sArticleId);
 
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $sSql = 'INSERT INTO `oevattbe_articlevat` (oevattbe_articleid, oevattbe_countryid, oevattbe_vatgroupid) VALUES ';
         $aSqlValues = [];
 
@@ -56,6 +57,7 @@ class ArticleVATGroupsDbGateway extends ModelDbGateway implements ModelDbGateway
     public function load($sArticleId)
     {
         $oDb = $this->getDb();
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $aData = $oDb->getAll('SELECT * FROM `oevattbe_articlevat` WHERE `oevattbe_articleid` = ' . $oDb->quote($sArticleId));
 
         return $aData;
@@ -71,6 +73,7 @@ class ArticleVATGroupsDbGateway extends ModelDbGateway implements ModelDbGateway
     public function loadByGroupId($sGroupId)
     {
         $oDb = $this->getDb();
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $aData = $oDb->getAll('SELECT * FROM `oevattbe_articlevat` WHERE `oevattbe_vatgroupid` = ' . $oDb->quote($sGroupId));
 
         return $aData;
@@ -88,6 +91,7 @@ class ArticleVATGroupsDbGateway extends ModelDbGateway implements ModelDbGateway
         $oDb = $this->getDb();
         $oDb->startTransaction();
 
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $blDeleteResult = $oDb->execute('DELETE FROM `oevattbe_articlevat` WHERE `oevattbe_articleid` = ' . $oDb->quote($sGroupId));
 
         $blResult = ($blDeleteResult !== false);

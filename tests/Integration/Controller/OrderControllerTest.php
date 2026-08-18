@@ -47,6 +47,7 @@ class OrderControllerTest extends IntegrationTestCase
      * @param bool $blCountryAppliesTBEVAT Whether country is configured as TBE country.
      */
     #[DataProvider('providerShowVATTBEMarkMessageWhenMessageShouldBeHidden')]
+    // phpcs:ignore Generic.Files.LineLength.TooLong
     public function testShowVATTBEMarkMessageWhenMessageShouldBeHidden($blIsDomesticCountry, $blHasTBEArticles, $blValidArticles, $blCountryAppliesTBEVAT)
     {
         $sDomesticCountryAbbr = $blIsDomesticCountry ? 'LT' : 'DE';
@@ -56,6 +57,7 @@ class OrderControllerTest extends IntegrationTestCase
         $oCountry = $this->createPartialMock(Country::class, ['appliesOeTBEVATTbeVat']);
         $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->willReturn($blCountryAppliesTBEVAT);
 
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'isOeVATTBEValid', 'getOeVATTBECountry']);
         $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->willReturn($blHasTBEArticles);
         $oBasket->expects($this->any())->method("isOeVATTBEValid")->willReturn($blValidArticles);
@@ -81,6 +83,7 @@ class OrderControllerTest extends IntegrationTestCase
         $oCountry = $this->createPartialMock(Country::class, ['appliesOeTBEVATTbeVat']);
         $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->willReturn(true);
 
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'isOeVATTBEValid', 'getOeVATTBECountry']);
         $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->willReturn(true);
         $oBasket->expects($this->any())->method("isOeVATTBEValid")->willReturn(true);
@@ -100,6 +103,7 @@ class OrderControllerTest extends IntegrationTestCase
         $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->willReturn(true);
         $oCountry->expects($this->any())->method("getOeVATTBEName")->willReturn('Deutschland');
 
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'isOeVATTBEValid', 'getOeVATTBECountry']);
         $oBasket->expects($this->any())->method("hasOeTBEVATArticles")->willReturn(true);
         $oBasket->expects($this->any())->method("isOeVATTBEValid")->willReturn(true);
@@ -110,6 +114,7 @@ class OrderControllerTest extends IntegrationTestCase
         $oOrderController = oxNew(OrderController::class);
 
         $sExpectedMessage = '** - ';
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $sExpectedMessage .= sprintf(Registry::getLang()->translateString('OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY'), 'Deutschland');
         $this->assertEquals($sExpectedMessage, $oOrderController->getOeVATTBEMarkMessage());
     }

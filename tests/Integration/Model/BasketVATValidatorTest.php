@@ -129,6 +129,7 @@ class BasketVATValidatorTest extends IntegrationTestCase
         $oBasketItem->expects($this->any())->method("getVatPercent")->willReturn(10);
         $oBasketItem->expects($this->any())->method("getArticle")->willReturn($oArticle);
 
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $oBasket = $this->createPartialMock(Basket::class, ['getOeVATTBECountry', 'isOeVATTBEValid', 'getOeVATTBEInValidArticles']);
         $oBasket->expects($this->any())->method("getOeVATTBECountry")->willReturn($oCountry);
         $oBasket->expects($this->any())->method("isOeVATTBEValid")->willReturn(false);
@@ -162,6 +163,7 @@ class BasketVATValidatorTest extends IntegrationTestCase
         $oBasketItem->expects($this->any())->method("getArticle")->willReturn($oArticle);
 
         $aInValidArticles = ['invalid_article_id' => 'article1'];
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $oBasket = $this->createPartialMock(Basket::class, ['getOeVATTBECountry', 'isOeVATTBEValid', 'getOeVATTBEInValidArticles']);
         $oBasket->expects($this->any())->method("getOeVATTBECountry")->willReturn($oCountry);
         $oBasket->expects($this->any())->method("isOeVATTBEValid")->willReturn(false);

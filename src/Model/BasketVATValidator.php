@@ -53,6 +53,7 @@ class BasketVATValidator
         $aInValidArticles = $this->basket->getOeVATTBEInValidArticles();
         $blIsArticleInvalid = isset($aInValidArticles[$oArticle->getId()]);
 
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         if ($this->user && !$this->userCountry->isUserFromDomesticCountry() && !$this->basket->isOeVATTBEValid() && $blIsArticleInvalid) {
             $blValid = false;
         }
@@ -75,6 +76,7 @@ class BasketVATValidator
 
         /** @var EShopArticle|Article $oArticle */
         $oArticle = $oBasketItem->getArticle();
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         if ($oArticle->isOeVATTBETBEService() && !$this->userCountry->isUserFromDomesticCountry() && (!$this->user || ($oCountry && $oCountry->appliesOeTBEVATTbeVat()))) {
             $blShowMark = true;
         }

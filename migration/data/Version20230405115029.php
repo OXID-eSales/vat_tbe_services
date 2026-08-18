@@ -159,15 +159,19 @@ final class Version20230405115029 extends AbstractMigration
         ];
 
         foreach ($aCountryVATs as $sCountryCode => $aVATRates) {
+            // phpcs:ignore Generic.Files.LineLength.TooLong
             $isCountryConfigured = $this->connection->fetchOne("SELECT COUNT(*) FROM `oevattbe_countryvatgroups` INNER JOIN `oxcountry` ON oevattbe_countryvatgroups.OEVATTBE_COUNTRYID=oxcountry.oxid AND OXISOALPHA2 = " . $this->connection->quote($sCountryCode));
             if (!$isCountryConfigured) {
+                // phpcs:ignore Generic.Files.LineLength.TooLong
                 $this->addSql("UPDATE `oxcountry` SET `oevattbe_appliestbevat` = 1, `oevattbe_istbevatconfigured` = 1 WHERE `oxisoalpha2` = " . $this->connection->quote($sCountryCode));
 
                 foreach ($aVATRates as $aRate) {
+                    // phpcs:disable Generic.Files.LineLength.TooLong
                     $this->addSql("INSERT INTO `oevattbe_countryvatgroups`
                         SET `oevattbe_countryid` = (SELECT `oxid` FROM `oxcountry` WHERE `oxisoalpha2` = " . $this->connection->quote($sCountryCode) . "),
                         `oevattbe_name` = " . $this->connection->quote($aRate['name']) . ", 
                         `oevattbe_rate` = " . $this->connection->quote($aRate['rate']));
+                    // phpcs:enable Generic.Files.LineLength.TooLong
                 }
             }
         }

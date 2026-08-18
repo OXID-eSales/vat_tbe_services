@@ -64,6 +64,7 @@ class ArticleList extends ArticleList_parent
         $sSelect .= " left join $sArticleTable ON $sArticleTable.oxid = oc.oxobjectid";
         $sSelect .= $this->getOeVATTBEArticleSqlBuilder()->getJoins();
         $sSelect .= " WHERE " . $this->getBaseObject()->getSqlActiveSnippet() . " and $sArticleTable.oxparentid = ''";
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $sSelect .= " and oc.oxcatnid = " . $oDb->quote($sCatId) . " $sFilterSql ORDER BY $sSorting oc.oxpos, oc.oxobjectid ";
 
         return $sSelect;
@@ -206,6 +207,7 @@ class ArticleList extends ArticleList_parent
         $sSelect .= " left join $sArticleTable on $sArticleTable.oxid = oxactions2article.oxartid";
         $sSelect .= " left join $sViewName on $sViewName.oxid = oxactions2article.oxactionid";
         $sSelect .= $this->getOeVATTBEArticleSqlBuilder()->getJoins();
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $sSelect .= " where oxactions2article.oxshopid = '$sShopID' and oxactions2article.oxactionid = $sActionID and $sActiveSql";
         $sSelect .= " and $sArticleTable.oxid is not null and " . $oBaseObject->getSqlActiveSnippet();
         $sSelect .= " order by oxactions2article.oxsort $sLimit";
@@ -351,6 +353,7 @@ class ArticleList extends ArticleList_parent
                 $sSelect .= $this->getOeVATTBEArticleSqlBuilder()->getSelectFields();
                 $sSelect .= " from $sArticleTable ";
                 $sSelect .= $this->getOeVATTBEArticleSqlBuilder()->getJoins();
+                // phpcs:ignore Generic.Files.LineLength.TooLong
                 $sSelect .= "where oxparentid = '' and " . $this->getBaseObject()->getSqlActiveSnippet() . " and oxissearch = 1 order by $sType desc ";
                 if (!($iLimit = (int) $iLimit)) {
                     $iLimit = $myConfig->getConfigParam('iNrofNewcomerArticles');
@@ -401,6 +404,7 @@ class ArticleList extends ArticleList_parent
                 $sSelect .= $this->getOeVATTBEArticleSqlBuilder()->getSelectFields();
                 $sSelect .= " from $sArticleTable ";
                 $sSelect .= $this->getOeVATTBEArticleSqlBuilder()->getJoins();
+                // phpcs:ignore Generic.Files.LineLength.TooLong
                 $sSelect .= "where " . $this->getBaseObject()->getSqlActiveSnippet() . " and $sArticleTable.oxissearch = 1 ";
                 $sSelect .= "and $sArticleTable.oxparentid = '' and $sArticleTable.oxsoldamount>0 ";
                 $sSelect .= "order by $sArticleTable.oxsoldamount desc $sLimit";

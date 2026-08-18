@@ -28,7 +28,7 @@ class Order extends Order_parent
      *
      * @var int
      */
-    const ORDER_STATE_TBE_NOT_CONFIGURED = 10;
+    public const ORDER_STATE_TBE_NOT_CONFIGURED = 10;
 
     /** @var bool If order has TBE services. */
     private $_blHasOrderTBEServicesInInvoice;
@@ -75,6 +75,7 @@ class Order extends Order_parent
         $oArticleChecker = $this->getOeVATTBEOrderArticleChecker($oBasket);
 
         $blUserFromDomesticCountry = $oUserCountry->isUserFromDomesticCountry();
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $blOrderValid = !$oBasket->hasOeTBEVATArticles() || ($oArticleChecker->isValid() && $oUserCountry->getOeVATTBETbeCountryId());
 
         if (!$iValidState && !$blUserFromDomesticCountry && !$blOrderValid) {
@@ -212,6 +213,7 @@ class Order extends Order_parent
         if ($this->getOeVATTBEHasOrderTBEServicesInInvoice()) {
             $iStartPos += 5;
             $sCountryTitle = $this->getOeVATTBECountryTitle();
+            // phpcs:ignore Generic.Files.LineLength.TooLong
             $oPdf->text(15, $iStartPos, '* ' . sprintf(Registry::getLang()->translateString('OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY_INVOICE', $this->getSelectedLang()), $sCountryTitle));
         }
     }
@@ -269,6 +271,7 @@ class Order extends Order_parent
     /**
      * Returns whether to store evidences.
      *
+     * @phpcs:ignore Generic.Files.LineLength.TooLong
      * @param int                $iRet                 Order status. Check oxOrder constants for available return values.
      * @param EShopBasket|Basket $oBasket              Basket object. Will check for TBE articles inside basket.
      * @param bool               $blRecalculatingOrder Whether order recalculation is being done.

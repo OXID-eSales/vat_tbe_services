@@ -111,6 +111,7 @@ class CountryVATGroupsEditingTest extends LegacyBaseTestCase
             $oVATTBECountryVatGroup->load($iExpectedGroupId);
             $this->assertSame($aExpectedCountryVatGroup['oevattbe_name'], $oVATTBECountryVatGroup->getName());
             $this->assertSame($sExpectedVATRate, $oVATTBECountryVatGroup->getRate());
+            // phpcs:ignore Generic.Files.LineLength.TooLong
             $this->assertSame($aExpectedCountryVatGroup['oevattbe_description'], $oVATTBECountryVatGroup->getDescription());
         }
     }

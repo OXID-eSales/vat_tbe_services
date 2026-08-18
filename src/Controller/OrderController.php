@@ -76,6 +76,7 @@ class OrderController extends OrderController_parent
         $sCountryName = $oCountry ? $oCountry->getOeVATTBEName() : '';
 
         $sMessage = $oMarkGenerator->getMark('tbeService') . ' - ';
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $sMessage .= sprintf(Registry::getLang()->translateString('OEVATTBE_VAT_CALCULATED_BY_USER_COUNTRY'), $sCountryName);
 
         return $sMessage;

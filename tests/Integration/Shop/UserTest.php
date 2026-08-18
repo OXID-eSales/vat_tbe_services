@@ -227,6 +227,7 @@ class UserTest extends BaseTestCase
         $oUser->save();
 
         //removing set date
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         oxDb::getDb()->execute("UPDATE `oxuser` SET `oevattbe_vatinenterdate` = '0000-00-00 00:00:00' WHERE `oxid` = 'userId'");
 
         $oUser = oxNew(User::class);

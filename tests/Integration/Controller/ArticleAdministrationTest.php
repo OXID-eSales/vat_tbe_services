@@ -37,6 +37,7 @@ class ArticleAdministrationTest extends IntegrationTestCase
 
         /** @var ArticleAdministration|MockObject $oArticleAdministration */
         $oArticleAdministration = $this->createPartialMock(ArticleAdministration::class, ['loadCurrentArticle']);
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $oArticleAdministration->expects($this->atLeastOnce())->method('loadCurrentArticle')->willReturn($oDerivedArticle);
         $oArticleAdministration->render();
 
@@ -61,6 +62,7 @@ class ArticleAdministrationTest extends IntegrationTestCase
 
         /** @var ArticleAdministration|MockObject $oArticleAdministration */
         $oArticleAdministration = $this->createPartialMock(ArticleAdministration::class, ['loadCurrentArticle']);
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $oArticleAdministration->expects($this->atLeastOnce())->method('loadCurrentArticle')->willReturn($oDerivedArticle);
         $oArticleAdministration->render();
 
@@ -85,6 +87,7 @@ class ArticleAdministrationTest extends IntegrationTestCase
 
         /** @var ArticleAdministration|MockObject $oArticleAdministration */
         $oArticleAdministration = $this->createPartialMock(ArticleAdministration::class, ['loadCurrentArticle']);
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $oArticleAdministration->expects($this->atLeastOnce())->method('loadCurrentArticle')->willReturn($oDerivedArticle);
         $oArticleAdministration->render();
 

@@ -38,6 +38,7 @@ class CountryVATGroupsDbGateway extends ModelDbGateway implements ModelDbGateway
 
         $iGroupId = $aData['OEVATTBE_ID'] ?? $oDb->getOne('SELECT LAST_INSERT_ID()');
 
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $oDb->execute('UPDATE `oxcountry` SET `oevattbe_istbevatconfigured` = 1 WHERE `oxid` = ' . $oDb->quote($aData['OEVATTBE_COUNTRYID']));
 
         return $iGroupId;
@@ -72,6 +73,7 @@ class CountryVATGroupsDbGateway extends ModelDbGateway implements ModelDbGateway
     public function load($sGroupId)
     {
         $oDb = $this->getDb();
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $aData = $oDb->getRow('SELECT * FROM `oevattbe_countryvatgroups` WHERE `oevattbe_id` = ' . $oDb->quote($sGroupId));
 
         return $aData;
@@ -94,18 +96,22 @@ class CountryVATGroupsDbGateway extends ModelDbGateway implements ModelDbGateway
             return true;
         }
 
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $blDeleteResult = $oDb->execute('DELETE FROM `oevattbe_countryvatgroups` WHERE `oevattbe_id` = ' . $oDb->quote($sGroupId));
         $blResult = ($blDeleteResult !== false) ? true : false;
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $blDeleteResult = $oDb->execute('DELETE FROM `oevattbe_articlevat` WHERE `oevattbe_vatgroupid` = ' . $oDb->quote($sGroupId));
         $blResult = ($blDeleteResult !== false) ? $blResult : false;
 
         $sCountryId = $aGroupInformation['OEVATTBE_COUNTRYID'];
         $bCountryHasGroup = (bool) $oDb->getOne(
+            // phpcs:ignore Generic.Files.LineLength.TooLong
             'SELECT `OEVATTBE_ID` FROM `oevattbe_countryvatgroups` WHERE `oevattbe_countryid` = ' . $oDb->quote($sCountryId) . ' LIMIT 1'
         );
 
         if ($blResult) {
             if (!$bCountryHasGroup) {
+                // phpcs:ignore Generic.Files.LineLength.TooLong
                 $oDb->execute('UPDATE `oxcountry` SET `oevattbe_istbevatconfigured` = 0 WHERE `oxid` = ' . $oDb->quote($sCountryId));
             }
             $oDb->commitTransaction();

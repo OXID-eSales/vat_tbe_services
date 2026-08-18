@@ -31,6 +31,7 @@ class CountryInformationAboutVatGroupsTest extends BaseTestCase
         /** @var Country $oCountry */
         $oCountry = oxNew(Country::class);
         $oCountry->load($sCountryId);
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $this->assertFalse($oCountry->isOEVATTBEAtLeastOneGroupConfigured(), 'Country should not be marked as configured before test.');
 
         $oGroup = $this->get(CountryVATGroup::class);
@@ -42,6 +43,7 @@ class CountryInformationAboutVatGroupsTest extends BaseTestCase
         $groupId = $oGroup->save();
 
         $oCountry->load($sCountryId);
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $this->assertTrue($oCountry->isOEVATTBEAtLeastOneGroupConfigured(), 'Country should be configured as new group was created.');
         $oGroup->delete($groupId);
     }
@@ -56,6 +58,7 @@ class CountryInformationAboutVatGroupsTest extends BaseTestCase
         /** @var Country $oCountry */
         $oCountry = oxNew(Country::class);
         $oCountry->load($sCountryId);
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $this->assertTrue($oCountry->isOEVATTBEAtLeastOneGroupConfigured(), 'Country should be marked as configured before test.');
 
         /** @var CountryVatGroups $oVATTBECountryVatGroups */
@@ -65,11 +68,13 @@ class CountryInformationAboutVatGroupsTest extends BaseTestCase
         $_POST['countryVATGroupId'] = '79';
         $oVATTBECountryVatGroups->deleteCountryVatGroup();
         $oCountry->load($sCountryId);
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $this->assertTrue($oCountry->isOEVATTBEAtLeastOneGroupConfigured(), 'Country should be still marked as configured as one more group left.');
 
         $_POST['countryVATGroupId'] = '80';
         $oVATTBECountryVatGroups->deleteCountryVatGroup();
         $oCountry->load($sCountryId);
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $this->assertFalse($oCountry->isOEVATTBEAtLeastOneGroupConfigured(), 'Country should be marked as not configured as no more groups left.');
     }
 }

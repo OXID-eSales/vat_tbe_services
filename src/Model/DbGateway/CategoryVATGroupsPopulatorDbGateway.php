@@ -62,11 +62,13 @@ class CategoryVATGroupsPopulatorDbGateway
 
         $oDb = $this->getDb();
 
+        // phpcs:disable Generic.Files.LineLength.TooLong
         $sSql = '
           DELETE `oevattbe_articlevat`.*
           FROM `oevattbe_articlevat`
           INNER JOIN `oxobject2category` ON `oxobject2category`.`oxobjectid` = `oevattbe_articlevat`.`oevattbe_articleid`
           WHERE `oxobject2category`.`oxcatnid` = ' . $oDb->quote($sCategoryId);
+        // phpcs:enable Generic.Files.LineLength.TooLong
 
         return $oDb->execute($sSql);
     }
@@ -86,11 +88,13 @@ class CategoryVATGroupsPopulatorDbGateway
 
         $oDb = $this->getDb();
 
+        // phpcs:disable Generic.Files.LineLength.TooLong
         $sSql = 'INSERT INTO `oevattbe_articlevat` (`oevattbe_articleid`, `oevattbe_countryid`, `oevattbe_vatgroupid`)
               SELECT DISTINCT `oxobject2category`.`oxobjectid`, `oevattbe_categoryvat`.`oevattbe_countryid`, `oevattbe_categoryvat`.`oevattbe_vatgroupid`
               FROM `oxobject2category`
               LEFT JOIN `oevattbe_categoryvat` ON `oxobject2category`.`oxcatnid` = `oevattbe_categoryvat`.`oevattbe_categoryid`
               WHERE `oevattbe_categoryvat`.`oevattbe_categoryid` = ' . $oDb->quote($sCategoryId);
+        // phpcs:enable Generic.Files.LineLength.TooLong
 
         return $oDb->execute($sSql);
     }

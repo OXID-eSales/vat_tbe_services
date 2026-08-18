@@ -144,6 +144,7 @@ class ArticleTest extends BaseTestCase
         $aCacheKeys = $oArticle->getCacheKeys();
 
         $sShopId = Registry::getConfig()->getShopId();
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $this->assertSame(['oxArticle__' . $sShopId . '_de_' . $sAustriaId, 'oxArticle__' . $sShopId . '_en_' . $sAustriaId], $aCacheKeys);
     }
 }

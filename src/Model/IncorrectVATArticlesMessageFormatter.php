@@ -39,6 +39,7 @@ class IncorrectVATArticlesMessageFormatter
         }
         $sArticleNames = implode(', ', $aArticleNames);
 
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $oEx->setMessage(sprintf($oLang->translateString('OEVATTBE_ERROR_MESSAGE_TBE_ARTICLE_VAT_PROBLEMS', $oLang->getTplLanguage()), $sArticleNames));
 
         return $oEx;

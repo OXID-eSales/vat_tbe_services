@@ -29,6 +29,7 @@ class CategoryVATGroupsPopulatorDbGatewayTest extends BaseTestCase
         $iRecordCount = \oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oevattbe_articlevat`");
         $this->assertEquals(0, $iRecordCount);
 
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $iRecordCount = \oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oxarticles` WHERE  `oevattbe_istbeservice` = '1'");
         $this->assertEquals(0, $iRecordCount);
     }
@@ -48,6 +49,7 @@ class CategoryVATGroupsPopulatorDbGatewayTest extends BaseTestCase
 
         $iRecordCount = \oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oevattbe_articlevat`");
         $this->assertEquals(4, $iRecordCount);
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $iRecordCount = \oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oxarticles` WHERE  `oevattbe_istbeservice` = '1'");
         $this->assertEquals(2, $iRecordCount);
 
@@ -78,6 +80,7 @@ class CategoryVATGroupsPopulatorDbGatewayTest extends BaseTestCase
         $this->assertTrue($oDbGateway->reset($aArticles));
         $iRecordCount = \oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oevattbe_articlevat`");
         $this->assertEquals(2, $iRecordCount);
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $iRecordCount = \oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oxarticles` WHERE  `oevattbe_istbeservice` = '1'");
         $this->assertEquals(1, $iRecordCount);
     }
@@ -96,6 +99,7 @@ class CategoryVATGroupsPopulatorDbGatewayTest extends BaseTestCase
 
     private function _cleanFixturesData()
     {
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         \oxDb::getDb()->execute("DELETE FROM `oevattbe_articlevat` WHERE OEVATTBE_ARTICLEID IN ('1126', '1127', '1131')");
         \oxDb::getDb()->execute("DELETE FROM `oxarticles` WHERE OXID IN ('1126', '1127', '1131', '_testArticle')");
     }
@@ -118,9 +122,13 @@ class CategoryVATGroupsPopulatorDbGatewayTest extends BaseTestCase
     private function _prepareData()
     {
         $aSqlQueries = [];
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $aSqlQueries[] = "INSERT INTO `oevattbe_categoryvat` SET `OEVATTBE_CATEGORYID` = 'categoryId', `OEVATTBE_COUNTRYID` = 'a7c40f631fc920687.20179984', `OEVATTBE_VATGROUPID` = '10'";
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $aSqlQueries[] = "INSERT INTO `oevattbe_categoryvat` SET `OEVATTBE_CATEGORYID` = 'categoryId', `OEVATTBE_COUNTRYID` = 'a7c40f631fc920687.20179985', `OEVATTBE_VATGROUPID` = '11'";
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $aSqlQueries[] = "INSERT INTO `oxobject2category` SET `oxcatnid` = 'categoryId', `oxobjectid` = 'article1', `oxid` = 1";
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $aSqlQueries[] = "INSERT INTO `oxobject2category` SET `oxcatnid` = 'categoryId', `oxobjectid` = 'article2', `oxid` = 2";
         $aSqlQueries[] = "INSERT INTO `oxcategories` SET `oxid` = 'categoryId', `oevattbe_istbe` = '1'";
         $aSqlQueries[] = "INSERT INTO `oxarticles` SET `oxid` = 'article1', `oevattbe_istbeservice` = '0'";

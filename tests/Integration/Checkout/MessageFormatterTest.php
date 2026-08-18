@@ -59,6 +59,7 @@ class MessageFormatterTest extends BaseTestCase
         $sErrorMessage = $oVATTBEArticleMessageFormer->getMessage($oInvalidArticles);
 
         $oLang = Registry::getLang();
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $sExpectedMessage = sprintf($oLang->translateString('OEVATTBE_ERROR_MESSAGE_TBE_ARTICLE_VAT_PROBLEMS'), $articleName);
 
         $this->assertSame($sExpectedMessage, $sErrorMessage->getOxMessage());

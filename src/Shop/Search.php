@@ -39,9 +39,11 @@ class Search extends Search_parent
      *
      * @return string
      */
+    // phpcs:ignore Generic.Files.LineLength.TooLong
     protected function getSearchSelect($sSearchParamForQuery = false, $sInitialSearchCat = false, $sInitialSearchVendor = false, $sInitialSearchManufacturer = false, $sSortBy = false)
     {
         if (!$this->isOeVATTBEConfigured()) {
+            // phpcs:ignore Generic.Files.LineLength.TooLong
             return parent::getSearchSelect($sSearchParamForQuery, $sInitialSearchCat, $sInitialSearchVendor, $sInitialSearchManufacturer, $sSortBy);
         }
 
@@ -122,16 +124,21 @@ class Search extends Search_parent
         if ($sInitialSearchCat) {
             $sCatView = $tableViewNameGenerator->getViewName('oxcategories', $this->_iLanguage);
             $sInitialSearchCatQuoted = $oDb->quote($sInitialSearchCat);
+            // phpcs:ignore Generic.Files.LineLength.TooLong
             $sSelectCat = "select oxid from {$sCatView} where oxid = $sInitialSearchCatQuoted and (oxpricefrom != '0' or oxpriceto != 0)";
             if ($oDb->getOne($sSelectCat)) {
                 $sSelect = "select {$sSelectFields}, {$sArticleTable}.oxtimestamp from {$sArticleTable} $sDescJoin " .
+                           // phpcs:ignore Generic.Files.LineLength.TooLong
                            "where {$sArticleTable}.oxid in ( select {$sArticleTable}.oxid as id from {$sArticleTable}, {$sO2CView} as oxobject2category, {$sCatView} as oxcategories " .
+                           // phpcs:ignore Generic.Files.LineLength.TooLong
                            "where (oxobject2category.oxcatnid=$sInitialSearchCatQuoted and oxobject2category.oxobjectid={$sArticleTable}.oxid) or (oxcategories.oxid=$sInitialSearchCatQuoted and {$sArticleTable}.oxprice >= oxcategories.oxpricefrom and
                         {$sArticleTable}.oxprice <= oxcategories.oxpriceto )) and ";
             } else {
+                // phpcs:disable Generic.Files.LineLength.TooLong
                 $sSelect = "select {$sSelectFields} from {$sO2CView} as
                         oxobject2category, {$sArticleTable} {$sDescJoin} where oxobject2category.oxcatnid=$sInitialSearchCatQuoted and
                         oxobject2category.oxobjectid={$sArticleTable}.oxid and ";
+                // phpcs:enable Generic.Files.LineLength.TooLong
             }
         }
 

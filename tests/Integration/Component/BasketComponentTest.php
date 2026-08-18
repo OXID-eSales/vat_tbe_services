@@ -66,6 +66,7 @@ class BasketComponentTest extends IntegrationTestCase
             'oxboni'      => '',
         ]);
 
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $oBasket = $this->createPartialMock(Basket::class, ['hasOeTBEVATArticles', 'getOeVATTBECountry', 'findDelivCountry']);
         $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->willReturn(true);
         $oBasket->expects($this->any())->method('getOeVATTBECountry')->willReturn($oCountry);

@@ -173,6 +173,7 @@ class User extends User_parent
      */
     protected function isOeVATTBEINStoredDateEmpty()
     {
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         return  is_null($this->getOeVATTBEVatInStoreDate()) || $this->getOeVATTBEVatInStoreDate() == '0000-00-00 00:00:00';
     }
 }

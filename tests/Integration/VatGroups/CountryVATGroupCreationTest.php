@@ -104,6 +104,7 @@ class CountryVATGroupCreationTest extends BaseTestCase
      * @param string $sGroupDescription group description.
      */
     #[DataProvider('providerCreateNewGroupFailWhenMissingRequiredData')]
+    // phpcs:ignore Generic.Files.LineLength.TooLong
     public function testCreateNewGroupFailWithErrorMessageWhenMissingRequiredData($sGroupName, $fVATRate, $sGroupDescription)
     {
         $_POST['editval'] = [
@@ -127,6 +128,7 @@ class CountryVATGroupCreationTest extends BaseTestCase
         if (isset($aVATTBECountryVATGroupsList[0])) {
             $this->assertTrue(
                 !isset($aVATTBECountryVATGroupsList[0]),
+                // phpcs:ignore Generic.Files.LineLength.TooLong
                 'Some data missing so no new entry should be created. However got this: ' . serialize($aVATTBECountryVATGroupsList[0])
             );
         }

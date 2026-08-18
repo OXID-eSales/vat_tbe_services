@@ -82,6 +82,7 @@ class ArticleAdministrationTest extends BaseTestCase
             ],
         ];
 
+        // phpcs:ignore Generic.Files.LineLength.TooLong
         $this->assertEquals($aExpectedViewData, $oArticleAdministration->getCountryAndVATGroupsData(), 'Data which should go to template is not correct.');
     }
 
