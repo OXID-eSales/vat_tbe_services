@@ -5,7 +5,6 @@
  */
 
 namespace OxidEsales\EVatModule\Tests\Integration\Shop;
-use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
@@ -13,6 +12,7 @@ use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\EVatModule\Service\ModuleSettings;
 use OxidEsales\EVatModule\Shop\Article;
 use OxidEsales\EVatModule\Shop\VatSelector;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\DataProvider;
 use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 use OxidEsales\Eshop\Application\Model\User;

@@ -5,7 +5,6 @@
  */
 
 namespace OxidEsales\EVatModule\Tests\Integration\Article;
-use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 use OxidEsales\Eshop\Application\Controller\Admin\ArticleList as ArticleListController;
 use OxidEsales\Eshop\Core\Model\BaseModel;
@@ -14,6 +13,7 @@ use OxidEsales\EVatModule\Shop\ArticleList;
 use OxidEsales\EVatModule\Shop\User;
 use OxidEsales\EVatModule\Shop\Article;
 use OxidEsales\EVatModule\Tests\Integration\LegacyBaseTestCase;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 /**

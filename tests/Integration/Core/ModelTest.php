@@ -6,7 +6,6 @@
  */
 
 namespace OxidEsales\EVatModule\Tests\Integration\Core;
-use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 use OxidEsales\EVatModule\Core\Model;
 use OxidEsales\EVatModule\Model\ArticleVATGroupsList;
@@ -18,6 +17,7 @@ use OxidEsales\EVatModule\Model\DbGateway\ArticleVATGroupsDbGateway;
 use OxidEsales\EVatModule\Model\DbGateway\CategoryVATGroupsDbGateway;
 use OxidEsales\EVatModule\Model\DbGateway\CountryVATGroupsDbGateway;
 use OxidEsales\EVatModule\Model\DbGateway\OrderEvidenceListDbGateway;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\DataProvider;
 use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 

@@ -5,12 +5,12 @@
  */
 
 namespace OxidEsales\EVatModule\Tests\Integration\Article;
-use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 use OxidEsales\EVatModule\Shop\Article;
 use OxidEsales\EVatModule\Shop\Search;
 use OxidEsales\EVatModule\Shop\User;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 /**
  * Testing extended Article class.

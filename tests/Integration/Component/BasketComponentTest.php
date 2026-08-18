@@ -5,13 +5,13 @@
  */
 
 namespace OxidEsales\EVatModule\Tests\Integration\Component;
-use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Component\BasketComponent;
 use OxidEsales\EVatModule\Shop\Basket;
 use OxidEsales\EVatModule\Shop\Country;
 use OxidEsales\EVatModule\Shop\User;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\DataProvider;
 use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 

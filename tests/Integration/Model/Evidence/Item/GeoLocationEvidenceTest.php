@@ -5,11 +5,11 @@
  */
 
 namespace OxidEsales\EVatModule\Tests\Integration\Model\Evidence\Item;
-use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EVatModule\Model\Evidence\Item\GeoLocationEvidence;
 use OxidEsales\EVatModule\Shop\User;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\MockObject\MockObject;
 use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 

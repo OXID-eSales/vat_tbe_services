@@ -5,11 +5,11 @@
  */
 
 namespace OxidEsales\EVatModule\Tests\Integration\Shop;
-use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 use OxidEsales\Eshop\Application\Model\BasketContentMarkGenerator;
 use OxidEsales\EVatModule\Shop\Basket;
 use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 /**
  * Testing extended oxArticle class.

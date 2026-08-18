@@ -5,7 +5,6 @@
  */
 
 namespace OxidEsales\EVatModule\Tests\Integration\VatGroups;
-use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 use OxidEsales\EVatModule\Controller\Admin\ArticleExtendAjax;
 use OxidEsales\EVatModule\Controller\Admin\ArticleMain;
@@ -13,6 +12,7 @@ use OxidEsales\EVatModule\Controller\Admin\CategoryAdministration;
 use OxidEsales\EVatModule\Controller\Admin\CategoryMainAjax;
 use OxidEsales\EVatModule\Shop\Category;
 use OxidEsales\EVatModule\Tests\Integration\BaseTestCase;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 /**
  * Test class for.

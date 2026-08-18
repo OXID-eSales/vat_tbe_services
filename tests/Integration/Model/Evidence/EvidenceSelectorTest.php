@@ -5,7 +5,6 @@
  */
 
 namespace OxidEsales\EVatModule\Tests\Integration\Model\Evidence;
-use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
@@ -14,6 +13,7 @@ use OxidEsales\EVatModule\Model\Evidence\EvidenceList;
 use OxidEsales\EVatModule\Model\Evidence\EvidenceSelector;
 use OxidEsales\EVatModule\Model\Evidence\Item\Evidence;
 use OxidEsales\EVatModule\Service\ModuleSettings;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\DataProvider;
 use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 

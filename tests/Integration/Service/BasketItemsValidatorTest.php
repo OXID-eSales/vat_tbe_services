@@ -5,13 +5,13 @@
  */
 
 namespace OxidEsales\EVatModule\Tests\Integration\Service;
-use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 use OxidEsales\Eshop\Core\UtilsView;
 use OxidEsales\EVatModule\Model\IncorrectVATArticlesMessageFormatter;
 use OxidEsales\EVatModule\Model\OrderArticleChecker;
 use OxidEsales\EVatModule\Service\BasketItemsValidator;
 use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 /**
  * Testing TBEUser class.

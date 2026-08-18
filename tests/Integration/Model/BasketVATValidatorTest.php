@@ -5,7 +5,6 @@
  */
 
 namespace OxidEsales\EVatModule\Tests\Integration\Model;
-use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 use OxidEsales\Eshop\Application\Model\BasketItem as EShopBasketItem;
 use OxidEsales\Eshop\Core\Registry;
@@ -18,6 +17,7 @@ use OxidEsales\EVatModule\Shop\Country;
 use OxidEsales\Eshop\Application\Model\Country as EShopCountry;
 use OxidEsales\EVatModule\Model\User as UserModel;
 use OxidEsales\EVatModule\Shop\User;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;

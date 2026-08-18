@@ -5,11 +5,11 @@
  */
 
 namespace OxidEsales\EVatModule\Tests\Integration\Controller;
-use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\EVatModule\Controller\Admin\ArticleAdministration;
 use OxidEsales\Facts\Facts;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\MockObject\MockObject;
 use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 

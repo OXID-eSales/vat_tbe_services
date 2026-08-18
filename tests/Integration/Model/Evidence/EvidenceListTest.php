@@ -5,10 +5,10 @@
  */
 
 namespace OxidEsales\EVatModule\Tests\Integration\Model\Evidence;
-use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 use OxidEsales\EVatModule\Model\Evidence\EvidenceList;
 use OxidEsales\EVatModule\Model\Evidence\Item\Evidence;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\MockObject\MockObject;
 use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 

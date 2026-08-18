@@ -5,11 +5,11 @@
  */
 
 namespace OxidEsales\EVatModule\Tests\Integration\Model;
-use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 use OxidEsales\EVatModule\Model\DbGateway\OrderEvidenceListDbGateway;
 use OxidEsales\EVatModule\Model\OrderEvidenceList;
 use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 /**
  * Test class for oeVATTBEOrderEvidenceList.
