@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -95,15 +96,15 @@ class ArticleAdministration extends AdminDetailsController
     {
         /** @var EShopCountry|Country $oCountry */
         $oCountry = oxNew(EShopCountry::class);
-        $aViewData = array();
+        $aViewData = [];
         $oCountryVATGroupsList = ContainerFacade::get(CountryVATGroupsList::class);
         $aVATGroupList = $oCountryVATGroupsList->getList();
         foreach ($aVATGroupList as $sCountryId => $aGroupsList) {
             $oCountry->load($sCountryId);
-            $aViewData[$sCountryId] = array(
+            $aViewData[$sCountryId] = [
                 'countryTitle' => $oCountry->getOeVATTBEName(),
                 'countryGroups' => $aGroupsList
-            );
+            ];
         }
 
         return $aViewData;

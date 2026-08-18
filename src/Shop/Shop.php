@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -24,7 +25,8 @@ class Shop extends Shop_parent
     {
         $oCountry = null;
 
-        $sCountryISO2 = ContainerFacade::get(ModuleSettings::class)->getDomesticCountry();;
+        $sCountryISO2 = ContainerFacade::get(ModuleSettings::class)->getDomesticCountry();
+        ;
 
         if ($sCountryISO2) {
             /** @var EShopCountry|Country $oCountry */
@@ -33,7 +35,6 @@ class Shop extends Shop_parent
             if (!$oCountry->load($oCountry->getIdByCode($sCountryISO2))) {
                 $oCountry = null;
             };
-
         }
 
         return $oCountry;

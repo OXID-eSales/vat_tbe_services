@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -67,7 +68,7 @@ class EvidenceSelector
     {
         $aEvidences = $this->getEvidenceList();
 
-        $aUniqueCountries = array();
+        $aUniqueCountries = [];
         foreach ($aEvidences as $oEvidence) {
             /** @var Evidence $oEvidence */
             $aUniqueCountries[$oEvidence->getCountryId()] = $oEvidence->getCountryId();

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -27,16 +28,16 @@ class CountryVATGroupCreationTest extends BaseTestCase
      */
     public static function providerCreateNewGroup()
     {
-        return array(
-            array('small VAT', 5, 'some description', '5.00'),
-            array('small VAT', 5, '', '5.00'),
-            array('small VAT', 5.5, 'some description', '5.50'),
-            array('small VAT', 0, '', '0.00'),
-            array('small VAT', 'five', 'some description', '0.00'),
-            array('small VAT', '5.5', 'some description', '5.50'),
-            array('small VAT', '5,5', 'some description', '5.00'),
-            array('small VAT', '', 'some description', '0.00'),
-        );
+        return [
+            ['small VAT', 5, 'some description', '5.00'],
+            ['small VAT', 5, '', '5.00'],
+            ['small VAT', 5.5, 'some description', '5.50'],
+            ['small VAT', 0, '', '0.00'],
+            ['small VAT', 'five', 'some description', '0.00'],
+            ['small VAT', '5.5', 'some description', '5.50'],
+            ['small VAT', '5,5', 'some description', '5.00'],
+            ['small VAT', '', 'some description', '0.00'],
+        ];
     }
 
     /**
@@ -89,10 +90,10 @@ class CountryVATGroupCreationTest extends BaseTestCase
      */
     public static function providerCreateNewGroupFailWhenMissingRequiredData()
     {
-        return array(
-            array('', '5', 'some description'),
-            array('', '', 'some description'),
-        );
+        return [
+            ['', '5', 'some description'],
+            ['', '', 'some description'],
+        ];
     }
 
     /**

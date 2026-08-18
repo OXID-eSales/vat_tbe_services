@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -70,9 +71,9 @@ class CategoryVATGroupsPopulatorDbGatewayTest extends BaseTestCase
 
         $this->_cleanFixturesData();
 
-        $aArticles = array(
+        $aArticles = [
             'article2'
-        );
+        ];
 
         $this->assertTrue($oDbGateway->reset($aArticles));
         $iRecordCount = \oxDb::getDb()->getOne("SELECT COUNT(*) FROM `oevattbe_articlevat`");
@@ -86,7 +87,7 @@ class CategoryVATGroupsPopulatorDbGatewayTest extends BaseTestCase
      */
     public function testResetArticlesWhenGivenEmptyArray()
     {
-        $aArticles = array();
+        $aArticles = [];
         /** @var CategoryVATGroupsPopulatorDbGateway $oDbGateway */
         $oDbGateway = oxNew(CategoryVATGroupsPopulatorDbGateway::class);
 
@@ -116,7 +117,7 @@ class CategoryVATGroupsPopulatorDbGatewayTest extends BaseTestCase
      */
     private function _prepareData()
     {
-        $aSqlQueries = array();
+        $aSqlQueries = [];
         $aSqlQueries[] = "INSERT INTO `oevattbe_categoryvat` SET `OEVATTBE_CATEGORYID` = 'categoryId', `OEVATTBE_COUNTRYID` = 'a7c40f631fc920687.20179984', `OEVATTBE_VATGROUPID` = '10'";
         $aSqlQueries[] = "INSERT INTO `oevattbe_categoryvat` SET `OEVATTBE_CATEGORYID` = 'categoryId', `OEVATTBE_COUNTRYID` = 'a7c40f631fc920687.20179985', `OEVATTBE_VATGROUPID` = '11'";
         $aSqlQueries[] = "INSERT INTO `oxobject2category` SET `oxcatnid` = 'categoryId', `oxobjectid` = 'article1', `oxid` = 1";

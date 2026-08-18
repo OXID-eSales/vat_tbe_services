@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -32,7 +33,7 @@ class IncorrectVATArticlesMessageFormatter
         $oLang = Registry::getLang();
 
         /** @var Article $invalidArticle */
-        $aArticleNames = array();
+        $aArticleNames = [];
         foreach ($aInvalidArticles as $invalidArticle) {
             $aArticleNames[] = $invalidArticle->getFieldData('oxtitle');
         }

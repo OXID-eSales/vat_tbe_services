@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -7,7 +8,7 @@
 namespace OxidEsales\EVatModule\Model;
 
 use OxidEsales\Eshop\Application\Model\Article;
-use \oxDb;
+use oxDb;
 
 /**
  * Has TBE TBE article logic.
@@ -34,7 +35,7 @@ class ArticleSQLBuilder
     public function getSelectFields()
     {
         $sSelect = '';
-        $sSelect .=  $this->_oArticle->getSelectFields();
+        $sSelect .= $this->_oArticle->getSelectFields();
         $sSelect .= ", `oevattbe_countryvatgroups`.`oevattbe_rate` ";
 
         return $sSelect;
@@ -52,7 +53,7 @@ class ArticleSQLBuilder
         $oUser = $oArticle->getUser();
 
         $sSelect = '';
-        $sSelect .= " LEFT JOIN `oevattbe_articlevat` ON `".$oArticle->getViewName()."`.`oxid` = `oevattbe_articlevat`.`oevattbe_articleid` ";
+        $sSelect .= " LEFT JOIN `oevattbe_articlevat` ON `" . $oArticle->getViewName() . "`.`oxid` = `oevattbe_articlevat`.`oevattbe_articleid` ";
         if ($oUser) {
             $sSelect .= " AND `oevattbe_articlevat`.`oevattbe_countryid` = " . oxDb::getDb()->quote($oUser->getOeVATTBETbeCountryId() ?? '');
         }

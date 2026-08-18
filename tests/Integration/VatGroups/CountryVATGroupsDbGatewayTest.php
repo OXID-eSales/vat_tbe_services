@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -71,12 +72,12 @@ class CountryVATGroupsDbGatewayTest extends LegacyBaseTestCase
         $oVatGroupsGateway = oxNew(CountryVATGroupsDbGateway::class);
         $oVatGroupsGateway->delete($sGroupId);
 
-        $this->assertSame(array(), $oVatGroupsGateway->load($sGroupId));
+        $this->assertSame([], $oVatGroupsGateway->load($sGroupId));
 
         //No VAT Groups exists for specific country, empty groups list should be returned.
         $aGroupsList = $oVatGroupsGateway->getList('8f241f11095410f38.37165361');
 
-        $this->assertEquals(array(), $aGroupsList);
+        $this->assertEquals([], $aGroupsList);
     }
 
     /**
@@ -86,14 +87,14 @@ class CountryVATGroupsDbGatewayTest extends LegacyBaseTestCase
     {
         $oRelationsList = $this->get(ArticleVATGroupsList::class);
         $oRelationsList->setId('articleid');
-        $oRelationsList->setData(array('germanyid' => '10', 'lithuaniaid' => '12'));
+        $oRelationsList->setData(['germanyid' => '10', 'lithuaniaid' => '12']);
         $oRelationsList->save();
 
         $oVatGroupsGateway = oxNew(CountryVATGroupsDbGateway::class);
         $oVatGroupsGateway->delete('12');
 
         $oRelationsList->load('articleid');
-        $this->assertEquals(array('germanyid' => 10), $oRelationsList->getData());
+        $this->assertEquals(['germanyid' => 10], $oRelationsList->getData());
     }
 
     /**
@@ -102,7 +103,7 @@ class CountryVATGroupsDbGatewayTest extends LegacyBaseTestCase
     public function testLoadingEmptyVATGroup()
     {
         $oVatGroupsGateway = oxNew(CountryVATGroupsDbGateway::class);
-        $this->assertSame(array(), $oVatGroupsGateway->load('non_existing_group'));
+        $this->assertSame([], $oVatGroupsGateway->load('non_existing_group'));
     }
 
     /**
@@ -141,7 +142,7 @@ class CountryVATGroupsDbGatewayTest extends LegacyBaseTestCase
         $aData2['OEVATTBE_ID'] = $sGroupId2;
         $aData2['OEVATTBE_TIMESTAMP'] = $aGroupsList[1]['OEVATTBE_TIMESTAMP'];
 
-        $this->assertEquals(array($aData1, $aData2), $aGroupsList);
+        $this->assertEquals([$aData1, $aData2], $aGroupsList);
     }
 
     /**

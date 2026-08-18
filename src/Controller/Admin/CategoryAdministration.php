@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -94,15 +95,15 @@ class CategoryAdministration extends AdminDetailsController
     {
         /** @var Country $country */
         $country = oxNew(Country::class);
-        $aViewData = array();
+        $aViewData = [];
         $countryVATGroupsList = ContainerFacade::get(CountryVATGroupsList::class);
         $aVATGroupList = $countryVATGroupsList->getList();
         foreach ($aVATGroupList as $sCountryId => $aGroupsList) {
             $country->load($sCountryId);
-            $aViewData[$sCountryId] = array(
+            $aViewData[$sCountryId] = [
                 'countryTitle' => $country->getFieldData('oxtitle'),
                 'countryGroups' => $aGroupsList
-            );
+            ];
         }
 
         return $aViewData;

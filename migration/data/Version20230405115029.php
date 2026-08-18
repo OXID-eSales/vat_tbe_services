@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -158,7 +159,6 @@ final class Version20230405115029 extends AbstractMigration
         ];
 
         foreach ($aCountryVATs as $sCountryCode => $aVATRates) {
-
             $isCountryConfigured = $this->connection->fetchOne("SELECT COUNT(*) FROM `oevattbe_countryvatgroups` INNER JOIN `oxcountry` ON oevattbe_countryvatgroups.OEVATTBE_COUNTRYID=oxcountry.oxid AND OXISOALPHA2 = " . $this->connection->quote($sCountryCode));
             if (!$isCountryConfigured) {
                 $this->addSql("UPDATE `oxcountry` SET `oevattbe_appliestbevat` = 1, `oevattbe_istbevatconfigured` = 1 WHERE `oxisoalpha2` = " . $this->connection->quote($sCountryCode));
@@ -176,6 +176,5 @@ final class Version20230405115029 extends AbstractMigration
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-
     }
 }

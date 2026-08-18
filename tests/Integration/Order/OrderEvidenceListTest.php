@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -52,18 +53,18 @@ class OrderEvidenceListTest extends BaseTestCase
 
         $aData = $oList->getData();
 
-        $aExpectedData = array(
-            'evidence1' => array(
+        $aExpectedData = [
+            'evidence1' => [
                 'name' => 'evidence1',
                 'countryId' => 'a7c40f631fc920687.20179984',
                 'timestamp' => $aData['evidence1']['timestamp'],
-            ),
-            'evidence2' => array(
+            ],
+            'evidence2' => [
                 'name' => 'evidence2',
                 'countryId' => 'NonExisting',
                 'timestamp' => $aData['evidence2']['timestamp'],
-            ),
-        );
+            ],
+        ];
 
         $this->assertEquals($aExpectedData, $aData);
     }
@@ -81,20 +82,20 @@ class OrderEvidenceListTest extends BaseTestCase
 
         $aData = $oList->getData();
 
-        $aExpectedData = array(
-            'evidence1' => array(
+        $aExpectedData = [
+            'evidence1' => [
                 'name' => 'evidence1',
                 'countryId' => 'a7c40f631fc920687.20179984',
                 'timestamp' => $aData['evidence1']['timestamp'],
                 'countryTitle' => 'Deutschland',
-            ),
-            'evidence2' => array(
+            ],
+            'evidence2' => [
                 'name' => 'evidence2',
                 'countryId' => 'NonExisting',
                 'timestamp' => $aData['evidence2']['timestamp'],
                 'countryTitle' => '-',
-            ),
-        );
+            ],
+        ];
 
         $this->assertEquals($aExpectedData, $aData);
 

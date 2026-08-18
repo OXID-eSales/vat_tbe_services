@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -61,20 +62,20 @@ class OrderMainTest extends BaseTestCase
     public function testTBEEvidenceData($aViewData)
     {
         $aEvidenceData = $aViewData['aEvidencesData'];
-        $aExpectedResult = array(
-            'billing_country' => array(
+        $aExpectedResult = [
+            'billing_country' => [
                 'name' => 'billing_country',
                 'countryId' => 'a7c40f631fc920687.20179984',
                 'timestamp' => $aEvidenceData['billing_country']['timestamp'],
                 'countryTitle' => 'Deutschland'
-            ),
-            'geo_location' => array(
+            ],
+            'geo_location' => [
                 'name' => 'geo_location',
                 'countryId' => '',
                 'timestamp' => $aEvidenceData['geo_location']['timestamp'],
                 'countryTitle' => '-'
-            )
-        );
+            ]
+        ];
         $this->assertSame($aEvidenceData, $aExpectedResult);
     }
 
@@ -85,7 +86,7 @@ class OrderMainTest extends BaseTestCase
     {
         /** @var Basket $oBasket */
         $oBasket = $this->getMockBuilder(Basket::class)
-            ->onlyMethods(array("hasOeTBEVATArticles"))
+            ->onlyMethods(["hasOeTBEVATArticles"])
             ->getMock();
         $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->willReturn(true);
         /** @var User $oUser */
@@ -102,7 +103,7 @@ class OrderMainTest extends BaseTestCase
 
         /** @var Order $oOrder */
         $oOrder = $this->getMockBuilder(Order::class)
-            ->onlyMethods(array("getFinalizeOrderParent"))
+            ->onlyMethods(["getFinalizeOrderParent"])
             ->getMock();
         $oOrder->expects($this->any())->method("getFinalizeOrderParent")->willReturn(Order::ORDER_STATE_OK);
 

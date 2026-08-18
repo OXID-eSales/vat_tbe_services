@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -39,7 +40,7 @@ class ArticleCacheKey
     public function updateCacheKeys($aKeys)
     {
         foreach ($aKeys as $sKey => $sCacheKey) {
-            $sCacheKey .= '_'. $this->getOeVATTBETbeCountryId();
+            $sCacheKey .= '_' . $this->getOeVATTBETbeCountryId();
             $aKeys[$sKey] = $sCacheKey;
         }
 

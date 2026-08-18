@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -9,7 +10,7 @@ namespace OxidEsales\EVatModule\Shop;
 use OxidEsales\Eshop\Application\Model\Actions;
 use OxidEsales\Eshop\Application\Model\Country;
 use OxidEsales\Eshop\Core\Registry;
-use \oxDb;
+use oxDb;
 use OxidEsales\Eshop\Core\TableViewNameGenerator;
 use OxidEsales\EVatModule\Model\ArticleSQLBuilder;
 
@@ -329,7 +330,7 @@ class ArticleList extends ArticleList_parent
             $this->getBaseObject()->disablePriceLoad();
         }
 
-        $this->_aArray = array();
+        $this->_aArray = [];
         switch ($myConfig->getConfigParam('iNewestArticlesMode')) {
             case 0:
                 // switched off, do nothing

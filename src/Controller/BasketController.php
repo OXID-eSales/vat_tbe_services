@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -49,7 +50,7 @@ class BasketController extends BasketController_parent
      */
     public function getOeVATTBEMarkMessage()
     {
-        $oMarkGenerator =  $this->getBasketContentMarkGenerator();
+        $oMarkGenerator = $this->getBasketContentMarkGenerator();
 
         $sMessage = $oMarkGenerator->getMark('tbeService') . ' - ';
         if (!$this->getUser()) {
@@ -117,7 +118,7 @@ class BasketController extends BasketController_parent
         $oLang = Registry::getLang();
 
         $oDomesticCountry = $oShop->getOeVATTBEDomesticCountry();
-        $sCountryName = $oDomesticCountry ? $oDomesticCountry->getOeVATTBEName(): '';
+        $sCountryName = $oDomesticCountry ? $oDomesticCountry->getOeVATTBEName() : '';
 
         return sprintf($oLang->translateString('OEVATTBE_VAT_WILL_BE_CALCULATED_BY_USER_COUNTRY'), $sCountryName);
     }

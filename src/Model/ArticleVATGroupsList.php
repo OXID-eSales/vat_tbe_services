@@ -16,12 +16,11 @@ use OxidEsales\EVatModule\Model\DbGateway\ArticleVATGroupsDbGateway;
 class ArticleVATGroupsList extends Model
 {
     /** @var array Model data. */
-    protected $_aData = array();
+    protected $_aData = [];
 
     public function __construct(
         protected ArticleVATGroupsDbGateway $dbGateway
-    )
-    {
+    ) {
     }
 
     /**
@@ -32,21 +31,21 @@ class ArticleVATGroupsList extends Model
     public function save()
     {
         $aData = $this->getData();
-        $aDbData = array();
+        $aDbData = [];
         foreach ($aData as $sCountryId => $sGroupId) {
             if ($sGroupId) {
-                $aDbData[] = array(
+                $aDbData[] = [
                     'OEVATTBE_ARTICLEID' => $this->getId(),
                     'OEVATTBE_COUNTRYID' => $sCountryId,
                     'OEVATTBE_VATGROUPID' => $sGroupId
-                );
+                ];
             }
         }
 
-        $aData = array(
+        $aData = [
             'articleid' => $this->getId(),
             'relations' => $aDbData
-        );
+        ];
         $this->getDbGateway()->save($aData);
 
         return $this->getId();
@@ -68,7 +67,7 @@ class ArticleVATGroupsList extends Model
         $this->_blIsLoaded = false;
         $aDbData = $this->getDbGateway()->load($this->getId());
         if ($aDbData) {
-            $aData = array();
+            $aData = [];
             foreach ($aDbData as $aRecord) {
                 $aData[$aRecord['OEVATTBE_COUNTRYID']] = $aRecord['OEVATTBE_VATGROUPID'];
             }
@@ -88,7 +87,7 @@ class ArticleVATGroupsList extends Model
      */
     public function getArticlesAssignedToGroup($sGroupId = null)
     {
-        $aData = array();
+        $aData = [];
         $aDbData = $this->getDbGateway()->loadByGroupId($sGroupId);
         if ($aDbData) {
             foreach ($aDbData as $aRecord) {

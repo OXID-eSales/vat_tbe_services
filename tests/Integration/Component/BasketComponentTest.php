@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -56,7 +57,7 @@ class BasketComponentTest extends IntegrationTestCase
         $oCountry->expects($this->any())->method("appliesOeTBEVATTbeVat")->willReturn($isVatApplied);
 
         $oUser = $this->getMockBuilder(User::class)
-            ->onlyMethods(array("getOeVATTBETbeCountryId"))
+            ->onlyMethods(["getOeVATTBETbeCountryId"])
             ->getMock();
         $oUser->expects($this->any())->method('getOeVATTBETbeCountryId')->willReturn('DE');
 
@@ -91,7 +92,7 @@ class BasketComponentTest extends IntegrationTestCase
     public function testRenderBasketWithTbeCountryNoTBEArticles()
     {
         $oUser = $this->getMockBuilder(User::class)
-            ->onlyMethods(array("getOeVATTBETbeCountryId"))
+            ->onlyMethods(["getOeVATTBETbeCountryId"])
             ->getMock();
         $oUser->expects($this->any())->method('getOeVATTBETbeCountryId')->willReturn('DE');
 
@@ -122,7 +123,7 @@ class BasketComponentTest extends IntegrationTestCase
     public function testRenderBasketWithTbeSameCountry()
     {
         $oUser = $this->getMockBuilder(User::class)
-            ->onlyMethods(array("getOeVATTBETbeCountryId"))
+            ->onlyMethods(["getOeVATTBETbeCountryId"])
             ->getMock();
         $oUser->expects($this->any())->method('getOeVATTBETbeCountryId')->willReturn('DE');
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -43,13 +44,13 @@ class EvidenceList extends BaseList
     {
         $aItems = parent::getArray();
 
-        $aEvidences = array();
+        $aEvidences = [];
         foreach ($aItems as $oEvidence) {
             /** @var Evidence $oEvidence */
-            $aEvidences[$oEvidence->getId()] = array(
+            $aEvidences[$oEvidence->getId()] = [
                 'name' => $oEvidence->getId(),
                 'countryId' => $oEvidence->getCountryId()
-            );
+            ];
         }
 
         return $aEvidences;

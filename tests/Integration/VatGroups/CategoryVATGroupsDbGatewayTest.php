@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -143,7 +144,7 @@ class CategoryVATGroupsDbGatewayTest extends LegacyBaseTestCase
         $oVatGroupsGateway = oxNew(CategoryVATGroupsDbGateway::class);
         $oVatGroupsGateway->delete($sCategoryId);
 
-        $this->assertSame(array(), $oVatGroupsGateway->load($sCategoryId));
+        $this->assertSame([], $oVatGroupsGateway->load($sCategoryId));
     }
 
     /**
@@ -152,7 +153,7 @@ class CategoryVATGroupsDbGatewayTest extends LegacyBaseTestCase
     public function testLoadingEmptyVATGroup()
     {
         $oVatGroupsGateway = oxNew(CategoryVATGroupsDbGateway::class);
-        $this->assertSame(array(), $oVatGroupsGateway->load('non_existing_group'));
+        $this->assertSame([], $oVatGroupsGateway->load('non_existing_group'));
     }
 
     /**

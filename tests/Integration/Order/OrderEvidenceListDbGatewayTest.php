@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -23,19 +24,19 @@ class OrderEvidenceListDbGatewayTest extends LegacyBaseTestCase
     public function testOrderListSavingToDatabase()
     {
         $oOrderArticleList = oxNew(OrderEvidenceListDbGateway::class);
-        $aData = array(
+        $aData = [
             'orderId' => 'order_id',
-            'evidenceList' => array(
-                'evidence1' => array(
+            'evidenceList' => [
+                'evidence1' => [
                     'name' => 'evidence1',
                     'countryId' => 'GermanyId',
-                ),
-                'evidence2' => array(
+                ],
+                'evidence2' => [
                     'name' => 'evidence2',
                     'countryId' => 'GermanyId',
-                )
-            )
-        );
+                ]
+            ]
+        ];
         $this->assertNotSame(false, $oOrderArticleList->save($aData));
 
         return $oOrderArticleList;
@@ -53,18 +54,18 @@ class OrderEvidenceListDbGatewayTest extends LegacyBaseTestCase
     {
         $aData = $oOrderArticleList->load('order_id');
 
-        $aExpectedData = array(
-            'evidence1' => array(
+        $aExpectedData = [
+            'evidence1' => [
                 'name' => 'evidence1',
                 'countryId' => 'GermanyId',
                 'timestamp' => $aData['evidence1']['timestamp']
-            ),
-            'evidence2' => array(
+            ],
+            'evidence2' => [
                 'name' => 'evidence2',
                 'countryId' => 'GermanyId',
                 'timestamp' => $aData['evidence2']['timestamp']
-            )
-        );
+            ]
+        ];
 
         $this->assertSame($aExpectedData, $oOrderArticleList->load('order_id'));
 
@@ -81,7 +82,7 @@ class OrderEvidenceListDbGatewayTest extends LegacyBaseTestCase
     {
         $oOrderArticleList->delete('order_id');
 
-        $this->assertSame(array(), $oOrderArticleList->load('order_id'));
+        $this->assertSame([], $oOrderArticleList->load('order_id'));
     }
 
     /**
@@ -90,12 +91,12 @@ class OrderEvidenceListDbGatewayTest extends LegacyBaseTestCase
     public function testSavingEmptyList()
     {
         $oOrderArticleList = oxNew(OrderEvidenceListDbGateway::class);
-        $aData = array(
+        $aData = [
             'orderId' => 'order_id',
-            'evidenceList' => array()
-        );
+            'evidenceList' => []
+        ];
         $oOrderArticleList->save($aData);
-        $this->assertSame(array(), $oOrderArticleList->load('order_id'));
+        $this->assertSame([], $oOrderArticleList->load('order_id'));
     }
 
     /**
@@ -104,7 +105,7 @@ class OrderEvidenceListDbGatewayTest extends LegacyBaseTestCase
     public function testLoadingEmptyOrderList()
     {
         $oOrderArticleList = oxNew(OrderEvidenceListDbGateway::class);
-        $this->assertSame(array(), $oOrderArticleList->load('non_existing_order'));
+        $this->assertSame([], $oOrderArticleList->load('non_existing_order'));
     }
 
     /**

@@ -27,7 +27,7 @@ class OrderEvidenceListDbGateway extends ModelDbGateway implements ModelDbGatewa
         $oDb = $this->getDb();
 
         $sSql = 'INSERT INTO `oevattbe_orderevidences` (oevattbe_orderid, oevattbe_evidence, oevattbe_countryid) VALUES ';
-        $aSqlValues = array();
+        $aSqlValues = [];
 
         $sOrderId = $aData['orderId'];
         $sOrderIdQuoted = $oDb->quote($sOrderId);
@@ -59,7 +59,7 @@ class OrderEvidenceListDbGateway extends ModelDbGateway implements ModelDbGatewa
         $sQuery = 'SELECT * FROM `oevattbe_orderevidences` WHERE `oevattbe_orderid` = ' . $oDb->quote($sOrderId);
         $aRecords = $oDb->getAll($sQuery);
 
-        $aData = array();
+        $aData = [];
         foreach ($aRecords as $aRecord) {
             $sName = $aRecord['OEVATTBE_EVIDENCE'];
             $aData[$sName]['name'] = $sName;

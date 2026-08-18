@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -26,15 +27,15 @@ class CountryVATGroupsEditingTest extends LegacyBaseTestCase
     public static function providerGetVatGroupsForCountry()
     {
         $sAustriaId = 'a7c40f6320aeb2ec2.72885259';
-        $aAustriaGroups = array(56 => '', 57 => '', 58 => '');
+        $aAustriaGroups = [56 => '', 57 => '', 58 => ''];
 
         $sGermanyId = 'a7c40f631fc920687.20179984';
-        $aGermanyGroups = array(10 => '', 11 => '');
+        $aGermanyGroups = [10 => '', 11 => ''];
 
-        return array(
-            array($sAustriaId, $aAustriaGroups),
-            array($sGermanyId, $aGermanyGroups),
-        );
+        return [
+            [$sAustriaId, $aAustriaGroups],
+            [$sGermanyId, $aGermanyGroups],
+        ];
     }
 
     /**
@@ -70,7 +71,7 @@ class CountryVATGroupsEditingTest extends LegacyBaseTestCase
         $oVATTBECountryVatGroups->setEditObjectId($sCountryId);
         $aCountryVatGroups = $oVATTBECountryVatGroups->getVatGroups();
 
-        $this->assertSame(array(), $aCountryVatGroups);
+        $this->assertSame([], $aCountryVatGroups);
     }
 
     /**

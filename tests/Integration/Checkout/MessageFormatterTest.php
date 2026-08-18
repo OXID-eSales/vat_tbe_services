@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -18,7 +19,6 @@ use PHPUnit\Framework\Attributes\DataProvider;
  */
 class MessageFormatterTest extends BaseTestCase
 {
-
     /**
      * Provider for different article set to test if error message was formed correctly.
      *
@@ -28,10 +28,10 @@ class MessageFormatterTest extends BaseTestCase
     {
         // Return plain data only. Building models (oxNew) here would open a DB connection
         // at data-provider collection time, outside the test's setUp/transaction context.
-        return array(
-            array(['some article name'], 'some article name'),
-            array(['some article name', 'some other name'], 'some article name, some other name'),
-        );
+        return [
+            [['some article name'], 'some article name'],
+            [['some article name', 'some other name'], 'some article name, some other name'],
+        ];
     }
 
     /**

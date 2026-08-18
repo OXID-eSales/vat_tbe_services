@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -52,12 +53,12 @@ class CheckoutMessageTest extends BaseTestCase
         $sErrorMessage1 = '/.*: Bar-Set ABSINTH.*/';
         $sErrorMessage2 = '/.*: Blinkende Eisw.*/';
         $sErrorMessage3 = '/.*: Bar-Set ABSINTH, Blinkende Eisw.*/';
-        return array(
-            array(array($sIdTbeArticleWithVatGroup), $sErrorMessage1),
-            array(array($sTbeArticleWithoutVatGroup), $sErrorMessage2),
-            array(array($sIdTbeArticleWithVatGroup, $sTbeArticleWithoutVatGroup), $sErrorMessage3),
-            array(array($sIdTbeArticleWithVatGroup, $sTbeArticleWithoutVatGroup, $sNotTbeArticle), $sErrorMessage3),
-        );
+        return [
+            [[$sIdTbeArticleWithVatGroup], $sErrorMessage1],
+            [[$sTbeArticleWithoutVatGroup], $sErrorMessage2],
+            [[$sIdTbeArticleWithVatGroup, $sTbeArticleWithoutVatGroup], $sErrorMessage3],
+            [[$sIdTbeArticleWithVatGroup, $sTbeArticleWithoutVatGroup, $sNotTbeArticle], $sErrorMessage3],
+        ];
     }
 
     /**
@@ -97,9 +98,9 @@ class CheckoutMessageTest extends BaseTestCase
     {
         $sNotTbeArticle = '1131';
 
-        return array(
-            array(array($sNotTbeArticle)),
-        );
+        return [
+            [[$sNotTbeArticle]],
+        ];
     }
 
     /**
@@ -140,11 +141,11 @@ class CheckoutMessageTest extends BaseTestCase
 
         $sErrorMessage2 = '/.*: ABSINTH.*/';
         $sErrorMessage3 = '/.*: ABSINTH.*/';
-        return array(
-            array(array($sTbeArticleWithoutVatGroup), $sErrorMessage2),
-            array(array($sIdTbeArticleWithVatGroup, $sTbeArticleWithoutVatGroup), $sErrorMessage3),
-            array(array($sIdTbeArticleWithVatGroup, $sTbeArticleWithoutVatGroup, $sNotTbeArticle), $sErrorMessage3),
-        );
+        return [
+            [[$sTbeArticleWithoutVatGroup], $sErrorMessage2],
+            [[$sIdTbeArticleWithVatGroup, $sTbeArticleWithoutVatGroup], $sErrorMessage3],
+            [[$sIdTbeArticleWithVatGroup, $sTbeArticleWithoutVatGroup, $sNotTbeArticle], $sErrorMessage3],
+        ];
     }
 
     /**
@@ -178,7 +179,7 @@ class CheckoutMessageTest extends BaseTestCase
 
         $aEx = $oSession->getVariable('Errors');
         $this->assertTrue(isset($aEx['default'][0]));
-        $this->assertMatchesRegularExpression($sErrorMessage, $aEx['default'][0], 'Error message: '. $aEx['default'][0]);
+        $this->assertMatchesRegularExpression($sErrorMessage, $aEx['default'][0], 'Error message: ' . $aEx['default'][0]);
     }
 
     /**
@@ -223,10 +224,10 @@ class CheckoutMessageTest extends BaseTestCase
         $sIdTbeArticleWithVatGroup = '1126';
         $sNotTbeArticle = '1131';
 
-        return array(
-            array(array($sIdTbeArticleWithVatGroup)),
-            array(array($sIdTbeArticleWithVatGroup, $sNotTbeArticle)),
-        );
+        return [
+            [[$sIdTbeArticleWithVatGroup]],
+            [[$sIdTbeArticleWithVatGroup, $sNotTbeArticle]],
+        ];
     }
 
     /**
@@ -282,7 +283,7 @@ class CheckoutMessageTest extends BaseTestCase
         $this->assertTrue($blLogin, 'User must login successfully.');
         $oSession->setUser($oUser);
 
-        $aArticles = array('1126','1127');
+        $aArticles = ['1126','1127'];
         foreach ($aArticles as $sArticleId) {
             $oBasket->addToBasket($sArticleId, 1);
         }
@@ -327,7 +328,7 @@ class CheckoutMessageTest extends BaseTestCase
         $this->assertTrue($blLogin, 'User must login successfully.');
         $oSession->setUser($oUser);
 
-        $aArticles = array('1126', '1131');
+        $aArticles = ['1126', '1131'];
         foreach ($aArticles as $sArticleId) {
             $oBasket->addToBasket($sArticleId, 1);
         }
@@ -373,7 +374,7 @@ class CheckoutMessageTest extends BaseTestCase
         $this->assertTrue($blLogin, 'User must login successfully.');
         $oSession->setUser($oUser);
 
-        $aArticles = array('1131');
+        $aArticles = ['1131'];
         foreach ($aArticles as $sArticleId) {
             $oBasket->addToBasket($sArticleId, 1);
         }
@@ -395,7 +396,7 @@ class CheckoutMessageTest extends BaseTestCase
      */
     private function _createUser()
     {
-        $sUserId = \oxDb::getDb()->getOne("SELECT `oxid` FROM `oxuser` WHERE `oxusername` = '".$this->_sDefaultUserName."'");
+        $sUserId = \oxDb::getDb()->getOne("SELECT `oxid` FROM `oxuser` WHERE `oxusername` = '" . $this->_sDefaultUserName . "'");
 
         if (!$sUserId) {
             $sUserName = $this->_sDefaultUserName;

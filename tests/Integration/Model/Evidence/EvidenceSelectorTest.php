@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -192,7 +193,9 @@ class EvidenceSelectorTest extends IntegrationTestCase
     protected static function createEvidence2($sName, $sCountry)
     {
         $testCase = new class extends IntegrationTestCase {
-            public function __construct() {}
+            public function __construct()
+            {
+            }
         };
 
         $mock = $testCase

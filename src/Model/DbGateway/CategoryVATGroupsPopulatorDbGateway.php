@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -6,7 +7,7 @@
 
 namespace OxidEsales\EVatModule\Model\DbGateway;
 
-use \oxDb;
+use oxDb;
 use OxidEsales\Eshop\Core\Database\Adapter\DatabaseInterface;
 
 /**
@@ -89,7 +90,7 @@ class CategoryVATGroupsPopulatorDbGateway
               SELECT DISTINCT `oxobject2category`.`oxobjectid`, `oevattbe_categoryvat`.`oevattbe_countryid`, `oevattbe_categoryvat`.`oevattbe_vatgroupid`
               FROM `oxobject2category`
               LEFT JOIN `oevattbe_categoryvat` ON `oxobject2category`.`oxcatnid` = `oevattbe_categoryvat`.`oevattbe_categoryid`
-              WHERE `oevattbe_categoryvat`.`oevattbe_categoryid` = '. $oDb->quote($sCategoryId);
+              WHERE `oevattbe_categoryvat`.`oevattbe_categoryid` = ' . $oDb->quote($sCategoryId);
 
         return $oDb->execute($sSql);
     }
@@ -113,7 +114,7 @@ class CategoryVATGroupsPopulatorDbGateway
               INNER JOIN `oxobject2category` ON `oxobject2category`.`oxobjectid` = `oxarticles`.`oxid`
               LEFT JOIN `oxcategories` ON `oxobject2category`.`oxcatnid` = `oxcategories`.`oxid`
               SET  `oxarticles`.`oevattbe_istbeservice` = `oxcategories`.`oevattbe_istbe`
-              WHERE `oxobject2category`.`oxcatnid` = '. $oDb->quote($sCategoryId);
+              WHERE `oxobject2category`.`oxcatnid` = ' . $oDb->quote($sCategoryId);
 
         return $oDb->execute($sSql);
     }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -12,7 +13,7 @@ namespace OxidEsales\EVatModule\Tests\Libs;
 class TestCacheConnector implements \OxidEsales\Eshop\Application\Model\Contract\CacheConnectorInterface
 {
     /** @var array */
-    public $aCache = array();
+    public $aCache = [];
 
     /**
      * Returns that cache is always active.
@@ -75,6 +76,6 @@ class TestCacheConnector implements \OxidEsales\Eshop\Application\Model\Contract
      */
     public function flush()
     {
-        $this->aCache = array();
+        $this->aCache = [];
     }
 }

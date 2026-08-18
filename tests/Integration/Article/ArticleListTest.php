@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -306,7 +307,7 @@ class ArticleListTest extends LegacyBaseTestCase
 
         if ($sUserStatus != 'notLoggedIn') {
             $oUser = $this->getMockBuilder(User::class)
-                ->onlyMethods(array("getOeVATTBETbeCountryId"))
+                ->onlyMethods(["getOeVATTBETbeCountryId"])
                 ->getMock();
             $sCountryId = ($sUserStatus == 'loggedInWithoutCountry') ? null : 'a7c40f631fc920687.20179984';
             $oUser->expects($this->any())->method("getOeVATTBETbeCountryId")->willReturn($sCountryId);

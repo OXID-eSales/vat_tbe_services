@@ -18,8 +18,7 @@ class CountryVATGroup extends Model
     public function __construct(
         protected CountryVATGroupsDbGateway $dbGateway,
         protected ?GroupArticleCacheInvalidator $groupArticleCacheInvalidator = null
-    )
-    {
+    ) {
     }
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -10,7 +11,7 @@ use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\EVatModule\Model\ArticleSQLBuilder;
 use OxidEsales\EVatModule\Model\ArticleCacheKey;
 use OxidEsales\EVatModule\Model\User;
-use \oxDb;
+use oxDb;
 use OxidEsales\Facts\Facts;
 
 /**

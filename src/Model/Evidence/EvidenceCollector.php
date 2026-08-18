@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -61,7 +62,7 @@ class EvidenceCollector
      */
     private function fillEvidenceList($oList, $aEvidenceClasses, $aEvidences)
     {
-        $aUpdatedEvidences = array();
+        $aUpdatedEvidences = [];
 
         foreach ($aEvidenceClasses as $sEvidenceClass) {
             if (class_exists($sEvidenceClass)) {

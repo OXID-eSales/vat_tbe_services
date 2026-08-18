@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -39,16 +40,16 @@ class OrderMarksTest extends BaseTestCase
      */
     public static function providerShowVATTBEMark()
     {
-        return array(
-            array(true, true, true, true),
-            array(false, true, true, true),
-            array(false, true, false, true),
-            array(true, false, true, false),
-            array(false, false, true, false),
-            array(true, true, false, false),
-            array(true, false, false, false),
-            array(false, false, false, false),
-        );
+        return [
+            [true, true, true, true],
+            [false, true, true, true],
+            [false, true, false, true],
+            [true, false, true, false],
+            [false, false, true, false],
+            [true, true, false, false],
+            [true, false, false, false],
+            [false, false, false, false],
+        ];
     }
 
     /**
@@ -85,7 +86,7 @@ class OrderMarksTest extends BaseTestCase
         ]);
         $oArticle->save();
 
-        if($blIsUserLoggedIn) {
+        if ($blIsUserLoggedIn) {
             $oUser = oxNew(User::class);
             $oUser->assign([
                 'oxcountryid' => $countryId,
@@ -121,10 +122,10 @@ class OrderMarksTest extends BaseTestCase
      */
     public static function providerIsTBEArticleValid()
     {
-        return array(
-            array(false, false),
-            array(true, true),
-        );
+        return [
+            [false, false],
+            [true, true],
+        ];
     }
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -66,20 +67,20 @@ class ArticleAdministrationTest extends BaseTestCase
         $oCountryVATGroup2->setId(3);
         $oCountryVATGroup2->setData($aData2);
 
-        $aExpectedViewData = array(
-            'a7c40f631fc920687.20179984' => array(
+        $aExpectedViewData = [
+            'a7c40f631fc920687.20179984' => [
                 'countryTitle' => 'Deutschland',
-                'countryGroups' => array (
+                'countryGroups' => [
                     $oCountryVATGroup1
-                ),
-            ),
-            'a7c40f6323c4bfb36.59919433' => array(
+                ],
+            ],
+            'a7c40f6323c4bfb36.59919433' => [
                 'countryTitle' => 'Italien',
-                'countryGroups' => array (
+                'countryGroups' => [
                     $oCountryVATGroup2
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
 
         $this->assertEquals($aExpectedViewData, $oArticleAdministration->getCountryAndVATGroupsData(), 'Data which should go to template is not correct.');
     }
@@ -91,12 +92,12 @@ class ArticleAdministrationTest extends BaseTestCase
      */
     public static function providerViewDataIsTBEService()
     {
-        return array(
+        return [
             /** TBE Service */
-            array(1),
+            [1],
             /** Not TBE Service */
-            array(0),
-        );
+            [0],
+        ];
     }
 
     /**
@@ -131,10 +132,10 @@ class ArticleAdministrationTest extends BaseTestCase
     {
         /** @var ArticleAdministration $oArticleAdministration */
         $oArticleAdministration = oxNew(ArticleAdministration::class);
-        $aSelectParams = array(
+        $aSelectParams = [
             'a7c40f632e04633c9.47194042' => 2,
             '8f241f110955d3260.55487539' => ''
-        );
+        ];
         $_POST['VATGroupsByCountry'] = $aSelectParams;
         $_POST['editval'] = ['oevattbe_istbeservice' => true];
         $oArticleAdministration->setEditObjectId('_testArticle');

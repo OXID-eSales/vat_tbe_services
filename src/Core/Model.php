@@ -89,7 +89,7 @@ class Model
 
         $blResult = $this->getDbGateway()->delete($this->getId());
         if ($blResult) {
-            $this->setData(array());
+            $this->setData([]);
         }
 
         return $blResult;

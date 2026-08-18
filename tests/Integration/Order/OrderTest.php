@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -32,10 +33,10 @@ class OrderTest extends BaseTestCase
      */
     public static function providerSavingEvidenceList()
     {
-        return array(
-            array(Order::ORDER_STATE_OK),
-            array(Order::ORDER_STATE_MAILINGERROR)
-        );
+        return [
+            [Order::ORDER_STATE_OK],
+            [Order::ORDER_STATE_MAILINGERROR]
+        ];
     }
 
     /**
@@ -57,7 +58,7 @@ class OrderTest extends BaseTestCase
 
         /** @var Basket $oBasket */
         $oBasket = $this->getMockBuilder(Basket::class)
-                ->onlyMethods(array("hasOeTBEVATArticles"))
+                ->onlyMethods(["hasOeTBEVATArticles"])
                 ->getMock();
         $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->willReturn(true);
 
@@ -67,7 +68,7 @@ class OrderTest extends BaseTestCase
 
         /** @var Order $oOrder */
         $oOrder = $this->getMockBuilder(Order::class)
-                ->onlyMethods(array("getFinalizeOrderParent"))
+                ->onlyMethods(["getFinalizeOrderParent"])
                 ->getMock();
         $oOrder->expects($this->any())->method("getFinalizeOrderParent")->willReturn($iOrderState);
 
@@ -81,13 +82,13 @@ class OrderTest extends BaseTestCase
 
         $aData = $oList->getData();
 
-        $aExpectedData = array(
-            'billing_country' => array(
+        $aExpectedData = [
+            'billing_country' => [
                 'name' => 'billing_country',
                 'countryId' => '',
                 'timestamp' => $aData['billing_country']['timestamp']
-            )
-        );
+            ]
+        ];
 
         $this->assertEquals($aExpectedData, $aData);
     }
@@ -104,13 +105,13 @@ class OrderTest extends BaseTestCase
 
         /** @var User $oUser */
         $oUser = $this->getMockBuilder(User::class)
-                ->onlyMethods(array("getOeVATTBETbeEvidenceUsed"))
+                ->onlyMethods(["getOeVATTBETbeEvidenceUsed"])
                 ->getMock();
         $oUser->expects($this->any())->method('getOeVATTBETbeEvidenceUsed')->willReturn('billing_country');
 
         /** @var Order$oOrder */
         $oOrder = $this->getMockBuilder(Order::class)
-                ->onlyMethods(array("getFinalizeOrderParent"))
+                ->onlyMethods(["getFinalizeOrderParent"])
                 ->getMock();
         $oOrder->expects($this->any())->method("getFinalizeOrderParent")->willReturn(Order::ORDER_STATE_PAYMENTERROR);
 
@@ -132,13 +133,13 @@ class OrderTest extends BaseTestCase
 
         /** @var User $oUser */
         $oUser = $this->getMockBuilder(User::class)
-                ->onlyMethods(array("getOeVATTBETbeEvidenceUsed"))
+                ->onlyMethods(["getOeVATTBETbeEvidenceUsed"])
                 ->getMock();
         $oUser->expects($this->any())->method('getOeVATTBETbeEvidenceUsed')->willReturn('geo_location');
 
         /** @var Order $oOrder */
         $oOrder = $this->getMockBuilder(Order::class)
-                ->onlyMethods(array("getFinalizeOrderParent"))
+                ->onlyMethods(["getFinalizeOrderParent"])
                 ->getMock();
         $oOrder->expects($this->any())->method("getFinalizeOrderParent")->willReturn(Order::ORDER_STATE_PAYMENTERROR);
         $oOrder->assign([
@@ -162,7 +163,7 @@ class OrderTest extends BaseTestCase
 
         /** @var Basket $oBasket */
         $oBasket = $this->getMockBuilder(Basket::class)
-                ->onlyMethods(array("hasOeTBEVATArticles"))
+                ->onlyMethods(["hasOeTBEVATArticles"])
                 ->getMock();
         $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->willReturn(true);
 
@@ -171,7 +172,7 @@ class OrderTest extends BaseTestCase
 
         /** @var Order $oOrder */
         $oOrder = $this->getMockBuilder(Order::class)
-                ->onlyMethods(array("getFinalizeOrderParent"))
+                ->onlyMethods(["getFinalizeOrderParent"])
                 ->getMock();
         $oOrder->expects($this->any())->method("getFinalizeOrderParent")->willReturn(Order::ORDER_STATE_OK);
 
@@ -186,7 +187,7 @@ class OrderTest extends BaseTestCase
         $oList = oxNew(OrderEvidenceList::class, $oGateway);
         $oList->load('new_order_id');
 
-        $this->assertEquals(array(), $oList->getData());
+        $this->assertEquals([], $oList->getData());
     }
 
     /**
@@ -196,16 +197,16 @@ class OrderTest extends BaseTestCase
      */
     public static function providerNotSavingEvidenceListOnFailedOrder()
     {
-        return array(
-            array(Order::ORDER_STATE_OK, false),
-            array(Order::ORDER_STATE_MAILINGERROR, false),
-            array(Order::ORDER_STATE_PAYMENTERROR, true),
-            array(Order::ORDER_STATE_ORDEREXISTS, true),
-            array(Order::ORDER_STATE_INVALIDDELIVERY, true),
-            array(Order::ORDER_STATE_INVALIDPAYMENT, true),
-            array(Order::ORDER_STATE_INVALIDDELADDRESSCHANGED, true),
-            array(Order::ORDER_STATE_BELOWMINPRICE, true),
-        );
+        return [
+            [Order::ORDER_STATE_OK, false],
+            [Order::ORDER_STATE_MAILINGERROR, false],
+            [Order::ORDER_STATE_PAYMENTERROR, true],
+            [Order::ORDER_STATE_ORDEREXISTS, true],
+            [Order::ORDER_STATE_INVALIDDELIVERY, true],
+            [Order::ORDER_STATE_INVALIDPAYMENT, true],
+            [Order::ORDER_STATE_INVALIDDELADDRESSCHANGED, true],
+            [Order::ORDER_STATE_BELOWMINPRICE, true],
+        ];
     }
 
     /**
@@ -224,7 +225,7 @@ class OrderTest extends BaseTestCase
 
         /** @var Basket $oBasket */
         $oBasket = $this->getMockBuilder(Basket::class)
-                ->onlyMethods(array("hasOeTBEVATArticles"))
+                ->onlyMethods(["hasOeTBEVATArticles"])
                 ->getMock();
         $oBasket->expects($this->any())->method('hasOeTBEVATArticles')->willReturn($blHasTBEArticles);
 
@@ -233,7 +234,7 @@ class OrderTest extends BaseTestCase
 
         /** @var Order $oOrder */
         $oOrder = $this->getMockBuilder(Order::class)
-                ->onlyMethods(array("getFinalizeOrderParent"))
+                ->onlyMethods(["getFinalizeOrderParent"])
                 ->getMock();
         $oOrder->expects($this->any())->method("getFinalizeOrderParent")->willReturn($iOrderState);
 
@@ -247,6 +248,6 @@ class OrderTest extends BaseTestCase
 
         $aData = $oList->getData();
 
-        $this->assertEquals(array(), $aData);
+        $this->assertEquals([], $aData);
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -31,9 +32,9 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
         $_POST['synchoxid'] = 'article1';
 
         $oController = $this->getMockBuilder(ArticleExtendAjax::class)
-                ->onlyMethods(array("getActionIds"))
+                ->onlyMethods(["getActionIds"])
                 ->getMock();
-        $oController->expects($this->any())->method('getActionIds')->willReturn(array('categoryId2'));
+        $oController->expects($this->any())->method('getActionIds')->willReturn(['categoryId2']);
 
         $oController->addCat();
 
@@ -54,9 +55,9 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
 
         /** @var ArticleExtendAjax $oController */
         $oController = $this->getMockBuilder(ArticleExtendAjax::class)
-                ->onlyMethods(array("getActionIds"))
+                ->onlyMethods(["getActionIds"])
                 ->getMock();
-        $oController->expects($this->any())->method('getActionIds')->willReturn(array('categoryId'));
+        $oController->expects($this->any())->method('getActionIds')->willReturn(['categoryId']);
 
         $oController->addCat();
 
@@ -76,9 +77,9 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
         $_POST['synchoxid'] = 'categoryId2';
 
         $oController = $this->getMockBuilder(CategoryMainAjax::class)
-                ->onlyMethods(array("getActionIds"))
+                ->onlyMethods(["getActionIds"])
                 ->getMock();
-        $oController->expects($this->any())->method('getActionIds')->willReturn(array('article1'));
+        $oController->expects($this->any())->method('getActionIds')->willReturn(['article1']);
 
         $oController->addArticle();
 
@@ -98,9 +99,9 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
         $_POST['synchoxid'] = 'categoryId';
 
         $oController = $this->getMockBuilder(CategoryMainAjax::class)
-                ->onlyMethods(array("getActionIds"))
+                ->onlyMethods(["getActionIds"])
                 ->getMock();
-        $oController->expects($this->any())->method('getActionIds')->willReturn(array('article1'));
+        $oController->expects($this->any())->method('getActionIds')->willReturn(['article1']);
         $oController->addArticle();
 
         $this->assertEquals(1, $this->getAssignedToCategoryProductsCount());
@@ -120,18 +121,18 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
 
         $_POST['synchoxid'] = 'categoryId';
         $addController = $this->getMockBuilder(CategoryMainAjax::class)
-                ->onlyMethods(array("getActionIds"))
+                ->onlyMethods(["getActionIds"])
                 ->getMock();
-        $addController->expects($this->any())->method('getActionIds')->willReturn(array('article1'));
+        $addController->expects($this->any())->method('getActionIds')->willReturn(['article1']);
         $addController->addArticle();
 
         $this->cleanFixtures();
 
         /** @var CategoryMainAjax $oController */
         $oController = $this->getMockBuilder(CategoryMainAjax::class)
-                ->onlyMethods(array("getActionIds"))
+                ->onlyMethods(["getActionIds"])
                 ->getMock();
-        $oController->expects($this->any())->method('getActionIds')->willReturn(array('article1'));
+        $oController->expects($this->any())->method('getActionIds')->willReturn(['article1']);
 
         $_POST['oxid'] = '';
         $oController->removeArticle();
@@ -152,9 +153,9 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
 
         /** @var CategoryMainAjax $oController */
         $oController = $this->getMockBuilder(CategoryMainAjax::class)
-                ->onlyMethods(array('getActionIds', 'getAll', 'addFilter'))
+                ->onlyMethods(['getActionIds', 'getAll', 'addFilter'])
                 ->getMock();
-        $oController->expects($this->atLeastOnce())->method('getAll')->willReturn(array('article3', 'article4'));
+        $oController->expects($this->atLeastOnce())->method('getAll')->willReturn(['article3', 'article4']);
 
         $_POST['all'] = 1;
         $_POST['oxid'] = '';
@@ -205,11 +206,11 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
         $this->prepareData(true);
 
         $_POST['oxid'] = 'categoryId';
-        $_POST['editval'] = array('oevattbe_istbe' => 1);
-        $aSelectParams = array(
+        $_POST['editval'] = ['oevattbe_istbe' => 1];
+        $aSelectParams = [
             'a7c40f631fc920687.20179984' => 10,
             'a7c40f631fc920687.20179985' => 11
-        );
+        ];
         $_POST['VATGroupsByCountry'] = $aSelectParams;
 
         $oController = oxNew(CategoryAdministration::class);
@@ -229,11 +230,11 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
         $this->prepareData(true);
 
         $_POST['oxid'] = 'categoryId';
-        $_POST['editval'] = array('oevattbe_istbe' => 0);
-        $aSelectParams = array(
+        $_POST['editval'] = ['oevattbe_istbe' => 0];
+        $aSelectParams = [
             'a7c40f631fc920687.20179984' => 10,
             'a7c40f631fc920687.20179985' => 11
-        );
+        ];
         $_POST['VATGroupsByCountry'] = $aSelectParams;
 
         $oController = oxNew(CategoryAdministration::class);
@@ -253,8 +254,8 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
         $this->prepareData(true);
 
         $_POST['oxid'] = 'categoryId';
-        $_POST['editval'] = array('oevattbe_istbe' => 1);
-        $aSelectParams = array();
+        $_POST['editval'] = ['oevattbe_istbe' => 1];
+        $aSelectParams = [];
         $_POST['VATGroupsByCountry'] = $aSelectParams;
 
         $oController = oxNew(CategoryAdministration::class);
@@ -272,7 +273,7 @@ class CategoryArticlesUpdaterTest extends BaseTestCase
      */
     protected function prepareData($blAssign = false)
     {
-        $aSqlQueries = array();
+        $aSqlQueries = [];
         $aSqlQueries[] = "INSERT INTO `oevattbe_categoryvat` SET `OEVATTBE_CATEGORYID` = 'categoryId', `OEVATTBE_COUNTRYID` = 'a7c40f631fc920687.20179984', `OEVATTBE_VATGROUPID` = '10'";
         $aSqlQueries[] = "INSERT INTO `oevattbe_categoryvat` SET `OEVATTBE_CATEGORYID` = 'categoryId', `OEVATTBE_COUNTRYID` = 'a7c40f631fc920687.20179985', `OEVATTBE_VATGROUPID` = '11'";
         if ($blAssign) {

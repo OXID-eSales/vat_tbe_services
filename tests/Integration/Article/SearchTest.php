@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -24,7 +25,7 @@ class SearchTest extends BaseTestCase
     public function testGetSearchArticles()
     {
         $oUser = $this->getMockBuilder(User::class)
-            ->onlyMethods(array("getOeVATTBETbeCountryId"))
+            ->onlyMethods(["getOeVATTBETbeCountryId"])
             ->getMock();
         $oUser->expects($this->any())->method("getOeVATTBETbeCountryId")->willReturn('a7c40f631fc920687.20179984');
 
@@ -46,7 +47,7 @@ class SearchTest extends BaseTestCase
     public function testGetSearchArticlesUserCountryNotSet()
     {
         $oUser = $this->getMockBuilder(User::class)
-            ->onlyMethods(array("getOeVATTBETbeCountryId"))
+            ->onlyMethods(["getOeVATTBETbeCountryId"])
             ->getMock();
         $oUser->expects($this->any())->method("getOeVATTBETbeCountryId")->willReturn(null);
 

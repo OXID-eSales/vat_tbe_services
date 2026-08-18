@@ -17,12 +17,11 @@ use OxidEsales\EVatModule\Model\DbGateway\OrderEvidenceListDbGateway;
 class OrderEvidenceList extends Model
 {
     /** @var array Model data. */
-    protected $_aData = array();
+    protected $_aData = [];
 
     public function __construct(
         protected OrderEvidenceListDbGateway $dbGateway
-    )
-    {
+    ) {
     }
 
     /**
@@ -32,10 +31,10 @@ class OrderEvidenceList extends Model
      */
     public function save()
     {
-        $aData = array(
+        $aData = [
             'evidenceList' => $this->getData(),
             'orderId' => $this->getId()
-        );
+        ];
         $this->getDbGateway()->save($aData);
 
         return $this->getId();

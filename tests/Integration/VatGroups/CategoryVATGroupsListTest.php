@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -26,10 +27,10 @@ class CategoryVATGroupsListTest extends LegacyBaseTestCase
      */
     public function testSavingGroupsList()
     {
-        $aData = array(
+        $aData = [
             'GermanyId' => '12',
             'LithuaniaId' => '13'
-        );
+        ];
 
         $oGroupsList = $this->get(CategoryVATGroupsList::class);
         $oGroupsList->setId('categoryId');
@@ -50,10 +51,10 @@ class CategoryVATGroupsListTest extends LegacyBaseTestCase
     {
         $oGroupsList = $this->get(CategoryVATGroupsList::class);
 
-        $aExpectedData = array(
+        $aExpectedData = [
             'GermanyId' => '12',
             'LithuaniaId' => '13'
-        );
+        ];
         $oGroupsList->load($sCategoryId);
 
         $this->assertEquals($aExpectedData, $oGroupsList->getData());
@@ -68,7 +69,6 @@ class CategoryVATGroupsListTest extends LegacyBaseTestCase
         $oGroupsList = $this->get(CategoryVATGroupsList::class);
         $oGroupsList->load('NonExistingCountryId');
 
-        $this->assertEquals(array(), $oGroupsList->getData());
+        $this->assertEquals([], $oGroupsList->getData());
     }
-
 }

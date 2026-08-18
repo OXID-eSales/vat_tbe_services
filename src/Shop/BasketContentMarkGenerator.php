@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -58,7 +59,7 @@ class BasketContentMarkGenerator extends BasketContentMarkGenerator_parent
     private function formMarks($sCurrentMark)
     {
         $oBasket = $this->_oTBEBasket;
-        $aMarks = array();
+        $aMarks = [];
 
         if ($oBasket->hasOeTBEVATArticles()) {
             $aMarks['tbeService'] = $sCurrentMark;

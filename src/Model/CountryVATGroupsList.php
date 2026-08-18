@@ -18,8 +18,7 @@ class CountryVATGroupsList extends Model
 {
     public function __construct(
         protected CountryVATGroupsDbGateway $dbGateway
-    )
-    {
+    ) {
     }
 
     /**
@@ -37,7 +36,7 @@ class CountryVATGroupsList extends Model
 
         $groupArticleCacheInvalidator = ContainerFacade::get(GroupArticleCacheInvalidator::class);
 
-        $aGroups = array();
+        $aGroups = [];
         $oGateway = $this->getDbGateway();
         $aGroupsData = $oGateway->getList($this->getId());
         if (is_array($aGroupsData) && count($aGroupsData)) {
@@ -63,7 +62,7 @@ class CountryVATGroupsList extends Model
     {
         $groupArticleCacheInvalidator = ContainerFacade::get(GroupArticleCacheInvalidator::class);
 
-        $aGroups = array();
+        $aGroups = [];
         $oGateway = $this->getDbGateway();
         $aGroupsData = $oGateway->getList();
         if (is_array($aGroupsData) && count($aGroupsData)) {

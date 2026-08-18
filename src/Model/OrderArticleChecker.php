@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -63,7 +64,7 @@ class OrderArticleChecker
                 return $this->_aInvalidArticles;
             }
 
-            $this->_aInvalidArticles = array();
+            $this->_aInvalidArticles = [];
             foreach ($basketArticles as $basketArticle) {
                 /** @var EShopArticle $basketArticle */
                 if ($basketArticle->isOeVATTBETBEService() && is_null($basketArticle->getOeVATTBETBEVat())) {

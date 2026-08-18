@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -22,8 +23,7 @@ class CategoryArticlesUpdater
      */
     public function __construct(
         private CategoryVATGroupsPopulatorDbGateway $dbGateway
-    )
-    {
+    ) {
     }
 
     /**

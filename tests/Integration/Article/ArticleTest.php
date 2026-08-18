@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -26,7 +27,7 @@ class ArticleTest extends BaseTestCase
     {
         Registry::getSession()->setVariable('TBECountryId', 'a7c40f631fc920687.20179984');
         $oUser = $this->getMockBuilder(User::class)
-            ->onlyMethods(array("getOeVATTBETbeCountryId"))
+            ->onlyMethods(["getOeVATTBETbeCountryId"])
             ->getMock();
         $oUser->expects($this->any())->method("getOeVATTBETbeCountryId")->willReturn('a7c40f631fc920687.20179984');
 
@@ -45,7 +46,7 @@ class ArticleTest extends BaseTestCase
     public function testLoadArticleUserIsFromLocalCountry()
     {
         $oUser = $this->getMockBuilder(User::class)
-            ->onlyMethods(array("getOeVATTBETbeCountryId"))
+            ->onlyMethods(["getOeVATTBETbeCountryId"])
             ->getMock();
         $oUser->expects($this->any())->method("getOeVATTBETbeCountryId")->willReturn(null);
 
@@ -98,7 +99,7 @@ class ArticleTest extends BaseTestCase
         $sAustriaId = 'a7c40f6320aeb2ec2.72885259';
         /** @var User $oUser */
         $oUser = $this->getMockBuilder(User::class)
-            ->onlyMethods(array("getOeVATTBETbeCountryId"))
+            ->onlyMethods(["getOeVATTBETbeCountryId"])
             ->getMock();
         $oUser->expects($this->any())->method('getOeVATTBETbeCountryId')->willReturn($sAustriaId);
 
@@ -123,7 +124,7 @@ class ArticleTest extends BaseTestCase
         $sAustriaId = 'a7c40f6320aeb2ec2.72885259';
         /** @var User $oUser */
         $oUser = $this->getMockBuilder(User::class)
-            ->onlyMethods(array("getOeVATTBETbeCountryId"))
+            ->onlyMethods(["getOeVATTBETbeCountryId"])
             ->getMock();
         $oUser->expects($this->any())->method('getOeVATTBETbeCountryId')->willReturn($sAustriaId);
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -39,22 +40,22 @@ class CategoryAdministrationTest extends BaseTestCase
      */
     public function testViewData()
     {
-        $aData1 = array(
+        $aData1 = [
             'OEVATTBE_ID'          => 2,
             'OEVATTBE_COUNTRYID'   => 'a7c40f631fc920687.20179984',
             'OEVATTBE_NAME'        => 'Group Name1',
             'OEVATTBE_DESCRIPTION' => 'Some description1',
             'OEVATTBE_RATE'        => '20.50',
             'OEVATTBE_TIMESTAMP'   => '2014-10-24 09:46:11'
-        );
-        $aData2 = array(
+        ];
+        $aData2 = [
             'OEVATTBE_ID'          => 3,
             'OEVATTBE_COUNTRYID'   => 'a7c40f6323c4bfb36.59919433',
             'OEVATTBE_NAME'        => 'Group Name2',
             'OEVATTBE_DESCRIPTION' => 'Some description2',
             'OEVATTBE_RATE'        => '11.11',
             'OEVATTBE_TIMESTAMP'   => '2014-10-24 09:46:11'
-        );
+        ];
         $this->_cleanData();
         $this->_addData($aData1);
         $this->_addData($aData2);
@@ -76,20 +77,20 @@ class CategoryAdministrationTest extends BaseTestCase
         $oCountryVATGroup2->setId(3);
         $oCountryVATGroup2->setData($aData2);
 
-        $aExpectedViewData = array(
-            'a7c40f631fc920687.20179984' => array(
+        $aExpectedViewData = [
+            'a7c40f631fc920687.20179984' => [
                 'countryTitle' => 'Deutschland',
-                'countryGroups' => array (
+                'countryGroups' => [
                     $oCountryVATGroup1
-                ),
-            ),
-            'a7c40f6323c4bfb36.59919433' => array(
+                ],
+            ],
+            'a7c40f6323c4bfb36.59919433' => [
                 'countryTitle' => 'Italien',
-                'countryGroups' => array (
+                'countryGroups' => [
                     $oCountryVATGroup2
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
 
         $this->assertEquals($aExpectedViewData, $oCategoryAdministration->getCountryAndVATGroupsData(), 'Data which should go to template is not correct.');
     }
@@ -101,12 +102,12 @@ class CategoryAdministrationTest extends BaseTestCase
      */
     public static function providerViewDataIsTBEService()
     {
-        return array(
+        return [
             /** TBE Service */
-            array(1),
+            [1],
             /** Not TBE Service */
-            array(0),
-        );
+            [0],
+        ];
     }
 
     /**
@@ -147,10 +148,10 @@ class CategoryAdministrationTest extends BaseTestCase
 
         /** @var CategoryAdministration $oCategoryAdministration */
         $oCategoryAdministration = oxNew(CategoryAdministration::class);
-        $aSelectParams = array(
+        $aSelectParams = [
             'a7c40f632e04633c9.47194042' => 2,
             '8f241f110955d3260.55487539' => ''
-        );
+        ];
 
         $_POST['VATGroupsByCountry'] = $aSelectParams;
         $oCategoryAdministration->setEditObjectId('_testCategory');

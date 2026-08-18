@@ -31,11 +31,11 @@ class ArticleVATGroupsDbGateway extends ModelDbGateway implements ModelDbGateway
         $this->delete($sArticleId);
 
         $sSql = 'INSERT INTO `oevattbe_articlevat` (oevattbe_articleid, oevattbe_countryid, oevattbe_vatgroupid) VALUES ';
-        $aSqlValues = array();
+        $aSqlValues = [];
 
         foreach ($aData['relations'] as $aValues) {
-            $aQuoted = array_map(array($oDb, 'quote'), $aValues);
-            $aSqlValues[] = "(".implode(',', $aQuoted).")";
+            $aQuoted = array_map([$oDb, 'quote'], $aValues);
+            $aSqlValues[] = "(" . implode(',', $aQuoted) . ")";
         }
 
         if (!empty($aSqlValues)) {

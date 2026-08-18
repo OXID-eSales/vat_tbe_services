@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -51,7 +52,7 @@ class CountryVATGroupsListTest extends LegacyBaseTestCase
         /** @var CountryVATGroupsList $oGroupsList */
         $oGroupsList = oxNew(CountryVATGroupsList::class, $oGateway);
 
-        $this->assertEquals(array($oGroup1, $oGroup2), $oGroupsList->load('8f241f11095410f38.37165361'));
+        $this->assertEquals([$oGroup1, $oGroup2], $oGroupsList->load('8f241f11095410f38.37165361'));
     }
 
     /**
@@ -66,7 +67,7 @@ class CountryVATGroupsListTest extends LegacyBaseTestCase
         /** @var CountryVATGroupsList $oGroupsList */
         $oGroupsList = oxNew(CountryVATGroupsList::class, $oGateway);
 
-        $this->assertEquals(array(), $oGroupsList->load('NonExistingCountryId'));
+        $this->assertEquals([], $oGroupsList->load('NonExistingCountryId'));
     }
 
     /**
