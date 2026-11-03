@@ -9,7 +9,7 @@ telecommunications, broadcasting and electronic services.
 
 ## Branch compatibility
 
-* b-7.6.x branch is compatible with latest shop compilation 7.6.x resp. b-7.6.x shop compilation branches
+* b-7.6.x branch and v4.5 are compatible with OXID eShop compilation version 7.6.x
 * b-7.5.x branch and v4.4 are compatible with OXID eShop compilation version 7.5.x
 * b-7.4.x branch and v4.3 are compatible with OXID eShop compilation version 7.4.x
 * b-7.3.x branch and v4.2 are compatible with OXID eShop compilation version 7.3.x
@@ -25,6 +25,7 @@ telecommunications, broadcasting and electronic services.
 In order to install the module via composer, run one of the following commands 
 on commandline in your shop base directory (where the shop's composer.json file resides).
 
+* **composer require oxid-esales/evat-module:^4.5** to install the latest version from GitHub, compatible with eShop Version 7.6
 * **composer require oxid-esales/evat-module:^4.4** to install the latest version from GitHub, compatible with eShop Version 7.5
 * **composer require oxid-esales/evat-module:^4.3** to install the latest version from GitHub, compatible with eShop Version 7.4
 * **composer require oxid-esales/evat-module:^4.2** to install the latest version from GitHub, compatible with eShop Version 7.3
